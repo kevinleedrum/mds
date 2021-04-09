@@ -1,3 +1,3 @@
 # Inputs
 
-<mx-input></mx-input>
+<mx-input label="Placeholder"></mx-input>

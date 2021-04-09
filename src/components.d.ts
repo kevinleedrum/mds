@@ -9,7 +9,10 @@ export namespace Components {
     interface MxInput {
         "dense": boolean;
         "label": string;
+        "leftIcon": string;
         "name": string;
+        "rightIcon": string;
+        "type": string;
         "value": string;
     }
 }
@@ -28,7 +31,10 @@ declare namespace LocalJSX {
     interface MxInput {
         "dense"?: boolean;
         "label"?: string;
+        "leftIcon"?: string;
         "name"?: string;
+        "rightIcon"?: string;
+        "type"?: string;
         "value"?: string;
     }
     interface IntrinsicElements {
