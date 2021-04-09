@@ -23,7 +23,8 @@
     "stencil:start": "stencil build --dev --watch",
     "stencil:test": "stencil test --spec --e2e",
     "stencil:test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "generate": "stencil generate",
+    "copy": "copyfiles -u 2 www/build/*.js vuepress/.vuepress/public/components"
   },
   "dependencies": {
     "@stencil/core": "^2.0.1",
@@ -35,6 +36,7 @@
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^10.2.5",
+    "copyfiles": "^2.4.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.2.9",
     "postcss-cli": "^8.3.1",
