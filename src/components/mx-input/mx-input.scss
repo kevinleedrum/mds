@@ -1,5 +1,8 @@
 mx-input {
-  .foo {
-    color: orange;
+  .standard {
+    max-height: 48px;
+  }
+  .dense {
+    max-height: 36px;
   }
 }
