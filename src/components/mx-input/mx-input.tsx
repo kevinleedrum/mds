@@ -15,6 +15,7 @@ export class MxInput {
   @Prop() rightIcon: string;
   @Prop() isActive: boolean = false;
   @Prop() isFocused: boolean = false;
+  @Prop() outerContainerClass: string = '';
   @Prop() labelClass: string = '';
 
   connectedCallback() {
@@ -42,18 +43,20 @@ export class MxInput {
 
   handleFocus() {
     this.isActive = true;
+    this.isFocused = true;
     this.labelClass = ' active focus';
   }
 
   handleBlur(event) {
     const { target } = event;
+    this.isFocused = false;
     this.setLabelClass(target);
   }
 
   render() {
     return (
       <Host>
-        <div class={this.makeTypeClass()}>
+        <div class={`${this.makeTypeClass()} ${this.isFocused ? 'focused' : ''}`}>
           <div class="mx-input-inner-wrapper">
             {this.leftIcon && (
               <div class="mds-input-left-content">
@@ -64,7 +67,11 @@ export class MxInput {
             <div class="mds-input">
               <input type={this.type} name={this.name} value={this.value} onFocus={() => this.handleFocus()} onBlur={event => this.handleBlur(event)} />
             </div>
-            {this.rightIcon && <div class="mds-input-right-content">3</div>}
+            {this.rightIcon && (
+              <div class="mds-input-right-content">
+                <i class={this.rightIcon}></i>
+              </div>
+            )}
           </div>
         </div>
       </Host>

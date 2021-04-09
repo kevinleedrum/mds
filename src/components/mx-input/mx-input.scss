@@ -10,6 +10,10 @@ mx-input {
     align-items: center;
     align-content: center;
 
+    &.focused {
+      border: 2px solid #0457af;
+    }
+
     i {
       font-size: 24px;
     }
@@ -31,7 +35,7 @@ mx-input {
       z-index: 10;
 
       &.indented {
-        left: 44px;
+        left: 50px;
       }
 
       &.active {
@@ -60,7 +64,8 @@ mx-input {
       max-height: 36px;
 
       label {
-        top: 4px;
+        top: 5px;
+        font-size: 14px;
 
         &.active {
           -webkit-transform: translateY(-17px) scale(0.8);
@@ -83,10 +88,10 @@ mx-input {
     .mds-input-left-content {
       display: flex;
       flex-shrink: 0;
+      margin-right: 16px;
     }
     .mds-input {
       flex-grow: 1;
-      margin: 0 16px;
 
       input {
         width: 100%;
@@ -94,8 +99,10 @@ mx-input {
       }
     }
     .mds-input-right-content {
-      width: 60px;
+      display: flex;
+      width: 24px;
       flex-shrink: 0;
+      margin-left: 16px;
     }
   }
 }

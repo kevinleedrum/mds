@@ -14,6 +14,7 @@ export namespace Components {
         "labelClass": string;
         "leftIcon": string;
         "name": string;
+        "outerContainerClass": string;
         "rightIcon": string;
         "type": string;
         "value": string;
@@ -39,6 +40,7 @@ declare namespace LocalJSX {
         "labelClass"?: string;
         "leftIcon"?: string;
         "name"?: string;
+        "outerContainerClass"?: string;
         "rightIcon"?: string;
         "type"?: string;
         "value"?: string;
