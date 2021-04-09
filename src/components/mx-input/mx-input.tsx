@@ -9,7 +9,7 @@ export class MxInput {
   render() {
     return (
       <Host>
-        <slot>Help</slot>
+        <slot>This is rad. Working in .gitignore?</slot>
       </Host>
     );
   }

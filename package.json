@@ -14,8 +14,17 @@
     "dist/",
     "loader/"
   ],
+  "watch": {
+    "copy": {
+      "patterns": [
+        "www"
+      ],
+      "extensions": "js, css",
+      "runOnChangeOnly": true
+    }
+  },
   "scripts": {
-    "dev": "npm-run-all --parallel docs:dev stencil:start tailwind:dev",
+    "dev": "npm-run-all --parallel docs:dev stencil:start tailwind:dev watch",
     "tailwind:dev": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css -w",
     "docs:dev": "vuepress dev vuepress",
     "docs:build": "vuepress build docs",
@@ -24,7 +33,8 @@
     "stencil:test": "stencil test --spec --e2e",
     "stencil:test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
-    "copy": "copyfiles -u 2 www/build/*.js vuepress/.vuepress/public/components"
+    "copy": "copyfiles -u 2 www/build/*.js vuepress/.vuepress/public/components",
+    "watch": "npm-watch"
   },
   "dependencies": {
     "@stencil/core": "^2.0.1",

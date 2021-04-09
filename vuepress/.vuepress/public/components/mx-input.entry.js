@@ -7,7 +7,7 @@ const MxInput = class {
     registerInstance(this, hostRef);
   }
   render() {
-    return (h(Host, null, h("slot", null, "Help")));
+    return (h(Host, null, h("slot", null, "This is rad. Working in .gitignore?")));
   }
 };
 MxInput.style = mxInputCss;
