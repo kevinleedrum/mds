@@ -37,6 +37,9 @@ module.exports = {
         link: '/components/',
       },
     ],
+    sidebar: {
+      '/components/': ['inputs'],
+    },
   },
   plugins: [
     [
