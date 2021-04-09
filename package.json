@@ -23,7 +23,7 @@
     "stencil:start": "stencil build --dev --watch",
     "stencil:test": "stencil test --spec --e2e",
     "stencil:test.watch": "stencil test --spec --e2e --watchAll",
-    "stencil:generate": "stencil generate"
+    "generate": "stencil generate"
   },
   "dependencies": {
     "@stencil/core": "^2.0.1",
