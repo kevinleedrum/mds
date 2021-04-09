@@ -99,9 +99,9 @@ export class MxInput {
                 ref={el => (this.textInput = el as HTMLInputElement)}
               />
             </div>
-            {this.rightIcon && (
+            {(this.rightIcon || this.error) && (
               <div class="mds-input-right-content">
-                <i class={this.rightIcon}></i>
+                {this.error ? <i class="ph-warning-circle"></i> : <i class={this.rightIcon}></i>}
               </div>
             )}
           </div>

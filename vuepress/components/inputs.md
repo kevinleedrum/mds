@@ -16,7 +16,7 @@
       <mx-input label="Placeholder & Assistive Text" assistive-text="Helpful text about input"></mx-input>
     </div>
     <div class="my-5">
-      <mx-input label="Placeholder & Right Icon" right-icon="ph-apple-logo" value="Some Error" error></mx-input>
+      <mx-input label="Placeholder & Right Icon" value="Some Error" error></mx-input>
     </div>
   </div>
   <div style="width: 47%;">
