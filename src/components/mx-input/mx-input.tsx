@@ -22,8 +22,6 @@ export class MxInput {
     return `mx-input-wrapper ${type}`;
   }
 
-  setLabelClass() {}
-
   handleFocus() {
     this.labelClass = 'active focus';
   }
