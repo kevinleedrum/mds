@@ -6,7 +6,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: false,
 })
 export class MxInput {
-
+  containerElem!: HTMLDivElement;
   textInput!: HTMLInputElement;
 
   @Prop() name: string;
@@ -16,13 +16,19 @@ export class MxInput {
   @Prop() dense: boolean = false;
   @Prop() leftIcon: string;
   @Prop() rightIcon: string;
-  @Prop() isActive: boolean = false;
+  @Prop({ mutable: true }) isActive: boolean = false;
   @Prop() isFocused: boolean = false;
   @Prop() outerContainerClass: string = '';
-  @Prop() labelClass: string = '';
+  @Prop({ mutable: true }) labelClass: string = '';
+  @Prop() error: boolean = false;
 
   connectedCallback() {
-    this.setLabelClass();
+    if (this.error) {
+      this.isActive = true;
+      this.labelClass += ' active error';
+    } else {
+      this.setLabelClass();
+    }
   }
 
   setLabelClass(target = undefined) {
@@ -48,22 +54,26 @@ export class MxInput {
     this.isActive = true;
     this.isFocused = true;
     this.labelClass = ' active focus';
+    this.removeError();
   }
 
-  handleBlur(event) {
-    const { target } = event;
+  handleBlur() {
     this.isFocused = false;
-    this.setLabelClass(target);
+    this.setLabelClass(this.textInput);
   }
 
   focusOnInput() {
     this.textInput.focus();
   }
 
+  removeError() {
+    this.containerElem.classList.remove('error');
+  }
+
   render() {
     return (
       <Host>
-        <div class={`${this.makeTypeClass()} ${this.isFocused ? 'focused' : ''}`}>
+        <div class={`${this.makeTypeClass()} ${this.isFocused ? 'focused' : ''} ${(this.error) ? 'error': ''}`} ref={(el) => this.containerElem = el as HTMLDivElement}>
           <div class="mx-input-inner-wrapper">
             {this.leftIcon && (
               <div class="mds-input-left-content">
@@ -72,7 +82,7 @@ export class MxInput {
             )}
             {this.label && <label class={this.labelClass} onClick={() => this.focusOnInput()}>{this.label}</label>}
             <div class="mds-input">
-              <input type={this.type} name={this.name} value={this.value} onFocus={() => this.handleFocus()} onBlur={event => this.handleBlur(event)} ref={(el) => this.textInput = el as HTMLInputElement} />
+              <input type={this.type} name={this.name} value={this.value} onFocus={() => this.handleFocus()} onBlur={() => this.handleBlur()} ref={(el) => this.textInput = el as HTMLInputElement} />
             </div>
             {this.rightIcon && (
               <div class="mds-input-right-content">

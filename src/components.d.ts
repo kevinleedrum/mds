@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MxInput {
         "dense": boolean;
+        "error": boolean;
         "isActive": boolean;
         "isFocused": boolean;
         "label": string;
@@ -34,6 +35,7 @@ declare global {
 declare namespace LocalJSX {
     interface MxInput {
         "dense"?: boolean;
+        "error"?: boolean;
         "isActive"?: boolean;
         "isFocused"?: boolean;
         "label"?: string;
