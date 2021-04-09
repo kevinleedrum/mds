@@ -21,6 +21,7 @@ export class MxInput {
   @Prop() outerContainerClass: string = '';
   @Prop({ mutable: true }) labelClass: string = '';
   @Prop() error: boolean = false;
+  @Prop() assistiveText: string;
 
   connectedCallback() {
     if (this.error) {
@@ -105,6 +106,7 @@ export class MxInput {
             )}
           </div>
         </div>
+        {this.assistiveText && <div class="assistive-text">{this.assistiveText}</div>}
       </Host>
     );
   }
