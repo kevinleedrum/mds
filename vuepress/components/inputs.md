@@ -1,5 +1,17 @@
 # Inputs
 
-<mx-input label="Placeholder" left-icon="ph-apple-logo" right-icon="ph-android-logo"></mx-input>
-<br /><br />
-<mx-input label="Placeholder" left-icon="ph-apple-logo" dense></mx-input>
+<div class="flex flex-row flex-nowrap justify-between">
+  <div style="width: 47%;">
+    <div class="my-5">
+      <mx-input label="Placeholder"></mx-input>
+    </div>
+    <div class="my-5">
+      <mx-input label="Placeholder & Left Icon" left-icon="ph-apple-logo"></mx-input>
+    </div>
+  </div>
+  <div style="width: 47%;">
+    <div class="my-5">
+      <mx-input label="Placeholder" dense></mx-input>
+    </div>
+  </div>
+</div>

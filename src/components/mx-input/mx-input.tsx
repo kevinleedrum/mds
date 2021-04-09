@@ -6,6 +6,9 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: false,
 })
 export class MxInput {
+
+  textInput!: HTMLInputElement;
+
   @Prop() name: string;
   @Prop() label: string;
   @Prop() value: string;
@@ -53,6 +56,10 @@ export class MxInput {
     this.setLabelClass(target);
   }
 
+  focusOnInput() {
+    this.textInput.focus();
+  }
+
   render() {
     return (
       <Host>
@@ -63,9 +70,9 @@ export class MxInput {
                 <i class={this.leftIcon}></i>
               </div>
             )}
-            {this.label && <label class={this.labelClass}>{this.label}</label>}
+            {this.label && <label class={this.labelClass} onClick={() => this.focusOnInput()}>{this.label}</label>}
             <div class="mds-input">
-              <input type={this.type} name={this.name} value={this.value} onFocus={() => this.handleFocus()} onBlur={event => this.handleBlur(event)} />
+              <input type={this.type} name={this.name} value={this.value} onFocus={() => this.handleFocus()} onBlur={event => this.handleBlur(event)} ref={(el) => this.textInput = el as HTMLInputElement} />
             </div>
             {this.rightIcon && (
               <div class="mds-input-right-content">
