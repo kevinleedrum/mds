@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  --text-dark: #111827;
+  --text-light: #fff;
+  --primary-color: #312e81;
+  --secondary-color: #ea580c;
+}
+
+/*********************************************************
+ * Scoped MDS selectors
+ ********************************************************/
+.mds {
+}
