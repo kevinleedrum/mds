@@ -30,7 +30,8 @@
     "docs:build": "vuepress build docs",
     "stencil:build": "stencil build --docs",
     "stencil:start": "stencil build --dev --watch",
-    "stencil:test": "stencil test --spec --e2e",
+    "stencil:test": "stencil test --spec",
+    "stencil:test.all": "stencil test --spec --e2e",
     "stencil:test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "copy": "copyfiles -u 2 www/build/*.js vuepress/.vuepress/public/components",
@@ -38,6 +39,8 @@
   },
   "dependencies": {
     "@stencil/core": "^2.0.1",
+    "jest": "26.6.3",
+    "jest-cli": "26.6.3",
     "postcss-custom-properties": "^11.0.0",
     "postcss-import": "^14.0.1",
     "postcss-nested": "^5.0.5",
@@ -46,6 +49,7 @@
   "license": "MIT",
   "devDependencies": {
     "@stencil/sass": "^1.4.1",
+    "@types/jest": "^26.0.22",
     "autoprefixer": "^10.2.5",
     "copyfiles": "^2.4.1",
     "npm-run-all": "^4.1.5",

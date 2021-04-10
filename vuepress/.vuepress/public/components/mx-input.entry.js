@@ -52,6 +52,7 @@ const MxInput = class {
     this.textInput.focus();
   }
   removeError() {
+    this.error = false;
     this.containerElem.classList.remove('error');
   }
   render() {
