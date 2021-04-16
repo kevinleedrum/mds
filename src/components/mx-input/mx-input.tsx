@@ -17,10 +17,10 @@ export class MxInput {
   @Prop() leftIcon: string;
   @Prop() rightIcon: string;
   @Prop({ mutable: true }) isActive: boolean = false;
-  @Prop() isFocused: boolean = false;
+  @Prop({ mutable: true }) isFocused: boolean = false;
   @Prop() outerContainerClass: string = '';
   @Prop({ mutable: true }) labelClass: string = '';
-  @Prop() error: boolean = false;
+  @Prop({ mutable: true }) error: boolean = false;
   @Prop() assistiveText: string;
 
   connectedCallback() {
