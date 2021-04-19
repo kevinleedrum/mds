@@ -6,8 +6,9 @@
 * {
   --text-dark: #111827;
   --text-light: #fff;
-  --primary-color: #312e81;
-  --secondary-color: #ea580c;
+  --primary-bg-color: #0457af;
+  --primary-bg-text-color: #fff;
+  --secondary-bg-color: #ea580c;
 }
 
 .mds {

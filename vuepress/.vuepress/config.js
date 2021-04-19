@@ -39,7 +39,7 @@ module.exports = {
     ],
     sidebar: {
       '/css-documentation/': ['typography'],
-      '/components/': ['inputs'],
+      '/components/': ['inputs', 'buttons'],
     },
   },
   plugins: [

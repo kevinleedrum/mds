@@ -6,6 +6,10 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface MxButton {
+        "type": string;
+        "value": string;
+    }
     interface MxInput {
         "assistiveText": string;
         "dense": boolean;
@@ -25,6 +29,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLMxButtonElement extends Components.MxButton, HTMLStencilElement {
+    }
+    var HTMLMxButtonElement: {
+        prototype: HTMLMxButtonElement;
+        new (): HTMLMxButtonElement;
+    };
     interface HTMLMxInputElement extends Components.MxInput, HTMLStencilElement {
     }
     var HTMLMxInputElement: {
@@ -32,10 +42,15 @@ declare global {
         new (): HTMLMxInputElement;
     };
     interface HTMLElementTagNameMap {
+        "mx-button": HTMLMxButtonElement;
         "mx-input": HTMLMxInputElement;
     }
 }
 declare namespace LocalJSX {
+    interface MxButton {
+        "type"?: string;
+        "value"?: string;
+    }
     interface MxInput {
         "assistiveText"?: string;
         "dense"?: boolean;
@@ -54,6 +69,7 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface IntrinsicElements {
+        "mx-button": MxButton;
         "mx-input": MxInput;
     }
 }
@@ -61,6 +77,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
         }
     }

@@ -1,0 +1,19 @@
+mx-button {
+  button {
+    &.btn {
+      background-color: var(--primary-bg-color);
+      color: var(--primary-bg-text-color);
+      text-transform: uppercase;
+      font-size: 14px;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: 600;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      align-content: center;
+    }
+  }
+}
