@@ -10,6 +10,8 @@ export class MxInput {
 
   @Prop() type: string = 'outlined';
   @Prop() value: string;
+  @Prop() disabled: boolean = false;
+  @Prop() xl: boolean = false;
 
   ripple(e) {
     // Create span element
@@ -37,15 +39,22 @@ export class MxInput {
     }, 300);
   }
 
+  returnBaseClass() {
+    let str = `btn ${this.type}`;
+    if (this.xl) str = `${str} xl`;
+    return str;
+  }
+
   render() {
     return (
       <Host>
         <button
-          class="btn"
+          class={this.returnBaseClass()}
           ref={el => (this.btnElem = el as HTMLButtonElement)}
           onClick={e => {
             this.ripple(e);
           }}
+          disabled={this.disabled}
         >
           {this.value}
         </button>

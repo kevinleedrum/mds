@@ -7,8 +7,10 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MxButton {
+        "disabled": boolean;
         "type": string;
         "value": string;
+        "xl": boolean;
     }
     interface MxInput {
         "assistiveText": string;
@@ -48,8 +50,10 @@ declare global {
 }
 declare namespace LocalJSX {
     interface MxButton {
+        "disabled"?: boolean;
         "type"?: string;
         "value"?: string;
+        "xl"?: boolean;
     }
     interface MxInput {
         "assistiveText"?: string;

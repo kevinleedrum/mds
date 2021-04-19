@@ -1,13 +1,6 @@
 mx-button {
   button {
     &.btn {
-      background-color: var(--primary-bg-color);
-      color: var(--primary-bg-text-color);
-      text-transform: uppercase;
-      font-size: 14px;
-      border-radius: 8px;
-      padding: 10px 16px;
-      font-weight: 600;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -16,6 +9,7 @@ mx-button {
       justify-content: space-between;
       align-items: center;
       align-content: center;
+      text-transform: uppercase;
 
       span {
         position: absolute;
@@ -39,6 +33,29 @@ mx-button {
           opacity: 0;
           transform: scale(10);
         }
+      }
+    }
+
+    &.outlined {
+      background-color: var(--primary-bg-color);
+      color: var(--primary-bg-text-color);
+      font-size: 14px;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: 600;
+
+      &.xl {
+        padding: 16px 32px;
+        font-size: 16px;
+      }
+
+      &:hover {
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), var(--primary-bg-color);
+      }
+
+      &:disabled {
+        background: rgba(51, 51, 51, 0.38);
+        color: rgba(51, 51, 51, 0.38);
       }
     }
   }
