@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
+
 /*! tailwindcss v2.1.1 | MIT License | https://tailwindcss.com */
 
 /*! modern-normalize v1.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
@@ -31895,6 +31897,10 @@ video {
   --primary-color: #312e81;
   --secondary-color: #ea580c;
 }
+
+.mds * {
+    font-family: 'Open Sans', sans-serif;
+  }
 
 .mds h1.xl {
     font-size: 6rem;
@@ -187814,6 +187820,3 @@ video {
     --tw-backdrop-sepia: sepia(100%);
   }
 }
-
-
-
