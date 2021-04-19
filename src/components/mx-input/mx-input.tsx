@@ -8,6 +8,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
 export class MxInput {
   containerElem!: HTMLDivElement;
   textInput!: HTMLInputElement;
+  textArea!: HTMLTextAreaElement;
 
   @Prop() name: string;
   @Prop() label: string;
@@ -22,6 +23,8 @@ export class MxInput {
   @Prop({ mutable: true }) labelClass: string = '';
   @Prop({ mutable: true }) error: boolean = false;
   @Prop() assistiveText: string;
+  @Prop() textarea: boolean = false;
+  @Prop({ mutable: true }) textareaHeight: string = '250px';
 
   connectedCallback() {
     if (this.error) {
@@ -59,17 +62,23 @@ export class MxInput {
   }
 
   handleBlur() {
+    const workingElem = this.textarea ? this.textArea : this.textInput;
     this.isFocused = false;
-    this.setLabelClass(this.textInput);
+    this.setLabelClass(workingElem);
   }
 
   focusOnInput() {
-    this.textInput.focus();
+    const workingElem = this.textarea ? this.textArea : this.textInput;
+    workingElem.focus();
   }
 
   removeError() {
     this.error = false;
     this.containerElem.classList.remove('error');
+  }
+
+  returnTaHeight() {
+    return { height: this.textareaHeight };
   }
 
   render() {
@@ -90,16 +99,29 @@ export class MxInput {
                 {this.label}
               </label>
             )}
-            <div class="mds-input">
-              <input
-                type={this.type}
+            {!this.textarea ? (
+              <div class="mds-input">
+                <input
+                  type={this.type}
+                  name={this.name}
+                  value={this.value}
+                  onFocus={() => this.handleFocus()}
+                  onBlur={() => this.handleBlur()}
+                  ref={el => (this.textInput = el as HTMLInputElement)}
+                />
+              </div>
+            ) : (
+              <textarea
+                style={this.returnTaHeight()}
                 name={this.name}
-                value={this.value}
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
-                ref={el => (this.textInput = el as HTMLInputElement)}
-              />
-            </div>
+                ref={el => (this.textArea = el as HTMLTextAreaElement)}
+              >
+                {this.value}
+              </textarea>
+            )}
+
             {(this.rightIcon || this.error) && (
               <div class="mds-input-right-content">
                 {this.error ? <i class="ph-warning-circle"></i> : <i class={this.rightIcon}></i>}

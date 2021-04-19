@@ -63,7 +63,7 @@ mx-input {
 
     &.standard {
       min-height: 48px;
-      max-height: 48px;
+      // max-height: 48px;
 
       label {
         top: 11px;
@@ -144,5 +144,12 @@ mx-input {
     font-size: 12px;
     color: #929292;
     margin: 5px 0 0 16px;
+  }
+
+  textarea {
+    background: transparent;
+    width: 100%;
+    padding: 16px 0;
+    outline: none;
   }
 }

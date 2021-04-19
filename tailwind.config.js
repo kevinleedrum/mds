@@ -25,6 +25,13 @@ module.exports = {
         '2xl': '1536px',
         // => @media (min-width: 1536px) { ... }
       },
+      fontSize: {
+        // Font size and line-height
+        sm: ['0.875rem', '20px'], // 14px
+        base: ['1rem', '24px'], // 16px
+        lg: ['1.125rem', '24px'], // 18px
+        xl: ['1.25rem', '24px'], // 20px
+      },
     },
   },
   variants: {

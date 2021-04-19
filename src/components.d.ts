@@ -18,6 +18,8 @@ export namespace Components {
         "name": string;
         "outerContainerClass": string;
         "rightIcon": string;
+        "textarea": boolean;
+        "textareaHeight": string;
         "type": string;
         "value": string;
     }
@@ -46,6 +48,8 @@ declare namespace LocalJSX {
         "name"?: string;
         "outerContainerClass"?: string;
         "rightIcon"?: string;
+        "textarea"?: boolean;
+        "textareaHeight"?: string;
         "type"?: string;
         "value"?: string;
     }

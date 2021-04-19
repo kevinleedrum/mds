@@ -2,9 +2,13 @@
 
 The icons for Moxi Design System are from [https://phosphoricons.com/](https://phosphoricons.com/).
 
+## Standard Input
+
+<br />
+
 <div class="flex flex-row flex-nowrap justify-between">
   <div style="width: 47%;">
-    <h4>Regular</h4>
+    <strong>Regular</strong>
     <div class="my-5">
       <mx-input label="Placeholder"></mx-input>
     </div>
@@ -22,7 +26,7 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
     </div>
   </div>
   <div style="width: 47%;">
-    <h4>Dense</h4>
+    <strong>Dense</strong>
     <div class="my-5">
       <mx-input label="Placeholder" dense></mx-input>
     </div>
@@ -40,3 +44,8 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
     </div>
   </div>
 </div>
+
+## Text Area
+
+<br />
+<mx-input label="Placeholder" textarea></mx-input>

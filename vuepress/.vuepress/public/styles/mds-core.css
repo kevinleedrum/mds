@@ -551,6 +551,80 @@ video {
   height: auto;
 }
 
+h1.xl {
+  font-size: 6rem;
+  letter-spacing: -1.5px;
+  font-weight: bold;
+  line-height: 120px;
+}
+
+h1 {
+  font-size: 3.75rem;
+  letter-spacing: -0.5px;
+  font-weight: bold;
+  line-height: 72px;
+}
+
+h2 {
+  font-size: 3rem;
+  line-height: 64px;
+  font-weight: 600;
+}
+
+h3.emphasis {
+  font-size: 2.5rem;
+  letter-spacing: 0.25px;
+  line-height: 56px;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 2.5rem;
+  letter-spacing: 0.25px;
+  line-height: 56px;
+  font-weight: normal;
+}
+
+h4.emphasis {
+  font-size: 2.25rem;
+  letter-spacing: 0.25px;
+  line-height: 56px;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 2.25rem;
+  letter-spacing: 0.25px;
+  line-height: 56px;
+  font-weight: normal;
+}
+
+h5.emphasis {
+  font-size: 1.5rem;
+  line-height: 40px;
+  font-weight: 800;
+}
+
+h5 {
+  font-size: 1.5rem;
+  line-height: 40px;
+  font-weight: normal;
+}
+
+h6.emphasis {
+  font-size: 1.125rem;
+  letter-spacing: 0.25px;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+h6 {
+  font-size: 1.125rem;
+  letter-spacing: 0.25px;
+  line-height: 24px;
+  font-weight: normal;
+}
+
 .container {
   width: 100%;
 }
@@ -11492,22 +11566,22 @@ video {
 
 .text-sm {
   font-size: 0.875rem;
-  line-height: 1.25rem;
+  line-height: 20px;
 }
 
 .text-base {
   font-size: 1rem;
-  line-height: 1.5rem;
+  line-height: 24px;
 }
 
 .text-lg {
   font-size: 1.125rem;
-  line-height: 1.75rem;
+  line-height: 24px;
 }
 
 .text-xl {
   font-size: 1.25rem;
-  line-height: 1.75rem;
+  line-height: 24px;
 }
 
 .text-2xl {
@@ -31896,13 +31970,6 @@ video {
   --secondary-color: #ea580c;
 }
 
-/*********************************************************
- * Scoped MDS selectors
- ********************************************************/
-
-.mds {
-}
-
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -42845,22 +42912,22 @@ video {
 
   .sm\:text-sm {
     font-size: 0.875rem;
-    line-height: 1.25rem;
+    line-height: 20px;
   }
 
   .sm\:text-base {
     font-size: 1rem;
-    line-height: 1.5rem;
+    line-height: 24px;
   }
 
   .sm\:text-lg {
     font-size: 1.125rem;
-    line-height: 1.75rem;
+    line-height: 24px;
   }
 
   .sm\:text-xl {
     font-size: 1.25rem;
-    line-height: 1.75rem;
+    line-height: 24px;
   }
 
   .sm\:text-2xl {
@@ -74014,22 +74081,22 @@ video {
 
   .md\:text-sm {
     font-size: 0.875rem;
-    line-height: 1.25rem;
+    line-height: 20px;
   }
 
   .md\:text-base {
     font-size: 1rem;
-    line-height: 1.5rem;
+    line-height: 24px;
   }
 
   .md\:text-lg {
     font-size: 1.125rem;
-    line-height: 1.75rem;
+    line-height: 24px;
   }
 
   .md\:text-xl {
     font-size: 1.25rem;
-    line-height: 1.75rem;
+    line-height: 24px;
   }
 
   .md\:text-2xl {
@@ -105183,22 +105250,22 @@ video {
 
   .lg\:text-sm {
     font-size: 0.875rem;
-    line-height: 1.25rem;
+    line-height: 20px;
   }
 
   .lg\:text-base {
     font-size: 1rem;
-    line-height: 1.5rem;
+    line-height: 24px;
   }
 
   .lg\:text-lg {
     font-size: 1.125rem;
-    line-height: 1.75rem;
+    line-height: 24px;
   }
 
   .lg\:text-xl {
     font-size: 1.25rem;
-    line-height: 1.75rem;
+    line-height: 24px;
   }
 
   .lg\:text-2xl {
@@ -136352,22 +136419,22 @@ video {
 
   .xl\:text-sm {
     font-size: 0.875rem;
-    line-height: 1.25rem;
+    line-height: 20px;
   }
 
   .xl\:text-base {
     font-size: 1rem;
-    line-height: 1.5rem;
+    line-height: 24px;
   }
 
   .xl\:text-lg {
     font-size: 1.125rem;
-    line-height: 1.75rem;
+    line-height: 24px;
   }
 
   .xl\:text-xl {
     font-size: 1.25rem;
-    line-height: 1.75rem;
+    line-height: 24px;
   }
 
   .xl\:text-2xl {
@@ -167521,22 +167588,22 @@ video {
 
   .\32xl\:text-sm {
     font-size: 0.875rem;
-    line-height: 1.25rem;
+    line-height: 20px;
   }
 
   .\32xl\:text-base {
     font-size: 1rem;
-    line-height: 1.5rem;
+    line-height: 24px;
   }
 
   .\32xl\:text-lg {
     font-size: 1.125rem;
-    line-height: 1.75rem;
+    line-height: 24px;
   }
 
   .\32xl\:text-xl {
     font-size: 1.25rem;
-    line-height: 1.75rem;
+    line-height: 24px;
   }
 
   .\32xl\:text-2xl {
