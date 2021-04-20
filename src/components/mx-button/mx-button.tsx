@@ -8,7 +8,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
 export class MxInput {
   btnElem!: HTMLButtonElement;
 
-  @Prop() type: string = 'outlined';
+  @Prop() type: string = 'contained';
   @Prop() value: string;
   @Prop() disabled: boolean = false;
   @Prop() xl: boolean = false;
