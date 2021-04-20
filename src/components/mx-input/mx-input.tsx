@@ -2,7 +2,6 @@ import { Component, Host, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'mx-input',
-  styleUrl: 'mx-input.scss',
   shadow: false,
 })
 export class MxInput {
@@ -88,7 +87,7 @@ export class MxInput {
 
   render() {
     return (
-      <Host>
+      <Host class="mx-input">
         <div
           class={`${this.makeTypeClass()} ${this.isFocused ? 'focused' : ''} ${this.error ? 'error' : ''}`}
           ref={el => (this.containerElem = el as HTMLDivElement)}

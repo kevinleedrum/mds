@@ -13,6 +13,7 @@
 /***************************
 * Import Component CSS
 ***************************/
+@import './mx-input/index.scss';
 @import './mx-button/index.scss';
 
 /***************************
