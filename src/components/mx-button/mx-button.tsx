@@ -2,16 +2,18 @@ import { Component, Host, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'mx-button',
-  styleUrl: 'mx-button.scss',
   shadow: false,
 })
 export class MxInput {
   btnElem!: HTMLButtonElement;
+  anchorElem!: HTMLAnchorElement;
 
   @Prop() type: string = 'contained';
   @Prop() value: string;
   @Prop() disabled: boolean = false;
   @Prop() xl: boolean = false;
+  @Prop() href: string;
+  @Prop() target: string;
 
   ripple(e) {
     // Create span element
@@ -47,17 +49,31 @@ export class MxInput {
 
   render() {
     return (
-      <Host>
-        <button
-          class={this.returnBaseClass()}
-          ref={el => (this.btnElem = el as HTMLButtonElement)}
-          onClick={e => {
-            this.ripple(e);
-          }}
-          disabled={this.disabled}
-        >
-          {this.value}
-        </button>
+      <Host class="mx-button">
+        {this.href ? (
+          <a
+            href={this.href}
+            target={this.target}
+            class={this.returnBaseClass()}
+            ref={el => (this.anchorElem = el as HTMLAnchorElement)}
+            onClick={e => {
+              this.ripple(e);
+            }}
+          >
+            {this.value}
+          </a>
+        ) : (
+          <button
+            class={this.returnBaseClass()}
+            ref={el => (this.btnElem = el as HTMLButtonElement)}
+            onClick={e => {
+              this.ripple(e);
+            }}
+            disabled={this.disabled}
+          >
+            {this.value}
+          </button>
+        )}
       </Host>
     );
   }

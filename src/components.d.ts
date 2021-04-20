@@ -8,6 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MxButton {
         "disabled": boolean;
+        "href": string;
+        "target": string;
         "type": string;
         "value": string;
         "xl": boolean;
@@ -51,6 +53,8 @@ declare global {
 declare namespace LocalJSX {
     interface MxButton {
         "disabled"?: boolean;
+        "href"?: string;
+        "target"?: string;
         "type"?: string;
         "value"?: string;
         "xl"?: boolean;

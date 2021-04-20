@@ -1,8 +1,23 @@
+/***************************
+* Import Font
+***************************/
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
+
+/***************************
+* Import Tailwind helpers
+***************************/
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/***************************
+* Import Component CSS
+***************************/
+@import './mx-button/index.scss';
+
+/***************************
+* Custom CSS
+***************************/
 * {
   --text-dark: #111827;
   --text-light: #fff;

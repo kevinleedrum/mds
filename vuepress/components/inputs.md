@@ -49,4 +49,4 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
 ## Text Area
 
 <br />
-<mx-input label="Placeholder" left-icon="ph-apple-logo" textarea=true></mx-input>
+<mx-input label="Placeholder" textarea=true></mx-input>

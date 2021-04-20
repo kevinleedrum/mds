@@ -1,7 +1,5 @@
 import { r as registerInstance, h, e as Host } from './index-d7718e8b.js';
 
-const mxButtonCss = "mx-button button.btn{position:relative;overflow:hidden;display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:space-between;align-items:center;align-content:center;text-transform:uppercase}mx-button button.btn span{position:absolute;border-radius:50%;background-color:rgba(255, 255, 255, 0.3);width:100px;height:100px;margin-top:-50px;margin-left:-50px;animation:ripple 1s;opacity:0}@keyframes ripple{from{opacity:1;transform:scale(0)}to{opacity:0;transform:scale(10)}}mx-button button.contained{background-color:var(--primary-bg-color);color:var(--primary-bg-text-color);font-size:14px;border-radius:8px;padding:10px 16px;font-weight:600}mx-button button.contained:hover{background:linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), var(--primary-bg-color)}mx-button button.contained:disabled{background:rgba(51, 51, 51, 0.38);color:rgba(51, 51, 51, 0.38)}mx-button button.outlined{border:1px solid #eaeaea;background-color:#fff;color:#333;font-size:14px;border-radius:8px;padding:10px 16px;font-weight:600}mx-button button.outlined:disabled{background:rgba(255, 255, 255, 0.38);border:1px solid rgba(234, 234, 234, 0.38);color:rgba(51, 51, 51, 0.38)}mx-button button.xl{padding:16px 32px;font-size:16px}";
-
 const MxInput = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
@@ -35,11 +33,12 @@ const MxInput = class {
     return str;
   }
   render() {
-    return (h(Host, null, h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: e => {
+    return (h(Host, { class: "mx-button" }, this.href ? (h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: e => {
         this.ripple(e);
-      }, disabled: this.disabled }, this.value)));
+      } }, this.value)) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: e => {
+        this.ripple(e);
+      }, disabled: this.disabled }, this.value))));
   }
 };
-MxInput.style = mxButtonCss;
 
 export { MxInput as mx_button };
