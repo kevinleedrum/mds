@@ -1,8 +1,52 @@
-import { r as registerInstance, h, e as Host } from './index-b935b875.js';
+import { h, Host, proxyCustomElement } from '@stencil/core/internal/client';
+export { setAssetPath, setPlatformOptions } from '@stencil/core/internal/client';
 
-const MxInput = class {
-  constructor(hostRef) {
-    registerInstance(this, hostRef);
+const MxInput$2 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.type = 'contained';
+    this.disabled = false;
+    this.xl = false;
+  }
+  ripple(e) {
+    // Create span element
+    let ripple = document.createElement('span');
+    // Add ripple class to span
+    ripple.classList.add('ripple');
+    // Add span to the button
+    this.btnElem.appendChild(ripple);
+    // Get position of X
+    let x = e.clientX - e.target.offsetLeft;
+    // Get position of Y
+    let y = e.clientY - e.target.offsetTop;
+    // Position the span element
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+    // Remove span after 0.3s
+    setTimeout(() => {
+      ripple.remove();
+    }, 300);
+  }
+  returnBaseClass() {
+    let str = `btn ${this.type}`;
+    if (this.xl)
+      str = `${str} xl`;
+    return str;
+  }
+  render() {
+    return (h(Host, { class: "mx-button" }, this.href ? (h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: e => {
+        this.ripple(e);
+      } }, this.value)) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: e => {
+        this.ripple(e);
+      }, disabled: this.disabled }, this.value))));
+  }
+};
+
+const MxInput$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
     this.type = 'text';
     this.dense = false;
     this.isActive = false;
@@ -70,4 +114,19 @@ const MxInput = class {
   }
 };
 
-export { MxInput as mx_input };
+const MxButton = /*@__PURE__*/proxyCustomElement(MxInput$2, [0,"mx-button",{"type":[1],"value":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1]}]);
+const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"label":[1],"value":[1],"type":[1],"dense":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
+const defineCustomElements = (opts) => {
+  if (typeof customElements !== 'undefined') {
+    [
+      MxButton,
+  MxInput
+    ].forEach(cmp => {
+      if (!customElements.get(cmp.is)) {
+        customElements.define(cmp.is, cmp, opts);
+      }
+    });
+  }
+};
+
+export { MxButton, MxInput, defineCustomElements };
