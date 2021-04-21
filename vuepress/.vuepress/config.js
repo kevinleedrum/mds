@@ -13,6 +13,7 @@ module.exports = {
     ['script', { src: 'https://unpkg.com/phosphor-icons' }],
     ['script', { type: 'module', src: '/components/mds-components.esm.js' }],
     ['script', { nomodule: '', src: '/components/mds-components.js' }],
+    ['script', { src: '/fixProdInitialLoad.js' }],
   ],
   theme: 'yuu',
   markdown: {
