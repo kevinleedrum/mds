@@ -10,4 +10,4 @@ echo ""
 
 yarn docs:build
 rm -rf ./docs
-mv public/.vuepress/dist docs
+mv vuepress/.vuepress/dist ./docs
