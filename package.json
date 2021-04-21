@@ -1,5 +1,5 @@
 {
-  "name": "mds-components",
+  "name": "@moxiworks/mds-components",
   "version": "0.0.1",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
@@ -31,18 +31,19 @@
     }
   },
   "scripts": {
+    "build": "sh build-all.sh",
     "dev": "npm-run-all --parallel docs:dev stencil:start tailwind:dev watch",
     "tailwind:dev": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css -w",
     "tailwind:scss": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css",
     "docs:dev": "vuepress dev vuepress",
-    "docs:build": "vuepress build docs",
+    "docs:build": "vuepress build vuepress",
     "stencil:build": "stencil build --docs",
     "stencil:start": "stencil build --dev --watch",
     "stencil:test": "stencil test --spec",
     "stencil:test.all": "stencil test --spec --e2e",
     "stencil:test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
-    "copy": "copyfiles -u 2 www/build/*.js vuepress/.vuepress/public/components",
+    "copy": "sh copy-on-change.sh",
     "watch": "npm-watch"
   },
   "dependencies": {
