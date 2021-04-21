@@ -31,11 +31,12 @@
     }
   },
   "scripts": {
+    "build": "sh build-all.sh",
     "dev": "npm-run-all --parallel docs:dev stencil:start tailwind:dev watch",
     "tailwind:dev": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css -w",
     "tailwind:scss": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css",
     "docs:dev": "vuepress dev vuepress",
-    "docs:build": "vuepress build docs",
+    "docs:build": "vuepress build vuepress",
     "stencil:build": "stencil build --docs",
     "stencil:start": "stencil build --dev --watch",
     "stencil:test": "stencil test --spec",
