@@ -1,17 +1,19 @@
 .mx-button {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+
   button,
   a {
-    &.btn {
-      position: relative;
-      overflow: hidden;
-      display: inline-flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: space-between;
-      align-items: center;
-      align-content: center;
-      text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    cursor: pointer;
 
+    &.btn {
       span {
         position: absolute;
         border-radius: 50%;
@@ -35,6 +37,10 @@
           transform: scale(10);
         }
       }
+    }
+
+    &.full {
+      width: 100%;
     }
 
     &.contained {
@@ -80,6 +86,57 @@
     &.xl {
       padding: 16px 32px;
       font-size: 16px;
+    }
+
+    &.action {
+      padding: 8px 16px;
+      background: #ffffff;
+      border: 1px solid #eaeaea;
+      border-radius: 32px;
+      font-size: 14px;
+      line-height: 20px;
+
+      i {
+        margin-right: 8px;
+      }
+
+      &:disabled {
+        border: 1px solid #eaeaea;
+        color: #c1c1c1;
+      }
+
+      &:focus {
+        background: #dcdcdc;
+      }
+
+      &:hover {
+        background: #f0f0f0;
+      }
+    }
+
+    &.text {
+      padding: 10px 8px;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 16px;
+      border-radius: 8px;
+      color: #0457af;
+
+      i {
+        margin-right: 8px;
+      }
+
+      &:disabled {
+        color: #c1c1c1;
+      }
+
+      &:focus {
+        background: #c3d7ec;
+      }
+
+      &:hover {
+        background: #ebf2f9;
+      }
     }
   }
 }

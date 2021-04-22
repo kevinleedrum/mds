@@ -1,7 +1,9 @@
 # Buttons
 
+## Standard Buttons
+
 <section class="mds">
-  <div class="flex flex-row flex-nowrap justify-between">
+  <div class="flex flex-row flex-nowrap justify-between mt-10">
     <div style="width: 47%;">
       <strong>Contained</strong>
       <div class="my-5">
@@ -38,5 +40,48 @@
         <mx-button value="Button as Link" type="outlined" href="https://google.com" target="_blank" />
       </div>
     </div>
+  </div>
+  <div>
+    <strong>Full</strong>
+    <div class="my-5">
+      <mx-button value="button" full />
+    </div>
+    <div class="my-5">
+      <mx-button value="XL button" xl full />
+    </div>
+    <div class="my-5">
+      <mx-button value="Outlined button" type="outlined" full />
+    </div>
+    <div class="my-5">
+      <mx-button value="Outlined button" type="outlined" full xl />
+    </div>
+  </div>
+</section>
+
+## Action Buttons
+
+<section class="mds">
+  <div class="my-5">
+    <mx-button value="button" type="action" />
+  </div>
+  <div class="my-5">
+    <mx-button value="button with icon" type="action" icon-left="ph-apple-logo" />
+  </div>
+  <div class="my-5">
+    <mx-button value="disabled" type="action" disabled />
+  </div>
+</section>
+
+## Text Buttons
+
+<section class="mds">
+  <div class="my-5">
+    <mx-button value="button" type="text" />
+  </div>
+  <div class="my-5">
+    <mx-button value="button with icon" type="text" icon-left="ph-apple-logo" />
+  </div>
+  <div class="my-5">
+    <mx-button value="disabled" type="text" disabled />
   </div>
 </section>

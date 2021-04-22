@@ -14,8 +14,12 @@ export class MxInput {
   @Prop() xl: boolean = false;
   @Prop() href: string;
   @Prop() target: string;
+  @Prop() full: boolean = false;
+  @Prop() iconLeft: string;
 
   ripple(e) {
+    const elem = this.href ? this.anchorElem : this.btnElem;
+
     // Create span element
     let ripple = document.createElement('span');
 
@@ -23,7 +27,7 @@ export class MxInput {
     ripple.classList.add('ripple');
 
     // Add span to the button
-    this.btnElem.appendChild(ripple);
+    elem.appendChild(ripple);
 
     // Get position of X
     let x = e.clientX - e.target.offsetLeft;
@@ -44,6 +48,7 @@ export class MxInput {
   returnBaseClass() {
     let str = `btn ${this.type}`;
     if (this.xl) str = `${str} xl`;
+    if (this.full) str = `${str} full`;
     return str;
   }
 
@@ -60,7 +65,10 @@ export class MxInput {
               this.ripple(e);
             }}
           >
-            {this.value}
+            <div class="flex justify-center items-center content-center">
+              {this.iconLeft && <i class={this.iconLeft}></i>}
+              {this.value}
+            </div>
           </a>
         ) : (
           <button
@@ -71,7 +79,10 @@ export class MxInput {
             }}
             disabled={this.disabled}
           >
-            {this.value}
+            <div class="flex justify-center items-center content-center">
+              {this.iconLeft && <i class={this.iconLeft}></i>}
+              {this.value}
+            </div>
           </button>
         )}
       </Host>
