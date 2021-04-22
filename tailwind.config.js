@@ -1,7 +1,7 @@
 module.exports = {
   important: '.mds',
-  // mode: 'jit',
-  purge: [],
+  mode: 'jit',
+  purge: ['./src/**/*.{js,jsx,ts,tsx,vue}', './vuepress/**/*.{js,jsx,ts,tsx,vue,md,html}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
