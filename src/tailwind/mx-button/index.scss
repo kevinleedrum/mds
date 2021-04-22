@@ -92,7 +92,6 @@
       padding: 8px 16px;
       background: #ffffff;
       border: 1px solid #eaeaea;
-      box-sizing: border-box;
       border-radius: 32px;
       font-size: 14px;
       line-height: 20px;
@@ -101,12 +100,42 @@
         margin-right: 8px;
       }
 
+      &:disabled {
+        border: 1px solid #eaeaea;
+        color: #c1c1c1;
+      }
+
       &:focus {
         background: #dcdcdc;
       }
 
       &:hover {
         background: #f0f0f0;
+      }
+    }
+
+    &.text {
+      padding: 10px 8px;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 16px;
+      border-radius: 8px;
+      color: #0457af;
+
+      i {
+        margin-right: 8px;
+      }
+
+      &:disabled {
+        color: #c1c1c1;
+      }
+
+      &:focus {
+        background: #c3d7ec;
+      }
+
+      &:hover {
+        background: #ebf2f9;
       }
     }
   }

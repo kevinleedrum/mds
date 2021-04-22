@@ -32155,7 +32155,6 @@ video {
       padding: 8px 16px;
       background: #ffffff;
       border: 1px solid #eaeaea;
-      box-sizing: border-box;
       border-radius: 32px;
       font-size: 14px;
       line-height: 20px;
@@ -32165,12 +32164,42 @@ video {
         margin-right: 8px;
       }
 
+.mx-button button.action:disabled, .mx-button a.action:disabled {
+        border: 1px solid #eaeaea;
+        color: #c1c1c1;
+      }
+
 .mx-button button.action:focus, .mx-button a.action:focus {
         background: #dcdcdc;
       }
 
 .mx-button button.action:hover, .mx-button a.action:hover {
         background: #f0f0f0;
+      }
+
+.mx-button button.text, .mx-button a.text {
+      padding: 10px 8px;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 16px;
+      border-radius: 8px;
+      color: #0457af;
+    }
+
+.mx-button button.text i, .mx-button a.text i {
+        margin-right: 8px;
+      }
+
+.mx-button button.text:disabled, .mx-button a.text:disabled {
+        color: #c1c1c1;
+      }
+
+.mx-button button.text:focus, .mx-button a.text:focus {
+        background: #c3d7ec;
+      }
+
+.mx-button button.text:hover, .mx-button a.text:hover {
+        background: #ebf2f9;
       }
 
 /***************************

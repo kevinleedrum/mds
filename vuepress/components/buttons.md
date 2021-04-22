@@ -67,4 +67,21 @@
   <div class="my-5">
     <mx-button value="button with icon" type="action" icon-left="ph-apple-logo" />
   </div>
+  <div class="my-5">
+    <mx-button value="disabled" type="action" disabled />
+  </div>
+</section>
+
+## Text Buttons
+
+<section class="mds">
+  <div class="my-5">
+    <mx-button value="button" type="text" />
+  </div>
+  <div class="my-5">
+    <mx-button value="button with icon" type="text" icon-left="ph-apple-logo" />
+  </div>
+  <div class="my-5">
+    <mx-button value="disabled" type="text" disabled />
+  </div>
 </section>
