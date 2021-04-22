@@ -1,8 +1,12 @@
-import { r as registerInstance, h, e as Host } from './index-b935b875.js';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+const index = require('./index-7a6d2fc8.js');
 
 const MxInput = class {
   constructor(hostRef) {
-    registerInstance(this, hostRef);
+    index.registerInstance(this, hostRef);
     this.type = 'contained';
     this.disabled = false;
     this.xl = false;
@@ -37,12 +41,12 @@ const MxInput = class {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-button" }, this.href ? (h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: e => {
+    return (index.h(index.Host, { class: "mx-button" }, this.href ? (index.h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: e => {
         this.ripple(e);
-      } }, h("div", { class: "flex justify-center items-center content-center" }, this.iconLeft && h("i", { class: this.iconLeft }), this.value))) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: e => {
+      } }, index.h("div", { class: "flex justify-center items-center content-center" }, this.iconLeft && index.h("i", { class: this.iconLeft }), this.value))) : (index.h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: e => {
         this.ripple(e);
-      }, disabled: this.disabled }, h("div", { class: "flex justify-center items-center content-center" }, this.iconLeft && h("i", { class: this.iconLeft }), this.value)))));
+      }, disabled: this.disabled }, index.h("div", { class: "flex justify-center items-center content-center" }, this.iconLeft && index.h("i", { class: this.iconLeft }), this.value)))));
   }
 };
 
-export { MxInput as mx_button };
+exports.mx_button = MxInput;
