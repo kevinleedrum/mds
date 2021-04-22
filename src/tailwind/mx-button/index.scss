@@ -1,15 +1,16 @@
 .mx-button {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+
   button,
   a {
     &.btn {
-      position: relative;
-      overflow: hidden;
-      display: inline-flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: space-between;
-      align-items: center;
-      align-content: center;
       text-transform: uppercase;
 
       span {
@@ -35,6 +36,10 @@
           transform: scale(10);
         }
       }
+    }
+
+    &.full {
+      width: 100%;
     }
 
     &.contained {

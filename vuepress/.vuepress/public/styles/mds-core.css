@@ -32048,15 +32048,18 @@ video {
     outline: none;
   }
 
+.mx-button {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
 .mx-button button.btn, .mx-button a.btn {
-      position: relative;
-      overflow: hidden;
-      display: inline-flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: space-between;
-      align-items: center;
-      align-content: center;
       text-transform: uppercase;
     }
 
@@ -32096,6 +32099,10 @@ video {
           transform: scale(10);
         }
       }
+
+.mx-button button.full, .mx-button a.full {
+      width: 100%;
+    }
 
 .mx-button button.contained, .mx-button a.contained {
       background-color: var(--primary-bg-color);

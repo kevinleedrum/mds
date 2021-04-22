@@ -6,6 +6,7 @@ const MxInput = class {
     this.type = 'contained';
     this.disabled = false;
     this.xl = false;
+    this.full = false;
   }
   ripple(e) {
     // Create span element
@@ -30,6 +31,8 @@ const MxInput = class {
     let str = `btn ${this.type}`;
     if (this.xl)
       str = `${str} xl`;
+    if (this.full)
+      str = `${str} full`;
     return str;
   }
   render() {

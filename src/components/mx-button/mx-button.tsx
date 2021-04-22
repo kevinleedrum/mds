@@ -14,6 +14,7 @@ export class MxInput {
   @Prop() xl: boolean = false;
   @Prop() href: string;
   @Prop() target: string;
+  @Prop() full: boolean = false;
 
   ripple(e) {
     // Create span element
@@ -44,6 +45,7 @@ export class MxInput {
   returnBaseClass() {
     let str = `btn ${this.type}`;
     if (this.xl) str = `${str} xl`;
+    if (this.full) str = `${str} full`;
     return str;
   }
 

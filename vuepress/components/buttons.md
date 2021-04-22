@@ -39,4 +39,18 @@
       </div>
     </div>
   </div>
+  <div>
+    <div class="my-5">
+      <mx-button value="button" full />
+    </div>
+    <div class="my-5">
+      <mx-button value="XL button" xl full />
+    </div>
+    <div class="my-5">
+      <mx-button value="Outlined button" type="outlined" full />
+    </div>
+    <div class="my-5">
+      <mx-button value="Outlined button" type="outlined" full xl />
+    </div>
+  </div>
 </section>
