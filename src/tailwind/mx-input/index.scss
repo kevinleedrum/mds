@@ -59,6 +59,10 @@
       .mx-input-inner-wrapper {
         padding: 0 15px;
       }
+
+      .mx-input-inner-wrapper.textarea {
+        margin: -1px 0;
+      }
     }
 
     &.standard {

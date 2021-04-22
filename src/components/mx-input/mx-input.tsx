@@ -82,7 +82,11 @@ export class MxInput {
 
   overrideTextArea() {
     if (!this.textarea) return {};
-    return { alignItems: 'start', marginTop: '11px' };
+    return { alignItems: 'start' }; // For icon placement.
+  }
+
+  isTextarea() {
+    return this.textarea ? 'textarea' : '';
   }
 
   render() {
@@ -92,7 +96,7 @@ export class MxInput {
           class={`${this.makeTypeClass()} ${this.isFocused ? 'focused' : ''} ${this.error ? 'error' : ''}`}
           ref={el => (this.containerElem = el as HTMLDivElement)}
         >
-          <div class="mx-input-inner-wrapper" style={this.overrideTextArea()}>
+          <div class={`mx-input-inner-wrapper ${this.isTextarea()}`} style={this.overrideTextArea()}>
             {this.leftIcon && (
               <div class="mds-input-left-content">
                 <i class={this.leftIcon}></i>

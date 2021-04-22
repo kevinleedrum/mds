@@ -30,10 +30,9 @@ export declare class MxInput {
   };
   overrideTextArea(): {
     alignItems?: undefined;
-    marginTop?: undefined;
   } | {
     alignItems: string;
-    marginTop: string;
   };
+  isTextarea(): "" | "textarea";
   render(): any;
 }

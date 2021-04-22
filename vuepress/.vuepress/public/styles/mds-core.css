@@ -31961,6 +31961,10 @@ video {
         padding: 0 15px;
       }
 
+.mx-input .mx-input-wrapper.focused .mx-input-inner-wrapper.textarea {
+        margin: -1px 0;
+      }
+
 .mx-input .mx-input-wrapper.standard {
       min-height: 48px;
     }
