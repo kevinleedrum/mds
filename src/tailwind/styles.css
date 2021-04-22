@@ -17,7 +17,7 @@
 @import './mx-button/index.scss';
 
 /***************************
-* Custom CSS
+* CSS Variables
 ***************************/
 * {
   --text-dark: #111827;
@@ -27,6 +27,9 @@
   --secondary-bg-color: #ea580c;
 }
 
+/***************************
+* Custom CSS
+***************************/
 .mds {
   * {
     font-family: 'Open Sans', sans-serif;

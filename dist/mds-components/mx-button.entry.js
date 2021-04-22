@@ -1,12 +1,8 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-const index = require('./index-7a6d2fc8.js');
+import { r as registerInstance, h, e as Host } from './index-b935b875.js';
 
 const MxInput = class {
   constructor(hostRef) {
-    index.registerInstance(this, hostRef);
+    registerInstance(this, hostRef);
     this.type = 'contained';
     this.disabled = false;
     this.xl = false;
@@ -37,12 +33,12 @@ const MxInput = class {
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: "mx-button" }, this.href ? (index.h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: e => {
+    return (h(Host, { class: "mx-button" }, this.href ? (h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: e => {
         this.ripple(e);
-      } }, this.value)) : (index.h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: e => {
+      } }, this.value)) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: e => {
         this.ripple(e);
       }, disabled: this.disabled }, this.value))));
   }
 };
 
-exports.mx_button = MxInput;
+export { MxInput as mx_button };

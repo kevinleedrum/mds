@@ -1,75 +1,78 @@
 ![Built With Stencil](https://img.shields.io/badge/-Built%20With%20Stencil-16161d.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI%2BCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI%2BCgkuc3Qwe2ZpbGw6I0ZGRkZGRjt9Cjwvc3R5bGU%2BCjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik00MjQuNywzNzMuOWMwLDM3LjYtNTUuMSw2OC42LTkyLjcsNjguNkgxODAuNGMtMzcuOSwwLTkyLjctMzAuNy05Mi43LTY4LjZ2LTMuNmgzMzYuOVYzNzMuOXoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTQyNC43LDI5Mi4xSDE4MC40Yy0zNy42LDAtOTIuNy0zMS05Mi43LTY4LjZ2LTMuNkgzMzJjMzcuNiwwLDkyLjcsMzEsOTIuNyw2OC42VjI5Mi4xeiIvPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDI0LjcsMTQxLjdIODcuN3YtMy42YzAtMzcuNiw1NC44LTY4LjYsOTIuNy02OC42SDMzMmMzNy45LDAsOTIuNywzMC43LDkyLjcsNjguNlYxNDEuN3oiLz4KPC9zdmc%2BCg%3D%3D&colorA=16161d&style=flat-square)
 
-# Stencil Component Starter
+# Moxi Design System
 
-This is a starter project for building a standalone Web Component using Stencil.
+The Moxi Design System is a framework utilizing TailwindCSS and StencilJS to provide a CSS foundational framework combined with a library of universal Javascript components to use in any project with any framework you desire.
 
-Stencil is also great for building entire apps. For that, use the [stencil-app-starter](https://github.com/ionic-team/stencil-app-starter) instead.
+The goal is to create this framework to the spec of our design team and committing to the continued growth of this system moving forward.
 
-# Stencil
+## Development
 
-Stencil is a compiler for building fast web apps using Web Components.
+The project uses Vuepress as a means to write documentation as you develop. When the system is built, Vuepress is compiled to the `docs` directory to be accessed via Github pages. This project also uses `yarn` over `npm`.
 
-Stencil combines the best concepts of the most popular frontend frameworks into a compile-time rather than run-time tool.  Stencil takes TypeScript, JSX, a tiny virtual DOM layer, efficient one-way data binding, an asynchronous rendering pipeline (similar to React Fiber), and lazy-loading out of the box, and generates 100% standards-based Web Components that run in any browser supporting the Custom Elements v1 spec.
+### Installing Yarn
 
-Stencil components are just Web Components, so they work in any major framework or with no framework at all.
+`npm install yarn -g`
 
-## Getting Started
+### Cloning For Local Development
 
-To start building a new web component using Stencil, clone this repo to a new directory:
+1. Fork and then clone the project locally.
+2. Inside the cloned direcrory run `yarn install`.
+3. After the dependencies are installed run `yarn dev` to start the development Vuepress server.
 
-```bash
-git clone https://github.com/ionic-team/stencil-component-starter.git my-component
-cd my-component
-git remote rm origin
+You can now access the site at [http://localhost:8080](http://localhost:8080).
+
+### Where Things Live
+
+#### Vuepress
+
+The development site is located under the `vuepress` directory. To learn more about Vuepress and it's paradigms, please read the [documentation here](http://vuepress.vuejs.org/).
+
+The basics are very straight forward. The site is powered by Markdown files. Add and edit folders and `.md` files as needed for documentation and development.
+
+You can develop the component in Vuepress then write the documentation around it when ready.
+
+#### StencilJS Components
+
+All of the StencilJS components are located in the `src` directory. There is a generator to stub a new component: `yarn generate mx-{name of component}`. All of the components are prefixed with `mx-`. For example, the input component is called `mx-input` which is essentially the tag name `<mx-input />`.
+
+You can read more about Stencil, it's lifecycle methods, property handling, etc at [https://stenciljs.com/docs/introduction](https://stenciljs.com/docs/introduction).
+
+#### TailwindCSS
+
+The TailwindCSS code is located under `src/tailwind`. The configuration file is located in the root of the directory as `tailwind.config.js`.
+
+You can read more about [TailwindCSS here](http://tailwindcss.com/).
+
+#### :rotating_light: IMPORTANT :rotating_light:
+
+We are not using the Shadow DOM for the Stencil components and are not using the CSS paradigm they provide. The reason is that the CSS for this project needs to also support Ruby based `view components`. You can read more about them here: [https://viewcomponent.org/](https://viewcomponent.org/).
+
+There's no reason to write and maintain this CSS in two places so the TailwindCSS implementation will be the source of truth for our component styling.
+
+Under `src/tailwind` you'll see directories like `mx-input` and `mx-button`. Those `SASS` directories and files are included in the `styles.css` file. Thanks to the magic of PostCSS, the includes work and support transpiling of `scss` to `css` immediately.
+
+## Using In A Project
+
+From your project run `yarn add @moxiworks/mds` or `npm install @moxiworks/mds` depending on your package manager.
+
+At your entry point add the following code:
+
+```js
+import { applyPolyfills, defineCustomElements } from '@moxiworks/mds/loader';
+
+// Bind the custom elements to the window object
+applyPolyfills().then(() => {
+  defineCustomElements();
+});
 ```
 
-and run:
+StencilJS provides a loader which dynamically "tree-shakes" the code as needed. So, for example, the bundle for the mx-input won't be included in your bundle until you've written code in one of your views like:
 
-```bash
-npm install
-npm start
+```html
+<mx-input label="Placeholder & Left Icon" left-icon="ph-apple-logo" />
 ```
 
-To build the component for production, run:
+### Framework Integrations
 
-```bash
-npm run build
-```
-
-To run the unit tests for the components, run:
-
-```bash
-npm test
-```
-
-Need help? Check out our docs [here](https://stenciljs.com/docs/my-first-component).
-
-
-## Naming Components
-
-When creating new component tags, we recommend _not_ using `stencil` in the component name (ex: `<stencil-datepicker>`). This is because the generated component has little to nothing to do with Stencil; it's just a web component!
-
-Instead, use a prefix that fits your company or any name for a group of related components. For example, all of the Ionic generated web components use the prefix `ion`.
-
-
-## Using this component
-
-There are three strategies we recommend for using web components built with Stencil.
-
-The first step for all three of these strategies is to [publish to NPM](https://docs.npmjs.com/getting-started/publishing-npm-packages).
-
-### Script tag
-
-- Put a script tag similar to this `<script src='https://unpkg.com/my-component@0.0.1/dist/my-component.esm.js'></script>` in the head of your index.html
-- Then you can use the element anywhere in your template, JSX, html etc
-
-### Node Modules
-- Run `npm install my-component --save`
-- Put a script tag similar to this `<script src='node_modules/my-component/dist/my-component.esm.js'></script>` in the head of your index.html
-- Then you can use the element anywhere in your template, JSX, html etc
-
-### In a stencil-starter app
-- Run `npm install my-component --save`
-- Add an import to the npm packages `import my-component;`
-- Then you can use the element anywhere in your template, JSX, html etc
+StencilJS jas a bunch of documentation around integrating these types of components into most popular frameworks - including vanilla Javascript. You can read more about that here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview)

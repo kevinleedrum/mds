@@ -32139,7 +32139,7 @@ video {
     }
 
 /***************************
-* Custom CSS
+* CSS Variables
 ***************************/
 
 * {
@@ -32149,6 +32149,10 @@ video {
   --primary-bg-text-color: #fff;
   --secondary-bg-color: #ea580c;
 }
+
+/***************************
+* Custom CSS
+***************************/
 
 .mds * {
     font-family: 'Open Sans', sans-serif;
