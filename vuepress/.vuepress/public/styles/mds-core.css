@@ -32151,6 +32151,28 @@ video {
       font-size: 16px;
     }
 
+.mx-button button.action, .mx-button a.action {
+      padding: 8px 16px;
+      background: #ffffff;
+      border: 1px solid #eaeaea;
+      box-sizing: border-box;
+      border-radius: 32px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+.mx-button button.action i, .mx-button a.action i {
+        margin-right: 8px;
+      }
+
+.mx-button button.action:focus, .mx-button a.action:focus {
+        background: #dcdcdc;
+      }
+
+.mx-button button.action:hover, .mx-button a.action:hover {
+        background: #f0f0f0;
+      }
+
 /***************************
 * CSS Variables
 ***************************/

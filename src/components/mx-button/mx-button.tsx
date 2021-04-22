@@ -15,6 +15,7 @@ export class MxInput {
   @Prop() href: string;
   @Prop() target: string;
   @Prop() full: boolean = false;
+  @Prop() iconLeft: string;
 
   ripple(e) {
     const elem = this.href ? this.anchorElem : this.btnElem;
@@ -64,7 +65,10 @@ export class MxInput {
               this.ripple(e);
             }}
           >
-            {this.value}
+            <div class="flex justify-center items-center content-center">
+              {this.iconLeft && <i class={this.iconLeft}></i>}
+              {this.value}
+            </div>
           </a>
         ) : (
           <button
@@ -75,7 +79,10 @@ export class MxInput {
             }}
             disabled={this.disabled}
           >
-            {this.value}
+            <div class="flex justify-center items-center content-center">
+              {this.iconLeft && <i class={this.iconLeft}></i>}
+              {this.value}
+            </div>
           </button>
         )}
       </Host>

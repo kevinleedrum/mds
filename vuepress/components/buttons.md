@@ -59,3 +59,12 @@
 </section>
 
 ## Action Buttons
+
+<section class="mds">
+  <div class="my-5">
+    <mx-button value="button" type="action" />
+  </div>
+  <div class="my-5">
+    <mx-button value="button with icon" type="action" icon-left="ph-apple-logo" />
+  </div>
+</section>

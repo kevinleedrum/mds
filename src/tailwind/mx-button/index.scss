@@ -87,5 +87,27 @@
       padding: 16px 32px;
       font-size: 16px;
     }
+
+    &.action {
+      padding: 8px 16px;
+      background: #ffffff;
+      border: 1px solid #eaeaea;
+      box-sizing: border-box;
+      border-radius: 32px;
+      font-size: 14px;
+      line-height: 20px;
+
+      i {
+        margin-right: 8px;
+      }
+
+      &:focus {
+        background: #dcdcdc;
+      }
+
+      &:hover {
+        background: #f0f0f0;
+      }
+    }
   }
 }

@@ -10,6 +10,7 @@ export namespace Components {
         "disabled": boolean;
         "full": boolean;
         "href": string;
+        "iconLeft": string;
         "target": string;
         "type": string;
         "value": string;
@@ -56,6 +57,7 @@ declare namespace LocalJSX {
         "disabled"?: boolean;
         "full"?: boolean;
         "href"?: string;
+        "iconLeft"?: string;
         "target"?: string;
         "type"?: string;
         "value"?: string;

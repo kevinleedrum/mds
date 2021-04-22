@@ -8,6 +8,7 @@ export declare class MxInput {
   href: string;
   target: string;
   full: boolean;
+  iconLeft: string;
   ripple(e: any): void;
   returnBaseClass(): string;
   render(): any;

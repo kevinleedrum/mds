@@ -39,9 +39,9 @@ const MxInput = class {
   render() {
     return (h(Host, { class: "mx-button" }, this.href ? (h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: e => {
         this.ripple(e);
-      } }, this.value)) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: e => {
+      } }, h("div", { class: "flex justify-center items-center content-center" }, this.iconLeft && h("i", { class: this.iconLeft }), this.value))) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: e => {
         this.ripple(e);
-      }, disabled: this.disabled }, this.value))));
+      }, disabled: this.disabled }, h("div", { class: "flex justify-center items-center content-center" }, this.iconLeft && h("i", { class: this.iconLeft }), this.value)))));
   }
 };
 
