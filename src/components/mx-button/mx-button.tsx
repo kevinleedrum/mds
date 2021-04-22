@@ -17,6 +17,8 @@ export class MxInput {
   @Prop() full: boolean = false;
 
   ripple(e) {
+    const elem = this.href ? this.anchorElem : this.btnElem;
+
     // Create span element
     let ripple = document.createElement('span');
 
@@ -24,7 +26,7 @@ export class MxInput {
     ripple.classList.add('ripple');
 
     // Add span to the button
-    this.btnElem.appendChild(ripple);
+    elem.appendChild(ripple);
 
     // Get position of X
     let x = e.clientX - e.target.offsetLeft;

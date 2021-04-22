@@ -1,6 +1,4 @@
 .mx-button {
-  position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -10,9 +8,12 @@
 
   button,
   a {
-    &.btn {
-      text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    cursor: pointer;
 
+    &.btn {
       span {
         position: absolute;
         border-radius: 50%;

@@ -1,7 +1,9 @@
 # Buttons
 
+## Standard Buttons
+
 <section class="mds">
-  <div class="flex flex-row flex-nowrap justify-between">
+  <div class="flex flex-row flex-nowrap justify-between mt-10">
     <div style="width: 47%;">
       <strong>Contained</strong>
       <div class="my-5">
@@ -40,6 +42,7 @@
     </div>
   </div>
   <div>
+    <strong>Full</strong>
     <div class="my-5">
       <mx-button value="button" full />
     </div>
@@ -54,3 +57,5 @@
     </div>
   </div>
 </section>
+
+## Action Buttons

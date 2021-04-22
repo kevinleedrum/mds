@@ -44,7 +44,7 @@ The TailwindCSS code is located under `src/tailwind`. The configuration file is 
 
 You can read more about [TailwindCSS here](http://tailwindcss.com/).
 
-#### :rotating_light: IMPORTANT :rotating_light:
+#### IMPORTANT :rotating_light: :rotating_light: :rotating_light:
 
 We are not using the Shadow DOM for the Stencil components and are not using the CSS paradigm they provide. The reason is that the CSS for this project needs to also support Ruby based `view components`. You can read more about them here: [https://viewcomponent.org/](https://viewcomponent.org/).
 

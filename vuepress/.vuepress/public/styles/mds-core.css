@@ -32049,8 +32049,6 @@ video {
   }
 
 .mx-button {
-  position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -32059,9 +32057,13 @@ video {
   align-content: center;
 }
 
-.mx-button button.btn, .mx-button a.btn {
-      text-transform: uppercase;
-    }
+.mx-button button,
+  .mx-button a {
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
 
 .mx-button button.btn span, .mx-button a.btn span {
         position: absolute;
