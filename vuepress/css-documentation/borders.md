@@ -1,4 +1,4 @@
-# Backgrounds
+# Borders
 
 Visit [https://tailwindcss.com/docs/border-radius](https://tailwindcss.com/docs/border-radius) for more information.
 
