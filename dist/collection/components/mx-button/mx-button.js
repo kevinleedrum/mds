@@ -6,7 +6,7 @@ export class MxInput {
     this.xl = false;
     this.full = false;
   }
-  ripple(e) {
+  ripple() {
     const elem = this.href ? this.anchorElem : this.btnElem;
     // Create span element
     let ripple = document.createElement('span');
@@ -14,13 +14,9 @@ export class MxInput {
     ripple.classList.add('ripple');
     // Add span to the button
     elem.appendChild(ripple);
-    // Get position of X
-    let x = e.clientX - e.target.offsetLeft;
-    // Get position of Y
-    let y = e.clientY - e.target.offsetTop;
     // Position the span element
-    ripple.style.left = `${x}px`;
-    ripple.style.top = `${y}px`;
+    ripple.style.left = '0';
+    ripple.style.top = '0';
     // Remove span after 0.3s
     setTimeout(() => {
       ripple.remove();
@@ -35,15 +31,19 @@ export class MxInput {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-button" }, this.href ? (h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: e => {
-        this.ripple(e);
+    return (h(Host, { class: "mx-button" }, this.href ? (h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: () => {
+        this.ripple();
       } },
-      h("div", { class: "flex justify-center items-center content-center" },
+      h("div", { class: "flex justify-center items-center content-center", onClick: () => {
+          this.ripple();
+        } },
         this.iconLeft && h("i", { class: this.iconLeft }),
-        this.value))) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: e => {
-        this.ripple(e);
+        this.value))) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: () => {
+        this.ripple();
       }, disabled: this.disabled },
-      h("div", { class: "flex justify-center items-center content-center" },
+      h("div", { class: "flex justify-center items-center content-center relative", onClick: () => {
+          this.ripple();
+        } },
         this.iconLeft && h("i", { class: this.iconLeft }),
         this.value)))));
   }
