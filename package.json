@@ -44,8 +44,7 @@
     "stencil:test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "copy": "sh copy-on-change.sh",
-    "watch": "npm-watch",
-    "push:build": "git push origin main && git push --tags && npm publish --access=public"
+    "watch": "npm-watch"
   },
   "dependencies": {
     "@stencil/core": "^2.0.1",
