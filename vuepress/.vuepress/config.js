@@ -121,6 +121,8 @@ module.exports = {
           ],
         },
         'typography',
+        'borders',
+        'effects',
       ],
       '/components/': ['inputs', 'buttons'],
     },
