@@ -105,6 +105,10 @@ module.exports = {
             'box-alignment/place-self',
           ],
         },
+        {
+          title: 'Spacing',
+          children: ['spacing/padding', 'spacing/margin', 'spacing/space'],
+        },
       ],
       '/components/': ['inputs', 'buttons'],
     },
