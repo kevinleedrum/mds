@@ -9,6 +9,9 @@ module.exports = {
         transparent: 'transparent',
         current: 'currentColor',
       },
+      container: {
+        center: true,
+      },
       screens: {
         'sm': '640px',
         // => @media (min-width: 640px) { ... }
