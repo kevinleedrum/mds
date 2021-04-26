@@ -109,6 +109,18 @@ module.exports = {
           title: 'Spacing',
           children: ['spacing/padding', 'spacing/margin', 'spacing/space'],
         },
+        {
+          title: 'Sizing',
+          children: [
+            'sizing/width',
+            'sizing/min-width',
+            'sizing/max-width',
+            'sizing/height',
+            'sizing/min-height',
+            'sizing/max-height',
+          ],
+        },
+        'typography',
       ],
       '/components/': ['inputs', 'buttons'],
     },
