@@ -17,7 +17,7 @@ export class MxInput {
   @Prop() full: boolean = false;
   @Prop() iconLeft: string;
 
-  ripple(e) {
+  ripple() {
     const elem = this.href ? this.anchorElem : this.btnElem;
 
     // Create span element
@@ -29,15 +29,9 @@ export class MxInput {
     // Add span to the button
     elem.appendChild(ripple);
 
-    // Get position of X
-    let x = e.clientX - e.target.offsetLeft;
-
-    // Get position of Y
-    let y = e.clientY - e.target.offsetTop;
-
     // Position the span element
-    ripple.style.left = `${x}px`;
-    ripple.style.top = `${y}px`;
+    ripple.style.left = '0';
+    ripple.style.top = '0';
 
     // Remove span after 0.3s
     setTimeout(() => {
@@ -61,11 +55,16 @@ export class MxInput {
             target={this.target}
             class={this.returnBaseClass()}
             ref={el => (this.anchorElem = el as HTMLAnchorElement)}
-            onClick={e => {
-              this.ripple(e);
+            onClick={() => {
+              this.ripple();
             }}
           >
-            <div class="flex justify-center items-center content-center">
+            <div
+              class="flex justify-center items-center content-center"
+              onClick={() => {
+                this.ripple();
+              }}
+            >
               {this.iconLeft && <i class={this.iconLeft}></i>}
               {this.value}
             </div>
@@ -74,12 +73,17 @@ export class MxInput {
           <button
             class={this.returnBaseClass()}
             ref={el => (this.btnElem = el as HTMLButtonElement)}
-            onClick={e => {
-              this.ripple(e);
+            onClick={() => {
+              this.ripple();
             }}
             disabled={this.disabled}
           >
-            <div class="flex justify-center items-center content-center">
+            <div
+              class="flex justify-center items-center content-center relative"
+              onClick={() => {
+                this.ripple();
+              }}
+            >
               {this.iconLeft && <i class={this.iconLeft}></i>}
               {this.value}
             </div>

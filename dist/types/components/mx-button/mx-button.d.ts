@@ -9,7 +9,7 @@ export declare class MxInput {
   target: string;
   full: boolean;
   iconLeft: string;
-  ripple(e: any): void;
+  ripple(): void;
   returnBaseClass(): string;
   render(): any;
 }
