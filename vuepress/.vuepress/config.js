@@ -123,6 +123,7 @@ module.exports = {
         'typography',
         'borders',
         'effects',
+        'filters',
       ],
       '/components/': ['inputs', 'buttons'],
     },
