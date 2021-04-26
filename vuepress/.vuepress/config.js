@@ -40,35 +40,30 @@ module.exports = {
       },
     ],
     sidebar: {
-      '/css-documentation/': ['typography'],
+      '/css-documentation/': [
+        'responsive-design',
+        'hover-focus-states',
+        'container',
+        'display',
+        'float',
+        'clear',
+        'object-fit',
+        'object-position',
+        'overflow',
+        'overscroll-behavior',
+        'top-right-bottom-left',
+        'visibility',
+        'z-index',
+        'flex-direction',
+        'flex-wrap',
+        'flex',
+        'flex-grow',
+        'flex-shrink',
+        'order',
+        'typography',
+      ],
       '/components/': ['inputs', 'buttons'],
     },
   },
-  plugins: [
-    [
-      'flexsearch',
-      {
-        /*
-        Plugin custom options
-      */
-        maxSuggestions: 10, // how many search suggestions to show on the menu, the default is 10.
-        searchPaths: ['path1', 'path2'], // an array of paths to search in, keep it null to search all docs.
-        searchHotkeys: ['s'], // Hot keys to activate the search input, the default is "s" but you can add more.
-        searchResultLength: 60, // the length of the suggestion result text by characters, the default is 60 characters.
-        /*
-        Default FlexSearch options
-        To override the default options you can see available options at https://github.com/nextapps-de/flexsearch
-      */
-        search_options: {
-          encode: 'icase',
-          tokenize: 'forward',
-          resolution: 9,
-          doc: {
-            id: 'key',
-            field: ['title', 'content', 'headers'],
-          },
-        },
-      },
-    ],
-  ],
+  plugins: [['fulltext-search']],
 };
