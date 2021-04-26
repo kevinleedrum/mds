@@ -1,4 +1,9 @@
 /***************************
+* CSS Variables
+***************************/
+@import './variables/index.scss';
+
+/***************************
 * Import Font
 ***************************/
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
@@ -15,17 +20,6 @@
 ***************************/
 @import './mx-input/index.scss';
 @import './mx-button/index.scss';
-
-/***************************
-* CSS Variables
-***************************/
-* {
-  --text-dark: #111827;
-  --text-light: #fff;
-  --primary-bg-color: #0457af;
-  --primary-bg-text-color: #fff;
-  --secondary-bg-color: #ea580c;
-}
 
 /***************************
 * Custom CSS
