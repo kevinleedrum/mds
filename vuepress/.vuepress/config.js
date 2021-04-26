@@ -40,7 +40,7 @@ module.exports = {
       },
     ],
     sidebar: {
-      '/css-documentation/': ['typography'],
+      '/css-documentation/': ['responsive-design', 'hover-focus-states', 'typography'],
       '/components/': ['inputs', 'buttons'],
     },
   },
