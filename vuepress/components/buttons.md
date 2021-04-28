@@ -34,7 +34,7 @@
         <mx-button value="XL outlined button" type="outlined" xl />
       </div>
       <div class="my-5">
-        <mx-button value="XL Disabled outlined button" type="outlined" disabled xl />
+        <mx-button value="XL outlined Disabled" type="outlined" disabled xl />
       </div>
       <div class="my-5">
         <mx-button value="Button as Link" type="outlined" href="https://google.com" target="_blank" />
