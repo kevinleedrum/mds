@@ -26,7 +26,3 @@ applyPolyfills().then(() => {
 That's it. Once you've executed the loader, Stencil will intelligently "tree shake" the neccessary components by only adding tags you use.
 
 For more information around including StencilJS components into specific frame works visit [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview)
-
-<div class="mds">
-  <div class="rounded p-10 bg-lbp text-dtp">yo</div>
-</div>
