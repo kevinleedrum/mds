@@ -75,7 +75,7 @@ Heading examples for the Moxi Design System.
 
 </div>
 
-## Body Fonts
+## Body Fonts & Font Size
 
 In the moxi design system, the default body font size is 16px. To achieve the base font simply add the `mds` class to your body tag or a containing div you desire the implementation.
 
