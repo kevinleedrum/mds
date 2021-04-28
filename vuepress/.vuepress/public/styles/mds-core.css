@@ -4,11 +4,12 @@
 * CSS Variables
 ***************************/
 * {
-  --text-dark: #111827;
-  --text-light: #fff;
-  --primary-bg-color: #0457af;
-  --primary-bg-text-color: #fff;
-  --secondary-bg-color: #ea580c;
+  --mds-dark-txt-primary: #111827;
+  --mds-light-txt-primary: #fff;
+  --mds-dark-bg-primary: #0457af;
+  --mds-light-bg-primary: #e1f5ff;
+  --mds-dark-bg-secondary: #00696b;
+  --mds-light-bg-secondary: ##edfffc;
 }
 /***************************
 * Import Font
@@ -8761,7 +8762,7 @@ video {
 }
 .mds .text-sm{
   font-size: 0.875rem;
-  line-height: 20px;
+  line-height: 1.25rem;
 }
 .mds .text-xs{
   font-size: 0.75rem;
@@ -8769,15 +8770,15 @@ video {
 }
 .mds .text-base{
   font-size: 1rem;
-  line-height: 24px;
+  line-height: 1.5rem;
 }
 .mds .text-lg{
   font-size: 1.125rem;
-  line-height: 24px;
+  line-height: 1.5rem;
 }
 .mds .text-xl{
   font-size: 1.25rem;
-  line-height: 24px;
+  line-height: 1.5rem;
 }
 .mds .font-semibold{
   font-weight: 600;
@@ -10892,63 +10893,64 @@ video {
     font-size: 6rem;
     letter-spacing: -1.5px;
     font-weight: bold;
-    line-height: 120px;
+    line-height: 7.5rem;
   }
 .mds h1 {
     font-size: 3.75rem;
     letter-spacing: -0.5px;
     font-weight: bold;
-    line-height: 72px;
+    line-height: 4.5rem;
   }
 .mds h2 {
     font-size: 3rem;
     line-height: 64px;
     font-weight: 600;
+    line-height: 4rem;
   }
 .mds h3.emphasis {
     font-size: 2.5rem;
     letter-spacing: 0.25px;
-    line-height: 56px;
+    line-height: 3.5rem;
     font-weight: bold;
   }
 .mds h3 {
     font-size: 2.5rem;
     letter-spacing: 0.25px;
-    line-height: 56px;
+    line-height: 3.5rem;
     font-weight: normal;
   }
 .mds h4.emphasis {
     font-size: 2.25rem;
     letter-spacing: 0.25px;
-    line-height: 56px;
+    line-height: 3.5rem;
     font-weight: 600;
   }
 .mds h4 {
     font-size: 2.25rem;
     letter-spacing: 0.25px;
-    line-height: 56px;
+    line-height: 3.5rem;
     font-weight: normal;
   }
 .mds h5.emphasis {
     font-size: 1.5rem;
-    line-height: 40px;
+    line-height: 2.5rem;
     font-weight: 800;
   }
 .mds h5 {
     font-size: 1.5rem;
-    line-height: 40px;
+    line-height: 2.5rem;
     font-weight: normal;
   }
 .mds h6.emphasis {
     font-size: 1.125rem;
     letter-spacing: 0.25px;
-    line-height: 24px;
+    line-height: 1.5rem;
     font-weight: bold;
   }
 .mds h6 {
     font-size: 1.125rem;
     letter-spacing: 0.25px;
-    line-height: 24px;
+    line-height: 1.5rem;
     font-weight: normal;
   }
 .mds .first\:rotate-45:first-child{

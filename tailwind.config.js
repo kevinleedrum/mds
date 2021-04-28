@@ -6,8 +6,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        transparent: 'transparent',
-        current: 'currentColor',
+        dtp: 'var(--mds-dark-txt-primary)', // Dark text primary
+        ltp: 'var(--mds-light-txt-primary)', // Light text primary
+        dbp: 'var(--mds-dark-bg-primary)', // Dark background primary
+        lbp: 'var(--mds-light-bg-primary)', // Light background primary
       },
       container: {
         center: true,
@@ -30,10 +32,10 @@ module.exports = {
       },
       fontSize: {
         // Font size and line-height
-        sm: ['0.875rem', '20px'], // 14px
-        base: ['1rem', '24px'], // 16px
-        lg: ['1.125rem', '24px'], // 18px
-        xl: ['1.25rem', '24px'], // 20px
+        sm: ['0.875rem', '1.25rem'], // 14px / 20px
+        base: ['1rem', '1.5rem'], // 16px / 24px
+        lg: ['1.125rem', '1.5rem'], // 18px / 24px
+        xl: ['1.25rem', '1.5rem'], // 20px / 24px
       },
     },
   },

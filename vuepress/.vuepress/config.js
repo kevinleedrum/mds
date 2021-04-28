@@ -15,7 +15,7 @@ module.exports = {
     ['script', { nomodule: '', src: '/components/mds-components.js' }],
     ['script', { src: '/fixProdInitialLoad.js' }],
   ],
-  theme: 'yuu',
+  // theme: 'yuu',
   markdown: {
     lineNumbers: true,
   },
