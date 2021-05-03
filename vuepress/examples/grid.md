@@ -1,6 +1,6 @@
 # Grid System
 
-Example of how the grid system works. The examples use rows, but they coould just as easily be interchanged or mixed with `.grid-rows-{n}`.
+Example of how the grid system works. The examples use rows, but they coould just as easily be interchanged or mixed with `.grid-rows-{n}`. For more information on rows and columns, visit [the grid definition](/css-documentation/grid/grid-template-columns.html).
 
 <div class="mds">
   <div class="container">
@@ -37,7 +37,7 @@ Example of how the grid system works. The examples use rows, but they coould jus
   </div>
 </div>
 
-Below is the code example of the above non-responsive grid above. For more information on rows and columns, visit [the grid definition](/grid/grid-template-columns.html).
+Below is the code example of the above non-responsive grid above.
 
 ```html
 <div class="grid grid-flow-row grid-cols-3 gap-4">
