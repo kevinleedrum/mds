@@ -7721,6 +7721,7 @@ video {
 }
 .mds .bg-primary-bg-dark{
   background-color: var(--mds-primary-bg-dark);
+  background-color: var(--mds-primary-bg-dark);
 }
 .mds .bg-opacity-0{
   --tw-bg-opacity: 0;
@@ -9029,6 +9030,12 @@ video {
 .mds .text-gray-800{
   --tw-text-opacity: 1;
   color: rgba(31, 41, 55, var(--tw-text-opacity));
+}
+.mds .text-primary-text-light{
+  color: var(--mds-primary-bg-light);
+}
+.mds .text-primary-text-dark{
+  color: var(--mds-primary-text-dark);
 }
 .mds .text-primary-text-light{
   color: var(--mds-primary-bg-light);

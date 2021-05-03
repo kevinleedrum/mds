@@ -35,11 +35,16 @@ module.exports = {
         link: '/css-documentation/',
       },
       {
+        text: 'Examples',
+        link: '/examples/',
+      },
+      {
         text: 'Components',
         link: '/components/',
       },
     ],
     sidebar: {
+      '/examples/': ['grid'],
       '/css-documentation/': [
         {
           title: 'Layout',
@@ -113,6 +118,7 @@ module.exports = {
             'sizing/max-height',
           ],
         },
+        'colors',
         'typography',
         'backgrounds',
         'borders',
