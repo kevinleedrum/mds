@@ -44,15 +44,16 @@
     }
 
     &.contained {
-      background-color: var(--primary-bg-color);
-      color: var(--primary-bg-text-color);
+      background-color: var(--mds-primary-bg-dark);
+      color: var(--mds-primary-text-light);
       font-size: 14px;
       border-radius: 8px;
       padding: 10px 16px;
       font-weight: 600;
 
       &:hover {
-        background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), var(--primary-bg-color);
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)),
+          var(--mds-primary-bg-dark);
         text-decoration: none !important;
       }
 

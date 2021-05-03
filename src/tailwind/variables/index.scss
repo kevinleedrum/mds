@@ -1,8 +1,12 @@
 * {
-  --mds-dark-txt-primary: #111827;
-  --mds-light-txt-primary: #fff;
-  --mds-dark-bg-primary: #0457af;
-  --mds-light-bg-primary: #e1f5ff;
-  --mds-dark-bg-secondary: #00696b;
-  --mds-light-bg-secondary: ##edfffc;
+  --mds-primary-bg-dark: #0457af;
+  --mds-primary-bg-light: #e1f5ff;
+  --mds-secondary-bg-dark: #00696b;
+  --mds-secondary-bg-light: #edfffc;
+
+  --mds-gray-bg-dark: #e8e8e8;
+  --mds-gray-bg-light: #fafafa;
+
+  --mds-primary-text-dark: #111827;
+  --mds-primary-text-light: #fff;
 }
