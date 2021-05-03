@@ -44,7 +44,7 @@ module.exports = {
       },
     ],
     sidebar: {
-      '/examples/': ['grid'],
+      '/examples/': ['grid', 'flex'],
       '/css-documentation/': [
         {
           title: 'Layout',
