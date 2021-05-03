@@ -42,16 +42,9 @@ module.exports = {
     sidebar: {
       '/css-documentation/': [
         {
-          title: 'Core Concepts',
-          children: [
-            'core-concepts/utility-first',
-            'core-concepts/responsive-design',
-            'core-concepts/hover-focus-states',
-          ],
-        },
-        {
           title: 'Layout',
           children: [
+            'layout/responsive-design',
             'layout/container',
             'layout/box-sizing',
             'layout/display',

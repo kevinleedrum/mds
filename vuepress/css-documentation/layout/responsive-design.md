@@ -21,64 +21,6 @@ To add a utility but only have it take effect at a certain breakpoint, all you n
 
 This works for **every utility class in the framework**, which means you can change literally anything at a given breakpoint — even things like letter spacing or cursor styles.
 
-Here's a simple example of a marketing page component that uses a stacked layout on small screens, and a side-by-side layout on larger screens _(resize your browser to see it in action)_:
-
-```html indigo
-<template preview class="px-6 py-8">
-  <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-    <div class="md:flex">
-      <div class="md:flex-shrink-0">
-        <img
-          class="h-48 w-full object-cover md:w-48"
-          src="https://images.unsplash.com/photo-1515711660811-48832a4c6f69?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80"
-          width="448"
-          height="299"
-          alt="Man looking at item at a store"
-        />
-      </div>
-      <div class="p-8">
-        <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Case study</div>
-        <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline"
-          >Finding customers for your new business</a
-        >
-        <p class="mt-2 text-gray-500">
-          Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your
-          first customers.
-        </p>
-      </div>
-    </div>
-  </div>
-</template>
-
-<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden **md:max-w-2xl**">
-  <div class="**md:flex**">
-    <div class="**md:flex-shrink-0**">
-      <img class="h-48 w-full object-cover **md:w-48**" src="/img/store.jpg" alt="Man looking at item at a store" />
-    </div>
-    <div class="p-8">
-      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Case study</div>
-      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline"
-        >Finding customers for your new business</a
-      >
-      <p class="mt-2 text-gray-500">
-        Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first
-        customers.
-      </p>
-    </div>
-  </div>
-</div>
-```
-
-Here's how the example above works:
-
-- By default, the outer `div` is `display: block`, but by adding the `md:flex` utility, it becomes `display: flex` on medium screens and larger.
-- When the parent is a flex container, we want to make sure the image never shrinks, so we've added `md:flex-shrink-0` to prevent shrinking on medium screens and larger. Technically we could have just used `flex-shrink-0` since it would do nothing on smaller screens, but since it only matters on `md` screens, it's a good idea to make that clear in the class name.
-- On small screens the image is automatically full width by default. On medium screens and up, we've constrained that width to a fixed size using `md:w-48`.
-
-We've only used one breakpoint in this example, but you could easily customize this component at other sizes using the `sm`, `lg`, or `xl` responsive prefixes as well.
-
----
-
 ## Mobile First
 
 By default, Tailwind uses a mobile first breakpoint system, similar to what you might be used to in other frameworks like Bootstrap.
