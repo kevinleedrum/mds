@@ -4,12 +4,16 @@
 * CSS Variables
 ***************************/
 * {
-  --mds-dark-txt-primary: #111827;
-  --mds-light-txt-primary: #fff;
-  --mds-dark-bg-primary: #0457af;
-  --mds-light-bg-primary: #e1f5ff;
-  --mds-dark-bg-secondary: #00696b;
-  --mds-light-bg-secondary: ##edfffc;
+  --mds-primary-bg-dark: #0457af;
+  --mds-primary-bg-light: #e1f5ff;
+  --mds-secondary-bg-dark: #00696b;
+  --mds-secondary-bg-light: #edfffc;
+
+  --mds-gray-bg-dark: #e8e8e8;
+  --mds-gray-bg-light: #fafafa;
+
+  --mds-primary-text-dark: #111827;
+  --mds-primary-text-light: #fff;
 }
 /***************************
 * Import Font
@@ -7683,6 +7687,12 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
 }
+.mds .bg-dbp{
+  background-color: var(--mds-dark-bg-primary);
+}
+.mds .bg-lbp{
+  background-color: var(--mds-light-bg-primary);
+}
 .mds .bg-purple-600{
   --tw-bg-opacity: 1;
   background-color: rgba(124, 58, 237, var(--tw-bg-opacity));
@@ -7714,15 +7724,6 @@ video {
 .mds .bg-indigo-300{
   --tw-bg-opacity: 1;
   background-color: rgba(165, 180, 252, var(--tw-bg-opacity));
-}
-.mds .bg-lbp{
-  background-color: var(--mds-light-bg-primary);
-}
-.mds .bg-dbp{
-  background-color: var(--mds-dark-bg-primary);
-}
-.mds .bg-lbp{
-  background-color: var(--mds-light-bg-primary);
 }
 .mds .bg-opacity-0{
   --tw-bg-opacity: 0;
@@ -8985,6 +8986,12 @@ video {
   --tw-text-opacity: 1;
   color: rgba(196, 181, 253, var(--tw-text-opacity));
 }
+.mds .text-dtp{
+  color: var(--mds-dark-txt-primary);
+}
+.mds .text-ltp{
+  color: var(--mds-light-txt-primary);
+}
 .mds .text-gray-500{
   --tw-text-opacity: 1;
   color: rgba(107, 114, 128, var(--tw-text-opacity));
@@ -9028,14 +9035,6 @@ video {
 .mds .text-gray-800{
   --tw-text-opacity: 1;
   color: rgba(31, 41, 55, var(--tw-text-opacity));
-}
-.mds .text-dtp{
-  color: var(--mds-dark-txt-primary);
-  color: var(--mds-dark-txt-primary);
-  color: var(--mds-dark-txt-primary);
-}
-.mds .text-ltp{
-  color: var(--mds-light-txt-primary);
 }
 .mds .text-opacity-0{
   --tw-text-opacity: 0;
@@ -10822,15 +10821,16 @@ video {
       width: 100%;
     }
 .mx-button button.contained, .mx-button a.contained {
-      background-color: var(--primary-bg-color);
-      color: var(--primary-bg-text-color);
+      background-color: var(--mds-primary-bg-dark);
+      color: var(--mds-primary-text-light);
       font-size: 14px;
       border-radius: 8px;
       padding: 10px 16px;
       font-weight: 600;
     }
 .mx-button button.contained:hover, .mx-button a.contained:hover {
-        background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), var(--primary-bg-color);
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)),
+          var(--mds-primary-bg-dark);
         text-decoration: none !important;
       }
 .mx-button button.contained:disabled, .mx-button a.contained:disabled {
