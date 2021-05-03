@@ -6,10 +6,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        dtp: 'var(--mds-dark-txt-primary)', // Dark text primary
-        ltp: 'var(--mds-light-txt-primary)', // Light text primary
-        dbp: 'var(--mds-dark-bg-primary)', // Dark background primary
-        lbp: 'var(--mds-light-bg-primary)', // Light background primary
+        'primary-text-dark': 'var(--mds-primary-text-dark)', // Dark text primary
+        'primary-text-light': 'var(--mds-primary-text-light)', // Light text primary
+        'primary-bg-dark': 'var(--mds-primary-bg-dark)', // Dark background primary
+        'primary-text-light': 'var(--mds-primary-bg-light)', // Light background primary
       },
       container: {
         center: true,
