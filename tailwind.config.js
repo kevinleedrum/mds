@@ -34,6 +34,8 @@ module.exports = {
       },
       fontSize: {
         // Font size and line-height
+        xxs: ['0.625rem', '1rem'], // 10px / 16px
+        xs: ['0.75rem', '1rem'], // 12px / 16px
         sm: ['0.875rem', '1.25rem'], // 14px / 20px
         base: ['1rem', '1.5rem'], // 16px / 24px
         lg: ['1.125rem', '1.5rem'], // 18px / 24px

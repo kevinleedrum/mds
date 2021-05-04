@@ -87,11 +87,12 @@ After the default body class font size, there are three other classes which can 
 
 | Class      | Description                 |
 | ---------- | --------------------------- |
+| .text-xxs  | 10px or 0.625rem font size  |
+| .text-xs   | 12px or 0.75rem font size.  |
 | .text-sm   | 14px or 0.875rem font size. |
 | .text-base | 16px or 1 rem font size.    |
 | .text-lg   | 18px or 1.125rem font size. |
 | .text-xl   | 24px or 1.25rem font size.  |
-| .text-dark | something                   |
 
 ## Font Smoothing
 
