@@ -2,4 +2,105 @@
 
 Visit [https://tailwindcss.com/docs/grid-template-columns](https://tailwindcss.com/docs/grid-template-columns) for more information.
 
-<table class="w-full text-left border-collapse"><thead><tr><th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0"><div class="pb-2 pr-2 border-b border-gray-200">Class</div></th><th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0"><div class="pb-2 pl-2 border-b border-gray-200">Properties</div></th></tr></thead><tbody class="align-baseline"><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">grid-cols-1</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">grid-template-columns: repeat(1, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-2</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(2, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-3</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(3, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-4</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(4, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-5</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(5, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-6</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(6, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-7</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(7, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-8</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(8, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-9</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(9, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-10</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(10, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-11</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(11, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-12</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: repeat(12, minmax(0, 1fr));</td></tr><tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">grid-cols-none</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">grid-template-columns: none;</td></tr></tbody></table>
+| Class          | Properties                                         |
+| -------------- | -------------------------------------------------- |
+| grid-cols-1    | grid-template-columns: repeat(1, minmax(0, 1fr));  |
+| grid-cols-2    | grid-template-columns: repeat(2, minmax(0, 1fr));  |
+| grid-cols-3    | grid-template-columns: repeat(3, minmax(0, 1fr));  |
+| grid-cols-4    | grid-template-columns: repeat(4, minmax(0, 1fr));  |
+| grid-cols-5    | grid-template-columns: repeat(5, minmax(0, 1fr));  |
+| grid-cols-6    | grid-template-columns: repeat(6, minmax(0, 1fr));  |
+| grid-cols-7    | grid-template-columns: repeat(7, minmax(0, 1fr));  |
+| grid-cols-8    | grid-template-columns: repeat(8, minmax(0, 1fr));  |
+| grid-cols-9    | grid-template-columns: repeat(9, minmax(0, 1fr));  |
+| grid-cols-10   | grid-template-columns: repeat(10, minmax(0, 1fr)); |
+| grid-cols-11   | grid-template-columns: repeat(11, minmax(0, 1fr)); |
+| grid-cols-12   | grid-template-columns: repeat(12, minmax(0, 1fr)); |
+| grid-cols-none | grid-template-columns: none;                       |
+
+## Responsive
+
+### Small Screen
+
+| Class           | Properties                                         |
+| --------------- | -------------------------------------------------- |
+| sm:grid-cols-1  | grid-template-columns: repeat(1, minmax(0, 1fr));  |
+| sm:grid-cols-2  | grid-template-columns: repeat(2, minmax(0, 1fr));  |
+| sm:grid-cols-3  | grid-template-columns: repeat(3, minmax(0, 1fr));  |
+| sm:grid-cols-4  | grid-template-columns: repeat(4, minmax(0, 1fr));  |
+| sm:grid-cols-5  | grid-template-columns: repeat(5, minmax(0, 1fr));  |
+| sm:grid-cols-6  | grid-template-columns: repeat(6, minmax(0, 1fr));  |
+| sm:grid-cols-7  | grid-template-columns: repeat(7, minmax(0, 1fr));  |
+| sm:grid-cols-8  | grid-template-columns: repeat(8, minmax(0, 1fr));  |
+| sm:grid-cols-9  | grid-template-columns: repeat(9, minmax(0, 1fr));  |
+| sm:grid-cols-10 | grid-template-columns: repeat(10, minmax(0, 1fr)); |
+| sm:grid-cols-11 | grid-template-columns: repeat(11, minmax(0, 1fr)); |
+| sm:grid-cols-12 | grid-template-columns: repeat(12, minmax(0, 1fr)); |
+
+### Medium Screeen
+
+| Class           | Properties                                         |
+| --------------- | -------------------------------------------------- |
+| md:grid-cols-1  | grid-template-columns: repeat(1, minmax(0, 1fr));  |
+| md:grid-cols-2  | grid-template-columns: repeat(2, minmax(0, 1fr));  |
+| md:grid-cols-3  | grid-template-columns: repeat(3, minmax(0, 1fr));  |
+| md:grid-cols-4  | grid-template-columns: repeat(4, minmax(0, 1fr));  |
+| md:grid-cols-5  | grid-template-columns: repeat(5, minmax(0, 1fr));  |
+| md:grid-cols-6  | grid-template-columns: repeat(6, minmax(0, 1fr));  |
+| md:grid-cols-7  | grid-template-columns: repeat(7, minmax(0, 1fr));  |
+| md:grid-cols-8  | grid-template-columns: repeat(8, minmax(0, 1fr));  |
+| md:grid-cols-9  | grid-template-columns: repeat(9, minmax(0, 1fr));  |
+| md:grid-cols-10 | grid-template-columns: repeat(10, minmax(0, 1fr)); |
+| md:grid-cols-11 | grid-template-columns: repeat(11, minmax(0, 1fr)); |
+| md:grid-cols-12 | grid-template-columns: repeat(12, minmax(0, 1fr)); |
+
+### Large Screeen
+
+| Class           | Properties                                         |
+| --------------- | -------------------------------------------------- |
+| lg:grid-cols-1  | grid-template-columns: repeat(1, minmax(0, 1fr));  |
+| lg:grid-cols-2  | grid-template-columns: repeat(2, minmax(0, 1fr));  |
+| lg:grid-cols-3  | grid-template-columns: repeat(3, minmax(0, 1fr));  |
+| lg:grid-cols-4  | grid-template-columns: repeat(4, minmax(0, 1fr));  |
+| lg:grid-cols-5  | grid-template-columns: repeat(5, minmax(0, 1fr));  |
+| lg:grid-cols-6  | grid-template-columns: repeat(6, minmax(0, 1fr));  |
+| lg:grid-cols-7  | grid-template-columns: repeat(7, minmax(0, 1fr));  |
+| lg:grid-cols-8  | grid-template-columns: repeat(8, minmax(0, 1fr));  |
+| lg:grid-cols-9  | grid-template-columns: repeat(9, minmax(0, 1fr));  |
+| lg:grid-cols-10 | grid-template-columns: repeat(10, minmax(0, 1fr)); |
+| lg:grid-cols-11 | grid-template-columns: repeat(11, minmax(0, 1fr)); |
+| lg:grid-cols-12 | grid-template-columns: repeat(12, minmax(0, 1fr)); |
+
+### XL Screeen
+
+| Class           | Properties                                         |
+| --------------- | -------------------------------------------------- |
+| xl:grid-cols-1  | grid-template-columns: repeat(1, minmax(0, 1fr));  |
+| xl:grid-cols-2  | grid-template-columns: repeat(2, minmax(0, 1fr));  |
+| xl:grid-cols-3  | grid-template-columns: repeat(3, minmax(0, 1fr));  |
+| xl:grid-cols-4  | grid-template-columns: repeat(4, minmax(0, 1fr));  |
+| xl:grid-cols-5  | grid-template-columns: repeat(5, minmax(0, 1fr));  |
+| xl:grid-cols-6  | grid-template-columns: repeat(6, minmax(0, 1fr));  |
+| xl:grid-cols-7  | grid-template-columns: repeat(7, minmax(0, 1fr));  |
+| xl:grid-cols-8  | grid-template-columns: repeat(8, minmax(0, 1fr));  |
+| xl:grid-cols-9  | grid-template-columns: repeat(9, minmax(0, 1fr));  |
+| xl:grid-cols-10 | grid-template-columns: repeat(10, minmax(0, 1fr)); |
+| xl:grid-cols-11 | grid-template-columns: repeat(11, minmax(0, 1fr)); |
+| xl:grid-cols-12 | grid-template-columns: repeat(12, minmax(0, 1fr)); |
+
+### 2XL Screeen
+
+| Class            | Properties                                         |
+| ---------------- | -------------------------------------------------- |
+| 2xl:grid-cols-1  | grid-template-columns: repeat(1, minmax(0, 1fr));  |
+| 2xl:grid-cols-2  | grid-template-columns: repeat(2, minmax(0, 1fr));  |
+| 2xl:grid-cols-3  | grid-template-columns: repeat(3, minmax(0, 1fr));  |
+| 2xl:grid-cols-4  | grid-template-columns: repeat(4, minmax(0, 1fr));  |
+| 2xl:grid-cols-5  | grid-template-columns: repeat(5, minmax(0, 1fr));  |
+| 2xl:grid-cols-6  | grid-template-columns: repeat(6, minmax(0, 1fr));  |
+| 2xl:grid-cols-7  | grid-template-columns: repeat(7, minmax(0, 1fr));  |
+| 2xl:grid-cols-8  | grid-template-columns: repeat(8, minmax(0, 1fr));  |
+| 2xl:grid-cols-9  | grid-template-columns: repeat(9, minmax(0, 1fr));  |
+| 2xl:grid-cols-10 | grid-template-columns: repeat(10, minmax(0, 1fr)); |
+| 2xl:grid-cols-11 | grid-template-columns: repeat(11, minmax(0, 1fr)); |
+| 2xl:grid-cols-12 | grid-template-columns: repeat(12, minmax(0, 1fr)); |

@@ -10,6 +10,8 @@ module.exports = {
         'primary-text-light': 'var(--mds-primary-text-light)', // Light text primary
         'primary-bg-dark': 'var(--mds-primary-bg-dark)', // Dark background primary
         'primary-text-light': 'var(--mds-primary-bg-light)', // Light background primary
+        'gray-bg-dark': 'var(--mds-gray-bg-dark)',
+        'gray-bg-light': 'var(--mds-gray-bg-light)',
       },
       container: {
         center: true,
