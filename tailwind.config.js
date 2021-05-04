@@ -43,6 +43,7 @@ module.exports = {
       },
       spacing: {
         '0': '0px',
+        '1': '1px',
         '2': '0.125rem',
         '4': '0.25rem',
         '6': '0.375rem',

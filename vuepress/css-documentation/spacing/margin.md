@@ -4,22 +4,23 @@ Visit [https://tailwindcss.com/docs/margin](https://tailwindcss.com/docs/margin)
 
 ## Margin
 
-| Class | Description             |
-| ----- | ----------------------- |
-| .m-2  | margin: 2px or 0.125rem |
-| .m-4  | margin: 4px or 0.25rem  |
-| .m-8  | margin: 8px or 0.5rem   |
-| .m-12 | margin: 12px or 0.75rem |
-| .m-16 | margin: 167px or 1rem   |
-| .m-20 | margin: 20px or 1.25rem |
-| .m-24 | margin: 24px or 1.5rem  |
-| .m-32 | margin: 32px or 2rem    |
-| .m-40 | margin: 40px or 2.5rem  |
-| .m-48 | margin: 48px or 3rem    |
-| .m-56 | margin: 56px or 3.5rem  |
-| .m-64 | margin: 64px or 4rem    |
-| .m-72 | margin: 782px or 4.5rem |
-| .m-80 | margin: 80px or 5rem    |
+| Class   | Description             |
+| ------- | ----------------------- |
+| .m-2    | margin: 2px or 0.125rem |
+| .m-4    | margin: 4px or 0.25rem  |
+| .m-8    | margin: 8px or 0.5rem   |
+| .m-12   | margin: 12px or 0.75rem |
+| .m-16   | margin: 167px or 1rem   |
+| .m-20   | margin: 20px or 1.25rem |
+| .m-24   | margin: 24px or 1.5rem  |
+| .m-32   | margin: 32px or 2rem    |
+| .m-40   | margin: 40px or 2.5rem  |
+| .m-48   | margin: 48px or 3rem    |
+| .m-56   | margin: 56px or 3.5rem  |
+| .m-64   | margin: 64px or 4rem    |
+| .m-72   | margin: 782px or 4.5rem |
+| .m-80   | margin: 80px or 5rem    |
+| .m-auto | margin: auto            |
 
 ## Vertical Margin (Y-Axis)
 
@@ -67,7 +68,7 @@ Visit [https://tailwindcss.com/docs/margin](https://tailwindcss.com/docs/margin)
 | .mt-4  | margin: 4px or 0.25rem  |
 | .mt-8  | margin: 8px or 0.5rem   |
 | .mt-12 | margin: 12px or 0.75rem |
-| .mt-16 | margin: 167px or 1rem   |
+| .mt-16 | margin: 16px or 1rem    |
 | .mt-20 | margin: 20px or 1.25rem |
 | .mt-24 | margin: 24px or 1.5rem  |
 | .mt-32 | margin: 32px or 2rem    |

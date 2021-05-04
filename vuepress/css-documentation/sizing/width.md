@@ -5,6 +5,7 @@ Visit [https://tailwindcss.com/docs/width](https://tailwindcss.com/docs/width) f
 | Class     | Properties          |
 | --------- | ------------------- |
 | .w-0      | width: 0px;         |
+| .w-1      | width: 1px;         |
 | .w-2      | width: 0.125rem;    |
 | .w-4      | width: 0.25rem;     |
 | .w-6      | width: 0.375rem;    |
@@ -40,7 +41,6 @@ Visit [https://tailwindcss.com/docs/width](https://tailwindcss.com/docs/width) f
 | .w-320    | width: 20rem;       |
 | .w-384    | width: 24rem;       |
 | .w-auto   | width: auto;        |
-| .w-px     | width: 1px;         |
 | .w-1/2    | width: 50%;         |
 | .w-1/3    | width: 33.333333%;  |
 | .w-2/3    | width: 66.666667%;  |
@@ -71,3 +71,17 @@ Visit [https://tailwindcss.com/docs/width](https://tailwindcss.com/docs/width) f
 | .w-screen | width: 100vw;       |
 | .w-min    | width: min-content; |
 | .w-max    | width: max-content; |
+
+## Examples
+
+<div class="mds">
+  <div class="w-9/12 bg-primary-bg-dark text-primary-text-light p-12 mt-16">
+    This div is set to 75% width.
+  </div>
+</div>
+
+```html
+<div class="w-9/12 bg-primary-bg-dark text-primary-text-light p-12 mt-16">
+  This div is set to 75% width.
+</div>
+```
