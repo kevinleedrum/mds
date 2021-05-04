@@ -28,7 +28,7 @@ Heading examples for the Moxi Design System.
   <h3 class="emphasis">This is an H3 with emphasis</h3>
 
 ```html
-<h3>This is an H3</h3>
+<h3 class="emphasis">This is an H3</h3>
 ```
 
   <h3>This is an H3</h3>
@@ -40,7 +40,7 @@ Heading examples for the Moxi Design System.
   <h4 class="emphasis">This is an H4 with emphasis</h4>
 
 ```html
-<h4>This is an H4</h4>
+<h4 class="emphasis">This is an H4</h4>
 ```
 
   <h4>This is an H4</h4>
@@ -52,7 +52,7 @@ Heading examples for the Moxi Design System.
   <h5 class="emphasis">This is an H5 with emphasis</h5>
 
 ```html
-<h5>This is an H5 with emphasis</h5>
+<h5 class="emphasis">This is an H5 with emphasis</h5>
 ```
 
   <h5>This is an H5</h5>
@@ -64,7 +64,7 @@ Heading examples for the Moxi Design System.
   <h6 class="emphasis">This is an H6 with emphasis</h6>
 
 ```html
-<h6>This is an H6</h6>
+<h6 class="emphasis">This is an H6</h6>
 ```
 
   <h6>This is an H6 Without Bold</h6>
@@ -87,11 +87,12 @@ After the default body class font size, there are three other classes which can 
 
 | Class      | Description                 |
 | ---------- | --------------------------- |
+| .text-xxs  | 10px or 0.625rem font size  |
+| .text-xs   | 12px or 0.75rem font size.  |
 | .text-sm   | 14px or 0.875rem font size. |
 | .text-base | 16px or 1 rem font size.    |
 | .text-lg   | 18px or 1.125rem font size. |
 | .text-xl   | 24px or 1.25rem font size.  |
-| .text-dark | something                   |
 
 ## Font Smoothing
 
