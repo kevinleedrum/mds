@@ -127,6 +127,7 @@ module.exports = {
         'colors',
         'typography',
         'backgrounds',
+        'elevations',
         'borders',
         'effects',
         'filters',
