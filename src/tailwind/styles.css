@@ -102,4 +102,40 @@
     line-height: 1.5rem;
     font-weight: normal;
   }
+
+  .subtitle1 {
+    @apply text-base tracking-0-5 leading-6 font-semibold;
+  }
+
+  .subtitle2 {
+    @apply text-sm tracking-0-4 leading-5 font-semibold;
+  }
+
+  .subtitle3 {
+    @apply text-sm tracking-0-5 leading-5 font-extrabold;
+  }
+
+  .subtitle4 {
+    @apply text-xs tracking-0-5 leading-4 font-semibold;
+  }
+
+  .subtitle5 {
+    @apply text-xxs tracking-0-5 leading-4 font-bold;
+  }
+
+  .caption1 {
+    @apply text-xs tracking-0-3 leading-4;
+  }
+
+  .caption2 {
+    @apply text-xxs tracking-0-3 leading-4;
+  }
+
+  .overline1 {
+    @apply text-lg tracking-1-5 leading-6 font-semibold uppercase;
+  }
+
+  .overline2 {
+    @apply text-xs tracking-1-5 leading-4 font-normal uppercase;
+  }
 }

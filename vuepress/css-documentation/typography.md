@@ -94,6 +94,80 @@ After the default body class font size, there are three other classes which can 
 | .text-lg   | 18px or 1.125rem font size. |
 | .text-xl   | 24px or 1.25rem font size.  |
 
+## Subtitles
+
+There are currently 5 subtitle variants available via special classes.
+
+| Class      | Description                                             |
+| ---------- | ------------------------------------------------------- |
+| .subtitle1 | 16px, SemiBold, 24px line-height, 0.15px letter spacing |
+| .subtitle2 | 14px, SemiBold, 20px line-height, 0.4px letter spacing  |
+| .subtitle3 | 14px, ExtraBold, 20px line-height, 0.4px letter spacing |
+| .subtitle4 | 12px, SemiBold, 16px line-height, 0.4px letter spacing  |
+| .subtitle5 | 10px, Bold, 16px line-height, 0.3px letter spacing      |
+
+### Examples
+
+<div class="mds">
+  <p class="my-6 subtitle1">Subtitle 1</p>
+  <p class="my-6 subtitle2">Subtitle 2</p>
+  <p class="my-6 subtitle3">Subtitle 3</p>
+  <p class="my-6 subtitle4">Subtitle 4</p>
+  <p class="my-6 subtitle5">Subtitle 5</p>
+</div>
+
+```html
+<div class="mds">
+  <p class="my-6 subtitle1">Subtitle 1</p>
+  <p class="my-6 subtitle2">Subtitle 2</p>
+  <p class="my-6 subtitle3">Subtitle 3</p>
+  <p class="my-6 subtitle4">Subtitle 4</p>
+  <p class="my-6 subtitle5">Subtitle 5</p>
+</div>
+```
+
+## Captions
+
+| Class     | Description                                  |
+| --------- | -------------------------------------------- |
+| .caption1 | 12px, 16px line-height, 0.3px letter spacing |
+| .caption2 | 14px, 16px line-height, 0.3px letter spacing |
+
+### Examples
+
+<div class="mds">
+  <p class="my-6 caption1">Caption 1</p>
+  <p class="my-6 caption2">Caption 2</p>
+</div>
+
+```html
+<div class="mds">
+  <p class="my-6 caption1">Caption 1</p>
+  <p class="my-6 caption2">Caption 2</p>
+</div>
+```
+
+## Overline
+
+| Class      | Description                                             |
+| ---------- | ------------------------------------------------------- |
+| .overline1 | 18px, 24px line-height, 1.5px letter spacing, uppercase |
+| .overline2 | 12px, 16px line-height, 1.5px letter spacing, uppercase |
+
+### Examples
+
+<div class="mds">
+  <p class="my-6 overline1">Overline 1</p>
+  <p class="my-6 overline2">Overline 2</p>
+</div>
+
+```html
+<div class="mds">
+  <p class="my-6 caption1">Caption 1</p>
+  <p class="my-6 caption2">Caption 2</p>
+</div>
+```
+
 ## Font Style
 
 | Class      | Properties          |
@@ -144,10 +218,6 @@ After the default body class font size, there are three other classes which can 
 | tracking-0-5     | 0.031rem   |
 | tracking-1-25    | 0.078rem   |
 | tracking-1-5     | 0.094rem   |
-
-<div class="mds">
-  <p class="tracking-1-5">Hello</p>
-</div>
 
 ## Line Height
 
@@ -265,3 +335,7 @@ After the default body class font size, there are three other classes which can 
 | break-normal | overflow-wrap: normal; word-break: normal; |
 | break-words  | overflow-wrap: break-word;                 |
 | break-all    | word-break: break-all;                     |
+
+```
+
+```

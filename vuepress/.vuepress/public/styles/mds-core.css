@@ -3092,6 +3092,10 @@ video {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
 }
+.mds .my-6{
+  margin-top: 0.375rem;
+  margin-bottom: 0.375rem;
+}
 .mds .my-10{
   margin-top: 0.625rem;
   margin-bottom: 0.625rem;
@@ -4084,21 +4088,6 @@ video {
 }
 .mds .list-outside{
   list-style-position: outside;
-}
-.mds .list-inside{
-  list-style-position: inside;
-}
-.mds .list-outside{
-  list-style-position: outside;
-}
-.mds .list-none{
-  list-style-type: none;
-}
-.mds .list-disc{
-  list-style-type: disc;
-}
-.mds .list-decimal{
-  list-style-type: decimal;
 }
 .mds .list-none{
   list-style-type: none;
@@ -5947,15 +5936,6 @@ video {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.mds .overflow-ellipsis{
-  text-overflow: ellipsis;
-}
-.mds .overflow-clip{
-  text-overflow: clip;
 }
 .mds .overflow-ellipsis{
   text-overflow: ellipsis;
@@ -5977,31 +5957,6 @@ video {
 }
 .mds .whitespace-pre-wrap{
   white-space: pre-wrap;
-}
-.mds .whitespace-normal{
-  white-space: normal;
-}
-.mds .whitespace-nowrap{
-  white-space: nowrap;
-}
-.mds .whitespace-pre{
-  white-space: pre;
-}
-.mds .whitespace-pre-line{
-  white-space: pre-line;
-}
-.mds .whitespace-pre-wrap{
-  white-space: pre-wrap;
-}
-.mds .break-normal{
-  overflow-wrap: normal;
-  word-break: normal;
-}
-.mds .break-words{
-  overflow-wrap: break-word;
-}
-.mds .break-all{
-  word-break: break-all;
 }
 .mds .break-normal{
   overflow-wrap: normal;
@@ -7014,36 +6969,6 @@ video {
 .mds .text-justify{
   text-align: justify;
 }
-.mds .text-left{
-  text-align: left;
-}
-.mds .text-center{
-  text-align: center;
-}
-.mds .text-right{
-  text-align: right;
-}
-.mds .text-justify{
-  text-align: justify;
-}
-.mds .align-baseline{
-  vertical-align: baseline;
-}
-.mds .align-top{
-  vertical-align: top;
-}
-.mds .align-middle{
-  vertical-align: middle;
-}
-.mds .align-bottom{
-  vertical-align: bottom;
-}
-.mds .align-text-top{
-  vertical-align: text-top;
-}
-.mds .align-text-bottom{
-  vertical-align: text-bottom;
-}
 .mds .align-baseline{
   vertical-align: baseline;
 }
@@ -7092,30 +7017,6 @@ video {
   font-size: 1.25rem;
   line-height: 1.5rem;
 }
-.mds .text-xxs{
-  font-size: 0.625rem;
-  line-height: 1rem;
-}
-.mds .text-xs{
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
-.mds .text-sm{
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-.mds .text-base{
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-.mds .text-lg{
-  font-size: 1.125rem;
-  line-height: 1.5rem;
-}
-.mds .text-xl{
-  font-size: 1.25rem;
-  line-height: 1.5rem;
-}
 .mds .font-semibold{
   font-weight: 600;
 }
@@ -7143,33 +7044,6 @@ video {
 .mds .font-black{
   font-weight: 900;
 }
-.mds .font-thin{
-  font-weight: 100;
-}
-.mds .font-extralight{
-  font-weight: 200;
-}
-.mds .font-light{
-  font-weight: 300;
-}
-.mds .font-normal{
-  font-weight: 400;
-}
-.mds .font-medium{
-  font-weight: 500;
-}
-.mds .font-semibold{
-  font-weight: 600;
-}
-.mds .font-bold{
-  font-weight: 700;
-}
-.mds .font-extrabold{
-  font-weight: 800;
-}
-.mds .font-black{
-  font-weight: 900;
-}
 .mds .uppercase{
   text-transform: uppercase;
 }
@@ -7181,24 +7055,6 @@ video {
 }
 .mds .normal-case{
   text-transform: none;
-}
-.mds .uppercase{
-  text-transform: uppercase;
-}
-.mds .lowercase{
-  text-transform: lowercase;
-}
-.mds .capitalize{
-  text-transform: capitalize;
-}
-.mds .normal-case{
-  text-transform: none;
-}
-.mds .italic{
-  font-style: italic;
-}
-.mds .not-italic{
-  font-style: normal;
 }
 .mds .italic{
   font-style: italic;
@@ -7261,60 +7117,6 @@ video {
   --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
   --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
   font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-  --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
-  --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-  --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
-  --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-  --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
-  --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-  --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
-  --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-  --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
-  --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-  --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
-  --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-  --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
-  --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-  --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
-  --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-  --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
-  --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
 }
 .mds .normal-nums{
   font-variant-numeric: normal;
@@ -7342,75 +7144,6 @@ video {
 }
 .mds .stacked-fractions{
   --tw-numeric-fraction: stacked-fractions;
-}
-.mds .normal-nums{
-  font-variant-numeric: normal;
-}
-.mds .ordinal{
-  --tw-ordinal: ordinal;
-}
-.mds .slashed-zero{
-  --tw-slashed-zero: slashed-zero;
-}
-.mds .lining-nums{
-  --tw-numeric-figure: lining-nums;
-}
-.mds .oldstyle-nums{
-  --tw-numeric-figure: oldstyle-nums;
-}
-.mds .proportional-nums{
-  --tw-numeric-spacing: proportional-nums;
-}
-.mds .tabular-nums{
-  --tw-numeric-spacing: tabular-nums;
-}
-.mds .diagonal-fractions{
-  --tw-numeric-fraction: diagonal-fractions;
-}
-.mds .stacked-fractions{
-  --tw-numeric-fraction: stacked-fractions;
-}
-.mds .leading-3{
-  line-height: .75rem;
-}
-.mds .leading-4{
-  line-height: 1rem;
-}
-.mds .leading-5{
-  line-height: 1.25rem;
-}
-.mds .leading-6{
-  line-height: 1.5rem;
-}
-.mds .leading-7{
-  line-height: 1.75rem;
-}
-.mds .leading-8{
-  line-height: 2rem;
-}
-.mds .leading-9{
-  line-height: 2.25rem;
-}
-.mds .leading-10{
-  line-height: 2.5rem;
-}
-.mds .leading-none{
-  line-height: 1;
-}
-.mds .leading-tight{
-  line-height: 1.25;
-}
-.mds .leading-snug{
-  line-height: 1.375;
-}
-.mds .leading-normal{
-  line-height: 1.5;
-}
-.mds .leading-relaxed{
-  line-height: 1.625;
-}
-.mds .leading-loose{
-  line-height: 2;
 }
 .mds .leading-3{
   line-height: .75rem;
@@ -7553,60 +7286,6 @@ video {
 }
 .mds .text-opacity-100{
   --tw-text-opacity: 1;
-}
-.mds .text-opacity-0{
-  --tw-text-opacity: 0;
-}
-.mds .text-opacity-5{
-  --tw-text-opacity: 0.05;
-}
-.mds .text-opacity-10{
-  --tw-text-opacity: 0.1;
-}
-.mds .text-opacity-20{
-  --tw-text-opacity: 0.2;
-}
-.mds .text-opacity-25{
-  --tw-text-opacity: 0.25;
-}
-.mds .text-opacity-30{
-  --tw-text-opacity: 0.3;
-}
-.mds .text-opacity-40{
-  --tw-text-opacity: 0.4;
-}
-.mds .text-opacity-50{
-  --tw-text-opacity: 0.5;
-}
-.mds .text-opacity-60{
-  --tw-text-opacity: 0.6;
-}
-.mds .text-opacity-70{
-  --tw-text-opacity: 0.7;
-}
-.mds .text-opacity-75{
-  --tw-text-opacity: 0.75;
-}
-.mds .text-opacity-80{
-  --tw-text-opacity: 0.8;
-}
-.mds .text-opacity-90{
-  --tw-text-opacity: 0.9;
-}
-.mds .text-opacity-95{
-  --tw-text-opacity: 0.95;
-}
-.mds .text-opacity-100{
-  --tw-text-opacity: 1;
-}
-.mds .underline{
-  text-decoration: underline;
-}
-.mds .line-through{
-  text-decoration: line-through;
-}
-.mds .no-underline{
-  text-decoration: none;
 }
 .mds .underline{
   text-decoration: underline;
@@ -8342,6 +8021,123 @@ video {
     line-height: 1.5rem;
     font-weight: normal;
   }
+.mds .subtitle1{
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.mds .subtitle1{
+  font-weight: 600;
+}
+.mds .subtitle1{
+  line-height: 1.5rem;
+}
+.mds .subtitle1{
+  letter-spacing: 0.031rem;
+}
+.mds .subtitle2{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.mds .subtitle2{
+  font-weight: 600;
+}
+.mds .subtitle2{
+  line-height: 1.25rem;
+}
+.mds .subtitle2{
+  letter-spacing: 0.025;
+}
+.mds .subtitle3{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.mds .subtitle3{
+  font-weight: 800;
+}
+.mds .subtitle3{
+  line-height: 1.25rem;
+}
+.mds .subtitle3{
+  letter-spacing: 0.031rem;
+}
+.mds .subtitle4{
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.mds .subtitle4{
+  font-weight: 600;
+}
+.mds .subtitle4{
+  line-height: 1rem;
+}
+.mds .subtitle4{
+  letter-spacing: 0.031rem;
+}
+.mds .subtitle5{
+  font-size: 0.625rem;
+  line-height: 1rem;
+}
+.mds .subtitle5{
+  font-weight: 700;
+}
+.mds .subtitle5{
+  line-height: 1rem;
+}
+.mds .subtitle5{
+  letter-spacing: 0.031rem;
+}
+.mds .caption1{
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.mds .caption1{
+  line-height: 1rem;
+}
+.mds .caption1{
+  letter-spacing: 0.019rem;
+}
+.mds .caption2{
+  font-size: 0.625rem;
+  line-height: 1rem;
+}
+.mds .caption2{
+  line-height: 1rem;
+}
+.mds .caption2{
+  letter-spacing: 0.019rem;
+}
+.mds .overline1{
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+}
+.mds .overline1{
+  font-weight: 600;
+}
+.mds .overline1{
+  text-transform: uppercase;
+}
+.mds .overline1{
+  line-height: 1.5rem;
+}
+.mds .overline1{
+  letter-spacing: 0.094rem;
+}
+.mds .overline2{
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.mds .overline2{
+  font-weight: 400;
+}
+.mds .overline2{
+  text-transform: uppercase;
+}
+.mds .overline2{
+  line-height: 1rem;
+}
+.mds .overline2{
+  letter-spacing: 0.094rem;
+}
 .mds .hover\:bg-gray-bg-dark:hover{
   background-color: var(--mds-gray-bg-dark);
 }
