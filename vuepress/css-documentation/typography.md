@@ -149,10 +149,10 @@ There are currently 5 subtitle variants available via special classes.
 
 ## Overline
 
-| Class      | Description                                             |
-| ---------- | ------------------------------------------------------- |
-| .overline1 | 18px, 24px line-height, 1.5px letter spacing, uppercase |
-| .overline2 | 12px, 16px line-height, 1.5px letter spacing, uppercase |
+| Class      | Description                                                       |
+| ---------- | ----------------------------------------------------------------- |
+| .overline1 | 18px, SemiBold, 24px line-height, 1.5px letter spacing, uppercase |
+| .overline2 | 12px, Regular, 16px line-height, 1.5px letter spacing, uppercase  |
 
 ### Examples
 
