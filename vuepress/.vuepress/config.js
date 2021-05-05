@@ -48,6 +48,7 @@ module.exports = {
       '/css-documentation/': [
         {
           title: 'Layout',
+          collapsable: false,
           children: [
             'layout/responsive-design',
             'layout/container',
@@ -67,6 +68,7 @@ module.exports = {
         },
         {
           title: 'Flexbox',
+          collapsable: false,
           children: [
             'flexbox/flex-direction',
             'flexbox/flex-wrap',
@@ -78,6 +80,7 @@ module.exports = {
         },
         {
           title: 'Grid',
+          collapsable: false,
           children: [
             'grid/grid-template-columns',
             'grid/grid-column',
@@ -91,6 +94,7 @@ module.exports = {
         },
         {
           title: 'Box Alignment',
+          collapsable: false,
           children: [
             'box-alignment/justify-content',
             'box-alignment/justify-items',
@@ -105,10 +109,12 @@ module.exports = {
         },
         {
           title: 'Spacing',
+          collapsable: false,
           children: ['spacing/padding', 'spacing/margin', 'spacing/space'],
         },
         {
           title: 'Sizing',
+          collapsable: false,
           children: [
             'sizing/width',
             'sizing/min-width',

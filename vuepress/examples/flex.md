@@ -8,13 +8,13 @@ The below example uses a `.flex` container combined with `.space-x-{n}` or `spac
 
 <div class="mds">
   <div class="flex space-x-4">
-    <div class="flex-1 rounded p-4 bg-primary-bg-dark text-primary-text-light">
+    <div class="flex-1 rounded p-12 bg-primary-bg-dark text-primary-text-light">
       Item that can grow or shrink if needed
     </div>
-    <div class="flex-none rounded p-4 bg-primary-bg-dark text-primary-text-light">
+    <div class="flex-none rounded p-12 bg-primary-bg-dark text-primary-text-light">
       Item that cannot grow or shrink
     </div>
-    <div class="flex-1 rounded p-4 bg-primary-bg-dark text-primary-text-light">
+    <div class="flex-1 rounded p-12 bg-primary-bg-dark text-primary-text-light">
       Item that can grow or shrink if needed
     </div>
   </div>
@@ -22,13 +22,13 @@ The below example uses a `.flex` container combined with `.space-x-{n}` or `spac
 
 ```html
 <div class="flex space-x-4">
-  <div class="flex-1 rounded p-4 bg-primary-bg-dark text-primary-text-light">
+  <div class="flex-1 rounded p-12 bg-primary-bg-dark text-primary-text-light">
     Item that can grow or shrink if needed
   </div>
-  <div class="flex-none rounded p-4 bg-primary-bg-dark text-primary-text-light">
+  <div class="flex-none rounded p-12 bg-primary-bg-dark text-primary-text-light">
     Item that cannot grow or shrink
   </div>
-  <div class="flex-1 rounded p-4 bg-primary-bg-dark text-primary-text-light">
+  <div class="flex-1 rounded p-12 bg-primary-bg-dark text-primary-text-light">
     Item that can grow or shrink if needed
   </div>
 </div>
