@@ -131,14 +131,23 @@ After the default body class font size, there are three other classes which can 
 
 ## Letter Spacing
 
-| Class            | Properties                |
-| ---------------- | ------------------------- |
-| tracking-tighter | letter-spacing: -0.05em;  |
-| tracking-tight   | letter-spacing: -0.025em; |
-| tracking-normal  | letter-spacing: 0em;      |
-| tracking-wide    | letter-spacing: 0.025em;  |
-| tracking-wider   | letter-spacing: 0.05em;   |
-| tracking-widest  | letter-spacing: 0.1em;    |
+| Class            | Properties |
+| ---------------- | ---------- |
+| tracking-neg-1-5 | -0.094rem  |
+| tracking-neg-0-5 | -0.031rem  |
+| tracking-0       | 0rem       |
+| tracking-0-1     | 0.006rem   |
+| tracking-0-15    | 0.009rem   |
+| tracking-0-25    | 0.016rem   |
+| tracking-0-3     | 0.019rem   |
+| tracking-0-4     | 0.025,     |
+| tracking-0-5     | 0.031rem   |
+| tracking-1-25    | 0.078rem   |
+| tracking-1-5     | 0.094rem   |
+
+<div class="mds">
+  <p class="tracking-1-5">Hello</p>
+</div>
 
 ## Line Height
 

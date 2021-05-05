@@ -5,13 +5,26 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      letterSpacing: {
+        'neg-1-5': '-0.094rem', // -1.5px
+        'neg-0-5': '-0.031rem', // -0.5px
+        '0': '0rem',
+        '0-1': '0.006rem',
+        '0-15': '0.009rem',
+        '0-25': '0.016rem',
+        '0-3': '0.019rem',
+        '0-4': '0.025',
+        '0-5': '0.031rem',
+        '1-25': '0.078rem',
+        '1-5': '0.094rem',
+      },
       colors: {
         'primary-text-dark': 'var(--mds-primary-text-dark)', // Dark text primary
         'primary-text-light': 'var(--mds-primary-text-light)', // Light text primary
         'primary-bg-dark': 'var(--mds-primary-bg-dark)', // Dark background primary
         'primary-text-light': 'var(--mds-primary-bg-light)', // Light background primary
-        'gray-bg-dark': 'var(--mds-gray-bg-dark)',
-        'gray-bg-light': 'var(--mds-gray-bg-light)',
+        'gray-bg-dark': 'var(--mds-gray-bg-dark)', // Primary dark gray
+        'gray-bg-light': 'var(--mds-gray-bg-light)', // Primary light gray
       },
       container: {
         center: true,
