@@ -1738,9 +1738,6 @@ video {
   left: -100%;
   right: -100%;
 }
-.mds .top-44{
-  top: 2.75rem;
-}
 .mds .top-0{
   top: 0px;
 }
@@ -2340,6 +2337,9 @@ video {
 }
 .mds .-left-40{
   left: -2.5rem;
+}
+.mds .top-44{
+  top: 2.75rem;
 }
 .mds .right-44{
   right: 2.75rem;
@@ -3459,14 +3459,14 @@ video {
 .mds .hidden{
   display: none;
 }
+.mds .h-0{
+  height: 0px;
+}
 .mds .h-18{
   height: 1.125rem;
 }
 .mds .h-12{
   height: 0.75rem;
-}
-.mds .h-0{
-  height: 0px;
 }
 .mds .h-1{
   height: 1px;
@@ -3744,6 +3744,9 @@ video {
 .mds .min-h-screen{
   min-height: 100vh;
 }
+.mds .w-0{
+  width: 0px;
+}
 .mds .w-18{
   width: 1.125rem;
 }
@@ -3764,9 +3767,6 @@ video {
 }
 .mds .w-240{
   width: 15rem;
-}
-.mds .w-0{
-  width: 0px;
 }
 .mds .w-1{
   width: 1px;
@@ -7957,19 +7957,23 @@ video {
 .mx-button button.text:hover, .mx-button a.text:hover {
         background: #ebf2f9;
       }
-.mx-checkbox span::after {
-    content: '';
-    position: absolute;
-    display: none;
-  }
-.mx-checkbox input:checked ~ span {
-    background-color: var(--mds-primary-bg-dark);
-  }
 .mx-checkbox span {
     position: relative;
     z-index: 1;
     border: 2px solid #5a5a5a;
   }
+.mx-checkbox span::after {
+      content: '';
+      position: absolute;
+      display: none;
+      left: 5px;
+      top: 1px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
 .mx-checkbox span:hover::before {
         content: '';
         position: absolute;
@@ -7977,9 +7981,18 @@ video {
         left: -13.5px;
         width: 40px;
         height: 40px;
-        background: rgba(4, 87, 175, 0.08);
+        background: rgba(0, 0, 0, 0.04);
         border-radius: 100%;
         z-index: 0;
+      }
+.mx-checkbox input:checked ~ span {
+    background-color: var(--mds-primary-bg-dark);
+  }
+.mx-checkbox input:checked ~ span::after {
+      display: block;
+    }
+.mx-checkbox input:checked ~ span:hover::before {
+        background: rgba(4, 87, 175, 0.08);
       }
 /***************************
 * Custom CSS
