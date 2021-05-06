@@ -15,7 +15,7 @@ export class MxCheckbox {
   render() {
     return (
       <Host class="mx-checkbox">
-        <label class="relative inline-flex flex-nowrap align-center items-center">
+        <label class="relative inline-flex flex-nowrap align-center items-center cursor-pointer">
           <input class="absolute h-0 w-0 opacity-0" type="checkbox" checked={this.checked} />
           <span class="flex h-18 w-18 cursor-pointer"></span>
           <div class="ml-16 inline-block">{this.labelName}</div>
