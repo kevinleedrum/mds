@@ -12,3 +12,13 @@ Selection controls consist of checkboxes, radios, and switches.
     <div><mx-checkbox name="foo" label-name="Warlock" /></div>
   </div>
 </div>
+
+### Properties
+
+| Property     | Attribute    | Description | Type      | Default     |
+| ------------ | ------------ | ----------- | --------- | ----------- |
+| `checked`    | `checked`    |             | `boolean` | `false`     |
+| `identifier` | `identifier` |             | `string`  | `nanoid(5)` |
+| `labelName`  | `label-name` |             | `string`  | `''`        |
+| `name`       | `name`       |             | `string`  | `''`        |
+| `value`      | `value`      |             | `string`  | `''`        |
