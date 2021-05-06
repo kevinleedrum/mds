@@ -1,0 +1,65 @@
+.mx-checkbox {
+  span {
+    position: relative;
+    z-index: 1;
+    border: 2px solid #5a5a5a;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -13.5px;
+      left: -13.5px;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      z-index: 0;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      display: none;
+      left: 5px;
+      top: 1px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    &:hover {
+      &::before {
+        background: rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    &:active {
+      &::before {
+        background: rgba(0, 0, 0, 0.12);
+      }
+    }
+  }
+
+  input:checked ~ span {
+    /* background-color: var(--mds-primary-bg-dark); */
+    background-color: #0457af;
+    &::after {
+      display: block;
+    }
+
+    &:hover {
+      &::before {
+        background: rgba(4, 87, 175, 0.08);
+      }
+    }
+
+    &:active {
+      &::before {
+        background: rgba(4, 87, 175, 0.32);
+      }
+    }
+  }
+}

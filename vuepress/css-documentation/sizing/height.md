@@ -14,6 +14,7 @@ Visit []() for more information.
 | .h-12     | height: 0.75rem;    |
 | .h-14     | height: 0.875rem;   |
 | .h-16     | height: 1rem;       |
+| .h-18     | width: 1.125rem;    |
 | .h-20     | height: 1.25rem;    |
 | .h-24     | height: 1.5rem;     |
 | .h-28     | height: 1.75rem;    |

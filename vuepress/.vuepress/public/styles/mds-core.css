@@ -536,11 +536,11 @@ video {
 .mds .relative{
   position: relative;
 }
-.mds .sticky{
-  position: sticky;
-}
 .mds .absolute{
   position: absolute;
+}
+.mds .sticky{
+  position: sticky;
 }
 .mds .fixed{
   position: fixed;
@@ -3216,6 +3216,9 @@ video {
   margin-left: 5rem;
   margin-right: 5rem;
 }
+.mds .ml-16{
+  margin-left: 1rem;
+}
 .mds .mt-10{
   margin-top: 0.625rem;
 }
@@ -3360,9 +3363,6 @@ video {
 .mds .ml-12{
   margin-left: 0.75rem;
 }
-.mds .ml-16{
-  margin-left: 1rem;
-}
 .mds .ml-20{
   margin-left: 1.25rem;
 }
@@ -3459,11 +3459,14 @@ video {
 .mds .hidden{
   display: none;
 }
-.mds .h-12{
-  height: 0.75rem;
-}
 .mds .h-0{
   height: 0px;
+}
+.mds .h-18{
+  height: 1.125rem;
+}
+.mds .h-12{
+  height: 0.75rem;
 }
 .mds .h-1{
   height: 1px;
@@ -3741,6 +3744,12 @@ video {
 .mds .min-h-screen{
   min-height: 100vh;
 }
+.mds .w-0{
+  width: 0px;
+}
+.mds .w-18{
+  width: 1.125rem;
+}
 .mds .w-full{
   width: 100%;
 }
@@ -3758,9 +3767,6 @@ video {
 }
 .mds .w-240{
   width: 15rem;
-}
-.mds .w-0{
-  width: 0px;
 }
 .mds .w-1{
   width: 1px;
@@ -4059,14 +4065,14 @@ video {
 .mds .border-collapse{
   border-collapse: collapse;
 }
+.mds .cursor-pointer{
+  cursor: pointer;
+}
 .mds .cursor-auto{
   cursor: auto;
 }
 .mds .cursor-default{
   cursor: default;
-}
-.mds .cursor-pointer{
-  cursor: pointer;
 }
 .mds .cursor-wait{
   cursor: wait;
@@ -4138,14 +4144,14 @@ video {
 .mds .auto-rows-fr{
   grid-auto-rows: minmax(0, 1fr);
 }
+.mds .grid-cols-2{
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 .mds .grid-cols-1{
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 .mds .grid-cols-3{
   grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-.mds .grid-cols-2{
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .mds .grid-cols-4{
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -4315,11 +4321,11 @@ video {
 .mds .justify-items-stretch{
   justify-items: stretch;
 }
-.mds .gap-32{
-  gap: 2rem;
-}
 .mds .gap-4{
   gap: 0.25rem;
+}
+.mds .gap-32{
+  gap: 2rem;
 }
 .mds .gap-0{
   gap: 0px;
@@ -7950,6 +7956,52 @@ video {
       }
 .mx-button button.text:hover, .mx-button a.text:hover {
         background: #ebf2f9;
+      }
+.mx-checkbox span {
+    position: relative;
+    z-index: 1;
+    border: 2px solid #5a5a5a;
+  }
+.mx-checkbox span::before {
+      content: '';
+      position: absolute;
+      top: -13.5px;
+      left: -13.5px;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      z-index: 0;
+    }
+.mx-checkbox span::after {
+      content: '';
+      position: absolute;
+      display: none;
+      left: 5px;
+      top: 1px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+.mx-checkbox span:hover::before {
+        background: rgba(0, 0, 0, 0.04);
+      }
+.mx-checkbox span:active::before {
+        background: rgba(0, 0, 0, 0.12);
+      }
+.mx-checkbox input:checked ~ span {
+    /* background-color: var(--mds-primary-bg-dark); */
+    background-color: #0457af;
+  }
+.mx-checkbox input:checked ~ span::after {
+      display: block;
+    }
+.mx-checkbox input:checked ~ span:hover::before {
+        background: rgba(4, 87, 175, 0.08);
+      }
+.mx-checkbox input:checked ~ span:active::before {
+        background: rgba(4, 87, 175, 0.32);
       }
 /***************************
 * Custom CSS
