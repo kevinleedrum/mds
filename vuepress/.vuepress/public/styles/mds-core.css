@@ -7962,6 +7962,16 @@ video {
     z-index: 1;
     border: 2px solid #5a5a5a;
   }
+.mx-checkbox span::before {
+      content: '';
+      position: absolute;
+      top: -13.5px;
+      left: -13.5px;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      z-index: 0;
+    }
 .mx-checkbox span::after {
       content: '';
       position: absolute;
@@ -7975,24 +7985,23 @@ video {
       transform: rotate(45deg);
     }
 .mx-checkbox span:hover::before {
-        content: '';
-        position: absolute;
-        top: -13.5px;
-        left: -13.5px;
-        width: 40px;
-        height: 40px;
         background: rgba(0, 0, 0, 0.04);
-        border-radius: 100%;
-        z-index: 0;
+      }
+.mx-checkbox span:active::before {
+        background: rgba(0, 0, 0, 0.12);
       }
 .mx-checkbox input:checked ~ span {
-    background-color: var(--mds-primary-bg-dark);
+    /* background-color: var(--mds-primary-bg-dark); */
+    background-color: #0457af;
   }
 .mx-checkbox input:checked ~ span::after {
       display: block;
     }
 .mx-checkbox input:checked ~ span:hover::before {
         background: rgba(4, 87, 175, 0.08);
+      }
+.mx-checkbox input:checked ~ span:active::before {
+        background: rgba(4, 87, 175, 0.32);
       }
 /***************************
 * Custom CSS
