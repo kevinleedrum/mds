@@ -111,10 +111,11 @@ const MxCheckbox = class {
     this.name = '';
     this.value = '';
     this.identifier = nanoid(5);
-    this.labelName = undefined;
+    this.labelName = '';
+    this.checked = false;
   }
   render() {
-    return (h(Host, null, h("div", { class: "inline-flex flex-nowrap align-center items-center" }, h("input", { type: "checkbox", name: this.name, value: this.value, id: this.identifier }), this.labelName && (h("label", { class: "ml-16 cursor-pointer", htmlFor: this.identifier }, this.labelName)))));
+    return (h(Host, { class: "mx-checkbox" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center" }, h("input", { class: "absolute top-44", type: "checkbox", checked: this.checked }), h("span", { class: "flex h-18 w-18 cursor-pointer" }), h("div", { class: "ml-16 inline-block" }, this.labelName))));
   }
 };
 

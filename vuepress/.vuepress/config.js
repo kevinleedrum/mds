@@ -131,6 +131,7 @@ module.exports = {
         'borders',
         'effects',
         'filters',
+        'opacity',
       ],
       '/components/': ['inputs', 'buttons', 'selection-controls'],
     },

@@ -9,19 +9,17 @@ export class MxCheckbox {
   @Prop() name: string = '';
   @Prop() value: string = '';
   @Prop() identifier: string = nanoid(5);
-  @Prop() labelName: string = undefined;
+  @Prop() labelName: string = '';
+  @Prop() checked: boolean = false;
 
   render() {
     return (
-      <Host>
-        <div class="inline-flex flex-nowrap align-center items-center">
-          <input type="checkbox" name={this.name} value={this.value} id={this.identifier} />
-          {this.labelName && (
-            <label class="ml-16 cursor-pointer" htmlFor={this.identifier}>
-              {this.labelName}
-            </label>
-          )}
-        </div>
+      <Host class="mx-checkbox">
+        <label class="relative inline-flex flex-nowrap align-center items-center">
+          <input class="absolute top-44" type="checkbox" checked={this.checked} />
+          <span class="flex h-18 w-18 cursor-pointer"></span>
+          <div class="ml-16 inline-block">{this.labelName}</div>
+        </label>
       </Host>
     );
   }

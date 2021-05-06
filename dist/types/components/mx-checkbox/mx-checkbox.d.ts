@@ -3,5 +3,6 @@ export declare class MxCheckbox {
   value: string;
   identifier: string;
   labelName: string;
+  checked: boolean;
   render(): any;
 }

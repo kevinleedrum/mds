@@ -1,0 +1,31 @@
+.mx-checkbox {
+  span::after {
+    content: '';
+    position: absolute;
+    display: none;
+  }
+
+  input:checked ~ span {
+    background-color: var(--mds-primary-bg-dark);
+  }
+
+  span {
+    position: relative;
+    z-index: 1;
+    border: 2px solid #5a5a5a;
+
+    &:hover {
+      &::before {
+        content: '';
+        position: absolute;
+        top: -13.5px;
+        left: -13.5px;
+        width: 40px;
+        height: 40px;
+        background: rgba(4, 87, 175, 0.08);
+        border-radius: 100%;
+        z-index: 0;
+      }
+    }
+  }
+}

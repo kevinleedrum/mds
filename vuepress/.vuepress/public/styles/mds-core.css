@@ -536,11 +536,11 @@ video {
 .mds .relative{
   position: relative;
 }
-.mds .sticky{
-  position: sticky;
-}
 .mds .absolute{
   position: absolute;
+}
+.mds .sticky{
+  position: sticky;
 }
 .mds .fixed{
   position: fixed;
@@ -1738,6 +1738,9 @@ video {
   left: -100%;
   right: -100%;
 }
+.mds .top-44{
+  top: 2.75rem;
+}
 .mds .top-0{
   top: 0px;
 }
@@ -2337,9 +2340,6 @@ video {
 }
 .mds .-left-40{
   left: -2.5rem;
-}
-.mds .top-44{
-  top: 2.75rem;
 }
 .mds .right-44{
   right: 2.75rem;
@@ -3216,6 +3216,9 @@ video {
   margin-left: 5rem;
   margin-right: 5rem;
 }
+.mds .ml-16{
+  margin-left: 1rem;
+}
 .mds .mt-10{
   margin-top: 0.625rem;
 }
@@ -3360,9 +3363,6 @@ video {
 .mds .ml-12{
   margin-left: 0.75rem;
 }
-.mds .ml-16{
-  margin-left: 1rem;
-}
 .mds .ml-20{
   margin-left: 1.25rem;
 }
@@ -3458,6 +3458,9 @@ video {
 }
 .mds .hidden{
   display: none;
+}
+.mds .h-18{
+  height: 1.125rem;
 }
 .mds .h-12{
   height: 0.75rem;
@@ -3740,6 +3743,9 @@ video {
 }
 .mds .min-h-screen{
   min-height: 100vh;
+}
+.mds .w-18{
+  width: 1.125rem;
 }
 .mds .w-full{
   width: 100%;
@@ -4059,14 +4065,14 @@ video {
 .mds .border-collapse{
   border-collapse: collapse;
 }
+.mds .cursor-pointer{
+  cursor: pointer;
+}
 .mds .cursor-auto{
   cursor: auto;
 }
 .mds .cursor-default{
   cursor: default;
-}
-.mds .cursor-pointer{
-  cursor: pointer;
 }
 .mds .cursor-wait{
   cursor: wait;
@@ -7950,6 +7956,30 @@ video {
       }
 .mx-button button.text:hover, .mx-button a.text:hover {
         background: #ebf2f9;
+      }
+.mx-checkbox span::after {
+    content: '';
+    position: absolute;
+    display: none;
+  }
+.mx-checkbox input:checked ~ span {
+    background-color: var(--mds-primary-bg-dark);
+  }
+.mx-checkbox span {
+    position: relative;
+    z-index: 1;
+    border: 2px solid #5a5a5a;
+  }
+.mx-checkbox span:hover::before {
+        content: '';
+        position: absolute;
+        top: -13.5px;
+        left: -13.5px;
+        width: 40px;
+        height: 40px;
+        background: rgba(4, 87, 175, 0.08);
+        border-radius: 100%;
+        z-index: 0;
       }
 /***************************
 * Custom CSS

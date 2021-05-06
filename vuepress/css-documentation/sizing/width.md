@@ -14,6 +14,7 @@ Visit [https://tailwindcss.com/docs/width](https://tailwindcss.com/docs/width) f
 | .w-12     | width: 0.75rem;     |
 | .w-14     | width: 0.875rem;    |
 | .w-16     | width: 1rem;        |
+| .w-18     | width: 1.125rem;    |
 | .w-20     | width: 1.25rem;     |
 | .w-24     | width: 1.5rem;      |
 | .w-28     | width: 1.75rem;     |
@@ -81,7 +82,5 @@ Visit [https://tailwindcss.com/docs/width](https://tailwindcss.com/docs/width) f
 </div>
 
 ```html
-<div class="w-9/12 bg-primary-bg-dark text-primary-text-light p-12 mt-16">
-  This div is set to 75% width.
-</div>
+<div class="w-9/12 bg-primary-bg-dark text-primary-text-light p-12 mt-16">This div is set to 75% width.</div>
 ```
