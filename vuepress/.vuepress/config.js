@@ -132,7 +132,7 @@ module.exports = {
         'effects',
         'filters',
       ],
-      '/components/': ['inputs', 'buttons'],
+      '/components/': ['inputs', 'buttons', 'selection-controls'],
     },
   },
   plugins: [['fulltext-search']],
