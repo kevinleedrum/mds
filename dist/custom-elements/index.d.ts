@@ -8,6 +8,12 @@ export const MxButton: {
   new (): MxButton;
 };
 
+interface MxCheckbox extends Components.MxCheckbox, HTMLElement {}
+export const MxCheckbox: {
+  prototype: MxCheckbox;
+  new (): MxCheckbox;
+};
+
 interface MxInput extends Components.MxInput, HTMLElement {}
 export const MxInput: {
   prototype: MxInput;
