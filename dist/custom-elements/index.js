@@ -165,15 +165,32 @@ const MxInput$1 = class extends HTMLElement {
   }
 };
 
+const MxRadio$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.name = '';
+    this.value = '';
+    this.identifier = nanoid(5);
+    this.labelName = '';
+    this.checked = false;
+  }
+  render() {
+    return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, checked: this.checked }), h("span", { class: "flex h-20 w-20 cursor-pointer rounded-full" }), h("div", { class: "ml-16 inline-block" }, this.labelName))));
+  }
+};
+
 const MxButton = /*@__PURE__*/proxyCustomElement(MxInput$2, [0,"mx-button",{"type":[1],"value":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"iconLeft":[1,"icon-left"]}]);
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"identifier":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"label":[1],"value":[1],"type":[1],"dense":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
+const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"identifier":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const defineCustomElements = (opts) => {
   if (typeof customElements !== 'undefined') {
     [
       MxButton,
   MxCheckbox,
-  MxInput
+  MxInput,
+  MxRadio
     ].forEach(cmp => {
       if (!customElements.get(cmp.is)) {
         customElements.define(cmp.is, cmp, opts);
@@ -182,4 +199,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxButton, MxCheckbox, MxInput, defineCustomElements };
+export { MxButton, MxCheckbox, MxInput, MxRadio, defineCustomElements };
