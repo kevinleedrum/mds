@@ -21,6 +21,7 @@
 @import './mx-input/index.scss';
 @import './mx-button/index.scss';
 @import './mx-checkbox/index.scss';
+@import './mx-radio/index.scss';
 
 /***************************
 * Custom CSS
