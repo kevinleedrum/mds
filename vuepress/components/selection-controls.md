@@ -65,3 +65,11 @@ Selection controls consist of checkboxes, radios, and switches.
 | `labelName`  | `label-name` |             | `string`  | `''`        |
 | `name`       | `name`       |             | `string`  | `''`        |
 | `value`      | `value`      |             | `string`  | `''`        |
+
+## Switches
+
+<div class="mds">
+  <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
+    <div><mx-switch name="foo" label-name="Premier" /></div>
+  </div>
+</div>

@@ -26,6 +26,12 @@ export const MxRadio: {
   new (): MxRadio;
 };
 
+interface MxSwitch extends Components.MxSwitch, HTMLElement {}
+export const MxSwitch: {
+  prototype: MxSwitch;
+  new (): MxSwitch;
+};
+
 /**
  * Utility to define all custom elements within this package using the tag name provided in the component's source. 
  * When defining each custom element, it will also check it's safe to define by:
