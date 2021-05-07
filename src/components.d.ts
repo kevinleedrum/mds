@@ -47,6 +47,13 @@ export namespace Components {
         "name": string;
         "value": string;
     }
+    interface MxSwitch {
+        "checked": boolean;
+        "identifier": string;
+        "labelName": string;
+        "name": string;
+        "value": string;
+    }
 }
 declare global {
     interface HTMLMxButtonElement extends Components.MxButton, HTMLStencilElement {
@@ -73,11 +80,18 @@ declare global {
         prototype: HTMLMxRadioElement;
         new (): HTMLMxRadioElement;
     };
+    interface HTMLMxSwitchElement extends Components.MxSwitch, HTMLStencilElement {
+    }
+    var HTMLMxSwitchElement: {
+        prototype: HTMLMxSwitchElement;
+        new (): HTMLMxSwitchElement;
+    };
     interface HTMLElementTagNameMap {
         "mx-button": HTMLMxButtonElement;
         "mx-checkbox": HTMLMxCheckboxElement;
         "mx-input": HTMLMxInputElement;
         "mx-radio": HTMLMxRadioElement;
+        "mx-switch": HTMLMxSwitchElement;
     }
 }
 declare namespace LocalJSX {
@@ -122,11 +136,19 @@ declare namespace LocalJSX {
         "name"?: string;
         "value"?: string;
     }
+    interface MxSwitch {
+        "checked"?: boolean;
+        "identifier"?: string;
+        "labelName"?: string;
+        "name"?: string;
+        "value"?: string;
+    }
     interface IntrinsicElements {
         "mx-button": MxButton;
         "mx-checkbox": MxCheckbox;
         "mx-input": MxInput;
         "mx-radio": MxRadio;
+        "mx-switch": MxSwitch;
     }
 }
 export { LocalJSX as JSX };
@@ -137,6 +159,7 @@ declare module "@stencil/core" {
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;
+            "mx-switch": LocalJSX.MxSwitch & JSXBase.HTMLAttributes<HTMLMxSwitchElement>;
         }
     }
 }
