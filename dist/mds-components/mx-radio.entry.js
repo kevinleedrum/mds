@@ -1,5 +1,5 @@
-import { r as registerInstance, h, H as Host } from './index-62ff7c7d.js';
-import { n as nanoid } from './index.browser-9b266c44.js';
+import { r as registerInstance, h, e as Host } from './index-b935b875.js';
+import { n as nanoid } from './index.browser-083ffff9.js';
 
 const MxRadio = class {
   constructor(hostRef) {
