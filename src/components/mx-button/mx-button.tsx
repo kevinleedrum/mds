@@ -4,11 +4,12 @@ import { Component, Host, h, Prop } from '@stencil/core';
   tag: 'mx-button',
   shadow: false,
 })
-export class MxInput {
+export class MxButton {
   btnElem!: HTMLButtonElement;
   anchorElem!: HTMLAnchorElement;
 
-  @Prop() type: string = 'contained';
+  @Prop() btnType: string = 'contained';
+  @Prop() type: string = 'button'; // reset | submit
   @Prop() value: string;
   @Prop() disabled: boolean = false;
   @Prop() xl: boolean = false;
@@ -40,7 +41,7 @@ export class MxInput {
   }
 
   returnBaseClass() {
-    let str = `btn ${this.type}`;
+    let str = `btn ${this.btnType}`;
     if (this.xl) str = `${str} xl`;
     if (this.full) str = `${str} full`;
     return str;
@@ -66,11 +67,13 @@ export class MxInput {
               }}
             >
               {this.iconLeft && <i class={this.iconLeft}></i>}
-              {this.value}
+              <slot />
             </div>
           </a>
         ) : (
           <button
+            type={this.type}
+            value={this.value}
             class={this.returnBaseClass()}
             ref={el => (this.btnElem = el as HTMLButtonElement)}
             onClick={() => {
@@ -85,7 +88,7 @@ export class MxInput {
               }}
             >
               {this.iconLeft && <i class={this.iconLeft}></i>}
-              {this.value}
+              <slot />
             </div>
           </button>
         )}
