@@ -1,24 +1,31 @@
-// import { newSpecPage } from '@stencil/core/testing';
-// import { MxRadio } from '../mx-radio';
+import { newSpecPage } from '@stencil/core/testing';
+import { MxRadio } from '../mx-radio';
 
-// describe('mx-radio', () => {
-//   it('renders', async () => {
-//     const page = await newSpecPage({
-//       components: [MxRadio],
-//       html: `<mx-radio></mx-radio>`,
-//     });
-//     expect(page.root).toEqualHtml(`
-//       <mx-radio>
-//         <mock:shadow-root>
-//           <slot></slot>
-//         </mock:shadow-root>
-//       </mx-radio>
-//     `);
-//   });
-// });
+describe('mx-checkbox', () => {
+  let page;
+  let root;
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [MxRadio],
+      html: `<mx-radio name="foo" label-name="Premier" checked="true" />`,
+    });
+    root = page.root;
+  });
 
-describe('My Service', () => {
-  it('should correctly add numbers', () => {
-    expect(1 + 1).toBe(2);
+  it('is a radio', async () => {
+    const input = root.querySelector('input');
+    expect(input.type).toBe('radio');
+  });
+
+  it('has the proper name and label', async () => {
+    const input = root.querySelector('input');
+    const labelName = root.querySelector('[data-testid="labelName"]');
+    expect(input.getAttribute('name')).toBe('foo');
+    expect(labelName.innerText).toBe('Premier');
+  });
+
+  it('is checked', async () => {
+    const input = root.querySelector('input');
+    expect(input.checked).toBeTruthy();
   });
 });

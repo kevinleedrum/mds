@@ -19,7 +19,6 @@ export namespace Components {
     }
     interface MxCheckbox {
         "checked": boolean;
-        "identifier": string;
         "labelName": string;
         "name": string;
         "value": string;
@@ -109,7 +108,6 @@ declare namespace LocalJSX {
     }
     interface MxCheckbox {
         "checked"?: boolean;
-        "identifier"?: string;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;

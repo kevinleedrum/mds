@@ -18,7 +18,6 @@ describe('mx-input', () => {
           assistive-text="Enter your test input"
         />
       `,
-      supportsShadowDom: true,
     });
     root = page.root;
   });
