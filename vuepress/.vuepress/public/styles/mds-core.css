@@ -527,11 +527,11 @@ video {
   white-space: nowrap;
   border-width: 0;
 }
-.mds .invisible{
-  visibility: hidden;
-}
 .mds .visible{
   visibility: visible;
+}
+.mds .invisible{
+  visibility: hidden;
 }
 .mds .relative{
   position: relative;

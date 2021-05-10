@@ -1,9 +1,10 @@
-import { r as registerInstance, h, H as Host } from './index-62ff7c7d.js';
+import { r as registerInstance, h, e as Host } from './index-5d582d27.js';
 
-const MxInput = class {
+const MxButton = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
-    this.type = 'contained';
+    this.btnType = 'contained';
+    this.type = 'button'; // reset | submit
     this.disabled = false;
     this.xl = false;
     this.full = false;
@@ -25,7 +26,7 @@ const MxInput = class {
     }, 300);
   }
   returnBaseClass() {
-    let str = `btn ${this.type}`;
+    let str = `btn ${this.btnType}`;
     if (this.xl)
       str = `${str} xl`;
     if (this.full)
@@ -37,12 +38,12 @@ const MxInput = class {
         this.ripple();
       } }, h("div", { class: "flex justify-center items-center content-center", onClick: () => {
         this.ripple();
-      } }, this.iconLeft && h("i", { class: this.iconLeft }), this.value))) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: () => {
+      } }, this.iconLeft && h("i", { class: this.iconLeft }), h("slot", null)))) : (h("button", { type: this.type, value: this.value, class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: () => {
         this.ripple();
       }, disabled: this.disabled }, h("div", { class: "flex justify-center items-center content-center relative", onClick: () => {
         this.ripple();
-      } }, this.iconLeft && h("i", { class: this.iconLeft }), this.value)))));
+      } }, this.iconLeft && h("i", { class: this.iconLeft }), h("slot", null))))));
   }
 };
 
-export { MxInput as mx_button };
+export { MxButton as mx_button };
