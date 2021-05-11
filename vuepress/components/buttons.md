@@ -7,53 +7,53 @@
     <div style="width: 47%;">
       <strong>Contained</strong>
       <div class="my-5">
-        <mx-button value="button" />
+        <mx-button>button</mx-button>
       </div>
       <div class="my-5">
-        <mx-button value="Disabled button" disabled />
+        <mx-button disabled>Disabled button</mx-button>
       </div>
       <div class="my-5">
-        <mx-button value="XL button" xl />
+        <mx-button xl>XL button</mx-button>
       </div>
       <div class="my-5">
-        <mx-button value="XL Disabled button" disabled xl />
+        <mx-button disabled xl>XL Disabled button</mx-button>
       </div>
        <div class="my-5">
-        <mx-button value="Button as Link" href="https://google.com" target="_blank" />
+        <mx-button href="https://google.com" target="_blank">Button as Link</mx-button>
       </div>
     </div>
     <div style="width: 47%;">
       <strong>Outline</strong>
       <div class="my-5">
-        <mx-button value="Outlined button" type="outlined" />
+        <mx-button btn-type="outlined">Outlined button</mx-button>
       </div>
       <div class="my-5">
-        <mx-button value="Outlined button" type="outlined" disabled />
+        <mx-button btn-type="outlined" disabled>Outlined button</mx-button>
       </div>
       <div class="my-5">
-        <mx-button value="XL outlined button" type="outlined" xl />
+        <mx-button btn-type="outlined" xl>XL outlined button</mx-button>
       </div>
       <div class="my-5">
-        <mx-button value="XL outlined Disabled" type="outlined" disabled xl />
+        <mx-button btn-type="outlined" disabled xl>XL outlined Disabled</mx-button>
       </div>
       <div class="my-5">
-        <mx-button value="Button as Link" type="outlined" href="https://google.com" target="_blank" />
+        <mx-button btn-type="outlined" href="https://google.com" target="_blank">Button as Link</mx-button>
       </div>
     </div>
   </div>
   <div>
     <strong>Full</strong>
     <div class="my-5">
-      <mx-button value="button" full />
+      <mx-button full>button</mx-button>
     </div>
     <div class="my-5">
-      <mx-button value="XL button" xl full />
+      <mx-button xl full>XL button</mx-button>
     </div>
     <div class="my-5">
-      <mx-button value="Outlined button" type="outlined" full />
+      <mx-button btn-type="outlined" full>Outlined button</mx-button>
     </div>
     <div class="my-5">
-      <mx-button value="Outlined button" type="outlined" full xl />
+      <mx-button btn-type="outlined" full xl>Outlined button</mx-button>
     </div>
   </div>
 </section>
@@ -62,13 +62,13 @@
 
 <section class="mds">
   <div class="my-5">
-    <mx-button value="button" type="action" />
+    <mx-button btn-type="action">button</mx-button>
   </div>
   <div class="my-5">
-    <mx-button value="button with icon" type="action" icon-left="ph-apple-logo" />
+    <mx-button btn-type="action" icon-left="ph-apple-logo">button with icon</mx-button>
   </div>
   <div class="my-5">
-    <mx-button value="disabled" type="action" disabled />
+    <mx-button btn-type="action" disabled>disabled</mx-button>
   </div>
 </section>
 
@@ -76,13 +76,13 @@
 
 <section class="mds">
   <div class="my-5">
-    <mx-button value="button" type="text" />
+    <mx-button btn-type="text">button</mx-button>
   </div>
   <div class="my-5">
-    <mx-button value="button with icon" type="text" icon-left="ph-apple-logo" />
+    <mx-button btn-type="text" icon-left="ph-apple-logo">button with icon</mx-button>
   </div>
   <div class="my-5">
-    <mx-button value="disabled" type="text" disabled />
+    <mx-button btn-type="text" disabled>disabled</mx-button>
   </div>
 </section>
 
@@ -90,11 +90,12 @@
 
 | Property   | Attribute   | Description | Type      | Default       |
 | ---------- | ----------- | ----------- | --------- | ------------- |
+| `btnType`  | `btn-type`  |             | `string`  | `'contained'` |
 | `disabled` | `disabled`  |             | `boolean` | `false`       |
 | `full`     | `full`      |             | `boolean` | `false`       |
 | `href`     | `href`      |             | `string`  | `undefined`   |
 | `iconLeft` | `icon-left` |             | `string`  | `undefined`   |
 | `target`   | `target`    |             | `string`  | `undefined`   |
-| `type`     | `type`      |             | `string`  | `'contained'` |
+| `type`     | `type`      |             | `string`  | `'button'`    |
 | `value`    | `value`     |             | `string`  | `undefined`   |
 | `xl`       | `xl`        |             | `boolean` | `false`       |

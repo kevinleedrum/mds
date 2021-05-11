@@ -26,13 +26,12 @@ Selection controls consist of checkboxes, radios, and switches.
 
 ### Properties
 
-| Property     | Attribute    | Description | Type      | Default     |
-| ------------ | ------------ | ----------- | --------- | ----------- |
-| `checked`    | `checked`    |             | `boolean` | `false`     |
-| `identifier` | `identifier` |             | `string`  | `nanoid(5)` |
-| `labelName`  | `label-name` |             | `string`  | `''`        |
-| `name`       | `name`       |             | `string`  | `''`        |
-| `value`      | `value`      |             | `string`  | `''`        |
+| Property    | Attribute    | Description | Type      | Default |
+| ----------- | ------------ | ----------- | --------- | ------- |
+| `checked`   | `checked`    |             | `boolean` | `false` |
+| `labelName` | `label-name` |             | `string`  | `''`    |
+| `name`      | `name`       |             | `string`  | `''`    |
+| `value`     | `value`      |             | `string`  | `''`    |
 
 ## Radio Buttons
 
@@ -58,13 +57,12 @@ Selection controls consist of checkboxes, radios, and switches.
 
 ### Properties
 
-| Property     | Attribute    | Description | Type      | Default     |
-| ------------ | ------------ | ----------- | --------- | ----------- |
-| `checked`    | `checked`    |             | `boolean` | `false`     |
-| `identifier` | `identifier` |             | `string`  | `nanoid(5)` |
-| `labelName`  | `label-name` |             | `string`  | `''`        |
-| `name`       | `name`       |             | `string`  | `''`        |
-| `value`      | `value`      |             | `string`  | `''`        |
+| Property    | Attribute    | Description | Type      | Default |
+| ----------- | ------------ | ----------- | --------- | ------- |
+| `checked`   | `checked`    |             | `boolean` | `false` |
+| `labelName` | `label-name` |             | `string`  | `''`    |
+| `name`      | `name`       |             | `string`  | `''`    |
+| `value`     | `value`      |             | `string`  | `''`    |
 
 ## Switches
 
@@ -90,10 +88,9 @@ Selection controls consist of checkboxes, radios, and switches.
 
 ### Properties
 
-| Property     | Attribute    | Description | Type      | Default     |
-| ------------ | ------------ | ----------- | --------- | ----------- |
-| `checked`    | `checked`    |             | `boolean` | `false`     |
-| `identifier` | `identifier` |             | `string`  | `nanoid(5)` |
-| `labelName`  | `label-name` |             | `string`  | `''`        |
-| `name`       | `name`       |             | `string`  | `''`        |
-| `value`      | `value`      |             | `string`  | `''`        |
+| Property    | Attribute    | Description | Type      | Default |
+| ----------- | ------------ | ----------- | --------- | ------- |
+| `checked`   | `checked`    |             | `boolean` | `false` |
+| `labelName` | `label-name` |             | `string`  | `''`    |
+| `name`      | `name`       |             | `string`  | `''`    |
+| `value`     | `value`      |             | `string`  | `''`    |

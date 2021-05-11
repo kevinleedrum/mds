@@ -1,11 +1,12 @@
 import { h, Host, proxyCustomElement } from '@stencil/core/internal/client';
 export { setAssetPath, setPlatformOptions } from '@stencil/core/internal/client';
 
-const MxInput$2 = class extends HTMLElement {
+const MxButton$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
-    this.type = 'contained';
+    this.btnType = 'contained';
+    this.type = 'button'; // reset | submit
     this.disabled = false;
     this.xl = false;
     this.full = false;
@@ -27,7 +28,7 @@ const MxInput$2 = class extends HTMLElement {
     }, 300);
   }
   returnBaseClass() {
-    let str = `btn ${this.type}`;
+    let str = `btn ${this.btnType}`;
     if (this.xl)
       str = `${str} xl`;
     if (this.full)
@@ -39,41 +40,12 @@ const MxInput$2 = class extends HTMLElement {
         this.ripple();
       } }, h("div", { class: "flex justify-center items-center content-center", onClick: () => {
         this.ripple();
-      } }, this.iconLeft && h("i", { class: this.iconLeft }), this.value))) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: () => {
+      } }, this.iconLeft && h("i", { class: this.iconLeft }), h("slot", null)))) : (h("button", { type: this.type, value: this.value, class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: () => {
         this.ripple();
       }, disabled: this.disabled }, h("div", { class: "flex justify-center items-center content-center relative", onClick: () => {
         this.ripple();
-      } }, this.iconLeft && h("i", { class: this.iconLeft }), this.value)))));
+      } }, this.iconLeft && h("i", { class: this.iconLeft }), h("slot", null))))));
   }
-};
-
-// This file replaces `index.js` in bundlers like webpack or Rollup,
-
-let nanoid = (size = 21) => {
-  let id = '';
-  let bytes = crypto.getRandomValues(new Uint8Array(size));
-
-  // A compact alternative for `for (var i = 0; i < step; i++)`.
-  while (size--) {
-    // It is incorrect to use bytes exceeding the alphabet size.
-    // The following mask reduces the random byte in the 0-255 value
-    // range to the 0-63 value range. Therefore, adding hacks, such
-    // as empty string fallback or magic numbers, is unneccessary because
-    // the bitmask trims bytes down to the alphabet size.
-    let byte = bytes[size] & 63;
-    if (byte < 36) {
-      // `0-9a-z`
-      id += byte.toString(36);
-    } else if (byte < 62) {
-      // `A-Z`
-      id += (byte - 26).toString(36).toUpperCase();
-    } else if (byte < 63) {
-      id += '_';
-    } else {
-      id += '-';
-    }
-  }
-  return id
 };
 
 const MxCheckbox$1 = class extends HTMLElement {
@@ -82,12 +54,11 @@ const MxCheckbox$1 = class extends HTMLElement {
     this.__registerHost();
     this.name = '';
     this.value = '';
-    this.identifier = nanoid(5);
     this.labelName = '';
     this.checked = false;
   }
   render() {
-    return (h(Host, { class: "mx-checkbox" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "checkbox", checked: this.checked }), h("span", { class: "flex h-18 w-18 cursor-pointer" }), h("div", { class: "ml-16 inline-block" }, this.labelName))));
+    return (h(Host, { class: "mx-checkbox" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "checkbox", name: this.name, value: this.value, checked: this.checked }), h("span", { class: "flex h-18 w-18 cursor-pointer" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
 };
 
@@ -171,12 +142,11 @@ const MxRadio$1 = class extends HTMLElement {
     this.__registerHost();
     this.name = '';
     this.value = '';
-    this.identifier = nanoid(5);
     this.labelName = '';
     this.checked = false;
   }
   render() {
-    return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, checked: this.checked }), h("span", { class: "flex h-20 w-20 cursor-pointer rounded-full" }), h("div", { class: "ml-16 inline-block" }, this.labelName))));
+    return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }), h("span", { class: "flex h-20 w-20 cursor-pointer rounded-full" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
 };
 
@@ -186,20 +156,19 @@ const MxSwitch$1 = class extends HTMLElement {
     this.__registerHost();
     this.name = '';
     this.value = '';
-    this.identifier = nanoid(5);
     this.labelName = '';
     this.checked = false;
   }
   render() {
-    return (h(Host, { class: "mx-switch" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm w-36 h-14" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "checkbox", name: this.name, checked: this.checked }), h("span", { class: "slider round" }), h("div", { class: "ml-48 inline-block whitespace-nowrap" }, this.labelName))));
+    return (h(Host, { class: "mx-switch" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm w-36 h-14" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "checkbox", name: this.name, checked: this.checked }), h("span", { class: "slider round" }), h("div", { class: "ml-48 inline-block whitespace-nowrap", "data-testid": "labelName" }, this.labelName))));
   }
 };
 
-const MxButton = /*@__PURE__*/proxyCustomElement(MxInput$2, [0,"mx-button",{"type":[1],"value":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"iconLeft":[1,"icon-left"]}]);
-const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"identifier":[1],"labelName":[1,"label-name"],"checked":[4]}]);
+const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"iconLeft":[1,"icon-left"]}]);
+const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"label":[1],"value":[1],"type":[1],"dense":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
-const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"identifier":[1],"labelName":[1,"label-name"],"checked":[4]}]);
-const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"identifier":[1],"labelName":[1,"label-name"],"checked":[4]}]);
+const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
+const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const defineCustomElements = (opts) => {
   if (typeof customElements !== 'undefined') {
     [

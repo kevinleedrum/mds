@@ -1,7 +1,8 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-export class MxInput {
+export class MxButton {
   constructor() {
-    this.type = 'contained';
+    this.btnType = 'contained';
+    this.type = 'button'; // reset | submit
     this.disabled = false;
     this.xl = false;
     this.full = false;
@@ -23,7 +24,7 @@ export class MxInput {
     }, 300);
   }
   returnBaseClass() {
-    let str = `btn ${this.type}`;
+    let str = `btn ${this.btnType}`;
     if (this.xl)
       str = `${str} xl`;
     if (this.full)
@@ -38,17 +39,35 @@ export class MxInput {
           this.ripple();
         } },
         this.iconLeft && h("i", { class: this.iconLeft }),
-        this.value))) : (h("button", { class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: () => {
+        h("slot", null)))) : (h("button", { type: this.type, value: this.value, class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: () => {
         this.ripple();
       }, disabled: this.disabled },
       h("div", { class: "flex justify-center items-center content-center relative", onClick: () => {
           this.ripple();
         } },
         this.iconLeft && h("i", { class: this.iconLeft }),
-        this.value)))));
+        h("slot", null))))));
   }
   static get is() { return "mx-button"; }
   static get properties() { return {
+    "btnType": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "btn-type",
+      "reflect": false,
+      "defaultValue": "'contained'"
+    },
     "type": {
       "type": "string",
       "mutable": false,
@@ -65,7 +84,7 @@ export class MxInput {
       },
       "attribute": "type",
       "reflect": false,
-      "defaultValue": "'contained'"
+      "defaultValue": "'button'"
     },
     "value": {
       "type": "string",

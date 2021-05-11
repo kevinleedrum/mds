@@ -1,6 +1,7 @@
-export declare class MxInput {
+export declare class MxButton {
   btnElem: HTMLButtonElement;
   anchorElem: HTMLAnchorElement;
+  btnType: string;
   type: string;
   value: string;
   disabled: boolean;

@@ -1,19 +1,17 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { nanoid } from 'nanoid';
 export class MxRadio {
   constructor() {
     this.name = '';
     this.value = '';
-    this.identifier = nanoid(5);
     this.labelName = '';
     this.checked = false;
   }
   render() {
     return (h(Host, { class: "mx-radio" },
       h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm" },
-        h("input", { class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, checked: this.checked }),
+        h("input", { class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }),
         h("span", { class: "flex h-20 w-20 cursor-pointer rounded-full" }),
-        h("div", { class: "ml-16 inline-block" }, this.labelName))));
+        h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
   static get is() { return "mx-radio"; }
   static get properties() { return {
@@ -52,24 +50,6 @@ export class MxRadio {
       "attribute": "value",
       "reflect": false,
       "defaultValue": "''"
-    },
-    "identifier": {
-      "type": "string",
-      "mutable": false,
-      "complexType": {
-        "original": "string",
-        "resolved": "string",
-        "references": {}
-      },
-      "required": false,
-      "optional": false,
-      "docs": {
-        "tags": [],
-        "text": ""
-      },
-      "attribute": "identifier",
-      "reflect": false,
-      "defaultValue": "nanoid(5)"
     },
     "labelName": {
       "type": "string",

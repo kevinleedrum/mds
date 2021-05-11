@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MxButton {
+        "btnType": string;
         "disabled": boolean;
         "full": boolean;
         "href": string;
@@ -18,7 +19,6 @@ export namespace Components {
     }
     interface MxCheckbox {
         "checked": boolean;
-        "identifier": string;
         "labelName": string;
         "name": string;
         "value": string;
@@ -42,14 +42,12 @@ export namespace Components {
     }
     interface MxRadio {
         "checked": boolean;
-        "identifier": string;
         "labelName": string;
         "name": string;
         "value": string;
     }
     interface MxSwitch {
         "checked": boolean;
-        "identifier": string;
         "labelName": string;
         "name": string;
         "value": string;
@@ -96,6 +94,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface MxButton {
+        "btnType"?: string;
         "disabled"?: boolean;
         "full"?: boolean;
         "href"?: string;
@@ -107,7 +106,6 @@ declare namespace LocalJSX {
     }
     interface MxCheckbox {
         "checked"?: boolean;
-        "identifier"?: string;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
@@ -131,14 +129,12 @@ declare namespace LocalJSX {
     }
     interface MxRadio {
         "checked"?: boolean;
-        "identifier"?: string;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
     }
     interface MxSwitch {
         "checked"?: boolean;
-        "identifier"?: string;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
