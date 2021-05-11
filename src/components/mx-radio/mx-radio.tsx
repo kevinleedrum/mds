@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { nanoid } from 'nanoid';
 
 @Component({
   tag: 'mx-radio',
@@ -8,7 +7,6 @@ import { nanoid } from 'nanoid';
 export class MxRadio {
   @Prop() name: string = '';
   @Prop() value: string = '';
-  @Prop() identifier: string = nanoid(5);
   @Prop() labelName: string = '';
   @Prop() checked: boolean = false;
 

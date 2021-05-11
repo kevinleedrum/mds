@@ -90,11 +90,12 @@
 
 | Property   | Attribute   | Description | Type      | Default       |
 | ---------- | ----------- | ----------- | --------- | ------------- |
+| `btnType`  | `btn-type`  |             | `string`  | `'contained'` |
 | `disabled` | `disabled`  |             | `boolean` | `false`       |
 | `full`     | `full`      |             | `boolean` | `false`       |
 | `href`     | `href`      |             | `string`  | `undefined`   |
 | `iconLeft` | `icon-left` |             | `string`  | `undefined`   |
 | `target`   | `target`    |             | `string`  | `undefined`   |
-| `btn-type` | `btn-type`  |             | `string`  | `'contained'` |
+| `type`     | `type`      |             | `string`  | `'button'`    |
 | `value`    | `value`     |             | `string`  | `undefined`   |
 | `xl`       | `xl`        |             | `boolean` | `false`       |

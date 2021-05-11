@@ -42,14 +42,12 @@ export namespace Components {
     }
     interface MxRadio {
         "checked": boolean;
-        "identifier": string;
         "labelName": string;
         "name": string;
         "value": string;
     }
     interface MxSwitch {
         "checked": boolean;
-        "identifier": string;
         "labelName": string;
         "name": string;
         "value": string;
@@ -131,14 +129,12 @@ declare namespace LocalJSX {
     }
     interface MxRadio {
         "checked"?: boolean;
-        "identifier"?: string;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
     }
     interface MxSwitch {
         "checked"?: boolean;
-        "identifier"?: string;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
