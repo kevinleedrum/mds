@@ -83,4 +83,4 @@ StencilJS provides a loader which dynamically "tree-shakes" the code as needed. 
 
 ### Framework Integrations
 
-StencilJS jas a bunch of documentation around integrating these types of components into most popular frameworks - including vanilla Javascript. You can read more about that here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview)
+StencilJS has a bunch of documentation around integrating these types of components into most popular frameworks - including vanilla Javascript. You can read more about that here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview)
