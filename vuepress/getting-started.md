@@ -1,7 +1,3 @@
----
-sidebar: true
----
-
 # Getting Started
 
 ## Adding The Mx Design System via Yarn or NPM
@@ -73,3 +69,15 @@ If you prefer to use the system as a modern ESModule you can do so via UNPKG or 
 ```
 
 [![Edit moxi-design-system-esmodule-example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/agitated-cannon-tw60n?fontsize=14&hidenavigation=1&theme=dark)
+
+## Phosphor Icons
+
+Any icon system will work but the design team at Moxi has put an emphasis on Phosphor Icons. If you plan to use icons in your collaberation with this framework, please visit [https://phosphoricons.com/](https://phosphoricons.com/) for more information.
+
+To add Phosphor Icons to your project, simply add the following script tag:
+
+```html
+<script src="https://unpkg.com/phosphor-icons"></script>
+```
+
+We purposly do not internally add this icon system as it's prefered to keep the icon libraries flexible. This way if you prefer Font Awesome feel free to use it.

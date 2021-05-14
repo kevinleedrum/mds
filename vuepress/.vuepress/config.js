@@ -44,6 +44,7 @@ module.exports = {
       },
     ],
     sidebar: {
+      '/getting-started.html': ['getting-started'],
       '/examples/': ['grid', 'flex'],
       '/css-documentation/': [
         {
