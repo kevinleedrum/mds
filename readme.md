@@ -22,6 +22,14 @@ The project uses Vuepress as a means to write documentation as you develop. When
 
 You can now access the site at [http://localhost:8080](http://localhost:8080).
 
+## Vuepress Documentation Only Creation and Editing
+
+Because of relationship between Vuepress, TailwindCSS, and Stencil, simply running `yarn dev` will result in more changed files than you might be prepared for. To make the multiple framework environment work, they all react off of changes to one another.
+
+If your only goal is to add or edit documentation, please do the following:
+
+In your terminal run `yarn docs:dev`. This will ensure that only Vuepress is listening to changes resulting in the changes only being documentation and not dynamic Javascript files or TailwindCSS alterations.
+
 ### Where Things Live
 
 #### Vuepress
@@ -50,7 +58,7 @@ We are not using the Shadow DOM for the Stencil components and are not using the
 
 There's no reason to write and maintain this CSS in two places so the TailwindCSS implementation will be the source of truth for our component styling.
 
-Under `src/tailwind` you'll see directories like `mx-input` and `mx-button`. Those `SASS` directories and files are included in the `styles.css` file. Thanks to the magic of PostCSS, the includes work and support transpiling of `scss` to `css` immediately.
+Under `src/tailwind` you'll see directories like `mx-input` and `mx-button`. Those `SASS` directories and files are included in the `styles.css` file. SCSS is transpiled to CSS immediately thanks to PostCSS.
 
 ## Using In A Project
 
@@ -75,4 +83,4 @@ StencilJS provides a loader which dynamically "tree-shakes" the code as needed. 
 
 ### Framework Integrations
 
-StencilJS jas a bunch of documentation around integrating these types of components into most popular frameworks - including vanilla Javascript. You can read more about that here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview)
+StencilJS has a bunch of documentation around integrating these types of components into most popular frameworks - including vanilla Javascript. You can read more about that here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview)
