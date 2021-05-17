@@ -41,6 +41,7 @@
     letter-spacing: -1.5px;
     font-weight: bold;
     line-height: 7.5rem;
+    @apply mb-24;
   }
 
   h1 {
@@ -48,6 +49,7 @@
     letter-spacing: -0.5px;
     font-weight: bold;
     line-height: 4.5rem;
+    @apply mb-24;
   }
 
   h2 {
@@ -55,6 +57,7 @@
     line-height: 64px;
     font-weight: 600;
     line-height: 4rem;
+    @apply my-24;
   }
 
   h3.emphasis {
@@ -62,6 +65,7 @@
     letter-spacing: 0.25px;
     line-height: 3.5rem;
     font-weight: bold;
+    @apply my-24;
   }
 
   h3 {
@@ -69,6 +73,7 @@
     letter-spacing: 0.25px;
     line-height: 3.5rem;
     font-weight: normal;
+    @apply my-24;
   }
 
   h4.emphasis {
@@ -76,6 +81,7 @@
     letter-spacing: 0.25px;
     line-height: 3.5rem;
     font-weight: 600;
+    @apply my-24;
   }
 
   h4 {
@@ -83,18 +89,21 @@
     letter-spacing: 0.25px;
     line-height: 3.5rem;
     font-weight: normal;
+    @apply my-24;
   }
 
   h5.emphasis {
     font-size: 1.5rem;
     line-height: 2.5rem;
     font-weight: 800;
+    @apply my-24;
   }
 
   h5 {
     font-size: 1.5rem;
     line-height: 2.5rem;
     font-weight: normal;
+    @apply my-24;
   }
 
   h6.emphasis {
@@ -102,6 +111,7 @@
     letter-spacing: 0.25px;
     line-height: 1.5rem;
     font-weight: bold;
+    @apply my-24;
   }
 
   h6 {
@@ -109,6 +119,7 @@
     letter-spacing: 0.25px;
     line-height: 1.5rem;
     font-weight: normal;
+    @apply my-24;
   }
 
   .subtitle1 {
@@ -145,6 +156,10 @@
 
   .overline2 {
     @apply text-xs tracking-1-5 leading-4 font-normal uppercase;
+  }
+
+  p {
+    @apply my-24;
   }
 
   /***************************
