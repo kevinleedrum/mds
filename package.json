@@ -36,7 +36,7 @@
     "tailwind:dev": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css -w",
     "tailwind:scss": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css",
     "docs:dev": "vuepress dev vuepress",
-    "docs:build": "vuepress build vuepress",
+    "docs:build": "sh build-docs.sh",
     "stencil:build": "stencil build --docs",
     "stencil:start": "stencil build --dev --watch",
     "test": "stencil test --spec",
