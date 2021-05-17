@@ -9,5 +9,5 @@ echo "==========================="
 echo ""
 
 yarn stencil:build
-sh build-docs.sh
+yarn docs:build
 cp -R vuepress/.vuepress/public/styles ./dist
