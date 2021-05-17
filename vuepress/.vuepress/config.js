@@ -36,11 +36,11 @@ module.exports = {
       },
       {
         text: 'Examples',
-        link: '/examples/',
+        link: '/examples/grid.html',
       },
       {
         text: 'Components',
-        link: '/components/',
+        link: '/components/inputs.html',
       },
     ],
     sidebar: {
