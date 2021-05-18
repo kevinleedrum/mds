@@ -18,7 +18,7 @@ export class MxButton {
   @Prop() full: boolean = false;
   @Prop() iconLeft: string;
 
-  ripple() {
+  ripple(e: MouseEvent) {
     const elem = this.href ? this.anchorElem : this.btnElem;
 
     // Create span element
@@ -31,8 +31,8 @@ export class MxButton {
     elem.appendChild(ripple);
 
     // Position the span element
-    ripple.style.left = '0';
-    ripple.style.top = '0';
+    ripple.style.left = (e.offsetX || 0) + 'px';
+    ripple.style.top = (e.offsetY || 0) + 'px';
 
     // Remove span after 0.3s
     setTimeout(() => {
@@ -56,14 +56,14 @@ export class MxButton {
             target={this.target}
             class={this.returnBaseClass()}
             ref={el => (this.anchorElem = el as HTMLAnchorElement)}
-            onClick={() => {
-              this.ripple();
+            onClick={e => {
+              this.ripple(e);
             }}
           >
             <div
               class="flex justify-center items-center content-center"
-              onClick={() => {
-                this.ripple();
+              onClick={e => {
+                this.ripple(e);
               }}
             >
               {this.iconLeft && <i class={this.iconLeft}></i>}
@@ -76,15 +76,15 @@ export class MxButton {
             value={this.value}
             class={this.returnBaseClass()}
             ref={el => (this.btnElem = el as HTMLButtonElement)}
-            onClick={() => {
-              this.ripple();
+            onClick={e => {
+              this.ripple(e);
             }}
             disabled={this.disabled}
           >
             <div
               class="flex justify-center items-center content-center relative"
-              onClick={() => {
-                this.ripple();
+              onClick={e => {
+                this.ripple(e);
               }}
             >
               {this.iconLeft && <i class={this.iconLeft}></i>}
