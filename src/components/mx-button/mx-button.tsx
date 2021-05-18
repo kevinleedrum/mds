@@ -18,6 +18,16 @@ export class MxButton {
   @Prop() full: boolean = false;
   @Prop() iconLeft: string;
 
+  onClick(e: MouseEvent) {
+    if (this.disabled) {
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
+
+    this.ripple(e);
+  }
+
   ripple(e: MouseEvent) {
     const elem = this.href ? this.anchorElem : this.btnElem;
 
@@ -56,16 +66,9 @@ export class MxButton {
             target={this.target}
             class={this.returnBaseClass()}
             ref={el => (this.anchorElem = el as HTMLAnchorElement)}
-            onClick={e => {
-              this.ripple(e);
-            }}
+            onClick={e => this.onClick(e)}
           >
-            <div
-              class="flex justify-center items-center content-center"
-              onClick={e => {
-                this.ripple(e);
-              }}
-            >
+            <div class="flex justify-center items-center content-center">
               {this.iconLeft && <i class={this.iconLeft}></i>}
               <slot />
             </div>
@@ -76,17 +79,10 @@ export class MxButton {
             value={this.value}
             class={this.returnBaseClass()}
             ref={el => (this.btnElem = el as HTMLButtonElement)}
-            onClick={e => {
-              this.ripple(e);
-            }}
-            disabled={this.disabled}
+            onClick={e => this.onClick(e)}
+            aria-disabled={this.disabled}
           >
-            <div
-              class="flex justify-center items-center content-center relative"
-              onClick={e => {
-                this.ripple(e);
-              }}
-            >
+            <div class="flex justify-center items-center content-center relative">
               {this.iconLeft && <i class={this.iconLeft}></i>}
               <slot />
             </div>
