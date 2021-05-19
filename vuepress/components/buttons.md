@@ -95,6 +95,20 @@
   </div>
 </section>
 
+## Icon Buttons
+
+<section class="mds">
+  <div class="my-5">
+    <mx-button btn-type="icon" icon="ph-heart"></mx-button>
+    <mx-button btn-type="icon" icon="ph-x"></mx-button>
+  </div>
+  <strong>Disabled</strong>
+  <div class="my-5">
+    <mx-button btn-type="icon" icon="ph-heart" disabled></mx-button>
+    <mx-button btn-type="icon" icon="ph-x" disabled></mx-button>
+  </div>
+</section>
+
 ### Properties
 
 | Property   | Attribute   | Description | Type      | Default       |

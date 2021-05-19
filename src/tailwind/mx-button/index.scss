@@ -138,5 +138,23 @@
         }
       }
     }
+
+    &.icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 100%;
+
+      &[aria-disabled] {
+        color: #c1c1c1;
+      }
+
+      &:focus:not([aria-disabled]) {
+        background: #dcdcdc;
+      }
+
+      &:hover:not([aria-disabled]) {
+        background: #f0f0f0;
+      }
+    }
   }
 }

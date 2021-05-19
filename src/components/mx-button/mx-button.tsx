@@ -8,7 +8,7 @@ export class MxButton {
   btnElem!: HTMLButtonElement;
   anchorElem!: HTMLAnchorElement;
 
-  @Prop() btnType: string = 'contained'; // contained | outlined | action | text
+  @Prop() btnType: string = 'contained'; // contained | outlined | action | text | icon
   @Prop() type: string = 'button'; // reset | submit
   @Prop() value: string;
   @Prop() disabled: boolean = false;
@@ -18,6 +18,7 @@ export class MxButton {
   @Prop() full: boolean = false;
   @Prop() dropdown: boolean = false;
   @Prop() iconLeft: string;
+  @Prop() icon: string;
 
   onClick(e: MouseEvent) {
     if (this.disabled) {
@@ -88,12 +89,11 @@ export class MxButton {
     const buttonContent = (
       <div class="flex justify-center items-center content-center relative">
         {this.iconLeft && <i class={'mr-8 ' + this.iconLeft}></i>}
+        {this.icon && <i class={this.icon}></i>}
         <span class="slot-content">
           <slot />
         </span>
-        {this.dropdown && this.btnType === 'text' && (
-          <span class="separator inline-block w-1 ml-4 -my-4 h-24 bg-blue-200"></span>
-        )}
+        {this.dropdown && this.btnType === 'text' && <span class="separator inline-block w-1 ml-4 -my-4 h-24"></span>}
         {this.dropdown && <span class={this.btnType === 'text' ? 'ml-4' : 'ml-8'}>{dropdownIcon}</span>}
       </div>
     );
