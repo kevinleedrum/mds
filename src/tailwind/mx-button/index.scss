@@ -112,10 +112,12 @@
         background: #eaeaea;
       }
 
-      &.dropdown .slot-content,
-      &.dropdown svg {
-        font-weight: initial;
-        color: initial;
+      &.dropdown:not([aria-disabled]) {
+        .slot-content,
+        svg.dropdown-icon {
+          font-weight: initial;
+          color: initial;
+        }
       }
 
       &[aria-disabled] {

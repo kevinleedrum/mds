@@ -85,10 +85,13 @@
     <mx-button btn-type="text" icon-left="ph-apple-logo">button with icon</mx-button>
   </div>
   <div class="my-5">
+    <mx-button btn-type="text" disabled>disabled</mx-button>
+  </div>
+  <div class="my-5">
     <mx-button btn-type="text" icon-left="ph-apple-logo" dropdown>Icon + Dropdown</mx-button>
   </div>
   <div class="my-5">
-    <mx-button btn-type="text" disabled>disabled</mx-button>
+    <mx-button btn-type="text" icon-left="ph-apple-logo" dropdown disabled>Disabled</mx-button>
   </div>
 </section>
 
