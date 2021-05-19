@@ -27,7 +27,7 @@ export class MxButton {
       return;
     }
 
-    this.ripple(e);
+    if (this.btnType !== 'icon') this.ripple(e);
   }
 
   ripple(e: MouseEvent) {
@@ -68,16 +68,16 @@ export class MxButton {
     return str;
   }
 
+  returnChevronClass() {
+    if (this.btnType === 'text') return 'ml-4';
+    if (this.btnType === 'icon')
+      return 'chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center bg-white shadow-dp-1';
+    return 'ml-8';
+  }
+
   render() {
-    const dropdownIcon = (
-      <svg
-        class="dropdown-icon"
-        width="13"
-        height="8"
-        viewBox="0 0 13 8"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+    const chevronIcon = (
+      <svg class="chevron-icon" width="13" height="7" viewBox="0 0 13 7" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z"
           fill="currentColor"
@@ -90,11 +90,13 @@ export class MxButton {
       <div class="flex justify-center items-center content-center relative">
         {this.iconLeft && <i class={'mr-8 ' + this.iconLeft}></i>}
         {this.icon && <i class={this.icon}></i>}
-        <span class="slot-content">
-          <slot />
-        </span>
+        {this.btnType !== 'icon' && (
+          <span class="slot-content">
+            <slot />
+          </span>
+        )}
         {this.dropdown && this.btnType === 'text' && <span class="separator inline-block w-1 ml-4 -my-4 h-24"></span>}
-        {this.dropdown && <span class={this.btnType === 'text' ? 'ml-4' : 'ml-8'}>{dropdownIcon}</span>}
+        {this.dropdown && <span class={this.returnChevronClass()}>{chevronIcon}</span>}
       </div>
     );
 

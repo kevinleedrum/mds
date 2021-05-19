@@ -7,10 +7,10 @@
     <div style="width: 47%;">
       <strong>Contained</strong>
       <div class="my-5">
-        <mx-button @click="() => { debugger }">button</mx-button>
+        <mx-button>button</mx-button>
       </div>
       <div class="my-5">
-        <mx-button disabled @click="() => { debugger }">Disabled button</mx-button>
+        <mx-button disabled>Disabled button</mx-button>
       </div>
       <div class="my-5">
         <mx-button xl>XL button</mx-button>
@@ -98,14 +98,16 @@
 ## Icon Buttons
 
 <section class="mds">
-  <div class="my-5">
+  <div class="flex my-5 items-center">
     <mx-button btn-type="icon" icon="ph-heart"></mx-button>
     <mx-button btn-type="icon" icon="ph-x"></mx-button>
+    <mx-button btn-type="icon" dropdown></mx-button>
   </div>
   <strong>Disabled</strong>
-  <div class="my-5">
+  <div class="flex my-5 items-center">
     <mx-button btn-type="icon" icon="ph-heart" disabled></mx-button>
     <mx-button btn-type="icon" icon="ph-x" disabled></mx-button>
+    <mx-button btn-type="icon" dropdown disabled></mx-button>
   </div>
 </section>
 

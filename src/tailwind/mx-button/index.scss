@@ -100,6 +100,14 @@
       }
     }
 
+    &.dropdown:not([aria-disabled]) {
+      .slot-content,
+      svg.chevron-icon {
+        font-weight: initial;
+        color: initial;
+      }
+    }
+
     &.text {
       padding: 10px 8px;
       font-weight: 600;
@@ -110,14 +118,6 @@
 
       .separator {
         background: #eaeaea;
-      }
-
-      &.dropdown:not([aria-disabled]) {
-        .slot-content,
-        svg.dropdown-icon {
-          font-weight: initial;
-          color: initial;
-        }
       }
 
       &[aria-disabled] {
@@ -149,11 +149,17 @@
       }
 
       &:focus:not([aria-disabled]) {
-        background: #dcdcdc;
+        background: #d7d7d7;
+        .chevron-wrapper {
+          background: #dcdcdc;
+        }
       }
 
       &:hover:not([aria-disabled]) {
-        background: #f0f0f0;
+        background: #eeeeee;
+        .chevron-wrapper {
+          background: #f3f3f4;
+        }
       }
     }
   }
