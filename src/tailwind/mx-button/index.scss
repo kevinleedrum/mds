@@ -87,10 +87,6 @@
       font-size: 14px;
       line-height: 20px;
 
-      i {
-        margin-right: 8px;
-      }
-
       &[aria-disabled] {
         border: 1px solid #eaeaea;
         color: #c1c1c1;
@@ -112,10 +108,6 @@
       line-height: 16px;
       border-radius: 8px;
       color: #0457af;
-
-      i {
-        margin-right: 8px;
-      }
 
       &[aria-disabled] {
         color: #c1c1c1;

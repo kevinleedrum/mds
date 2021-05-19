@@ -7,10 +7,10 @@
     <div style="width: 47%;">
       <strong>Contained</strong>
       <div class="my-5">
-        <mx-button>button</mx-button>
+        <mx-button @click="() => { debugger }">button</mx-button>
       </div>
       <div class="my-5">
-        <mx-button disabled>Disabled button</mx-button>
+        <mx-button disabled @click="() => { debugger }">Disabled button</mx-button>
       </div>
       <div class="my-5">
         <mx-button xl>XL button</mx-button>
@@ -66,6 +66,9 @@
   </div>
   <div class="my-5">
     <mx-button btn-type="action" icon-left="ph-apple-logo">button with icon</mx-button>
+  </div>
+  <div class="my-5">
+    <mx-button btn-type="action" dropdown>dropdown</mx-button>
   </div>
   <div class="my-5">
     <mx-button btn-type="action" disabled>disabled</mx-button>

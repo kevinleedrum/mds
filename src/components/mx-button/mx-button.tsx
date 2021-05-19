@@ -1,5 +1,15 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 
+const dropdownIcon = (
+  <svg width="13" height="8" viewBox="0 0 13 8" class="ml-8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z"
+      fill="currentColor"
+      fill-opacity="0.88"
+    />
+  </svg>
+);
+
 @Component({
   tag: 'mx-button',
   shadow: false,
@@ -16,6 +26,7 @@ export class MxButton {
   @Prop() href: string;
   @Prop() target: string;
   @Prop() full: boolean = false;
+  @Prop() dropdown: boolean = false;
   @Prop() iconLeft: string;
 
   onClick(e: MouseEvent) {
@@ -64,6 +75,14 @@ export class MxButton {
   }
 
   render() {
+    const buttonContent = (
+      <div class="flex justify-center items-center content-center relative">
+        {this.iconLeft && <i class={'mr-8 ' + this.iconLeft}></i>}
+        <slot />
+        {this.dropdown && dropdownIcon}
+      </div>
+    );
+
     return (
       <Host class={this.returnHostClass()}>
         {this.href ? (
@@ -74,10 +93,7 @@ export class MxButton {
             ref={el => (this.anchorElem = el as HTMLAnchorElement)}
             onClick={e => this.onClick(e)}
           >
-            <div class="flex justify-center items-center content-center">
-              {this.iconLeft && <i class={this.iconLeft}></i>}
-              <slot />
-            </div>
+            {buttonContent}
           </a>
         ) : (
           <button
@@ -88,10 +104,7 @@ export class MxButton {
             onClick={e => this.onClick(e)}
             aria-disabled={this.disabled}
           >
-            <div class="flex justify-center items-center content-center relative">
-              {this.iconLeft && <i class={this.iconLeft}></i>}
-              <slot />
-            </div>
+            {buttonContent}
           </button>
         )}
       </Host>
