@@ -18,7 +18,7 @@ export class MxButton {
   btnElem!: HTMLButtonElement;
   anchorElem!: HTMLAnchorElement;
 
-  @Prop() btnType: string = 'contained';
+  @Prop() btnType: string = 'contained'; // contained | outlined | action | text
   @Prop() type: string = 'button'; // reset | submit
   @Prop() value: string;
   @Prop() disabled: boolean = false;
@@ -71,6 +71,7 @@ export class MxButton {
     let str = `btn ${this.btnType}`;
     if (this.xl) str = `${str} xl`;
     if (this.full) str = `${str} full`;
+    if (this.btnType !== 'action') str += ' uppercase';
     return str;
   }
 

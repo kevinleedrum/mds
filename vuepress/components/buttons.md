@@ -62,16 +62,16 @@
 
 <section class="mds">
   <div class="my-5">
-    <mx-button btn-type="action">button</mx-button>
+    <mx-button btn-type="action">Button</mx-button>
   </div>
   <div class="my-5">
-    <mx-button btn-type="action" icon-left="ph-apple-logo">button with icon</mx-button>
+    <mx-button btn-type="action" icon-left="ph-apple-logo">Button with Icon</mx-button>
   </div>
   <div class="my-5">
-    <mx-button btn-type="action" dropdown>dropdown</mx-button>
+    <mx-button btn-type="action" dropdown>Dropdown</mx-button>
   </div>
   <div class="my-5">
-    <mx-button btn-type="action" disabled>disabled</mx-button>
+    <mx-button btn-type="action" disabled>Disabled</mx-button>
   </div>
 </section>
 
