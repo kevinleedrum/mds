@@ -7,7 +7,7 @@
     width: 100%;
 
     &.btn {
-      span {
+      span.ripple {
         position: absolute;
         border-radius: 50%;
         background-color: rgba(255, 255, 255, 0.4);
@@ -91,11 +91,11 @@
         color: #c1c1c1;
       }
 
-      &:focus {
+      &:focus:not([aria-disabled]) {
         background: #dcdcdc;
       }
 
-      &:hover {
+      &:hover:not([aria-disabled]) {
         background: #f0f0f0;
       }
     }
@@ -108,16 +108,32 @@
       border-radius: 8px;
       color: #0457af;
 
+      .separator {
+        background: #eaeaea;
+      }
+
+      &.dropdown .slot-content,
+      &.dropdown svg {
+        font-weight: initial;
+        color: initial;
+      }
+
       &[aria-disabled] {
         color: #c1c1c1;
       }
 
-      &:focus {
+      &:focus:not([aria-disabled]) {
         background: #c3d7ec;
+        .separator {
+          background: rgba(4, 87, 175, 0.24);
+        }
       }
 
-      &:hover {
+      &:hover:not([aria-disabled]) {
         background: #ebf2f9;
+        .separator {
+          background: rgba(4, 87, 175, 0.08);
+        }
       }
     }
   }

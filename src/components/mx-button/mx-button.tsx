@@ -1,15 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 
-const dropdownIcon = (
-  <svg width="13" height="8" viewBox="0 0 13 8" class="ml-8" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z"
-      fill="currentColor"
-      fill-opacity="0.88"
-    />
-  </svg>
-);
-
 @Component({
   tag: 'mx-button',
   shadow: false,
@@ -71,16 +61,33 @@ export class MxButton {
     let str = `btn ${this.btnType}`;
     if (this.xl) str = `${str} xl`;
     if (this.full) str = `${str} full`;
-    if (this.btnType !== 'action') str += ' uppercase';
+    if (this.dropdown) str += ' dropdown';
+    // Action buttons and Text Dropdown buttons are not uppercase
+    if (this.btnType !== 'action' && !(this.btnType === 'text' && this.dropdown)) str += ' uppercase';
     return str;
   }
 
   render() {
+    const dropdownIcon = (
+      <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z"
+          fill="currentColor"
+          fill-opacity="0.88"
+        />
+      </svg>
+    );
+
     const buttonContent = (
       <div class="flex justify-center items-center content-center relative">
         {this.iconLeft && <i class={'mr-8 ' + this.iconLeft}></i>}
-        <slot />
-        {this.dropdown && dropdownIcon}
+        <span class="slot-content">
+          <slot />
+        </span>
+        {this.dropdown && this.btnType === 'text' && (
+          <span class="separator inline-block w-1 ml-4 -my-4 h-24 bg-blue-200"></span>
+        )}
+        {this.dropdown && <span class={this.btnType === 'text' ? 'ml-4' : 'ml-8'}>{dropdownIcon}</span>}
       </div>
     );
 
