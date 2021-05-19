@@ -50,6 +50,12 @@ export class MxButton {
     }, 300);
   }
 
+  returnHostClass() {
+    let str = 'mx-button';
+    str += this.full ? ' flex' : ' inline-flex';
+    return str;
+  }
+
   returnBaseClass() {
     let str = `btn ${this.btnType}`;
     if (this.xl) str = `${str} xl`;
@@ -59,7 +65,7 @@ export class MxButton {
 
   render() {
     return (
-      <Host class="mx-button">
+      <Host class={this.returnHostClass()}>
         {this.href ? (
           <a
             href={this.href}
