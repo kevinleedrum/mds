@@ -65,7 +65,7 @@
     <mx-button btn-type="action">Button</mx-button>
   </div>
   <div class="my-5">
-    <mx-button btn-type="action" icon-left="ph-apple-logo">Button with Icon</mx-button>
+    <mx-button btn-type="action" icon="ph-apple-logo">Button with Icon</mx-button>
   </div>
   <div class="my-5">
     <mx-button btn-type="action" dropdown>Dropdown</mx-button>
@@ -82,16 +82,16 @@
     <mx-button btn-type="text">button</mx-button>
   </div>
   <div class="my-5">
-    <mx-button btn-type="text" icon-left="ph-apple-logo">button with icon</mx-button>
+    <mx-button btn-type="text" icon="ph-apple-logo">button with icon</mx-button>
   </div>
   <div class="my-5">
     <mx-button btn-type="text" disabled>disabled</mx-button>
   </div>
   <div class="my-5">
-    <mx-button btn-type="text" icon-left="ph-apple-logo" dropdown>Icon + Dropdown</mx-button>
+    <mx-button btn-type="text" icon="ph-apple-logo" dropdown>Icon + Dropdown</mx-button>
   </div>
   <div class="my-5">
-    <mx-button btn-type="text" icon-left="ph-apple-logo" dropdown disabled>Disabled</mx-button>
+    <mx-button btn-type="text" icon="ph-apple-logo" dropdown disabled>Disabled</mx-button>
   </div>
 </section>
 
@@ -111,16 +111,38 @@
   </div>
 </section>
 
+## Toggle Buttons
+
+<section class="mds">
+  <div class="flex my-5 items-center">
+    <mx-toggle-button name="foo" icon="ph-text-align-left" value="left" checked></mx-toggle-button>
+    <mx-toggle-button name="foo" icon="ph-text-align-center" value="center"></mx-toggle-button>
+    <mx-toggle-button name="foo" icon="ph-text-align-right" value="right"></mx-toggle-button>
+  </div>
+  <strong>Multiple</strong>
+  <div class="flex my-5 items-center">
+    <mx-toggle-button name="baz" icon="ph-text-bolder" multiple></mx-toggle-button>
+    <mx-toggle-button name="baz" icon="ph-text-italic" multiple></mx-toggle-button>
+    <mx-toggle-button name="baz" icon="ph-text-underline" checked multiple></mx-toggle-button>
+  </div>
+  <strong>Disabled</strong>
+  <div class="flex my-5 items-center">
+    <mx-toggle-button name="bar" icon="ph-text-align-left" disabled></mx-toggle-button>
+    <mx-toggle-button name="bar" icon="ph-text-align-center" disabled></mx-toggle-button>
+    <mx-toggle-button name="bar" icon="ph-text-align-right" disabled></mx-toggle-button>
+  </div>
+</section>
+
 ### Properties
 
-| Property   | Attribute   | Description | Type      | Default       |
-| ---------- | ----------- | ----------- | --------- | ------------- |
-| `btnType`  | `btn-type`  |             | `string`  | `'contained'` |
-| `disabled` | `disabled`  |             | `boolean` | `false`       |
-| `full`     | `full`      |             | `boolean` | `false`       |
-| `href`     | `href`      |             | `string`  | `undefined`   |
-| `iconLeft` | `icon-left` |             | `string`  | `undefined`   |
-| `target`   | `target`    |             | `string`  | `undefined`   |
-| `type`     | `type`      |             | `string`  | `'button'`    |
-| `value`    | `value`     |             | `string`  | `undefined`   |
-| `xl`       | `xl`        |             | `boolean` | `false`       |
+| Property   | Attribute  | Description | Type      | Default       |
+| ---------- | ---------- | ----------- | --------- | ------------- |
+| `btnType`  | `btn-type` |             | `string`  | `'contained'` |
+| `disabled` | `disabled` |             | `boolean` | `false`       |
+| `full`     | `full`     |             | `boolean` | `false`       |
+| `href`     | `href`     |             | `string`  | `undefined`   |
+| `iconLeft` | `icon`     |             | `string`  | `undefined`   |
+| `target`   | `target`   |             | `string`  | `undefined`   |
+| `type`     | `type`     |             | `string`  | `'button'`    |
+| `value`    | `value`    |             | `string`  | `undefined`   |
+| `xl`       | `xl`       |             | `boolean` | `false`       |
