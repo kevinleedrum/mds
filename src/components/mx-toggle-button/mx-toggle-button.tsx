@@ -79,6 +79,7 @@ export class MxToggleButton {
             name={this.name}
             value={this.value}
             checked={this.checked}
+            disabled={this.disabled}
           />
           <span
             ref={el => (this.spanElem = el as HTMLSpanElement)}
