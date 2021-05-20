@@ -142,9 +142,9 @@
     <div>
       <strong>Disabled</strong>
       <div class="flex my-5 items-center">
-        <mx-toggle-button name="bar" icon="ph-text-align-left" disabled></mx-toggle-button>
-        <mx-toggle-button name="bar" icon="ph-text-align-center" disabled></mx-toggle-button>
-        <mx-toggle-button name="bar" icon="ph-text-align-right" disabled></mx-toggle-button>
+      <mx-toggle-button name="bar" icon="ph-text-align-left" value="left" single disabled></mx-toggle-button>
+      <mx-toggle-button name="bar" icon="ph-text-align-center" value="center" single disabled></mx-toggle-button>
+      <mx-toggle-button name="bar" icon="ph-text-align-right" value="right" single disabled></mx-toggle-button>
       </div>
     </div>
     <div>
