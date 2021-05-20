@@ -44,6 +44,10 @@
     border-radius: 0 4px 4px 0;
   }
 
+  &:first-of-type:last-of-type .btn-toggle {
+    border-radius: 4px;
+  }
+
   span.ripple {
     position: absolute;
     border-radius: 50%;

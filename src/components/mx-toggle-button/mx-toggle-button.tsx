@@ -9,7 +9,7 @@ export class MxToggleButton {
   spanElem: HTMLSpanElement;
 
   @Prop() icon: string;
-  @Prop() multiple: boolean = false;
+  @Prop() single: boolean = false;
   @Prop() name: string;
   @Prop() value: string;
   @Prop() checked: boolean = false;
@@ -75,7 +75,7 @@ export class MxToggleButton {
           <input
             ref={el => (this.inputElem = el as HTMLInputElement)}
             class="absolute h-0 w-0 opacity-0"
-            type={this.multiple ? 'checkbox' : 'radio'}
+            type={this.single ? 'radio' : 'checkbox'}
             name={this.name}
             value={this.value}
             checked={this.checked}
