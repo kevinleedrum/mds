@@ -91,12 +91,12 @@
         color: #c1c1c1;
       }
 
-      &:focus:not([aria-disabled]) {
-        background: #dcdcdc;
-      }
-
       &:hover:not([aria-disabled]) {
         background: #f0f0f0;
+      }
+
+      &:focus:not([aria-disabled]) {
+        background: #dcdcdc;
       }
 
       &:active:not([aria-disabled]) {
@@ -129,17 +129,17 @@
         color: #c1c1c1;
       }
 
-      &:focus:not([aria-disabled]) {
-        background: #c3d7ec;
-        .separator {
-          background: rgba(4, 87, 175, 0.24);
-        }
-      }
-
       &:hover:not([aria-disabled]) {
         background: #ebf2f9;
         .separator {
           background: rgba(4, 87, 175, 0.08);
+        }
+      }
+
+      &:focus:not([aria-disabled]) {
+        background: #c3d7ec;
+        .separator {
+          background: rgba(4, 87, 175, 0.24);
         }
       }
 
@@ -151,23 +151,25 @@
     &.icon {
       width: 48px;
       height: 48px;
+      font-size: 20px;
       border-radius: 100%;
 
       &[aria-disabled] {
         color: #c1c1c1;
       }
 
-      &:focus:not([aria-disabled]) {
-        background: #d7d7d7;
-        .chevron-wrapper {
-          background: #dcdcdc;
-        }
-      }
-
       &:hover:not([aria-disabled]) {
         background: #eeeeee;
         .chevron-wrapper {
           background: #f3f3f4;
+        }
+      }
+
+      &:focus:not([aria-disabled]),
+      &:active:not([aria-disabled]) {
+        background: #d7d7d7;
+        .chevron-wrapper {
+          background: #dcdcdc;
         }
       }
     }
