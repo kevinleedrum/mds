@@ -3,23 +3,23 @@
 
   .btn-toggle {
     background: #fff;
+  }
 
-    &:focus {
-      background: #d7d7d7;
-    }
+  input:focus ~ .btn-toggle {
+    background: #d7d7d7;
+  }
 
-    &:hover {
-      background: #eeeeee;
-    }
-
-    &:active {
-      background: #fff;
-      color: #0457af;
-    }
+  input:hover ~ .btn-toggle {
+    background: #eeeeee;
   }
 
   input:checked ~ .btn-toggle {
     background: #dde8f4;
+  }
+
+  input:active ~ .btn-toggle {
+    background: #fff;
+    color: #0457af;
   }
 
   [aria-disabled] .btn-toggle {
