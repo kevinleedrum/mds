@@ -98,44 +98,61 @@
 ## Icon Buttons
 
 <section class="mds">
-  <div class="flex my-5 items-center">
-    <mx-button btn-type="icon" icon="ph-heart"></mx-button>
-    <mx-button btn-type="icon" icon="ph-x"></mx-button>
-    <mx-button btn-type="icon" dropdown></mx-button>
-  </div>
-  <strong>Disabled</strong>
-  <div class="flex my-5 items-center">
-    <mx-button btn-type="icon" icon="ph-heart" disabled></mx-button>
-    <mx-button btn-type="icon" icon="ph-x" disabled></mx-button>
-    <mx-button btn-type="icon" dropdown disabled></mx-button>
+  <div class="mt-5">
+    <div>
+      <div class="flex my-5 items-center">
+        <mx-button btn-type="icon" icon="ph-thumbs-up"></mx-button>
+        <mx-button btn-type="icon" icon="ph-heart" class="text-red-400"></mx-button>
+        <mx-button btn-type="icon" icon="ph-x"></mx-button>
+        <mx-button btn-type="icon" dropdown></mx-button>
+      </div>
+    </div>
+    <div>
+      <strong>Disabled</strong>
+      <div class="flex my-5 items-center">
+        <mx-button btn-type="icon" icon="ph-thumbs-up" disabled></mx-button>
+        <mx-button btn-type="icon" icon="ph-heart" disabled></mx-button>
+        <mx-button btn-type="icon" icon="ph-x" disabled></mx-button>
+        <mx-button btn-type="icon" dropdown disabled></mx-button>
+      </div>
+    </div>
   </div>
 </section>
 
 ## Toggle Buttons
 
 <section class="mds">
-  <div class="mt-5">
+<div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
+  <div>
     <strong>Single Selection</strong>
     <div class="flex my-5 items-center">
       <mx-toggle-button name="foo" icon="ph-text-align-left" value="left" checked single></mx-toggle-button>
       <mx-toggle-button name="foo" icon="ph-text-align-center" value="center" single></mx-toggle-button>
       <mx-toggle-button name="foo" icon="ph-text-align-right" value="right" single></mx-toggle-button>
     </div>
-    <strong>Multiple Selection</strong>
-    <div class="flex my-5 items-center">
-      <mx-toggle-button name="baz" icon="ph-text-bolder"></mx-toggle-button>
-      <mx-toggle-button name="baz" icon="ph-text-italic"></mx-toggle-button>
-      <mx-toggle-button name="baz" icon="ph-text-underline" checked></mx-toggle-button>
+  </div>
+    <div>
+      <strong>Multiple Selection</strong>
+      <div class="flex my-5 items-center">
+        <mx-toggle-button name="baz" icon="ph-text-bolder"></mx-toggle-button>
+        <mx-toggle-button name="baz" icon="ph-text-italic" checked></mx-toggle-button>
+        <mx-toggle-button name="baz" icon="ph-text-underline" checked></mx-toggle-button>
+      </div>
     </div>
-    <strong>Single Button</strong>
-    <div class="flex my-5 items-center">
-      <mx-toggle-button name="grapes" icon="ph-microphone-slash"></mx-toggle-button>
+    <div>
+      <strong>Disabled</strong>
+      <div class="flex my-5 items-center">
+        <mx-toggle-button name="bar" icon="ph-text-align-left" disabled></mx-toggle-button>
+        <mx-toggle-button name="bar" icon="ph-text-align-center" disabled></mx-toggle-button>
+        <mx-toggle-button name="bar" icon="ph-text-align-right" disabled></mx-toggle-button>
+      </div>
     </div>
-    <strong>Disabled</strong>
-    <div class="flex my-5 items-center">
-      <mx-toggle-button name="bar" icon="ph-text-align-left" disabled></mx-toggle-button>
-      <mx-toggle-button name="bar" icon="ph-text-align-center" disabled></mx-toggle-button>
-      <mx-toggle-button name="bar" icon="ph-text-align-right" disabled></mx-toggle-button>
+    <div>
+      <strong>Single Button</strong>
+      <div class="flex my-5 items-center">
+        <mx-toggle-button name="grapes" icon="ph-microphone-slash"></mx-toggle-button>
+      </div>
     </div>
+  </div>
   </div>
 </section>
