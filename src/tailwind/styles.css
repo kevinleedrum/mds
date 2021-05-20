@@ -24,6 +24,7 @@
 @import './mx-checkbox/index.scss';
 @import './mx-radio/index.scss';
 @import './mx-switch/index.scss';
+@import './ripple.scss';
 
 /***************************
 * Custom CSS

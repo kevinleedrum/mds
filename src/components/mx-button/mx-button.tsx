@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
+import ripple from '../ripple';
 
 @Component({
   tag: 'mx-button',
@@ -17,7 +18,6 @@ export class MxButton {
   @Prop() target: string;
   @Prop() full: boolean = false;
   @Prop() dropdown: boolean = false;
-  @Prop() iconLeft: string;
   @Prop() icon: string;
 
   onClick(e: MouseEvent) {
@@ -27,59 +27,26 @@ export class MxButton {
       return;
     }
 
-    if (this.btnType !== 'icon') this.ripple(e);
+    if (this.btnType !== 'icon') ripple(e, this.href ? this.anchorElem : this.btnElem);
   }
 
-  ripple(e: MouseEvent) {
-    const elem = this.href ? this.anchorElem : this.btnElem;
-
-    let existingRipple = elem.querySelector('.ripple');
-    if (existingRipple) existingRipple.remove();
-
-    // Create span element
-    let ripple = document.createElement('span');
-
-    // Add ripple class to span
-    ripple.classList.add('ripple');
-
-    // Add span to the button
-    elem.prepend(ripple);
-
-    // Set the size of the span element
-    const diameter = Math.max(elem.clientWidth, elem.clientHeight);
-    ripple.style.width = ripple.style.height = diameter + 'px';
-
-    // Position the span element
-    const elemOffset = elem.getBoundingClientRect();
-    // Center over click coords OR over top left corner if activated by keypress
-    const left = Math.max(e.clientX - elemOffset.left, 0);
-    const top = Math.max(e.clientY - elemOffset.top, 0);
-    ripple.style.left = left - diameter / 2 + 'px';
-    ripple.style.top = top - diameter / 2 + 'px';
-
-    // Remove span after 0.3s
-    setTimeout(() => {
-      ripple.remove();
-    }, 300);
-  }
-
-  returnHostClass() {
+  get hostClass() {
     let str = 'mx-button';
     str += this.full ? ' flex' : ' inline-flex';
     return str;
   }
 
-  returnBaseClass() {
+  get baseClass() {
     let str = `btn ${this.btnType}`;
-    if (this.xl) str = `${str} xl`;
-    if (this.full) str = `${str} full`;
+    if (this.xl) str += ' xl';
+    if (this.full) str += ' full';
     if (this.dropdown) str += ' dropdown';
     // Action buttons and Text Dropdown buttons are not uppercase
     if (this.btnType !== 'action' && !(this.btnType === 'text' && this.dropdown)) str += ' uppercase';
     return str;
   }
 
-  returnChevronClass() {
+  get chevronClass() {
     if (this.btnType === 'text') return 'ml-4';
     if (this.btnType === 'icon')
       return 'chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center bg-white shadow-dp-1';
@@ -99,25 +66,24 @@ export class MxButton {
 
     const buttonContent = (
       <div class="flex justify-center items-center content-center relative">
-        {this.iconLeft && <i class={'mr-8 ' + this.iconLeft}></i>}
-        {this.icon && <i class={this.icon}></i>}
+        {this.icon && <i class={(this.btnType === 'icon' ? '' : 'mr-8 ') + this.icon}></i>}
         {this.btnType !== 'icon' && (
           <span class="slot-content">
             <slot />
           </span>
         )}
         {this.dropdown && this.btnType === 'text' && <span class="separator inline-block w-1 ml-4 -my-4 h-24"></span>}
-        {this.dropdown && <span class={this.returnChevronClass()}>{chevronIcon}</span>}
+        {this.dropdown && <span class={this.chevronClass}>{chevronIcon}</span>}
       </div>
     );
 
     return (
-      <Host class={this.returnHostClass()}>
+      <Host class={this.hostClass}>
         {this.href ? (
           <a
             href={this.href}
             target={this.target}
-            class={this.returnBaseClass()}
+            class={this.baseClass}
             ref={el => (this.anchorElem = el as HTMLAnchorElement)}
             onClick={e => this.onClick(e)}
           >
@@ -127,7 +93,7 @@ export class MxButton {
           <button
             type={this.type}
             value={this.value}
-            class={this.returnBaseClass()}
+            class={this.baseClass}
             ref={el => (this.btnElem = el as HTMLButtonElement)}
             onClick={e => this.onClick(e)}
             aria-disabled={this.disabled}
