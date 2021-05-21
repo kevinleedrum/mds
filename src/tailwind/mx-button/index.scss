@@ -112,6 +112,9 @@
     }
 
     &.icon {
+      .chevron-wrapper {
+        background: #fff;
+      }
       &:focus:not([aria-disabled]) {
         background: #d7d7d7;
         .chevron-wrapper {

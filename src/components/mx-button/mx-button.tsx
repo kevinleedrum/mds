@@ -68,7 +68,7 @@ export class MxButton {
   get chevronClass() {
     if (this.btnType === 'text') return 'ml-4';
     if (this.btnType === 'icon')
-      return 'chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center bg-white shadow-dp-1';
+      return 'chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-dp-1';
     return 'ml-8';
   }
 
