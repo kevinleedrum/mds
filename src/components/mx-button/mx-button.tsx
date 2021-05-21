@@ -36,24 +36,24 @@ export class MxButton {
     if (this.dropdown) str += ' dropdown';
 
     // Common classes
-    str += ' relative overflow-hidden cursor-pointer hover:no-underline';
+    str += ' flex items-center justify-center relative overflow-hidden cursor-pointer hover:no-underline';
 
     // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
       str += ' w-full rounded-lg font-semibold uppercase';
       if (this.btnType === 'outlined') str += ' border';
-      if (this.xl) str += ' px-32 py-16 text-base';
-      else str += ' px-16 py-10 text-sm leading-4';
+      if (this.xl) str += ' h-48 px-32 text-base';
+      else str += ' h-36 px-16 text-sm';
     }
 
     // Action Button
     if (this.btnType === 'action') {
-      str += ' w-full px-16 py-8 border rounded-3xl text-sm leading-5';
+      str += ' w-full h-36 px-16 border rounded-3xl text-sm';
     }
 
     // Text Button
     if (this.btnType === 'text') {
-      str += ' w-full px-8 py-10 text-sm rounded-lg leading-4';
+      str += ' w-full h-36 px-8 py-10 text-sm rounded-lg';
       str += this.dropdown ? ' font-normal' : ' font-semibold uppercase';
     }
 
