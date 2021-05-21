@@ -1,5 +1,7 @@
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
-  important: '.mds',
+  important: true,
   mode: 'jit',
   purge: ['./src/**/*.{js,jsx,ts,tsx,vue}', './vuepress/**/*.{js,jsx,ts,tsx,vue,md,html}'],
   darkMode: false, // or 'media' or 'class'
@@ -109,8 +111,18 @@ module.exports = {
       },
     },
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
+  plugins: [
+    plugin(function({ addVariant, e }) {
+      addVariant('first-of-type', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.${e(`first-of-type${separator}${className}`)}:first-of-type`;
+        });
+      });
+      addVariant('last-of-type', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.${e(`last-of-type${separator}${className}`)}:last-of-type`;
+        });
+      });
+    }),
+  ],
 };
