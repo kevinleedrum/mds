@@ -1,6 +1,6 @@
 # Selection Controls
 
-Selection controls consist of checkboxes, radios, and switches.
+Selection controls consist of checkboxes, radios, and switches. Also see [Toggle Buttons](/components/buttons.html#toggle-buttons).
 
 ## Checkboxes
 
