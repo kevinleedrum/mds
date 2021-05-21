@@ -30,19 +30,34 @@ export class MxButton {
     if (this.btnType !== 'icon') ripple(e, this.href ? this.anchorElem : this.btnElem);
   }
 
-  get hostClass() {
-    let str = 'mx-button';
-    str += this.full ? ' flex' : ' inline-flex';
-    return str;
-  }
-
-  get baseClass() {
-    let str = `btn ${this.btnType}`;
-    if (this.xl) str += ' xl';
-    if (this.full) str += ' full';
+  get buttonClass() {
+    // The btnType and dropdown classes are only used for colors
+    let str = this.btnType;
     if (this.dropdown) str += ' dropdown';
-    // Action buttons and Text Dropdown buttons are not uppercase
-    if (this.btnType !== 'action' && !(this.btnType === 'text' && this.dropdown)) str += ' uppercase';
+
+    // Common classes
+    str += ' relative overflow-hidden cursor-pointer hover:no-underline';
+
+    if (['contained', 'outlined'].includes(this.btnType)) {
+      str += ' w-full rounded-lg font-semibold uppercase';
+      if (this.btnType === 'outlined') str += ' border';
+      if (this.xl) str += ' px-32 py-16 text-base';
+      else str += ' px-16 py-10 text-sm';
+    }
+
+    if (this.btnType === 'action') {
+      str += ' w-full px-16 py-8 border rounded-3xl text-sm';
+    }
+
+    if (this.btnType === 'text') {
+      str += ' w-full px-8 py-10 text-sm leading-4 rounded-lg';
+      str += this.dropdown ? ' font-normal' : ' font-semibold uppercase';
+    }
+
+    if (this.btnType === 'icon') {
+      str += ' w-48 h-48 text-xl rounded-full';
+    }
+
     return str;
   }
 
@@ -78,12 +93,12 @@ export class MxButton {
     );
 
     return (
-      <Host class={this.hostClass}>
+      <Host class={'mx-button' + (this.full ? ' flex' : ' inline-flex')}>
         {this.href ? (
           <a
             href={this.href}
             target={this.target}
-            class={this.baseClass}
+            class={this.buttonClass}
             ref={el => (this.anchorElem = el as HTMLAnchorElement)}
             onClick={e => this.onClick(e)}
           >
@@ -93,7 +108,7 @@ export class MxButton {
           <button
             type={this.type}
             value={this.value}
-            class={this.baseClass}
+            class={this.buttonClass}
             ref={el => (this.btnElem = el as HTMLButtonElement)}
             onClick={e => this.onClick(e)}
             aria-disabled={this.disabled}

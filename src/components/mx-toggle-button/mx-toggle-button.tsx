@@ -43,7 +43,7 @@ export class MxToggleButton {
     );
 
     return (
-      <Host class="mx-toggle-button">
+      <Host class="mx-toggle-button overflow-hidden border-l first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl last-of-type:rounded-tr last-of-type:rounded-br">
         <label class="relative" aria-disabled={this.disabled}>
           <input
             ref={el => (this.inputElem = el as HTMLInputElement)}

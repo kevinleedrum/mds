@@ -1,4 +1,5 @@
 .mx-toggle-button {
+  border-color: #bcbcbc;
   --ripple-color: #afc9e6;
 
   .btn-toggle {
@@ -30,21 +31,5 @@
       color: #c1c1c1;
       background: #fff;
     }
-  }
-
-  & + .mx-toggle-button .btn-toggle {
-    border-left: 1px solid #bcbcbc;
-  }
-
-  &:first-of-type .btn-toggle {
-    border-radius: 4px 0 0 4px;
-  }
-
-  &:last-of-type .btn-toggle {
-    border-radius: 0 4px 4px 0;
-  }
-
-  &:first-of-type:last-of-type .btn-toggle {
-    border-radius: 4px;
   }
 }
