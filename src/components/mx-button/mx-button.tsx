@@ -38,6 +38,7 @@ export class MxButton {
     // Common classes
     str += ' relative overflow-hidden cursor-pointer hover:no-underline';
 
+    // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
       str += ' w-full rounded-lg font-semibold uppercase';
       if (this.btnType === 'outlined') str += ' border';
@@ -45,15 +46,18 @@ export class MxButton {
       else str += ' px-16 py-10 text-sm';
     }
 
+    // Action Button
     if (this.btnType === 'action') {
       str += ' w-full px-16 py-8 border rounded-3xl text-sm';
     }
 
+    // Text Button
     if (this.btnType === 'text') {
       str += ' w-full px-8 py-10 text-sm leading-4 rounded-lg';
       str += this.dropdown ? ' font-normal' : ' font-semibold uppercase';
     }
 
+    // Icon Button
     if (this.btnType === 'icon') {
       str += ' w-48 h-48 text-xl rounded-full';
     }
