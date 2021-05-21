@@ -67,7 +67,7 @@ export class MxButton {
 
     // Icon Button
     if (this.btnType === 'icon') {
-      str += ' w-48 h-48 text-xl rounded-full';
+      str += ' w-48 h-48 rounded-full';
     }
 
     return str;
@@ -93,7 +93,7 @@ export class MxButton {
 
     const buttonContent = (
       <div class="flex justify-center items-center content-center relative">
-        {this.icon && <i class={(this.btnType === 'icon' ? '' : 'mr-8 ') + this.icon}></i>}
+        {this.icon && <i class={(this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon}></i>}
         {this.btnType !== 'icon' && (
           <span class="slot-content">
             <slot />
