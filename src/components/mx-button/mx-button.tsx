@@ -43,17 +43,17 @@ export class MxButton {
       str += ' w-full rounded-lg font-semibold uppercase';
       if (this.btnType === 'outlined') str += ' border';
       if (this.xl) str += ' px-32 py-16 text-base';
-      else str += ' px-16 py-10 text-sm';
+      else str += ' px-16 py-10 text-sm leading-4';
     }
 
     // Action Button
     if (this.btnType === 'action') {
-      str += ' w-full px-16 py-8 border rounded-3xl text-sm';
+      str += ' w-full px-16 py-8 border rounded-3xl text-sm leading-5';
     }
 
     // Text Button
     if (this.btnType === 'text') {
-      str += ' w-full px-8 py-10 text-sm leading-4 rounded-lg';
+      str += ' w-full px-8 py-10 text-sm rounded-lg leading-4';
       str += this.dropdown ? ' font-normal' : ' font-semibold uppercase';
     }
 
