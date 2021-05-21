@@ -1,6 +1,9 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import ripple from '../ripple';
 
+export type BtnType = 'contained' | 'outlined' | 'action' | 'text' | 'icon';
+export type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
+
 @Component({
   tag: 'mx-button',
   shadow: false,
@@ -9,15 +12,20 @@ export class MxButton {
   btnElem!: HTMLButtonElement;
   anchorElem!: HTMLAnchorElement;
 
-  @Prop() btnType: string = 'contained'; // contained | outlined | action | text | icon
-  @Prop() type: string = 'button'; // reset | submit
+  @Prop() btnType: BtnType = 'contained';
+  @Prop() type: ButtonTypeAttribute = 'button';
   @Prop() value: string;
   @Prop() disabled: boolean = false;
   @Prop() xl: boolean = false;
+  /** Create button as link */
   @Prop() href: string;
+  /** Combine with href */
   @Prop() target: string;
+  /** Sets display to flex instead of inline-flex */
   @Prop() full: boolean = false;
+  /** Show chevron icon */
   @Prop() dropdown: boolean = false;
+  /** Class name of icon */
   @Prop() icon: string;
 
   onClick(e: MouseEvent) {

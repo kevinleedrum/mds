@@ -53,7 +53,7 @@
       <mx-button btn-type="outlined" full>Outlined button</mx-button>
     </div>
     <div class="my-5">
-      <mx-button btn-type="outlined" full xl>Outlined button</mx-button>
+      <mx-button btn-type="outlined" full xl>XL Outlined button</mx-button>
     </div>
   </div>
 </section>
@@ -68,10 +68,13 @@
     <mx-button btn-type="action" icon="ph-apple-logo">Button with Icon</mx-button>
   </div>
   <div class="my-5">
+    <mx-button btn-type="action" disabled>Disabled</mx-button>
+  </div>
+  <div class="my-5">
     <mx-button btn-type="action" dropdown>Dropdown</mx-button>
   </div>
   <div class="my-5">
-    <mx-button btn-type="action" disabled>Disabled</mx-button>
+    <mx-button btn-type="action" dropdown disabled>Disabled</mx-button>
   </div>
 </section>
 
@@ -88,7 +91,7 @@
     <mx-button btn-type="text" disabled>disabled</mx-button>
   </div>
   <div class="my-5">
-    <mx-button btn-type="text" icon="ph-apple-logo" dropdown>Icon + Dropdown</mx-button>
+    <mx-button btn-type="text" icon="ph-apple-logo" dropdown>Icon with Dropdown</mx-button>
   </div>
   <div class="my-5">
     <mx-button btn-type="text" icon="ph-apple-logo" dropdown disabled>Disabled</mx-button>
@@ -102,7 +105,7 @@
     <div>
       <div class="flex my-5 items-center">
         <mx-button btn-type="icon" icon="ph-thumbs-up"></mx-button>
-        <mx-button btn-type="icon" icon="ph-heart" class="text-red-400"></mx-button>
+        <mx-button btn-type="icon" icon="ph-heart"></mx-button>
         <mx-button btn-type="icon" icon="ph-x"></mx-button>
         <mx-button btn-type="icon" dropdown></mx-button>
       </div>
@@ -118,6 +121,21 @@
     </div>
   </div>
 </section>
+
+### Button Properties
+
+| Property   | Attribute  | Description                                 | Type                                                    | Default       |
+| ---------- | ---------- | ------------------------------------------- | ------------------------------------------------------- | ------------- |
+| `btnType`  | `btn-type` |                                             | `"action" | "contained" | "icon" | "outlined" | "text"` | `'contained'` |
+| `disabled` | `disabled` |                                             | `boolean`                                               | `false`       |
+| `dropdown` | `dropdown` | Show chevron icon                           | `boolean`                                               | `false`       |
+| `full`     | `full`     | Sets display to flex instead of inline-flex | `boolean`                                               | `false`       |
+| `href`     | `href`     | Create button as link                       | `string`                                                | `undefined`   |
+| `icon`     | `icon`     | Class name of icon                          | `string`                                                | `undefined`   |
+| `target`   | `target`   | Combine with href                           | `string`                                                | `undefined`   |
+| `type`     | `type`     |                                             | `"button" | "reset" | "submit"`                         | `'button'`    |
+| `value`    | `value`    |                                             | `string`                                                | `undefined`   |
+| `xl`       | `xl`       |                                             | `boolean`                                               | `false`       |
 
 ## Toggle Buttons
 
@@ -156,3 +174,14 @@
   </div>
   </div>
 </section>
+
+### Toggle Button Properties
+
+| Property   | Attribute  | Description                                | Type      | Default     |
+| ---------- | ---------- | ------------------------------------------ | --------- | ----------- |
+| `checked`  | `checked`  |                                            | `boolean` | `false`     |
+| `disabled` | `disabled` |                                            | `boolean` | `false`     |
+| `icon`     | `icon`     | Class name of icon                         | `string`  | `undefined` |
+| `name`     | `name`     |                                            | `string`  | `undefined` |
+| `single`   | `single`   | Create as radio button instead of checkbox | `boolean` | `false`     |
+| `value`    | `value`    |                                            | `string`  | `undefined` |

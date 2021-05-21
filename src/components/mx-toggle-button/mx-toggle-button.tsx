@@ -9,7 +9,9 @@ export class MxToggleButton {
   inputElem: HTMLInputElement;
   btnElem: HTMLElement;
 
+  /** Class name of icon */
   @Prop() icon: string;
+  /** Create as radio button instead of checkbox */
   @Prop() single: boolean = false;
   @Prop() name: string;
   @Prop() value: string;
