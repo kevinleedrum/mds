@@ -9,6 +9,7 @@ span.ripple {
   animation: ripple 1s;
   opacity: 1;
   transform: scale(0);
+  pointer-events: none;
 }
 
 @keyframes ripple {

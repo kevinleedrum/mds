@@ -13,13 +13,13 @@
     background: #eeeeee;
   }
 
-  input:checked ~ .btn-toggle {
-    background: #dde8f4;
-  }
-
   input:active ~ .btn-toggle {
     background: #fff;
     color: #0457af;
+  }
+
+  input:checked ~ .btn-toggle {
+    background: #dde8f4;
   }
 
   [aria-disabled] .btn-toggle {

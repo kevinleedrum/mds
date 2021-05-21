@@ -7,7 +7,7 @@ import ripple from '../ripple';
 })
 export class MxToggleButton {
   inputElem: HTMLInputElement;
-  spanElem: HTMLSpanElement;
+  btnElem: HTMLElement;
 
   @Prop() icon: string;
   @Prop() single: boolean = false;
@@ -17,18 +17,21 @@ export class MxToggleButton {
   @Prop() disabled: boolean = false;
 
   onClick(e: MouseEvent) {
-    if (this.disabled) {
-      e.stopPropagation();
-      e.preventDefault();
-      return;
-    }
+    e.stopPropagation();
+    e.preventDefault();
+    if (this.disabled) return;
 
-    ripple(e, this.spanElem);
+    ripple(e, this.btnElem);
 
     // Allow unchecking of radio button
-    if (this.inputElem.checked) {
-      this.inputElem.checked = false;
-      e.preventDefault();
+    this.inputElem.checked = !this.inputElem.checked;
+    e.preventDefault();
+  }
+
+  onKeyDown(e: KeyboardEvent) {
+    // Allow span to be activated using Enter and Space just like a button
+    if (e.key === 'Enter' || e.key == ' ') {
+      (e.target as HTMLElement).click();
     }
   }
 
@@ -44,6 +47,7 @@ export class MxToggleButton {
         <label class="relative" aria-disabled={this.disabled}>
           <input
             ref={el => (this.inputElem = el as HTMLInputElement)}
+            tabindex="-1"
             class="absolute h-0 w-0 opacity-0"
             type={this.single ? 'radio' : 'checkbox'}
             name={this.name}
@@ -52,9 +56,11 @@ export class MxToggleButton {
             disabled={this.disabled}
           />
           <span
-            ref={el => (this.spanElem = el as HTMLSpanElement)}
+            ref={el => (this.btnElem = el as HTMLElement)}
+            tabindex="0"
             class="btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-xl overflow-hidden cursor-pointer"
             onClick={e => this.onClick(e)}
+            onKeyDown={e => this.onKeyDown(e)}
           >
             {buttonContent}
           </span>
