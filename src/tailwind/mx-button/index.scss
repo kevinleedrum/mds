@@ -7,7 +7,7 @@
     width: 100%;
 
     &:focus:not(:focus-visible) {
-      // Only show focus outline when tabbing with keyboard
+      /* Only show focus outline when tabbing with keyboard */
       outline: none;
     }
 
