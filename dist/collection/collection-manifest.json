@@ -4,7 +4,9 @@
     "./components/mx-checkbox/mx-checkbox.js",
     "./components/mx-input/mx-input.js",
     "./components/mx-radio/mx-radio.js",
-    "./components/mx-switch/mx-switch.js"
+    "./components/mx-switch/mx-switch.js",
+    "./components/mx-toggle-button/mx-toggle-button.js",
+    "./components/mx-toggle-button-group/mx-toggle-button-group.js"
   ],
   "compiler": {
     "name": "@stencil/core",

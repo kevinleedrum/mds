@@ -32,6 +32,18 @@ export const MxSwitch: {
   new (): MxSwitch;
 };
 
+interface MxToggleButton extends Components.MxToggleButton, HTMLElement {}
+export const MxToggleButton: {
+  prototype: MxToggleButton;
+  new (): MxToggleButton;
+};
+
+interface MxToggleButtonGroup extends Components.MxToggleButtonGroup, HTMLElement {}
+export const MxToggleButtonGroup: {
+  prototype: MxToggleButtonGroup;
+  new (): MxToggleButtonGroup;
+};
+
 /**
  * Utility to define all custom elements within this package using the tag name provided in the component's source. 
  * When defining each custom element, it will also check it's safe to define by:

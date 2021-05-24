@@ -1,0 +1,31 @@
+.mx-toggle-button {
+  border-color: #bcbcbc;
+  --ripple-color: #afc9e6;
+
+  .btn-toggle {
+    background: #fff;
+
+    &:focus:not([aria-disabled]) {
+      background: #d7d7d7;
+    }
+
+    &:hover:not([aria-disabled]) {
+      background: #eeeeee;
+    }
+
+    &:active:not([aria-disabled]) {
+      background: #fff;
+      color: #0457af;
+    }
+
+    &[aria-disabled] {
+      color: #c1c1c1;
+      background: #fff;
+    }
+
+    &.selected,
+    &.selected:focus {
+      background: #dde8f4;
+    }
+  }
+}

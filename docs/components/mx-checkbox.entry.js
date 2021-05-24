@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host } from './index-5d582d27.js';
+import { r as registerInstance, h, e as Host } from './index-0595217f.js';
 
 const MxCheckbox = class {
   constructor(hostRef) {
