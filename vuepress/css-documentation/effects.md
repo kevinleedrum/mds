@@ -6,9 +6,9 @@ These values correspond to [Elevations](/css-documentation/elevations.html).
 
 <section class="mds">
   <table class="w-full text-left border-collapse"><thead><tr><th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0"><div class="pb-2 pr-2 border-b border-gray-200">Class</div></th><th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0"><div class="pb-2 pl-2 border-b border-gray-200">Properties</div></th></tr></thead><tbody class="align-baseline">
+  <tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">*</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">--tw-shadow: 0 0 #0000;</td></tr>
   <tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">shadow-0</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">--tw-shadow: 0 0 #0000;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);</td></tr>
-  <tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">*</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">--tw-shadow: 0 0 #0000;</td></tr>
           <tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">shadow-1</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">--tw-shadow: 0px 0px 2px rgba(0, 0, 0, 0.04), 0px 2px 2px rgba(0, 0, 0, 0.02), 0px 1px 3px rgba(0, 0, 0, 0.06);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);</td></tr>
           <tr><td class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">shadow-2</td><td class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">--tw-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px 3px 4px rgba(0, 0, 0, 0.02), 0px 1px 5px rgba(0, 0, 0, 0.04);
