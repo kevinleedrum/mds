@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property   | Attribute  | Description                                 | Type                                                        | Default       |
@@ -17,6 +18,7 @@
 | `value`    | `value`    |                                             | `string`                                                    | `undefined`   |
 | `xl`       | `xl`       |                                             | `boolean`                                                   | `false`       |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

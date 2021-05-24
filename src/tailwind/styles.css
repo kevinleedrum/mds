@@ -34,6 +34,11 @@
     font-family: 'Open Sans', sans-serif;
   }
 
+  :focus:not(:focus-visible) {
+    /* Only show focus outline when tabbing with keyboard */
+    outline: none;
+  }
+
   /***************************
   * Typography
   ***************************/

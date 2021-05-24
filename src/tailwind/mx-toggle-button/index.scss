@@ -4,32 +4,28 @@
 
   .btn-toggle {
     background: #fff;
-  }
 
-  input:focus ~ .btn-toggle {
-    background: #d7d7d7;
-  }
+    &:focus:not([aria-disabled]) {
+      background: #d7d7d7;
+    }
 
-  input:hover ~ .btn-toggle {
-    background: #eeeeee;
-  }
+    &:hover:not([aria-disabled]) {
+      background: #eeeeee;
+    }
 
-  input:active ~ .btn-toggle {
-    background: #fff;
-    color: #0457af;
-  }
+    &:active:not([aria-disabled]) {
+      background: #fff;
+      color: #0457af;
+    }
 
-  input:checked ~ .btn-toggle {
-    background: #dde8f4;
-  }
-
-  [aria-disabled] .btn-toggle {
-    color: #c1c1c1;
-    &:focus,
-    &:hover,
-    &:active {
+    &[aria-disabled] {
       color: #c1c1c1;
       background: #fff;
+    }
+
+    &.selected,
+    &.selected:focus {
+      background: #dde8f4;
     }
   }
 }

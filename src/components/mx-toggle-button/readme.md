@@ -7,14 +7,12 @@
 
 ## Properties
 
-| Property   | Attribute  | Description                                | Type      | Default     |
-| ---------- | ---------- | ------------------------------------------ | --------- | ----------- |
-| `checked`  | `checked`  |                                            | `boolean` | `false`     |
-| `disabled` | `disabled` |                                            | `boolean` | `false`     |
-| `icon`     | `icon`     | Class name of icon                         | `string`  | `undefined` |
-| `name`     | `name`     |                                            | `string`  | `undefined` |
-| `single`   | `single`   | Create as radio button instead of checkbox | `boolean` | `false`     |
-| `value`    | `value`    |                                            | `string`  | `undefined` |
+| Property   | Attribute  | Description                            | Type      | Default     |
+| ---------- | ---------- | -------------------------------------- | --------- | ----------- |
+| `disabled` | `disabled` |                                        | `boolean` | `false`     |
+| `icon`     | `icon`     |                                        | `string`  | `undefined` |
+| `selected` | `selected` |                                        | `boolean` | `false`     |
+| `value`    | `value`    | Only used inside a toggle button group | `any`     | `undefined` |
 
 
 ----------------------------------------------

@@ -1,11 +1,6 @@
 .mx-button {
   button,
   a {
-    &:focus:not(:focus-visible) {
-      /* Only show focus outline when tabbing with keyboard */
-      outline: none;
-    }
-
     &.contained {
       background-color: var(--mds-primary-bg-dark);
       color: var(--mds-primary-text-light);

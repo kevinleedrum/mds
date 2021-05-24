@@ -261,37 +261,32 @@
 
 ## Toggle Buttons
 
+Unlike other buttons, Toggle Buttons also have a selected or "on" state, which is set using the <code>selected</code> prop.
+When multiple Toggle Buttons are adjacent siblings, the <code>border-radius</code> is adjusted automatically to make them
+appear as a group. They can act as radio buttons when given a <code>value</code> and placed inside a Toggle Button Group (see next section).
+
 <section class="mds">
-<div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
-  <div>
-    <strong>Single Selection</strong>
-    <div class="flex my-5 items-center">
-      <mx-toggle-button name="foo" icon="ph-text-align-left" value="left" checked single></mx-toggle-button>
-      <mx-toggle-button name="foo" icon="ph-text-align-center" value="center" single></mx-toggle-button>
-      <mx-toggle-button name="foo" icon="ph-text-align-right" value="right" single></mx-toggle-button>
-    </div>
-  </div>
+  <div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
     <div>
-      <strong>Multiple Selection</strong>
-      <div class="flex my-5 items-center">
-        <mx-toggle-button name="baz" icon="ph-text-bolder" value="bold"></mx-toggle-button>
-        <mx-toggle-button name="baz" icon="ph-text-italic" value="italic" checked></mx-toggle-button>
-        <mx-toggle-button name="baz" icon="ph-text-underline" value="underline" checked></mx-toggle-button>
+      <strong>Single Button</strong>
+      <div class="my-5">
+        <mx-toggle-button  icon="ph-microphone-slash" :selected="isMuted" @click="isMuted = !isMuted" />
       </div>
     </div>
     <div>
       <strong>Disabled</strong>
-      <div class="flex my-5 items-center">
-      <mx-toggle-button name="bar" icon="ph-text-align-left" value="left" single disabled></mx-toggle-button>
-      <mx-toggle-button name="bar" icon="ph-text-align-center" value="center" single disabled></mx-toggle-button>
-      <mx-toggle-button name="bar" icon="ph-text-align-right" value="right" single disabled></mx-toggle-button>
+      <div class="my-5">
+        <mx-toggle-button  icon="ph-heart" disabled />
       </div>
     </div>
     <div>
-      <strong>Single Button</strong>
-      <div class="flex my-5 items-center">
-        <mx-toggle-button name="grapes" icon="ph-microphone-slash"></mx-toggle-button>
+      <strong>Multiple Buttons</strong>
+      <div class="flex my-5">
+        <mx-toggle-button icon="ph-text-bolder" :selected="hasStyle('bold')" @click="toggleStyle('bold')" />
+        <mx-toggle-button icon="ph-text-italic" :selected="hasStyle('italic')" @click="toggleStyle('italic')" />
+        <mx-toggle-button icon="ph-text-underline" :selected="hasStyle('underline')" @click="toggleStyle('underline')" />
       </div>
+      <p class="my-5">Selected: <code>{{ JSON.stringify(textStyles) }}</code></p>
     </div>
   </div>
   </div>
@@ -299,36 +294,27 @@
 
 ```html
 <section class="mds">
-<div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
-  <div>
-    <strong>Single Selection</strong>
-    <div class="flex my-5 items-center">
-      <mx-toggle-button name="foo" icon="ph-text-align-left" value="left" checked single></mx-toggle-button>
-      <mx-toggle-button name="foo" icon="ph-text-align-center" value="center" single></mx-toggle-button>
-      <mx-toggle-button name="foo" icon="ph-text-align-right" value="right" single></mx-toggle-button>
-    </div>
-  </div>
+  <div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
     <div>
-      <strong>Multiple Selection</strong>
-      <div class="flex my-5 items-center">
-        <mx-toggle-button name="baz" icon="ph-text-bolder" value="bold"></mx-toggle-button>
-        <mx-toggle-button name="baz" icon="ph-text-italic" value="italic" checked></mx-toggle-button>
-        <mx-toggle-button name="baz" icon="ph-text-underline" value="underline" checked></mx-toggle-button>
+      <strong>Single Button</strong>
+      <div class="my-5">
+        <mx-toggle-button  icon="ph-microphone-slash" :selected="isMuted" @click="isMuted = !isMuted" />
       </div>
     </div>
     <div>
       <strong>Disabled</strong>
-      <div class="flex my-5 items-center">
-      <mx-toggle-button name="bar" icon="ph-text-align-left" value="left" single disabled></mx-toggle-button>
-      <mx-toggle-button name="bar" icon="ph-text-align-center" value="center" single disabled></mx-toggle-button>
-      <mx-toggle-button name="bar" icon="ph-text-align-right" value="right" single disabled></mx-toggle-button>
+      <div class="my-5">
+        <mx-toggle-button  icon="ph-heart" disabled />
       </div>
     </div>
     <div>
-      <strong>Single Button</strong>
-      <div class="flex my-5 items-center">
-        <mx-toggle-button name="grapes" icon="ph-microphone-slash"></mx-toggle-button>
+      <strong>Multiple Buttons</strong>
+      <div class="flex my-5">
+        <mx-toggle-button icon="ph-text-bolder" :selected="hasStyle('bold')" @click="toggleStyle('bold')" />
+        <mx-toggle-button icon="ph-text-italic" :selected="hasStyle('italic')" @click="toggleStyle('italic')" />
+        <mx-toggle-button icon="ph-text-underline" :selected="hasStyle('underline')" @click="toggleStyle('underline')" />
       </div>
+      <p class="my-5">Selected: <code>{{ JSON.stringify(textStyles) }}</code></p>
     </div>
   </div>
   </div>
@@ -337,11 +323,104 @@
 
 ### Toggle Button Properties
 
-| Property   | Attribute  | Description                                | Type      | Default     |
-| ---------- | ---------- | ------------------------------------------ | --------- | ----------- |
-| `checked`  | `checked`  |                                            | `boolean` | `false`     |
-| `disabled` | `disabled` |                                            | `boolean` | `false`     |
-| `icon`     | `icon`     | Class name of icon                         | `string`  | `undefined` |
-| `name`     | `name`     |                                            | `string`  | `undefined` |
-| `single`   | `single`   | Create as radio button instead of checkbox | `boolean` | `false`     |
-| `value`    | `value`    |                                            | `string`  | `undefined` |
+| Property   | Attribute  | Description                            | Type      | Default     |
+| ---------- | ---------- | -------------------------------------- | --------- | ----------- |
+| `disabled` | `disabled` |                                        | `boolean` | `false`     |
+| `icon`     | `icon`     |                                        | `string`  | `undefined` |
+| `selected` | `selected` |                                        | `boolean` | `false`     |
+| `value`    | `value`    | Only used inside a toggle button group | `any`     | `undefined` |
+
+## Toggle Button Groups
+
+A Toggle Button Group provides a convenient way to bind a group of toggle buttons to a single value, much like a radio button group.
+However, unlike radio buttons, Toggle Buttons can be deselected. When a Toggle Button is clicked, the resulting value is
+emitted via a custom <code>mxInput</code> event.
+
+<section class="mds">
+  <div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
+    <div>
+      <strong>Enabled</strong>
+      <div class="my-5">
+        <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
+          <mx-toggle-button icon="ph-text-align-left" value="left" />
+          <mx-toggle-button icon="ph-text-align-center" value="center" />
+          <mx-toggle-button icon="ph-text-align-right" value="right" />
+        </mx-toggle-button-group>
+      </div>
+      <p class="my-5">Selected: <code>{{ JSON.stringify(textAlign) }}</code></p>
+    </div>
+    <div>
+      <strong>Disabled</strong>
+      <div class="my-5">
+        <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
+          <mx-toggle-button icon="ph-text-align-left" value="left" disabled />
+          <mx-toggle-button icon="ph-text-align-center" value="center" disabled />
+          <mx-toggle-button icon="ph-text-align-right" value="right" disabled />
+        </mx-toggle-button-group>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+```html
+<section class="mds">
+  <div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
+    <div>
+      <strong>Enabled</strong>
+      <div class="my-5">
+        <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
+          <mx-toggle-button icon="ph-text-align-left" value="left" />
+          <mx-toggle-button icon="ph-text-align-center" value="center" />
+          <mx-toggle-button icon="ph-text-align-right" value="right" />
+        </mx-toggle-button-group>
+      </div>
+      <p class="my-5">Selected: <code>{{ JSON.stringify(textAlign) }}</code></p>
+    </div>
+    <div>
+      <strong>Disabled</strong>
+      <div class="my-5">
+        <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
+          <mx-toggle-button icon="ph-text-align-left" value="left" disabled />
+          <mx-toggle-button icon="ph-text-align-center" value="center" disabled />
+          <mx-toggle-button icon="ph-text-align-right" value="right" disabled />
+        </mx-toggle-button-group>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+```
+
+### Toggle Button Group Properties
+
+| Property | Attribute | Description | Type  | Default     |
+| -------- | --------- | ----------- | ----- | ----------- |
+| `value`  | `value`   |             | `any` | `undefined` |
+
+### Toggle Button Group Events
+
+| Event     | Description                             | Type               |
+| --------- | --------------------------------------- | ------------------ |
+| `mxInput` | Emits the updated value as event.detail | `CustomEvent<any>` |
+
+<script>
+export default {
+  data() {
+    return {
+      isMuted: false,
+      textAlign: 'left',
+      textStyles: ['underline', 'italic']
+    }
+  },
+  methods: {
+    hasStyle(value) {
+      return this.textStyles.includes(value)
+    },
+    toggleStyle(value) {
+      if (this.textStyles.includes(value)) this.textStyles = this.textStyles.filter(s => s !== value)
+      else this.textStyles = [ ...this.textStyles, value]
+    },
+  }
+}
+</script>
