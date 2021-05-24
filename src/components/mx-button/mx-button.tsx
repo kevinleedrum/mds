@@ -19,7 +19,7 @@ export class MxButton {
   @Prop() xl: boolean = false;
   /** Create button as link */
   @Prop() href: string;
-  /** Combine with href */
+  /** Only for link buttons */
   @Prop() target: string;
   /** Sets display to flex instead of inline-flex */
   @Prop() full: boolean = false;
@@ -112,7 +112,7 @@ export class MxButton {
             target={this.target}
             class={this.buttonClass}
             ref={el => (this.anchorElem = el as HTMLAnchorElement)}
-            onClick={e => this.onClick(e)}
+            onClick={this.onClick.bind(this)}
           >
             {buttonContent}
           </a>
@@ -122,7 +122,7 @@ export class MxButton {
             value={this.value}
             class={this.buttonClass}
             ref={el => (this.btnElem = el as HTMLButtonElement)}
-            onClick={e => this.onClick(e)}
+            onClick={this.onClick.bind(this)}
             aria-disabled={this.disabled}
           >
             {buttonContent}
