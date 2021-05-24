@@ -1,50 +1,97 @@
-import { h, Host, proxyCustomElement } from '@stencil/core/internal/client';
+import { h, Host, createEvent, proxyCustomElement } from '@stencil/core/internal/client';
 export { setAssetPath, setPlatformOptions } from '@stencil/core/internal/client';
+
+function ripple(e, elem) {
+  let existingRipple = elem.querySelector('.ripple');
+  if (existingRipple)
+    existingRipple.remove();
+  // Create span element
+  let ripple = document.createElement('span');
+  // Add ripple class to span
+  ripple.classList.add('ripple');
+  // Add span to the button
+  elem.prepend(ripple);
+  // Set the size of the span element
+  const diameter = Math.max(elem.clientWidth, elem.clientHeight);
+  ripple.style.width = ripple.style.height = diameter + 'px';
+  // Position the span element
+  const elemOffset = elem.getBoundingClientRect();
+  // Center over click coords OR over top left corner if activated by keypress
+  const left = Math.max(e.clientX - elemOffset.left, 0);
+  const top = Math.max(e.clientY - elemOffset.top, 0);
+  ripple.style.left = left - diameter / 2 + 'px';
+  ripple.style.top = top - diameter / 2 + 'px';
+  // Remove span after 0.3s
+  setTimeout(() => {
+    ripple.remove();
+  }, 300);
+}
 
 const MxButton$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
     this.btnType = 'contained';
-    this.type = 'button'; // reset | submit
+    this.type = 'button';
     this.disabled = false;
     this.xl = false;
+    /** Sets display to flex instead of inline-flex */
     this.full = false;
+    /** Show chevron icon */
+    this.dropdown = false;
   }
-  ripple() {
-    const elem = this.href ? this.anchorElem : this.btnElem;
-    // Create span element
-    let ripple = document.createElement('span');
-    // Add ripple class to span
-    ripple.classList.add('ripple');
-    // Add span to the button
-    elem.appendChild(ripple);
-    // Position the span element
-    ripple.style.left = '0';
-    ripple.style.top = '0';
-    // Remove span after 0.3s
-    setTimeout(() => {
-      ripple.remove();
-    }, 300);
+  onClick(e) {
+    if (this.disabled) {
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
+    if (this.btnType !== 'icon')
+      ripple(e, this.href ? this.anchorElem : this.btnElem);
   }
-  returnBaseClass() {
-    let str = `btn ${this.btnType}`;
-    if (this.xl)
-      str = `${str} xl`;
-    if (this.full)
-      str = `${str} full`;
+  get buttonClass() {
+    // The btnType and dropdown classes are only used for colors
+    let str = this.btnType;
+    if (this.dropdown)
+      str += ' dropdown';
+    // Common classes
+    str += ' flex items-center justify-center relative overflow-hidden cursor-pointer hover:no-underline';
+    // Contained & Outlined Buttons
+    if (['contained', 'outlined'].includes(this.btnType)) {
+      str += ' w-full rounded-lg font-semibold uppercase';
+      if (this.btnType === 'outlined')
+        str += ' border';
+      if (this.xl)
+        str += ' h-48 px-32 text-base';
+      else
+        str += ' h-36 px-16 text-sm';
+    }
+    // Action Button
+    if (this.btnType === 'action') {
+      str += ' w-full h-36 px-16 border rounded-3xl text-sm';
+    }
+    // Text Button
+    if (this.btnType === 'text') {
+      str += ' w-full h-36 px-8 py-10 text-sm rounded-lg';
+      str += this.dropdown ? ' font-normal' : ' font-semibold uppercase';
+    }
+    // Icon Button
+    if (this.btnType === 'icon') {
+      str += ' w-48 h-48 rounded-full';
+    }
     return str;
   }
+  get chevronClass() {
+    if (this.btnType === 'text')
+      return 'ml-4';
+    if (this.btnType === 'icon')
+      return 'chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1';
+    return 'ml-8';
+  }
   render() {
-    return (h(Host, { class: "mx-button" }, this.href ? (h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: () => {
-        this.ripple();
-      } }, h("div", { class: "flex justify-center items-center content-center", onClick: () => {
-        this.ripple();
-      } }, this.iconLeft && h("i", { class: this.iconLeft }), h("slot", null)))) : (h("button", { type: this.type, value: this.value, class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: () => {
-        this.ripple();
-      }, disabled: this.disabled }, h("div", { class: "flex justify-center items-center content-center relative", onClick: () => {
-        this.ripple();
-      } }, this.iconLeft && h("i", { class: this.iconLeft }), h("slot", null))))));
+    const chevronIcon = (h("svg", { class: "chevron-icon", width: "13", height: "7", viewBox: "0 0 13 7", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, h("path", { d: "M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z", fill: "currentColor", "fill-opacity": "0.88" })));
+    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: (this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon }), this.btnType !== 'icon' && (h("span", { class: "slot-content" }, h("slot", null))), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && h("span", { class: this.chevronClass }, chevronIcon)));
+    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", { type: this.type, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled }, buttonContent))));
   }
 };
 
@@ -164,11 +211,72 @@ const MxSwitch$1 = class extends HTMLElement {
   }
 };
 
-const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"iconLeft":[1,"icon-left"]}]);
+const MxToggleButton$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.selected = false;
+    this.disabled = false;
+  }
+  onClick(e) {
+    if (this.disabled) {
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
+    ripple(e, this.btnElem);
+  }
+  render() {
+    return (h(Host, { class: "mx-toggle-button inline-flex overflow-hidden border-l\n      first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl\n      last-of-type:rounded-tr last-of-type:rounded-br" }, h("button", { class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-xl overflow-hidden cursor-pointer' +
+        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), "aria-disabled": this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected, onClick: this.onClick.bind(this) }, h("i", { class: this.icon }))));
+  }
+};
+
+const MxToggleButtonGroup$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxInput = createEvent(this, "mxInput", 7);
+  }
+  onValueChange() {
+    this.updateChildButtons();
+  }
+  connectedCallback() {
+    this.updateChildButtons();
+  }
+  onToggleButtonClick(e) {
+    const toggleButton = e.target.closest('mx-toggle-button');
+    if (!toggleButton)
+      return;
+    this.toggleValue(toggleButton.value);
+    this.mxInput.emit(this.value);
+  }
+  toggleValue(value) {
+    if (this.value !== value)
+      this.value = value;
+    else
+      this.value = null;
+  }
+  updateChildButtons() {
+    const buttons = this.element.querySelectorAll('mx-toggle-button');
+    buttons.forEach(button => (button.selected = button.value === this.value));
+  }
+  render() {
+    return (h(Host, { class: "inline-flex", role: "radio-group" }, h("slot", null)));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "value": ["onValueChange"]
+  }; }
+};
+
+const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"label":[1],"value":[1],"type":[1],"dense":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
 const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
+const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"value":[8]}]);
+const MxToggleButtonGroup = /*@__PURE__*/proxyCustomElement(MxToggleButtonGroup$1, [4,"mx-toggle-button-group",{"value":[1032]},[[0,"click","onToggleButtonClick"]]]);
 const defineCustomElements = (opts) => {
   if (typeof customElements !== 'undefined') {
     [
@@ -176,7 +284,9 @@ const defineCustomElements = (opts) => {
   MxCheckbox,
   MxInput,
   MxRadio,
-  MxSwitch
+  MxSwitch,
+  MxToggleButton,
+  MxToggleButtonGroup
     ].forEach(cmp => {
       if (!customElements.get(cmp.is)) {
         customElements.define(cmp.is, cmp, opts);
@@ -185,4 +295,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxButton, MxCheckbox, MxInput, MxRadio, MxSwitch, defineCustomElements };
+export { MxButton, MxCheckbox, MxInput, MxRadio, MxSwitch, MxToggleButton, MxToggleButtonGroup, defineCustomElements };

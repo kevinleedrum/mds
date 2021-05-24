@@ -5,15 +5,32 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
 export namespace Components {
     interface MxButton {
-        "btnType": string;
+        "btnType": BtnType;
         "disabled": boolean;
+        /**
+          * Show chevron icon
+         */
+        "dropdown": boolean;
+        /**
+          * Sets display to flex instead of inline-flex
+         */
         "full": boolean;
+        /**
+          * Create button as link
+         */
         "href": string;
-        "iconLeft": string;
+        /**
+          * Class name of icon
+         */
+        "icon": string;
+        /**
+          * Only for link buttons
+         */
         "target": string;
-        "type": string;
+        "type": ButtonTypeAttribute;
         "value": string;
         "xl": boolean;
     }
@@ -52,6 +69,18 @@ export namespace Components {
         "name": string;
         "value": string;
     }
+    interface MxToggleButton {
+        "disabled": boolean;
+        "icon": string;
+        "selected": boolean;
+        /**
+          * Only used inside a toggle button group
+         */
+        "value": any;
+    }
+    interface MxToggleButtonGroup {
+        "value": any;
+    }
 }
 declare global {
     interface HTMLMxButtonElement extends Components.MxButton, HTMLStencilElement {
@@ -84,23 +113,53 @@ declare global {
         prototype: HTMLMxSwitchElement;
         new (): HTMLMxSwitchElement;
     };
+    interface HTMLMxToggleButtonElement extends Components.MxToggleButton, HTMLStencilElement {
+    }
+    var HTMLMxToggleButtonElement: {
+        prototype: HTMLMxToggleButtonElement;
+        new (): HTMLMxToggleButtonElement;
+    };
+    interface HTMLMxToggleButtonGroupElement extends Components.MxToggleButtonGroup, HTMLStencilElement {
+    }
+    var HTMLMxToggleButtonGroupElement: {
+        prototype: HTMLMxToggleButtonGroupElement;
+        new (): HTMLMxToggleButtonGroupElement;
+    };
     interface HTMLElementTagNameMap {
         "mx-button": HTMLMxButtonElement;
         "mx-checkbox": HTMLMxCheckboxElement;
         "mx-input": HTMLMxInputElement;
         "mx-radio": HTMLMxRadioElement;
         "mx-switch": HTMLMxSwitchElement;
+        "mx-toggle-button": HTMLMxToggleButtonElement;
+        "mx-toggle-button-group": HTMLMxToggleButtonGroupElement;
     }
 }
 declare namespace LocalJSX {
     interface MxButton {
-        "btnType"?: string;
+        "btnType"?: BtnType;
         "disabled"?: boolean;
+        /**
+          * Show chevron icon
+         */
+        "dropdown"?: boolean;
+        /**
+          * Sets display to flex instead of inline-flex
+         */
         "full"?: boolean;
+        /**
+          * Create button as link
+         */
         "href"?: string;
-        "iconLeft"?: string;
+        /**
+          * Class name of icon
+         */
+        "icon"?: string;
+        /**
+          * Only for link buttons
+         */
         "target"?: string;
-        "type"?: string;
+        "type"?: ButtonTypeAttribute;
         "value"?: string;
         "xl"?: boolean;
     }
@@ -139,12 +198,30 @@ declare namespace LocalJSX {
         "name"?: string;
         "value"?: string;
     }
+    interface MxToggleButton {
+        "disabled"?: boolean;
+        "icon"?: string;
+        "selected"?: boolean;
+        /**
+          * Only used inside a toggle button group
+         */
+        "value"?: any;
+    }
+    interface MxToggleButtonGroup {
+        /**
+          * Emits the updated value as event.detail
+         */
+        "onMxInput"?: (event: CustomEvent<any>) => void;
+        "value"?: any;
+    }
     interface IntrinsicElements {
         "mx-button": MxButton;
         "mx-checkbox": MxCheckbox;
         "mx-input": MxInput;
         "mx-radio": MxRadio;
         "mx-switch": MxSwitch;
+        "mx-toggle-button": MxToggleButton;
+        "mx-toggle-button-group": MxToggleButtonGroup;
     }
 }
 export { LocalJSX as JSX };
@@ -156,6 +233,8 @@ declare module "@stencil/core" {
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;
             "mx-switch": LocalJSX.MxSwitch & JSXBase.HTMLAttributes<HTMLMxSwitchElement>;
+            "mx-toggle-button": LocalJSX.MxToggleButton & JSXBase.HTMLAttributes<HTMLMxToggleButtonElement>;
+            "mx-toggle-button-group": LocalJSX.MxToggleButtonGroup & JSXBase.HTMLAttributes<HTMLMxToggleButtonGroupElement>;
         }
     }
 }

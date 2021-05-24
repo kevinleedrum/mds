@@ -1,52 +1,74 @@
 import { Component, Host, h, Prop } from '@stencil/core';
+import ripple from '../ripple';
 export class MxButton {
   constructor() {
     this.btnType = 'contained';
-    this.type = 'button'; // reset | submit
+    this.type = 'button';
     this.disabled = false;
     this.xl = false;
+    /** Sets display to flex instead of inline-flex */
     this.full = false;
+    /** Show chevron icon */
+    this.dropdown = false;
   }
-  ripple() {
-    const elem = this.href ? this.anchorElem : this.btnElem;
-    // Create span element
-    let ripple = document.createElement('span');
-    // Add ripple class to span
-    ripple.classList.add('ripple');
-    // Add span to the button
-    elem.appendChild(ripple);
-    // Position the span element
-    ripple.style.left = '0';
-    ripple.style.top = '0';
-    // Remove span after 0.3s
-    setTimeout(() => {
-      ripple.remove();
-    }, 300);
+  onClick(e) {
+    if (this.disabled) {
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
+    if (this.btnType !== 'icon')
+      ripple(e, this.href ? this.anchorElem : this.btnElem);
   }
-  returnBaseClass() {
-    let str = `btn ${this.btnType}`;
-    if (this.xl)
-      str = `${str} xl`;
-    if (this.full)
-      str = `${str} full`;
+  get buttonClass() {
+    // The btnType and dropdown classes are only used for colors
+    let str = this.btnType;
+    if (this.dropdown)
+      str += ' dropdown';
+    // Common classes
+    str += ' flex items-center justify-center relative overflow-hidden cursor-pointer hover:no-underline';
+    // Contained & Outlined Buttons
+    if (['contained', 'outlined'].includes(this.btnType)) {
+      str += ' w-full rounded-lg font-semibold uppercase';
+      if (this.btnType === 'outlined')
+        str += ' border';
+      if (this.xl)
+        str += ' h-48 px-32 text-base';
+      else
+        str += ' h-36 px-16 text-sm';
+    }
+    // Action Button
+    if (this.btnType === 'action') {
+      str += ' w-full h-36 px-16 border rounded-3xl text-sm';
+    }
+    // Text Button
+    if (this.btnType === 'text') {
+      str += ' w-full h-36 px-8 py-10 text-sm rounded-lg';
+      str += this.dropdown ? ' font-normal' : ' font-semibold uppercase';
+    }
+    // Icon Button
+    if (this.btnType === 'icon') {
+      str += ' w-48 h-48 rounded-full';
+    }
     return str;
   }
+  get chevronClass() {
+    if (this.btnType === 'text')
+      return 'ml-4';
+    if (this.btnType === 'icon')
+      return 'chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1';
+    return 'ml-8';
+  }
   render() {
-    return (h(Host, { class: "mx-button" }, this.href ? (h("a", { href: this.href, target: this.target, class: this.returnBaseClass(), ref: el => (this.anchorElem = el), onClick: () => {
-        this.ripple();
-      } },
-      h("div", { class: "flex justify-center items-center content-center", onClick: () => {
-          this.ripple();
-        } },
-        this.iconLeft && h("i", { class: this.iconLeft }),
-        h("slot", null)))) : (h("button", { type: this.type, value: this.value, class: this.returnBaseClass(), ref: el => (this.btnElem = el), onClick: () => {
-        this.ripple();
-      }, disabled: this.disabled },
-      h("div", { class: "flex justify-center items-center content-center relative", onClick: () => {
-          this.ripple();
-        } },
-        this.iconLeft && h("i", { class: this.iconLeft }),
-        h("slot", null))))));
+    const chevronIcon = (h("svg", { class: "chevron-icon", width: "13", height: "7", viewBox: "0 0 13 7", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+      h("path", { d: "M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z", fill: "currentColor", "fill-opacity": "0.88" })));
+    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" },
+      this.icon && h("i", { class: (this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon }),
+      this.btnType !== 'icon' && (h("span", { class: "slot-content" },
+        h("slot", null))),
+      this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }),
+      this.dropdown && h("span", { class: this.chevronClass }, chevronIcon)));
+    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", { type: this.type, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled }, buttonContent))));
   }
   static get is() { return "mx-button"; }
   static get properties() { return {
@@ -54,9 +76,13 @@ export class MxButton {
       "type": "string",
       "mutable": false,
       "complexType": {
-        "original": "string",
-        "resolved": "string",
-        "references": {}
+        "original": "BtnType",
+        "resolved": "\"action\" | \"contained\" | \"icon\" | \"outlined\" | \"text\"",
+        "references": {
+          "BtnType": {
+            "location": "local"
+          }
+        }
       },
       "required": false,
       "optional": false,
@@ -72,9 +98,13 @@ export class MxButton {
       "type": "string",
       "mutable": false,
       "complexType": {
-        "original": "string",
-        "resolved": "string",
-        "references": {}
+        "original": "ButtonTypeAttribute",
+        "resolved": "\"button\" | \"reset\" | \"submit\"",
+        "references": {
+          "ButtonTypeAttribute": {
+            "location": "local"
+          }
+        }
       },
       "required": false,
       "optional": false,
@@ -151,7 +181,7 @@ export class MxButton {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": ""
+        "text": "Create button as link"
       },
       "attribute": "href",
       "reflect": false
@@ -168,7 +198,7 @@ export class MxButton {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": ""
+        "text": "Only for link buttons"
       },
       "attribute": "target",
       "reflect": false
@@ -185,13 +215,31 @@ export class MxButton {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": ""
+        "text": "Sets display to flex instead of inline-flex"
       },
       "attribute": "full",
       "reflect": false,
       "defaultValue": "false"
     },
-    "iconLeft": {
+    "dropdown": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Show chevron icon"
+      },
+      "attribute": "dropdown",
+      "reflect": false,
+      "defaultValue": "false"
+    },
+    "icon": {
       "type": "string",
       "mutable": false,
       "complexType": {
@@ -203,9 +251,9 @@ export class MxButton {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": ""
+        "text": "Class name of icon"
       },
-      "attribute": "icon-left",
+      "attribute": "icon",
       "reflect": false
     }
   }; }

@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-e17b5fa1.js');
+const index = require('./index-8955b53c.js');
 
 const MxSwitch = class {
   constructor(hostRef) {
