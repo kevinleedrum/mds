@@ -180,61 +180,61 @@
 
   .elevation1 {
     background: #fafafa;
-    @apply shadow-dp-1;
+    @apply shadow-1;
     border-radius: 8px;
   }
 
   .elevation2 {
     background: #fafafa;
-    @apply shadow-dp-2;
+    @apply shadow-2;
     border-radius: 8px;
   }
 
   .elevation3 {
     background: #fafafa;
-    @apply shadow-dp-3;
+    @apply shadow-3;
     border-radius: 8px;
   }
 
   .elevation4 {
     background: #fafafa;
-    @apply shadow-dp-4;
+    @apply shadow-4;
     border-radius: 8px;
   }
 
   .elevation6 {
     background: #fafafa;
-    @apply shadow-dp-6;
+    @apply shadow-6;
     border-radius: 8px;
   }
 
   .elevation8 {
     background: #fafafa;
-    @apply shadow-dp-8;
+    @apply shadow-8;
     border-radius: 8px;
   }
 
   .elevation9 {
     background: #fafafa;
-    @apply shadow-dp-9;
+    @apply shadow-9;
     border-radius: 8px;
   }
 
   .elevation12 {
     background: #fafafa;
-    @apply shadow-dp-12;
+    @apply shadow-12;
     border-radius: 8px;
   }
 
   .elevation16 {
     background: #fafafa;
-    @apply shadow-dp-16;
+    @apply shadow-16;
     border-radius: 8px;
   }
 
   .elevation24 {
     background: #fafafa;
-    @apply shadow-dp-24;
+    @apply shadow-24;
     border-radius: 8px;
   }
 }
