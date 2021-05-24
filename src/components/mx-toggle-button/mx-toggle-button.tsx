@@ -9,7 +9,7 @@ export class MxToggleButton {
   btnElem: HTMLButtonElement;
 
   @Prop() icon: string;
-  @Prop() selected: boolean = false;
+  @Prop({ reflect: true }) selected: boolean = false;
   @Prop() disabled: boolean = false;
   /** Only used inside a toggle button group */
   @Prop() value: any;

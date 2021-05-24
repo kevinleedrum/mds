@@ -26,7 +26,6 @@ export class MxToggleButtonGroup {
     const toggleButton: HTMLMxToggleButtonElement = (e.target as HTMLElement).closest('mx-toggle-button');
     if (!toggleButton) return;
     this.toggleValue(toggleButton.value);
-    this.updateChildButtons();
     this.mxInput.emit(this.value);
   }
 
