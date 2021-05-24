@@ -185,21 +185,21 @@ describe('mx-button as an icon button', () => {
     expect(btn.getAttribute('class')).toContain('h-48');
     expect(btn.getAttribute('class')).toContain('rounded-full');
   });
+});
 
-  describe('mx-button as a dropdown icon button', () => {
-    let page;
-    let root;
-    beforeEach(async () => {
-      page = await newSpecPage({
-        components: [MxButton],
-        html: `<mx-button btn-type="icon" dropdown></mx-button>`,
-      });
-      root = page.root;
+describe('mx-button as a dropdown icon button', () => {
+  let page;
+  let root;
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [MxButton],
+      html: `<mx-button btn-type="icon" dropdown></mx-button>`,
     });
+    root = page.root;
+  });
 
-    it('has a chevron icon', async () => {
-      const icon = root.querySelector('button svg.chevron-icon');
-      expect(icon).not.toBeNull();
-    });
+  it('has a chevron icon', async () => {
+    const icon = root.querySelector('button svg.chevron-icon');
+    expect(icon).not.toBeNull();
   });
 });
