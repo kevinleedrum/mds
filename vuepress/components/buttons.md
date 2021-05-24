@@ -136,7 +136,7 @@
 </section>
 <!-- #endregion icon-buttons -->
 
-<<< @/vuepress/components/buttons.md#action-buttons
+<<< @/vuepress/components/buttons.md#icon-buttons
 
 ### Button Properties
 
