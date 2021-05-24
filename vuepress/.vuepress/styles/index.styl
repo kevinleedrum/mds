@@ -4,6 +4,13 @@ body
 p
   margin: 20px 0;
 
+// Override theme's a:hover rule since it has higher specificity than ".mds .hover:no-underline"
+.theme-default-content:not(.custom) a:hover
+  text-decoration: none;
+// Restore underline for a:hover that is not inside a .mds container
+.theme-default-content:not(.custom) a:hover:not(.mds a)
+  text-decoration: underline;
+
 .front
   position: absolute;
   top: 0
