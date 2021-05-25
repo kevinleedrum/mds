@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host } from './index-0595217f.js';
+import { r as registerInstance, h, e as Host } from './index-3267cb6d.js';
 
 const MxRadio = class {
   constructor(hostRef) {
