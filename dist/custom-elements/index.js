@@ -1,6 +1,72 @@
 import { h, Host, createEvent, proxyCustomElement } from '@stencil/core/internal/client';
 export { setAssetPath, setPlatformOptions } from '@stencil/core/internal/client';
 
+const MxBadge$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    /** Make the corners a little more square (best for standalone text) */
+    this.squared = false;
+    /** Display as a small dot (no value) */
+    this.dot = false;
+    /** Offset badge inward by this many pixels (e.g. 10 for icon buttons) */
+    this.offset = 0;
+    /** Anchor the badge to the bottom of the wrapped content */
+    this.bottom = false;
+    /** Anchor the badge to the left of the wrapped content */
+    this.left = false;
+  }
+  get isStandalone() {
+    return !this.element.firstElementChild;
+  }
+  get isIconOnly() {
+    return this.icon && this.value === undefined;
+  }
+  get badgeClassNames() {
+    let str = 'badge inline-flex items-center justify-center text-sm font-semibold pointer-events-none';
+    // Border-Radius
+    if (this.dot || this.isIconOnly) {
+      str += ' rounded-full';
+    }
+    else if (this.squared) {
+      str += ' rounded';
+    }
+    else {
+      str += ' rounded-xl';
+    }
+    // Width & Height
+    if (this.dot) {
+      str += ' w-12 h-12';
+    }
+    else if (this.isStandalone) {
+      str += ' h-24';
+      str += this.isIconOnly ? ' w-24' : ' px-8';
+    }
+    else {
+      str += ' h-20';
+      str += this.isIconOnly ? ' w-20' : ' px-6';
+    }
+    // Position Anchored Badge
+    if (!this.isStandalone) {
+      str += ' absolute transform';
+      if (this.bottom) {
+        str += ` bottom-${this.offset} translate-y-1/2`;
+        str += this.left ? ' origin-bottom-left' : ' origin-bottom-right';
+      }
+      else {
+        str += ` top-${this.offset} -translate-y-1/2`;
+        str += this.left ? ' origin-top-left' : ' origin-top-right';
+      }
+      str += this.left ? ` left-${this.offset} -translate-x-1/2` : ` right-${this.offset} translate-x-1/2`;
+    }
+    return [str, this.badgeClass].join(' ');
+  }
+  render() {
+    return (h(Host, { class: "mx-badge inline-flex relative" }, h("slot", null), h("span", { class: this.badgeClassNames }, this.icon && h("i", { class: this.icon + (this.isIconOnly ? '' : ' mr-4') }), this.value)));
+  }
+  get element() { return this; }
+};
+
 function ripple(e, elem) {
   let existingRipple = elem.querySelector('.ripple');
   if (existingRipple)
@@ -270,6 +336,7 @@ const MxToggleButtonGroup$1 = class extends HTMLElement {
   }; }
 };
 
+const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"dot":[4],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
 const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"label":[1],"value":[1],"type":[1],"dense":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
@@ -280,7 +347,8 @@ const MxToggleButtonGroup = /*@__PURE__*/proxyCustomElement(MxToggleButtonGroup$
 const defineCustomElements = (opts) => {
   if (typeof customElements !== 'undefined') {
     [
-      MxButton,
+      MxBadge,
+  MxButton,
   MxCheckbox,
   MxInput,
   MxRadio,
@@ -295,4 +363,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxButton, MxCheckbox, MxInput, MxRadio, MxSwitch, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxInput, MxRadio, MxSwitch, MxToggleButton, MxToggleButtonGroup, defineCustomElements };

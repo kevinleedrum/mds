@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-8955b53c.js');
+const index = require('./index-62cba631.js');
 
 const MxRadio = class {
   constructor(hostRef) {
