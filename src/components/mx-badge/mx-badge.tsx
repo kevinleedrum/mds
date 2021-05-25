@@ -6,7 +6,6 @@ import { Component, Host, h, Prop, Element } from '@stencil/core';
 })
 export class MxBadge {
   childElement: HTMLElement;
-  slotWrapper: HTMLSpanElement;
 
   @Element() private element: HTMLElement;
 
