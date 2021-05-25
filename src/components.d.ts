@@ -7,6 +7,40 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
 export namespace Components {
+    interface MxBadge {
+        /**
+          * Additional classes to add to the badge itself
+         */
+        "badgeClass": string;
+        /**
+          * Anchor the badge to the bottom of the wrapped content
+         */
+        "bottom": boolean;
+        /**
+          * Display as a small dot (no value)
+         */
+        "dot": boolean;
+        /**
+          * Class name of icon
+         */
+        "icon": string;
+        /**
+          * Anchor the badge to the left of the wrapped content
+         */
+        "left": boolean;
+        /**
+          * Offset badge inward by this many pixels (e.g. 10 for icon buttons)
+         */
+        "offset": number;
+        /**
+          * Make the corners a little more square (best for standalone text)
+         */
+        "squared": boolean;
+        /**
+          * The value to display inside the badge
+         */
+        "value": any;
+    }
     interface MxButton {
         "btnType": BtnType;
         "disabled": boolean;
@@ -83,6 +117,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLMxBadgeElement extends Components.MxBadge, HTMLStencilElement {
+    }
+    var HTMLMxBadgeElement: {
+        prototype: HTMLMxBadgeElement;
+        new (): HTMLMxBadgeElement;
+    };
     interface HTMLMxButtonElement extends Components.MxButton, HTMLStencilElement {
     }
     var HTMLMxButtonElement: {
@@ -126,6 +166,7 @@ declare global {
         new (): HTMLMxToggleButtonGroupElement;
     };
     interface HTMLElementTagNameMap {
+        "mx-badge": HTMLMxBadgeElement;
         "mx-button": HTMLMxButtonElement;
         "mx-checkbox": HTMLMxCheckboxElement;
         "mx-input": HTMLMxInputElement;
@@ -136,6 +177,40 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface MxBadge {
+        /**
+          * Additional classes to add to the badge itself
+         */
+        "badgeClass"?: string;
+        /**
+          * Anchor the badge to the bottom of the wrapped content
+         */
+        "bottom"?: boolean;
+        /**
+          * Display as a small dot (no value)
+         */
+        "dot"?: boolean;
+        /**
+          * Class name of icon
+         */
+        "icon"?: string;
+        /**
+          * Anchor the badge to the left of the wrapped content
+         */
+        "left"?: boolean;
+        /**
+          * Offset badge inward by this many pixels (e.g. 10 for icon buttons)
+         */
+        "offset"?: number;
+        /**
+          * Make the corners a little more square (best for standalone text)
+         */
+        "squared"?: boolean;
+        /**
+          * The value to display inside the badge
+         */
+        "value"?: any;
+    }
     interface MxButton {
         "btnType"?: BtnType;
         "disabled"?: boolean;
@@ -215,6 +290,7 @@ declare namespace LocalJSX {
         "value"?: any;
     }
     interface IntrinsicElements {
+        "mx-badge": MxBadge;
         "mx-button": MxButton;
         "mx-checkbox": MxCheckbox;
         "mx-input": MxInput;
@@ -228,6 +304,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;

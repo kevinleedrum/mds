@@ -2,6 +2,12 @@
 
 import type { Components, JSX } from "../types/components";
 
+interface MxBadge extends Components.MxBadge, HTMLElement {}
+export const MxBadge: {
+  prototype: MxBadge;
+  new (): MxBadge;
+};
+
 interface MxButton extends Components.MxButton, HTMLElement {}
 export const MxButton: {
   prototype: MxButton;

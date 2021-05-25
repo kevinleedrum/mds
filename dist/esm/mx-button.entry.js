@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host } from './index-5e389dc2.js';
+import { r as registerInstance, h, H as Host } from './index-de894109.js';
 import { r as ripple } from './ripple-a99cb795.js';
 
 const MxButton = class {

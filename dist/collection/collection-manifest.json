@@ -1,6 +1,7 @@
 {
   "entries": [
     "./components/mx-button/mx-button.js",
+    "./components/mx-badge/mx-badge.js",
     "./components/mx-checkbox/mx-checkbox.js",
     "./components/mx-input/mx-input.js",
     "./components/mx-radio/mx-radio.js",
