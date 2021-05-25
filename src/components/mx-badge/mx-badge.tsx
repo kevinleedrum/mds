@@ -19,10 +19,8 @@ export class MxBadge {
   @Prop() badgeClass: string;
   /** Class name of icon */
   @Prop() icon: string;
-  /** Place anchored badge further inward */
-  @Prop() tight: boolean = false;
-  /** Place badge even further inward (suitable for icon buttons) */
-  @Prop() snug: boolean = false;
+  /** Offset badge inward by this many pixels (e.g. 10 for icon buttons) */
+  @Prop() offset: number = 0;
   /** Anchor the badge to the bottom of the wrapped content */
   @Prop() bottom: boolean = false;
   /** Anchor the badge to the left of the wrapped content */
@@ -61,16 +59,15 @@ export class MxBadge {
 
     // Position Anchored Badge
     if (!this.isStandalone) {
-      const offset = this.tight ? '4' : this.snug ? '10' : '0';
       str += ' absolute transform';
       if (this.bottom) {
-        str += ` bottom-${offset} translate-y-1/2`;
+        str += ` bottom-${this.offset} translate-y-1/2`;
         str += this.left ? ' origin-bottom-left' : ' origin-bottom-right';
       } else {
-        str += ` top-${offset} -translate-y-1/2`;
+        str += ` top-${this.offset} -translate-y-1/2`;
         str += this.left ? ' origin-top-left' : ' origin-top-right';
       }
-      str += this.left ? ` left-${offset} -translate-x-1/2` : ` right-${offset} translate-x-1/2`;
+      str += this.left ? ` left-${this.offset} -translate-x-1/2` : ` right-${this.offset} translate-x-1/2`;
     }
 
     return [str, this.badgeClass].join(' ');

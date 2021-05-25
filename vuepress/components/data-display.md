@@ -20,13 +20,13 @@ itelf in a corner of that element.
       <mx-badge badge-class="bg-purple-500 text-white" value="237">
         <mx-button btn-type="action" icon="ph-bell">Notifications</mx-button>
       </mx-badge>
-      <mx-badge badge-class="bg-red-500 text-white" icon="ph-x" bottom snug>
+      <mx-badge badge-class="bg-red-500 text-white" icon="ph-x" bottom offset="10">
         <mx-button btn-type="icon" icon="ph-video-camera" />
       </mx-badge>
-      <mx-badge badge-class="bg-yellow-300" dot tight>
+      <mx-badge badge-class="bg-yellow-300" dot offset="4">
         <mx-button btn-type="action">Announcements</mx-button>
       </mx-badge>
-      <mx-badge badge-class="bg-gray-700 text-white" value="3" bottom left snug>
+      <mx-badge badge-class="bg-gray-700 text-white" value="3" bottom left offset="10">
         <mx-button btn-type="icon" icon="ph-shopping-cart" />
       </mx-badge>
     </div>
@@ -38,14 +38,13 @@ itelf in a corner of that element.
 
 ### Badge Properties
 
-| Property     | Attribute     | Description                                                      | Type      | Default     |
-| ------------ | ------------- | ---------------------------------------------------------------- | --------- | ----------- |
-| `value`      | `value`       | The value to display inside the badge                            | `any`     | `undefined` |
-| `squared`    | `squared`     | Make the corners a little more square (best for standalone text) | `boolean` | `false`     |
-| `dot`        | `dot`         | Display as a small dot (no value)                                | `boolean` | `false`     |
-| `badgeClass` | `badge-class` | Additional classes to add to the badge itself                    | `string`  | `undefined` |
-| `icon`       | `icon`        | Class name of icon                                               | `string`  | `undefined` |
-| `tight`      | `tight`       | Place anchored badge further inward                              | `boolean` | `false`     |
-| `snug`       | `snug`        | Place badge even further inward (suitable for icon buttons)      | `boolean` | `false`     |
-| `bottom`     | `bottom`      | Anchor the badge to the bottom of the wrapped content            | `boolean` | `false`     |
-| `left`       | `left`        | Anchor the badge to the left of the wrapped content              | `boolean` | `false`     |
+| Property     | Attribute     | Description                                                        | Type      | Default     |
+| ------------ | ------------- | ------------------------------------------------------------------ | --------- | ----------- |
+| `value`      | `value`       | The value to display inside the badge                              | `any`     | `undefined` |
+| `squared`    | `squared`     | Make the corners a little more square (best for standalone text)   | `boolean` | `false`     |
+| `dot`        | `dot`         | Display as a small dot (no value)                                  | `boolean` | `false`     |
+| `badgeClass` | `badge-class` | Additional classes to add to the badge itself                      | `string`  | `undefined` |
+| `icon`       | `icon`        | Class name of icon                                                 | `string`  | `undefined` |
+| `offset`     | `offset`      | Offset badge inward by this many pixels (e.g. 10 for icon buttons) | `number`  | `0`         |
+| `bottom`     | `bottom`      | Anchor the badge to the bottom of the wrapped content              | `boolean` | `false`     |
+| `left`       | `left`        | Anchor the badge to the left of the wrapped content                | `boolean` | `false`     |
