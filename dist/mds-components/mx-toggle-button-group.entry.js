@@ -1,13 +1,9 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-const index = require('./index-62cba631.js');
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-3267cb6d.js';
 
 const MxToggleButtonGroup = class {
   constructor(hostRef) {
-    index.registerInstance(this, hostRef);
-    this.mxInput = index.createEvent(this, "mxInput", 7);
+    registerInstance(this, hostRef);
+    this.mxInput = createEvent(this, "mxInput", 7);
   }
   onValueChange() {
     this.updateChildButtons();
@@ -33,12 +29,12 @@ const MxToggleButtonGroup = class {
     buttons.forEach(button => (button.selected = button.value === this.value));
   }
   render() {
-    return (index.h(index.Host, { class: "inline-flex", role: "radio-group" }, index.h("slot", null)));
+    return (h(Host, { class: "inline-flex", role: "radio-group" }, h("slot", null)));
   }
-  get element() { return index.getElement(this); }
+  get element() { return getElement(this); }
   static get watchers() { return {
     "value": ["onValueChange"]
   }; }
 };
 
-exports.mx_toggle_button_group = MxToggleButtonGroup;
+export { MxToggleButtonGroup as mx_toggle_button_group };
