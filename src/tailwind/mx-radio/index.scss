@@ -5,6 +5,7 @@
     border: 2px solid #5a5a5a;
 
     &::before {
+      display: none;
       content: '';
       position: absolute;
       top: -12.5px;
@@ -29,6 +30,7 @@
 
     &:hover {
       &::before {
+        display: block;
         background: rgba(0, 0, 0, 0.04);
       }
     }
@@ -37,6 +39,16 @@
       &::before {
         background: rgba(0, 0, 0, 0.12);
       }
+    }
+  }
+
+  :focus-within:focus-visible {
+    & + span::before {
+      display: block;
+      background: rgba(0, 0, 0, 0.12);
+    }
+    &:checked ~ span::before {
+      background: rgba(4, 87, 175, 0.32);
     }
   }
 
@@ -53,6 +65,7 @@
 
     &:active {
       &::before {
+        display: block;
         background: rgba(4, 87, 175, 0.32);
       }
     }
