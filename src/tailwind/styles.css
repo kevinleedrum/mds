@@ -30,7 +30,7 @@
 * Custom CSS
 ***************************/
 .mds {
-  * {
+  *:not(code, code *) {
     font-family: 'Open Sans', sans-serif;
   }
 
