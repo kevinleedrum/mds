@@ -10,4 +10,5 @@ echo ""
 
 yarn stencil:build
 yarn docs:build
-cp -R vuepress/.vuepress/public/styles ./dist
+yarn tailwind:prod
+yarn minify:css
