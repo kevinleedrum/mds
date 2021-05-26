@@ -21,8 +21,8 @@
 /***************************
 * Import Tailwind helpers
 ***************************/
-/*! tailwindcss v2.1.1 | MIT License | https://tailwindcss.com*/
-/*! modern-normalize v1.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
+/*! tailwindcss v2.2.0-canary.9 | MIT License | https://tailwindcss.com*/
+/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 /*
 Document
 ========
@@ -31,14 +31,14 @@ Document
 Use a better box model (opinionated).
 */
 *,
-*::before,
-*::after {
+::before,
+::after {
 	box-sizing: border-box;
 }
 /**
 Use a more readable tab size (opinionated).
 */
-:root {
+html {
 	-moz-tab-size: 4;
 	-o-tab-size: 4;
 	   tab-size: 4;
@@ -360,7 +360,7 @@ body {
   box-sizing: border-box; /* 1 */
   border-width: 0; /* 2 */
   border-style: solid; /* 2 */
-  border-color: #e5e7eb; /* 2 */
+  border-color: currentColor; /* 2 */
 }
 /*
  * Ensure horizontal rules are visible by default
@@ -477,6 +477,10 @@ video {
   max-width: 100%;
   height: auto;
 }
+*, ::before, ::after{
+  --tw-border-opacity: 1;
+  border-color: rgba(229, 231, 235, var(--tw-border-opacity));
+}
 *{
   --tw-shadow: 0 0 #0000;
   --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
@@ -536,6 +540,12 @@ video {
 .mds .invisible{
   visibility: hidden;
 }
+.mds .static{
+  position: static;
+}
+.mds .fixed{
+  position: fixed;
+}
 .mds .absolute{
   position: absolute;
 }
@@ -544,12 +554,6 @@ video {
 }
 .mds .sticky{
   position: sticky;
-}
-.mds .fixed{
-  position: fixed;
-}
-.mds .static{
-  position: static;
 }
 .mds .inset-0{
   top: 0px;
@@ -2827,6 +2831,9 @@ video {
 .mds .order-none{
   order: 0;
 }
+.mds .col-span-4{
+  grid-column: span 4 / span 4;
+}
 .mds .col-auto{
   grid-column: auto;
 }
@@ -2838,9 +2845,6 @@ video {
 }
 .mds .col-span-3{
   grid-column: span 3 / span 3;
-}
-.mds .col-span-4{
-  grid-column: span 4 / span 4;
 }
 .mds .col-span-5{
   grid-column: span 5 / span 5;
@@ -2868,48 +2872,6 @@ video {
 }
 .mds .col-span-full{
   grid-column: 1 / -1;
-}
-.mds .col-end-1{
-  grid-column-end: 1;
-}
-.mds .col-end-2{
-  grid-column-end: 2;
-}
-.mds .col-end-3{
-  grid-column-end: 3;
-}
-.mds .col-end-4{
-  grid-column-end: 4;
-}
-.mds .col-end-5{
-  grid-column-end: 5;
-}
-.mds .col-end-6{
-  grid-column-end: 6;
-}
-.mds .col-end-7{
-  grid-column-end: 7;
-}
-.mds .col-end-8{
-  grid-column-end: 8;
-}
-.mds .col-end-9{
-  grid-column-end: 9;
-}
-.mds .col-end-10{
-  grid-column-end: 10;
-}
-.mds .col-end-11{
-  grid-column-end: 11;
-}
-.mds .col-end-12{
-  grid-column-end: 12;
-}
-.mds .col-end-13{
-  grid-column-end: 13;
-}
-.mds .col-end-auto{
-  grid-column-end: auto;
 }
 .mds .col-start-1{
   grid-column-start: 1;
@@ -2953,6 +2915,48 @@ video {
 .mds .col-start-auto{
   grid-column-start: auto;
 }
+.mds .col-end-1{
+  grid-column-end: 1;
+}
+.mds .col-end-2{
+  grid-column-end: 2;
+}
+.mds .col-end-3{
+  grid-column-end: 3;
+}
+.mds .col-end-4{
+  grid-column-end: 4;
+}
+.mds .col-end-5{
+  grid-column-end: 5;
+}
+.mds .col-end-6{
+  grid-column-end: 6;
+}
+.mds .col-end-7{
+  grid-column-end: 7;
+}
+.mds .col-end-8{
+  grid-column-end: 8;
+}
+.mds .col-end-9{
+  grid-column-end: 9;
+}
+.mds .col-end-10{
+  grid-column-end: 10;
+}
+.mds .col-end-11{
+  grid-column-end: 11;
+}
+.mds .col-end-12{
+  grid-column-end: 12;
+}
+.mds .col-end-13{
+  grid-column-end: 13;
+}
+.mds .col-end-auto{
+  grid-column-end: auto;
+}
 .mds .row-auto{
   grid-row: auto;
 }
@@ -2977,30 +2981,6 @@ video {
 .mds .row-span-full{
   grid-row: 1 / -1;
 }
-.mds .row-end-1{
-  grid-row-end: 1;
-}
-.mds .row-end-2{
-  grid-row-end: 2;
-}
-.mds .row-end-3{
-  grid-row-end: 3;
-}
-.mds .row-end-4{
-  grid-row-end: 4;
-}
-.mds .row-end-5{
-  grid-row-end: 5;
-}
-.mds .row-end-6{
-  grid-row-end: 6;
-}
-.mds .row-end-7{
-  grid-row-end: 7;
-}
-.mds .row-end-auto{
-  grid-row-end: auto;
-}
 .mds .row-start-1{
   grid-row-start: 1;
 }
@@ -3024,6 +3004,30 @@ video {
 }
 .mds .row-start-auto{
   grid-row-start: auto;
+}
+.mds .row-end-1{
+  grid-row-end: 1;
+}
+.mds .row-end-2{
+  grid-row-end: 2;
+}
+.mds .row-end-3{
+  grid-row-end: 3;
+}
+.mds .row-end-4{
+  grid-row-end: 4;
+}
+.mds .row-end-5{
+  grid-row-end: 5;
+}
+.mds .row-end-6{
+  grid-row-end: 6;
+}
+.mds .row-end-7{
+  grid-row-end: 7;
+}
+.mds .row-end-auto{
+  grid-row-end: auto;
 }
 .mds .float-right{
   float: right;
@@ -3253,11 +3257,11 @@ video {
 .mds .ml-1{
   margin-left: 1px;
 }
-.mds .mt-16{
-  margin-top: 1rem;
-}
 .mds .mt-2{
   margin-top: 0.125rem;
+}
+.mds .mt-16{
+  margin-top: 1rem;
 }
 .mds .mt-4{
   margin-top: 0.25rem;
@@ -4251,23 +4255,23 @@ video {
 .mds .flex-row{
   flex-direction: row;
 }
-.mds .flex-col{
-  flex-direction: column;
-}
 .mds .flex-row-reverse{
   flex-direction: row-reverse;
 }
+.mds .flex-col{
+  flex-direction: column;
+}
 .mds .flex-col-reverse{
   flex-direction: column-reverse;
-}
-.mds .flex-nowrap{
-  flex-wrap: nowrap;
 }
 .mds .flex-wrap{
   flex-wrap: wrap;
 }
 .mds .flex-wrap-reverse{
   flex-wrap: wrap-reverse;
+}
+.mds .flex-nowrap{
+  flex-wrap: nowrap;
 }
 .mds .place-content-center{
   place-content: center;
@@ -4320,14 +4324,14 @@ video {
 .mds .content-evenly{
   align-content: space-evenly;
 }
-.mds .items-center{
-  align-items: center;
-}
 .mds .items-start{
   align-items: flex-start;
 }
 .mds .items-end{
   align-items: flex-end;
+}
+.mds .items-center{
+  align-items: center;
 }
 .mds .items-baseline{
   align-items: baseline;
@@ -4335,17 +4339,17 @@ video {
 .mds .items-stretch{
   align-items: stretch;
 }
-.mds .justify-center{
-  justify-content: center;
-}
-.mds .justify-between{
-  justify-content: space-between;
-}
 .mds .justify-start{
   justify-content: flex-start;
 }
 .mds .justify-end{
   justify-content: flex-end;
+}
+.mds .justify-center{
+  justify-content: center;
+}
+.mds .justify-between{
+  justify-content: space-between;
 }
 .mds .justify-around{
   justify-content: space-around;
@@ -5916,11 +5920,11 @@ video {
 .mds .justify-self-stretch{
   justify-self: stretch;
 }
-.mds .overflow-hidden{
-  overflow: hidden;
-}
 .mds .overflow-auto{
   overflow: auto;
+}
+.mds .overflow-hidden{
+  overflow: hidden;
 }
 .mds .overflow-visible{
   overflow: visible;
@@ -5993,14 +5997,14 @@ video {
 .mds .overflow-clip{
   text-overflow: clip;
 }
+.mds .whitespace-normal{
+  white-space: normal;
+}
 .mds .whitespace-nowrap{
   white-space: nowrap;
 }
 .mds .whitespace-pre{
   white-space: pre;
-}
-.mds .whitespace-normal{
-  white-space: normal;
 }
 .mds .whitespace-pre-line{
   white-space: pre-line;
@@ -6883,6 +6887,9 @@ video {
 .mds .pl-2{
   padding-left: 0.125rem;
 }
+.mds .pr-56{
+  padding-right: 3.5rem;
+}
 .mds .pt-2{
   padding-top: 0.125rem;
 }
@@ -6951,9 +6958,6 @@ video {
 }
 .mds .pr-48{
   padding-right: 3rem;
-}
-.mds .pr-56{
-  padding-right: 3.5rem;
 }
 .mds .pr-64{
   padding-right: 4rem;
@@ -7039,11 +7043,11 @@ video {
 .mds .pl-80{
   padding-left: 5rem;
 }
-.mds .text-center{
-  text-align: center;
-}
 .mds .text-left{
   text-align: left;
+}
+.mds .text-center{
+  text-align: center;
 }
 .mds .text-right{
   text-align: right;
@@ -7145,12 +7149,6 @@ video {
   font-style: normal;
 }
 .mds .ordinal, .mds .slashed-zero, .mds .lining-nums, .mds .oldstyle-nums, .mds .proportional-nums, .mds .tabular-nums, .mds .diagonal-fractions, .mds .stacked-fractions{
-  --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
-  --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-spacing: var(--tw-empty,/*!*/ /*!*/);
-  --tw-numeric-fraction: var(--tw-empty,/*!*/ /*!*/);
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
   --tw-ordinal: var(--tw-empty,/*!*/ /*!*/);
   --tw-slashed-zero: var(--tw-empty,/*!*/ /*!*/);
   --tw-numeric-figure: var(--tw-empty,/*!*/ /*!*/);
@@ -8641,6 +8639,9 @@ span.ripple {
   .mds .sm\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .mds .sm\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
   .mds .sm\:grid-cols-1{
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
@@ -8649,9 +8650,6 @@ span.ripple {
   }
   .mds .sm\:grid-cols-4{
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .mds .sm\:grid-cols-5{
-    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
   .mds .sm\:grid-cols-6{
     grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -8695,14 +8693,23 @@ span.ripple {
   .mds .sm\:grid-rows-none{
     grid-template-rows: none;
   }
+  .mds .sm\:gap-56{
+    gap: 3.5rem;
+  }
+  .mds .sm\:border-r-2{
+    border-right-width: 2px;
+  }
+  .mds .sm\:border-primary-bg-dark{
+    border-color: var(--mds-primary-bg-dark);
+  }
   .mds .sm\:pr-2{
     padding-right: 0.125rem;
   }
-  .mds .sm\:text-center{
-    text-align: center;
-  }
   .mds .sm\:text-left{
     text-align: left;
+  }
+  .mds .sm\:text-center{
+    text-align: center;
   }
 }
 @media (min-width: 768px){

@@ -1,12 +1,8 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-const index = require('./index-62cba631.js');
+import { r as registerInstance, h, e as Host, g as getElement } from './index-3267cb6d.js';
 
 const MxBadge = class {
   constructor(hostRef) {
-    index.registerInstance(this, hostRef);
+    registerInstance(this, hostRef);
     /** Make the corners a little more square (best for standalone text) */
     this.squared = false;
     /** Display as a small dot (no value) */
@@ -64,9 +60,9 @@ const MxBadge = class {
     return [str, this.badgeClass].join(' ');
   }
   render() {
-    return (index.h(index.Host, { class: "mx-badge inline-flex relative" }, index.h("slot", null), index.h("span", { class: this.badgeClassNames }, this.icon && index.h("i", { class: this.icon + (this.isIconOnly ? '' : ' mr-4') }), this.value)));
+    return (h(Host, { class: "mx-badge inline-flex relative" }, h("slot", null), h("span", { class: this.badgeClassNames }, this.icon && h("i", { class: this.icon + (this.isIconOnly ? '' : ' mr-4') }), this.value)));
   }
-  get element() { return index.getElement(this); }
+  get element() { return getElement(this); }
 };
 
-exports.mx_badge = MxBadge;
+export { MxBadge as mx_badge };
