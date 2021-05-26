@@ -7,53 +7,53 @@
   <div class="flex flex-row flex-nowrap justify-between mt-10">
     <div style="width: 47%;">
       <strong>Contained</strong>
-      <div class="my-5">
+      <div class="my-20">
         <mx-button>button</mx-button>
       </div>
-      <div class="my-5">
+      <div class="my-20">
         <mx-button disabled>Disabled button</mx-button>
       </div>
-      <div class="my-5">
+      <div class="my-20">
         <mx-button xl>XL button</mx-button>
       </div>
-      <div class="my-5">
+      <div class="my-20">
         <mx-button disabled xl>XL Disabled button</mx-button>
       </div>
-       <div class="my-5">
+       <div class="my-20">
         <mx-button href="https://google.com" target="_blank">Button as Link</mx-button>
       </div>
     </div>
     <div style="width: 47%;">
       <strong>Outline</strong>
-      <div class="my-5">
+      <div class="my-20">
         <mx-button btn-type="outlined">Outlined button</mx-button>
       </div>
-      <div class="my-5">
+      <div class="my-20">
         <mx-button btn-type="outlined" disabled>Outlined button</mx-button>
       </div>
-      <div class="my-5">
+      <div class="my-20">
         <mx-button btn-type="outlined" xl>XL outlined button</mx-button>
       </div>
-      <div class="my-5">
+      <div class="my-20">
         <mx-button btn-type="outlined" disabled xl>XL outlined Disabled</mx-button>
       </div>
-      <div class="my-5">
+      <div class="my-20">
         <mx-button btn-type="outlined" href="https://google.com" target="_blank">Button as Link</mx-button>
       </div>
     </div>
   </div>
   <div>
     <strong>Full</strong>
-    <div class="my-5">
+    <div class="my-20">
       <mx-button full>button</mx-button>
     </div>
-    <div class="my-5">
+    <div class="my-20">
       <mx-button xl full>XL button</mx-button>
     </div>
-    <div class="my-5">
+    <div class="my-20">
       <mx-button btn-type="outlined" full>Outlined button</mx-button>
     </div>
-    <div class="my-5">
+    <div class="my-20">
       <mx-button btn-type="outlined" full xl>XL Outlined button</mx-button>
     </div>
   </div>
@@ -66,19 +66,19 @@
 
 <!-- #region action-buttons -->
 <section class="mds">
-  <div class="my-5">
+  <div class="my-20">
     <mx-button btn-type="action">Button</mx-button>
   </div>
-  <div class="my-5">
+  <div class="my-20">
     <mx-button btn-type="action" icon="ph-apple-logo">Button with Icon</mx-button>
   </div>
-  <div class="my-5">
+  <div class="my-20">
     <mx-button btn-type="action" disabled>Disabled</mx-button>
   </div>
-  <div class="my-5">
+  <div class="my-20">
     <mx-button btn-type="action" dropdown>Dropdown</mx-button>
   </div>
-  <div class="my-5">
+  <div class="my-20">
     <mx-button btn-type="action" dropdown disabled>Disabled</mx-button>
   </div>
 </section>
@@ -90,19 +90,19 @@
 
 <!-- #region text-buttons -->
 <section class="mds">
-  <div class="my-5">
+  <div class="my-20">
     <mx-button btn-type="text">button</mx-button>
   </div>
-  <div class="my-5">
+  <div class="my-20">
     <mx-button btn-type="text" icon="ph-apple-logo">button with icon</mx-button>
   </div>
-  <div class="my-5">
+  <div class="my-20">
     <mx-button btn-type="text" disabled>disabled</mx-button>
   </div>
-  <div class="my-5">
+  <div class="my-20">
     <mx-button btn-type="text" icon="ph-apple-logo" dropdown>Icon with Dropdown</mx-button>
   </div>
-  <div class="my-5">
+  <div class="my-20">
     <mx-button btn-type="text" icon="ph-apple-logo" dropdown disabled>Disabled</mx-button>
   </div>
 </section>
@@ -116,7 +116,7 @@
 <section class="mds">
   <div class="mt-5">
     <div>
-      <div class="flex my-5 items-center">
+      <div class="flex my-20 items-center">
         <mx-button btn-type="icon" icon="ph-thumbs-up"></mx-button>
         <mx-button btn-type="icon" icon="ph-heart"></mx-button>
         <mx-button btn-type="icon" icon="ph-x"></mx-button>
@@ -125,7 +125,7 @@
     </div>
     <div>
       <strong>Disabled</strong>
-      <div class="flex my-5 items-center">
+      <div class="flex my-20 items-center">
         <mx-button btn-type="icon" icon="ph-thumbs-up" disabled></mx-button>
         <mx-button btn-type="icon" icon="ph-heart" disabled></mx-button>
         <mx-button btn-type="icon" icon="ph-x" disabled></mx-button>
@@ -164,24 +164,24 @@ appear as a group. They can act as radio buttons when given a <code>value</code>
   <div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
     <div>
       <strong>Single Button</strong>
-      <div class="my-5">
+      <div class="my-20">
         <mx-toggle-button  icon="ph-microphone-slash" :selected="isMuted" @click="isMuted = !isMuted" />
       </div>
     </div>
     <div>
       <strong>Disabled</strong>
-      <div class="my-5">
+      <div class="my-20">
         <mx-toggle-button  icon="ph-heart" disabled />
       </div>
     </div>
     <div>
       <strong>Multiple Buttons</strong>
-      <div class="flex my-5">
+      <div class="flex my-20">
         <mx-toggle-button icon="ph-text-bolder" :selected="hasStyle('bold')" @click="toggleStyle('bold')" />
         <mx-toggle-button icon="ph-text-italic" :selected="hasStyle('italic')" @click="toggleStyle('italic')" />
         <mx-toggle-button icon="ph-text-underline" :selected="hasStyle('underline')" @click="toggleStyle('underline')" />
       </div>
-      <p class="my-5">Selected: <code>{{ JSON.stringify(textStyles) }}</code></p>
+      <p class="my-20">Selected: <code>{{ JSON.stringify(textStyles) }}</code></p>
     </div>
   </div>
   </div>
@@ -210,18 +210,18 @@ emitted via a custom <code>mxInput</code> event.
   <div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
     <div>
       <strong>Enabled</strong>
-      <div class="my-5">
+      <div class="my-20">
         <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
           <mx-toggle-button icon="ph-text-align-left" value="left" />
           <mx-toggle-button icon="ph-text-align-center" value="center" />
           <mx-toggle-button icon="ph-text-align-right" value="right" />
         </mx-toggle-button-group>
       </div>
-      <p class="my-5">Selected: <code>{{ JSON.stringify(textAlign) }}</code></p>
+      <p class="my-20">Selected: <code>{{ JSON.stringify(textAlign) }}</code></p>
     </div>
     <div>
       <strong>Disabled</strong>
-      <div class="my-5">
+      <div class="my-20">
         <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
           <mx-toggle-button icon="ph-text-align-left" value="left" disabled />
           <mx-toggle-button icon="ph-text-align-center" value="center" disabled />

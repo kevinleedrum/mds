@@ -30,7 +30,7 @@
 * Custom CSS
 ***************************/
 .mds {
-  * {
+  *:not(code, code *) {
     font-family: 'Open Sans', sans-serif;
   }
 
@@ -130,7 +130,7 @@
   }
 
   .subtitle1 {
-    @apply text-base tracking-0-5 leading-6 font-semibold;
+    @apply text-base tracking-0-15 leading-6 font-semibold;
   }
 
   .subtitle2 {
@@ -138,15 +138,15 @@
   }
 
   .subtitle3 {
-    @apply text-sm tracking-0-5 leading-5 font-extrabold;
+    @apply text-sm tracking-0-4 leading-5 font-extrabold;
   }
 
   .subtitle4 {
-    @apply text-xs tracking-0-5 leading-4 font-semibold;
+    @apply text-xs tracking-0-4 leading-4 font-semibold;
   }
 
   .subtitle5 {
-    @apply text-xxs tracking-0-5 leading-4 font-bold;
+    @apply text-xxs tracking-0-3 leading-4 font-bold;
   }
 
   .caption1 {

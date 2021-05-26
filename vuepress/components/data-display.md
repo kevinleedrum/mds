@@ -9,14 +9,14 @@ itelf in a corner of that element.
 <section class="mds">
   <div class="mt-10">
     <strong>Standalone Badges</strong>
-    <div class="flex items-center my-5 space-x-20">
+    <div class="flex items-center my-20 space-x-20">
       <mx-badge badge-class="bg-blue-500 text-white" value="Pending" squared />
       <mx-badge badge-class="bg-red-800 text-white" value="8" />
       <mx-badge badge-class="bg-yellow-200" value="999+" />
       <mx-badge badge-class="bg-green-200 text-green-800" icon="ph-star" value="Popular" squared />
     </div>
     <strong>Anchored Badges</strong>
-    <div class="flex items-center my-5 space-x-20">
+    <div class="flex items-center my-20 space-x-20">
       <mx-badge badge-class="bg-purple-500 text-white" value="237">
         <mx-button btn-type="action" icon="ph-bell">Notifications</mx-button>
       </mx-badge>
