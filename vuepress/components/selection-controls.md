@@ -4,6 +4,7 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 
 ## Checkboxes
 
+<!-- #region checkboxes -->
 <div class="mds">
   <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
     <div><mx-checkbox name="foo" label-name="Premier" checked="true" /></div>
@@ -12,17 +13,9 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-checkbox name="foo" label-name="Warlock" /></div>
   </div>
 </div>
+<!-- #endregion checkboxes -->
 
-```html
-<div class="mds">
-  <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
-    <div><mx-checkbox name="foo" label-name="Premier" checked="true" /></div>
-    <div><mx-checkbox name="foo" label-name="W Collection" /></div>
-    <div><mx-checkbox name="foo" label-name="Equestrian" /></div>
-    <div><mx-checkbox name="foo" label-name="Warlock" /></div>
-  </div>
-</div>
-```
+<<< @/vuepress/components/selection-controls.md#checkboxes
 
 ### Properties
 
@@ -35,6 +28,7 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 
 ## Radio Buttons
 
+<!-- #region radio-buttons -->
 <div class="mds">
   <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
     <div><mx-radio name="foo" label-name="Premier" /></div>
@@ -43,17 +37,9 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-radio name="foo" label-name="Warlock" /></div>
   </div>
 </div>
+<!-- #endregion radio-buttons -->
 
-```html
-<div class="mds">
-  <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
-    <div><mx-radio name="foo" label-name="Premier" /></div>
-    <div><mx-radio name="foo" label-name="W Collection" /></div>
-    <div><mx-radio name="foo" label-name="Equestrian" /></div>
-    <div><mx-radio name="foo" label-name="Warlock" /></div>
-  </div>
-</div>
-```
+<<< @/vuepress/components/selection-controls.md#radio-buttons
 
 ### Properties
 
@@ -66,6 +52,7 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 
 ## Switches
 
+<!-- #region switches -->
 <div class="mds">
   <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
     <div><mx-switch name="foo" label-name="Premier" /></div>
@@ -74,17 +61,9 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-switch name="foo" label-name="Warlock" /></div>
   </div>
 </div>
+<!-- #endregion switches -->
 
-```html
-<div class="mds">
-  <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
-    <div><mx-switch name="foo" label-name="Premier" /></div>
-    <div><mx-switch name="foo" label-name="W Collection" /></div>
-    <div><mx-switch name="foo" label-name="Equestrian" /></div>
-    <div><mx-switch name="foo" label-name="Warlock" /></div>
-  </div>
-</div>
-```
+<<< @/vuepress/components/selection-controls.md#switches
 
 ### Properties
 
