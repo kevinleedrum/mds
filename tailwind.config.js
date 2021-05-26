@@ -127,6 +127,8 @@ const config = {
 if (NODE_ENV === 'development') {
   config.mode = 'jit';
   config.purge = ['./src/**/*.{js,jsx,ts,tsx,vue}', './vuepress/**/*.{js,jsx,ts,tsx,vue,md,html}'];
+} else {
+  config.purge = false;
 }
 
 module.exports = config;
