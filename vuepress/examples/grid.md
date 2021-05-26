@@ -116,3 +116,36 @@ Below is the code example of a responsive grid system. The grid system works in 
   <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">9</div>
 </div>
 ```
+
+### Example of a 2 column grid system with responsive
+
+<div class="mds">
+  <div class="mt-56 grid grid-cols-1 gap-0 sm:grid-cols-5 sm:gap-56">
+    <div class="col-span-2 py-56 border-b-2 mb-56 text-center border-primary-bg-dark sm:border-2 sm:p-56 sm:rounded">
+      Something Here
+    </div>
+    <div class="col-span-3">
+      <h2 class="mt-2">Another Thing</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+    </div>
+  </div>
+</div>
+
+```html
+<div class="mds">
+  <div class="mt-56 grid grid-cols-1 gap-0 sm:grid-cols-5 sm:gap-56">
+    <div class="col-span-2 py-56 border-b-2 mb-56 text-center border-primary-bg-dark sm:border-2 sm:p-56 sm:rounded">
+      Something Here
+    </div>
+    <div class="col-span-3">
+      <h2 class="mt-2">Another Thing</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante
+        dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce
+        nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti
+        sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+      </p>
+    </div>
+  </div>
+</div>
+```
