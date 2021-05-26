@@ -3238,9 +3238,6 @@ video {
 .mds .ml-16{
   margin-left: 1rem;
 }
-.mds .ml-48{
-  margin-left: 3rem;
-}
 .mds .mt-24{
   margin-top: 1.5rem;
 }
@@ -3387,6 +3384,9 @@ video {
 }
 .mds .ml-40{
   margin-left: 2.5rem;
+}
+.mds .ml-48{
+  margin-left: 3rem;
 }
 .mds .ml-56{
   margin-left: 3.5rem;
@@ -6871,6 +6871,9 @@ video {
   padding-left: 5rem;
   padding-right: 5rem;
 }
+.mds .pl-48{
+  padding-left: 3rem;
+}
 .mds .pb-2{
   padding-bottom: 0.125rem;
 }
@@ -7023,9 +7026,6 @@ video {
 }
 .mds .pl-40{
   padding-left: 2.5rem;
-}
-.mds .pl-48{
-  padding-left: 3rem;
 }
 .mds .pl-56{
   padding-left: 3.5rem;
@@ -8058,6 +8058,7 @@ video {
     position: relative;
     z-index: 1;
     border: 2px solid #5a5a5a;
+    border-radius: 2px;
   }
 .mx-checkbox span::before {
       content: '';
@@ -8087,6 +8088,13 @@ video {
 .mx-checkbox span:active::before {
         background: rgba(0, 0, 0, 0.12);
       }
+.mx-checkbox :focus-within:focus-visible + span::before {
+      display: block;
+      background: rgba(0, 0, 0, 0.12);
+    }
+.mx-checkbox :focus-within:focus-visible:checked ~ span::before {
+      background: rgba(4, 87, 175, 0.32);
+    }
 .mx-checkbox input:checked ~ span {
     /* background-color: var(--mds-primary-bg-dark); */
     background-color: #0457af;
@@ -8106,6 +8114,7 @@ video {
     border: 2px solid #5a5a5a;
   }
 .mx-radio span::before {
+      display: none;
       content: '';
       position: absolute;
       top: -12.5px;
@@ -8127,11 +8136,19 @@ video {
       border-radius: 100%;
     }
 .mx-radio span:hover::before {
+        display: block;
         background: rgba(0, 0, 0, 0.04);
       }
 .mx-radio span:active::before {
         background: rgba(0, 0, 0, 0.12);
       }
+.mx-radio :focus-within:focus-visible + span::before {
+      display: block;
+      background: rgba(0, 0, 0, 0.12);
+    }
+.mx-radio :focus-within:focus-visible:checked ~ span::before {
+      background: rgba(4, 87, 175, 0.32);
+    }
 .mx-radio input:checked ~ span::after {
       display: block;
     }
@@ -8139,6 +8156,7 @@ video {
         background: rgba(4, 87, 175, 0.08);
       }
 .mx-radio input:checked ~ span:active::before {
+        display: block;
         background: rgba(4, 87, 175, 0.32);
       }
 .mx-switch .slider {
@@ -8151,6 +8169,11 @@ video {
     background-color: #b9b9b9;
     transition: 0.4s;
   }
+.mx-switch .slider:before{
+  --tw-shadow: 0px 0px 2px rgba(0, 0, 0, 0.04), 0px 2px 2px rgba(0, 0, 0, 0.02), 0px 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 .mx-switch .slider:before {
       position: absolute;
       content: '';
@@ -8159,25 +8182,38 @@ video {
       left: -1px;
       bottom: -3px;
       background-color: white;
-      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.04), 0px 2px 2px rgba(0, 0, 0, 0.02), 0px 1px 3px rgba(0, 0, 0, 0.06);
       transition: 0.4s;
     }
+.mx-switch .slider::after {
+      display: none;
+      content: '';
+      position: absolute;
+      top: -13px;
+      left: -11.5px;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      z-index: 0;
+    }
 .mx-switch .slider:hover::after {
-        content: '';
-        position: absolute;
-        top: -12.5px;
-        left: -12.5px;
-        width: 40px;
-        height: 40px;
-        border-radius: 100%;
-        z-index: 0;
-        background: rgba(0, 0, 0, 0.04);
-      }
+      display: block;
+      background: rgba(0, 0, 0, 0.04);
+    }
+.mx-switch .slider:active::after {
+      display: block;
+      background: rgba(0, 0, 0, 0.12);
+    }
 .mx-switch input:checked + .slider {
     background-color: #abc6e2;
   }
-.mx-switch input:focus + .slider {
-    box-shadow: 0 0 1px #abc6e2;
+.mx-switch :focus-within:focus-visible + .slider::after {
+    display: block;
+    background: rgba(0, 0, 0, 0.12);
+  }
+.mx-switch input:checked + .slider:active::after,
+  .mx-switch :focus-within:focus-visible:checked + .slider::after {
+    display: block;
+    background: rgba(4, 87, 175, 0.32);
   }
 .mx-switch input:checked + .slider:before {
     transform: translateX(20px);
