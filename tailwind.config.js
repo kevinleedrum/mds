@@ -2,8 +2,6 @@ const plugin = require('tailwindcss/plugin');
 
 const { NODE_ENV } = process.env;
 
-console.log('+++++++++++', NODE_ENV);
-
 const config = {
   important: '.mds',
   darkMode: false, // or 'media' or 'class'
