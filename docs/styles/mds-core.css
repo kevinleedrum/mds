@@ -2873,6 +2873,28 @@ video {
 .mds .col-span-full{
   grid-column: 1 / -1;
 }
+.mds .col-span-4{
+  grid-column: span 4 / span 4;
+  grid-column: span 4 / span 4;
+}
+.mds .col-span-2{
+  grid-column: span 2 / span 2;
+}
+.mds .col-span-3{
+  grid-column: span 3 / span 3;
+}
+.mds .col-span-2{
+  grid-column: span 2 / span 2;
+}
+.mds .col-span-3{
+  grid-column: span 3 / span 3;
+}
+.mds .col-span-2{
+  grid-column: span 2 / span 2;
+}
+.mds .col-span-3{
+  grid-column: span 3 / span 3;
+}
 .mds .col-start-1{
   grid-column-start: 1;
 }
@@ -3227,6 +3249,18 @@ video {
   margin-left: 5rem;
   margin-right: 5rem;
 }
+.mds .my-10{
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+}
 .mds .mr-4{
   margin-right: 0.25rem;
 }
@@ -3404,6 +3438,18 @@ video {
 .mds .ml-80{
   margin-left: 5rem;
 }
+.mds .mt-2{
+  margin-top: 0.125rem;
+  margin-top: 0.125rem;
+  margin-top: 0.125rem;
+  margin-top: 0.125rem;
+}
+.mds .mb-56{
+  margin-bottom: 3.5rem;
+}
+.mds .mt-2{
+  margin-top: 0.125rem;
+}
 .mds .box-border{
   box-sizing: border-box;
 }
@@ -3459,6 +3505,11 @@ video {
   display: flow-root;
 }
 .mds .grid{
+  display: grid;
+  display: grid;
+  display: grid;
+  display: grid;
+  display: grid;
   display: grid;
 }
 .mds .inline-grid{
@@ -4168,6 +4219,11 @@ video {
 }
 .mds .grid-flow-row{
   grid-auto-flow: row;
+  grid-auto-flow: row;
+  grid-auto-flow: row;
+  grid-auto-flow: row;
+  grid-auto-flow: row;
+  grid-auto-flow: row;
 }
 .mds .grid-flow-col{
   grid-auto-flow: column;
@@ -4230,6 +4286,36 @@ video {
 }
 .mds .grid-cols-none{
   grid-template-columns: none;
+}
+.mds .grid-cols-3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.mds .grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.mds .grid-cols-3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.mds .grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.mds .grid-cols-3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.mds .grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.mds .grid-cols-3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.mds .grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.mds .grid-cols-3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.mds .grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 .mds .grid-rows-1{
   grid-template-rows: repeat(1, minmax(0, 1fr));
@@ -4473,6 +4559,36 @@ video {
 }
 .mds .gap-px{
   gap: 1px;
+}
+.mds .gap-4{
+  gap: 0.25rem;
+}
+.mds .gap-0{
+  gap: 0px;
+}
+.mds .gap-4{
+  gap: 0.25rem;
+}
+.mds .gap-0{
+  gap: 0px;
+}
+.mds .gap-4{
+  gap: 0.25rem;
+}
+.mds .gap-0{
+  gap: 0px;
+}
+.mds .gap-4{
+  gap: 0.25rem;
+}
+.mds .gap-0{
+  gap: 0px;
+}
+.mds .gap-4{
+  gap: 0.25rem;
+}
+.mds .gap-0{
+  gap: 0px;
 }
 .mds .gap-x-0{
   -moz-column-gap: 0px;
@@ -6049,6 +6165,13 @@ video {
 .mds .rounded-2xl{
   border-radius: 1rem;
 }
+.mds .rounded{
+  border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-radius: 0.25rem;
+}
 .mds .rounded-t-none{
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
@@ -6376,6 +6499,10 @@ video {
 .mds .border-r{
   border-right-width: 1px;
 }
+.mds .border-b-2{
+  border-bottom-width: 2px;
+  border-bottom-width: 2px;
+}
 .mds .border-solid{
   border-style: solid;
 }
@@ -6394,6 +6521,10 @@ video {
 .mds .border-gray-200{
   --tw-border-opacity: 1;
   border-color: rgba(229, 231, 235, var(--tw-border-opacity));
+}
+.mds .border-primary-bg-dark{
+  border-color: var(--mds-primary-bg-dark);
+  border-color: var(--mds-primary-bg-dark);
 }
 .mds .border-opacity-0{
   --tw-border-opacity: 0;
@@ -6496,6 +6627,13 @@ video {
 .mds .bg-indigo-500{
   --tw-bg-opacity: 1;
   background-color: rgba(99, 102, 241, var(--tw-bg-opacity));
+}
+.mds .bg-primary-bg-dark{
+  background-color: var(--mds-primary-bg-dark);
+  background-color: var(--mds-primary-bg-dark);
+  background-color: var(--mds-primary-bg-dark);
+  background-color: var(--mds-primary-bg-dark);
+  background-color: var(--mds-primary-bg-dark);
 }
 .mds .bg-opacity-0{
   --tw-bg-opacity: 0;
@@ -6755,6 +6893,9 @@ video {
 .mds .p-80{
   padding: 5rem;
 }
+.mds .p-56{
+  padding: 3.5rem;
+}
 .mds .px-8{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -6874,6 +7015,22 @@ video {
 .mds .px-80{
   padding-left: 5rem;
   padding-right: 5rem;
+}
+.mds .py-4{
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+.mds .py-56{
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
 }
 .mds .pl-48{
   padding-left: 3rem;
@@ -7043,10 +7200,20 @@ video {
 .mds .pl-80{
   padding-left: 5rem;
 }
+.mds .pr-56{
+  padding-right: 3.5rem;
+  padding-right: 3.5rem;
+  padding-right: 3.5rem;
+}
 .mds .text-left{
   text-align: left;
 }
 .mds .text-center{
+  text-align: center;
+  text-align: center;
+  text-align: center;
+  text-align: center;
+  text-align: center;
   text-align: center;
 }
 .mds .text-right{
@@ -7325,6 +7492,13 @@ video {
 .mds .text-gray-800{
   --tw-text-opacity: 1;
   color: rgba(31, 41, 55, var(--tw-text-opacity));
+}
+.mds .text-primary-text-light{
+  color: var(--mds-primary-bg-light);
+  color: var(--mds-primary-bg-light);
+  color: var(--mds-primary-bg-light);
+  color: var(--mds-primary-bg-light);
+  color: var(--mds-primary-bg-light);
 }
 .mds .text-opacity-0{
   --tw-text-opacity: 0;
@@ -8672,6 +8846,36 @@ span.ripple {
   .mds .sm\:grid-cols-12{
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
+  .mds .sm\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mds .sm\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .mds .sm\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mds .sm\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .mds .sm\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mds .sm\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .mds .sm\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mds .sm\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .mds .sm\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mds .sm\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
   .mds .sm\:grid-rows-1{
     grid-template-rows: repeat(1, minmax(0, 1fr));
   }
@@ -8692,6 +8896,57 @@ span.ripple {
   }
   .mds .sm\:grid-rows-none{
     grid-template-rows: none;
+  }
+  .mds .sm\:gap-56{
+    gap: 3.5rem;
+  }
+  .mds .sm\:gap-56{
+    gap: 3.5rem;
+  }
+  .mds .sm\:gap-56{
+    gap: 3.5rem;
+  }
+  .mds .sm\:gap-56{
+    gap: 3.5rem;
+  }
+  .mds .sm\:gap-56{
+    gap: 3.5rem;
+  }
+  .mds .sm\:rounded{
+    border-radius: 0.25rem;
+  }
+  .mds .sm\:rounded{
+    border-radius: 0.25rem;
+  }
+  .mds .sm\:rounded{
+    border-radius: 0.25rem;
+  }
+  .mds .sm\:border-2{
+    border-width: 2px;
+  }
+  .mds .sm\:border-2{
+    border-width: 2px;
+  }
+  .mds .sm\:border-2{
+    border-width: 2px;
+  }
+  .mds .sm\:border-2{
+    border-width: 2px;
+  }
+  .mds .sm\:border-r-2{
+    border-right-width: 2px;
+  }
+  .mds .sm\:border-primary-bg-dark{
+    border-color: var(--mds-primary-bg-dark);
+  }
+  .mds .sm\:border-primary-bg-dark{
+    border-color: var(--mds-primary-bg-dark);
+  }
+  .mds .sm\:border-primary-bg-dark{
+    border-color: var(--mds-primary-bg-dark);
+  }
+  .mds .sm\:p-56{
+    padding: 3.5rem;
   }
   .mds .sm\:pr-2{
     padding-right: 0.125rem;
@@ -8773,6 +9028,21 @@ span.ripple {
   .mds .md\:grid-cols-12{
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
+  .mds .md\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .mds .md\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .mds .md\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .mds .md\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .mds .md\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .mds .md\:grid-rows-1{
     grid-template-rows: repeat(1, minmax(0, 1fr));
   }
@@ -8836,6 +9106,21 @@ span.ripple {
   .mds .lg\:grid-cols-12{
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
+  .mds .lg\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .mds .lg\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .mds .lg\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .mds .lg\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .mds .lg\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
   .mds .lg\:grid-rows-1{
     grid-template-rows: repeat(1, minmax(0, 1fr));
   }
@@ -8892,6 +9177,36 @@ span.ripple {
   .mds .xl\:grid-cols-12{
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
+  .mds .xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .mds .xl\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .mds .xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .mds .xl\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .mds .xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .mds .xl\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .mds .xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .mds .xl\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .mds .xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .mds .xl\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
   .mds .xl\:grid-rows-1{
     grid-template-rows: repeat(1, minmax(0, 1fr));
   }
@@ -8947,6 +9262,36 @@ span.ripple {
   }
   .mds .\32xl\:grid-cols-11{
     grid-template-columns: repeat(11, minmax(0, 1fr));
+  }
+  .mds .\32xl\:grid-cols-12{
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .mds .\32xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .mds .\32xl\:grid-cols-12{
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .mds .\32xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .mds .\32xl\:grid-cols-12{
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .mds .\32xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .mds .\32xl\:grid-cols-12{
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .mds .\32xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .mds .\32xl\:grid-cols-12{
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .mds .\32xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
   .mds .\32xl\:grid-rows-1{
     grid-template-rows: repeat(1, minmax(0, 1fr));
