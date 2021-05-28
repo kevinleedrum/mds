@@ -7,33 +7,33 @@ The Moxi Design System tab implementation consists of an `mx-tabs` component tha
   <div class="my-20">
     <strong>Horizontal Fill (stretch tabs to fill width)</strong>
     <mx-tabs fill>
-      <mx-tab :selected="activeTab === 0" icon="ph-house" label="Home" @click="activeTab = 0"></mx-tab>
-      <mx-tab :selected="activeTab === 1" icon="ph-heart" label="Favorites" badge badge-class="bg-green-600" @click="activeTab = 1"></mx-tab>
-      <mx-tab :selected="activeTab === 2" icon="ph-magnifying-glass" label="Search" @click="activeTab = 2"></mx-tab>
+      <mx-tab :selected="activeTabA === 0" icon="ph-house" label="Home" @click="activeTabA = 0"></mx-tab>
+      <mx-tab :selected="activeTabA === 1" icon="ph-heart" label="Favorites" badge badge-class="bg-green-600" @click="activeTabA = 1"></mx-tab>
+      <mx-tab :selected="activeTabA === 2" icon="ph-magnifying-glass" label="Search" @click="activeTabA = 2"></mx-tab>
     </mx-tabs>
   </div>
   <div class="my-20">
     <strong>Horizontal Stack (set tabs to a min width)</strong>
     <mx-tabs class="mt-10">
-      <mx-tab :selected="activeTab === 0" icon="ph-house" label="Home" @click="activeTab = 0"></mx-tab>
-      <mx-tab :selected="activeTab === 1" icon="ph-heart" label="Favorites" badge badge-class="bg-green-600" @click="activeTab = 1"></mx-tab>
-      <mx-tab :selected="activeTab === 2" icon="ph-magnifying-glass" label="Search" @click="activeTab = 2"></mx-tab>
+      <mx-tab :selected="activeTabB === 0" icon="ph-house" label="Home" @click="activeTabB = 0"></mx-tab>
+      <mx-tab :selected="activeTabB === 1" icon="ph-heart" label="Favorites" badge badge-class="bg-green-600" @click="activeTabB = 1"></mx-tab>
+      <mx-tab :selected="activeTabB === 2" icon="ph-magnifying-glass" label="Search" @click="activeTabB = 2"></mx-tab>
     </mx-tabs>
   </div>
   <div class="my-20">
     <strong>Icons Only, Horizontal Stack</strong>
     <mx-tabs class="mt-10">
-      <mx-tab :selected="activeTab === 0" icon="ph-house" @click="activeTab = 0"></mx-tab>
-      <mx-tab :selected="activeTab === 1" icon="ph-heart" badge badge-class="bg-red-500" @click="activeTab = 1"></mx-tab>
-      <mx-tab :selected="activeTab === 2" icon="ph-magnifying-glass" @click="activeTab = 2"></mx-tab>
+      <mx-tab :selected="activeTabC === 0" icon="ph-house" @click="activeTabC = 0"></mx-tab>
+      <mx-tab :selected="activeTabC === 1" icon="ph-heart" badge badge-class="bg-red-500" @click="activeTabC = 1"></mx-tab>
+      <mx-tab :selected="activeTabC === 2" icon="ph-magnifying-glass" @click="activeTabC = 2"></mx-tab>
     </mx-tabs>
   </div>
   <div class="my-20">
     <strong>Text Only, Horizontal Fill</strong>
     <mx-tabs class="mt-10" fill>
-      <mx-tab :selected="activeTab === 0" label="Home" @click="activeTab = 0"></mx-tab>
-      <mx-tab :selected="activeTab === 1" label="Favorites" @click="activeTab = 1"></mx-tab>
-      <mx-tab :selected="activeTab === 2" label="Search" @click="activeTab = 2"></mx-tab>
+      <mx-tab :selected="activeTabD === 0" label="Home" @click="activeTabD = 0"></mx-tab>
+      <mx-tab :selected="activeTabD === 1" label="Favorites" @click="activeTabD = 1"></mx-tab>
+      <mx-tab :selected="activeTabD === 2" label="Search" @click="activeTabD = 2"></mx-tab>
     </mx-tabs>
   </div>
 </section>
@@ -62,7 +62,10 @@ The Moxi Design System tab implementation consists of an `mx-tabs` component tha
 export default {
   data() {
     return {
-      activeTab: 1
+      activeTabA: 0,
+      activeTabB: 0,
+      activeTabC: 1,
+      activeTabD: 2
     }
   }
 }
