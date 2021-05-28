@@ -1,0 +1,42 @@
+.mx-tab {
+  .active-tab-indicator {
+    background: #0457af;
+  }
+
+  button {
+    color: #333;
+    --ripple-color: #afc9e6;
+
+    &[aria-selected] {
+      color: #0457af;
+    }
+
+    &:not([aria-selected]) i {
+      color: rgba(0, 0, 0, 0.64);
+      &.icon-only {
+        color: rgba(51, 51, 51, 0.38);
+      }
+    }
+
+    &:focus-visible {
+      background: #d7d7d7;
+      border-bottom-color: #b9b9b9;
+      &[aria-selected] {
+        background: #d7e2ef;
+      }
+    }
+
+    &:hover {
+      background: #eeeeee;
+      border-bottom-color: #b9b9b9;
+      &[aria-selected] {
+        background: #eef1f6;
+      }
+    }
+
+    &:active {
+      background: transparent;
+      border-bottom-color: #b9b9b9;
+    }
+  }
+}
