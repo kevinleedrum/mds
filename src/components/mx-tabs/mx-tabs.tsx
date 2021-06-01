@@ -10,6 +10,7 @@ export class MxTabs {
 
   @Element() element: HTMLMxTabsElement;
 
+  // Listen to keyup and mouseup so we can get the selected tab before the click event changes it
   @Listen('keyup')
   onKeyUp(e: KeyboardEvent) {
     if (e.key === 'Enter' || e.key === ' ') this.animateIndicator(e);
@@ -20,14 +21,17 @@ export class MxTabs {
   }
 
   animateIndicator(e: MouseEvent | KeyboardEvent) {
+    // Find the distance between the clicked tab and the soon-to-be-deselected tab
     const currentSelectedTab = this.element.querySelector('mx-tab[selected]') as HTMLMxTabElement;
     const clickedTab = (e.target as HTMLElement).parentElement as HTMLMxTabElement;
     if (!currentSelectedTab || !clickedTab || clickedTab.tagName !== 'MX-TAB') return;
-    const deltaX = currentSelectedTab.offsetLeft - clickedTab.offsetLeft;
+    const distance = currentSelectedTab.offsetLeft - clickedTab.offsetLeft;
     const indicator = clickedTab.querySelector('.active-tab-indicator') as HTMLElement;
     if (!indicator) return;
-    indicator.style.transform = `translateX(${deltaX}px)`;
+    // Position clicked tab's indicator under the tab that is being deselected
+    indicator.style.transform = `translateX(${distance}px)`;
     indicator.style.transition = `none`;
+    // Transition the indicator back to the clicked tab
     setTimeout(() => {
       indicator.style.transform = `translateX(0)`;
       indicator.style.transition = `transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)`;
