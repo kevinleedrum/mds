@@ -27,6 +27,7 @@ export class MxTab {
   get tabClass() {
     let str = 'mx-tab relative inline-flex items-center justify-center min-w-full';
     str += this.label && this.icon ? ' h-72' : ' h-48';
+    if (this.badge && this.label) str += ' wider';
     return str;
   }
 
@@ -36,7 +37,7 @@ export class MxTab {
 
   render() {
     return (
-      <Host class={this.tabClass} style={{ width: `${this.badge && this.label ? '133' : '120'}px` }}>
+      <Host class={this.tabClass}>
         <button
           ref={el => (this.btnElem = el)}
           role="tab"
