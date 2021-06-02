@@ -1,4 +1,4 @@
-# Evelevations
+# Elevations
 
 Elevations are a bit like cards in that they are containers which have a set background color and dropshadow.
 
