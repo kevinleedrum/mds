@@ -134,7 +134,7 @@ module.exports = {
         'filters',
         'opacity',
       ],
-      '/components/': ['inputs', 'buttons', 'selection-controls', 'data-display'],
+      '/components/': ['inputs', 'buttons', 'selection-controls', 'data-display', 'tabs'],
     },
   },
   plugins: [['fulltext-search']],

@@ -277,6 +277,139 @@ const MxSwitch$1 = class extends HTMLElement {
   }
 };
 
+const MxTab$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    /** Label text to display */
+    this.label = '';
+    /** If you are not providing a `label`, this should be provided instead for accessibility */
+    this.ariaLabel = '';
+    /** Class name of icon to display */
+    this.icon = '';
+    /** Only set this if you are not using the `mx-tabs` `value` prop */
+    this.selected = false;
+    /** Display a dot badge */
+    this.badge = false;
+    /** Additional classes for the badge */
+    this.badgeClass = '';
+  }
+  onClick(e) {
+    ripple(e, this.btnElem);
+  }
+  get tabClass() {
+    let str = 'mx-tab relative inline-flex items-center justify-center min-w-full';
+    str += this.label && this.icon ? ' h-72' : ' h-48';
+    if (this.badge && this.label)
+      str += ' wider';
+    return str;
+  }
+  get badgeEl() {
+    return h("mx-badge", { dot: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
+  }
+  render() {
+    return (h(Host, { class: this.tabClass }, h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected, "aria-label": this.label || this.ariaLabel, class: "relative overflow-hidden w-full h-full border border-transparent", onClick: this.onClick.bind(this) }, h("div", { class: "relative flex flex-col items-center justify-center space-y-6 pointer-events-none" }, h("span", { class: "flex items-center space-x-6" }, !this.label && this.badge && this.badgeEl, this.icon && h("i", { class: this.icon + ' text-xl' + (!this.label ? ' icon-only' : '') })), this.label && (h("span", { class: "flex items-center uppercase text-sm font-semibold leading-4 tracking-1-25 space-x-6" }, this.badge && this.badgeEl, h("span", null, this.label))))), h("span", { class: 'active-tab-indicator absolute bottom-0 left-0 w-full h-2 pointer-events-none' +
+        (this.selected ? '' : ' opacity-0') })));
+  }
+};
+
+const MxTabContent$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+  }
+  get isActiveTab() {
+    return this.value >= 0 && this.index === this.value;
+  }
+  render() {
+    return (h(Host, { class: !this.isActiveTab ? 'hidden' : '' }, h("slot", null)));
+  }
+};
+
+const MxTabs$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxChange = createEvent(this, "mxChange", 7);
+    /** Stretch tabs to fill the entire width */
+    this.fill = false;
+    /** The index of the selected tab (not needed if manually setting the `selected` prop on each tab) */
+    this.value = null;
+  }
+  // Listen to keyup and mouseup so we can get the selected tab before the click event changes it
+  onKeyUp(e) {
+    if (e.key === 'Enter' || e.key === ' ')
+      this.animateIndicator(e);
+  }
+  onMouseUp(e) {
+    this.animateIndicator(e);
+  }
+  // Get the clicked tab's index and emit it via the mxChange event
+  onClick(e) {
+    const tab = e.target.closest('mx-tab');
+    if (!tab)
+      return;
+    const tabs = this.element.querySelectorAll('mx-tab');
+    const tabIndex = Array.prototype.indexOf.call(tabs, tab);
+    if (tabIndex >= 0)
+      this.mxChange.emit(tabIndex);
+  }
+  onValueChange() {
+    this.animateIndicator(null, this.value);
+    this.setSelectedTab();
+  }
+  connectedCallback() {
+    if (this.value !== null)
+      this.setSelectedTab();
+  }
+  setSelectedTab() {
+    const tabs = this.element.querySelectorAll('mx-tab');
+    tabs.forEach((tab, index) => {
+      tab.selected = index === this.value;
+    });
+  }
+  animateIndicator(e, newSelectedTabIndex) {
+    if (this.value !== null && this.value === newSelectedTabIndex)
+      return; // no need to animate
+    // Find the distance between the clicked tab and the soon-to-be-deselected tab
+    const currentSelectedTab = this.element.querySelector('mx-tab[selected]');
+    let clickedTab;
+    if (e) {
+      clickedTab = e.target.closest('mx-tab');
+    }
+    else if (newSelectedTabIndex >= 0) {
+      const tabs = this.element.querySelectorAll('mx-tab');
+      clickedTab = tabs[newSelectedTabIndex];
+    }
+    if (!currentSelectedTab || !clickedTab || clickedTab.tagName !== 'MX-TAB')
+      return;
+    const distance = currentSelectedTab.offsetLeft - clickedTab.offsetLeft;
+    const indicator = clickedTab.querySelector('.active-tab-indicator');
+    if (!indicator)
+      return;
+    // Position clicked tab's indicator under the tab that is being deselected
+    indicator.style.transform = `translateX(${distance}px)`;
+    indicator.style.transition = `none`;
+    // Transition the indicator back to the clicked tab
+    setTimeout(() => {
+      indicator.style.transform = `translateX(0)`;
+      indicator.style.transition = `transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)`;
+    }, 0);
+  }
+  get gridClass() {
+    let str = this.fill ? 'grid' : 'inline-grid';
+    str += ' grid-flow-col auto-cols-fr';
+    return str;
+  }
+  render() {
+    return (h(Host, { class: "mx-tabs relative block", role: "tablist" }, h("div", { class: this.gridClass }, h("slot", null))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "value": ["onValueChange"]
+  }; }
+};
+
 const MxToggleButton$1 = class extends HTMLElement {
   constructor() {
     super();
@@ -342,6 +475,9 @@ const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"label":[1],"value":[1],"type":[1],"dense":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
 const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
+const MxTab = /*@__PURE__*/proxyCustomElement(MxTab$1, [0,"mx-tab",{"label":[1],"ariaLabel":[1,"aria-label"],"icon":[1],"selected":[516],"badge":[4],"badgeClass":[1,"badge-class"]}]);
+const MxTabContent = /*@__PURE__*/proxyCustomElement(MxTabContent$1, [4,"mx-tab-content",{"index":[2],"value":[2]}]);
+const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [4,"mx-tabs",{"fill":[4],"value":[2]},[[0,"keyup","onKeyUp"],[1,"mouseup","onMouseUp"],[0,"click","onClick"]]]);
 const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"value":[8]}]);
 const MxToggleButtonGroup = /*@__PURE__*/proxyCustomElement(MxToggleButtonGroup$1, [4,"mx-toggle-button-group",{"value":[1032]},[[0,"click","onToggleButtonClick"]]]);
 const defineCustomElements = (opts) => {
@@ -353,6 +489,9 @@ const defineCustomElements = (opts) => {
   MxInput,
   MxRadio,
   MxSwitch,
+  MxTab,
+  MxTabContent,
+  MxTabs,
   MxToggleButton,
   MxToggleButtonGroup
     ].forEach(cmp => {
@@ -363,4 +502,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxInput, MxRadio, MxSwitch, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxInput, MxRadio, MxSwitch, MxTab, MxTabContent, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };

@@ -19,6 +19,19 @@
 | `value`      | `value`       | The value to display inside the badge                              | `any`     | `undefined` |
 
 
+## Dependencies
+
+### Used by
+
+ - [mx-tab](../mx-tab)
+
+### Graph
+```mermaid
+graph TD;
+  mx-tab --> mx-badge
+  style mx-badge fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

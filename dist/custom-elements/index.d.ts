@@ -38,6 +38,24 @@ export const MxSwitch: {
   new (): MxSwitch;
 };
 
+interface MxTab extends Components.MxTab, HTMLElement {}
+export const MxTab: {
+  prototype: MxTab;
+  new (): MxTab;
+};
+
+interface MxTabContent extends Components.MxTabContent, HTMLElement {}
+export const MxTabContent: {
+  prototype: MxTabContent;
+  new (): MxTabContent;
+};
+
+interface MxTabs extends Components.MxTabs, HTMLElement {}
+export const MxTabs: {
+  prototype: MxTabs;
+  new (): MxTabs;
+};
+
 interface MxToggleButton extends Components.MxToggleButton, HTMLElement {}
 export const MxToggleButton: {
   prototype: MxToggleButton;
