@@ -6,6 +6,9 @@
     "./components/mx-input/mx-input.js",
     "./components/mx-radio/mx-radio.js",
     "./components/mx-switch/mx-switch.js",
+    "./components/mx-tab/mx-tab.js",
+    "./components/mx-tab-content/mx-tab-content.js",
+    "./components/mx-tabs/mx-tabs.js",
     "./components/mx-toggle-button/mx-toggle-button.js",
     "./components/mx-toggle-button-group/mx-toggle-button-group.js"
   ],

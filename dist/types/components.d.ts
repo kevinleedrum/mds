@@ -103,6 +103,52 @@ export namespace Components {
         "name": string;
         "value": string;
     }
+    interface MxTab {
+        /**
+          * If you are not providing a `label`, this should be provided instead for accessibility
+         */
+        "ariaLabel": string;
+        /**
+          * Display a dot badge
+         */
+        "badge": boolean;
+        /**
+          * Additional classes for the badge
+         */
+        "badgeClass": string;
+        /**
+          * Class name of icon to display
+         */
+        "icon": string;
+        /**
+          * Label text to display
+         */
+        "label": string;
+        /**
+          * Only set this if you are not using the `mx-tabs` `value` prop
+         */
+        "selected": boolean;
+    }
+    interface MxTabContent {
+        /**
+          * The index of the tab that corresponds to this content
+         */
+        "index": number;
+        /**
+          * The index of the selected tab
+         */
+        "value": number;
+    }
+    interface MxTabs {
+        /**
+          * Stretch tabs to fill the entire width
+         */
+        "fill": boolean;
+        /**
+          * The index of the selected tab (not needed if manually setting the `selected` prop on each tab)
+         */
+        "value": number;
+    }
     interface MxToggleButton {
         "disabled": boolean;
         "icon": string;
@@ -153,6 +199,24 @@ declare global {
         prototype: HTMLMxSwitchElement;
         new (): HTMLMxSwitchElement;
     };
+    interface HTMLMxTabElement extends Components.MxTab, HTMLStencilElement {
+    }
+    var HTMLMxTabElement: {
+        prototype: HTMLMxTabElement;
+        new (): HTMLMxTabElement;
+    };
+    interface HTMLMxTabContentElement extends Components.MxTabContent, HTMLStencilElement {
+    }
+    var HTMLMxTabContentElement: {
+        prototype: HTMLMxTabContentElement;
+        new (): HTMLMxTabContentElement;
+    };
+    interface HTMLMxTabsElement extends Components.MxTabs, HTMLStencilElement {
+    }
+    var HTMLMxTabsElement: {
+        prototype: HTMLMxTabsElement;
+        new (): HTMLMxTabsElement;
+    };
     interface HTMLMxToggleButtonElement extends Components.MxToggleButton, HTMLStencilElement {
     }
     var HTMLMxToggleButtonElement: {
@@ -172,6 +236,9 @@ declare global {
         "mx-input": HTMLMxInputElement;
         "mx-radio": HTMLMxRadioElement;
         "mx-switch": HTMLMxSwitchElement;
+        "mx-tab": HTMLMxTabElement;
+        "mx-tab-content": HTMLMxTabContentElement;
+        "mx-tabs": HTMLMxTabsElement;
         "mx-toggle-button": HTMLMxToggleButtonElement;
         "mx-toggle-button-group": HTMLMxToggleButtonGroupElement;
     }
@@ -273,6 +340,56 @@ declare namespace LocalJSX {
         "name"?: string;
         "value"?: string;
     }
+    interface MxTab {
+        /**
+          * If you are not providing a `label`, this should be provided instead for accessibility
+         */
+        "ariaLabel"?: string;
+        /**
+          * Display a dot badge
+         */
+        "badge"?: boolean;
+        /**
+          * Additional classes for the badge
+         */
+        "badgeClass"?: string;
+        /**
+          * Class name of icon to display
+         */
+        "icon"?: string;
+        /**
+          * Label text to display
+         */
+        "label"?: string;
+        /**
+          * Only set this if you are not using the `mx-tabs` `value` prop
+         */
+        "selected"?: boolean;
+    }
+    interface MxTabContent {
+        /**
+          * The index of the tab that corresponds to this content
+         */
+        "index"?: number;
+        /**
+          * The index of the selected tab
+         */
+        "value"?: number;
+    }
+    interface MxTabs {
+        /**
+          * Stretch tabs to fill the entire width
+         */
+        "fill"?: boolean;
+        /**
+          * Emits the clicked tab's index as `Event.detail`
+         */
+        "onMxChange"?: (event: CustomEvent<number>) => void;
+        /**
+          * The index of the selected tab (not needed if manually setting the `selected` prop on each tab)
+         */
+        "value"?: number;
+    }
     interface MxToggleButton {
         "disabled"?: boolean;
         "icon"?: string;
@@ -296,6 +413,9 @@ declare namespace LocalJSX {
         "mx-input": MxInput;
         "mx-radio": MxRadio;
         "mx-switch": MxSwitch;
+        "mx-tab": MxTab;
+        "mx-tab-content": MxTabContent;
+        "mx-tabs": MxTabs;
         "mx-toggle-button": MxToggleButton;
         "mx-toggle-button-group": MxToggleButtonGroup;
     }
@@ -310,6 +430,9 @@ declare module "@stencil/core" {
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;
             "mx-switch": LocalJSX.MxSwitch & JSXBase.HTMLAttributes<HTMLMxSwitchElement>;
+            "mx-tab": LocalJSX.MxTab & JSXBase.HTMLAttributes<HTMLMxTabElement>;
+            "mx-tab-content": LocalJSX.MxTabContent & JSXBase.HTMLAttributes<HTMLMxTabContentElement>;
+            "mx-tabs": LocalJSX.MxTabs & JSXBase.HTMLAttributes<HTMLMxTabsElement>;
             "mx-toggle-button": LocalJSX.MxToggleButton & JSXBase.HTMLAttributes<HTMLMxToggleButtonElement>;
             "mx-toggle-button-group": LocalJSX.MxToggleButtonGroup & JSXBase.HTMLAttributes<HTMLMxToggleButtonGroupElement>;
         }
