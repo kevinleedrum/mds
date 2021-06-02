@@ -17,7 +17,7 @@
       color: #0457af;
     }
 
-    &:not([aria-selected]) i {
+    &:not([aria-selected], :active) i {
       color: rgba(0, 0, 0, 0.64);
       &.icon-only {
         color: rgba(51, 51, 51, 0.38);
@@ -42,6 +42,7 @@
 
     &:active {
       background: transparent;
+      color: #0457af;
       border-bottom-color: #b9b9b9;
     }
   }
