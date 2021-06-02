@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Listen, Element } from '@stencil/core';
+import { Component, Host, h, Prop, Listen, Element, Watch, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'mx-tabs',
@@ -7,6 +7,11 @@ import { Component, Host, h, Prop, Listen, Element } from '@stencil/core';
 export class MxTabs {
   /** Stretch tabs to fill the entire width */
   @Prop() fill: boolean = false;
+  /** The index of the selected tab (not needed if manually setting the `selected` prop on each tab) */
+  @Prop() value: number = null;
+
+  /** Emits the clicked tab's index as `Event.detail` */
+  @Event() mxChange: EventEmitter<number>;
 
   @Element() element: HTMLMxTabsElement;
 
@@ -20,10 +25,44 @@ export class MxTabs {
     this.animateIndicator(e);
   }
 
-  animateIndicator(e: MouseEvent | KeyboardEvent) {
+  // Get the clicked tab's index and emit it via the mxChange event
+  @Listen('click')
+  onClick(e: MouseEvent) {
+    const tab: HTMLMxTabElement = (e.target as HTMLElement).closest('mx-tab');
+    if (!tab) return;
+    const tabs = this.element.querySelectorAll('mx-tab');
+    const tabIndex = Array.prototype.indexOf.call(tabs, tab);
+    if (tabIndex >= 0) this.mxChange.emit(tabIndex);
+  }
+
+  @Watch('value')
+  onValueChange() {
+    this.animateIndicator(null, this.value);
+    this.setSelectedTab();
+  }
+
+  connectedCallback() {
+    if (this.value !== null) this.setSelectedTab();
+  }
+
+  setSelectedTab() {
+    const tabs = this.element.querySelectorAll('mx-tab');
+    tabs.forEach((tab: HTMLMxTabElement, index) => {
+      tab.selected = index === this.value;
+    });
+  }
+
+  animateIndicator(e: MouseEvent | KeyboardEvent, newSelectedTabIndex?: number) {
+    if (this.value !== null && this.value === newSelectedTabIndex) return; // no need to animate
     // Find the distance between the clicked tab and the soon-to-be-deselected tab
     const currentSelectedTab = this.element.querySelector('mx-tab[selected]') as HTMLMxTabElement;
-    const clickedTab = (e.target as HTMLElement).parentElement as HTMLMxTabElement;
+    let clickedTab: HTMLMxTabElement;
+    if (e) {
+      clickedTab = (e.target as HTMLElement).closest('mx-tab');
+    } else if (newSelectedTabIndex >= 0) {
+      const tabs = this.element.querySelectorAll('mx-tab');
+      clickedTab = tabs[newSelectedTabIndex];
+    }
     if (!currentSelectedTab || !clickedTab || clickedTab.tagName !== 'MX-TAB') return;
     const distance = currentSelectedTab.offsetLeft - clickedTab.offsetLeft;
     const indicator = clickedTab.querySelector('.active-tab-indicator') as HTMLElement;
