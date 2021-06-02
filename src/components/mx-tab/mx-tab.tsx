@@ -10,11 +10,12 @@ export class MxTab {
 
   /** Label text to display */
   @Prop() label: string = '';
-  /** If you are not providing a visible label, this should be provided instead for accessibility */
+  /** If you are not providing a `label`, this should be provided instead for accessibility */
   @Prop() ariaLabel: string = '';
   /** Class name of icon to display */
   @Prop() icon: string = '';
-  @Prop() selected: boolean = false;
+  /** Only set this if you are not using the `mx-tabs` `value` prop */
+  @Prop({ reflect: true }) selected: boolean = false;
   /** Display a dot badge */
   @Prop() badge: boolean = false;
   /** Additional classes for the badge */
