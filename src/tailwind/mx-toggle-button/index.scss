@@ -1,31 +1,32 @@
 .mx-toggle-button {
-  border-color: #bcbcbc;
-  --ripple-color: #afc9e6;
+  color: var(--mds-text-btn-toggle);
+  border-color: var(--mds-border-btn-toggle);
+  --ripple-color: var(--mds-ripple-btn-toggle);
 
   .btn-toggle {
-    background: #fff;
+    background: var(--mds-bg-btn-toggle);
 
     &:focus:not([aria-disabled]) {
-      background: #d7d7d7;
+      background: var(--mds-bg-btn-toggle-focus);
     }
 
     &:hover:not([aria-disabled]) {
-      background: #eeeeee;
+      background: var(--mds-bg-btn-toggle-hover);
     }
 
     &:active:not([aria-disabled]) {
-      background: #fff;
-      color: #0457af;
+      background: var(--mds-bg-btn-toggle-active);
+      color: var(--mds-text-btn-toggle-active);
     }
 
     &[aria-disabled] {
-      color: #c1c1c1;
-      background: #fff;
+      color: var(--mds-text-btn-toggle-disabled);
+      background: var(--mds-bg-btn-toggle-disabled);
     }
 
     &.selected,
     &.selected:focus {
-      background: #dde8f4;
+      background: var(--mds-bg-btn-toggle-selected);
     }
   }
 }

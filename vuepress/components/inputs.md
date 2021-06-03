@@ -70,3 +70,7 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
 | `textareaHeight`      | `textarea-height`       |             | `string`  | `'250px'`   |
 | `type`                | `type`                  |             | `string`  | `'text'`    |
 | `value`               | `value`                 |             | `string`  | `undefined` |
+
+## CSS Variables
+
+<<< @/src/tailwind/variables/index.scss#inputs
