@@ -248,6 +248,10 @@ emitted via a custom <code>mxInput</code> event.
 | --------- | --------------------------------------- | ------------------ |
 | `mxInput` | Emits the updated value as event.detail | `CustomEvent<any>` |
 
+## CSS Variables
+
+<<< @/src/tailwind/variables/index.scss#buttons
+
 <script>
 export default {
   data() {

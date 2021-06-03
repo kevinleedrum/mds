@@ -1,29 +1,20 @@
 # Colors
 
-| Class                    | Description            | Default |
-| ------------------------ | ---------------------- | ------- |
-| .text-primary-text-dark  | Dark Text Color        | #111827 |
-| .text-primary-text-light | Light Text Color       | #fff    |
-| .bg-primary-bg-dark      | Dark Background Color  | #0457af |
-| .bg-primary-bg-light     | Light Background Color | #e1f5ff |
-| .bg-gray-bg-dark         | Dark Gray Background   | #e8e8e8 |
-| .bg-gray-bg-light        | Light Gray Background  | #fafafa |
+<div class="mds">
+
+| Class                    | Description            | Default                                                                                   |
+| ------------------------ | ---------------------- | ----------------------------------------------------------------------------------------- |
+| `.text-primary`          | Dark Text Color        | <span class="inline-block w-32 h-16 border" style="background: #111827"></span> `#111827` |
+| `.text-primary-inverted` | Light Text Color       | <span class="inline-block w-32 h-16 border" style="background: #fff"></span> `#fff`       |
+| `.bg-primary`            | Light Background Color | <span class="inline-block w-32 h-16 border" style="background: #e1f5ff"></span> `#e1f5ff` |
+| `.bg-primary-inverted`   | Dark Background Color  | <span class="inline-block w-32 h-16 border" style="background: #0457af"></span> `#0457af` |
+| `.bg-gray`               | Light Gray Background  | <span class="inline-block w-32 h-16 border" style="background: #fafafa"></span> `#fafafa` |
+| `.bg-gray-inverted`      | Dark Gray Background   | <span class="inline-block w-32 h-16 border" style="background: #e8e8e8"></span> `#e8e8e8` |
+
+</div>
 
 ## Variables
 
 The above classes are defaulted. These values can be overridden by setting a color on a CSS Variable.
 
-```css
-* {
-  --mds-primary-bg-dark: #0457af;
-  --mds-primary-bg-light: #e1f5ff;
-  --mds-secondary-bg-dark: #00696b;
-  --mds-secondary-bg-light: #edfffc;
-
-  --mds-gray-bg-dark: #e8e8e8;
-  --mds-gray-bg-light: #fafafa;
-
-  --mds-primary-text-dark: #111827;
-  --mds-primary-text-light: #fff;
-}
-```
+<<< @/src/tailwind/variables/index.scss

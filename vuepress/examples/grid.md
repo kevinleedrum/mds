@@ -6,31 +6,31 @@ Example of how the grid system works. The examples use rows, but they coould jus
   <div class="container">
     <h4 class="my-10">Non-Responsive Grid</h4>
     <div class="grid grid-flow-row grid-cols-3 gap-4 text-center">
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         1
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         2
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         3
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         4
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         5
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         6
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         7
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         8
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         9
       </div>
     </div>
@@ -41,15 +41,15 @@ Below is the code example of the above non-responsive grid above.
 
 ```html
 <div class="grid grid-flow-row grid-cols-3 gap-4 text-center">
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">1</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">2</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">3</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">4</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">5</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">6</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">7</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">8</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">9</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">1</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">2</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">3</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">4</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">5</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">6</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">7</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">8</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">9</div>
 </div>
 ```
 
@@ -59,40 +59,40 @@ Below is the code example of the above non-responsive grid above.
     <div
       class="grid grid-flow-row grid-cols-1 gap-4 text-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-12"
     >
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         1
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         2
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         3
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         4
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         5
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         6
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         7
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         8
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         9
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         10
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         11
       </div>
-      <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">
+      <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">
         12
       </div>
     </div>
@@ -105,15 +105,15 @@ Below is the code example of a responsive grid system. The grid system works in 
 <div
   class="grid grid-flow-row grid-cols-1 gap-4 text-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
 >
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">1</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">2</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">3</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">4</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">5</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">6</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">7</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">8</div>
-  <div class="rounded py-4 text-center bg-primary-bg-dark text-primary-text-light">9</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">1</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">2</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">3</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">4</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">5</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">6</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">7</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">8</div>
+  <div class="rounded py-4 text-center bg-primary-inverted text-primary-inverted">9</div>
 </div>
 ```
 

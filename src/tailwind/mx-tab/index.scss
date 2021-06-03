@@ -6,44 +6,44 @@
   }
 
   .active-tab-indicator {
-    background: #0457af;
+    background: var(--mds-bg-tab-indicator);
   }
 
   button {
-    color: #333;
-    --ripple-color: #afc9e6;
+    color: var(--mds-text-tab);
+    --ripple-color: var(--mds-ripple-tab);
 
     &[aria-selected] {
-      color: #0457af;
+      color: var(--mds-text-tab-selected);
     }
 
     &:not([aria-selected], :active) i {
-      color: rgba(0, 0, 0, 0.64);
+      color: var(--mds-text-tab-icon);
       &.icon-only {
-        color: rgba(51, 51, 51, 0.38);
+        color: var(--mds-text-tab-icon-only);
       }
     }
 
     &:focus-visible {
-      background: #d7d7d7;
-      border-bottom-color: #b9b9b9;
+      background: var(--mds-bg-tab-focus);
+      border-bottom-color: var(--mds-border-tab-focus);
       &[aria-selected] {
-        background: #d7e2ef;
+        background: var(--mds-bg-tab-selected-focus);
       }
     }
 
     &:hover {
-      background: #eeeeee;
-      border-bottom-color: #b9b9b9;
+      background: var(--mds-bg-tab-hover);
+      border-bottom-color: var(--mds-border-tab-hover);
       &[aria-selected] {
-        background: #eef1f6;
+        background: var(--mds-bg-tab-selected-hover);
       }
     }
 
     &:active {
-      background: transparent;
-      color: #0457af;
-      border-bottom-color: #b9b9b9;
+      background: var(--mds-bg-tab-active);
+      color: var(--mds-text-tab-active);
+      border-bottom-color: var(--mds-border-tab-active);
     }
   }
 }

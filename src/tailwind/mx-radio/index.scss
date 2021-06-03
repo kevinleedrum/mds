@@ -2,7 +2,7 @@
   span {
     position: relative;
     z-index: 1;
-    border: 2px solid #5a5a5a;
+    border: 2px solid var(--mds-border-radio);
 
     &::before {
       display: none;
@@ -24,20 +24,20 @@
       top: 3px;
       width: 10px;
       height: 10px;
-      background: #0457ae;
+      background: var(--mds-bg-radio-checked);
       border-radius: 100%;
     }
 
     &:hover {
       &::before {
         display: block;
-        background: rgba(0, 0, 0, 0.04);
+        background: var(--mds-bg-radio-overlay-hover);
       }
     }
 
     &:active {
       &::before {
-        background: rgba(0, 0, 0, 0.12);
+        background: var(--mds-bg-radio-overlay-active);
       }
     }
   }
@@ -45,10 +45,10 @@
   :focus-within:focus-visible {
     & + span::before {
       display: block;
-      background: rgba(0, 0, 0, 0.12);
+      background: var(--mds-bg-radio-overlay-focus);
     }
     &:checked ~ span::before {
-      background: rgba(4, 87, 175, 0.32);
+      background: var(--mds-bg-radio-overlay-checked-focus);
     }
   }
 
@@ -59,14 +59,14 @@
 
     &:hover {
       &::before {
-        background: rgba(4, 87, 175, 0.08);
+        background: var(--mds-bg-radio-overlay-checked-hover);
       }
     }
 
     &:active {
       &::before {
         display: block;
-        background: rgba(4, 87, 175, 0.32);
+        background: var(--mds-bg-radio-overlay-checked-active);
       }
     }
   }

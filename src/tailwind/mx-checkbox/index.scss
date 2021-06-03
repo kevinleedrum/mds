@@ -2,7 +2,7 @@
   span {
     position: relative;
     z-index: 1;
-    border: 2px solid #5a5a5a;
+    border: 2px solid var(--mds-border-checkbox);
     border-radius: 2px;
 
     &::before {
@@ -24,7 +24,7 @@
       top: 1px;
       width: 5px;
       height: 10px;
-      border: solid white;
+      border: solid var(--mds-border-checkbox-check);
       border-width: 0 2px 2px 0;
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
@@ -33,13 +33,13 @@
 
     &:hover {
       &::before {
-        background: rgba(0, 0, 0, 0.04);
+        background: var(--mds-bg-checkbox-overlay-hover);
       }
     }
 
     &:active {
       &::before {
-        background: rgba(0, 0, 0, 0.12);
+        background: var(--mds-bg-checkbox-overlay-active);
       }
     }
   }
@@ -47,29 +47,28 @@
   :focus-within:focus-visible {
     & + span::before {
       display: block;
-      background: rgba(0, 0, 0, 0.12);
+      background: var(--mds-bg-checkbox-overlay-focus);
     }
     &:checked ~ span::before {
-      background: rgba(4, 87, 175, 0.32);
+      background: var(--mds-bg-checkbox-overlay-checked-focus);
     }
   }
 
   input:checked ~ span {
-    /* background-color: var(--mds-primary-bg-dark); */
-    background-color: #0457af;
+    background-color: var(--mds-bg-checkbox-checked);
     &::after {
       display: block;
     }
 
     &:hover {
       &::before {
-        background: rgba(4, 87, 175, 0.08);
+        background: var(--mds-bg-checkbox-overlay-checked-hover);
       }
     }
 
     &:active {
       &::before {
-        background: rgba(4, 87, 175, 0.32);
+        background: var(--mds-bg-checkbox-overlay-checked-active);
       }
     }
   }
