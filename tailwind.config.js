@@ -79,13 +79,21 @@ const config = {
       384: '24rem',
     },
     extend: {
-      colors: {
-        'primary-text-dark': 'var(--mds-primary-text-dark)', // Dark text primary
-        'primary-text-light': 'var(--mds-primary-text-light)', // Light text primary
-        'primary-bg-dark': 'var(--mds-primary-bg-dark)', // Dark background primary
-        'primary-text-light': 'var(--mds-primary-bg-light)', // Light background primary
-        'gray-bg-dark': 'var(--mds-gray-bg-dark)', // Primary dark gray
-        'gray-bg-light': 'var(--mds-gray-bg-light)', // Primary light gray
+      backgroundColor: {
+        'primary': 'var(--mds-bg-primary)',
+        'primary-inverted': 'var(--mds-bg-primary-inverted)',
+        'secondary': 'var(--mds-bg-secondary)',
+        'secondary-inverted': 'var(--mds-bg-secondary-inverted)',
+        'gray': 'var(--mds-bg-gray)',
+        'gray-inverted': 'var(--mds-bg-gray-inverted)',
+      },
+      textColor: {
+        'primary': 'var(--mds-text-primary)',
+        'primary-inverted': 'var(--mds-text-primary-inverted)',
+      },
+      borderColor: {
+        'primary': 'var(--mds-border-primary)',
+        'primary-inverted': 'var(--mds-border-primary-inverted)',
       },
       container: {
         center: true,
@@ -109,7 +117,15 @@ const config = {
     },
   },
   plugins: [
-    plugin(function ({ addVariant, e }) {
+    plugin(function({ addVariant, e }) {
+      // Make "disabled:" variant work for aria-disabled as well
+      addVariant('disabled', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.${e(`disabled${separator}${className}`)}:disabled, .${e(
+            `disabled${separator}${className}`,
+          )}[aria-disabled]`;
+        });
+      });
       addVariant('first-of-type', ({ modifySelectors, separator }) => {
         modifySelectors(({ className }) => {
           return `.${e(`first-of-type${separator}${className}`)}:first-of-type`;

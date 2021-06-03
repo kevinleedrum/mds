@@ -73,3 +73,7 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 | `labelName` | `label-name` |             | `string`  | `''`    |
 | `name`      | `name`       |             | `string`  | `''`    |
 | `value`     | `value`      |             | `string`  | `''`    |
+
+## CSS Variables
+
+<<< @/src/tailwind/variables/index.scss#selection-controls

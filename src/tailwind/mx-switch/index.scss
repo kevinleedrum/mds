@@ -6,7 +6,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #b9b9b9;
+    background-color: var(--mds-bg-switch-track);
     -webkit-transition: 0.4s;
     transition: 0.4s;
 
@@ -18,7 +18,7 @@
       width: 20px;
       left: -1px;
       bottom: -3px;
-      background-color: white;
+      background-color: var(--mds-bg-switch-thumb);
       -webkit-transition: 0.4s;
       transition: 0.4s;
     }
@@ -36,41 +36,45 @@
     }
     &:hover::after {
       display: block;
-      background: rgba(0, 0, 0, 0.04);
+      background: var(--mds-bg-switch-overlay-hover);
     }
     &:active::after {
       display: block;
-      background: rgba(0, 0, 0, 0.12);
+      background: var(--mds-bg-switch-overlay-active);
     }
   }
 
   input:checked + .slider {
-    background-color: #abc6e2;
+    background-color: var(--mds-bg-switch-track-checked);
   }
 
   :focus-within:focus-visible + .slider::after {
     display: block;
-    background: rgba(0, 0, 0, 0.12);
+    background: var(--mds-bg-switch-overlay-focus);
   }
 
   input:checked + .slider:active::after,
   :focus-within:focus-visible:checked + .slider::after {
     display: block;
-    background: rgba(4, 87, 175, 0.32);
+    background: var(--mds-bg-switch-overlay-checked-focus);
   }
 
   input:checked + .slider:before {
     -webkit-transform: translateX(20px);
     -ms-transform: translateX(20px);
     transform: translateX(20px);
-    background: #0457ae;
+    background: var(--mds-bg-switch-thumb-checked);
   }
 
   input:checked + .slider:after {
     -webkit-transform: translateX(20px);
     -ms-transform: translateX(20px);
     transform: translateX(20px);
-    background: rgba(4, 87, 175, 0.08);
+    background: var(--mds-bg-switch-overlay-checked-active);
+  }
+
+  input:checked + .slider:hover::after {
+    background: var(--mds-bg-switch-overlay-checked-hover);
   }
 
   /* Rounded sliders */

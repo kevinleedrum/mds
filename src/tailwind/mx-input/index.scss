@@ -1,7 +1,8 @@
 .mx-input {
   .mx-input-wrapper {
     position: relative;
-    border: 1px solid rgba(51, 51, 51, 0.38);
+    background: var(--mds-bg-input);
+    border: 1px solid var(--mds-border-input);
     border-radius: 8px;
     display: flex;
     flex-direction: row;
@@ -11,18 +12,21 @@
     align-content: center;
 
     i {
+      color: var(--mds-text-input);
       font-size: 24px;
     }
 
     &.error {
-      border: 2px solid #ff0c3e;
-      color: #ff0c3e;
+      border: 2px solid var(--mds-border-input-error);
+      color: var(--mds-text-input-error);
     }
 
     label {
       position: absolute;
       left: 10px;
       display: block;
+      color: var(--mds-text-input-label);
+      background: var(--mds-bg-input);
       cursor: text;
       -webkit-transition: color 0.1s ease-out, -webkit-transform 0.1s ease-out;
       transition: color 0.1s ease-out, -webkit-transform 0.1s ease-out;
@@ -42,19 +46,17 @@
       }
 
       &.active {
-        color: #ababab;
         -webkit-transform-origin: 0 0;
         transform-origin: 0 0;
-        background: #fff;
       }
 
       &.error {
-        color: #ff0c3e;
+        color: var(--mds-text-input-error);
       }
     }
 
     &.focused {
-      border: 2px solid #0457af;
+      border: 2px solid var(--mds-border-input-focus);
 
       .mx-input-inner-wrapper {
         padding: 0 15px;
@@ -133,6 +135,7 @@
       input {
         width: 100%;
         outline: 0;
+        color: var(--mds-text-input);
         background: transparent;
       }
     }

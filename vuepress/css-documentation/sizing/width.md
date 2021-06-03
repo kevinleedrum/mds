@@ -76,11 +76,11 @@ Visit [https://tailwindcss.com/docs/width](https://tailwindcss.com/docs/width) f
 ## Examples
 
 <div class="mds">
-  <div class="w-9/12 bg-primary-bg-dark text-primary-text-light p-12 mt-16">
+  <div class="w-9/12 bg-primary-inverted text-primary-inverted p-12 mt-16">
     This div is set to 75% width.
   </div>
 </div>
 
 ```html
-<div class="w-9/12 bg-primary-bg-dark text-primary-text-light p-12 mt-16">This div is set to 75% width.</div>
+<div class="w-9/12 bg-primary-inverted text-primary-inverted p-12 mt-16">This div is set to 75% width.</div>
 ```

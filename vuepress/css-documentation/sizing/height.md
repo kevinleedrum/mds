@@ -63,13 +63,13 @@ Visit []() for more information.
 ## Examples
 
 <div class="mds">
-  <div class="my-16 flex h-240 w-240 bg-primary-bg-dark text-primary-text-light">
+  <div class="my-16 flex h-240 w-240 bg-primary-inverted text-primary-inverted">
     <div class="m-auto">240 x 240</div>
   </div>
 </div>
 
 ```html
-<div class="my-16 flex h-240 w-240 bg-primary-bg-dark text-primary-text-light">
+<div class="my-16 flex h-240 w-240 bg-primary-inverted text-primary-inverted">
   <div class="m-auto">240 x 240</div>
 </div>
 ```
