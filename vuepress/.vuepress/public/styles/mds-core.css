@@ -9682,6 +9682,11 @@ video {
       z-index: 10;
       cursor: pointer;
     }
+@media (prefers-reduced-motion: reduce) {
+.mx-input .mx-input-wrapper label {
+        transition: none
+    }
+      }
 .mx-input .mx-input-wrapper label.indented {
         left: 50px;
       }
@@ -10127,6 +10132,11 @@ video {
       background-color: var(--mds-bg-switch-thumb);
       transition: 0.4s;
     }
+@media (prefers-reduced-motion: reduce) {
+.mx-switch .slider:before {
+        transition: none
+    }
+      }
 .mx-switch .slider::after {
       display: none;
       content: '';
@@ -10254,6 +10264,12 @@ span.ripple {
   transform: scale(0);
   pointer-events: none;
 }
+@media (prefers-reduced-motion: reduce) {
+span.ripple {
+    -webkit-animation: none;
+            animation: none
+}
+  }
 @-webkit-keyframes ripple {
   to {
     opacity: 0;

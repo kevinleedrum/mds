@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Listen, Element, Watch, Event, EventEmitter } from '@stencil/core';
+import { queryPrefersReducedMotion } from '../../utils/utils';
 
 @Component({
   tag: 'mx-tabs',
@@ -53,6 +54,7 @@ export class MxTabs {
   }
 
   animateIndicator(e: MouseEvent | KeyboardEvent, newSelectedTabIndex?: number) {
+    if (queryPrefersReducedMotion()) return;
     if (this.value !== null && this.value === newSelectedTabIndex) return; // no need to animate
     // Find the distance between the clicked tab and the soon-to-be-deselected tab
     const currentSelectedTab = this.element.querySelector('mx-tab[selected]') as HTMLMxTabElement;
