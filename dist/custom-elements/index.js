@@ -326,6 +326,11 @@ const MxTabContent$1 = class extends HTMLElement {
   }
 };
 
+function queryPrefersReducedMotion() {
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  return !mediaQuery || mediaQuery.matches;
+}
+
 const MxTabs$1 = class extends HTMLElement {
   constructor() {
     super();
@@ -369,6 +374,8 @@ const MxTabs$1 = class extends HTMLElement {
     });
   }
   animateIndicator(e, newSelectedTabIndex) {
+    if (queryPrefersReducedMotion())
+      return;
     if (this.value !== null && this.value === newSelectedTabIndex)
       return; // no need to animate
     // Find the distance between the clicked tab and the soon-to-be-deselected tab

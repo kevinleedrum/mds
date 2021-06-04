@@ -4,6 +4,11 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-62cba631.js');
 
+function queryPrefersReducedMotion() {
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  return !mediaQuery || mediaQuery.matches;
+}
+
 const MxTabs = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
@@ -46,6 +51,8 @@ const MxTabs = class {
     });
   }
   animateIndicator(e, newSelectedTabIndex) {
+    if (queryPrefersReducedMotion())
+      return;
     if (this.value !== null && this.value === newSelectedTabIndex)
       return; // no need to animate
     // Find the distance between the clicked tab and the soon-to-be-deselected tab
