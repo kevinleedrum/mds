@@ -21,6 +21,10 @@
       background-color: var(--mds-bg-switch-thumb);
       -webkit-transition: 0.4s;
       transition: 0.4s;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
     }
 
     &::after {
