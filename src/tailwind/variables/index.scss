@@ -101,6 +101,22 @@
   --mds-text-input: rgba(51, 51, 51, 0.87);
   /* #endregion inputs */
 
+  /* #region dropdowns */
+  /* Selects */
+  --mds-bg-select: #fff;
+  --mds-border-select-elevated: transparent;
+  --mds-border-select-error: #ff0c3e;
+  --mds-border-select-flat: #eaeaea;
+  --mds-border-select-focus: #0457af;
+  --mds-border-select-hover: rgba(51, 51, 51, 0.86);
+  --mds-border-select: rgba(51, 51, 51, 0.38);
+  --mds-text-select-assistive: rgba(51, 51, 51, 0.6);
+  --mds-text-select-disabled: rgba(51, 51, 51, 0.38);
+  --mds-text-select-error: #ff0c3e;
+  --mds-text-select-label: rgba(51, 51, 51, 0.6);
+  --mds-text-select: rgba(51, 51, 51, 0.87);
+  /* #endregion dropdowns */
+
   /* #region selection-controls */
   /* Radio Buttons */
   --mds-bg-radio-checked: #0457af;
