@@ -84,7 +84,7 @@ export class MxSelect {
   }
 
   get iconSuffixClass() {
-    let str = 'absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
+    let str = 'icon-suffix absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
     if (this.isFocused) str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
   }
