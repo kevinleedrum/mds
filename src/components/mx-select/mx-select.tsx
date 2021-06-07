@@ -53,10 +53,6 @@ export class MxSelect {
     this.isFocused = false;
   }
 
-  onInput(e: InputEvent) {
-    this.value = (e.target as HTMLSelectElement).value;
-  }
-
   get hasValue() {
     return this.value !== null && this.value !== '' && this.value !== undefined;
   }
@@ -118,7 +114,6 @@ export class MxSelect {
             name={this.name}
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
-            onInput={this.onInput.bind(this)}
             ref={el => (this.selectElem = el)}
           >
             <slot></slot>
