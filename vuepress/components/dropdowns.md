@@ -149,7 +149,6 @@
       <mx-select
         id="favorite-animal"
         :value="animal"
-        elevated
         @input="animal = $event.target.value"
       >
         <option></option>
