@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Element, Watch, Event, Listen, EventEmitter, State } from '@stencil/core';
 import { IMxTabProps } from '../mx-tab/mx-tab';
+import { queryPrefersReducedMotion } from '../../utils/utils';
 
 const mql = window.matchMedia('(max-width: 720px)');
 let mqlListener;
@@ -32,6 +33,7 @@ export class MxTabs {
 
   @Watch('value')
   animateIndicator(tabIndex, previousTabIndex) {
+    if (queryPrefersReducedMotion()) return;
     if (tabIndex == null || previousTabIndex == null) return;
     // Find the distance between the clicked tab and the soon-to-be-deselected tab
     const tabEls = this.element.querySelectorAll('.mx-tab');

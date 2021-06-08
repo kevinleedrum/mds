@@ -1,4 +1,12 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-3267cb6d.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-56b2a4c3.js';
+
+function format(first, middle, last) {
+  return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
+}
+function queryPrefersReducedMotion() {
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  return !mediaQuery || mediaQuery.matches;
+}
 
 const MxTabs = class {
   constructor(hostRef) {
@@ -42,6 +50,8 @@ const MxTabs = class {
     });
   }
   animateIndicator(e, newSelectedTabIndex) {
+    if (queryPrefersReducedMotion())
+      return;
     if (this.value !== null && this.value === newSelectedTabIndex)
       return; // no need to animate
     // Find the distance between the clicked tab and the soon-to-be-deselected tab

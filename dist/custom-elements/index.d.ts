@@ -32,6 +32,12 @@ export const MxRadio: {
   new (): MxRadio;
 };
 
+interface MxSelect extends Components.MxSelect, HTMLElement {}
+export const MxSelect: {
+  prototype: MxSelect;
+  new (): MxSelect;
+};
+
 interface MxSwitch extends Components.MxSwitch, HTMLElement {}
 export const MxSwitch: {
   prototype: MxSwitch;
