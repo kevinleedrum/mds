@@ -97,6 +97,39 @@ export namespace Components {
         "name": string;
         "value": string;
     }
+    interface MxSelect {
+        "ariaLabel": string;
+        /**
+          * Helpful text to show below the select
+         */
+        "assistiveText": string;
+        "dense": boolean;
+        "disabled": boolean;
+        /**
+          * Style with a 1dp elevation
+         */
+        "elevated": boolean;
+        "error": boolean;
+        /**
+          * Style with a "flat" border color
+         */
+        "flat": boolean;
+        "label": string;
+        /**
+          * Additional classes for the label
+         */
+        "labelClass": string;
+        "name": string;
+        /**
+          * The `id` attribute for the select element
+         */
+        "selectId": string;
+        /**
+          * Text shown to the left of the arrow
+         */
+        "suffix": string;
+        "value": any;
+    }
     interface MxSwitch {
         "checked": boolean;
         "labelName": string;
@@ -193,6 +226,12 @@ declare global {
         prototype: HTMLMxRadioElement;
         new (): HTMLMxRadioElement;
     };
+    interface HTMLMxSelectElement extends Components.MxSelect, HTMLStencilElement {
+    }
+    var HTMLMxSelectElement: {
+        prototype: HTMLMxSelectElement;
+        new (): HTMLMxSelectElement;
+    };
     interface HTMLMxSwitchElement extends Components.MxSwitch, HTMLStencilElement {
     }
     var HTMLMxSwitchElement: {
@@ -235,6 +274,7 @@ declare global {
         "mx-checkbox": HTMLMxCheckboxElement;
         "mx-input": HTMLMxInputElement;
         "mx-radio": HTMLMxRadioElement;
+        "mx-select": HTMLMxSelectElement;
         "mx-switch": HTMLMxSwitchElement;
         "mx-tab": HTMLMxTabElement;
         "mx-tab-content": HTMLMxTabContentElement;
@@ -334,6 +374,39 @@ declare namespace LocalJSX {
         "name"?: string;
         "value"?: string;
     }
+    interface MxSelect {
+        "ariaLabel"?: string;
+        /**
+          * Helpful text to show below the select
+         */
+        "assistiveText"?: string;
+        "dense"?: boolean;
+        "disabled"?: boolean;
+        /**
+          * Style with a 1dp elevation
+         */
+        "elevated"?: boolean;
+        "error"?: boolean;
+        /**
+          * Style with a "flat" border color
+         */
+        "flat"?: boolean;
+        "label"?: string;
+        /**
+          * Additional classes for the label
+         */
+        "labelClass"?: string;
+        "name"?: string;
+        /**
+          * The `id` attribute for the select element
+         */
+        "selectId"?: string;
+        /**
+          * Text shown to the left of the arrow
+         */
+        "suffix"?: string;
+        "value"?: any;
+    }
     interface MxSwitch {
         "checked"?: boolean;
         "labelName"?: string;
@@ -412,6 +485,7 @@ declare namespace LocalJSX {
         "mx-checkbox": MxCheckbox;
         "mx-input": MxInput;
         "mx-radio": MxRadio;
+        "mx-select": MxSelect;
         "mx-switch": MxSwitch;
         "mx-tab": MxTab;
         "mx-tab-content": MxTabContent;
@@ -429,6 +503,7 @@ declare module "@stencil/core" {
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;
+            "mx-select": LocalJSX.MxSelect & JSXBase.HTMLAttributes<HTMLMxSelectElement>;
             "mx-switch": LocalJSX.MxSwitch & JSXBase.HTMLAttributes<HTMLMxSwitchElement>;
             "mx-tab": LocalJSX.MxTab & JSXBase.HTMLAttributes<HTMLMxTabElement>;
             "mx-tab-content": LocalJSX.MxTabContent & JSXBase.HTMLAttributes<HTMLMxTabContentElement>;
