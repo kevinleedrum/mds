@@ -1,11 +1,20 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import ripple from '../ripple';
 
+export interface IMxTabProps {
+  label: string;
+  ariaLabel: string;
+  icon: string;
+  selected: boolean;
+  badge: boolean;
+  badgeClass: string;
+}
+
 @Component({
   tag: 'mx-tab',
   shadow: false,
 })
-export class MxTab {
+export class MxTab implements IMxTabProps {
   btnElem: HTMLButtonElement;
 
   /** Label text to display */
@@ -14,12 +23,18 @@ export class MxTab {
   @Prop() ariaLabel: string = '';
   /** Class name of icon to display */
   @Prop() icon: string = '';
-  /** Only set this if you are not using the `mx-tabs` `value` prop */
+  /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
   @Prop({ reflect: true }) selected: boolean = false;
   /** Display a dot badge */
   @Prop() badge: boolean = false;
   /** Additional classes for the badge */
   @Prop() badgeClass: string = '';
+
+  componentDidLoad() {
+    if (!this.label && !this.ariaLabel) {
+      throw new Error('Please provide either a label or an aria-label for each tab.');
+    }
+  }
 
   onClick(e: MouseEvent) {
     ripple(e, this.btnElem);

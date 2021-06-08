@@ -1,50 +1,67 @@
 # Tabs
 
-The Moxi Design System tab implementation consists of an `mx-tabs` component that wraps `mx-tab` components.
-
-A tab becomes selected by either setting its `selected` prop to true, _or_ by passing the selected tab index
-into the parent `mx-tabs` component via the `value` prop. The `mx-tabs` component also emits a custom `mxChange`
+The Moxi Design System implements tabs as an `mx-tabs` component with a `tabs` prop that accepts an array of objects to configure each tab. The selected tab index is specified using the `value` prop. The `mx-tabs` component also emits a custom `mxChange`
 event, which contains the newly selected tab index in the `Event.detail` property.
 
 <!-- #region tabs -->
-<section class="mds">
-  <!-- The first two examples use the `value` prop and `mxChange` event on the `mx-tabs` component. -->
-  <div class="my-20">
-    <strong>Horizontal Fill (stretch tabs to fill width)</strong>
-    <mx-tabs fill :value="activeTabA" @mxChange="e => activeTabA = e.detail">
-      <mx-tab icon="ph-house" label="Home" />
-      <mx-tab icon="ph-heart" label="Favorites" badge badge-class="bg-green-600" />
-      <mx-tab icon="ph-magnifying-glass" label="Search" />
-    </mx-tabs>
-  </div>
-  <div class="my-20">
-    <strong>Horizontal Stack (set tabs to a min width)</strong>
-    <mx-tabs class="mt-10" :value="activeTabB" @mxChange="e => activeTabB = e.detail">
-      <mx-tab icon="ph-house" label="Home" />
-      <mx-tab icon="ph-heart" label="Favorites" badge badge-class="bg-green-600" />
-      <mx-tab icon="ph-magnifying-glass" label="Search" />
-    </mx-tabs>
-  </div>
-  <!-- The next two examples set the `selected` prop and `click` handler on each tab. -->
-  <!-- This may be preferred when you want the tab to change with the active route, for example. -->
-  <div class="my-20">
-    <strong>Icons Only, Horizontal Stack</strong>
-    <mx-tabs class="mt-10">
-      <mx-tab :selected="activeTabC === 'home'" icon="ph-house" @click="activeTabC = 'home'" />
-      <mx-tab :selected="activeTabC === 'favorites'" icon="ph-heart" badge badge-class="bg-red-500" @click="activeTabC = 'favorites'" />
-      <mx-tab :selected="activeTabC === 'search'" icon="ph-magnifying-glass" @click="activeTabC = 'search'" />
-    </mx-tabs>
-  </div>
-  <div class="my-20">
-    <strong>Text Only, Horizontal Fill</strong>
-    <mx-tabs class="mt-10" fill>
-      <mx-tab :selected="activeTabD === 'home'" label="Home" @click="activeTabD = 'home'" />
-      <mx-tab :selected="activeTabD === 'favorites'" label="Favorites" @click="activeTabD = 'favorites'" />
-      <mx-tab :selected="activeTabD === 'search'" label="Search" @click="activeTabD = 'search'" />
-    </mx-tabs>
-  </div>
-</section>
-<!-- #endregion tabs -->
+  <section class="mds">
+    <!-- 
+    The :tabs.prop syntax below is specific to Vue for passing data to DOM properties.
+    If using JSX, you can set the tabs prop using the typical tabs={[...]} syntax.
+    For vanilla JS, you will need to assign HTMLMxTabsElement.tabs = [...] in your script.
+    -->
+    <div class="my-20 space-y-20">
+      <strong>Horizontal Fill (stretch tabs to fill width)</strong>
+      <mx-tabs
+        fill
+        :tabs.prop="[
+          { label: 'Home', icon: 'ph-house' },
+          { label: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'bg-green-600' },
+          { label: 'Search', icon: 'ph-magnifying-glass' },
+        ]"
+        :value="activeTab"
+        @mxChange="e => activeTab = e.detail"
+      />
+    </div>
+    <div class="my-20 space-y-20">
+      <strong>Horizontal Stack (set tabs to a min width)</strong>
+      <mx-tabs
+        :tabs.prop="[
+          { label: 'Home', icon: 'ph-house' },
+          { label: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'bg-green-600' },
+          { label: 'Search', icon: 'ph-magnifying-glass' },
+        ]"
+        :value="activeTab"
+        @mxChange="e => activeTab = e.detail"
+      />
+    </div>
+    <div class="my-20 space-y-20">
+      <strong>Icons Only, Horizontal Stack</strong>
+      <mx-tabs
+        :tabs.prop="[
+          { ariaLabel: 'Home', icon: 'ph-house' },
+          { ariaLabel: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'bg-red-600' },
+          { ariaLabel: 'Search', icon: 'ph-magnifying-glass' },
+        ]"
+        :value="activeTab"
+        @mxChange="e => activeTab = e.detail"
+      />
+    </div>
+    <div class="my-20 space-y-20">
+      <strong>Text Only, Horizontal Fill</strong>
+      <mx-tabs
+        fill
+        :tabs.prop="[
+          { label: 'Home' },
+          { label: 'Favorites' },
+          { label: 'Search' }
+        ]"
+        :value="activeTab"
+        @mxChange="e => activeTab = e.detail"
+      />
+    </div>
+  </section>
+  <!-- #endregion tabs -->
 
 <<< @/vuepress/components/tabs.md#tabs
 
@@ -56,18 +73,23 @@ for the `value` prop (a variable containing the active tab index), and each `mx-
 <!-- #region tab-content -->
 <section class="mds">
   <div class="my-20 border">
-    <mx-tabs fill :value="activeTabE" @mxChange="e => activeTabE = e.detail">
-      <mx-tab icon="ph-house" label="Home" />
-      <mx-tab icon="ph-heart" label="Favorites" />
-      <mx-tab icon="ph-magnifying-glass" label="Search" />
-    </mx-tabs>
-    <mx-tab-content :value="activeTabE" index="0">
+    <mx-tabs
+      fill
+      :tabs.prop="[
+        { label: 'Home', icon: 'ph-house' },
+        { label: 'Favorites', icon: 'ph-heart' },
+        { label: 'Search', icon: 'ph-magnifying-glass' },
+      ]"
+      :value="activeTab"
+      @mxChange="e => activeTab = e.detail"
+    />
+    <mx-tab-content :value="activeTab" index="0">
       <p class="px-20">This is the Home tab.</p>
     </mx-tab-content>
-    <mx-tab-content :value="activeTabE" index="1">
+    <mx-tab-content :value="activeTab" index="1">
       <p class="px-20">This is the Favorites tab.</p>
     </mx-tab-content>
-    <mx-tab-content :value="activeTabE" index="2">
+    <mx-tab-content :value="activeTab" index="2">
       <p class="px-20">This is the Search tab.</p>
     </mx-tab-content>
   </div>
@@ -78,10 +100,11 @@ for the `value` prop (a variable containing the active tab index), and each `mx-
 
 ### Tabs Properties
 
-| Property | Attribute | Description                                                                                    | Type      | Default |
-| -------- | --------- | ---------------------------------------------------------------------------------------------- | --------- | ------- |
-| `fill`   | `fill`    | Stretch tabs to fill the entire width                                                          | `boolean` | `false` |
-| `value`  | `value`   | The index of the selected tab (not needed if manually setting the `selected` prop on each tab) | `number`  | `null`  |
+| Property            | Attribute | Description                                           | Type            | Default     |
+| ------------------- | --------- | ----------------------------------------------------- | --------------- | ----------- |
+| `fill`              | `fill`    | Stretch tabs to fill the entire width                 | `boolean`       | `false`     |
+| `tabs` _(required)_ | --        | An array of objects for each tab (see Tab Properties) | `IMxTabProps[]` | `undefined` |
+| `value`             | `value`   | The index of the selected tab                         | `number`        | `null`      |
 
 ### Tabs Events
 
@@ -91,14 +114,14 @@ for the `value` prop (a variable containing the active tab index), and each `mx-
 
 ### Tab Properties
 
-| Property     | Attribute     | Description                                                                           | Type      | Default |
-| ------------ | ------------- | ------------------------------------------------------------------------------------- | --------- | ------- |
-| `ariaLabel`  | `aria-label`  | If you are not providing a `label`, this should be provided instead for accessibility | `string`  | `''`    |
-| `badge`      | `badge`       | Display a dot badge                                                                   | `boolean` | `false` |
-| `badgeClass` | `badge-class` | Additional classes for the badge                                                      | `string`  | `''`    |
-| `icon`       | `icon`        | Class name of icon to display                                                         | `string`  | `''`    |
-| `label`      | `label`       | Label text to display                                                                 | `string`  | `''`    |
-| `selected`   | `selected`    | Only set this if you are not using the `mx-tabs` `value` prop                         | `boolean` | `false` |
+| Property     | Attribute     | Description                                                                                | Type      | Default |
+| ------------ | ------------- | ------------------------------------------------------------------------------------------ | --------- | ------- |
+| `ariaLabel`  | `aria-label`  | If you are not providing a `label`, this should be provided instead for accessibility      | `string`  | `''`    |
+| `badge`      | `badge`       | Display a dot badge                                                                        | `boolean` | `false` |
+| `badgeClass` | `badge-class` | Additional classes for the badge                                                           | `string`  | `''`    |
+| `icon`       | `icon`        | Class name of icon to display                                                              | `string`  | `''`    |
+| `label`      | `label`       | Label text to display                                                                      | `string`  | `''`    |
+| `selected`   | `selected`    | Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop | `boolean` | `false` |
 
 ### Tab Content Properties
 
@@ -115,11 +138,7 @@ for the `value` prop (a variable containing the active tab index), and each `mx-
 export default {
   data() {
     return {
-      activeTabA: 0,
-      activeTabB: 0,
-      activeTabC: 'favorites',
-      activeTabD: 'search',
-      activeTabE: 1,
+      activeTab: 1
     }
   }
 }
