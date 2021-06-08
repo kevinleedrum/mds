@@ -1,4 +1,4 @@
-import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-de894109.js';
+import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-f1e89dca.js';
 
 function queryPrefersReducedMotion() {
   const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');

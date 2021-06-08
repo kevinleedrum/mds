@@ -25,6 +25,7 @@
 @import './mx-radio/index.scss';
 @import './mx-switch/index.scss';
 @import './mx-tab/index.scss';
+@import './mx-select/index.scss';
 @import './ripple.scss';
 
 /***************************

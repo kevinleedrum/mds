@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host } from './index-de894109.js';
+import { r as registerInstance, h, H as Host } from './index-f1e89dca.js';
 
 const MxSwitch = class {
   constructor(hostRef) {
