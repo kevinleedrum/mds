@@ -1,4 +1,4 @@
-import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-de894109.js';
+import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-f1e89dca.js';
 
 const MxToggleButtonGroup = class {
   constructor(hostRef) {
