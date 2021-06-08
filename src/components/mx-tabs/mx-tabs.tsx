@@ -27,7 +27,10 @@ export class MxTabs {
 
   connectedCallback() {
     mqlListener = this.updateRenderAsSelect.bind(this);
-    mql.addListener(mqlListener); // addListener is deprecated, but is more widely supported
+    // Test runner does not implement MediaQueryList.addListener
+    if ('addListener' in mql) {
+      mql.addListener(mqlListener); // addListener is deprecated, but is more widely supported
+    }
     this.updateRenderAsSelect();
   }
 
@@ -93,11 +96,13 @@ export class MxTabs {
             ))}
           </mx-select>
         ) : (
-          <div class={this.gridClass}>
-            {this.tabs.map((tab: IMxTabProps, index: number) => (
-              <mx-tab selected={this.value === index} {...tab} />
-            ))}
-          </div>
+          this.tabs && (
+            <div class={this.gridClass}>
+              {this.tabs.map((tab: IMxTabProps, index: number) => (
+                <mx-tab selected={this.value === index} {...tab} />
+              ))}
+            </div>
+          )
         )}
       </Host>
     );

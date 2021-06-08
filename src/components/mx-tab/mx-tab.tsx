@@ -2,12 +2,12 @@ import { Component, Host, h, Prop } from '@stencil/core';
 import ripple from '../ripple';
 
 export interface IMxTabProps {
-  label: string;
-  ariaLabel: string;
-  icon: string;
-  selected: boolean;
-  badge: boolean;
-  badgeClass: string;
+  label?: string;
+  ariaLabel?: string;
+  icon?: string;
+  selected?: boolean;
+  badge?: boolean;
+  badgeClass?: string;
 }
 
 @Component({
