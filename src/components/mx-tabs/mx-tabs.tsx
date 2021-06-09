@@ -27,10 +27,7 @@ export class MxTabs {
 
   connectedCallback() {
     mqlListener = this.updateRenderAsSelect.bind(this);
-    // Test runner does not implement MediaQueryList.addListener
-    if ('addListener' in mql) {
-      mql.addListener(mqlListener); // addListener is deprecated, but is more widely supported
-    }
+    mql.addListener(mqlListener); // addListener is deprecated, but is more widely supported
     this.updateRenderAsSelect();
   }
 
