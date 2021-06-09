@@ -1,19 +1,24 @@
 import { EventEmitter } from '../../stencil-public-runtime';
+import { IMxTabProps } from '../mx-tab/mx-tab';
 export declare class MxTabs {
   /** Stretch tabs to fill the entire width */
   fill: boolean;
-  /** The index of the selected tab (not needed if manually setting the `selected` prop on each tab) */
+  /** The index of the selected tab */
   value: number;
-  /** Emits the clicked tab's index as `Event.detail` */
+  /** An array of objects for each tab (see Tab Properties) */
+  tabs: IMxTabProps[];
+  /** When true, render the tabs as an mx-select */
+  renderAsSelect: boolean;
+  /** Emits the newly selected tab's index as `Event.detail` */
   mxChange: EventEmitter<number>;
   element: HTMLMxTabsElement;
-  onKeyUp(e: KeyboardEvent): void;
-  onMouseUp(e: MouseEvent): void;
-  onClick(e: MouseEvent): void;
-  onValueChange(): void;
   connectedCallback(): void;
-  setSelectedTab(): void;
-  animateIndicator(e: MouseEvent | KeyboardEvent, newSelectedTabIndex?: number): void;
+  animateIndicator(tabIndex: any, previousTabIndex: any): void;
+  onTabsPropChange(tabs: any, previousTabs: any): void;
+  disconnectedCallback(): void;
+  onClick(e: MouseEvent): void;
+  onInput(e: InputEvent): void;
+  updateRenderAsSelect(): void;
   get gridClass(): string;
   render(): any;
 }
