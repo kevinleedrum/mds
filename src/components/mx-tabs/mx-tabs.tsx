@@ -56,6 +56,11 @@ export class MxTabs {
     }, 0);
   }
 
+  @Watch('tabs')
+  onTabsPropChange(tabs, previousTabs) {
+    if (previousTabs && tabs.length !== previousTabs.length) this.updateRenderAsSelect();
+  }
+
   disconnectedCallback() {
     mql.removeListener(mqlListener); // removeListener is deprecated, but is more widely supported
   }
@@ -77,7 +82,7 @@ export class MxTabs {
 
   updateRenderAsSelect() {
     const isMobileScreenSize = !mql || mql.matches;
-    this.renderAsSelect = isMobileScreenSize && this.tabs.length > 2;
+    this.renderAsSelect = isMobileScreenSize && this.tabs && this.tabs.length > 2;
   }
 
   get gridClass() {

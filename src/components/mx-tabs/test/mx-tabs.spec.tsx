@@ -1,3 +1,4 @@
+import '../../../utils/matchMedia.mock';
 import { newSpecPage } from '@stencil/core/testing';
 import { MxTabs } from '../mx-tabs';
 import { MxTab } from '../../mx-tab/mx-tab';
@@ -42,5 +43,14 @@ describe('mx-tabs (horizontal stack)', () => {
     root.addEventListener('mxChange', (e: CustomEvent) => (emittedValue = e.detail));
     tabs[1].click();
     expect(emittedValue).toBe(1);
+  });
+
+  it('uses an mx-select when screen width <= 720 and >2 tabs', async () => {
+    root.tabs = [{ label: 'Home' }, { label: 'Favorites' }, { label: 'Search' }];
+    await page.waitForChanges();
+    const select = root.querySelector('mx-select');
+    const options = root.querySelectorAll('option');
+    expect(select).not.toBeNull();
+    expect(options.length).toBe(3);
   });
 });
