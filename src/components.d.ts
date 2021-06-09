@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
+import { IMxTabProps } from "./components/mx-tab/mx-tab";
 export namespace Components {
     interface MxBadge {
         /**
@@ -158,7 +159,7 @@ export namespace Components {
          */
         "label": string;
         /**
-          * Only set this if you are not using the `mx-tabs` `value` prop
+          * Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop
          */
         "selected": boolean;
     }
@@ -178,7 +179,11 @@ export namespace Components {
          */
         "fill": boolean;
         /**
-          * The index of the selected tab (not needed if manually setting the `selected` prop on each tab)
+          * An array of objects for each tab (see Tab Properties)
+         */
+        "tabs": IMxTabProps[];
+        /**
+          * The index of the selected tab
          */
         "value": number;
     }
@@ -435,7 +440,7 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Only set this if you are not using the `mx-tabs` `value` prop
+          * Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop
          */
         "selected"?: boolean;
     }
@@ -455,11 +460,15 @@ declare namespace LocalJSX {
          */
         "fill"?: boolean;
         /**
-          * Emits the clicked tab's index as `Event.detail`
+          * Emits the newly selected tab's index as `Event.detail`
          */
         "onMxChange"?: (event: CustomEvent<number>) => void;
         /**
-          * The index of the selected tab (not needed if manually setting the `selected` prop on each tab)
+          * An array of objects for each tab (see Tab Properties)
+         */
+        "tabs": IMxTabProps[];
+        /**
+          * The index of the selected tab
          */
         "value"?: number;
     }

@@ -24,6 +24,19 @@
 | `value`         | `value`          |                                           | `any`     | `undefined` |
 
 
+## Dependencies
+
+### Used by
+
+ - [mx-tabs](../mx-tabs)
+
+### Graph
+```mermaid
+graph TD;
+  mx-tabs --> mx-select
+  style mx-select fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

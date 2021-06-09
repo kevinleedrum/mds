@@ -8,12 +8,17 @@ export class MxTab {
     this.ariaLabel = '';
     /** Class name of icon to display */
     this.icon = '';
-    /** Only set this if you are not using the `mx-tabs` `value` prop */
+    /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
     this.selected = false;
     /** Display a dot badge */
     this.badge = false;
     /** Additional classes for the badge */
     this.badgeClass = '';
+  }
+  componentDidLoad() {
+    if (!this.label && !this.ariaLabel) {
+      throw new Error('Please provide either a label or an aria-label for each tab.');
+    }
   }
   onClick(e) {
     ripple(e, this.btnElem);
@@ -109,7 +114,7 @@ export class MxTab {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": "Only set this if you are not using the `mx-tabs` `value` prop"
+        "text": "Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop"
       },
       "attribute": "selected",
       "reflect": true,
