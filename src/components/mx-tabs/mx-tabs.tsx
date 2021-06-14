@@ -92,7 +92,7 @@ export class MxTabs {
     return (
       <Host class="mx-tabs relative block" role="tablist">
         {this.renderAsSelect ? (
-          <mx-select value={this.value} onInput={this.onInput.bind(this)}>
+          <mx-select value={this.value} onInput={this.onInput.bind(this)} dense>
             {this.tabs.map((tab: IMxTabProps, index: number) => (
               <option value={index}>{tab.label || tab.ariaLabel}</option>
             ))}
