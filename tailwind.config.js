@@ -68,6 +68,7 @@ const config = {
       128: '8rem',
       144: '9rem',
       160: '10rem',
+      164: '10.25rem',
       176: '11rem',
       192: '12rem',
       208: '13rem',
@@ -95,6 +96,9 @@ const config = {
         'primary': 'var(--mds-border-primary)',
         'primary-inverted': 'var(--mds-border-primary-inverted)',
       },
+      backgroundImage: {
+        pattern: 'var(--mds-bg-pattern)',
+      },
       container: {
         center: true,
       },
@@ -102,8 +106,8 @@ const config = {
         'sm': '640px',
         // => @media (min-width: 640px) { ... }
 
-        'md': '768px',
-        // => @media (min-width: 768px) { ... }
+        'md': '720px',
+        // => @media (min-width: 720px) { ... }
 
         'lg': '1024px',
         // => @media (min-width: 1024px) { ... }
