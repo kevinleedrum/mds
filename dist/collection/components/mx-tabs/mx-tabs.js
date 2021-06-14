@@ -1,20 +1,16 @@
 import { Component, Host, h, Prop, Element, Watch, Event, Listen, State } from '@stencil/core';
 import { queryPrefersReducedMotion } from '../../utils/utils';
-const mql = window.matchMedia('(max-width: 720px)');
-let mqlListener;
+import { MinWidths, minWidthSync } from '../../utils/minWidthSync';
 export class MxTabs {
   constructor() {
     /** Stretch tabs to fill the entire width */
     this.fill = false;
     /** The index of the selected tab */
     this.value = null;
-    /** When true, render the tabs as an mx-select */
-    this.renderAsSelect = false;
+    this.minWidths = new MinWidths();
   }
   connectedCallback() {
-    mqlListener = this.updateRenderAsSelect.bind(this);
-    mql.addListener(mqlListener); // addListener is deprecated, but is more widely supported
-    this.updateRenderAsSelect();
+    minWidthSync.subscribeComponent(this);
   }
   animateIndicator(tabIndex, previousTabIndex) {
     if (queryPrefersReducedMotion())
@@ -40,12 +36,8 @@ export class MxTabs {
       indicator.style.transition = `transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)`;
     }, 0);
   }
-  onTabsPropChange(tabs, previousTabs) {
-    if (previousTabs && tabs.length !== previousTabs.length)
-      this.updateRenderAsSelect();
-  }
   disconnectedCallback() {
-    mql.removeListener(mqlListener); // removeListener is deprecated, but is more widely supported
+    minWidthSync.unsubscribeComponent(this);
   }
   // Get the clicked tab's index and emit it via the mxChange event
   onClick(e) {
@@ -61,9 +53,9 @@ export class MxTabs {
   onInput(e) {
     this.mxChange.emit(+e.target.value);
   }
-  updateRenderAsSelect() {
-    const isMobileScreenSize = !mql || mql.matches;
-    this.renderAsSelect = isMobileScreenSize && this.tabs && this.tabs.length > 2;
+  // When true, render the tabs as an mx-select
+  get renderAsSelect() {
+    return !this.minWidths.md && this.tabs.length > 2;
   }
   get gridClass() {
     let str = this.fill ? 'grid' : 'inline-grid';
@@ -133,7 +125,7 @@ export class MxTabs {
     }
   }; }
   static get states() { return {
-    "renderAsSelect": {}
+    "minWidths": {}
   }; }
   static get events() { return [{
       "method": "mxChange",
@@ -155,9 +147,6 @@ export class MxTabs {
   static get watchers() { return [{
       "propName": "value",
       "methodName": "animateIndicator"
-    }, {
-      "propName": "tabs",
-      "methodName": "onTabsPropChange"
     }]; }
   static get listeners() { return [{
       "name": "click",
