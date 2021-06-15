@@ -172,4 +172,18 @@
   --mds-text-tab-selected: #0457af;
   --mds-text-tab: #434343;
   /* #endregion tabs */
+
+  /* #region menus */
+  /* Menus */
+  --mds-bg-menu-item-active: #fff;
+  --mds-bg-menu-item-disabled: #fcfcfc;
+  --mds-bg-menu-item-focus: #d7d7d7;
+  --mds-bg-menu-item-hover: #eeeeee;
+  --mds-bg-menu-item: transparent;
+  --mds-bg-menu: #fff;
+  --mds-border-menu-hr: #c9c9c9;
+  --mds-ripple-menu-item: rgba(0, 0, 0, 0.12);
+  --mds-text-menu-item-disabled: #909090;
+  --mds-text-menu-item: #2d2d2d;
+  /* #endregion menus */
 }

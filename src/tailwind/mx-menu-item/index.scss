@@ -1,0 +1,14 @@
+.mx-menu-item button {
+  min-width: 6rem;
+  background: var(--mds-bg-menu-item);
+  color: var(--mds-text-menu-item);
+  --ripple-color: var(--mds-ripple-menu-item);
+
+  &:hover:not([aria-disabled]) {
+    background: var(--mds-bg-menu-item-hover);
+  }
+
+  &[aria-disabled] {
+    color: var(--mds-text-menu-item-disabled);
+  }
+}

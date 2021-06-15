@@ -26,6 +26,8 @@
 @import './mx-switch/index.scss';
 @import './mx-tab/index.scss';
 @import './mx-select/index.scss';
+@import './mx-menu/index.scss';
+@import './mx-menu-item/index.scss';
 @import './ripple.scss';
 
 /***************************
