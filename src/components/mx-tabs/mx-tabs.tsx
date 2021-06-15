@@ -1,9 +1,7 @@
 import { Component, Host, h, Prop, Element, Watch, Event, Listen, EventEmitter, State } from '@stencil/core';
 import { IMxTabProps } from '../mx-tab/mx-tab';
 import { queryPrefersReducedMotion } from '../../utils/utils';
-
-const mql = window.matchMedia('(max-width: 720px)');
-let mqlListener;
+import { MinWidths, minWidthSync } from '../../utils/minWidthSync';
 
 @Component({
   tag: 'mx-tabs',
@@ -17,8 +15,7 @@ export class MxTabs {
   /** An array of objects for each tab (see Tab Properties) */
   @Prop() tabs!: IMxTabProps[];
 
-  /** When true, render the tabs as an mx-select */
-  @State() renderAsSelect: boolean = false;
+  @State() minWidths = new MinWidths();
 
   /** Emits the newly selected tab's index as `Event.detail` */
   @Event() mxChange: EventEmitter<number>;
@@ -26,9 +23,7 @@ export class MxTabs {
   @Element() element: HTMLMxTabsElement;
 
   connectedCallback() {
-    mqlListener = this.updateRenderAsSelect.bind(this);
-    mql.addListener(mqlListener); // addListener is deprecated, but is more widely supported
-    this.updateRenderAsSelect();
+    minWidthSync.subscribeComponent(this);
   }
 
   @Watch('value')
@@ -53,13 +48,8 @@ export class MxTabs {
     }, 0);
   }
 
-  @Watch('tabs')
-  onTabsPropChange(tabs, previousTabs) {
-    if (previousTabs && tabs.length !== previousTabs.length) this.updateRenderAsSelect();
-  }
-
   disconnectedCallback() {
-    mql.removeListener(mqlListener); // removeListener is deprecated, but is more widely supported
+    minWidthSync.unsubscribeComponent(this);
   }
 
   // Get the clicked tab's index and emit it via the mxChange event
@@ -77,9 +67,9 @@ export class MxTabs {
     this.mxChange.emit(+(e.target as HTMLSelectElement).value);
   }
 
-  updateRenderAsSelect() {
-    const isMobileScreenSize = !mql || mql.matches;
-    this.renderAsSelect = isMobileScreenSize && this.tabs && this.tabs.length > 2;
+  // When true, render the tabs as an mx-select
+  get renderAsSelect() {
+    return !this.minWidths.md && this.tabs.length > 2;
   }
 
   get gridClass() {

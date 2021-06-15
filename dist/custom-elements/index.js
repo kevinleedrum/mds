@@ -128,9 +128,9 @@ const MxButton$1 = class extends HTMLElement {
       if (this.btnType === 'outlined')
         str += ' border';
       if (this.xl)
-        str += ' h-48 px-32 text-base';
+        str += ' h-48 px-32 text-base tracking-1-5';
       else
-        str += ' h-36 px-16 text-sm';
+        str += ' h-36 px-16 text-sm tracking tracking-1-25';
     }
     // Action Button
     if (this.btnType === 'action') {
@@ -139,7 +139,7 @@ const MxButton$1 = class extends HTMLElement {
     // Text Button
     if (this.btnType === 'text') {
       str += ' w-full h-36 px-8 py-10 text-sm rounded-lg';
-      str += this.dropdown ? ' font-normal' : ' font-semibold uppercase';
+      str += this.dropdown ? ' font-normal' : ' font-semibold uppercase tracking-1-25';
     }
     // Icon Button
     if (this.btnType === 'icon') {
@@ -422,8 +422,68 @@ function queryPrefersReducedMotion() {
   return !mediaQuery || mediaQuery.matches;
 }
 
-const mql = window.matchMedia('(max-width: 720px)');
-let mqlListener;
+const SCREENS = {
+  'sm': '640px',
+  'md': '720px',
+  'lg': '1024px',
+  'xl': '1280px',
+  '2xl': '1536px',
+};
+/** A key-value pair of breakpoint abbreviations and a boolean for whether the `min-width` meets or exceeds it.
+For example, `MinWidths.md` will be true for windows that are tablet-sized or larger */
+class MinWidths {
+  constructor() {
+    this['sm'] = false;
+    this['md'] = false;
+    this['lg'] = false;
+    this['xl'] = false;
+    this['2xl'] = false;
+  }
+}
+class MinWidthSync {
+  constructor() {
+    this.componentRefs = [];
+    this.minWidths = new MinWidths();
+    this.listeners = new Map();
+  }
+  subscribeComponent(componentRef) {
+    // If this is the first subscribed component, set up listeners.
+    if (this.componentRefs.length === 0)
+      this.addListeners();
+    this.componentRefs.push(componentRef);
+    // Immediately sync minWidths to component.
+    componentRef.minWidths = Object.assign({}, this.minWidths);
+  }
+  addListeners() {
+    Object.keys(SCREENS).forEach(screen => {
+      const mql = window.matchMedia(`(min-width: ${SCREENS[screen]})`);
+      const listener = (e) => {
+        this.minWidths[screen] = e.matches;
+        // Sync minWidths to all subscribed components
+        this.componentRefs.forEach(componentRef => {
+          componentRef.minWidths = Object.assign({}, this.minWidths);
+        });
+      };
+      listener(mql);
+      mql.addListener(listener);
+      this.listeners.set(mql, listener); // Store listener so it can be removed later
+    });
+  }
+  unsubscribeComponent(componentRef) {
+    this.componentRefs = this.componentRefs.filter(c => c !== componentRef);
+    // If no more subscribed components, remove listeners to prevent memory leaks.
+    if (this.componentRefs.length === 0)
+      this.removeListeners();
+  }
+  removeListeners() {
+    this.listeners.forEach((listener, mql) => {
+      mql.removeListener(listener);
+    });
+  }
+}
+/** Update subscribed components' `minWidths` state object based on `min-width` media query listeners. */
+const minWidthSync = new MinWidthSync();
+
 const MxTabs$1 = class extends HTMLElement {
   constructor() {
     super();
@@ -433,13 +493,10 @@ const MxTabs$1 = class extends HTMLElement {
     this.fill = false;
     /** The index of the selected tab */
     this.value = null;
-    /** When true, render the tabs as an mx-select */
-    this.renderAsSelect = false;
+    this.minWidths = new MinWidths();
   }
   connectedCallback() {
-    mqlListener = this.updateRenderAsSelect.bind(this);
-    mql.addListener(mqlListener); // addListener is deprecated, but is more widely supported
-    this.updateRenderAsSelect();
+    minWidthSync.subscribeComponent(this);
   }
   animateIndicator(tabIndex, previousTabIndex) {
     if (queryPrefersReducedMotion())
@@ -465,12 +522,8 @@ const MxTabs$1 = class extends HTMLElement {
       indicator.style.transition = `transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)`;
     }, 0);
   }
-  onTabsPropChange(tabs, previousTabs) {
-    if (previousTabs && tabs.length !== previousTabs.length)
-      this.updateRenderAsSelect();
-  }
   disconnectedCallback() {
-    mql.removeListener(mqlListener); // removeListener is deprecated, but is more widely supported
+    minWidthSync.unsubscribeComponent(this);
   }
   // Get the clicked tab's index and emit it via the mxChange event
   onClick(e) {
@@ -486,9 +539,9 @@ const MxTabs$1 = class extends HTMLElement {
   onInput(e) {
     this.mxChange.emit(+e.target.value);
   }
-  updateRenderAsSelect() {
-    const isMobileScreenSize = !mql || mql.matches;
-    this.renderAsSelect = isMobileScreenSize && this.tabs && this.tabs.length > 2;
+  // When true, render the tabs as an mx-select
+  get renderAsSelect() {
+    return !this.minWidths.md && this.tabs.length > 2;
   }
   get gridClass() {
     let str = this.fill ? 'grid' : 'inline-grid';
@@ -500,8 +553,7 @@ const MxTabs$1 = class extends HTMLElement {
   }
   get element() { return this; }
   static get watchers() { return {
-    "value": ["animateIndicator"],
-    "tabs": ["onTabsPropChange"]
+    "value": ["animateIndicator"]
   }; }
 };
 
@@ -573,7 +625,7 @@ const MxSelect = /*@__PURE__*/proxyCustomElement(MxSelect$1, [4,"mx-select",{"as
 const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxTab = /*@__PURE__*/proxyCustomElement(MxTab$1, [0,"mx-tab",{"label":[1],"ariaLabel":[1,"aria-label"],"icon":[1],"selected":[516],"badge":[4],"badgeClass":[1,"badge-class"]}]);
 const MxTabContent = /*@__PURE__*/proxyCustomElement(MxTabContent$1, [4,"mx-tab-content",{"index":[2],"value":[2]}]);
-const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [0,"mx-tabs",{"fill":[4],"value":[2],"tabs":[16],"renderAsSelect":[32]},[[0,"click","onClick"]]]);
+const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [0,"mx-tabs",{"fill":[4],"value":[2],"tabs":[16],"minWidths":[32]},[[0,"click","onClick"]]]);
 const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"value":[8]}]);
 const MxToggleButtonGroup = /*@__PURE__*/proxyCustomElement(MxToggleButtonGroup$1, [4,"mx-toggle-button-group",{"value":[1032]},[[0,"click","onToggleButtonClick"]]]);
 const defineCustomElements = (opts) => {

@@ -39,9 +39,9 @@ const MxButton = class {
       if (this.btnType === 'outlined')
         str += ' border';
       if (this.xl)
-        str += ' h-48 px-32 text-base';
+        str += ' h-48 px-32 text-base tracking-1-5';
       else
-        str += ' h-36 px-16 text-sm';
+        str += ' h-36 px-16 text-sm tracking tracking-1-25';
     }
     // Action Button
     if (this.btnType === 'action') {
@@ -50,7 +50,7 @@ const MxButton = class {
     // Text Button
     if (this.btnType === 'text') {
       str += ' w-full h-36 px-8 py-10 text-sm rounded-lg';
-      str += this.dropdown ? ' font-normal' : ' font-semibold uppercase';
+      str += this.dropdown ? ' font-normal' : ' font-semibold uppercase tracking-1-25';
     }
     // Icon Button
     if (this.btnType === 'icon') {
