@@ -1,7 +1,5 @@
 import { Component, Host, h, Prop, Element, State } from '@stencil/core';
-
-const mql = window.matchMedia('(max-width: 720px)');
-let mqlListener;
+import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 
 @Component({
   tag: 'mx-page-header',
@@ -16,7 +14,7 @@ export class MxPageHeader {
   @Prop() previousPageTitle: string = '';
   @Prop() pattern: boolean = false;
 
-  @State() isMobile: boolean = false;
+  @State() minWidths = new MinWidths();
 
   @Element() element: HTMLMxPageHeaderElement;
 
@@ -25,13 +23,11 @@ export class MxPageHeader {
   }
 
   connectedCallback() {
-    mqlListener = this.setIsMobile.bind(this);
-    mql.addListener(mqlListener); // addListener is deprecated, but is more widely supported
-    this.setIsMobile();
+    minWidthSync.subscribeComponent(this);
   }
 
-  setIsMobile() {
-    this.isMobile = !mql || mql.matches;
+  disconnectedCallback() {
+    minWidthSync.unsubscribeComponent(this);
   }
 
   get hostClass() {
@@ -61,7 +57,7 @@ export class MxPageHeader {
 
   get headingClass() {
     let str = 'my-0 pr-20 emphasis ';
-    if (this.isMobile) str += this.previousPageUrl ? 'text-h6' : 'text-h5';
+    if (!this.minWidths.md) str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else str += this.previousPageUrl ? 'text-h5' : 'text-h3';
     return str;
   }
@@ -106,7 +102,7 @@ export class MxPageHeader {
                 return (
                   <mx-button
                     {...button}
-                    xl={!this.isMobile}
+                    xl={this.minWidths.lg}
                     btn-type={btnType}
                     class={index === 2 ? ' !ml-auto md:!ml-0' : ''}
                   >
