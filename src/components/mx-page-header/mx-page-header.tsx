@@ -164,7 +164,7 @@ export class MxPageHeader {
         </slot>
         <div class="flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap">
           <h1 class={this.headingClass}>
-            <slot>Page Header</slot>
+            <slot></slot>
           </h1>
           {this.buttons.length > 0 && this.buttonsJsx}
           <slot name="buttons"></slot>
