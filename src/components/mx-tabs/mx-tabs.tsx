@@ -69,7 +69,7 @@ export class MxTabs {
 
   // When true, render the tabs as an mx-select
   get renderAsSelect() {
-    return !this.minWidths.md && this.tabs.length > 2;
+    return !this.minWidths.md && this.tabs && this.tabs.length > 2;
   }
 
   get gridClass() {
