@@ -38,10 +38,13 @@ export class MxPageHeader {
 
   updateRenderTertiaryButtonAsMenu() {
     // Only move tertiary button to menu, and only for small screens
-    if (this.minWidths.md || this.buttons.length < 3) return;
+    if (this.minWidths.md || this.buttons.length < 3) {
+      this.renderTertiaryButtonAsMenu = false;
+      return;
+    }
     if (!this.tertiaryButtonWrapper) return;
     const { left } = this.tertiaryButtonWrapper.getBoundingClientRect();
-    const buttonRight = left + this.tertiaryButtonWrapper.offsetWidth;
+    const buttonRight = Math.floor(left + this.tertiaryButtonWrapper.offsetWidth);
     const { right: containerRight } = this.buttonRow.getBoundingClientRect();
     const isOverflowing = buttonRight > containerRight;
     this.renderTertiaryButtonAsMenu = isOverflowing;
