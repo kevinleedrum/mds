@@ -1,13 +1,18 @@
 import { Component, Host, h, Prop, Element, State } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
+import { ResizeObserver } from '@juggle/resize-observer';
 
 @Component({
   tag: 'mx-page-header',
   shadow: false,
 })
 export class MxPageHeader {
-  tabSlot: HTMLElement;
+  buttonRow: HTMLElement;
   hasTabs: boolean = false;
+  menuButton: HTMLMxButtonElement;
+  resizeObserver: ResizeObserver;
+  tabSlot: HTMLElement;
+  tertiaryButtonWrapper: HTMLElement;
 
   @Prop() buttons: any[] = [];
   @Prop() previousPageUrl: string = '';
@@ -15,6 +20,7 @@ export class MxPageHeader {
   @Prop() pattern: boolean = false;
 
   @State() minWidths = new MinWidths();
+  @State() renderTertiaryButtonAsMenu: boolean = false;
 
   @Element() element: HTMLMxPageHeaderElement;
 
@@ -28,6 +34,24 @@ export class MxPageHeader {
 
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+  }
+
+  updateRenderTertiaryButtonAsMenu() {
+    // Only move tertiary button to menu, and only for small screens
+    if (this.minWidths.md || this.buttons.length < 3) return;
+    if (!this.tertiaryButtonWrapper) return;
+    const { left } = this.tertiaryButtonWrapper.getBoundingClientRect();
+    const buttonRight = left + this.tertiaryButtonWrapper.offsetWidth;
+    const { right: containerRight } = this.buttonRow.getBoundingClientRect();
+    const isOverflowing = buttonRight > containerRight;
+    this.renderTertiaryButtonAsMenu = isOverflowing;
+  }
+
+  componentDidLoad() {
+    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
+    this.resizeObserver.observe(this.element);
+    // HACK: Elements are not fully rendered after loading, so we wait 100ms.
+    setTimeout(() => this.updateRenderTertiaryButtonAsMenu(), 100);
   }
 
   get hostClass() {
@@ -45,6 +69,67 @@ export class MxPageHeader {
     if (!this.minWidths.md) str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else str += this.previousPageUrl ? 'text-h5' : 'text-h3';
     return str;
+  }
+
+  get buttonsJsx() {
+    const dotsSvg = (
+      <svg width="4" height="20" viewBox="0 0 4 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M2 12C3.10457 12 4 11.1046 4 10C4 8.89543 3.10457 8 2 8C0.89543 8 0 8.89543 0 10C0 11.1046 0.89543 12 2 12Z"
+          fill="currentColor"
+        />
+        <path
+          d="M2 4C3.10457 4 4 3.10457 4 2C4 0.89543 3.10457 0 2 0C0.89543 0 0 0.89543 0 2C0 3.10457 0.89543 4 2 4Z"
+          fill="currentColor"
+        />
+        <path
+          d="M2 20C3.10457 20 4 19.1046 4 18C4 16.8954 3.10457 16 2 16C0.89543 16 0 16.8954 0 18C0 19.1046 0.89543 20 2 20Z"
+          fill="currentColor"
+        />
+      </svg>
+    );
+
+    return (
+      <div
+        ref={el => (this.buttonRow = el)}
+        class="flex space-x-8 md:space-x-24 md:justify-end py-1 md:flex-row-reverse md:space-x-reverse items-center"
+      >
+        {this.buttons.map((button, index) => {
+          // If not specified, set btnType automatically for primary, secondary, and tertiary buttons
+          let { btnType } = button;
+          if (!btnType) btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
+          const isTertiary = index === 2;
+          return (
+            <div
+              ref={el => isTertiary && (this.tertiaryButtonWrapper = el)}
+              class={isTertiary ? 'relative !ml-auto md:!ml-0' : ''}
+            >
+              {/* Tertiary menu (shown when the tertiary button does not fit in the viewport) */}
+              {isTertiary && this.renderTertiaryButtonAsMenu && (
+                <div class="absolute !ml-auto -top-6">
+                  <mx-button ref={el => (this.menuButton = el)} btn-type="icon">
+                    {dotsSvg()}
+                  </mx-button>
+                  {/* <mx-menu anchor-el={this.menuButton}>
+                    <mx-menu-item {...button}>{button.label}</mx-menu-item>
+                  </mx-menu> */}
+                </div>
+              )}
+              {/* The tertiary button is always rendered so we always know when it is overflowing the viewport. */}
+              <mx-button
+                {...button}
+                xl={this.minWidths.lg}
+                btn-type={btnType}
+                aria-hidden={isTertiary && this.renderTertiaryButtonAsMenu}
+                class={isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : ''}
+              >
+                {button.label}
+              </mx-button>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 
   render() {
@@ -78,25 +163,7 @@ export class MxPageHeader {
           <h1 class={this.headingClass}>
             <slot>Page Header</slot>
           </h1>
-          {this.buttons.length > 0 && (
-            <div class="flex space-x-8 md:space-x-24 md:justify-end py-1 md:flex-row-reverse md:space-x-reverse items-center flex-wrap">
-              {this.buttons.map((button, index) => {
-                let { btnType } = button;
-                // If not specified, set btnType automatically for primary, secondary, and tertiary buttons
-                if (!btnType) btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
-                return (
-                  <mx-button
-                    {...button}
-                    xl={this.minWidths.lg}
-                    btn-type={btnType}
-                    class={index === 2 ? ' !ml-auto md:!ml-0' : ''}
-                  >
-                    {button.label}
-                  </mx-button>
-                );
-              })}
-            </div>
-          )}
+          {this.buttons.length > 0 && this.buttonsJsx}
           <slot name="buttons"></slot>
         </div>
         <slot name="tabs"></slot>
