@@ -4,6 +4,8 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MxPageHeader } from '../mx-page-header';
 import { MxButton } from '../../mx-button/mx-button';
 
+jest.useFakeTimers(); // Prevent setTimeout from blowing up tests
+
 describe('mx-page-header', () => {
   let page;
   let root: HTMLMxPageHeaderElement;
