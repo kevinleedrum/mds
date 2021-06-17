@@ -94,11 +94,9 @@ export class MxButton {
     const buttonContent = (
       <div class="flex justify-center items-center content-center relative">
         {this.icon && <i class={(this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon}></i>}
-        {this.btnType !== 'icon' && (
-          <span class="slot-content">
-            <slot />
-          </span>
-        )}
+        <span class="slot-content">
+          <slot />
+        </span>
         {this.dropdown && this.btnType === 'text' && <span class="separator inline-block w-1 ml-4 -my-4 h-24"></span>}
         {this.dropdown && <span class={this.chevronClass}>{chevronIcon}</span>}
       </div>
