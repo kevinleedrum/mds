@@ -115,6 +115,9 @@ const config = {
       backgroundImage: {
         pattern: 'var(--mds-bg-pattern)',
       },
+      minHeight: theme => ({
+        ...theme('spacing'), // Extend to include spacing values (e.g. min-h-128)
+      }),
       container: {
         center: true,
       },
