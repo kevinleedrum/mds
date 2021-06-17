@@ -108,7 +108,7 @@ export class MxPageHeader {
               {isTertiary && this.renderTertiaryButtonAsMenu && (
                 <div class="absolute !ml-auto -top-6">
                   <mx-button ref={el => (this.menuButton = el)} btn-type="icon">
-                    {dotsSvg()}
+                    {dotsSvg}
                   </mx-button>
                   {/* <mx-menu anchor-el={this.menuButton}>
                     <mx-menu-item {...button}>{button.label}</mx-menu-item>
