@@ -114,7 +114,7 @@
 
 Icon buttons are round buttons that only contain an icon. The icon can be set three different ways:
 
-- &bull; the class name of an icon from the app's icon font library (i.e. [Phosphor Icons](/getting-started.html#phosphor-icons)),
+- &bull; the class name of an icon in the icon font library (i.e. [Phosphor Icons](/getting-started.html#phosphor-icons)) via the `icon` prop,
 - &bull; an SVG passed into the default slot,
 - &bull; or the built-in dropdown icon via the `dropdown` prop.
 
