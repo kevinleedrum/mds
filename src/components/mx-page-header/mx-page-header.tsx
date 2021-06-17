@@ -31,27 +31,12 @@ export class MxPageHeader {
   }
 
   get hostClass() {
-    let str = 'mx-page-header flex flex-col px-24 lg:px-72 max-h-full';
+    let str = 'mx-page-header flex flex-col px-24 lg:px-72';
     if (this.pattern) str += ' bg-pattern';
     if (this.hasTabs) str += ' pb-12 md:pb-0';
-    return str;
-  }
-
-  get headingRowClass() {
-    let str =
-      'flex flex-col space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap';
-    // 176 -> 164
-    if (this.buttons.length && this.hasTabs && this.previousPageUrl) str += ' py-10 md:py-14 md:my-1';
-    // 176 -> 164
-    else if (this.buttons.length && this.hasTabs) str += ' py-0 md:py-12 my-18';
-    // 128
-    else if (this.previousPageUrl && this.buttons.length) str += ' py-10 md:py-20 md:my-1';
-    // 80 -> 128
-    else if (this.previousPageUrl) str += ' py-12 md:py-16 md:my-10';
-    // 128
-    else if (this.buttons.length) str += ' py-18 md:py-36';
-    // 80 -> 128
-    else str += ' py-20 md:py-36';
+    if (this.buttons.length && this.hasTabs) str += ' min-h-176 md:min-h-164';
+    else if (this.buttons.length) str += ' min-h-128';
+    else str += ' min-h-80 md:min-h-128';
     return str;
   }
 
@@ -89,7 +74,7 @@ export class MxPageHeader {
             </a>
           )}
         </slot>
-        <div class={this.headingRowClass}>
+        <div class="flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap">
           <h1 class={this.headingClass}>
             <slot>Page Header</slot>
           </h1>
