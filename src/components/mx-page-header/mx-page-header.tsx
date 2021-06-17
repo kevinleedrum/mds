@@ -34,6 +34,7 @@ export class MxPageHeader {
 
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+    this.resizeObserver.disconnect();
   }
 
   updateRenderTertiaryButtonAsMenu() {
@@ -53,8 +54,11 @@ export class MxPageHeader {
   componentDidLoad() {
     this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
     this.resizeObserver.observe(this.element);
-    // HACK: Elements are not fully rendered after loading, so we wait 100ms.
-    setTimeout(() => this.updateRenderTertiaryButtonAsMenu(), 100);
+    if (!process.env.JEST_WORKER_ID) {
+      // HACK: We wait 100ms for layout shifts in order to detect overflow correctly.
+      // This line is not run in jest because it crashes unit testing for some reason.
+      setTimeout(this.updateRenderTertiaryButtonAsMenu.bind(this), 100);
+    }
   }
 
   get hostClass() {
