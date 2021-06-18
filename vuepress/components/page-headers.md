@@ -69,6 +69,7 @@ On smaller screens, the size of the text and buttons will be reduced. Additional
       Page Header
       <mx-tabs
         slot="tabs"
+        fill
         :tabs.prop="[
           { label: 'Tab 1' },
           { label: 'Tab 2' },
