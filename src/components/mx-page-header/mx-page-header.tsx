@@ -105,7 +105,7 @@ export class MxPageHeader {
     return (
       <div
         ref={el => (this.buttonRow = el)}
-        class="flex space-x-8 md:space-x-24 md:justify-end py-1 md:flex-row-reverse md:space-x-reverse items-center"
+        class="flex py-1 space-x-8 md:space-x-24 md:justify-end md:flex-row-reverse md:space-x-reverse items-center max-w-full"
       >
         {this.buttons.map((button, index) => {
           // If not specified, set btnType automatically for primary, secondary, and tertiary buttons
