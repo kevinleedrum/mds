@@ -58,7 +58,7 @@ export class MxSelect {
   }
 
   get selectWrapperClass() {
-    let str = 'mx-select-wrapper flex items-center relative h-48 border rounded-lg';
+    let str = 'mx-select-wrapper flex items-center relative border rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     if (this.elevated) str += ' elevated shadow-1';
     if (this.flat) str += ' flat';

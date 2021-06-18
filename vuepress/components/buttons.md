@@ -112,6 +112,12 @@
 
 ## Icon Buttons
 
+Icon buttons are round buttons that only contain an icon. The icon can be set three different ways:
+
+- &bull; the class name of an icon in the icon font library (i.e. [Phosphor Icons](/getting-started.html#phosphor-icons)) via the `icon` prop,
+- &bull; an SVG passed into the default slot,
+- &bull; or the built-in dropdown icon via the `dropdown` prop.
+
 <!-- #region icon-buttons -->
 <section class="mds">
   <div class="mt-5">
@@ -120,6 +126,9 @@
         <mx-button btn-type="icon" icon="ph-thumbs-up"></mx-button>
         <mx-button btn-type="icon" icon="ph-heart"></mx-button>
         <mx-button btn-type="icon" icon="ph-x"></mx-button>
+        <mx-button btn-type="icon">
+          <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1 7l4.5 4.5L14 3" stroke="currentColor" stroke-linecap="square"></path></svg>
+        </mx-button>
         <mx-button btn-type="icon" dropdown></mx-button>
       </div>
     </div>
@@ -129,9 +138,13 @@
         <mx-button btn-type="icon" icon="ph-thumbs-up" disabled></mx-button>
         <mx-button btn-type="icon" icon="ph-heart" disabled></mx-button>
         <mx-button btn-type="icon" icon="ph-x" disabled></mx-button>
+        <mx-button btn-type="icon" disabled>
+          <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1 7l4.5 4.5L14 3" stroke="currentColor" stroke-linecap="square"></path></svg>
+        </mx-button>
         <mx-button btn-type="icon" dropdown disabled></mx-button>
       </div>
     </div>
+
   </div>
 </section>
 <!-- #endregion icon-buttons -->
