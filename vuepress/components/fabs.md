@@ -32,7 +32,7 @@ Floating Action Buttons represent primary, or occasionally secondary, actions on
 
 | Property    | Attribute    | Description                 | Type      | Default     |
 | ----------- | ------------ | --------------------------- | --------- | ----------- |
-| `ariaLabel` | `aria-label` |                             | `string`  | `''`        |
+| `ariaLabel` | `aria-label` |                             | `string`  | `undefined` |
 | `icon`      | `icon`       | Class name of icon          | `string`  | `undefined` |
 | `secondary` | `secondary`  | Style as a secondary action | `boolean` | `false`     |
 | `value`     | `value`      |                             | `string`  | `undefined` |

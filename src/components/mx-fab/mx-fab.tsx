@@ -13,7 +13,7 @@ export class MxFab {
   @Prop() icon: string;
   /** Style as a secondary action */
   @Prop() secondary: boolean = false;
-  @Prop() ariaLabel: string = '';
+  @Prop() ariaLabel: string;
   @Prop() value: string;
 
   @State() minWidths = new MinWidths();

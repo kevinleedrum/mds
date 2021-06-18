@@ -17,6 +17,8 @@ export class MxButton {
   @Prop() value: string;
   @Prop() disabled: boolean = false;
   @Prop() xl: boolean = false;
+  /** An aria-label is highly recommended for icon buttons */
+  @Prop() ariaLabel: string;
   /** Create button as link */
   @Prop() href: string;
   /** Only for link buttons */
@@ -124,6 +126,7 @@ export class MxButton {
             ref={el => (this.btnElem = el as HTMLButtonElement)}
             onClick={this.onClick.bind(this)}
             aria-disabled={this.disabled}
+            aria-label={this.ariaLabel}
           >
             {buttonContent}
           </button>
