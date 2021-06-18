@@ -38,7 +38,7 @@ export class MxFab {
   }
 
   get buttonClass() {
-    let str = 'flex  min-w-full items-center justify-center rounded-full shadow-4 relative overflow-hidden';
+    let str = 'flex min-w-full items-center justify-center rounded-full shadow-4 relative overflow-hidden';
     if (this.secondary) str += ' secondary';
     if (this.isExtended) str += ' h-48 py-16 px-24';
     else str += this.minWidths.md ? ' h-56' : ' h-40';
