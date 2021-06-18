@@ -69,8 +69,8 @@ describe('mx-badge (anchored, icon, bottom left, snug)', () => {
   });
 
   it('is positioned snugly in the bottom left corner', async () => {
-    expect(badge.getAttribute('class')).toContain('bottom-10');
-    expect(badge.getAttribute('class')).toContain('left-10');
+    expect(badge.getAttribute('class')).toContain('bottom-0');
+    expect(badge.getAttribute('class')).toContain('left-0');
   });
 
   it('is fully rounded', async () => {
@@ -92,8 +92,8 @@ describe('mx-badge (anchored, dot, tight)', () => {
   });
 
   it('is positioned tightly in the top right corner', async () => {
-    expect(badge.getAttribute('class')).toContain('top-4');
-    expect(badge.getAttribute('class')).toContain('right-4');
+    expect(badge.getAttribute('class')).toContain('top-0');
+    expect(badge.getAttribute('class')).toContain('right-0');
   });
 
   it('is a 12px circle', async () => {
