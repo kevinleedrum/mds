@@ -19,6 +19,19 @@
 | `xl`       | `xl`       |                                             | `boolean`                                                   | `false`       |
 
 
+## Dependencies
+
+### Used by
+
+ - [mx-page-header](../mx-page-header)
+
+### Graph
+```mermaid
+graph TD;
+  mx-page-header --> mx-button
+  style mx-button fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

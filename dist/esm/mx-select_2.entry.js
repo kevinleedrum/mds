@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host, g as getElement } from './index-5775867f.js';
+import { r as registerInstance, h, H as Host, g as getElement } from './index-51a85981.js';
 import { r as ripple } from './ripple-a99cb795.js';
 
 const MxSelect = class {
@@ -35,7 +35,7 @@ const MxSelect = class {
     return this.value !== null && this.value !== '' && this.value !== undefined;
   }
   get selectWrapperClass() {
-    let str = 'mx-select-wrapper flex items-center relative h-48 border rounded-lg';
+    let str = 'mx-select-wrapper flex items-center relative border rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     if (this.elevated)
       str += ' elevated shadow-1';
@@ -120,8 +120,11 @@ const MxTab = class {
   get badgeEl() {
     return h("mx-badge", { dot: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
   }
+  get isTextOnly() {
+    return this.label && !this.icon;
+  }
   render() {
-    return (h(Host, { class: this.tabClass }, h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected, "aria-label": this.label || this.ariaLabel, class: "relative overflow-hidden w-full h-full border border-transparent", onClick: this.onClick.bind(this) }, h("div", { class: "relative flex flex-col items-center justify-center space-y-6 pointer-events-none" }, h("span", { class: "flex items-center space-x-6" }, !this.label && this.badge && this.badgeEl, this.icon && h("i", { class: this.icon + ' text-xl' + (!this.label ? ' icon-only' : '') })), this.label && (h("span", { class: "flex items-center uppercase text-sm font-semibold leading-4 tracking-1-25 space-x-6" }, this.badge && this.badgeEl, h("span", null, this.label))))), h("span", { class: 'active-tab-indicator absolute bottom-0 left-0 w-full h-2 pointer-events-none' +
+    return (h(Host, { class: this.tabClass }, h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected, "aria-label": this.label || this.ariaLabel, class: "relative overflow-hidden w-full h-full border border-transparent", onClick: this.onClick.bind(this) }, h("div", { class: "relative flex flex-col items-center justify-center space-y-6 pointer-events-none" }, !this.isTextOnly && (h("span", { class: "flex items-center space-x-6" }, !this.label && this.badge && this.badgeEl, this.icon && h("i", { class: this.icon + ' text-xl' + (!this.label ? ' icon-only' : '') }))), this.label && (h("span", { class: "flex items-center uppercase text-sm font-semibold leading-4 tracking-1-25 space-x-6" }, this.badge && this.badgeEl, h("span", null, this.label))))), h("span", { class: 'active-tab-indicator absolute bottom-0 left-0 w-full h-2 pointer-events-none' +
         (this.selected ? '' : ' opacity-0') })));
   }
 };
