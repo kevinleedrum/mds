@@ -3,8 +3,8 @@
 The Page Header component displays the heading text of a page, and may also contain:
 
 - &bull; a link to the previous page,
-- &bull; primary, secondary, and tertiary buttons,
-- &bull; and tabs.
+- &bull; primary, secondary, and tertiary [buttons](/components/buttons.html),
+- &bull; and [tabs](/components/tabs.html).
 
 On smaller screens, the size of the text and buttons will be reduced. Additionally, if there is not enough room on small screens for the tertiary button, it will be converted into a small menu button.
 
@@ -91,6 +91,10 @@ On smaller screens, the size of the text and buttons will be reduced. Additional
 | `pattern`           | `pattern`             | When set to true, the Page Header will use the themed background pattern.                              | `boolean`             | `false`  |
 | `previousPageTitle` | `previous-page-title` | The text to display for the previous page link                                                         | `string`              | `'Back'` |
 | `previousPageUrl`   | `previous-page-url`   | The URL for the previous page link                                                                     | `string`              | `''`     |
+
+### CSS Variables
+
+<<< @/src/tailwind/variables/index.scss#page-headers
 
 <script>
 export default {
