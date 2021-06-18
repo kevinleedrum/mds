@@ -1,6 +1,11 @@
 import { Component, Host, h, Prop, Element, State } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { ResizeObserver } from '@juggle/resize-observer';
+import { IMxButtonProps } from '../mx-button/mx-button';
+
+export interface IPageHeaderButton extends IMxButtonProps {
+  label: string;
+}
 
 @Component({
   tag: 'mx-page-header',
@@ -14,9 +19,13 @@ export class MxPageHeader {
   tabSlot: HTMLElement;
   tertiaryButtonWrapper: HTMLElement;
 
-  @Prop() buttons: any[] = [];
+  /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
+  @Prop() buttons: IPageHeaderButton[] = [];
+  /** The URL for the previous page link */
   @Prop() previousPageUrl: string = '';
-  @Prop() previousPageTitle: string = '';
+  /** The text to display for the previous page link */
+  @Prop() previousPageTitle: string = 'Back';
+  /** When set to true, the Page Header will use the themed background pattern. */
   @Prop() pattern: boolean = false;
 
   @State() minWidths = new MinWidths();
@@ -159,7 +168,7 @@ export class MxPageHeader {
           {this.previousPageUrl && (
             <a href={this.previousPageUrl} class="block pt-16 md:pt-20 uppercase text-xs font-semibold tracking-1-25">
               {arrowSvg}
-              {this.previousPageTitle || 'Back'}
+              {this.previousPageTitle}
             </a>
           )}
         </slot>

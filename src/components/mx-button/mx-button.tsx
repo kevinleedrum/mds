@@ -4,11 +4,23 @@ import ripple from '../ripple';
 export type BtnType = 'contained' | 'outlined' | 'action' | 'text' | 'icon';
 export type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
 
+export interface IMxButtonProps {
+  btnType?: BtnType;
+  type?: ButtonTypeAttribute;
+  value?: string;
+  disabled?: boolean;
+  xl?: boolean;
+  href?: string;
+  target?: string;
+  full?: boolean;
+  dropdown?: boolean;
+  icon?: string;
+}
 @Component({
   tag: 'mx-button',
   shadow: false,
 })
-export class MxButton {
+export class MxButton implements IMxButtonProps {
   btnElem!: HTMLButtonElement;
   anchorElem!: HTMLAnchorElement;
 
