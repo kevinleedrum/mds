@@ -21,6 +21,7 @@
 @import './mx-input/index.scss';
 @import './mx-button/index.scss';
 @import './mx-toggle-button/index.scss';
+@import './mx-fab/index.scss';
 @import './mx-checkbox/index.scss';
 @import './mx-radio/index.scss';
 @import './mx-switch/index.scss';
