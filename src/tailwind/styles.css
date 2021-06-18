@@ -26,6 +26,7 @@
 @import './mx-switch/index.scss';
 @import './mx-tab/index.scss';
 @import './mx-select/index.scss';
+@import './mx-page-header/index.scss';
 @import './ripple.scss';
 
 /***************************
@@ -41,134 +42,144 @@
     outline: none;
   }
 
+  a {
+    color: var(--mds-text-link);
+  }
+
   /***************************
   * Typography
   ***************************/
-
-  h1.xl {
-    font-size: 6rem;
-    letter-spacing: -1.5px;
-    font-weight: bold;
-    line-height: 7.5rem;
-    @apply mb-24;
+  @layer components {
+    .text-h1 {
+      font-size: 3.75rem;
+      letter-spacing: -0.5px;
+      font-weight: bold;
+      line-height: 4.5rem;
+      @apply mb-24;
+    }
+    .text-h1.xl {
+      font-size: 6rem;
+      letter-spacing: -1.5px;
+      font-weight: bold;
+      line-height: 7.5rem;
+      @apply mb-24;
+    }
+    .text-h2 {
+      font-size: 3rem;
+      line-height: 64px;
+      font-weight: 600;
+      line-height: 4rem;
+      @apply my-24;
+    }
+    .text-h3 {
+      font-size: 2.5rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: normal;
+      @apply my-24;
+    }
+    .text-h3.emphasis {
+      font-size: 2.5rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: bold;
+      @apply my-24;
+    }
+    .text-h4 {
+      font-size: 2.25rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: normal;
+      @apply my-24;
+    }
+    .text-h4.emphasis {
+      font-size: 2.25rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: 600;
+      @apply my-24;
+    }
+    .text-h5 {
+      font-size: 1.5rem;
+      line-height: 2.5rem;
+      font-weight: normal;
+      @apply my-24;
+    }
+    .text-h5.emphasis {
+      font-size: 1.5rem;
+      line-height: 2.5rem;
+      font-weight: 800;
+      @apply my-24;
+    }
+    .text-h6 {
+      font-size: 1.125rem;
+      letter-spacing: 0.25px;
+      line-height: 1.5rem;
+      font-weight: normal;
+      @apply my-24;
+    }
+    .text-h6.emphasis {
+      font-size: 1.125rem;
+      letter-spacing: 0.25px;
+      line-height: 1.5rem;
+      font-weight: bold;
+      @apply my-24;
+    }
+    .subtitle1 {
+      @apply text-base tracking-0-15 leading-6 font-semibold;
+    }
+    .subtitle2 {
+      @apply text-sm tracking-0-4 leading-5 font-semibold;
+    }
+    .subtitle3 {
+      @apply text-sm tracking-0-4 leading-5 font-extrabold;
+    }
+    .subtitle4 {
+      @apply text-xs tracking-0-4 leading-4 font-semibold;
+    }
+    .subtitle5 {
+      @apply text-xxs tracking-0-3 leading-4 font-bold;
+    }
+    .caption1 {
+      @apply text-xs tracking-0-3 leading-4;
+    }
+    .caption2 {
+      @apply text-xxs tracking-0-3 leading-4;
+    }
+    .overline1 {
+      @apply text-lg tracking-1-5 leading-6 font-semibold uppercase;
+    }
+    .overline2 {
+      @apply text-xs tracking-1-5 leading-4 font-normal uppercase;
+    }
   }
 
-  h1 {
-    font-size: 3.75rem;
-    letter-spacing: -0.5px;
-    font-weight: bold;
-    line-height: 4.5rem;
-    @apply mb-24;
-  }
+  @layer base {
+    h1 {
+      @apply text-h1;
+    }
 
-  h2 {
-    font-size: 3rem;
-    line-height: 64px;
-    font-weight: 600;
-    line-height: 4rem;
-    @apply my-24;
-  }
+    h2 {
+      @apply text-h2;
+    }
+    h3 {
+      @apply text-h3;
+    }
 
-  h3.emphasis {
-    font-size: 2.5rem;
-    letter-spacing: 0.25px;
-    line-height: 3.5rem;
-    font-weight: bold;
-    @apply my-24;
-  }
+    h4 {
+      @apply text-h4;
+    }
 
-  h3 {
-    font-size: 2.5rem;
-    letter-spacing: 0.25px;
-    line-height: 3.5rem;
-    font-weight: normal;
-    @apply my-24;
-  }
+    h5 {
+      @apply text-h5;
+    }
 
-  h4.emphasis {
-    font-size: 2.25rem;
-    letter-spacing: 0.25px;
-    line-height: 3.5rem;
-    font-weight: 600;
-    @apply my-24;
-  }
-
-  h4 {
-    font-size: 2.25rem;
-    letter-spacing: 0.25px;
-    line-height: 3.5rem;
-    font-weight: normal;
-    @apply my-24;
-  }
-
-  h5.emphasis {
-    font-size: 1.5rem;
-    line-height: 2.5rem;
-    font-weight: 800;
-    @apply my-24;
-  }
-
-  h5 {
-    font-size: 1.5rem;
-    line-height: 2.5rem;
-    font-weight: normal;
-    @apply my-24;
-  }
-
-  h6.emphasis {
-    font-size: 1.125rem;
-    letter-spacing: 0.25px;
-    line-height: 1.5rem;
-    font-weight: bold;
-    @apply my-24;
-  }
-
-  h6 {
-    font-size: 1.125rem;
-    letter-spacing: 0.25px;
-    line-height: 1.5rem;
-    font-weight: normal;
-    @apply my-24;
-  }
-
-  .subtitle1 {
-    @apply text-base tracking-0-15 leading-6 font-semibold;
-  }
-
-  .subtitle2 {
-    @apply text-sm tracking-0-4 leading-5 font-semibold;
-  }
-
-  .subtitle3 {
-    @apply text-sm tracking-0-4 leading-5 font-extrabold;
-  }
-
-  .subtitle4 {
-    @apply text-xs tracking-0-4 leading-4 font-semibold;
-  }
-
-  .subtitle5 {
-    @apply text-xxs tracking-0-3 leading-4 font-bold;
-  }
-
-  .caption1 {
-    @apply text-xs tracking-0-3 leading-4;
-  }
-
-  .caption2 {
-    @apply text-xxs tracking-0-3 leading-4;
-  }
-
-  .overline1 {
-    @apply text-lg tracking-1-5 leading-6 font-semibold uppercase;
-  }
-
-  .overline2 {
-    @apply text-xs tracking-1-5 leading-4 font-normal uppercase;
-  }
-
-  p {
-    @apply my-24;
+    h6 {
+      @apply text-h6;
+    }
+    p {
+      @apply my-24;
+    }
   }
 
   /***************************
