@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
+import { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
 import { IMxTabProps } from "./components/mx-tab/mx-tab";
 export namespace Components {
     interface MxBadge {
@@ -91,6 +92,24 @@ export namespace Components {
         "textareaHeight": string;
         "type": string;
         "value": string;
+    }
+    interface MxPageHeader {
+        /**
+          * An array of prop objects for each button.  Use the `label` property to specify the button's inner text.
+         */
+        "buttons": IPageHeaderButton[];
+        /**
+          * When set to true, the Page Header will use the themed background pattern.
+         */
+        "pattern": boolean;
+        /**
+          * The text to display for the previous page link
+         */
+        "previousPageTitle": string;
+        /**
+          * The URL for the previous page link
+         */
+        "previousPageUrl": string;
     }
     interface MxRadio {
         "checked": boolean;
@@ -225,6 +244,12 @@ declare global {
         prototype: HTMLMxInputElement;
         new (): HTMLMxInputElement;
     };
+    interface HTMLMxPageHeaderElement extends Components.MxPageHeader, HTMLStencilElement {
+    }
+    var HTMLMxPageHeaderElement: {
+        prototype: HTMLMxPageHeaderElement;
+        new (): HTMLMxPageHeaderElement;
+    };
     interface HTMLMxRadioElement extends Components.MxRadio, HTMLStencilElement {
     }
     var HTMLMxRadioElement: {
@@ -278,6 +303,7 @@ declare global {
         "mx-button": HTMLMxButtonElement;
         "mx-checkbox": HTMLMxCheckboxElement;
         "mx-input": HTMLMxInputElement;
+        "mx-page-header": HTMLMxPageHeaderElement;
         "mx-radio": HTMLMxRadioElement;
         "mx-select": HTMLMxSelectElement;
         "mx-switch": HTMLMxSwitchElement;
@@ -372,6 +398,24 @@ declare namespace LocalJSX {
         "textareaHeight"?: string;
         "type"?: string;
         "value"?: string;
+    }
+    interface MxPageHeader {
+        /**
+          * An array of prop objects for each button.  Use the `label` property to specify the button's inner text.
+         */
+        "buttons"?: IPageHeaderButton[];
+        /**
+          * When set to true, the Page Header will use the themed background pattern.
+         */
+        "pattern"?: boolean;
+        /**
+          * The text to display for the previous page link
+         */
+        "previousPageTitle"?: string;
+        /**
+          * The URL for the previous page link
+         */
+        "previousPageUrl"?: string;
     }
     interface MxRadio {
         "checked"?: boolean;
@@ -493,6 +537,7 @@ declare namespace LocalJSX {
         "mx-button": MxButton;
         "mx-checkbox": MxCheckbox;
         "mx-input": MxInput;
+        "mx-page-header": MxPageHeader;
         "mx-radio": MxRadio;
         "mx-select": MxSelect;
         "mx-switch": MxSwitch;
@@ -511,6 +556,7 @@ declare module "@stencil/core" {
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
+            "mx-page-header": LocalJSX.MxPageHeader & JSXBase.HTMLAttributes<HTMLMxPageHeaderElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;
             "mx-select": LocalJSX.MxSelect & JSXBase.HTMLAttributes<HTMLMxSelectElement>;
             "mx-switch": LocalJSX.MxSwitch & JSXBase.HTMLAttributes<HTMLMxSwitchElement>;

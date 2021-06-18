@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host } from './index-5775867f.js';
+import { r as registerInstance, h, H as Host } from './index-51a85981.js';
 import { r as ripple } from './ripple-a99cb795.js';
 
 const MxToggleButton = class {

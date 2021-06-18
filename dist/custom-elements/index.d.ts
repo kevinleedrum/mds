@@ -26,6 +26,12 @@ export const MxInput: {
   new (): MxInput;
 };
 
+interface MxPageHeader extends Components.MxPageHeader, HTMLElement {}
+export const MxPageHeader: {
+  prototype: MxPageHeader;
+  new (): MxPageHeader;
+};
+
 interface MxRadio extends Components.MxRadio, HTMLElement {}
 export const MxRadio: {
   prototype: MxRadio;

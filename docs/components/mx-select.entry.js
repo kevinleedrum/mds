@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-3b18c5be.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-9d9fba8b.js';
 
 const MxSelect = class {
   constructor(hostRef) {
@@ -34,7 +34,7 @@ const MxSelect = class {
     return this.value !== null && this.value !== '' && this.value !== undefined;
   }
   get selectWrapperClass() {
-    let str = 'mx-select-wrapper flex items-center relative h-48 border rounded-lg';
+    let str = 'mx-select-wrapper flex items-center relative border rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     if (this.elevated)
       str += ' elevated shadow-1';

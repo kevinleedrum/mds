@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-c59b4a75.js');
+const index = require('./index-2d451529.js');
 const ripple = require('./ripple-b35647b1.js');
 
 const MxButton = class {
@@ -67,7 +67,7 @@ const MxButton = class {
   }
   render() {
     const chevronIcon = (index.h("svg", { class: "chevron-icon", width: "13", height: "7", viewBox: "0 0 13 7", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, index.h("path", { d: "M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z", fill: "currentColor", "fill-opacity": "0.88" })));
-    const buttonContent = (index.h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && index.h("i", { class: (this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon }), this.btnType !== 'icon' && (index.h("span", { class: "slot-content" }, index.h("slot", null))), this.dropdown && this.btnType === 'text' && index.h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && index.h("span", { class: this.chevronClass }, chevronIcon)));
+    const buttonContent = (index.h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && index.h("i", { class: (this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon }), index.h("span", { class: "slot-content" }, index.h("slot", null)), this.dropdown && this.btnType === 'text' && index.h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && index.h("span", { class: this.chevronClass }, chevronIcon)));
     return (index.h(index.Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (index.h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (index.h("button", { type: this.type, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled }, buttonContent))));
   }
 };

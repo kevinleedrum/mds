@@ -1,6 +1,18 @@
 export declare type BtnType = 'contained' | 'outlined' | 'action' | 'text' | 'icon';
 export declare type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
-export declare class MxButton {
+export interface IMxButtonProps {
+  btnType?: BtnType;
+  type?: ButtonTypeAttribute;
+  value?: string;
+  disabled?: boolean;
+  xl?: boolean;
+  href?: string;
+  target?: string;
+  full?: boolean;
+  dropdown?: boolean;
+  icon?: string;
+}
+export declare class MxButton implements IMxButtonProps {
   btnElem: HTMLButtonElement;
   anchorElem: HTMLAnchorElement;
   btnType: BtnType;

@@ -45,7 +45,7 @@ describe('mx-tabs (horizontal stack)', () => {
     expect(emittedValue).toBe(1);
   });
 
-  it('uses an mx-select when screen width <= 720 and >2 tabs', async () => {
+  it('uses an mx-select when screen width <= 768 and >2 tabs', async () => {
     root.tabs = [{ label: 'Home' }, { label: 'Favorites' }, { label: 'Search' }];
     await page.waitForChanges();
     const select = root.querySelector('mx-select');

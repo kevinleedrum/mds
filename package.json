@@ -1,6 +1,6 @@
 {
   "name": "@moxiworks/mds",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
@@ -48,6 +48,7 @@
     "minify:css": "minify dist/styles/mds-core.css > dist/styles/mds-core.min.css"
   },
   "dependencies": {
+    "@juggle/resize-observer": "^3.3.1",
     "@stencil/core": "^2.0.1",
     "nanoid": "^3.1.22",
     "postcss-custom-properties": "^11.0.0",
