@@ -118,7 +118,7 @@ describe('mx-button as an action button', () => {
   });
 
   it('has a chevron icon', async () => {
-    const icon = root.querySelector('button svg.chevron-icon');
+    const icon = root.querySelector('button [data-testid="chevron"]');
     expect(icon).not.toBeNull();
   });
 });
@@ -140,7 +140,7 @@ describe('mx-button as a text button', () => {
   });
 
   it('has a chevron icon', async () => {
-    const icon = root.querySelector('button svg.chevron-icon');
+    const icon = root.querySelector('button [data-testid="chevron"]');
     expect(icon).not.toBeNull();
   });
 });
@@ -199,7 +199,7 @@ describe('mx-button as a dropdown icon button', () => {
   });
 
   it('has a chevron icon', async () => {
-    const icon = root.querySelector('button svg.chevron-icon');
+    const icon = root.querySelector('button [data-testid="chevron"]');
     expect(icon).not.toBeNull();
   });
 });

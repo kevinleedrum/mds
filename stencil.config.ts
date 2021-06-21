@@ -1,5 +1,6 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import { inlineSvg } from 'stencil-inline-svg';
 
 export const config: Config = {
   namespace: 'mds-components',
@@ -19,5 +20,11 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
     },
   ],
-  plugins: [sass()],
+  plugins: [sass(), inlineSvg()],
+  testing: {
+    transform: {
+      // Stub in assets that jest does not know how to import
+      '^.+\\.svg$': '<rootDir>/jestAssetTransform.js',
+    },
+  },
 };
