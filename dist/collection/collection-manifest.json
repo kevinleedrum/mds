@@ -5,6 +5,7 @@
     "./components/mx-tab/mx-tab.js",
     "./components/mx-badge/mx-badge.js",
     "./components/mx-checkbox/mx-checkbox.js",
+    "./components/mx-fab/mx-fab.js",
     "./components/mx-input/mx-input.js",
     "./components/mx-radio/mx-radio.js",
     "./components/mx-select/mx-select.js",

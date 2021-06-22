@@ -93,6 +93,15 @@ function ripple(e, elem) {
   }, 300);
 }
 
+const chevronSvg = `<svg width="13" height="7" viewBox="0 0 13 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z"
+    fill="currentColor"
+    fill-opacity="0.88"
+  />
+</svg>
+`;
+
 const MxButton$1 = class extends HTMLElement {
   constructor() {
     super();
@@ -155,9 +164,8 @@ const MxButton$1 = class extends HTMLElement {
     return 'ml-8';
   }
   render() {
-    const chevronIcon = (h("svg", { class: "chevron-icon", width: "13", height: "7", viewBox: "0 0 13 7", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, h("path", { d: "M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z", fill: "currentColor", "fill-opacity": "0.88" })));
-    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: (this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && h("span", { class: this.chevronClass }, chevronIcon)));
-    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", { type: this.type, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled }, buttonContent))));
+    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: (this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && h("span", { "data-testid": "chevron", class: this.chevronClass, innerHTML: chevronSvg })));
+    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", { type: this.type, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, buttonContent))));
   }
 };
 
@@ -173,6 +181,111 @@ const MxCheckbox$1 = class extends HTMLElement {
   render() {
     return (h(Host, { class: "mx-checkbox" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "checkbox", name: this.name, value: this.value, checked: this.checked }), h("span", { class: "flex h-18 w-18 cursor-pointer" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
+};
+
+const SCREENS = {
+  'sm': '640px',
+  'md': '768px',
+  'lg': '1024px',
+  'xl': '1280px',
+  '2xl': '1536px',
+};
+/** A key-value pair of breakpoint abbreviations and a boolean for whether the `min-width` meets or exceeds it.
+For example, `MinWidths.md` will be true for windows that are tablet-sized or larger */
+class MinWidths {
+  constructor() {
+    this['sm'] = false;
+    this['md'] = false;
+    this['lg'] = false;
+    this['xl'] = false;
+    this['2xl'] = false;
+  }
+}
+class MinWidthSync {
+  constructor() {
+    this.componentRefs = [];
+    this.minWidths = new MinWidths();
+    this.listeners = new Map();
+  }
+  subscribeComponent(componentRef) {
+    // If this is the first subscribed component, set up listeners.
+    if (this.componentRefs.length === 0)
+      this.addListeners();
+    this.componentRefs.push(componentRef);
+    // Immediately sync minWidths to component.
+    componentRef.minWidths = Object.assign({}, this.minWidths);
+  }
+  addListeners() {
+    Object.keys(SCREENS).forEach(screen => {
+      const mql = window.matchMedia(`(min-width: ${SCREENS[screen]})`);
+      const listener = (e) => {
+        this.minWidths[screen] = e.matches;
+        // Sync minWidths to all subscribed components
+        this.componentRefs.forEach(componentRef => {
+          componentRef.minWidths = Object.assign({}, this.minWidths);
+        });
+      };
+      listener(mql);
+      mql.addListener(listener);
+      this.listeners.set(mql, listener); // Store listener so it can be removed later
+    });
+  }
+  unsubscribeComponent(componentRef) {
+    this.componentRefs = this.componentRefs.filter(c => c !== componentRef);
+    // If no more subscribed components, remove listeners to prevent memory leaks.
+    if (this.componentRefs.length === 0)
+      this.removeListeners();
+  }
+  removeListeners() {
+    this.listeners.forEach((listener, mql) => {
+      mql.removeListener(listener);
+    });
+  }
+}
+/** Update subscribed components' `minWidths` state object based on `min-width` media query listeners. */
+const minWidthSync = new MinWidthSync();
+
+const MxFab$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    /** Style as a secondary action */
+    this.secondary = false;
+    this.minWidths = new MinWidths();
+    this.isExtended = false;
+  }
+  connectedCallback() {
+    minWidthSync.subscribeComponent(this);
+  }
+  componentWillLoad() {
+    this.isExtended = !!this.element.textContent;
+  }
+  disconnectedCallback() {
+    minWidthSync.unsubscribeComponent(this);
+  }
+  onClick(e) {
+    ripple(e, this.buttonElem);
+  }
+  get buttonClass() {
+    let str = 'flex min-w-full items-center justify-center rounded-full shadow-4 relative overflow-hidden';
+    if (this.secondary)
+      str += ' secondary';
+    if (this.isExtended)
+      str += ' h-48 py-16 px-24';
+    else
+      str += this.minWidths.md ? ' h-56' : ' h-40';
+    return str;
+  }
+  get slotWrapperClass() {
+    let str = 'flex items-center text-sm tracking-1-25 leading-4 uppercase font-semibold';
+    if (this.isExtended && this.icon)
+      str += ' ml-12';
+    return str;
+  }
+  render() {
+    return (h(Host, { class: 'mx-fab inline-block min-w-max' + (this.minWidths.md ? ' w-56' : ' w-40') }, h("button", { ref: el => (this.buttonElem = el), type: "button", value: this.value, class: this.buttonClass, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, this.icon && h("i", { class: this.icon + ' text-xl' }), h("div", { class: this.slotWrapperClass }, h("slot", null)))));
+  }
+  get element() { return this; }
 };
 
 const MxInput$1 = class extends HTMLElement {
@@ -248,68 +361,6 @@ const MxInput$1 = class extends HTMLElement {
     return (h(Host, { class: "mx-input" }, h("div", { class: `${this.makeTypeClass()} ${this.isFocused ? 'focused' : ''} ${this.error ? 'error' : ''}`, ref: el => (this.containerElem = el) }, h("div", { class: `mx-input-inner-wrapper ${this.isTextarea()}`, style: this.overrideTextArea() }, this.leftIcon && (h("div", { class: "mds-input-left-content" }, h("i", { class: this.leftIcon }))), this.label && (h("label", { class: this.labelClass, onClick: () => this.focusOnInput() }, this.label)), !this.textarea ? (h("div", { class: "mds-input" }, h("input", { type: this.type, name: this.name, value: this.value, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textInput = el) }))) : (h("textarea", { style: this.returnTaHeight(), name: this.name, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textArea = el) }, this.value)), (this.rightIcon || this.error) && (h("div", { class: "mds-input-right-content" }, this.error ? h("i", { class: "ph-warning-circle" }) : h("i", { class: this.rightIcon }))))), this.assistiveText && h("div", { class: "assistive-text" }, this.assistiveText)));
   }
 };
-
-const SCREENS = {
-  'sm': '640px',
-  'md': '768px',
-  'lg': '1024px',
-  'xl': '1280px',
-  '2xl': '1536px',
-};
-/** A key-value pair of breakpoint abbreviations and a boolean for whether the `min-width` meets or exceeds it.
-For example, `MinWidths.md` will be true for windows that are tablet-sized or larger */
-class MinWidths {
-  constructor() {
-    this['sm'] = false;
-    this['md'] = false;
-    this['lg'] = false;
-    this['xl'] = false;
-    this['2xl'] = false;
-  }
-}
-class MinWidthSync {
-  constructor() {
-    this.componentRefs = [];
-    this.minWidths = new MinWidths();
-    this.listeners = new Map();
-  }
-  subscribeComponent(componentRef) {
-    // If this is the first subscribed component, set up listeners.
-    if (this.componentRefs.length === 0)
-      this.addListeners();
-    this.componentRefs.push(componentRef);
-    // Immediately sync minWidths to component.
-    componentRef.minWidths = Object.assign({}, this.minWidths);
-  }
-  addListeners() {
-    Object.keys(SCREENS).forEach(screen => {
-      const mql = window.matchMedia(`(min-width: ${SCREENS[screen]})`);
-      const listener = (e) => {
-        this.minWidths[screen] = e.matches;
-        // Sync minWidths to all subscribed components
-        this.componentRefs.forEach(componentRef => {
-          componentRef.minWidths = Object.assign({}, this.minWidths);
-        });
-      };
-      listener(mql);
-      mql.addListener(listener);
-      this.listeners.set(mql, listener); // Store listener so it can be removed later
-    });
-  }
-  unsubscribeComponent(componentRef) {
-    this.componentRefs = this.componentRefs.filter(c => c !== componentRef);
-    // If no more subscribed components, remove listeners to prevent memory leaks.
-    if (this.componentRefs.length === 0)
-      this.removeListeners();
-  }
-  removeListeners() {
-    this.listeners.forEach((listener, mql) => {
-      mql.removeListener(listener);
-    });
-  }
-}
-/** Update subscribed components' `minWidths` state object based on `min-width` media query listeners. */
-const minWidthSync = new MinWidthSync();
 
 var resizeObservers = [];
 
@@ -810,6 +861,30 @@ var ResizeObserver = (function () {
     return ResizeObserver;
 }());
 
+const dotsSvg = `<svg width="4" height="20" viewBox="0 0 4 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M2 12C3.10457 12 4 11.1046 4 10C4 8.89543 3.10457 8 2 8C0.89543 8 0 8.89543 0 10C0 11.1046 0.89543 12 2 12Z"
+    fill="currentColor"
+  />
+  <path
+    d="M2 4C3.10457 4 4 3.10457 4 2C4 0.89543 3.10457 0 2 0C0.89543 0 0 0.89543 0 2C0 3.10457 0.89543 4 2 4Z"
+    fill="currentColor"
+  />
+  <path
+    d="M2 20C3.10457 20 4 19.1046 4 18C4 16.8954 3.10457 16 2 16C0.89543 16 0 16.8954 0 18C0 19.1046 0.89543 20 2 20Z"
+    fill="currentColor"
+  />
+</svg>
+`;
+
+const arrowSvg$1 = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M11.3327 5.33317H3.21935L6.94602 1.6065L5.99935 0.666504L0.666016 5.99984L5.99935 11.3332L6.93935 10.3932L3.21935 6.6665H11.3327V5.33317Z"
+    fill="currentColor"
+  />
+</svg>
+`;
+
 const MxPageHeader$1 = class extends HTMLElement {
   constructor() {
     super();
@@ -879,19 +954,17 @@ const MxPageHeader$1 = class extends HTMLElement {
     return str;
   }
   get buttonsJsx() {
-    const dotsSvg = (h("svg", { width: "4", height: "20", viewBox: "0 0 4 20", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, h("path", { d: "M2 12C3.10457 12 4 11.1046 4 10C4 8.89543 3.10457 8 2 8C0.89543 8 0 8.89543 0 10C0 11.1046 0.89543 12 2 12Z", fill: "currentColor" }), h("path", { d: "M2 4C3.10457 4 4 3.10457 4 2C4 0.89543 3.10457 0 2 0C0.89543 0 0 0.89543 0 2C0 3.10457 0.89543 4 2 4Z", fill: "currentColor" }), h("path", { d: "M2 20C3.10457 20 4 19.1046 4 18C4 16.8954 3.10457 16 2 16C0.89543 16 0 16.8954 0 18C0 19.1046 0.89543 20 2 20Z", fill: "currentColor" })));
     return (h("div", { ref: el => (this.buttonRow = el), class: "flex py-1 space-x-8 md:space-x-24 md:justify-end md:flex-row-reverse md:space-x-reverse items-center max-w-full" }, this.buttons.map((button, index) => {
       // If not specified, set btnType automatically for primary, secondary, and tertiary buttons
       let { btnType } = button;
       if (!btnType)
         btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
       const isTertiary = index === 2;
-      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" }, h("mx-button", { ref: el => (this.menuButton = el), "btn-type": "icon" }, dotsSvg))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
+      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" }, h("mx-button", { ref: el => (this.menuButton = el), "btn-type": "icon", innerHTML: dotsSvg }))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {
-    const arrowSvg = (h("svg", { class: "inline-block mr-10", width: "12", height: "12", viewBox: "0 0 12 12", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, h("path", { d: "M11.3327 5.33317H3.21935L6.94602 1.6065L5.99935 0.666504L0.666016 5.99984L5.99935 11.3332L6.93935 10.3932L3.21935 6.6665H11.3327V5.33317Z", fill: "currentColor" })));
-    return (h(Host, { class: this.hostClass }, h("slot", { name: "previous-page" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "block pt-16 md:pt-20 uppercase text-xs font-semibold tracking-1-25" }, arrowSvg, this.previousPageTitle))), h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, h("h1", { class: this.headingClass }, h("slot", null)), this.buttons.length > 0 && this.buttonsJsx, h("slot", { name: "buttons" })), h("slot", { name: "tabs" })));
+    return (h(Host, { class: this.hostClass }, h("slot", { name: "previous-page" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "flex items-center pt-16 md:pt-20 uppercase text-xs font-semibold tracking-1-25" }, h("span", { class: "mr-10", innerHTML: arrowSvg$1 }), this.previousPageTitle))), h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, h("h1", { class: this.headingClass }, h("slot", null)), this.buttons.length > 0 && this.buttonsJsx, h("slot", { name: "buttons" })), h("slot", { name: "tabs" })));
   }
   get element() { return this; }
 };
@@ -909,6 +982,14 @@ const MxRadio$1 = class extends HTMLElement {
     return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }), h("span", { class: "flex h-20 w-20 cursor-pointer rounded-full" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
 };
+
+const arrowSvg = `<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M9.9654 0.757212C9.93099 0.681077 9.87273 0.616004 9.79798 0.57022C9.72323 0.524437 9.63535 0.5 9.54545 0.5H0.454547C0.364646 0.5 0.276763 0.524437 0.202012 0.570222C0.127262 0.616007 0.0690015 0.681082 0.0345985 0.757219C0.000195557 0.833357 -0.00880479 0.917136 0.00873577 0.997962C0.0262763 1.07879 0.0695701 1.15303 0.133142 1.2113L4.67859 5.37795C4.7208 5.41665 4.77091 5.44734 4.82605 5.46828C4.8812 5.48922 4.94031 5.5 5 5.5C5.05969 5.5 5.1188 5.48922 5.17394 5.46828C5.22909 5.44734 5.2792 5.41665 5.3214 5.37795L9.86686 1.2113C9.93043 1.15303 9.97372 1.07879 9.99126 0.997958C10.0088 0.917131 9.9998 0.833351 9.9654 0.757212Z"
+    fill="currentColor"
+  />
+</svg>
+`;
 
 const MxSelect$1 = class extends HTMLElement {
   constructor() {
@@ -982,7 +1063,7 @@ const MxSelect$1 = class extends HTMLElement {
     return str;
   }
   get iconEl() {
-    let icon = (h("svg", { "data-testid": "arrow", width: "10", height: "6", viewBox: "0 0 10 6", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, h("path", { d: "M9.9654 0.757212C9.93099 0.681077 9.87273 0.616004 9.79798 0.57022C9.72323 0.524437 9.63535 0.5 9.54545 0.5H0.454547C0.364646 0.5 0.276763 0.524437 0.202012 0.570222C0.127262 0.616007 0.0690015 0.681082 0.0345985 0.757219C0.000195557 0.833357 -0.00880479 0.917136 0.00873577 0.997962C0.0262763 1.07879 0.0695701 1.15303 0.133142 1.2113L4.67859 5.37795C4.7208 5.41665 4.77091 5.44734 4.82605 5.46828C4.8812 5.48922 4.94031 5.5 5 5.5C5.05969 5.5 5.1188 5.48922 5.17394 5.46828C5.22909 5.44734 5.2792 5.41665 5.3214 5.37795L9.86686 1.2113C9.93043 1.15303 9.97372 1.07879 9.99126 0.997958C10.0088 0.917131 9.9998 0.833351 9.9654 0.757212Z", fill: "currentColor" })));
+    let icon = h("span", { "data-testid": "arrow", innerHTML: arrowSvg });
     if (this.error)
       icon = h("i", { "data-testid": "error-icon", class: "ph-warning-circle -mr-4" });
     return icon;
@@ -1162,7 +1243,7 @@ const MxToggleButton$1 = class extends HTMLElement {
   }
   render() {
     return (h(Host, { class: "mx-toggle-button inline-flex overflow-hidden border-l\n      first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl\n      last-of-type:rounded-tr last-of-type:rounded-br" }, h("button", { class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-xl overflow-hidden cursor-pointer' +
-        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), "aria-disabled": this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected, onClick: this.onClick.bind(this) }, h("i", { class: this.icon }))));
+        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), "aria-disabled": this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, h("i", { class: this.icon }))));
   }
 };
 
@@ -1205,8 +1286,9 @@ const MxToggleButtonGroup$1 = class extends HTMLElement {
 };
 
 const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"dot":[4],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
-const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
+const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"disabled":[4],"xl":[4],"ariaLabel":[1,"aria-label"],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
+const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"ariaLabel":[1,"aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"label":[1],"value":[1],"type":[1],"dense":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);
 const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
@@ -1215,7 +1297,7 @@ const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"na
 const MxTab = /*@__PURE__*/proxyCustomElement(MxTab$1, [0,"mx-tab",{"label":[1],"ariaLabel":[1,"aria-label"],"icon":[1],"selected":[516],"badge":[4],"badgeClass":[1,"badge-class"]}]);
 const MxTabContent = /*@__PURE__*/proxyCustomElement(MxTabContent$1, [4,"mx-tab-content",{"index":[2],"value":[2]}]);
 const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [0,"mx-tabs",{"fill":[4],"value":[2],"tabs":[16],"minWidths":[32]},[[0,"click","onClick"]]]);
-const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"value":[8]}]);
+const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"ariaLabel":[1,"aria-label"],"value":[8]}]);
 const MxToggleButtonGroup = /*@__PURE__*/proxyCustomElement(MxToggleButtonGroup$1, [4,"mx-toggle-button-group",{"value":[1032]},[[0,"click","onToggleButtonClick"]]]);
 const defineCustomElements = (opts) => {
   if (typeof customElements !== 'undefined') {
@@ -1223,6 +1305,7 @@ const defineCustomElements = (opts) => {
       MxBadge,
   MxButton,
   MxCheckbox,
+  MxFab,
   MxInput,
   MxPageHeader,
   MxRadio,
@@ -1241,4 +1324,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxInput, MxPageHeader, MxRadio, MxSelect, MxSwitch, MxTab, MxTabContent, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxFab, MxInput, MxPageHeader, MxRadio, MxSelect, MxSwitch, MxTab, MxTabContent, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
