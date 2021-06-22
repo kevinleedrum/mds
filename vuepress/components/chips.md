@@ -20,7 +20,7 @@ Chips are compact elements that represent an input, attribute, or action.
     <mx-chip removable selected clickable class="m-8">
       Clickable, Selected &amp; Removable
     </mx-chip>
-    <mx-chip disabled removable avatar-url="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" class="m-8">
+    <mx-chip clickable disabled removable avatar-url="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" class="m-8">
       Disabled
     </mx-chip>
   </div>
@@ -38,7 +38,7 @@ Chips are compact elements that represent an input, attribute, or action.
     <mx-chip outlined removable selected clickable class="m-8">
       Clickable, Selected &amp; Removable
     </mx-chip>
-    <mx-chip outlined disabled removable avatar-url="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" class="m-8">
+    <mx-chip outlined clickable disabled removable avatar-url="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" class="m-8">
       Disabled
     </mx-chip>
   </div>

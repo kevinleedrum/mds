@@ -43,6 +43,15 @@ export class MxChip {
     if (this.isClickable) ripple(e, this.element);
   }
 
+  onKeydown(e: KeyboardEvent) {
+    if (!this.isClickable) return;
+    // Treat pressing Enter or spacebar as a click (like a button)
+    if (['Enter', ' '].includes(e.key)) {
+      e.preventDefault();
+      this.element.click();
+    }
+  }
+
   onRemove(e: MouseEvent) {
     e.stopPropagation(); // Do not trigger the chip's onClick
     if (this.disabled) return;
@@ -54,7 +63,7 @@ export class MxChip {
   }
 
   get isClickable() {
-    return (this.clickable || this.choice || this.filter) && !this.disabled;
+    return this.clickable || this.choice || this.filter;
   }
 
   get hostClass() {
@@ -63,7 +72,7 @@ export class MxChip {
     if (this.choice) str += ' choice';
     if (this.filter) str += ' filter';
     if (this.outlined) str += ' outlined border';
-    if (this.isClickable) str += ' clickable cursor-pointer transform';
+    if (this.isClickable) str += ' clickable transform cursor-pointer disabled:cursor-auto';
     str += this.hasLeftIcon ? ' pl-6' : ' pl-12';
     if (!this.removable) str += ' pr-12';
     else str += this.hasLeftIcon ? ' pr-2' : ' pr-8';
@@ -92,6 +101,7 @@ export class MxChip {
         role={this.ariaRole}
         tabindex={this.isClickable ? '0' : '-1'}
         onClick={this.onClick.bind(this)}
+        onKeydown={this.onKeydown.bind(this)}
       >
         {this.hasLeftIcon && (
           <div
