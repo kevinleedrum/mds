@@ -21,12 +21,10 @@ const config = {
     },
     fontSize: {
       // Font size, line-height, and letter-spacing
-      xxs: ['0.625rem', { lineHeight: '1rem', letterSpacing: '0.019rem' }], // 10px / 16px / 0.3px
-      xs: ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.025rem' }], // 12px / 16px / 0.4px
-      sm: ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.016rem' }], // 14px / 20px / 0.25px
-      base: ['1rem', { lineHeight: '1.5rem', letterSpacing: '0.009rem' }], // 16px / 24px / 0.15px
-      lg: ['1.125rem', { lineHeight: '1.5rem', letterSpacing: '0.031rem' }], // 18px / 24px / 0.5px
-      xl: ['1.25rem', { lineHeight: '1.5rem', letterSpacing: '0.031rem' }], // 20px / 24px / 0.5px
+      1: ['1.25rem', { lineHeight: '1.5rem', letterSpacing: '0.031rem' }], // 20px / 24px / 0.5px
+      2: ['1.125rem', { lineHeight: '1.5rem', letterSpacing: '0.031rem' }], // 18px / 24px / 0.5px
+      3: ['1rem', { lineHeight: '1.5rem', letterSpacing: '0.009rem' }], // 16px / 24px / 0.15px
+      4: ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.016rem' }], // 14px / 20px / 0.25px
     },
     letterSpacing: {
       '0': '0rem',

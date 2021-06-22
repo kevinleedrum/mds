@@ -65,18 +65,18 @@ export class MxButton implements IMxButtonProps {
     if (['contained', 'outlined'].includes(this.btnType)) {
       str += ' w-full rounded-lg font-semibold uppercase';
       if (this.btnType === 'outlined') str += ' border';
-      if (this.xl) str += ' h-48 px-32 text-base tracking-1-5';
-      else str += ' h-36 px-16 text-sm tracking tracking-1-25';
+      if (this.xl) str += ' h-48 px-32 text-3 tracking-1-5';
+      else str += ' h-36 px-16 text-4 tracking tracking-1-25';
     }
 
     // Action Button
     if (this.btnType === 'action') {
-      str += ' w-full h-36 px-16 border rounded-3xl text-sm';
+      str += ' w-full h-36 px-16 border rounded-3xl text-4';
     }
 
     // Text Button
     if (this.btnType === 'text') {
-      str += ' w-full h-36 px-8 py-10 text-sm rounded-lg';
+      str += ' w-full h-36 px-8 py-10 text-4 rounded-lg';
       str += this.dropdown ? ' font-normal' : ' font-semibold uppercase tracking-1-25';
     }
 
@@ -98,7 +98,7 @@ export class MxButton implements IMxButtonProps {
   render() {
     const buttonContent = (
       <div class="flex justify-center items-center content-center relative">
-        {this.icon && <i class={(this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon}></i>}
+        {this.icon && <i class={(this.btnType === 'icon' ? 'text-1 ' : 'mr-8 text-3 ') + this.icon}></i>}
         <span class="slot-content">
           <slot />
         </span>

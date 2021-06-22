@@ -13,7 +13,7 @@ export class MxSwitch {
   render() {
     return (
       <Host class="mx-switch">
-        <label class="relative inline-flex flex-nowrap align-center items-center cursor-pointer text-sm w-36 h-14">
+        <label class="relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4 w-36 h-14">
           <input
             class="absolute h-0 w-0 opacity-0"
             role="switch"
