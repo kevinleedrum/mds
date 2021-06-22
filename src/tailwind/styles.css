@@ -50,7 +50,29 @@
   /***************************
   * Typography
   ***************************/
-  @layer components {
+  h1 {
+    @apply text-h1;
+  }
+  h2 {
+    @apply text-h2;
+  }
+  h3 {
+    @apply text-h3;
+  }
+  h4 {
+    @apply text-h4;
+  }
+  h5 {
+    @apply text-h5;
+  }
+  h6 {
+    @apply text-h6;
+  }
+  p {
+    @apply my-24;
+  }
+
+  @layer utilities {
     .text-h1 {
       font-size: 3.75rem;
       letter-spacing: -0.5px;
@@ -67,7 +89,7 @@
     }
     .text-h2 {
       font-size: 3rem;
-      line-height: 64px;
+      letter-spacing: 0;
       font-weight: 600;
       line-height: 4rem;
       @apply my-24;
@@ -102,12 +124,14 @@
     }
     .text-h5 {
       font-size: 1.5rem;
+      letter-spacing: 0;
       line-height: 2.5rem;
       font-weight: normal;
       @apply my-24;
     }
     .text-h5.emphasis {
       font-size: 1.5rem;
+      letter-spacing: 0;
       line-height: 2.5rem;
       font-weight: 800;
       @apply my-24;
@@ -152,34 +176,6 @@
     }
     .overline2 {
       @apply text-xs tracking-1-5 leading-4 font-normal uppercase;
-    }
-  }
-
-  @layer base {
-    h1 {
-      @apply text-h1;
-    }
-
-    h2 {
-      @apply text-h2;
-    }
-    h3 {
-      @apply text-h3;
-    }
-
-    h4 {
-      @apply text-h4;
-    }
-
-    h5 {
-      @apply text-h5;
-    }
-
-    h6 {
-      @apply text-h6;
-    }
-    p {
-      @apply my-24;
     }
   }
 

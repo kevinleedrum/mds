@@ -4,75 +4,111 @@ Documentation and examples around typography including headings, body text, list
 
 ## Headings
 
-The headings in the MoxiWorks Design System comprise the `h1` through `h6` elements. The `h1` can become extra large with an `xl` utility class, and `h3` through `h6` can be given extra weight with an `emphasis` class.
+The headings in the MoxiWorks Design System comprise the `h1` through `h6` elements, as well as utility classes `text-h1` through `text-h6`. The `h1` can become extra large with an `xl` utility class, and `h3` through `h6` can be given extra weight with an `emphasis` class.
+
+| Selectors                           | Size            | Letter-Spacing | Line-Height   | Weight |
+| ----------------------------------- | --------------- | -------------- | ------------- | ------ |
+| `h1.xl` / `.text-h1.xl`             | 96px (6rem)     | -1.5px         | 7.5rem        | bold   |
+| `h1` / `.text-h1`                   | 56px (3.5rem)   | -0.5px         | 4.5rem        | bold   |
+| `h2` / `.text-h2`                   | 48px (3rem)     | 0              | 64px (4rem)   | 600    |
+| `h3.emphasis` / `.text-h3.emphasis` | 40px (2.5rem)   | 0.25px         | 56px (3.5rem) | bold   |
+| `h3` / `.text-h3`                   | 40px (2.5rem)   | 0.25px         | 56px (3.5rem) | normal |
+| `h4.emphasis` / `.text-h4.emphasis` | 36px (2.25rem)  | 0.25px         | 56px (3.5rem) | 600    |
+| `h4` / `.text-h4`                   | 36px (2.25rem)  | 0.25px         | 56px (3.5rem) | normal |
+| `h5.emphasis` / `.text-h5.emphasis` | 24px (1.5rem)   | 0              | 40px (2.5rem) | 800    |
+| `h5` / `.text-h5`                   | 24px (1.5rem)   | 0              | 40px (2.5rem) | normal |
+| `h6.emphasis` / `.text-h6.emphasis` | 18px (1.125rem) | 0.25px         | 24px (1.5rem) | bold   |
+| `h6` / `.text-h6`                   | 18px (1.125rem) | 0.25px         | 24px (1.5rem) | normal |
 
 ### Examples
 
 <div class="mds">
-  <h1 class="xl">This is an Extra Large H1</h1>
+  <h1 class="xl">This is XL H1.</h1>
+  <p class="text-h1 xl">This is styled as an XL H1.</p>
 
 ```html
-<h1 class="xl">This is an Extra Large H1</h1>
+<h1 class="xl">This is an XL H1.</h1>
+<p class="text-h1 xl">This is styled as an XL H1.</p>
 ```
 
-  <h1>This is an H1</h1>
+  <h1>This is an H1.</h1>
+  <p class="text-h1">This is styled as an H1.</p>
 
 ```html
-<h1>This is an H1</h1>
+<h1>This is an H1.</h1>
+<p class="text-h1">This is styled as an H1.</p>
 ```
 
-  <h2 style="border-bottom: 0;">This is an H2</h2>
+  <h2>This is an H2.</h2>
+  <h2 class="text-h2">This is styled as an H2.</h2>
 
 ```html
-<h2>This is an H2</h2>
+<h2>This is an H2.</h2>
+<h2 class="text-h2">This is styled as an H2.</h2>
 ```
 
-  <h3 class="emphasis">This is an H3 with emphasis</h3>
+  <h3 class="emphasis">This is an H3 with emphasis.</h3>
+  <p class="text-h3 emphasis">This is styled as an H3 with emphasis.</p>
 
 ```html
-<h3 class="emphasis">This is an H3 with emphasis</h3>
+<h3 class="emphasis">This is an H3 with emphasis.</h3>
+<p class="text-h3 emphasis">This is styled as an H3 with emphasis.</p>
 ```
 
-  <h3>This is an H3 without emphasis</h3>
+  <h3>This is an H3 without emphasis.</h3>
+  <p class="text-h3">This is styled as an H3 without emphasis.</p>
 
 ```html
-<h3>This is an H3 without emphasis</h3>
+<h3>This is an H3 without emphasis.</h3>
+<p class="text-h3">This is styled as an H3 without emphasis.</p>
 ```
 
-  <h4 class="emphasis">This is an H4 with emphasis</h4>
+  <h4 class="emphasis">This is an H4 with emphasis.</h4>
+  <p class="text-h4 emphasis">This is styled as an H4 with emphasis.</p>
 
 ```html
-<h4 class="emphasis">This is an H4</h4>
+<h4 class="emphasis">This is an H4 with emphasis.</h4>
+<p class="text-h4 emphasis">This is styled as an H4 with emphasis.</p>
 ```
 
-  <h4>This is an H4 without emphasis</h4>
+  <h4>This is an H4 without emphasis.</h4>
+  <p class="text-h4">This is styled as an H4 without emphasis.</p>
 
 ```html
-<h4>This is an H4 without emphasis</h4>
+<h4>This is an H4 without emphasis.</h4>
+<p class="text-h4">This is styled an H4 without emphasis.</p>
 ```
 
-  <h5 class="emphasis">This is an H5 with emphasis</h5>
+  <h5 class="emphasis">This is an H5 with emphasis.</h5>
+  <p class="text-h5 emphasis">This is styled as an H5 with emphasis.</p>
 
 ```html
-<h5 class="emphasis">This is an H5 with emphasis</h5>
+<h5 class="emphasis">This is an H5 with emphasis.</h5>
+<p class="text-h5 emphasis">This is styled as an H5 with emphasis.</p>
 ```
 
-  <h5>This is an H5 without emphasis</h5>
+  <h5>This is an H5 without emphasis.</h5>
+  <p class="text-h5">This is styled as an H5 without emphasis.</p>
 
 ```html
-<h5>This is an H5 without emphasis</h5>
+<h5>This is an H5 without emphasis.</h5>
+<p class="text-h5">This is styled as an H5 without emphasis.</p>
 ```
 
-  <h6 class="emphasis">This is an H6 with emphasis</h6>
+  <h6 class="emphasis">This is an H6 with emphasis.</h6>
+  <p class="text-h6 emphasis">This is styled as an H6 with emphasis.</p>
 
 ```html
-<h6 class="emphasis">This is an H6 with emphasis</h6>
+<h6 class="emphasis">This is an H6 with emphasis.</h6>
+<p class="text-h6 emphasis">This is styled as an H6 with emphasis.</p>
 ```
 
-  <h6>This is an H6 without emphasis</h6>
+  <h6>This is an H6 without emphasis.</h6>
+  <p class="text-h6">This is styled as an H6 without emphasis.</p>
 
 ```html
-<h6>This is an H6 without emphasis</h6>
+<h6>This is an H6 without emphasis.</h6>
+<p class="text-h6">This is styled as an H6 without emphasis.</p>
 ```
 
 </div>
