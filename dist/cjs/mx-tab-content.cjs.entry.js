@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-2d451529.js');
+const index = require('./index-e2d1a458.js');
 
 const MxTabContent = class {
   constructor(hostRef) {

@@ -20,6 +20,12 @@ export const MxCheckbox: {
   new (): MxCheckbox;
 };
 
+interface MxFab extends Components.MxFab, HTMLElement {}
+export const MxFab: {
+  prototype: MxFab;
+  new (): MxFab;
+};
+
 interface MxInput extends Components.MxInput, HTMLElement {}
 export const MxInput: {
   prototype: MxInput;

@@ -101,6 +101,20 @@
   --mds-text-btn-toggle: #434343;
   /* #endregion buttons */
 
+  /* #region fabs */
+  /* FABs */
+  --mds-bg-fab-active: #0457af;
+  --mds-bg-fab-focus: #4e80bd;
+  --mds-bg-fab-hover: #2d65af;
+  --mds-bg-fab-secondary-active: #00696b;
+  --mds-bg-fab-secondary-focus: #3c7a7c;
+  --mds-bg-fab-secondary-hover: #357476;
+  --mds-bg-fab-secondary: #00696b;
+  --mds-bg-fab: #0457af;
+  --mds-ripple-fab: rgb(255, 255, 255, 0.32);
+  --mds-text-fab: #fff;
+  /* #endregion fabs */
+
   /* #region inputs */
   /* Text Inputs & Textareas */
   --mds-bg-input: #fff;
@@ -4082,6 +4096,10 @@ p{
 
   margin-left: 1rem;
 }
+.mds .ml-12{
+
+  margin-left: 0.75rem;
+}
 .mds .\!ml-auto{
 
   margin-left: auto !important;
@@ -4278,10 +4296,6 @@ p{
 
   margin-left: 0.125rem;
 }
-.mds .ml-12{
-
-  margin-left: 0.75rem;
-}
 .mds .ml-20{
 
   margin-left: 1.25rem;
@@ -4337,6 +4351,10 @@ p{
 .mds .ml-16{
 
   margin-left: 1rem;
+}
+.mds .ml-12{
+
+  margin-left: 0.75rem;
 }
 .mds .\!ml-auto{
 
@@ -4504,6 +4522,14 @@ p{
 
   height: 1.125rem;
 }
+.mds .h-56{
+
+  height: 3.5rem;
+}
+.mds .h-40{
+
+  height: 2.5rem;
+}
 .mds .h-full{
 
   height: 100%;
@@ -4552,17 +4578,9 @@ p{
 
   height: 2rem;
 }
-.mds .h-40{
-
-  height: 2.5rem;
-}
 .mds .h-44{
 
   height: 2.75rem;
-}
-.mds .h-56{
-
-  height: 3.5rem;
 }
 .mds .h-64{
 
@@ -4723,6 +4741,14 @@ p{
 .mds .h-18{
 
   height: 1.125rem;
+}
+.mds .h-56{
+
+  height: 3.5rem;
+}
+.mds .h-40{
+
+  height: 2.5rem;
 }
 .mds .h-full{
 
@@ -4912,6 +4938,14 @@ p{
 
   width: 1.125rem;
 }
+.mds .w-56{
+
+  width: 3.5rem;
+}
+.mds .w-40{
+
+  width: 2.5rem;
+}
 .mds .w-36{
 
   width: 2.25rem;
@@ -4972,17 +5006,9 @@ p{
 
   width: 1.75rem;
 }
-.mds .w-40{
-
-  width: 2.5rem;
-}
 .mds .w-44{
 
   width: 2.75rem;
-}
-.mds .w-56{
-
-  width: 3.5rem;
 }
 .mds .w-64{
 
@@ -5192,6 +5218,14 @@ p{
 
   width: 1.125rem;
 }
+.mds .w-56{
+
+  width: 3.5rem;
+}
+.mds .w-40{
+
+  width: 2.5rem;
+}
 .mds .w-36{
 
   width: 2.25rem;
@@ -5203,6 +5237,14 @@ p{
 .mds .min-w-full{
 
   min-width: 100%;
+}
+.mds .min-w-max{
+
+  min-width: -webkit-max-content;
+
+  min-width: -moz-max-content;
+
+  min-width: max-content;
 }
 .mds .min-w-0{
 
@@ -5216,6 +5258,10 @@ p{
 
   min-width: min-content;
 }
+.mds .min-w-full{
+
+  min-width: 100%;
+}
 .mds .min-w-max{
 
   min-width: -webkit-max-content;
@@ -5223,10 +5269,6 @@ p{
   min-width: -moz-max-content;
 
   min-width: max-content;
-}
-.mds .min-w-full{
-
-  min-width: 100%;
 }
 .mds .max-w-full{
 
@@ -5850,6 +5892,10 @@ p{
 
   gap: 2.25rem;
 }
+.mds .gap-20{
+
+  gap: 1.25rem;
+}
 .mds .gap-4{
 
   gap: 0.25rem;
@@ -5893,10 +5939,6 @@ p{
 .mds .gap-16{
 
   gap: 1rem;
-}
-.mds .gap-20{
-
-  gap: 1.25rem;
 }
 .mds .gap-24{
 
@@ -8936,6 +8978,12 @@ p{
 
   padding-bottom: 0.625rem;
 }
+.mds .py-16{
+
+  padding-top: 1rem;
+
+  padding-bottom: 1rem;
+}
 .mds .px-24{
 
   padding-left: 1.5rem;
@@ -8989,12 +9037,6 @@ p{
   padding-top: 0.5rem;
 
   padding-bottom: 0.5rem;
-}
-.mds .py-16{
-
-  padding-top: 1rem;
-
-  padding-bottom: 1rem;
 }
 .mds .py-20{
 
@@ -9121,6 +9163,12 @@ p{
   padding-top: 0.625rem;
 
   padding-bottom: 0.625rem;
+}
+.mds .py-16{
+
+  padding-top: 1rem;
+
+  padding-bottom: 1rem;
 }
 .mds .px-24{
 
@@ -10142,6 +10190,14 @@ p{
 
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+.mds .shadow-4{
+
+  --tw-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 5px rgba(0, 0, 0, 0.04), 0px 1px 10px rgba(0, 0, 0, 0.06);
+
+  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 .mds .shadow-2{
 
   --tw-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px 3px 4px rgba(0, 0, 0, 0.02), 0px 1px 5px rgba(0, 0, 0, 0.04);
@@ -10161,14 +10217,6 @@ p{
 .mds .shadow-3{
 
   --tw-shadow: 0px 3px 3px rgba(0, 0, 0, 0.06), 0px 3px 4px rgba(0, 0, 0, 0.04), 0px 1px 8px rgba(0, 0, 0, 0.06);
-
-  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
-
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-.mds .shadow-4{
-
-  --tw-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 5px rgba(0, 0, 0, 0.04), 0px 1px 10px rgba(0, 0, 0, 0.06);
 
   box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
 
@@ -10225,6 +10273,14 @@ p{
 .mds .shadow-1{
 
   --tw-shadow: 0px 0px 2px rgba(0, 0, 0, 0.04), 0px 2px 2px rgba(0, 0, 0, 0.02), 0px 1px 3px rgba(0, 0, 0, 0.06);
+
+  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.mds .shadow-4{
+
+  --tw-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 5px rgba(0, 0, 0, 0.04), 0px 1px 10px rgba(0, 0, 0, 0.06);
 
   box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
 
@@ -10937,6 +10993,41 @@ p{
     .mx-toggle-button .btn-toggle.selected:focus {
       background: #dde8f4;
       background: var(--mds-bg-btn-toggle-selected);
+    }
+.mx-fab > button {
+  color: #fff;
+  color: var(--mds-text-fab);
+  background: #0457af;
+  background: var(--mds-bg-fab);
+  --ripple-color: var(--mds-ripple-fab);
+}
+.mx-fab > button:focus {
+    background: #4e80bd;
+    background: var(--mds-bg-fab-focus);
+  }
+.mx-fab > button:hover {
+    background: #2d65af;
+    background: var(--mds-bg-fab-hover);
+  }
+.mx-fab > button:active {
+    background: #0457af;
+    background: var(--mds-bg-fab-active);
+  }
+.mx-fab > button.secondary {
+    background: #00696b;
+    background: var(--mds-bg-fab-secondary);
+  }
+.mx-fab > button.secondary:focus {
+      background: #3c7a7c;
+      background: var(--mds-bg-fab-secondary-focus);
+    }
+.mx-fab > button.secondary:hover {
+      background: #357476;
+      background: var(--mds-bg-fab-secondary-hover);
+    }
+.mx-fab > button.secondary:active {
+      background: #00696b;
+      background: var(--mds-bg-fab-secondary-active);
     }
 .mx-checkbox span {
     position: relative;

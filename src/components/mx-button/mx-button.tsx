@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import ripple from '../ripple';
+import chevronSvg from '../../assets/svg/chevron-down.svg';
 
 export type BtnType = 'contained' | 'outlined' | 'action' | 'text' | 'icon';
 export type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
@@ -29,6 +30,8 @@ export class MxButton implements IMxButtonProps {
   @Prop() value: string;
   @Prop() disabled: boolean = false;
   @Prop() xl: boolean = false;
+  /** An aria-label is highly recommended for icon buttons */
+  @Prop() ariaLabel: string;
   /** Create button as link */
   @Prop() href: string;
   /** Only for link buttons */
@@ -93,16 +96,6 @@ export class MxButton implements IMxButtonProps {
   }
 
   render() {
-    const chevronIcon = (
-      <svg class="chevron-icon" width="13" height="7" viewBox="0 0 13 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z"
-          fill="currentColor"
-          fill-opacity="0.88"
-        />
-      </svg>
-    );
-
     const buttonContent = (
       <div class="flex justify-center items-center content-center relative">
         {this.icon && <i class={(this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon}></i>}
@@ -110,7 +103,7 @@ export class MxButton implements IMxButtonProps {
           <slot />
         </span>
         {this.dropdown && this.btnType === 'text' && <span class="separator inline-block w-1 ml-4 -my-4 h-24"></span>}
-        {this.dropdown && <span class={this.chevronClass}>{chevronIcon}</span>}
+        {this.dropdown && <span data-testid="chevron" class={this.chevronClass} innerHTML={chevronSvg}></span>}
       </div>
     );
 
@@ -134,6 +127,7 @@ export class MxButton implements IMxButtonProps {
             ref={el => (this.btnElem = el as HTMLButtonElement)}
             onClick={this.onClick.bind(this)}
             aria-disabled={this.disabled}
+            aria-label={this.ariaLabel}
           >
             {buttonContent}
           </button>

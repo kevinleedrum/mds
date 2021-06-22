@@ -20,6 +20,8 @@ export declare class MxButton implements IMxButtonProps {
   value: string;
   disabled: boolean;
   xl: boolean;
+  /** An aria-label is highly recommended for icon buttons */
+  ariaLabel: string;
   /** Create button as link */
   href: string;
   /** Only for link buttons */
