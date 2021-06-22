@@ -115,6 +115,6 @@ describe('mx-checkbox', () => {
   it('displays an arrow SVG when the error prop is NOT set', async () => {
     root.error = false;
     await page.waitForChanges();
-    expect(selectWrapper.querySelector('svg[data-testid=arrow]')).not.toBeNull();
+    expect(selectWrapper.querySelector('[data-testid=arrow]')).not.toBeNull();
   });
 });
