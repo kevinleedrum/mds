@@ -1,0 +1,33 @@
+.mx-fab > button {
+  color: var(--mds-text-fab);
+  background: var(--mds-bg-fab);
+  --ripple-color: var(--mds-ripple-fab);
+
+  &:focus {
+    background: var(--mds-bg-fab-focus);
+  }
+
+  &:hover {
+    background: var(--mds-bg-fab-hover);
+  }
+
+  &:active {
+    background: var(--mds-bg-fab-active);
+  }
+
+  &.secondary {
+    background: var(--mds-bg-fab-secondary);
+
+    &:focus {
+      background: var(--mds-bg-fab-secondary-focus);
+    }
+
+    &:hover {
+      background: var(--mds-bg-fab-secondary-hover);
+    }
+
+    &:active {
+      background: var(--mds-bg-fab-secondary-active);
+    }
+  }
+}
