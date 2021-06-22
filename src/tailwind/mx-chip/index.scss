@@ -1,0 +1,107 @@
+.mx-chip {
+  color: var(--mds-text-chip);
+  background: var(--mds-bg-chip);
+  --ripple-color: var(--mds-ripple-chip);
+
+  &[aria-checked] {
+    background: var(--mds-bg-chip-selected);
+    &.choice {
+      color: var(--mds-text-chip-choice-selected);
+      background: var(--mds-bg-chip-choice-selected);
+    }
+    &.filter {
+      background: var(--mds-bg-chip-filter-selected);
+    }
+  }
+
+  &.choice:not(.outlined) {
+    --ripple-color: var(--mds-ripple-chip-choice);
+  }
+  &.filter:not(.outlined) {
+    --ripple-color: var(--mds-ripple-chip-filter);
+  }
+
+  &.clickable {
+    &:focus:not([aria-disabled], [aria-checked]) {
+      background: var(--mds-bg-chip-focus);
+    }
+
+    &:hover:not([aria-disabled]) {
+      background: var(--mds-bg-chip-hover);
+    }
+
+    &:active:not([aria-disabled]) {
+      background: var(--mds-bg-chip-active);
+      @apply shadow-8 -translate-y-1;
+    }
+  }
+
+  &[aria-disabled] {
+    background: var(--mds-bg-chip-disabled);
+    color: var(--mds-text-chip-disabled);
+    .left-icon,
+    .remove,
+    .remove:hover {
+      opacity: 0.24;
+      cursor: initial;
+    }
+  }
+
+  .check {
+    background: var(--mds-bg-chip-check);
+    color: var(--mds-text-chip-check);
+  }
+
+  &.filter {
+    .check {
+      background: var(--mds-bg-chip-filter-check);
+    }
+  }
+
+  .remove {
+    color: var(--mds-text-chip-remove);
+    opacity: 0.64;
+    outline-offset: -4px;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &.outlined {
+    background: var(--mds-bg-chip-outlined);
+    border-color: var(--mds-border-chip-outlined);
+    --ripple-color: var(--mds-ripple-chip-outlined);
+
+    &[aria-checked] {
+      background: var(--mds-bg-chip-outlined-selected);
+      &.choice {
+        background: var(--mds-bg-chip-choice-selected);
+        border-color: var(--mds-border-chip-choice-outlined);
+      }
+      &.filter {
+        background: var(--mds-bg-chip-filter-selected);
+      }
+    }
+
+    &.clickable {
+      &:focus:not([aria-disabled], [aria-checked]) {
+        background: var(--mds-bg-chip-outlined-focus);
+      }
+
+      &:hover:not([aria-disabled]) {
+        background: var(--mds-bg-chip-outlined-hover);
+      }
+
+      &:active:not([aria-disabled]) {
+        background: var(--mds-bg-chip-outlined-active);
+      }
+    }
+
+    &[aria-disabled] {
+      background: var(--mds-bg-chip-outlined-disabled);
+      border-color: var(--mds-border-chip-outlined-disabled);
+      color: var(--mds-text-chip-outlined-disabled);
+    }
+  }
+}
