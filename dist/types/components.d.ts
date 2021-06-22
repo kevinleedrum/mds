@@ -44,6 +44,10 @@ export namespace Components {
         "value": any;
     }
     interface MxButton {
+        /**
+          * An aria-label is highly recommended for icon buttons
+         */
+        "ariaLabel": string;
         "btnType": BtnType;
         "disabled": boolean;
         /**
@@ -74,6 +78,18 @@ export namespace Components {
         "checked": boolean;
         "labelName": string;
         "name": string;
+        "value": string;
+    }
+    interface MxFab {
+        "ariaLabel": string;
+        /**
+          * Class name of icon
+         */
+        "icon": string;
+        /**
+          * Style as a secondary action
+         */
+        "secondary": boolean;
         "value": string;
     }
     interface MxInput {
@@ -207,6 +223,7 @@ export namespace Components {
         "value": number;
     }
     interface MxToggleButton {
+        "ariaLabel": string;
         "disabled": boolean;
         "icon": string;
         "selected": boolean;
@@ -237,6 +254,12 @@ declare global {
     var HTMLMxCheckboxElement: {
         prototype: HTMLMxCheckboxElement;
         new (): HTMLMxCheckboxElement;
+    };
+    interface HTMLMxFabElement extends Components.MxFab, HTMLStencilElement {
+    }
+    var HTMLMxFabElement: {
+        prototype: HTMLMxFabElement;
+        new (): HTMLMxFabElement;
     };
     interface HTMLMxInputElement extends Components.MxInput, HTMLStencilElement {
     }
@@ -302,6 +325,7 @@ declare global {
         "mx-badge": HTMLMxBadgeElement;
         "mx-button": HTMLMxButtonElement;
         "mx-checkbox": HTMLMxCheckboxElement;
+        "mx-fab": HTMLMxFabElement;
         "mx-input": HTMLMxInputElement;
         "mx-page-header": HTMLMxPageHeaderElement;
         "mx-radio": HTMLMxRadioElement;
@@ -350,6 +374,10 @@ declare namespace LocalJSX {
         "value"?: any;
     }
     interface MxButton {
+        /**
+          * An aria-label is highly recommended for icon buttons
+         */
+        "ariaLabel"?: string;
         "btnType"?: BtnType;
         "disabled"?: boolean;
         /**
@@ -380,6 +408,18 @@ declare namespace LocalJSX {
         "checked"?: boolean;
         "labelName"?: string;
         "name"?: string;
+        "value"?: string;
+    }
+    interface MxFab {
+        "ariaLabel"?: string;
+        /**
+          * Class name of icon
+         */
+        "icon"?: string;
+        /**
+          * Style as a secondary action
+         */
+        "secondary"?: boolean;
         "value"?: string;
     }
     interface MxInput {
@@ -517,6 +557,7 @@ declare namespace LocalJSX {
         "value"?: number;
     }
     interface MxToggleButton {
+        "ariaLabel"?: string;
         "disabled"?: boolean;
         "icon"?: string;
         "selected"?: boolean;
@@ -536,6 +577,7 @@ declare namespace LocalJSX {
         "mx-badge": MxBadge;
         "mx-button": MxButton;
         "mx-checkbox": MxCheckbox;
+        "mx-fab": MxFab;
         "mx-input": MxInput;
         "mx-page-header": MxPageHeader;
         "mx-radio": MxRadio;
@@ -555,6 +597,7 @@ declare module "@stencil/core" {
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
+            "mx-fab": LocalJSX.MxFab & JSXBase.HTMLAttributes<HTMLMxFabElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
             "mx-page-header": LocalJSX.MxPageHeader & JSXBase.HTMLAttributes<HTMLMxPageHeaderElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;

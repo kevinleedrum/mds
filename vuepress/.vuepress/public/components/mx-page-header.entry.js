@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-9d9fba8b.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-2135267f.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
 var resizeObservers = [];
@@ -500,6 +500,30 @@ var ResizeObserver = (function () {
     return ResizeObserver;
 }());
 
+const dotsSvg = `<svg width="4" height="20" viewBox="0 0 4 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M2 12C3.10457 12 4 11.1046 4 10C4 8.89543 3.10457 8 2 8C0.89543 8 0 8.89543 0 10C0 11.1046 0.89543 12 2 12Z"
+    fill="currentColor"
+  />
+  <path
+    d="M2 4C3.10457 4 4 3.10457 4 2C4 0.89543 3.10457 0 2 0C0.89543 0 0 0.89543 0 2C0 3.10457 0.89543 4 2 4Z"
+    fill="currentColor"
+  />
+  <path
+    d="M2 20C3.10457 20 4 19.1046 4 18C4 16.8954 3.10457 16 2 16C0.89543 16 0 16.8954 0 18C0 19.1046 0.89543 20 2 20Z"
+    fill="currentColor"
+  />
+</svg>
+`;
+
+const arrowSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M11.3327 5.33317H3.21935L6.94602 1.6065L5.99935 0.666504L0.666016 5.99984L5.99935 11.3332L6.93935 10.3932L3.21935 6.6665H11.3327V5.33317Z"
+    fill="currentColor"
+  />
+</svg>
+`;
+
 const MxPageHeader = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
@@ -568,19 +592,17 @@ const MxPageHeader = class {
     return str;
   }
   get buttonsJsx() {
-    const dotsSvg = (h("svg", { width: "4", height: "20", viewBox: "0 0 4 20", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, h("path", { d: "M2 12C3.10457 12 4 11.1046 4 10C4 8.89543 3.10457 8 2 8C0.89543 8 0 8.89543 0 10C0 11.1046 0.89543 12 2 12Z", fill: "currentColor" }), h("path", { d: "M2 4C3.10457 4 4 3.10457 4 2C4 0.89543 3.10457 0 2 0C0.89543 0 0 0.89543 0 2C0 3.10457 0.89543 4 2 4Z", fill: "currentColor" }), h("path", { d: "M2 20C3.10457 20 4 19.1046 4 18C4 16.8954 3.10457 16 2 16C0.89543 16 0 16.8954 0 18C0 19.1046 0.89543 20 2 20Z", fill: "currentColor" })));
     return (h("div", { ref: el => (this.buttonRow = el), class: "flex py-1 space-x-8 md:space-x-24 md:justify-end md:flex-row-reverse md:space-x-reverse items-center max-w-full" }, this.buttons.map((button, index) => {
       // If not specified, set btnType automatically for primary, secondary, and tertiary buttons
       let { btnType } = button;
       if (!btnType)
         btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
       const isTertiary = index === 2;
-      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" }, h("mx-button", { ref: el => (this.menuButton = el), "btn-type": "icon" }, dotsSvg))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
+      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" }, h("mx-button", { ref: el => (this.menuButton = el), "btn-type": "icon", innerHTML: dotsSvg }))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {
-    const arrowSvg = (h("svg", { class: "inline-block mr-10", width: "12", height: "12", viewBox: "0 0 12 12", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, h("path", { d: "M11.3327 5.33317H3.21935L6.94602 1.6065L5.99935 0.666504L0.666016 5.99984L5.99935 11.3332L6.93935 10.3932L3.21935 6.6665H11.3327V5.33317Z", fill: "currentColor" })));
-    return (h(Host, { class: this.hostClass }, h("slot", { name: "previous-page" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "block pt-16 md:pt-20 uppercase text-xs font-semibold tracking-1-25" }, arrowSvg, this.previousPageTitle))), h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, h("h1", { class: this.headingClass }, h("slot", null)), this.buttons.length > 0 && this.buttonsJsx, h("slot", { name: "buttons" })), h("slot", { name: "tabs" })));
+    return (h(Host, { class: this.hostClass }, h("slot", { name: "previous-page" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "flex items-center pt-16 md:pt-20 uppercase text-xs font-semibold tracking-1-25" }, h("span", { class: "mr-10", innerHTML: arrowSvg }), this.previousPageTitle))), h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, h("h1", { class: this.headingClass }, h("slot", null)), this.buttons.length > 0 && this.buttonsJsx, h("slot", { name: "buttons" })), h("slot", { name: "tabs" })));
   }
   get element() { return getElement(this); }
 };
