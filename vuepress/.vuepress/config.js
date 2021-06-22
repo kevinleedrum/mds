@@ -137,8 +137,8 @@ module.exports = {
       '/components/': [
         'inputs',
         'buttons',
-        'chips',
         'fabs',
+        'chips',
         'selection-controls',
         'data-display',
         'tabs',
