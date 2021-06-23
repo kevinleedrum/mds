@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 import ripple from '../ripple';
 import removeSvg from '../../assets/svg/remove.svg';
 import checkSvg from '../../assets/svg/check.svg';
@@ -8,6 +8,8 @@ import checkSvg from '../../assets/svg/check.svg';
   shadow: false,
 })
 export class MxChip {
+  innerDiv: HTMLElement;
+
   @Prop() outlined: boolean = false;
   @Prop() disabled: boolean = false;
   /** Display a checkmark on the left side of the chip */
@@ -29,8 +31,6 @@ export class MxChip {
   /** Style as a filter chip when selected */
   @Prop() filter: boolean = false;
 
-  @Element() element: HTMLMxChipElement;
-
   /** Emitted when the remove icon is clicked */
   @Event() mxRemove: EventEmitter<MouseEvent>;
 
@@ -40,7 +40,7 @@ export class MxChip {
       e.preventDefault();
       return;
     }
-    if (this.isClickable) ripple(e, this.element);
+    if (this.isClickable) ripple(e, this.innerDiv);
   }
 
   onKeyDown(e: KeyboardEvent) {
@@ -48,7 +48,7 @@ export class MxChip {
     // Treat pressing Enter or spacebar as a click (like a button)
     if (['Enter', ' '].includes(e.key)) {
       e.preventDefault();
-      this.element.click();
+      this.innerDiv.click();
     }
   }
 
@@ -68,7 +68,7 @@ export class MxChip {
 
   get chipClass() {
     let str =
-      'mx-chip h-32 inline-grid items-center leading-none gap-8 grid-flow-col relative rounded-full text-sm overflow-hidden';
+      'mx-chip h-32 inline-grid items-center outline-none leading-none gap-8 grid-flow-col relative rounded-full text-sm overflow-hidden';
     if (this.choice) str += ' choice';
     if (this.filter) str += ' filter';
     if (this.outlined) str += ' outlined border';
@@ -96,6 +96,7 @@ export class MxChip {
     return (
       <Host class="mx-chip inline-block">
         <div
+          ref={el => (this.innerDiv = el)}
           class={this.chipClass}
           aria-checked={this.selected}
           aria-disabled={this.disabled}

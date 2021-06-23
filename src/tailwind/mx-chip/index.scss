@@ -2,6 +2,7 @@
   color: var(--mds-text-chip);
   background: var(--mds-bg-chip);
   --ripple-color: var(--mds-ripple-chip);
+  transform: translateZ(0); /* HACK: Fix Safari ripple extending outside border radius */
 
   &[aria-checked] {
     background: var(--mds-bg-chip-selected);
@@ -41,7 +42,8 @@
     color: var(--mds-text-chip-disabled);
     .left-icon,
     .remove,
-    .remove:hover {
+    .remove:hover,
+    .remove:focus {
       opacity: 0.24;
       cursor: initial;
     }
@@ -63,7 +65,8 @@
     opacity: 0.64;
     outline-offset: -4px;
 
-    &:hover {
+    &:hover,
+    &:focus {
       opacity: 1;
     }
   }
