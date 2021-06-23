@@ -8,7 +8,7 @@ import checkSvg from '../../assets/svg/check.svg';
   shadow: false,
 })
 export class MxChip {
-  innerDiv: HTMLElement;
+  chipElem: HTMLElement;
 
   @Prop() outlined: boolean = false;
   @Prop() disabled: boolean = false;
@@ -40,7 +40,7 @@ export class MxChip {
       e.preventDefault();
       return;
     }
-    if (this.isClickable) ripple(e, this.innerDiv);
+    if (this.isClickable) ripple(e, this.chipElem);
   }
 
   onKeyDown(e: KeyboardEvent) {
@@ -48,7 +48,7 @@ export class MxChip {
     // Treat pressing Enter or spacebar as a click (like a button)
     if (['Enter', ' '].includes(e.key)) {
       e.preventDefault();
-      this.innerDiv.click();
+      this.chipElem.click();
     }
   }
 
@@ -68,7 +68,7 @@ export class MxChip {
 
   get chipClass() {
     let str =
-      'mx-chip h-32 inline-grid items-center outline-none leading-none gap-8 grid-flow-col relative rounded-full text-sm overflow-hidden';
+      'h-32 inline-grid items-center outline-none leading-none gap-8 grid-flow-col relative rounded-full text-sm overflow-hidden';
     if (this.choice) str += ' choice';
     if (this.filter) str += ' filter';
     if (this.outlined) str += ' outlined border';
@@ -96,7 +96,7 @@ export class MxChip {
     return (
       <Host class="mx-chip inline-block">
         <div
-          ref={el => (this.innerDiv = el)}
+          ref={el => (this.chipElem = el)}
           class={this.chipClass}
           aria-checked={this.selected}
           aria-disabled={this.disabled}
