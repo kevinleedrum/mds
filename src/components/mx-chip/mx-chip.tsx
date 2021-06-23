@@ -43,7 +43,7 @@ export class MxChip {
     if (this.isClickable) ripple(e, this.element);
   }
 
-  onKeydown(e: KeyboardEvent) {
+  onKeyDown(e: KeyboardEvent) {
     if (!this.isClickable) return;
     // Treat pressing Enter or spacebar as a click (like a button)
     if (['Enter', ' '].includes(e.key)) {
@@ -66,7 +66,7 @@ export class MxChip {
     return this.clickable || this.choice || this.filter;
   }
 
-  get hostClass() {
+  get chipClass() {
     let str =
       'mx-chip h-32 inline-grid items-center leading-none gap-8 grid-flow-col relative rounded-full text-sm overflow-hidden';
     if (this.choice) str += ' choice';
@@ -94,23 +94,24 @@ export class MxChip {
 
   render() {
     return (
-      <Host
-        class={this.hostClass}
+      <div
+        class={this.chipClass}
         aria-checked={this.selected}
         aria-disabled={this.disabled}
         role={this.ariaRole}
         tabindex={this.isClickable ? '0' : '-1'}
         onClick={this.onClick.bind(this)}
-        onKeydown={this.onKeydown.bind(this)}
+        onKeyDown={this.onKeyDown.bind(this)}
       >
         {this.hasLeftIcon && (
           <div
             style={this.avatarStyle}
+            data-testid="left-icon"
             class="left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden"
           >
             {this.icon && <i class={this.icon + ' text-xl'}></i>}
             {this.selected && (
-              <div class="check flex absolute inset-0 items-center justify-center">
+              <div data-testid="check" class="check flex absolute inset-0 items-center justify-center">
                 <span innerHTML={checkSvg}></span>
               </div>
             )}
@@ -129,7 +130,7 @@ export class MxChip {
             onClick={this.onRemove.bind(this)}
           ></button>
         )}
-      </Host>
+      </div>
     );
   }
 }
