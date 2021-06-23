@@ -11,7 +11,7 @@ export class MxChip {
   @Prop() outlined: boolean = false;
   @Prop() disabled: boolean = false;
   /** Display a checkmark on the left side of the chip */
-  @Prop() selected: boolean = false;
+  @Prop({ reflect: true }) selected: boolean = false;
   /** Use the pointer cursor and show a ripple animation.
    * This does not need to be explicitly set for `choice` or `filter` chips. */
   @Prop() clickable: boolean = false;
