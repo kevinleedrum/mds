@@ -183,6 +183,144 @@ const MxCheckbox$1 = class extends HTMLElement {
   }
 };
 
+const removeSvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 10.87L10.87 12L8 9.13L5.13 12L4 10.87L6.87 8L4 5.13L5.13 4L8 6.87L10.87 4L12 5.13L9.13 8L12 10.87ZM8 0C3.58 0 0 3.58 0 8C0 12.42 3.58 16 8 16C12.42 16 16 12.42 16 8C16 3.58 12.42 0 8 0Z" fill="currentColor" />
+</svg>
+`;
+
+const checkSvg = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6.18875 12.9387L3.06125 9.81125L2 10.8725L6.18875 15.0612L15.1888 6.06125L14.1275 5L6.18875 12.9387Z" fill="currentColor"/>
+</svg>`;
+
+const MxChip$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxRemove = createEvent(this, "mxRemove", 7);
+    this.outlined = false;
+    this.disabled = false;
+    /** Display a checkmark on the left side of the chip */
+    this.selected = false;
+    /** Use the pointer cursor and show a ripple animation.
+     * This does not need to be explicitly set for `choice` or `filter` chips. */
+    this.clickable = false;
+    /** Show the remove icon on the right */
+    this.removable = false;
+    /** Style as a choice chip when selected.
+     * This is set internally when the chip is wrapped with an `mx-chip-group`. */
+    this.choice = false;
+    /** Style as a filter chip when selected */
+    this.filter = false;
+  }
+  onClick(e) {
+    if (this.disabled) {
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
+    if (this.isClickable)
+      ripple(e, this.chipElem);
+  }
+  onKeyDown(e) {
+    if (!this.isClickable)
+      return;
+    // Treat pressing Enter or spacebar as a click (like a button)
+    if (['Enter', ' '].includes(e.key)) {
+      e.preventDefault();
+      this.chipElem.click();
+    }
+  }
+  onRemove(e) {
+    e.stopPropagation(); // Do not trigger the chip's onClick
+    if (this.disabled)
+      return;
+    this.mxRemove.emit(e);
+  }
+  get hasLeftIcon() {
+    return this.icon || this.avatarUrl || (this.selected && !this.choice);
+  }
+  get isClickable() {
+    return this.clickable || this.choice || this.filter;
+  }
+  get chipClass() {
+    let str = 'h-32 inline-grid items-center outline-none leading-none gap-8 grid-flow-col relative rounded-full text-sm overflow-hidden';
+    if (this.choice)
+      str += ' choice';
+    if (this.filter)
+      str += ' filter';
+    if (this.outlined)
+      str += ' outlined border';
+    if (this.isClickable)
+      str += ' clickable transform cursor-pointer disabled:cursor-auto';
+    str += this.hasLeftIcon ? ' pl-6' : ' pl-12';
+    if (!this.removable)
+      str += ' pr-12';
+    else
+      str += this.hasLeftIcon ? ' pr-2' : ' pr-8';
+    return str;
+  }
+  get ariaRole() {
+    if (this.choice)
+      return 'radio';
+    if (this.filter)
+      return 'checkbox';
+    if (this.clickable)
+      return 'button';
+    return null;
+  }
+  get avatarStyle() {
+    if (!this.avatarUrl)
+      return null;
+    const background = `url(${this.avatarUrl}) no-repeat center center`;
+    return { background, backgroundSize: 'cover' };
+  }
+  render() {
+    return (h(Host, { class: "mx-chip inline-block" }, h("div", { ref: el => (this.chipElem = el), class: this.chipClass, "aria-checked": this.selected, "aria-disabled": this.disabled, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) }, this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" }, this.icon && h("i", { class: this.icon + ' text-xl' }), this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" }, h("span", { innerHTML: checkSvg }))))), h("span", null, h("slot", null)), this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", class: "remove inline-flex items-center justify-center w-24 h-24 cursor-pointer", innerHTML: removeSvg, onClick: this.onRemove.bind(this) })))));
+  }
+};
+
+const MxChipGroup$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxInput = createEvent(this, "mxInput", 7);
+  }
+  onValueChange() {
+    this.updateChildChips();
+  }
+  connectedCallback() {
+    this.updateChildChips();
+  }
+  onChipClick(e) {
+    const chip = e.target.closest('mx-chip');
+    if (!chip)
+      return;
+    this.toggleValue(chip.value);
+    this.mxInput.emit(this.value);
+  }
+  toggleValue(value) {
+    if (this.value !== value)
+      this.value = value;
+    else
+      this.value = null;
+  }
+  updateChildChips() {
+    const chips = this.element.querySelectorAll('mx-chip');
+    chips.forEach(chip => {
+      chip.choice = true;
+      chip.clickable = true;
+      chip.selected = chip.value === this.value;
+    });
+  }
+  render() {
+    return (h(Host, { class: "inline-flex", role: "radio-group" }, h("slot", null)));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "value": ["onValueChange"]
+  }; }
+};
+
 const SCREENS = {
   'sm': '640px',
   'md': '768px',
@@ -1288,6 +1426,8 @@ const MxToggleButtonGroup$1 = class extends HTMLElement {
 const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"dot":[4],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
 const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"disabled":[4],"xl":[4],"ariaLabel":[1,"aria-label"],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
+const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined":[4],"disabled":[4],"selected":[516],"clickable":[4],"removable":[4],"avatarUrl":[1,"avatar-url"],"icon":[1],"value":[8],"choice":[4],"filter":[4]}]);
+const MxChipGroup = /*@__PURE__*/proxyCustomElement(MxChipGroup$1, [4,"mx-chip-group",{"value":[1032]},[[0,"click","onChipClick"]]]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"ariaLabel":[1,"aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"label":[1],"value":[1],"type":[1],"dense":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);
@@ -1305,6 +1445,8 @@ const defineCustomElements = (opts) => {
       MxBadge,
   MxButton,
   MxCheckbox,
+  MxChip,
+  MxChipGroup,
   MxFab,
   MxInput,
   MxPageHeader,
@@ -1324,4 +1466,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxFab, MxInput, MxPageHeader, MxRadio, MxSelect, MxSwitch, MxTab, MxTabContent, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxFab, MxInput, MxPageHeader, MxRadio, MxSelect, MxSwitch, MxTab, MxTabContent, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };

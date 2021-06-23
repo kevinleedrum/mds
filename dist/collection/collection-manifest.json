@@ -5,6 +5,8 @@
     "./components/mx-tab/mx-tab.js",
     "./components/mx-badge/mx-badge.js",
     "./components/mx-checkbox/mx-checkbox.js",
+    "./components/mx-chip/mx-chip.js",
+    "./components/mx-chip-group/mx-chip-group.js",
     "./components/mx-fab/mx-fab.js",
     "./components/mx-input/mx-input.js",
     "./components/mx-radio/mx-radio.js",
@@ -17,7 +19,7 @@
   ],
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.5.2",
+    "version": "2.6.0",
     "typescriptVersion": "4.2.3"
   },
   "collections": [],
