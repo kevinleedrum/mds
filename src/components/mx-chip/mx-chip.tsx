@@ -94,43 +94,46 @@ export class MxChip {
 
   render() {
     return (
-      <div
-        class={this.chipClass}
-        aria-checked={this.selected}
-        aria-disabled={this.disabled}
-        role={this.ariaRole}
-        tabindex={this.isClickable ? '0' : '-1'}
-        onClick={this.onClick.bind(this)}
-        onKeyDown={this.onKeyDown.bind(this)}
-      >
-        {this.hasLeftIcon && (
-          <div
-            style={this.avatarStyle}
-            data-testid="left-icon"
-            class="left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden"
-          >
-            {this.icon && <i class={this.icon + ' text-xl'}></i>}
-            {this.selected && (
-              <div data-testid="check" class="check flex absolute inset-0 items-center justify-center">
-                <span innerHTML={checkSvg}></span>
-              </div>
-            )}
-          </div>
-        )}
-        <span>
-          <slot></slot>
-        </span>
-        {this.removable && (
-          <button
-            type="button"
-            data-testid="remove"
-            aria-label="Remove"
-            class="remove inline-flex items-center justify-center w-24 h-24 cursor-pointer"
-            innerHTML={removeSvg}
-            onClick={this.onRemove.bind(this)}
-          ></button>
-        )}
-      </div>
+      <Host class="mx-chip inline-block">
+        <div
+          class={this.chipClass}
+          aria-checked={this.selected}
+          aria-disabled={this.disabled}
+          role={this.ariaRole}
+          tabindex={this.isClickable ? '0' : '-1'}
+          onClick={this.onClick.bind(this)}
+          onKeyDown={this.onKeyDown.bind(this)}
+        >
+          {this.hasLeftIcon && (
+            <div
+              style={this.avatarStyle}
+              role="presentation"
+              data-testid="left-icon"
+              class="left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden"
+            >
+              {this.icon && <i class={this.icon + ' text-xl'}></i>}
+              {this.selected && (
+                <div data-testid="check" class="check flex absolute inset-0 items-center justify-center">
+                  <span innerHTML={checkSvg}></span>
+                </div>
+              )}
+            </div>
+          )}
+          <span>
+            <slot></slot>
+          </span>
+          {this.removable && (
+            <button
+              type="button"
+              data-testid="remove"
+              aria-label="Remove"
+              class="remove inline-flex items-center justify-center w-24 h-24 cursor-pointer"
+              innerHTML={removeSvg}
+              onClick={this.onRemove.bind(this)}
+            ></button>
+          )}
+        </div>
+      </Host>
     );
   }
 }
