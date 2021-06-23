@@ -20,6 +20,18 @@ export const MxCheckbox: {
   new (): MxCheckbox;
 };
 
+interface MxChip extends Components.MxChip, HTMLElement {}
+export const MxChip: {
+  prototype: MxChip;
+  new (): MxChip;
+};
+
+interface MxChipGroup extends Components.MxChipGroup, HTMLElement {}
+export const MxChipGroup: {
+  prototype: MxChipGroup;
+  new (): MxChipGroup;
+};
+
 interface MxFab extends Components.MxFab, HTMLElement {}
 export const MxFab: {
   prototype: MxFab;

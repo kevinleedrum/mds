@@ -138,6 +138,7 @@ module.exports = {
         'inputs',
         'buttons',
         'fabs',
+        'chips',
         'selection-controls',
         'data-display',
         'tabs',

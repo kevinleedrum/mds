@@ -80,6 +80,45 @@ export namespace Components {
         "name": string;
         "value": string;
     }
+    interface MxChip {
+        /**
+          * URL of image to show on the left
+         */
+        "avatarUrl": string;
+        /**
+          * Style as a choice chip when selected. This is set internally when the chip is wrapped with an `mx-chip-group`.
+         */
+        "choice": boolean;
+        /**
+          * Use the pointer cursor and show a ripple animation. This does not need to be explicitly set for `choice` or `filter` chips.
+         */
+        "clickable": boolean;
+        "disabled": boolean;
+        /**
+          * Style as a filter chip when selected
+         */
+        "filter": boolean;
+        /**
+          * Class name of icon to show on the left
+         */
+        "icon": string;
+        "outlined": boolean;
+        /**
+          * Show the remove icon on the right
+         */
+        "removable": boolean;
+        /**
+          * Display a checkmark on the left side of the chip
+         */
+        "selected": boolean;
+        /**
+          * The value associated with a choice chip (used with `mx-chip-group`)
+         */
+        "value": any;
+    }
+    interface MxChipGroup {
+        "value": any;
+    }
     interface MxFab {
         "ariaLabel": string;
         /**
@@ -255,6 +294,18 @@ declare global {
         prototype: HTMLMxCheckboxElement;
         new (): HTMLMxCheckboxElement;
     };
+    interface HTMLMxChipElement extends Components.MxChip, HTMLStencilElement {
+    }
+    var HTMLMxChipElement: {
+        prototype: HTMLMxChipElement;
+        new (): HTMLMxChipElement;
+    };
+    interface HTMLMxChipGroupElement extends Components.MxChipGroup, HTMLStencilElement {
+    }
+    var HTMLMxChipGroupElement: {
+        prototype: HTMLMxChipGroupElement;
+        new (): HTMLMxChipGroupElement;
+    };
     interface HTMLMxFabElement extends Components.MxFab, HTMLStencilElement {
     }
     var HTMLMxFabElement: {
@@ -325,6 +376,8 @@ declare global {
         "mx-badge": HTMLMxBadgeElement;
         "mx-button": HTMLMxButtonElement;
         "mx-checkbox": HTMLMxCheckboxElement;
+        "mx-chip": HTMLMxChipElement;
+        "mx-chip-group": HTMLMxChipGroupElement;
         "mx-fab": HTMLMxFabElement;
         "mx-input": HTMLMxInputElement;
         "mx-page-header": HTMLMxPageHeaderElement;
@@ -409,6 +462,53 @@ declare namespace LocalJSX {
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
+    }
+    interface MxChip {
+        /**
+          * URL of image to show on the left
+         */
+        "avatarUrl"?: string;
+        /**
+          * Style as a choice chip when selected. This is set internally when the chip is wrapped with an `mx-chip-group`.
+         */
+        "choice"?: boolean;
+        /**
+          * Use the pointer cursor and show a ripple animation. This does not need to be explicitly set for `choice` or `filter` chips.
+         */
+        "clickable"?: boolean;
+        "disabled"?: boolean;
+        /**
+          * Style as a filter chip when selected
+         */
+        "filter"?: boolean;
+        /**
+          * Class name of icon to show on the left
+         */
+        "icon"?: string;
+        /**
+          * Emitted when the remove icon is clicked
+         */
+        "onMxRemove"?: (event: CustomEvent<MouseEvent>) => void;
+        "outlined"?: boolean;
+        /**
+          * Show the remove icon on the right
+         */
+        "removable"?: boolean;
+        /**
+          * Display a checkmark on the left side of the chip
+         */
+        "selected"?: boolean;
+        /**
+          * The value associated with a choice chip (used with `mx-chip-group`)
+         */
+        "value"?: any;
+    }
+    interface MxChipGroup {
+        /**
+          * Emits the updated value as event.detail
+         */
+        "onMxInput"?: (event: CustomEvent<any>) => void;
+        "value"?: any;
     }
     interface MxFab {
         "ariaLabel"?: string;
@@ -577,6 +677,8 @@ declare namespace LocalJSX {
         "mx-badge": MxBadge;
         "mx-button": MxButton;
         "mx-checkbox": MxCheckbox;
+        "mx-chip": MxChip;
+        "mx-chip-group": MxChipGroup;
         "mx-fab": MxFab;
         "mx-input": MxInput;
         "mx-page-header": MxPageHeader;
@@ -597,6 +699,8 @@ declare module "@stencil/core" {
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
+            "mx-chip": LocalJSX.MxChip & JSXBase.HTMLAttributes<HTMLMxChipElement>;
+            "mx-chip-group": LocalJSX.MxChipGroup & JSXBase.HTMLAttributes<HTMLMxChipGroupElement>;
             "mx-fab": LocalJSX.MxFab & JSXBase.HTMLAttributes<HTMLMxFabElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
             "mx-page-header": LocalJSX.MxPageHeader & JSXBase.HTMLAttributes<HTMLMxPageHeaderElement>;
