@@ -139,6 +139,7 @@ module.exports = {
         'search',
         'buttons',
         'fabs',
+        'chips',
         'selection-controls',
         'data-display',
         'tabs',

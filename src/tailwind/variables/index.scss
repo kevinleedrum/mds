@@ -96,6 +96,42 @@
   --mds-text-btn-toggle: #434343;
   /* #endregion buttons */
 
+  /* #region chips */
+  /* Chips */
+  --mds-bg-chip-active: #dcdcdc;
+  --mds-bg-chip-check: rgba(51, 51, 51, 0.38);
+  --mds-bg-chip-disabled: #eeeeee;
+  --mds-bg-chip-focus: #bebebe;
+  --mds-bg-chip-hover: #f0f0f0;
+  --mds-bg-chip-selected: #dcdcdc;
+  --mds-bg-chip: #dcdcdc;
+  --mds-ripple-chip: rgba(0, 0, 0, 0.12);
+  --mds-text-chip-check: #fff;
+  --mds-text-chip-disabled: #aeaeae;
+  --mds-text-chip-remove: #000;
+  --mds-text-chip: #333;
+  /* Outlined */
+  --mds-bg-chip-outlined-active: #fff;
+  --mds-bg-chip-outlined-disabled: #fcfcfc;
+  --mds-bg-chip-outlined-focus: #dcdcdc;
+  --mds-bg-chip-outlined-hover: #f0f0f0;
+  --mds-bg-chip-outlined-selected: #e6e6e6;
+  --mds-bg-chip-outlined: #fff;
+  --mds-border-chip-outlined-disabled: #f4f4f4;
+  --mds-border-chip-outlined: #eaeaea;
+  --mds-ripple-chip-outlined: rgba(0, 0, 0, 0.12);
+  --mds-text-chip-outlined-disabled: #aeaeae;
+  /* Choice Chips */
+  --mds-bg-chip-choice-selected: #dee6f0;
+  --mds-border-chip-choice-outlined: #e5f4fe;
+  --mds-ripple-chip-choice: rgba(4, 87, 175, 0.32);
+  --mds-text-chip-choice-selected: #00b8ff;
+  /* Filter Chips */
+  --mds-bg-chip-filter-check: transparent;
+  --mds-bg-chip-filter-selected: #dee6f0;
+  --mds-ripple-chip-filter: rgba(4, 87, 175, 0.32);
+  /* #endregion chips */
+
   /* #region fabs */
   /* FABs */
   --mds-bg-fab-active: #0457af;
