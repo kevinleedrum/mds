@@ -14,11 +14,6 @@ export class MxSearch {
   @Prop() placeholder: string;
   @Prop() value: string;
 
-  get hostClass() {
-    let str = 'mx-search flex items-center relative';
-    return str;
-  }
-
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
     str += this.flat ? ' flat' : ' shadow-1';
@@ -28,7 +23,7 @@ export class MxSearch {
 
   render() {
     return (
-      <Host class={this.hostClass}>
+      <Host class="mx-search flex items-center relative">
         <input
           type="search"
           aria-label={this.ariaLabel || this.placeholder || 'Search'}
