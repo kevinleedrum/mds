@@ -138,6 +138,17 @@
   --mds-text-select: #454545;
   /* #endregion dropdowns */
 
+  /* #region search */
+  /* Search */
+  --mds-border-search: transparent;
+  --mds-border-search-flat: #eaeaea;
+  --mds-bg-search: #fff;
+  --mds-text-search: #333;
+  --mds-text-search-placeholder: rgba(51, 51, 51, 0.6);
+  --mds-border-search-hover: #333;
+  --mds-border-search-focus: #0457af;
+  /* #endregion search */
+
   /* #region selection-controls */
   /* Radio Buttons */
   --mds-bg-radio-checked: #0457af;
