@@ -136,6 +136,7 @@ module.exports = {
       ],
       '/components/': [
         'inputs',
+        'search',
         'buttons',
         'fabs',
         'chips',
