@@ -68,7 +68,7 @@ export class MxChip {
 
   get chipClass() {
     let str =
-      'h-32 inline-grid items-center outline-none leading-none gap-8 grid-flow-col relative rounded-full text-sm overflow-hidden';
+      'h-32 inline-grid items-center outline-none leading-none gap-8 grid-flow-col relative rounded-full text-4 overflow-hidden';
     if (this.choice) str += ' choice';
     if (this.filter) str += ' filter';
     if (this.outlined) str += ' outlined border';
@@ -112,7 +112,7 @@ export class MxChip {
               data-testid="left-icon"
               class="left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden"
             >
-              {this.icon && <i class={this.icon + ' text-xl'}></i>}
+              {this.icon && <i class={this.icon + ' text-1'}></i>}
               {this.selected && (
                 <div data-testid="check" class="check flex absolute inset-0 items-center justify-center">
                   <span innerHTML={checkSvg}></span>
