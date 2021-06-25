@@ -32,6 +32,12 @@ export const MxChipGroup: {
   new (): MxChipGroup;
 };
 
+interface MxCircularProgress extends Components.MxCircularProgress, HTMLElement {}
+export const MxCircularProgress: {
+  prototype: MxCircularProgress;
+  new (): MxCircularProgress;
+};
+
 interface MxFab extends Components.MxFab, HTMLElement {}
 export const MxFab: {
   prototype: MxFab;
@@ -44,6 +50,12 @@ export const MxInput: {
   new (): MxInput;
 };
 
+interface MxLinearProgress extends Components.MxLinearProgress, HTMLElement {}
+export const MxLinearProgress: {
+  prototype: MxLinearProgress;
+  new (): MxLinearProgress;
+};
+
 interface MxPageHeader extends Components.MxPageHeader, HTMLElement {}
 export const MxPageHeader: {
   prototype: MxPageHeader;
@@ -54,6 +66,12 @@ interface MxRadio extends Components.MxRadio, HTMLElement {}
 export const MxRadio: {
   prototype: MxRadio;
   new (): MxRadio;
+};
+
+interface MxSearch extends Components.MxSearch, HTMLElement {}
+export const MxSearch: {
+  prototype: MxSearch;
+  new (): MxSearch;
 };
 
 interface MxSelect extends Components.MxSelect, HTMLElement {}
