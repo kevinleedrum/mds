@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { MxSelect } from '../mx-select';
 
-describe('mx-checkbox', () => {
+describe('mx-select', () => {
   let page;
   let root: HTMLMxSelectElement;
   let select: HTMLSelectElement;

@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-e2d1a458.js');
+const index = require('./index-2d451529.js');
 const ripple = require('./ripple-b35647b1.js');
 
 const arrowSvg = `<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">

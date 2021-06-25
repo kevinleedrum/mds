@@ -136,10 +136,13 @@ module.exports = {
       ],
       '/components/': [
         'inputs',
+        'search',
         'buttons',
         'fabs',
+        'chips',
         'selection-controls',
         'data-display',
+        'progress',
         'tabs',
         'dropdowns',
         'page-headers',

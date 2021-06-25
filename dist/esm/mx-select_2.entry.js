@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host, g as getElement } from './index-eaf28d08.js';
+import { r as registerInstance, h, H as Host, g as getElement } from './index-51a85981.js';
 import { r as ripple } from './ripple-a99cb795.js';
 
 const arrowSvg = `<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
