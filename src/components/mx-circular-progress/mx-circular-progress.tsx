@@ -65,22 +65,24 @@ export class MxCircularProgress {
     return (
       <Host
         style={this.hostStyle}
-        class="mx-circular-progress inline-flex items-center justify-center p-2 relative pointer-events-none"
+        class="mx-circular-progress inline-block pointer-events-none"
         role="progressbar"
         aria-valuenow={this.value != null ? Math.round(this.value) : null}
         aria-valuemin={this.value != null ? 0 : null}
         aria-valuemax={this.value != null ? 100 : null}
       >
-        <svg class="absolute" viewBox={[DIAMETER / 2, DIAMETER / 2, DIAMETER, DIAMETER].join(' ')}>
-          <circle
-            style={this.circleStyle}
-            cx={DIAMETER}
-            cy={DIAMETER}
-            r={RADIUS}
-            stroke-width={THICKNESS}
-            fill="none"
-          ></circle>
-        </svg>
+        <div class="flex items-center justify-center relative h-full p-2">
+          <svg class="absolute" viewBox={[DIAMETER / 2, DIAMETER / 2, DIAMETER, DIAMETER].join(' ')}>
+            <circle
+              style={this.circleStyle}
+              cx={DIAMETER}
+              cy={DIAMETER}
+              r={RADIUS}
+              stroke-width={THICKNESS}
+              fill="none"
+            ></circle>
+          </svg>
+        </div>
       </Host>
     );
   }
