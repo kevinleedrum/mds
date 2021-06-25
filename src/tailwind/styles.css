@@ -19,6 +19,7 @@
 * Import Component CSS
 ***************************/
 @import './mx-input/index.scss';
+@import './mx-search/index.scss';
 @import './mx-button/index.scss';
 @import './mx-toggle-button/index.scss';
 @import './mx-chip/index.scss';
@@ -26,6 +27,8 @@
 @import './mx-checkbox/index.scss';
 @import './mx-radio/index.scss';
 @import './mx-switch/index.scss';
+@import './mx-circular-progress/index.scss';
+@import './mx-linear-progress/index.scss';
 @import './mx-tab/index.scss';
 @import './mx-select/index.scss';
 @import './mx-page-header/index.scss';

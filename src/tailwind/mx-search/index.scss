@@ -1,0 +1,26 @@
+.mx-search > input {
+  border-color: var(--mds-border-search);
+  background: var(--mds-bg-search);
+  color: var(--mds-text-search);
+
+  &::placeholder {
+    color: var(--mds-text-search-placeholder);
+  }
+
+  &.flat {
+    border-color: var(--mds-border-search-flat);
+  }
+
+  &:hover {
+    border-color: var(--mds-border-search-hover);
+  }
+
+  &:focus {
+    border-color: var(--mds-border-search-focus);
+    padding-left: 3.438rem; /* Remove 1px of padding to offset the border increase */
+  }
+
+  &::-webkit-search-cancel-button {
+    appearance: none;
+  }
+}

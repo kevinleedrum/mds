@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host } from './index-2135267f.js';
+import { r as registerInstance, h, e as Host } from './index-5253f6cc.js';
 import { r as ripple } from './ripple-a99cb795.js';
 
 const MxTab = class {

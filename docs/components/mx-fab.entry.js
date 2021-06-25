@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-2135267f.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-5253f6cc.js';
 import { r as ripple } from './ripple-a99cb795.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
