@@ -16,6 +16,7 @@ export class MxLinearProgress {
 
   connectedCallback() {
     if (!this.appearDelay) return;
+    // Hide indicator until appearDelay duration has passed
     this.element.classList.remove('block');
     this.element.classList.add('hidden');
     this.delayTimeout = setTimeout(() => {
