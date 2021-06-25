@@ -141,6 +141,7 @@ module.exports = {
         'chips',
         'selection-controls',
         'data-display',
+        'progress',
         'tabs',
         'dropdowns',
         'page-headers',
