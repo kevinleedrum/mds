@@ -21,13 +21,13 @@ itelf in a corner of that element.
         <mx-button btn-type="action" icon="ph-bell">Notifications</mx-button>
       </mx-badge>
       <mx-badge badge-class="bg-red-500 text-white" icon="ph-x" bottom offset="10">
-        <mx-button btn-type="icon" icon="ph-video-camera" />
+        <mx-icon-button icon="ph-video-camera" />
       </mx-badge>
       <mx-badge badge-class="bg-yellow-300" dot offset="4">
         <mx-button btn-type="action">Announcements</mx-button>
       </mx-badge>
       <mx-badge badge-class="bg-gray-700 text-white" value="3" bottom left offset="10">
-        <mx-button btn-type="icon" icon="ph-shopping-cart" />
+        <mx-icon-button icon="ph-shopping-cart" />
       </mx-badge>
     </div>
   </div>
