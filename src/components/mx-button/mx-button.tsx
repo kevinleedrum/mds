@@ -90,7 +90,11 @@ export class MxButton implements IMxButtonProps {
         </span>
         {this.dropdown && this.btnType === 'text' && <span class="separator inline-block w-1 ml-4 -my-4 h-24"></span>}
         {this.dropdown && (
-          <span data-testid="chevron" class={this.btnType === 'text' ? 'ml-4' : 'ml-8'} innerHTML={chevronSvg}></span>
+          <span
+            data-testid="chevron"
+            class={this.btnType === 'text' ? 'chevron-icon ml-4' : 'ml-8'}
+            innerHTML={chevronSvg}
+          ></span>
         )}
       </div>
     );

@@ -108,7 +108,7 @@
 
       &.dropdown:not([aria-disabled]) {
         .slot-content,
-        svg.chevron-icon {
+        .chevron-icon {
           color: var(--mds-text-btn-text-dropdown);
         }
       }
