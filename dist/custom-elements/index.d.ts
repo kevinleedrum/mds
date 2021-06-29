@@ -44,6 +44,12 @@ export const MxFab: {
   new (): MxFab;
 };
 
+interface MxIconButton extends Components.MxIconButton, HTMLElement {}
+export const MxIconButton: {
+  prototype: MxIconButton;
+  new (): MxIconButton;
+};
+
 interface MxInput extends Components.MxInput, HTMLElement {}
 export const MxInput: {
   prototype: MxInput;

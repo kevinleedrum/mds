@@ -7,7 +7,7 @@ export interface IPageHeaderButton extends IMxButtonProps {
 export declare class MxPageHeader {
   buttonRow: HTMLElement;
   hasTabs: boolean;
-  menuButton: HTMLMxButtonElement;
+  menuButton: HTMLMxIconButtonElement;
   resizeObserver: ResizeObserver;
   tabSlot: HTMLElement;
   tertiaryButtonWrapper: HTMLElement;

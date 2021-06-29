@@ -1,14 +1,6 @@
 import { r as registerInstance, h, e as Host } from './index-5253f6cc.js';
 import { r as ripple } from './ripple-a99cb795.js';
-
-const chevronSvg = `<svg width="13" height="7" viewBox="0 0 13 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path
-    d="M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z"
-    fill="currentColor"
-    fill-opacity="0.88"
-  />
-</svg>
-`;
+import { c as chevronSvg } from './chevron-down-6a7bb36b.js';
 
 const MxButton = class {
   constructor(hostRef) {
@@ -28,8 +20,7 @@ const MxButton = class {
       e.preventDefault();
       return;
     }
-    if (this.btnType !== 'icon')
-      ripple(e, this.href ? this.anchorElem : this.btnElem);
+    ripple(e, this.href ? this.anchorElem : this.btnElem);
   }
   get buttonClass() {
     // The btnType and dropdown classes are only used for colors
@@ -44,35 +35,24 @@ const MxButton = class {
       if (this.btnType === 'outlined')
         str += ' border';
       if (this.xl)
-        str += ' h-48 px-32 text-base tracking-1-5';
+        str += ' h-48 px-32 text-3 tracking-1-5';
       else
-        str += ' h-36 px-16 text-sm tracking tracking-1-25';
+        str += ' h-36 px-16 text-4 tracking tracking-1-25';
     }
     // Action Button
     if (this.btnType === 'action') {
-      str += ' w-full h-36 px-16 border rounded-3xl text-sm';
+      str += ' w-full h-36 px-16 border rounded-3xl text-4';
     }
     // Text Button
     if (this.btnType === 'text') {
-      str += ' w-full h-36 px-8 py-10 text-sm rounded-lg';
+      str += ' w-full h-36 px-8 py-10 text-4 rounded-lg';
       str += this.dropdown ? ' font-normal' : ' font-semibold uppercase tracking-1-25';
-    }
-    // Icon Button
-    if (this.btnType === 'icon') {
-      str += ' w-48 h-48 rounded-full';
     }
     return str;
   }
-  get chevronClass() {
-    if (this.btnType === 'text')
-      return 'ml-4';
-    if (this.btnType === 'icon')
-      return 'chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1';
-    return 'ml-8';
-  }
   render() {
-    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: (this.btnType === 'icon' ? 'text-xl ' : 'mr-8 text-base ') + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && h("span", { "data-testid": "chevron", class: this.chevronClass, innerHTML: chevronSvg })));
-    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", { type: this.type, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, buttonContent))));
+    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("span", { "data-testid": "chevron", class: this.btnType === 'text' ? 'chevron-icon ml-4' : 'ml-8', innerHTML: chevronSvg }))));
+    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", { type: this.type, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled }, buttonContent))));
   }
 };
 

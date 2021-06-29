@@ -64,7 +64,7 @@ const MxChip = class {
     return this.clickable || this.choice || this.filter;
   }
   get chipClass() {
-    let str = 'h-32 inline-grid items-center outline-none leading-none gap-8 grid-flow-col relative rounded-full text-sm overflow-hidden';
+    let str = 'h-32 inline-grid items-center outline-none leading-none gap-8 grid-flow-col relative rounded-full text-4 overflow-hidden';
     if (this.choice)
       str += ' choice';
     if (this.filter)
@@ -96,7 +96,7 @@ const MxChip = class {
     return { background, backgroundSize: 'cover' };
   }
   render() {
-    return (index.h(index.Host, { class: "mx-chip inline-block" }, index.h("div", { ref: el => (this.chipElem = el), class: this.chipClass, "aria-checked": this.selected, "aria-disabled": this.disabled, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) }, this.hasLeftIcon && (index.h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" }, this.icon && index.h("i", { class: this.icon + ' text-xl' }), this.selected && (index.h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" }, index.h("span", { innerHTML: checkSvg }))))), index.h("span", null, index.h("slot", null)), this.removable && (index.h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", class: "remove inline-flex items-center justify-center w-24 h-24 cursor-pointer", innerHTML: removeSvg, onClick: this.onRemove.bind(this) })))));
+    return (index.h(index.Host, { class: "mx-chip inline-block" }, index.h("div", { ref: el => (this.chipElem = el), class: this.chipClass, "aria-checked": this.selected, "aria-disabled": this.disabled, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) }, this.hasLeftIcon && (index.h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" }, this.icon && index.h("i", { class: this.icon + ' text-1' }), this.selected && (index.h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" }, index.h("span", { innerHTML: checkSvg }))))), index.h("span", null, index.h("slot", null)), this.removable && (index.h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", class: "remove inline-flex items-center justify-center w-24 h-24 cursor-pointer", innerHTML: removeSvg, onClick: this.onRemove.bind(this) })))));
   }
 };
 
