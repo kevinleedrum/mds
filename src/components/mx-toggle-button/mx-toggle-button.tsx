@@ -34,7 +34,7 @@ export class MxToggleButton {
       >
         <button
           class={
-            'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-xl overflow-hidden cursor-pointer' +
+            'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer' +
             (this.selected ? ' selected' : '')
           }
           ref={el => (this.btnElem = el as HTMLButtonElement)}

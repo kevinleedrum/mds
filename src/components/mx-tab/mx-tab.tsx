@@ -71,11 +71,11 @@ export class MxTab implements IMxTabProps {
             {!this.isTextOnly && (
               <span class="flex items-center space-x-6">
                 {!this.label && this.badge && this.badgeEl}
-                {this.icon && <i class={this.icon + ' text-xl' + (!this.label ? ' icon-only' : '')}></i>}
+                {this.icon && <i class={this.icon + ' text-1' + (!this.label ? ' icon-only' : '')}></i>}
               </span>
             )}
             {this.label && (
-              <span class="flex items-center uppercase text-sm font-semibold leading-4 tracking-1-25 space-x-6">
+              <span class="flex items-center uppercase text-4 font-semibold leading-4 tracking-1-25 space-x-6">
                 {this.badge && this.badgeEl}
                 <span>{this.label}</span>
               </span>
