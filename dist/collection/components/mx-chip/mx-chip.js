@@ -50,7 +50,7 @@ export class MxChip {
     return this.clickable || this.choice || this.filter;
   }
   get chipClass() {
-    let str = 'h-32 inline-grid items-center outline-none leading-none gap-8 grid-flow-col relative rounded-full text-sm overflow-hidden';
+    let str = 'h-32 inline-grid items-center outline-none leading-none gap-8 grid-flow-col relative rounded-full text-4 overflow-hidden';
     if (this.choice)
       str += ' choice';
     if (this.filter)
@@ -85,7 +85,7 @@ export class MxChip {
     return (h(Host, { class: "mx-chip inline-block" },
       h("div", { ref: el => (this.chipElem = el), class: this.chipClass, "aria-checked": this.selected, "aria-disabled": this.disabled, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) },
         this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" },
-          this.icon && h("i", { class: this.icon + ' text-xl' }),
+          this.icon && h("i", { class: this.icon + ' text-1' }),
           this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" },
             h("span", { innerHTML: checkSvg }))))),
         h("span", null,

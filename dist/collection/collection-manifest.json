@@ -9,6 +9,7 @@
     "./components/mx-chip-group/mx-chip-group.js",
     "./components/mx-circular-progress/mx-circular-progress.js",
     "./components/mx-fab/mx-fab.js",
+    "./components/mx-icon-button/mx-icon-button.js",
     "./components/mx-input/mx-input.js",
     "./components/mx-linear-progress/mx-linear-progress.js",
     "./components/mx-radio/mx-radio.js",

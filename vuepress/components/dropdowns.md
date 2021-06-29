@@ -143,7 +143,7 @@
 <section class="mds">
   <div>
     <div class="my-20 w-192">
-      <label for="favorite-animal" class="block text-sm mb-4 font-semibold tracking-0-4">
+      <label for="favorite-animal" class="block text-4 mb-4 font-semibold tracking-0-4">
         Favorite Animal
       </label>
       <mx-select

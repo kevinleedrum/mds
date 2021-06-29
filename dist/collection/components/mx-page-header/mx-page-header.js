@@ -78,13 +78,13 @@ export class MxPageHeader {
       const isTertiary = index === 2;
       return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' },
         isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" },
-          h("mx-button", { ref: el => (this.menuButton = el), "btn-type": "icon", innerHTML: dotsSvg }))),
+          h("mx-icon-button", { ref: el => (this.menuButton = el), innerHTML: dotsSvg }))),
         h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {
     return (h(Host, { class: this.hostClass },
-      h("slot", { name: "previous-page" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "flex items-center pt-16 md:pt-20 uppercase text-xs font-semibold tracking-1-25" },
+      h("slot", { name: "previous-page" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25" },
         h("span", { class: "mr-10", innerHTML: arrowSvg }),
         this.previousPageTitle))),
       h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" },

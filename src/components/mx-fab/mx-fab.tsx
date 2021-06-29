@@ -46,7 +46,7 @@ export class MxFab {
   }
 
   get slotWrapperClass() {
-    let str = 'flex items-center text-sm tracking-1-25 leading-4 uppercase font-semibold';
+    let str = 'flex items-center text-4 tracking-1-25 leading-4 uppercase font-semibold';
     if (this.isExtended && this.icon) str += ' ml-12';
     return str;
   }
@@ -62,7 +62,7 @@ export class MxFab {
           aria-label={this.ariaLabel}
           onClick={this.onClick.bind(this)}
         >
-          {this.icon && <i class={this.icon + ' text-xl'}></i>}
+          {this.icon && <i class={this.icon + ' text-1'}></i>}
           <div class={this.slotWrapperClass}>
             <slot />
           </div>

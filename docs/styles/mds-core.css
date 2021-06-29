@@ -77,10 +77,10 @@
   /* Icon Buttons */
   --mds-bg-btn-icon-active: #d7d7d7;
   --mds-bg-btn-icon-disabled: transparent;
-  --mds-bg-btn-icon-dropdown-active: #dcdcdc;
-  --mds-bg-btn-icon-dropdown-focus: #dcdcdc;
-  --mds-bg-btn-icon-dropdown-hover: #f3f3f3;
-  --mds-bg-btn-icon-dropdown: #fff;
+  --mds-bg-btn-icon-chevron-active: #dcdcdc;
+  --mds-bg-btn-icon-chevron-focus: #dcdcdc;
+  --mds-bg-btn-icon-chevron-hover: #f3f3f3;
+  --mds-bg-btn-icon-chevron: #fff;
   --mds-bg-btn-icon-focus: #d7d7d7;
   --mds-bg-btn-icon-hover: #eeeeee;
   --mds-bg-btn-icon: transparent;
@@ -798,96 +798,6 @@ video {
 
   --tw-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
-h1 {
-      font-size: 3.75rem;
-      letter-spacing: -0.5px;
-      font-weight: bold;
-      line-height: 4.5rem;
-      margin-bottom: 1.5rem;
-    }
-h1.xl {
-      font-size: 6rem;
-      letter-spacing: -1.5px;
-      font-weight: bold;
-      line-height: 7.5rem;
-      margin-bottom: 1.5rem;
-    }
-h2 {
-      font-size: 3rem;
-      line-height: 64px;
-      font-weight: 600;
-      line-height: 4rem;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-h3 {
-      font-size: 2.5rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: normal;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-h3.emphasis {
-      font-size: 2.5rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: bold;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-h4 {
-      font-size: 2.25rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: normal;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-h4.emphasis {
-      font-size: 2.25rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: 600;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-h5 {
-      font-size: 1.5rem;
-      line-height: 2.5rem;
-      font-weight: normal;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-h5.emphasis {
-      font-size: 1.5rem;
-      line-height: 2.5rem;
-      font-weight: 800;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-h6 {
-      font-size: 1.125rem;
-      letter-spacing: 0.25px;
-      line-height: 1.5rem;
-      font-weight: normal;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-h6.emphasis {
-      font-size: 1.125rem;
-      letter-spacing: 0.25px;
-      line-height: 1.5rem;
-      font-weight: bold;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-p{
-
-  margin-top: 1.5rem;
-
-  margin-bottom: 1.5rem;
-}
 .container{
 
   width: 100%;
@@ -925,193 +835,6 @@ p{
 
     max-width: 1536px;
   }
-}
-.text-h1.xl {
-      font-size: 6rem;
-      letter-spacing: -1.5px;
-      font-weight: bold;
-      line-height: 7.5rem;
-      margin-bottom: 1.5rem;
-    }
-.text-h3 {
-      font-size: 2.5rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: normal;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-.text-h3.emphasis {
-      font-size: 2.5rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: bold;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-.text-h4.emphasis {
-      font-size: 2.25rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: 600;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-.text-h5 {
-      font-size: 1.5rem;
-      line-height: 2.5rem;
-      font-weight: normal;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-.text-h5.emphasis {
-      font-size: 1.5rem;
-      line-height: 2.5rem;
-      font-weight: 800;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-.text-h6 {
-      font-size: 1.125rem;
-      letter-spacing: 0.25px;
-      line-height: 1.5rem;
-      font-weight: normal;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-.text-h6.emphasis {
-      font-size: 1.125rem;
-      letter-spacing: 0.25px;
-      line-height: 1.5rem;
-      font-weight: bold;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-.subtitle1{
-
-  font-size: 1rem;
-
-  line-height: 1.5rem;
-
-  letter-spacing: 0.009rem;
-
-  font-weight: 600;
-
-  line-height: 1.5rem;
-
-  letter-spacing: 0.009rem;
-}
-.subtitle2{
-
-  font-size: 0.875rem;
-
-  line-height: 1.25rem;
-
-  letter-spacing: 0.016rem;
-
-  font-weight: 600;
-
-  line-height: 1.25rem;
-
-  letter-spacing: 0.025rem;
-}
-.subtitle3{
-
-  font-size: 0.875rem;
-
-  line-height: 1.25rem;
-
-  letter-spacing: 0.016rem;
-
-  font-weight: 800;
-
-  line-height: 1.25rem;
-
-  letter-spacing: 0.025rem;
-}
-.subtitle4{
-
-  font-size: 0.75rem;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.025rem;
-
-  font-weight: 600;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.025rem;
-}
-.subtitle5{
-
-  font-size: 0.625rem;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.019rem;
-
-  font-weight: 700;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.019rem;
-}
-.caption1{
-
-  font-size: 0.75rem;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.025rem;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.019rem;
-}
-.caption2{
-
-  font-size: 0.625rem;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.019rem;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.019rem;
-}
-.overline1{
-
-  font-size: 1.125rem;
-
-  line-height: 1.5rem;
-
-  letter-spacing: 0.031rem;
-
-  font-weight: 600;
-
-  text-transform: uppercase;
-
-  line-height: 1.5rem;
-
-  letter-spacing: 0.094rem;
-}
-.overline2{
-
-  font-size: 0.75rem;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.025rem;
-
-  font-weight: 400;
-
-  text-transform: uppercase;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.094rem;
 }
 .mds .sr-only{
 
@@ -4135,6 +3858,10 @@ p{
 
   margin-right: 0.25rem;
 }
+.mds .mr-8{
+
+  margin-right: 0.5rem;
+}
 .mds .ml-4{
 
   margin-left: 0.25rem;
@@ -4142,10 +3869,6 @@ p{
 .mds .ml-8{
 
   margin-left: 0.5rem;
-}
-.mds .mr-8{
-
-  margin-right: 0.5rem;
 }
 .mds .ml-16{
 
@@ -4839,10 +4562,6 @@ p{
 
   width: 100%;
 }
-.mds .w-48{
-
-  width: 3rem;
-}
 .mds .w-1{
 
   width: 1px;
@@ -4862,6 +4581,10 @@ p{
 .mds .w-40{
 
   width: 2.5rem;
+}
+.mds .w-48{
+
+  width: 3rem;
 }
 .mds .w-36{
 
@@ -5296,6 +5019,18 @@ p{
 .mds .translate-x-1\/2{
 
   --tw-translate-x: 50%;
+
+  transform: var(--tw-transform);
+}
+.mds .rotate-90{
+
+  --tw-rotate: 90deg;
+
+  transform: var(--tw-transform);
+}
+.mds .-rotate-90{
+
+  --tw-rotate: -90deg;
 
   transform: var(--tw-transform);
 }
@@ -9099,7 +8834,7 @@ p{
 
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
-.mds .text-sm{
+.mds .text-4{
 
   font-size: 0.875rem;
 
@@ -9107,7 +8842,7 @@ p{
 
   letter-spacing: 0.016rem;
 }
-.mds .text-base{
+.mds .text-3{
 
   font-size: 1rem;
 
@@ -9115,7 +8850,7 @@ p{
 
   letter-spacing: 0.009rem;
 }
-.mds .text-xl{
+.mds .text-1{
 
   font-size: 1.25rem;
 
@@ -9123,23 +8858,7 @@ p{
 
   letter-spacing: 0.031rem;
 }
-.mds .text-xs{
-
-  font-size: 0.75rem;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.025rem;
-}
-.mds .text-xxs{
-
-  font-size: 0.625rem;
-
-  line-height: 1rem;
-
-  letter-spacing: 0.019rem;
-}
-.mds .text-lg{
+.mds .text-2{
 
   font-size: 1.125rem;
 
@@ -9741,17 +9460,17 @@ p{
 
   mix-blend-mode: luminosity;
 }
-.mds .shadow-1{
+.mds .shadow-4{
 
-  --tw-shadow: 0px 0px 2px rgba(0, 0, 0, 0.04), 0px 2px 2px rgba(0, 0, 0, 0.02), 0px 1px 3px rgba(0, 0, 0, 0.06);
+  --tw-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 5px rgba(0, 0, 0, 0.04), 0px 1px 10px rgba(0, 0, 0, 0.06);
 
   box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
 
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.mds .shadow-4{
+.mds .shadow-1{
 
-  --tw-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 5px rgba(0, 0, 0, 0.04), 0px 1px 10px rgba(0, 0, 0, 0.06);
+  --tw-shadow: 0px 0px 2px rgba(0, 0, 0, 0.04), 0px 2px 2px rgba(0, 0, 0, 0.02), 0px 1px 3px rgba(0, 0, 0, 0.06);
 
   box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
 
@@ -10213,6 +9932,208 @@ p{
 
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+.mds .text-h1 {
+      font-size: 3.5rem;
+      letter-spacing: -0.5px;
+      font-weight: bold;
+      line-height: 4.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .text-h1.xl {
+      font-size: 6rem;
+      letter-spacing: -1.5px;
+      font-weight: bold;
+      line-height: 7.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 6rem;
+      letter-spacing: -1.5px;
+      font-weight: bold;
+      line-height: 7.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .text-h2 {
+      font-size: 3rem;
+      letter-spacing: 0;
+      font-weight: 600;
+      line-height: 4rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .text-h3 {
+      font-size: 2.5rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: normal;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .text-h3.emphasis {
+      font-size: 2.5rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .text-h4 {
+      font-size: 2.25rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: normal;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .text-h4.emphasis {
+      font-size: 2.25rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 2.25rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .text-h5 {
+      font-size: 1.5rem;
+      letter-spacing: 0;
+      line-height: 2.5rem;
+      font-weight: normal;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .text-h5.emphasis {
+      font-size: 1.5rem;
+      letter-spacing: 0;
+      line-height: 2.5rem;
+      font-weight: 800;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      letter-spacing: 0;
+      line-height: 2.5rem;
+      font-weight: 800;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .text-h6 {
+      font-size: 1.125rem;
+      letter-spacing: 0.25px;
+      line-height: 1.5rem;
+      font-weight: normal;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .text-h6.emphasis {
+      font-size: 1.125rem;
+      letter-spacing: 0.25px;
+      line-height: 1.5rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.125rem;
+      letter-spacing: 0.25px;
+      line-height: 1.5rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+.mds .subtitle1{
+
+  font-size: 1rem;
+
+  line-height: 1.5rem;
+
+  letter-spacing: 0.009rem;
+
+  font-weight: 600;
+
+  line-height: 1.5rem;
+
+  letter-spacing: 0.009rem;
+}
+.mds .subtitle2{
+
+  font-size: 0.875rem;
+
+  line-height: 1.25rem;
+
+  letter-spacing: 0.016rem;
+
+  font-weight: 600;
+
+  line-height: 1.25rem;
+
+  letter-spacing: 0.025rem;
+}
+.mds .subtitle3{
+
+  font-size: 0.875rem;
+
+  line-height: 1.25rem;
+
+  letter-spacing: 0.016rem;
+
+  font-weight: 800;
+
+  line-height: 1.25rem;
+
+  letter-spacing: 0.025rem;
+}
+.mds .subtitle4 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1rem;
+      letter-spacing: 0.025rem;
+    }
+.mds .subtitle5 {
+      font-size: 0.625rem;
+      font-weight: 700;
+      line-height: 1rem;
+      letter-spacing: 0.019rem;
+    }
+.mds .caption1 {
+      font-size: 0.75rem;
+      line-height: 1rem;
+      letter-spacing: 0.019rem;
+    }
+.mds .caption2 {
+      font-size: 0.625rem;
+      line-height: 1rem;
+      letter-spacing: 0.019rem;
+    }
+.mds .overline1{
+
+  font-size: 1.125rem;
+
+  line-height: 1.5rem;
+
+  letter-spacing: 0.031rem;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  line-height: 1.5rem;
+
+  letter-spacing: 0.094rem;
+}
+.mds .overline2 {
+      font-size: 0.75rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      line-height: 1rem;
+      letter-spacing: 0.094rem;
+    }
 /***************************
 * Import Component CSS
 ***************************/
@@ -10514,52 +10435,52 @@ p{
         background: var(--mds-bg-btn-text-disabled);
       }
 .mx-button button.text.dropdown:not([aria-disabled]) .slot-content,
-        .mx-button button.text.dropdown:not([aria-disabled]) svg.chevron-icon,
+        .mx-button button.text.dropdown:not([aria-disabled]) .chevron-icon,
         .mx-button a.text.dropdown:not([aria-disabled]) .slot-content,
-        .mx-button a.text.dropdown:not([aria-disabled]) svg.chevron-icon {
+        .mx-button a.text.dropdown:not([aria-disabled]) .chevron-icon {
           color: #2d2d2d;
           color: var(--mds-text-btn-text-dropdown);
         }
-.mx-button button.icon, .mx-button a.icon {
-      color: #434343;
-      color: var(--mds-text-btn-icon);
-      background: transparent;
-      background: var(--mds-bg-btn-icon);
+.mx-icon-button > button {
+  color: #434343;
+  color: var(--mds-text-btn-icon);
+  background: transparent;
+  background: var(--mds-bg-btn-icon);
+}
+.mx-icon-button > button .chevron-wrapper {
+    background: #fff;
+    background: var(--mds-bg-btn-icon-chevron);
+  }
+.mx-icon-button > button:focus:not([aria-disabled]) {
+    background: #d7d7d7;
+    background: var(--mds-bg-btn-icon-focus);
+  }
+.mx-icon-button > button:focus:not([aria-disabled]) .chevron-wrapper {
+      background: #dcdcdc;
+      background: var(--mds-bg-btn-icon-chevron-focus);
     }
-.mx-button button.icon .chevron-wrapper, .mx-button a.icon .chevron-wrapper {
-        background: #fff;
-        background: var(--mds-bg-btn-icon-dropdown);
-      }
-.mx-button button.icon:focus:not([aria-disabled]), .mx-button a.icon:focus:not([aria-disabled]) {
-        background: #d7d7d7;
-        background: var(--mds-bg-btn-icon-focus);
-      }
-.mx-button button.icon:focus:not([aria-disabled]) .chevron-wrapper, .mx-button a.icon:focus:not([aria-disabled]) .chevron-wrapper {
-          background: #dcdcdc;
-          background: var(--mds-bg-btn-icon-dropdown-focus);
-        }
-.mx-button button.icon:hover:not([aria-disabled]), .mx-button a.icon:hover:not([aria-disabled]) {
-        background: #eeeeee;
-        background: var(--mds-bg-btn-icon-hover);
-      }
-.mx-button button.icon:hover:not([aria-disabled]) .chevron-wrapper, .mx-button a.icon:hover:not([aria-disabled]) .chevron-wrapper {
-          background: #f3f3f3;
-          background: var(--mds-bg-btn-icon-dropdown-hover);
-        }
-.mx-button button.icon:active:not([aria-disabled]), .mx-button a.icon:active:not([aria-disabled]) {
-        background: #d7d7d7;
-        background: var(--mds-bg-btn-icon-active);
-      }
-.mx-button button.icon:active:not([aria-disabled]) .chevron-wrapper, .mx-button a.icon:active:not([aria-disabled]) .chevron-wrapper {
-          background: #dcdcdc;
-          background: var(--mds-bg-btn-icon-dropdown-active);
-        }
-.mx-button button.icon[aria-disabled], .mx-button a.icon[aria-disabled] {
-        color: #b5b5b5;
-        color: var(--mds-text-btn-icon-disabled);
-        background: transparent;
-        background: var(--mds-bg-btn-icon-disabled);
-      }
+.mx-icon-button > button:hover:not([aria-disabled]) {
+    background: #eeeeee;
+    background: var(--mds-bg-btn-icon-hover);
+  }
+.mx-icon-button > button:hover:not([aria-disabled]) .chevron-wrapper {
+      background: #f3f3f3;
+      background: var(--mds-bg-btn-icon-chevron-hover);
+    }
+.mx-icon-button > button:active:not([aria-disabled]) {
+    background: #d7d7d7;
+    background: var(--mds-bg-btn-icon-active);
+  }
+.mx-icon-button > button:active:not([aria-disabled]) .chevron-wrapper {
+      background: #dcdcdc;
+      background: var(--mds-bg-btn-icon-chevron-active);
+    }
+.mx-icon-button > button[aria-disabled] {
+    color: #b5b5b5;
+    color: var(--mds-text-btn-icon-disabled);
+    background: transparent;
+    background: var(--mds-bg-btn-icon-disabled);
+  }
 .mx-toggle-button {
   color: #434343;
   color: var(--mds-text-btn-toggle);
@@ -11385,15 +11306,149 @@ span.ripple {
     color: var(--mds-text-link);
   }
 /***************************
+  * Typography
+  ***************************/
+.mds h1 {
+      font-size: 3.5rem;
+      letter-spacing: -0.5px;
+      font-weight: bold;
+      line-height: 4.5rem;
+    }
+.mds h1{
+
+  margin-bottom: 1.5rem;
+}
+.mds h1.xl {
+      font-size: 6rem;
+      letter-spacing: -1.5px;
+      font-weight: bold;
+      line-height: 7.5rem;
+    }
+.mds h1.xl{
+
+  margin-bottom: 1.5rem;
+}
+.mds h2 {
+      font-size: 3rem;
+      letter-spacing: 0;
+      font-weight: 600;
+      line-height: 4rem;
+    }
+.mds h2{
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+}
+.mds h3 {
+      font-size: 2.5rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: normal;
+    }
+.mds h3{
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+}
+.mds h3.emphasis {
+      font-size: 2.5rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: bold;
+    }
+.mds h3.emphasis{
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+}
+.mds h4 {
+      font-size: 2.25rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: normal;
+    }
+.mds h4{
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+}
+.mds h4.emphasis {
+      font-size: 2.25rem;
+      letter-spacing: 0.25px;
+      line-height: 3.5rem;
+      font-weight: 600;
+    }
+.mds h4.emphasis{
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+}
+.mds h5 {
+      font-size: 1.5rem;
+      letter-spacing: 0;
+      line-height: 2.5rem;
+      font-weight: normal;
+    }
+.mds h5{
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+}
+.mds h5.emphasis {
+      font-size: 1.5rem;
+      letter-spacing: 0;
+      line-height: 2.5rem;
+      font-weight: 800;
+    }
+.mds h5.emphasis{
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+}
+.mds h6 {
+      font-size: 1.125rem;
+      letter-spacing: 0.25px;
+      line-height: 1.5rem;
+      font-weight: normal;
+    }
+.mds h6{
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+}
+.mds h6.emphasis {
+      font-size: 1.125rem;
+      letter-spacing: 0.25px;
+      line-height: 1.5rem;
+      font-weight: bold;
+    }
+.mds h6.emphasis{
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+}
+.mds p{
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+}
+/***************************
   * Elevations
   ***************************/
 .mds .elevation0 {
     background: #fafafa;
     border-radius: 8px;
   }
-/***************************
-  * Typography
-  ***************************/
 .mds .elevation1 {
     background: #fafafa;
   }

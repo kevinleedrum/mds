@@ -44,10 +44,6 @@ export namespace Components {
         "value": any;
     }
     interface MxButton {
-        /**
-          * An aria-label is highly recommended for icon buttons
-         */
-        "ariaLabel": string;
         "btnType": BtnType;
         "disabled": boolean;
         /**
@@ -143,6 +139,31 @@ export namespace Components {
           * Style as a secondary action
          */
         "secondary": boolean;
+        "value": string;
+    }
+    interface MxIconButton {
+        /**
+          * An aria-label is highly recommended
+         */
+        "ariaLabel": string;
+        /**
+          * Show downward chevron icon
+         */
+        "chevronDown": boolean;
+        /**
+          * Show left-pointing chevron icon
+         */
+        "chevronLeft": boolean;
+        /**
+          * Show right-pointing chevron icon
+         */
+        "chevronRight": boolean;
+        "disabled": boolean;
+        /**
+          * Class name of icon (for icon font)
+         */
+        "icon": string;
+        "type": 'button' | 'submit' | 'reset';
         "value": string;
     }
     interface MxInput {
@@ -353,6 +374,12 @@ declare global {
         prototype: HTMLMxFabElement;
         new (): HTMLMxFabElement;
     };
+    interface HTMLMxIconButtonElement extends Components.MxIconButton, HTMLStencilElement {
+    }
+    var HTMLMxIconButtonElement: {
+        prototype: HTMLMxIconButtonElement;
+        new (): HTMLMxIconButtonElement;
+    };
     interface HTMLMxInputElement extends Components.MxInput, HTMLStencilElement {
     }
     var HTMLMxInputElement: {
@@ -433,6 +460,7 @@ declare global {
         "mx-chip-group": HTMLMxChipGroupElement;
         "mx-circular-progress": HTMLMxCircularProgressElement;
         "mx-fab": HTMLMxFabElement;
+        "mx-icon-button": HTMLMxIconButtonElement;
         "mx-input": HTMLMxInputElement;
         "mx-linear-progress": HTMLMxLinearProgressElement;
         "mx-page-header": HTMLMxPageHeaderElement;
@@ -483,10 +511,6 @@ declare namespace LocalJSX {
         "value"?: any;
     }
     interface MxButton {
-        /**
-          * An aria-label is highly recommended for icon buttons
-         */
-        "ariaLabel"?: string;
         "btnType"?: BtnType;
         "disabled"?: boolean;
         /**
@@ -590,6 +614,31 @@ declare namespace LocalJSX {
           * Style as a secondary action
          */
         "secondary"?: boolean;
+        "value"?: string;
+    }
+    interface MxIconButton {
+        /**
+          * An aria-label is highly recommended
+         */
+        "ariaLabel"?: string;
+        /**
+          * Show downward chevron icon
+         */
+        "chevronDown"?: boolean;
+        /**
+          * Show left-pointing chevron icon
+         */
+        "chevronLeft"?: boolean;
+        /**
+          * Show right-pointing chevron icon
+         */
+        "chevronRight"?: boolean;
+        "disabled"?: boolean;
+        /**
+          * Class name of icon (for icon font)
+         */
+        "icon"?: string;
+        "type"?: 'button' | 'submit' | 'reset';
         "value"?: string;
     }
     interface MxInput {
@@ -772,6 +821,7 @@ declare namespace LocalJSX {
         "mx-chip-group": MxChipGroup;
         "mx-circular-progress": MxCircularProgress;
         "mx-fab": MxFab;
+        "mx-icon-button": MxIconButton;
         "mx-input": MxInput;
         "mx-linear-progress": MxLinearProgress;
         "mx-page-header": MxPageHeader;
@@ -797,6 +847,7 @@ declare module "@stencil/core" {
             "mx-chip-group": LocalJSX.MxChipGroup & JSXBase.HTMLAttributes<HTMLMxChipGroupElement>;
             "mx-circular-progress": LocalJSX.MxCircularProgress & JSXBase.HTMLAttributes<HTMLMxCircularProgressElement>;
             "mx-fab": LocalJSX.MxFab & JSXBase.HTMLAttributes<HTMLMxFabElement>;
+            "mx-icon-button": LocalJSX.MxIconButton & JSXBase.HTMLAttributes<HTMLMxIconButtonElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
             "mx-linear-progress": LocalJSX.MxLinearProgress & JSXBase.HTMLAttributes<HTMLMxLinearProgressElement>;
             "mx-page-header": LocalJSX.MxPageHeader & JSXBase.HTMLAttributes<HTMLMxPageHeaderElement>;

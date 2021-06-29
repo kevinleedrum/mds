@@ -42,8 +42,8 @@ export class MxTab {
         h("div", { class: "relative flex flex-col items-center justify-center space-y-6 pointer-events-none" },
           !this.isTextOnly && (h("span", { class: "flex items-center space-x-6" },
             !this.label && this.badge && this.badgeEl,
-            this.icon && h("i", { class: this.icon + ' text-xl' + (!this.label ? ' icon-only' : '') }))),
-          this.label && (h("span", { class: "flex items-center uppercase text-sm font-semibold leading-4 tracking-1-25 space-x-6" },
+            this.icon && h("i", { class: this.icon + ' text-1' + (!this.label ? ' icon-only' : '') }))),
+          this.label && (h("span", { class: "flex items-center uppercase text-4 font-semibold leading-4 tracking-1-25 space-x-6" },
             this.badge && this.badgeEl,
             h("span", null, this.label))))),
       h("span", { class: 'active-tab-indicator absolute bottom-0 left-0 w-full h-2 pointer-events-none' +

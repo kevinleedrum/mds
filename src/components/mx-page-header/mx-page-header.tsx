@@ -16,7 +16,7 @@ export interface IPageHeaderButton extends IMxButtonProps {
 export class MxPageHeader {
   buttonRow: HTMLElement;
   hasTabs: boolean = false;
-  menuButton: HTMLMxButtonElement;
+  menuButton: HTMLMxIconButtonElement;
   resizeObserver: ResizeObserver;
   tabSlot: HTMLElement;
   tertiaryButtonWrapper: HTMLElement;
@@ -105,7 +105,7 @@ export class MxPageHeader {
               {/* Tertiary menu (shown when the tertiary button does not fit in the viewport) */}
               {isTertiary && this.renderTertiaryButtonAsMenu && (
                 <div class="absolute !ml-auto -top-6">
-                  <mx-button ref={el => (this.menuButton = el)} btn-type="icon" innerHTML={dotsSvg}></mx-button>
+                  <mx-icon-button ref={el => (this.menuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
                   {/* <mx-menu anchor-el={this.menuButton}>
                     <mx-menu-item {...button}>{button.label}</mx-menu-item>
                   </mx-menu> */}
@@ -135,7 +135,7 @@ export class MxPageHeader {
           {this.previousPageUrl && (
             <a
               href={this.previousPageUrl}
-              class="flex items-center pt-16 md:pt-20 uppercase text-xs font-semibold tracking-1-25"
+              class="flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25"
             >
               <span class="mr-10" innerHTML={arrowSvg}></span>
               {this.previousPageTitle}

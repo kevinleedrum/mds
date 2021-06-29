@@ -33,13 +33,13 @@ const MxFab = class {
     return str;
   }
   get slotWrapperClass() {
-    let str = 'flex items-center text-sm tracking-1-25 leading-4 uppercase font-semibold';
+    let str = 'flex items-center text-4 tracking-1-25 leading-4 uppercase font-semibold';
     if (this.isExtended && this.icon)
       str += ' ml-12';
     return str;
   }
   render() {
-    return (h(Host, { class: 'mx-fab inline-block min-w-max' + (this.minWidths.md ? ' w-56' : ' w-40') }, h("button", { ref: el => (this.buttonElem = el), type: "button", value: this.value, class: this.buttonClass, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, this.icon && h("i", { class: this.icon + ' text-xl' }), h("div", { class: this.slotWrapperClass }, h("slot", null)))));
+    return (h(Host, { class: 'mx-fab inline-block min-w-max' + (this.minWidths.md ? ' w-56' : ' w-40') }, h("button", { ref: el => (this.buttonElem = el), type: "button", value: this.value, class: this.buttonClass, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, this.icon && h("i", { class: this.icon + ' text-1' }), h("div", { class: this.slotWrapperClass }, h("slot", null)))));
   }
   get element() { return getElement(this); }
 };
