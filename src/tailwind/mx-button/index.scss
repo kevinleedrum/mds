@@ -108,44 +108,9 @@
 
       &.dropdown:not([aria-disabled]) {
         .slot-content,
-        svg.chevron-icon {
+        .chevron-icon {
           color: var(--mds-text-btn-text-dropdown);
         }
-      }
-    }
-
-    &.icon {
-      color: var(--mds-text-btn-icon);
-      background: var(--mds-bg-btn-icon);
-
-      .chevron-wrapper {
-        background: var(--mds-bg-btn-icon-dropdown);
-      }
-
-      &:focus:not([aria-disabled]) {
-        background: var(--mds-bg-btn-icon-focus);
-        .chevron-wrapper {
-          background: var(--mds-bg-btn-icon-dropdown-focus);
-        }
-      }
-
-      &:hover:not([aria-disabled]) {
-        background: var(--mds-bg-btn-icon-hover);
-        .chevron-wrapper {
-          background: var(--mds-bg-btn-icon-dropdown-hover);
-        }
-      }
-
-      &:active:not([aria-disabled]) {
-        background: var(--mds-bg-btn-icon-active);
-        .chevron-wrapper {
-          background: var(--mds-bg-btn-icon-dropdown-active);
-        }
-      }
-
-      &[aria-disabled] {
-        color: var(--mds-text-btn-icon-disabled);
-        background: var(--mds-bg-btn-icon-disabled);
       }
     }
   }
