@@ -321,6 +321,67 @@ const MxChipGroup$1 = class extends HTMLElement {
   }; }
 };
 
+const DIAMETER = 44;
+const THICKNESS = 3.6;
+const RADIUS = (DIAMETER - THICKNESS) / 2;
+const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+const MxCircularProgress$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    /** The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. */
+    this.value = null;
+    /** The value to use for the width and height */
+    this.size = '3rem';
+    /** Delay the appearance of the indicator for this many milliseconds */
+    this.appearDelay = 0;
+  }
+  connectedCallback() {
+    if (!this.appearDelay)
+      return;
+    // Hide indicator until appearDelay duration has passed
+    this.element.classList.remove('block');
+    this.element.classList.add('hidden');
+    this.delayTimeout = setTimeout(() => {
+      this.element.classList.remove('hidden');
+      this.element.classList.add('block');
+    }, this.appearDelay);
+  }
+  disconnectedCallback() {
+    clearTimeout(this.delayTimeout);
+  }
+  get hostStyle() {
+    const style = { width: this.size, height: this.size };
+    // Determinate
+    if (this.value != null)
+      style.transform = 'rotate(-90deg)';
+    // Indeterminate
+    else
+      style.animation = 'spin 1.4s linear infinite';
+    return style;
+  }
+  get circleStyle() {
+    const style = { stroke: 'currentColor' };
+    if (this.value != null) {
+      // Determinate
+      style.transition = 'stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      style.strokeDasharray = CIRCUMFERENCE.toFixed(3);
+      style.strokeDashoffset = (((100 - this.value) / 100) * CIRCUMFERENCE).toFixed(3) + 'px';
+    }
+    else {
+      // Indeterminate
+      style.strokeDasharray = '80px, 200px';
+      style.strokeDashoffset = '0';
+      style.animation = 'indeterminate 1.4s ease-in-out infinite';
+    }
+    return style;
+  }
+  render() {
+    return (h(Host, { style: this.hostStyle, class: "mx-circular-progress inline-block pointer-events-none", role: "progressbar", "aria-valuenow": this.value != null ? Math.round(this.value) : null, "aria-valuemin": this.value != null ? 0 : null, "aria-valuemax": this.value != null ? 100 : null }, h("div", { class: "flex items-center justify-center relative h-full p-2" }, h("svg", { class: "absolute", viewBox: [DIAMETER / 2, DIAMETER / 2, DIAMETER, DIAMETER].join(' ') }, h("circle", { style: this.circleStyle, cx: DIAMETER, cy: DIAMETER, r: RADIUS, "stroke-width": THICKNESS, fill: "none" })))));
+  }
+  get element() { return this; }
+};
+
 const SCREENS = {
   'sm': '640px',
   'md': '768px',
@@ -498,6 +559,48 @@ const MxInput$1 = class extends HTMLElement {
   render() {
     return (h(Host, { class: "mx-input" }, h("div", { class: `${this.makeTypeClass()} ${this.isFocused ? 'focused' : ''} ${this.error ? 'error' : ''}`, ref: el => (this.containerElem = el) }, h("div", { class: `mx-input-inner-wrapper ${this.isTextarea()}`, style: this.overrideTextArea() }, this.leftIcon && (h("div", { class: "mds-input-left-content" }, h("i", { class: this.leftIcon }))), this.label && (h("label", { class: this.labelClass, onClick: () => this.focusOnInput() }, this.label)), !this.textarea ? (h("div", { class: "mds-input" }, h("input", { type: this.type, name: this.name, value: this.value, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textInput = el) }))) : (h("textarea", { style: this.returnTaHeight(), name: this.name, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textArea = el) }, this.value)), (this.rightIcon || this.error) && (h("div", { class: "mds-input-right-content" }, this.error ? h("i", { class: "ph-warning-circle" }) : h("i", { class: this.rightIcon }))))), this.assistiveText && h("div", { class: "assistive-text" }, this.assistiveText)));
   }
+};
+
+const MxLinearProgress$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    /** The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. */
+    this.value = null;
+    /** Delay the appearance of the indicator for this many milliseconds */
+    this.appearDelay = 0;
+  }
+  connectedCallback() {
+    if (!this.appearDelay)
+      return;
+    // Hide indicator until appearDelay duration has passed
+    this.element.classList.remove('block');
+    this.element.classList.add('hidden');
+    this.delayTimeout = setTimeout(() => {
+      this.element.classList.remove('hidden');
+      this.element.classList.add('block');
+    }, this.appearDelay);
+  }
+  disconnectedCallback() {
+    clearTimeout(this.delayTimeout);
+  }
+  get determinateBarStyle() {
+    return {
+      transform: `translateX(${this.value - 100}%)`,
+      transition: 'transform 0.4s linear',
+    };
+  }
+  render() {
+    return (h(Host, { class: "mx-linear-progress block h-4 w-full rounded-sm overflow-hidden pointer-events-none", role: "progressbar", "aria-valuenow": this.value != null ? Math.round(this.value) : null, "aria-valuemin": this.value != null ? 0 : null, "aria-valuemax": this.value != null ? 100 : null }, h("div", { class: "relative h-full" }, this.value != null ? (
+    // Determinate
+    h("div", { "data-testid": "determinate", class: "fill h-4 absolute inset-0 rounded-sm", style: this.determinateBarStyle })) : (
+    // Indeterminate has two animated bars with nested animations
+    [
+      h("div", { "data-testid": "indeterminate1", class: "indeterminate1 absolute h-full w-full" }, h("div", { class: "fill absolute w-full h-full rounded-sm" })),
+      h("div", { "data-testid": "indeterminate2", class: "indeterminate2 absolute h-full w-full" }, h("div", { class: "fill absolute w-full h-full rounded-sm" })),
+    ]))));
+  }
+  get element() { return this; }
 };
 
 var resizeObservers = [];
@@ -1121,6 +1224,30 @@ const MxRadio$1 = class extends HTMLElement {
   }
 };
 
+const searchSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8748 3.75C6.93979 3.75 3.74982 6.93997 3.74982 10.875C3.74982 14.81 6.93979 18 10.8748 18C14.8098 18 17.9998 14.81 17.9998 10.875C17.9998 6.93997 14.8098 3.75 10.8748 3.75ZM2.24982 10.875C2.24982 6.11154 6.11136 2.25 10.8748 2.25C15.6383 2.25 19.4998 6.11154 19.4998 10.875C19.4998 15.6385 15.6383 19.5 10.8748 19.5C6.11136 19.5 2.24982 15.6385 2.24982 10.875Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M15.9126 15.913C16.2055 15.6201 16.6804 15.6201 16.9733 15.913L21.5296 20.4693C21.8225 20.7622 21.8225 21.2371 21.5296 21.53C21.2367 21.8229 20.7618 21.8229 20.4689 21.53L15.9126 16.9737C15.6197 16.6808 15.6197 16.2059 15.9126 15.913Z" fill="currentColor"/>
+</svg>
+`;
+
+const MxSearch$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.dense = false;
+    this.flat = false;
+  }
+  get inputClass() {
+    let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
+    str += this.flat ? ' flat' : ' shadow-1';
+    str += this.dense ? ' h-36 py-8 text-sm' : ' h-48 py-12';
+    return str;
+  }
+  render() {
+    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", { type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }), h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
+  }
+};
+
 const arrowSvg = `<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path
     d="M9.9654 0.757212C9.93099 0.681077 9.87273 0.616004 9.79798 0.57022C9.72323 0.524437 9.63535 0.5 9.54545 0.5H0.454547C0.364646 0.5 0.276763 0.524437 0.202012 0.570222C0.127262 0.616007 0.0690015 0.681082 0.0345985 0.757219C0.000195557 0.833357 -0.00880479 0.917136 0.00873577 0.997962C0.0262763 1.07879 0.0695701 1.15303 0.133142 1.2113L4.67859 5.37795C4.7208 5.41665 4.77091 5.44734 4.82605 5.46828C4.8812 5.48922 4.94031 5.5 5 5.5C5.05969 5.5 5.1188 5.48922 5.17394 5.46828C5.22909 5.44734 5.2792 5.41665 5.3214 5.37795L9.86686 1.2113C9.93043 1.15303 9.97372 1.07879 9.99126 0.997958C10.0088 0.917131 9.9998 0.833351 9.9654 0.757212Z"
@@ -1428,10 +1555,13 @@ const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"bt
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined":[4],"disabled":[4],"selected":[516],"clickable":[4],"removable":[4],"avatarUrl":[1,"avatar-url"],"icon":[1],"value":[8],"choice":[4],"filter":[4]}]);
 const MxChipGroup = /*@__PURE__*/proxyCustomElement(MxChipGroup$1, [4,"mx-chip-group",{"value":[1032]},[[0,"click","onChipClick"]]]);
+const MxCircularProgress = /*@__PURE__*/proxyCustomElement(MxCircularProgress$1, [0,"mx-circular-progress",{"value":[2],"size":[1],"appearDelay":[2,"appear-delay"]}]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"ariaLabel":[1,"aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"label":[1],"value":[1],"type":[1],"dense":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
+const MxLinearProgress = /*@__PURE__*/proxyCustomElement(MxLinearProgress$1, [0,"mx-linear-progress",{"value":[2],"appearDelay":[2,"appear-delay"]}]);
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);
 const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
+const MxSearch = /*@__PURE__*/proxyCustomElement(MxSearch$1, [0,"mx-search",{"ariaLabel":[1,"aria-label"],"dense":[4],"flat":[4],"name":[1],"placeholder":[1],"value":[1]}]);
 const MxSelect = /*@__PURE__*/proxyCustomElement(MxSelect$1, [4,"mx-select",{"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elevated":[4],"flat":[4],"label":[1],"ariaLabel":[1,"aria-label"],"selectId":[1,"select-id"],"name":[1],"suffix":[1],"error":[1028],"labelClass":[1025,"label-class"],"value":[1032],"isFocused":[32]}]);
 const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxTab = /*@__PURE__*/proxyCustomElement(MxTab$1, [0,"mx-tab",{"label":[1],"ariaLabel":[1,"aria-label"],"icon":[1],"selected":[516],"badge":[4],"badgeClass":[1,"badge-class"]}]);
@@ -1447,10 +1577,13 @@ const defineCustomElements = (opts) => {
   MxCheckbox,
   MxChip,
   MxChipGroup,
+  MxCircularProgress,
   MxFab,
   MxInput,
+  MxLinearProgress,
   MxPageHeader,
   MxRadio,
+  MxSearch,
   MxSelect,
   MxSwitch,
   MxTab,
@@ -1466,4 +1599,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxFab, MxInput, MxPageHeader, MxRadio, MxSelect, MxSwitch, MxTab, MxTabContent, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxFab, MxInput, MxLinearProgress, MxPageHeader, MxRadio, MxSearch, MxSelect, MxSwitch, MxTab, MxTabContent, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };

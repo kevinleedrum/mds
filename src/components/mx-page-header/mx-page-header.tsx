@@ -135,7 +135,7 @@ export class MxPageHeader {
           {this.previousPageUrl && (
             <a
               href={this.previousPageUrl}
-              class="flex items-center pt-16 md:pt-20 uppercase text-xs font-semibold tracking-1-25"
+              class="flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25"
             >
               <span class="mr-10" innerHTML={arrowSvg}></span>
               {this.previousPageTitle}

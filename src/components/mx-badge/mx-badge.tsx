@@ -35,7 +35,7 @@ export class MxBadge {
   }
 
   get badgeClassNames() {
-    let str = 'badge inline-flex items-center justify-center text-sm font-semibold pointer-events-none';
+    let str = 'badge inline-flex items-center justify-center text-4 font-semibold pointer-events-none';
 
     // Border-Radius
     if (this.dot || this.isIconOnly) {

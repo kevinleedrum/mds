@@ -1,4 +1,4 @@
-import { r as registerInstance, c as createEvent, h, H as Host } from './index-eaf28d08.js';
+import { r as registerInstance, c as createEvent, h, H as Host } from './index-51a85981.js';
 import { r as ripple } from './ripple-a99cb795.js';
 
 const removeSvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -119,6 +119,20 @@ export namespace Components {
     interface MxChipGroup {
         "value": any;
     }
+    interface MxCircularProgress {
+        /**
+          * Delay the appearance of the indicator for this many milliseconds
+         */
+        "appearDelay": number;
+        /**
+          * The value to use for the width and height
+         */
+        "size": string;
+        /**
+          * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
+         */
+        "value": number;
+    }
     interface MxFab {
         "ariaLabel": string;
         /**
@@ -148,6 +162,16 @@ export namespace Components {
         "type": string;
         "value": string;
     }
+    interface MxLinearProgress {
+        /**
+          * Delay the appearance of the indicator for this many milliseconds
+         */
+        "appearDelay": number;
+        /**
+          * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
+         */
+        "value": number;
+    }
     interface MxPageHeader {
         /**
           * An array of prop objects for each button.  Use the `label` property to specify the button's inner text.
@@ -170,6 +194,17 @@ export namespace Components {
         "checked": boolean;
         "labelName": string;
         "name": string;
+        "value": string;
+    }
+    interface MxSearch {
+        /**
+          * If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search".
+         */
+        "ariaLabel": string;
+        "dense": boolean;
+        "flat": boolean;
+        "name": string;
+        "placeholder": string;
         "value": string;
     }
     interface MxSelect {
@@ -306,6 +341,12 @@ declare global {
         prototype: HTMLMxChipGroupElement;
         new (): HTMLMxChipGroupElement;
     };
+    interface HTMLMxCircularProgressElement extends Components.MxCircularProgress, HTMLStencilElement {
+    }
+    var HTMLMxCircularProgressElement: {
+        prototype: HTMLMxCircularProgressElement;
+        new (): HTMLMxCircularProgressElement;
+    };
     interface HTMLMxFabElement extends Components.MxFab, HTMLStencilElement {
     }
     var HTMLMxFabElement: {
@@ -318,6 +359,12 @@ declare global {
         prototype: HTMLMxInputElement;
         new (): HTMLMxInputElement;
     };
+    interface HTMLMxLinearProgressElement extends Components.MxLinearProgress, HTMLStencilElement {
+    }
+    var HTMLMxLinearProgressElement: {
+        prototype: HTMLMxLinearProgressElement;
+        new (): HTMLMxLinearProgressElement;
+    };
     interface HTMLMxPageHeaderElement extends Components.MxPageHeader, HTMLStencilElement {
     }
     var HTMLMxPageHeaderElement: {
@@ -329,6 +376,12 @@ declare global {
     var HTMLMxRadioElement: {
         prototype: HTMLMxRadioElement;
         new (): HTMLMxRadioElement;
+    };
+    interface HTMLMxSearchElement extends Components.MxSearch, HTMLStencilElement {
+    }
+    var HTMLMxSearchElement: {
+        prototype: HTMLMxSearchElement;
+        new (): HTMLMxSearchElement;
     };
     interface HTMLMxSelectElement extends Components.MxSelect, HTMLStencilElement {
     }
@@ -378,10 +431,13 @@ declare global {
         "mx-checkbox": HTMLMxCheckboxElement;
         "mx-chip": HTMLMxChipElement;
         "mx-chip-group": HTMLMxChipGroupElement;
+        "mx-circular-progress": HTMLMxCircularProgressElement;
         "mx-fab": HTMLMxFabElement;
         "mx-input": HTMLMxInputElement;
+        "mx-linear-progress": HTMLMxLinearProgressElement;
         "mx-page-header": HTMLMxPageHeaderElement;
         "mx-radio": HTMLMxRadioElement;
+        "mx-search": HTMLMxSearchElement;
         "mx-select": HTMLMxSelectElement;
         "mx-switch": HTMLMxSwitchElement;
         "mx-tab": HTMLMxTabElement;
@@ -510,6 +566,20 @@ declare namespace LocalJSX {
         "onMxInput"?: (event: CustomEvent<any>) => void;
         "value"?: any;
     }
+    interface MxCircularProgress {
+        /**
+          * Delay the appearance of the indicator for this many milliseconds
+         */
+        "appearDelay"?: number;
+        /**
+          * The value to use for the width and height
+         */
+        "size"?: string;
+        /**
+          * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
+         */
+        "value"?: number;
+    }
     interface MxFab {
         "ariaLabel"?: string;
         /**
@@ -539,6 +609,16 @@ declare namespace LocalJSX {
         "type"?: string;
         "value"?: string;
     }
+    interface MxLinearProgress {
+        /**
+          * Delay the appearance of the indicator for this many milliseconds
+         */
+        "appearDelay"?: number;
+        /**
+          * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
+         */
+        "value"?: number;
+    }
     interface MxPageHeader {
         /**
           * An array of prop objects for each button.  Use the `label` property to specify the button's inner text.
@@ -561,6 +641,17 @@ declare namespace LocalJSX {
         "checked"?: boolean;
         "labelName"?: string;
         "name"?: string;
+        "value"?: string;
+    }
+    interface MxSearch {
+        /**
+          * If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search".
+         */
+        "ariaLabel"?: string;
+        "dense"?: boolean;
+        "flat"?: boolean;
+        "name"?: string;
+        "placeholder"?: string;
         "value"?: string;
     }
     interface MxSelect {
@@ -679,10 +770,13 @@ declare namespace LocalJSX {
         "mx-checkbox": MxCheckbox;
         "mx-chip": MxChip;
         "mx-chip-group": MxChipGroup;
+        "mx-circular-progress": MxCircularProgress;
         "mx-fab": MxFab;
         "mx-input": MxInput;
+        "mx-linear-progress": MxLinearProgress;
         "mx-page-header": MxPageHeader;
         "mx-radio": MxRadio;
+        "mx-search": MxSearch;
         "mx-select": MxSelect;
         "mx-switch": MxSwitch;
         "mx-tab": MxTab;
@@ -701,10 +795,13 @@ declare module "@stencil/core" {
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
             "mx-chip": LocalJSX.MxChip & JSXBase.HTMLAttributes<HTMLMxChipElement>;
             "mx-chip-group": LocalJSX.MxChipGroup & JSXBase.HTMLAttributes<HTMLMxChipGroupElement>;
+            "mx-circular-progress": LocalJSX.MxCircularProgress & JSXBase.HTMLAttributes<HTMLMxCircularProgressElement>;
             "mx-fab": LocalJSX.MxFab & JSXBase.HTMLAttributes<HTMLMxFabElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
+            "mx-linear-progress": LocalJSX.MxLinearProgress & JSXBase.HTMLAttributes<HTMLMxLinearProgressElement>;
             "mx-page-header": LocalJSX.MxPageHeader & JSXBase.HTMLAttributes<HTMLMxPageHeaderElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;
+            "mx-search": LocalJSX.MxSearch & JSXBase.HTMLAttributes<HTMLMxSearchElement>;
             "mx-select": LocalJSX.MxSelect & JSXBase.HTMLAttributes<HTMLMxSelectElement>;
             "mx-switch": LocalJSX.MxSwitch & JSXBase.HTMLAttributes<HTMLMxSwitchElement>;
             "mx-tab": LocalJSX.MxTab & JSXBase.HTMLAttributes<HTMLMxTabElement>;

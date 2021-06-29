@@ -78,7 +78,7 @@ export class MxSelect {
 
   get labelClassNames() {
     let str = 'absolute block pointer-events-none mt-0 left-12 px-4';
-    if (this.dense) str += ' dense text-sm';
+    if (this.dense) str += ' dense text-4';
     if (this.isFocused || this.hasValue) str += ' floating';
     if (this.isFocused) str += ' -ml-1'; // prevent shifting due to border-width change
     return (str += ' ' + this.labelClass);
@@ -118,7 +118,7 @@ export class MxSelect {
             {this.iconEl}
           </span>
         </div>
-        {this.assistiveText && <div class="assistive-text text-xs mt-4 ml-16">{this.assistiveText}</div>}
+        {this.assistiveText && <div class="assistive-text caption1 mt-4 ml-16">{this.assistiveText}</div>}
       </Host>
     );
   }
