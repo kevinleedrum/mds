@@ -38,7 +38,7 @@ export class MxIconButton {
   render() {
     const buttonContent = (
       <div class="flex justify-center items-center content-center relative">
-        {this.icon && <i class={['text-xl', this.icon].join(' ')}></i>}
+        {this.icon && <i class={['text-1', this.icon].join(' ')}></i>}
         <span class="slot-content">
           <slot />
         </span>
