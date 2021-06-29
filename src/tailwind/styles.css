@@ -33,6 +33,7 @@
 @import './mx-tab/index.scss';
 @import './mx-select/index.scss';
 @import './mx-page-header/index.scss';
+@import './mx-pagination/index.scss';
 @import './ripple.scss';
 
 /***************************
