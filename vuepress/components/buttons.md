@@ -110,26 +110,57 @@
 
 <<< @/vuepress/components/buttons.md#text-buttons
 
+### Button Properties
+
+| Property   | Attribute  | Description                                 | Type                                           | Default       |
+| ---------- | ---------- | ------------------------------------------- | ---------------------------------------------- | ------------- |
+| `btnType`  | `btn-type` |                                             | `"action" | "contained" | "outlined" | "text"` | `'contained'` |
+| `disabled` | `disabled` |                                             | `boolean`                                      | `false`       |
+| `dropdown` | `dropdown` | Show chevron icon                           | `boolean`                                      | `false`       |
+| `full`     | `full`     | Sets display to flex instead of inline-flex | `boolean`                                      | `false`       |
+| `href`     | `href`     | Create button as link                       | `string`                                       | `undefined`   |
+| `icon`     | `icon`     | Class name of icon                          | `string`                                       | `undefined`   |
+| `target`   | `target`   | Only for link buttons                       | `string`                                       | `undefined`   |
+| `type`     | `type`     |                                             | `"button" | "reset" | "submit"`                | `'button'`    |
+| `value`    | `value`    |                                             | `string`                                       | `undefined`   |
+| `xl`       | `xl`       |                                             | `boolean`                                      | `false`       |
+
 ## Icon Buttons
+
+Icon buttons are round buttons that only contain an icon. The icon can be set three different ways:
+
+- &bull; the class name of an icon in the icon font library (i.e. [Phosphor Icons](/getting-started.html#phosphor-icons)) via the `icon` prop,
+- &bull; an SVG passed into the default slot,
+- &bull; or one of the built-in elevated chevron icons via the `chevron-dropdown`, `chevron-left`, and `chevron-right` props.
 
 <!-- #region icon-buttons -->
 <section class="mds">
   <div class="mt-5">
     <div>
       <div class="flex my-20 items-center">
-        <mx-button btn-type="icon" icon="ph-thumbs-up"></mx-button>
-        <mx-button btn-type="icon" icon="ph-heart"></mx-button>
-        <mx-button btn-type="icon" icon="ph-x"></mx-button>
-        <mx-button btn-type="icon" dropdown></mx-button>
+        <mx-icon-button icon="ph-thumbs-up"></mx-icon-button>
+        <mx-icon-button icon="ph-heart"></mx-icon-button>
+        <mx-icon-button icon="ph-x"></mx-icon-button>
+        <mx-icon-button>
+          <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1 7l4.5 4.5L14 3" stroke="currentColor" stroke-linecap="square"></path></svg>
+        </mx-icon-button>
+        <mx-icon-button chevron-down></mx-icon-button>
+        <mx-icon-button chevron-left></mx-icon-button>
+        <mx-icon-button chevron-right></mx-icon-button>
       </div>
     </div>
     <div>
       <strong>Disabled</strong>
       <div class="flex my-20 items-center">
-        <mx-button btn-type="icon" icon="ph-thumbs-up" disabled></mx-button>
-        <mx-button btn-type="icon" icon="ph-heart" disabled></mx-button>
-        <mx-button btn-type="icon" icon="ph-x" disabled></mx-button>
-        <mx-button btn-type="icon" dropdown disabled></mx-button>
+        <mx-icon-button icon="ph-thumbs-up" disabled></mx-icon-button>
+        <mx-icon-button icon="ph-heart" disabled></mx-icon-button>
+        <mx-icon-button icon="ph-x" disabled></mx-icon-button>
+        <mx-icon-button disabled>
+          <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1 7l4.5 4.5L14 3" stroke="currentColor" stroke-linecap="square"></path></svg>
+        </mx-icon-button>
+        <mx-icon-button chevron-down disabled></mx-icon-button>
+        <mx-icon-button chevron-left disabled></mx-icon-button>
+        <mx-icon-button chevron-right disabled></mx-icon-button>
       </div>
     </div>
   </div>
@@ -138,20 +169,18 @@
 
 <<< @/vuepress/components/buttons.md#icon-buttons
 
-### Button Properties
+### Icon Button Properties
 
-| Property   | Attribute  | Description                                 | Type                                                        | Default       |
-| ---------- | ---------- | ------------------------------------------- | ----------------------------------------------------------- | ------------- |
-| `btnType`  | `btn-type` |                                             | `"action" \| "contained" \| "icon" \| "outlined" \| "text"` | `'contained'` |
-| `disabled` | `disabled` |                                             | `boolean`                                                   | `false`       |
-| `dropdown` | `dropdown` | Show chevron icon                           | `boolean`                                                   | `false`       |
-| `full`     | `full`     | Sets display to flex instead of inline-flex | `boolean`                                                   | `false`       |
-| `href`     | `href`     | Create button as link                       | `string`                                                    | `undefined`   |
-| `icon`     | `icon`     | Class name of icon                          | `string`                                                    | `undefined`   |
-| `target`   | `target`   | Only for link buttons                       | `string`                                                    | `undefined`   |
-| `type`     | `type`     |                                             | `"button" \| "reset" \| "submit"`                           | `'button'`    |
-| `value`    | `value`    |                                             | `string`                                                    | `undefined`   |
-| `xl`       | `xl`       |                                             | `boolean`                                                   | `false`       |
+| Property       | Attribute       | Description                         | Type                            | Default     |
+| -------------- | --------------- | ----------------------------------- | ------------------------------- | ----------- |
+| `ariaLabel`    | `aria-label`    | An aria-label is highly recommended | `string`                        | `undefined` |
+| `chevronDown`  | `chevron-down`  | Show downward chevron icon          | `boolean`                       | `false`     |
+| `chevronLeft`  | `chevron-left`  | Show left-pointing chevron icon     | `boolean`                       | `false`     |
+| `chevronRight` | `chevron-right` | Show right-pointing chevron icon    | `boolean`                       | `false`     |
+| `disabled`     | `disabled`      |                                     | `boolean`                       | `false`     |
+| `icon`         | `icon`          | Class name of icon (for icon font)  | `string`                        | `undefined` |
+| `type`         | `type`          |                                     | `"button" | "reset" | "submit"` | `'button'`  |
+| `value`        | `value`         |                                     | `string`                        | `undefined` |
 
 ## Toggle Buttons
 
@@ -192,12 +221,13 @@ appear as a group. They can act as radio buttons when given a <code>value</code>
 
 ### Toggle Button Properties
 
-| Property   | Attribute  | Description                            | Type      | Default     |
-| ---------- | ---------- | -------------------------------------- | --------- | ----------- |
-| `disabled` | `disabled` |                                        | `boolean` | `false`     |
-| `icon`     | `icon`     |                                        | `string`  | `undefined` |
-| `selected` | `selected` |                                        | `boolean` | `false`     |
-| `value`    | `value`    | Only used inside a toggle button group | `any`     | `undefined` |
+| Property    | Attribute    | Description                            | Type      | Default     |
+| ----------- | ------------ | -------------------------------------- | --------- | ----------- |
+| `ariaLabel` | `aria-label` |                                        | `string`  | `undefined` |
+| `disabled`  | `disabled`   |                                        | `boolean` | `false`     |
+| `icon`      | `icon`       |                                        | `string`  | `undefined` |
+| `selected`  | `selected`   |                                        | `boolean` | `false`     |
+| `value`     | `value`      | Only used inside a toggle button group | `any`     | `undefined` |
 
 ## Toggle Button Groups
 

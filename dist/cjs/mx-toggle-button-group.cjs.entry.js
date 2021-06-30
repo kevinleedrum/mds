@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-c59b4a75.js');
+const index = require('./index-2d451529.js');
 
 const MxToggleButtonGroup = class {
   constructor(hostRef) {

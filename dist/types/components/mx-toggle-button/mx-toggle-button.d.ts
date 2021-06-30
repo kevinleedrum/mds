@@ -3,6 +3,7 @@ export declare class MxToggleButton {
   icon: string;
   selected: boolean;
   disabled: boolean;
+  ariaLabel: string;
   /** Only used inside a toggle button group */
   value: any;
   onClick(e: MouseEvent): void;

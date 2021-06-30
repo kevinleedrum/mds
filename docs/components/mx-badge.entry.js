@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-3b18c5be.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-5253f6cc.js';
 
 const MxBadge = class {
   constructor(hostRef) {
@@ -21,7 +21,7 @@ const MxBadge = class {
     return this.icon && this.value === undefined;
   }
   get badgeClassNames() {
-    let str = 'badge inline-flex items-center justify-center text-sm font-semibold pointer-events-none';
+    let str = 'badge inline-flex items-center justify-center text-4 font-semibold pointer-events-none';
     // Border-Radius
     if (this.dot || this.isIconOnly) {
       str += ' rounded-full';

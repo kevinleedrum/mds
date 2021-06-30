@@ -11,6 +11,7 @@ export class MxToggleButton {
   @Prop() icon: string;
   @Prop({ reflect: true }) selected: boolean = false;
   @Prop() disabled: boolean = false;
+  @Prop() ariaLabel: string;
   /** Only used inside a toggle button group */
   @Prop() value: any;
 
@@ -33,13 +34,14 @@ export class MxToggleButton {
       >
         <button
           class={
-            'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-xl overflow-hidden cursor-pointer' +
+            'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer' +
             (this.selected ? ' selected' : '')
           }
           ref={el => (this.btnElem = el as HTMLButtonElement)}
           aria-disabled={this.disabled}
           role={this.value === undefined ? 'switch' : 'radio'}
           aria-checked={this.selected}
+          aria-label={this.ariaLabel}
           onClick={this.onClick.bind(this)}
         >
           <i class={this.icon}></i>

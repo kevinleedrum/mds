@@ -31,7 +31,7 @@ What this means is that unprefixed utilities (like `uppercase`) take effect on a
 
 Where this approach surprises people most often is that to style something for mobile, you need to use the unprefixed version of a utility, not the `sm:` prefixed version. Don't think of `sm:` as meaning "on small screens", think of it as "at the small _breakpoint_".
 
-Don't use <code className="text-sm font-bold text-gray-800">sm:</code> to target mobile devices
+Don't use <code className="text-4 font-bold text-gray-800">sm:</code> to target mobile devices
 
 ```html
 <!-- This will only center text on screens 640px and wider, not on small screens -->

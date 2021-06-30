@@ -21,12 +21,10 @@ const config = {
     },
     fontSize: {
       // Font size, line-height, and letter-spacing
-      xxs: ['0.625rem', { lineHeight: '1rem', letterSpacing: '0.019rem' }], // 10px / 16px / 0.3px
-      xs: ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.025rem' }], // 12px / 16px / 0.4px
-      sm: ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.016rem' }], // 14px / 20px / 0.25px
-      base: ['1rem', { lineHeight: '1.5rem', letterSpacing: '0.009rem' }], // 16px / 24px / 0.15px
-      lg: ['1.125rem', { lineHeight: '1.5rem', letterSpacing: '0.031rem' }], // 18px / 24px / 0.5px
-      xl: ['1.25rem', { lineHeight: '1.5rem', letterSpacing: '0.031rem' }], // 20px / 24px / 0.5px
+      1: ['1.25rem', { lineHeight: '1.5rem', letterSpacing: '0.031rem' }], // 20px / 24px / 0.5px
+      2: ['1.125rem', { lineHeight: '1.5rem', letterSpacing: '0.031rem' }], // 18px / 24px / 0.5px
+      3: ['1rem', { lineHeight: '1.5rem', letterSpacing: '0.009rem' }], // 16px / 24px / 0.15px
+      4: ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.016rem' }], // 14px / 20px / 0.25px
     },
     letterSpacing: {
       '0': '0rem',
@@ -38,22 +36,6 @@ const config = {
       '0-5': '0.031rem',
       '1-25': '0.078rem',
       '1-5': '0.094rem',
-    },
-    screens: {
-      'sm': '640px',
-      // => @media (min-width: 640px) { ... }
-
-      'md': '720px',
-      // => @media (min-width: 720px) { ... }
-
-      'lg': '1024px',
-      // => @media (min-width: 1024px) { ... }
-
-      'xl': '1280px',
-      // => @media (min-width: 1280px) { ... }
-
-      '2xl': '1536px',
-      // => @media (min-width: 1536px) { ... }
     },
     spacing: {
       0: '0px',
@@ -84,6 +66,7 @@ const config = {
       128: '8rem',
       144: '9rem',
       160: '10rem',
+      164: '10.25rem',
       176: '11rem',
       192: '12rem',
       208: '13rem',
@@ -111,6 +94,12 @@ const config = {
         'primary': 'var(--mds-border-primary)',
         'primary-inverted': 'var(--mds-border-primary-inverted)',
       },
+      backgroundImage: {
+        pattern: 'var(--mds-bg-pattern)',
+      },
+      minHeight: theme => ({
+        ...theme('spacing'), // Extend to include spacing values (e.g. min-h-128)
+      }),
       container: {
         center: true,
       },

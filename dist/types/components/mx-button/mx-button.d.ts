@@ -1,6 +1,17 @@
-export declare type BtnType = 'contained' | 'outlined' | 'action' | 'text' | 'icon';
+export declare type BtnType = 'contained' | 'outlined' | 'action' | 'text';
 export declare type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
-export declare class MxButton {
+export interface IMxButtonProps {
+  btnType?: BtnType;
+  type?: ButtonTypeAttribute;
+  value?: string;
+  disabled?: boolean;
+  xl?: boolean;
+  href?: string;
+  target?: string;
+  full?: boolean;
+  dropdown?: boolean;
+}
+export declare class MxButton implements IMxButtonProps {
   btnElem: HTMLButtonElement;
   anchorElem: HTMLAnchorElement;
   btnType: BtnType;
@@ -20,6 +31,5 @@ export declare class MxButton {
   icon: string;
   onClick(e: MouseEvent): void;
   get buttonClass(): string;
-  get chevronClass(): "ml-4" | "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" | "ml-8";
   render(): any;
 }

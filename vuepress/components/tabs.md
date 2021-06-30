@@ -3,7 +3,7 @@
 The Moxi Design System implements tabs as an `mx-tabs` component with a `tabs` prop that accepts an array of objects to configure each tab. The selected tab index is specified using the `value` prop. The `mx-tabs` component also emits a custom `mxChange`
 event, which contains the newly selected tab index in the `Event.detail` property.
 
-The `mx-tabs` component will render as an `mx-select` when the screen width is less than or equal to 720 px and there are more than two tabs.
+The `mx-tabs` component will render as an `mx-select` when the screen width is less than or equal to 768 px and there are more than two tabs.
 
 <!-- #region tabs -->
   <section class="mds">

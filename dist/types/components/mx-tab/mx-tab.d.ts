@@ -24,5 +24,6 @@ export declare class MxTab implements IMxTabProps {
   onClick(e: MouseEvent): void;
   get tabClass(): string;
   get badgeEl(): any;
+  get isTextOnly(): boolean;
   render(): any;
 }

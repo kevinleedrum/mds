@@ -118,7 +118,7 @@ describe('mx-button as an action button', () => {
   });
 
   it('has a chevron icon', async () => {
-    const icon = root.querySelector('button svg.chevron-icon');
+    const icon = root.querySelector('button [data-testid="chevron"]');
     expect(icon).not.toBeNull();
   });
 });
@@ -140,7 +140,7 @@ describe('mx-button as a text button', () => {
   });
 
   it('has a chevron icon', async () => {
-    const icon = root.querySelector('button svg.chevron-icon');
+    const icon = root.querySelector('button [data-testid="chevron"]');
     expect(icon).not.toBeNull();
   });
 });
@@ -160,46 +160,5 @@ describe('mx-button as an anchor tag', () => {
     const btn = root.querySelector('a');
     expect(btn).not.toBeNull();
     expect(btn.getAttribute('target')).toBeDefined();
-  });
-});
-
-describe('mx-button as an icon button', () => {
-  let page;
-  let root;
-  beforeEach(async () => {
-    page = await newSpecPage({
-      components: [MxButton],
-      html: `<mx-button btn-type="icon" icon="ph-apple-logo"></mx-button>`,
-    });
-    root = page.root;
-  });
-
-  it('is an "icon" button', async () => {
-    const btn = root.querySelector('button');
-    expect(btn.getAttribute('class')).toContain('icon');
-  });
-
-  it('is a 48px-wide circle', async () => {
-    const btn = root.querySelector('button');
-    expect(btn.getAttribute('class')).toContain('w-48');
-    expect(btn.getAttribute('class')).toContain('h-48');
-    expect(btn.getAttribute('class')).toContain('rounded-full');
-  });
-});
-
-describe('mx-button as a dropdown icon button', () => {
-  let page;
-  let root;
-  beforeEach(async () => {
-    page = await newSpecPage({
-      components: [MxButton],
-      html: `<mx-button btn-type="icon" dropdown></mx-button>`,
-    });
-    root = page.root;
-  });
-
-  it('has a chevron icon', async () => {
-    const icon = root.querySelector('button svg.chevron-icon');
-    expect(icon).not.toBeNull();
   });
 });
