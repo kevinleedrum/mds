@@ -22,8 +22,8 @@ export class MxMenuItem {
       return;
     }
     ripple(e, this.btnElem);
-    // Allow ripple to animate for 150ms before closing menu
-    setTimeout(this.mxClick.emit, 150, e);
+    // Allow ripple to animate for 100ms before closing menu
+    setTimeout(this.mxClick.emit, 100, e);
   }
 
   get menuItemClass() {

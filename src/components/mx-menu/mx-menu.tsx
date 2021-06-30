@@ -1,6 +1,6 @@
-import { Component, Host, h, Prop, Element, Watch, Event, EventEmitter, Listen, State } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Event, EventEmitter, Listen, State } from '@stencil/core';
 import { createPopover, PopoverInstance, PopoverPlacement } from '../../utils/popover';
-
+import { fadeScaleIn, fadeOut } from '../transitions';
 @Component({
   tag: 'mx-menu',
   shadow: false,
@@ -21,35 +21,40 @@ export class MxMenu {
   @Listen('mxClick')
   onMenuItemClick() {
     // Close menu after menu item is clicked
-    this.isOpen = false;
+    this.closeMenu();
   }
 
   @Listen('click', { target: 'document', capture: true })
   onClick(e: MouseEvent) {
     if (!this.isOpen && this.anchorEl.contains(e.target as Node)) {
       // Open menu when the anchorEl is clicked
-      this.isOpen = true;
+      this.openMenu();
     } else if (this.isOpen && this.element && !this.element.contains(e.target as Node)) {
       // Close menu when a click occurs outside the menu
-      this.isOpen = false;
+      this.closeMenu();
     }
   }
   @Listen('keydown', { target: 'document' })
   onKeydown(e: KeyboardEvent) {
     if (this.isOpen && e.key === 'Escape') {
       // Close menu on Escape key
-      this.isOpen = false;
+      this.closeMenu();
     }
   }
 
-  @Watch('isOpen')
-  toggleMenu() {
-    if (this.isOpen && this.anchorEl) {
-      this.popoverInstance = createPopover(this.anchorEl, this.element, this.placement);
-    } else if (!this.isOpen && this.popoverInstance) {
-      this.popoverInstance.destroy();
-      this.popoverInstance = null;
-    }
+  async openMenu() {
+    if (!this.anchorEl) return;
+    this.isOpen = true;
+    this.popoverInstance = await createPopover(this.anchorEl, this.element, this.placement);
+    fadeScaleIn(this.element);
+  }
+
+  async closeMenu() {
+    await fadeOut(this.element);
+    this.isOpen = false;
+    if (!this.popoverInstance) return;
+    this.popoverInstance.destroy();
+    this.popoverInstance = null;
   }
 
   connectedCallback() {
