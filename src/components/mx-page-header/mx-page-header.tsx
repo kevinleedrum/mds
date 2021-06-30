@@ -65,8 +65,8 @@ export class MxPageHeader {
   componentDidLoad() {
     this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
     this.resizeObserver.observe(this.element);
-    // HACK: We wait 100ms for layout shifts in order to detect overflow correctly.
-    setTimeout(this.updateRenderTertiaryButtonAsMenu.bind(this), 100);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
 
   get hostClass() {
