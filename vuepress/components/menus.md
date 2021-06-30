@@ -17,7 +17,7 @@
         </mx-menu>
       </div>
       <div>
-        <mx-button ref="actionButton" btn-type="icon" dropdown />
+        <mx-icon-button ref="actionButton" chevron-down />
         <mx-menu ref="actionMenu" placement="bottom-start">
           <mx-menu-item @click="() => {}">New&hellip;</mx-menu-item>
           <mx-menu-item @click="() => {}">Open&hellip;</mx-menu-item>
@@ -29,7 +29,7 @@
         </mx-menu>
       </div>
       <div>
-        <mx-button ref="dotsButton" btn-type="icon" icon="ph-dots-three-outline" />
+        <mx-icon-button ref="dotsButton" icon="ph-dots-three-outline" />
         <mx-menu ref="dotsMenu" dense placement="top-start">
           <mx-menu-item @click="() => {}">Hide</mx-menu-item>
           <mx-menu-item @click="() => {}">Rename</mx-menu-item>
