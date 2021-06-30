@@ -29,7 +29,7 @@ export class MxMenuItem {
   get menuItemClass() {
     let str = 'flex items-center w-full relative cursor-pointer overflow-hidden';
     const isDense = (this.element.parentElement as HTMLMxMenuElement).dense;
-    str += isDense ? ' h-32 text-sm px-8' : ' h-36 px-12';
+    str += isDense ? ' h-32 text-4 px-8' : ' h-36 px-12';
     return str;
   }
 
