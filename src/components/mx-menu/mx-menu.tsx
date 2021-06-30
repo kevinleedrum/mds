@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, Event, EventEmitter, Listen, State } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Listen, State } from '@stencil/core';
 import { createPopover, PopoverInstance, PopoverPlacement } from '../../utils/popover';
 import { fadeScaleIn, fadeOut } from '../transitions';
 @Component({
@@ -15,8 +15,6 @@ export class MxMenu {
   @State() isOpen: boolean = false;
 
   @Element() element: HTMLMxMenuElement;
-
-  @Event() mxClose: EventEmitter<MouseEvent | KeyboardEvent>;
 
   @Listen('mxClick')
   onMenuItemClick() {
