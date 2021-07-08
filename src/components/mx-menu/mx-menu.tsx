@@ -133,7 +133,7 @@ export class MxMenu {
 
   render() {
     return (
-      <Host class={'mx-menu block z-50' + (this.isOpen ? '' : ' hidden')} role="menu">
+      <Host class={'mx-menu block z-50 w-screen sm:w-auto max-w-full' + (this.isOpen ? '' : ' hidden')} role="menu">
         <div ref={el => (this.menuElem = el)} class="flex flex-col py-8 z-10 shadow-9 rounded-lg" role="menu">
           <div
             ref={el => (this.scrollElem = el)}

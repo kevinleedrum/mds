@@ -131,7 +131,7 @@ export class MxMenuItem {
 
   render() {
     return (
-      <Host class={'mx-menu-item block max-w-xs sm:max-w-full' + (!!this.subMenu ? ' has-submenu' : '')}>
+      <Host class={'mx-menu-item block' + (!!this.subMenu ? ' has-submenu' : '')}>
         <div
           ref={el => (this.menuItemElem = el)}
           role="menuitem"
