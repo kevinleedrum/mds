@@ -85,6 +85,7 @@ export class MxDropdownMenu {
             placeholder={this.label}
             readonly
             ref={el => (this.inputElem = el)}
+            tabindex="0"
             type="text"
           />
           <span class={this.suffixClass}>
