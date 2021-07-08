@@ -21,7 +21,7 @@ To nest a Menu inside a Menu Item, add `slot="subMenu"` to the child Menu compon
           <mx-menu-item @click="clickHandler">Copy</mx-menu-item>
           <hr>
           <mx-menu-item>
-            Find
+            Find &amp; Sort
             <mx-menu slot="subMenu">
               <mx-menu-item @click="clickHandler">Find&hellip;</mx-menu-item>
               <mx-menu-item @click="clickHandler">Find Next</mx-menu-item>
