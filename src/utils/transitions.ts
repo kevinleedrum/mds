@@ -36,18 +36,24 @@ export const fadeOut = (el: HTMLElement, duration = 150) => {
 };
 
 /** Fade in and scale from 80% to 100% (Material Fade) */
-export const fadeScaleIn = (el: HTMLElement, duration = 150) => {
-  return executeTransition(el, [FADE_IN, SCALE_IN], duration);
+export const fadeScaleIn = (el: HTMLElement, duration = 150, transformOrigin?: string) => {
+  return executeTransition(el, [FADE_IN, SCALE_IN], duration, transformOrigin);
 };
 
 /** Executes a CSS transition on an element using the provided options and
  * Returns a Promise that resolves once the transition has ended. */
-function executeTransition(el: HTMLElement, transitionOptions: TransitionOptions[], duration): Promise<void> {
-  return new Promise(resolve => {
+function executeTransition(
+  el: HTMLElement,
+  transitionOptions: TransitionOptions[],
+  duration: number,
+  transformOrigin?: string,
+): Promise<void> {
+  return new Promise(async resolve => {
     // Set the start value for each property
     transitionOptions.forEach(transition => {
       setStyleProperty(el, transition.property, transition.startValue);
     });
+    if (transformOrigin) el.style.transformOrigin = transformOrigin;
     requestAnimationFrame(() => {
       // After a tick, change each property and start the transition
       if (!el) return;
@@ -60,8 +66,8 @@ function executeTransition(el: HTMLElement, transitionOptions: TransitionOptions
         setStyleProperty(el, transition.property, transition.endValue);
       });
     });
-    // Resolve once the transition has ended
-    el.addEventListener('transitionend', () => resolve(), { once: true });
+    // Resolve once the duration passes (setTimeout is safer than transition events)
+    setTimeout(resolve, duration);
   });
 }
 

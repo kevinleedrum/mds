@@ -1,0 +1,33 @@
+.mx-dropdown-menu > .dropdown-wrapper {
+  color: var(--mds-text-select);
+  background: var(--mds-bg-select);
+  border-color: var(--mds-border-select);
+
+  &::placeholder {
+    color: var(--mds-text-input-label);
+  }
+
+  .icon-suffix {
+    background: var(--mds-bg-select);
+
+    .suffix {
+      color: var(--mds-text-input-label);
+    }
+  }
+
+  &.elevated {
+    border-color: var(--mds-border-select-elevated);
+  }
+
+  &.flat {
+    border-color: var(--mds-border-select-flat);
+  }
+
+  &:hover:not(.disabled, .error, :focus-within) {
+    border-color: var(--mds-border-select-hover);
+  }
+
+  &:focus-within {
+    border-color: var(--mds-border-select-focus);
+  }
+}

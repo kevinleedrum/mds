@@ -1,14 +1,29 @@
-.mx-menu-item button {
-  min-width: 6rem;
-  background: var(--mds-bg-menu-item);
-  color: var(--mds-text-menu-item);
-  --ripple-color: var(--mds-ripple-menu-item);
+.mx-menu-item {
+  & > div {
+    min-width: 8rem; /* 128px */
+    background: var(--mds-bg-menu-item);
+    color: var(--mds-text-menu-item);
 
-  &:hover:not([aria-disabled]) {
-    background: var(--mds-bg-menu-item-hover);
+    .item-label {
+      color: var(--mds-text-menu-item-label);
+    }
+
+    .check {
+      color: var(--mds-text-menu-item-check);
+    }
+
+    &:focus,
+    &:focus-within {
+      background: var(--mds-bg-menu-item-focus);
+    }
+
+    &[aria-disabled] {
+      color: var(--mds-text-menu-item-disabled);
+    }
   }
 
-  &[aria-disabled] {
-    color: var(--mds-text-menu-item-disabled);
+  &.has-submenu:focus-within {
+    /* Add focused background to menu item when its submenu is focused */
+    background: var(--mds-bg-menu-item-focus);
   }
 }
