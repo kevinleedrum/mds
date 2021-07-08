@@ -49,6 +49,13 @@ export class MxMenu {
 
   @Listen('keydown', { target: 'document' })
   onDocumentKeyDown(e: KeyboardEvent) {
+    // Open menu if Enter or Space is pressed while anchor is focused
+    if (['Enter', ' '].includes(e.key) && this.anchorEl && this.anchorEl.contains(e.target as Node)) {
+      e.preventDefault();
+      e.stopPropagation();
+      (document.activeElement as HTMLElement).click();
+      return;
+    }
     if (!this.isOpen) return;
     // Close menus on Escape key
     if (e.key === 'Escape') this.closeMenu();
