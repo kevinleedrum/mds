@@ -27,9 +27,11 @@ export class MxDropdownMenu {
 
   @Listen('click')
   onClick(e: MouseEvent) {
-    const menuItem = (e.target as HTMLElement).closest('mx-menu-item');
-    if (!menuItem) return;
-    this.value = menuItem.innerText;
+    // Resize the menu width to match the input.  This is done every click in case the input is resized after initial load.
+    this.menu.style.width = this.inputElem.getBoundingClientRect().width + 'px';
+    const clickedMenuItem = (e.target as HTMLElement).closest('mx-menu-item');
+    if (!clickedMenuItem) return;
+    this.value = clickedMenuItem.innerText;
     // Fire native input event for consistency with mx-select
     this.inputElem.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
   }
@@ -37,7 +39,6 @@ export class MxDropdownMenu {
   componentDidLoad() {
     this.updateInputValue();
     this.menu.anchorEl = this.inputElem;
-    this.menu.style.width = this.inputElem.getBoundingClientRect().width + 'px';
   }
   @Watch('value')
   onValueChange() {
