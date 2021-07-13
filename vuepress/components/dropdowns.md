@@ -43,6 +43,43 @@ The options in the menu are represented by [Menu Items](/components/menus.html).
       </div>
     </div>
     <div>
+      <strong>Regular with Suffix</strong>
+      <div class="my-20">
+        <mx-dropdown-menu
+          label="Size of Home"
+          :value="size"
+          suffix="SQFT"
+          @input="size = $event.target.value"
+        >
+          <mx-menu-item></mx-menu-item>
+          <mx-menu-item>&lt; 1000</mx-menu-item>
+          <mx-menu-item>1000-2000</mx-menu-item>
+          <mx-menu-item>2001-3000</mx-menu-item>
+          <mx-menu-item>3001-4000</mx-menu-item>
+          <mx-menu-item>4000+</mx-menu-item>
+        </mx-dropdown-menu>
+      </div>
+    </div>
+    <div>
+      <strong>Dense with Suffix</strong>
+      <div class="my-10">
+        <mx-dropdown-menu
+          label="Size of Home"
+          :value="size"
+          suffix="SQFT"
+          @input="size = $event.target.value"
+          dense
+        >
+          <mx-menu-item></mx-menu-item>
+          <mx-menu-item>&lt; 1000</mx-menu-item>
+          <mx-menu-item>1000-2000</mx-menu-item>
+          <mx-menu-item>2001-3000</mx-menu-item>
+          <mx-menu-item>3001-4000</mx-menu-item>
+          <mx-menu-item>4000+</mx-menu-item>
+        </mx-dropdown-menu>
+      </div>
+    </div>
+    <div>
       <strong>Elevated</strong>
       <div class="my-10">
         <mx-dropdown-menu
