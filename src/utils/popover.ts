@@ -22,7 +22,7 @@ export async function createPopover(
     modifiers: getModifiers(placement, offset),
   });
   return new Promise(resolve => {
-    // Wait a frame for the element's width and height to be accurante and then update
+    // Wait a frame for the element's width and height to be accurate and then update
     // its placement to ensure it is positioned/centered correctly.
     requestAnimationFrame(() => {
       instance.update();

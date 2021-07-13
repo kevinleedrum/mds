@@ -6,6 +6,7 @@ import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
   shadow: false,
 })
 export class MxDropdownMenu {
+  dropdownWrapper: HTMLElement;
   inputElem: HTMLInputElement;
   menu: HTMLMxMenuElement;
 
@@ -28,7 +29,7 @@ export class MxDropdownMenu {
   @Listen('click')
   onClick(e: MouseEvent) {
     // Resize the menu width to match the input.  This is done every click in case the input is resized after initial load.
-    this.menu.style.width = this.inputElem.getBoundingClientRect().width + 'px';
+    this.menu.style.width = this.dropdownWrapper.getBoundingClientRect().width + 'px';
     const clickedMenuItem = (e.target as HTMLElement).closest('mx-menu-item');
     if (!clickedMenuItem) return;
     this.value = clickedMenuItem.innerText;
@@ -38,7 +39,7 @@ export class MxDropdownMenu {
 
   componentDidLoad() {
     this.updateInputValue();
-    this.menu.anchorEl = this.inputElem;
+    this.menu.anchorEl = this.dropdownWrapper;
   }
   @Watch('value')
   onValueChange() {
@@ -87,7 +88,7 @@ export class MxDropdownMenu {
   render() {
     return (
       <Host class="mx-dropdown-menu">
-        <div class={this.dropdownWrapperClass}>
+        <div ref={el => (this.dropdownWrapper = el)} class={this.dropdownWrapperClass}>
           <input
             aria-label={this.ariaLabel || this.label}
             class={this.inputClass}
