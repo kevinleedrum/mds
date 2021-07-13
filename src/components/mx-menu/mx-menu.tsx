@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, Listen, State, Method } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import {
   createPopover,
   PopoverInstance,
@@ -23,10 +23,12 @@ export class MxMenu {
   @Prop() offset: PopoverOffset;
   /** The placement of the menu.  Defaults to `bottom-start` (or `bottom` when the `anchorEl` is an `mx-input`) */
   @Prop() placement: PopoverPlacement;
-
-  @State() isOpen: boolean = false;
+  /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
+  @Prop({ mutable: true }) isOpen: boolean = false;
 
   @Element() element: HTMLMxMenuElement;
+
+  @Event() mxClose: EventEmitter;
 
   @Listen('mxClick')
   onMenuItemClick() {
@@ -89,7 +91,7 @@ export class MxMenu {
   async openMenu() {
     if (this.isOpen || !this.anchorEl) return false;
     this.isOpen = true;
-    const offset: PopoverOffset = this.offset || (this.isSubMenu ? { x: 0, y: -8 } : null); // Offset submenus by -8px to line up menu items
+    const offset: PopoverOffset = this.offset || (this.isSubMenu ? [-8, 0] : null); // Offset submenus by -8px to line up menu items
     const placement = this.placement || this.defaultPlacement;
     this.popoverInstance = await createPopover(this.anchorEl, this.element, placement, offset);
     await fadeScaleIn(this.menuElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
@@ -102,6 +104,7 @@ export class MxMenu {
     if (!this.isOpen) return false;
     this.menuItems.forEach(m => m.closeSubMenu());
     await fadeOut(this.menuElem);
+    this.mxClose.emit();
     this.isOpen = false;
     if (!this.popoverInstance) return true;
     this.popoverInstance.destroy();
@@ -140,8 +143,8 @@ export class MxMenu {
 
   render() {
     return (
-      <Host class={'mx-menu block z-50 w-screen sm:w-auto max-w-full' + (this.isOpen ? '' : ' hidden')} role="menu">
-        <div ref={el => (this.menuElem = el)} class="flex flex-col py-8 z-10 shadow-9 rounded-lg" role="menu">
+      <Host class={'mx-menu block z-50 w-screen sm:w-auto' + (this.isOpen ? '' : ' hidden')} role="menu">
+        <div ref={el => (this.menuElem = el)} class="flex flex-col py-8 shadow-9 rounded-lg">
           <div
             ref={el => (this.scrollElem = el)}
             class="scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain"

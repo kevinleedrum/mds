@@ -45,6 +45,19 @@ export class MxDropdownMenu {
     this.updateInputValue();
   }
 
+  onBlur() {
+    if (this.menu && this.menu.isOpen) return; // Style as focused/active while menu is open
+    this.isFocused = false;
+  }
+
+  onFocus() {
+    this.isFocused = true;
+  }
+
+  onMenuClose() {
+    if (!this.inputElem.contains(document.activeElement)) this.isFocused = false;
+  }
+
   updateInputValue() {
     this.inputElem.value = this.value;
   }
@@ -54,7 +67,7 @@ export class MxDropdownMenu {
     str += this.dense ? ' h-36' : ' h-48';
     if (this.elevated) str += ' elevated shadow-1';
     if (this.flat) str += ' flat';
-    if (this.isFocused) str += ' border-2';
+    if (this.isFocused) str += ' focused border-2';
     return str;
   }
 
@@ -80,8 +93,8 @@ export class MxDropdownMenu {
             class={this.inputClass}
             id={this.dropdownId}
             name={this.name}
-            onBlur={() => (this.isFocused = false)}
-            onFocus={() => (this.isFocused = true)}
+            onBlur={this.onBlur.bind(this)}
+            onFocus={this.onFocus.bind(this)}
             placeholder={this.label}
             readonly
             ref={el => (this.inputElem = el)}
@@ -93,7 +106,12 @@ export class MxDropdownMenu {
             <span data-testid="arrow" innerHTML={arrowSvg}></span>
           </span>
         </div>
-        <mx-menu ref={el => (this.menu = el)} placement="bottom" offset={{ x: 1, y: 0 }}>
+        <mx-menu
+          ref={el => (this.menu = el)}
+          placement="bottom"
+          offset={[0, 1]}
+          onMxClose={this.onMenuClose.bind(this)}
+        >
           <slot></slot>
         </mx-menu>
       </Host>

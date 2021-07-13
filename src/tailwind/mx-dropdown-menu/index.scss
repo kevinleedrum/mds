@@ -1,33 +1,65 @@
 .mx-dropdown-menu > .dropdown-wrapper {
-  color: var(--mds-text-select);
-  background: var(--mds-bg-select);
-  border-color: var(--mds-border-select);
+  color: var(--mds-text-dropdown);
+  background: var(--mds-bg-dropdown);
+  border-color: var(--mds-border-dropdown);
 
   &::placeholder {
-    color: var(--mds-text-input-label);
+    color: var(--mds-text-dropdown-label);
   }
 
   .icon-suffix {
-    background: var(--mds-bg-select);
+    background: var(--mds-bg-dropdown);
 
     .suffix {
-      color: var(--mds-text-input-label);
+      color: var(--mds-text-dropdown-label);
     }
   }
 
   &.elevated {
-    border-color: var(--mds-border-select-elevated);
+    border-color: var(--mds-border-dropdown-elevated);
+
+    &:hover:not(.focused) {
+      border-color: var(--mds-border-dropdown-elevated);
+      background: var(--mds-bg-dropdown-elevated-hover);
+      .icon-suffix {
+        background: var(--mds-bg-dropdown-elevated-hover);
+      }
+    }
+
+    &.focused {
+      border-color: var(--mds-border-dropdown-elevated);
+      background: var(--mds-bg-dropdown-elevated-focus);
+      .icon-suffix {
+        background: var(--mds-bg-dropdown-elevated-focus);
+      }
+    }
   }
 
   &.flat {
-    border-color: var(--mds-border-select-flat);
+    border-color: var(--mds-border-dropdown-flat);
+
+    &:hover:not(.focused) {
+      border-color: var(--mds-border-dropdown-flat);
+      background: var(--mds-bg-dropdown-flat-hover);
+      .icon-suffix {
+        background: var(--mds-bg-dropdown-flat-hover);
+      }
+    }
+
+    &.focused {
+      border-color: var(--mds-border-dropdown-flat-focus);
+      background: var(--mds-bg-dropdown-flat-focus);
+      .icon-suffix {
+        background: var(--mds-bg-dropdown-flat-focus);
+      }
+    }
   }
 
-  &:hover:not(.disabled, .error, :focus-within) {
-    border-color: var(--mds-border-select-hover);
+  &:hover:not(.focused) {
+    border-color: var(--mds-border-dropdown-hover);
   }
 
-  &:focus-within {
-    border-color: var(--mds-border-select-focus);
+  &.focused {
+    border-color: var(--mds-border-dropdown-focus);
   }
 }

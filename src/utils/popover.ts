@@ -6,7 +6,7 @@ import { PreventOverflowModifier } from '@popperjs/core/lib/modifiers/preventOve
 
 export type PopoverPlacement = Placement;
 export type PopoverInstance = PopperInstance;
-export type PopoverOffset = { x: number; y: number };
+export type PopoverOffset = [number, number];
 
 /** Create a popover that is anchored to another element or, if not specified, the body.
  * Returns a Promise that resolves once the popover is rendered and positioned. */
@@ -52,7 +52,7 @@ function getModifiers(placement: PopoverPlacement, offset: PopoverOffset) {
     modifiers.push(<OffsetModifier>{
       name: 'offset',
       options: {
-        offset: [offset.y, offset.x], // Apply specified offset
+        offset, // Apply specified offset
       },
     });
   return modifiers;
