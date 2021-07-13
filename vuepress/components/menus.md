@@ -2,11 +2,11 @@
 
 ## Menus & Menu Items
 
-Menus appear by clicking an "anchor" element and may include sub-menus and checkboxes for multiple selection. Also see [Dropdown Menus](/components/dropdowns.html#dropdown-menus), which use the Menu component internally to allow for a single selection.
+Menus appear by clicking an "anchor" element and may include submenus and checkboxes for multiple selection. Also see [Dropdown Menus](/components/dropdowns.html#dropdown-menus), which use the Menu component internally to allow for a single selection.
 
 By setting the Menu's `anchorEl` prop to a clickable element, the menu will open whenever that element is clicked. By default, the menu will open below the element, aligned to the left edge. The default placement can be changed via the `placement` prop. If the default placement does not have available space for the menu, then the placement will be changed automatically.
 
-To nest a Menu inside a Menu Item, add `slot="subMenu"` to the child Menu component. To add a divider between items, use a traditional `hr` element.
+To nest a Menu inside a Menu Item, add `slot="submenu"` to the child Menu component. To add a divider between items, use a traditional `hr` element.
 
 <!-- #region menus -->
 <section class="mds">
@@ -22,13 +22,13 @@ To nest a Menu inside a Menu Item, add `slot="subMenu"` to the child Menu compon
           <hr>
           <mx-menu-item>
             Find &amp; Sort
-            <mx-menu slot="subMenu">
+            <mx-menu slot="submenu">
               <mx-menu-item @click="clickHandler">Find&hellip;</mx-menu-item>
               <mx-menu-item @click="clickHandler">Find Next</mx-menu-item>
               <mx-menu-item @click="clickHandler">Find Previous</mx-menu-item>
               <mx-menu-item>
                 Sort By
-                <mx-menu slot="subMenu">
+                <mx-menu slot="submenu">
                   <mx-menu-item @click="clickHandler">Name</mx-menu-item>
                   <mx-menu-item checked @click="clickHandler">Date Modified</mx-menu-item>
                   <mx-menu-item @click="clickHandler">Size</mx-menu-item>
@@ -114,6 +114,12 @@ To add checkboxes to Menu Items, add the `multi-select` property, and set the `c
 | --------- | ----------------------------- | ------------------- |
 | `mxClose` | Emitted when the menu closes. | `CustomEvent<void>` |
 
+### Menu Item Events
+
+| Event     | Description                                                                                               | Type                      |
+| --------- | --------------------------------------------------------------------------------------------------------- | ------------------------- |
+| `mxClick` | Fired when an enabled menu item without a submenu is clicked. Used interally to close all ancestor menus. | `CustomEvent<MouseEvent>` |
+
 ### Menu Methods
 
 #### `closeMenu() => Promise<boolean>`
@@ -123,6 +129,16 @@ Close the menu. Returns a promise that resolves to false if the menu was already
 #### `openMenu() => Promise<boolean>`
 
 Open the menu. Returns a promise that resolves to false if the menu was already open.
+
+### Menu Item Methods
+
+#### `closeSubMenu() => Promise<boolean>`
+
+Closes the item's submenu.
+
+#### `focusMenuItem() => Promise<void>`
+
+Focuses the menu item.
 
 <script>
 export default {

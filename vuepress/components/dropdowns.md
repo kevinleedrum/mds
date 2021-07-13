@@ -151,6 +151,20 @@ The options in the menu are represented by [Menu Items](/components/menus.html).
 
 <<< @/vuepress/components/dropdowns.md#dropdown-menus
 
+### Dropdown Menu Properties
+
+| Property     | Attribute     | Description                                           | Type      | Default     |
+| ------------ | ------------- | ----------------------------------------------------- | --------- | ----------- |
+| `ariaLabel`  | `aria-label`  |                                                       | `string`  | `undefined` |
+| `dense`      | `dense`       |                                                       | `boolean` | `false`     |
+| `dropdownId` | `dropdown-id` | The `id` attribute for the internal input element     | `string`  | `undefined` |
+| `elevated`   | `elevated`    | Style as a filter dropdown with a 1dp elevation       | `boolean` | `false`     |
+| `flat`       | `flat`        | Style as a filter dropdown with a "flat" border color | `boolean` | `false`     |
+| `label`      | `label`       |                                                       | `string`  | `undefined` |
+| `name`       | `name`        |                                                       | `string`  | `undefined` |
+| `suffix`     | `suffix`      | Text shown to the left of the arrow                   | `string`  | `undefined` |
+| `value`      | `value`       |                                                       | `any`     | `undefined` |
+
 ## Selects
 
 The `mx-select` component wraps the browser's native `select` element. It is designed to be used within traditional forms. Unlike a [Dropdown Menu](#dropdown-menus), a Select can have a floating label and assistive text, as well as disabled and error states.

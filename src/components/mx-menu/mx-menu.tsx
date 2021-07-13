@@ -132,7 +132,7 @@ export class MxMenu {
   }
 
   get isSubMenu() {
-    return this.element.hasAttribute('slot') && this.element.getAttribute('slot') === 'subMenu';
+    return this.element.hasAttribute('slot') && this.element.getAttribute('slot') === 'submenu';
   }
 
   render() {

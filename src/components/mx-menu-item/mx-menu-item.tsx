@@ -8,8 +8,8 @@ import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 })
 export class MxMenuItem {
   menuItemElem: HTMLElement;
-  subMenu: HTMLMxMenuElement;
-  subMenuDelayTimeout;
+  submenu: HTMLMxMenuElement;
+  submenuDelayTimeout;
 
   /** If `multiSelect` is false, this will render a checkmark on the right side of the menu item.  If both `multiSelect` and `checked` are `true`, then the rendered multi-select checkbox will be checked. */
   @Prop() checked: boolean = false;
@@ -33,15 +33,15 @@ export class MxMenuItem {
     this.closeSiblingSubMenus();
     // Focus menu item on hover for consistent keyboard navigation
     this.focusMenuItem();
-    if (this.subMenu) {
+    if (this.submenu) {
       // Delay opening the submenu when hovering
-      clearTimeout(this.subMenuDelayTimeout);
-      this.subMenuDelayTimeout = setTimeout(this.openSubMenu.bind(this), 150);
+      clearTimeout(this.submenuDelayTimeout);
+      this.submenuDelayTimeout = setTimeout(this.openSubMenu.bind(this), 150);
     }
   }
   @Listen('mouseleave')
   onMouseLeave() {
-    clearTimeout(this.subMenuDelayTimeout);
+    clearTimeout(this.submenuDelayTimeout);
     (document.activeElement as HTMLElement).blur();
   }
 
@@ -52,7 +52,7 @@ export class MxMenuItem {
 
   @Listen('keydown')
   async onKeyDown(e: KeyboardEvent) {
-    if (this.subMenu) return this.onKeyDownSubMenu(e);
+    if (this.submenu) return this.onKeyDownSubMenu(e);
     // Treat Enter or Space as a click
     if (['Enter', ' '].includes(e.key)) {
       e.preventDefault();
@@ -62,7 +62,7 @@ export class MxMenuItem {
   }
 
   componentWillLoad() {
-    this.subMenu = this.element.querySelector('[slot="subMenu"]');
+    this.submenu = this.element.querySelector('[slot="submenu"]');
   }
 
   connectedCallback() {
@@ -73,14 +73,16 @@ export class MxMenuItem {
     minWidthSync.unsubscribeComponent(this);
   }
 
+  /** Close the item's submenu. */
   @Method()
   async closeSubMenu() {
-    if (this.subMenu) {
-      clearTimeout(this.subMenuDelayTimeout);
-      return await this.subMenu.closeMenu();
+    if (this.submenu) {
+      clearTimeout(this.submenuDelayTimeout);
+      return await this.submenu.closeMenu();
     }
   }
 
+  /** Focuses the menu item. */
   @Method()
   async focusMenuItem() {
     if (this.multiSelect) {
@@ -124,15 +126,15 @@ export class MxMenuItem {
   }
 
   async openSubMenu() {
-    if (this.subMenu) {
-      this.subMenu.placement = 'right-start';
-      this.subMenu.anchorEl = this.element;
-      return this.subMenu.openMenu();
+    if (this.submenu) {
+      this.submenu.placement = 'right-start';
+      this.submenu.anchorEl = this.element;
+      return this.submenu.openMenu();
     }
   }
 
   onClick(e: MouseEvent) {
-    if (this.disabled || !!this.subMenu) {
+    if (this.disabled || !!this.submenu) {
       e.stopPropagation();
       e.preventDefault();
       return;
@@ -142,7 +144,7 @@ export class MxMenuItem {
 
   render() {
     return (
-      <Host class={'mx-menu-item block' + (!!this.subMenu ? ' has-submenu' : '')}>
+      <Host class={'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '')}>
         <div
           ref={el => (this.menuItemElem = el)}
           role="menuitem"
@@ -171,7 +173,7 @@ export class MxMenuItem {
               </span>
             </div>
             {this.checked && !this.multiSelect && <span class="check ml-12" innerHTML={checkSvg}></span>}
-            {!!this.subMenu && <span class="transform -rotate-90" innerHTML={arrowSvg}></span>}
+            {!!this.submenu && <span class="transform -rotate-90" innerHTML={arrowSvg}></span>}
           </div>
           {this.multiSelect && (
             <mx-checkbox
@@ -183,7 +185,7 @@ export class MxMenuItem {
             />
           )}
         </div>
-        <slot name="subMenu"></slot>
+        <slot name="submenu"></slot>
       </Host>
     );
   }
