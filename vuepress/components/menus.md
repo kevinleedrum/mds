@@ -91,12 +91,46 @@ To add checkboxes to Menu Items, add the `multi-select` property, and set the `c
 
 ### Menu Properties
 
+| Property    | Attribute   | Description                                                                                                                                  | Type                                                                                                                                                                                           | Default          |
+| ----------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `anchorEl`  | --          | The element that will open the menu when clicked                                                                                             | `HTMLElement`                                                                                                                                                                                  | `undefined`      |
+| `isOpen`    | `is-open`   | This is set to true automatically when the `anchorEl` is clicked. Dropdown menus read this prop internally for styling purposes.             | `boolean`                                                                                                                                                                                      | `false`          |
+| `offset`    | --          | An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`. The second is the distance from the `anchorEl`. | `[number, number]`                                                                                                                                                                             | `undefined`      |
+| `placement` | `placement` | The placement of the menu, relative to the `anchorEl`.                                                                                       | `"auto" | "auto-end" | "auto-start" | "bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"` | `'bottom-start'` |
+
+### Menu Item Properties
+
+| Property      | Attribute      | Description                                                                                                                                                                                          | Type      | Default     |
+| ------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
+| `checked`     | `checked`      | If `multiSelect` is false, this will render a checkmark on the right side of the menu item. If both `multiSelect` and `checked` are `true`, then the rendered multi-select checkbox will be checked. | `boolean` | `false`     |
+| `disabled`    | `disabled`     |                                                                                                                                                                                                      | `boolean` | `false`     |
+| `icon`        | `icon`         | The class name of the icon to display on the left. This is sometimes automatically set to `null` to add an empty icon for alignment purposes (when a sibling menu item has an icon).                 | `string`  | `undefined` |
+| `label`       | `label`        | A label to display above the menu item                                                                                                                                                               | `string`  | `undefined` |
+| `multiSelect` | `multi-select` | Render a checkbox as part of the menu item. On small screens, the checkbox will appear on the left; otherwise, it will be on the right.                                                              | `boolean` | `false`     |
+
+### Menu Events
+
+| Event     | Description                   | Type                |
+| --------- | ----------------------------- | ------------------- |
+| `mxClose` | Emitted when the menu closes. | `CustomEvent<void>` |
+
+### Menu Methods
+
+#### `closeMenu() => Promise<boolean>`
+
+Close the menu. Returns a promise that resolves to false if the menu was already closed.
+
+#### `openMenu() => Promise<boolean>`
+
+Open the menu. Returns a promise that resolves to false if the menu was already open.
+
 <script>
 export default {
   mounted() {
     // #region menus-anchorEl
-    // For JSX-based frameworks, the anchorEl can be set within the template.
+    // For JSX-based frameworks, you may be able to set the anchorEl within the template.
     // Otherwise, assign the anchorEl property in your script.
+
     this.$refs.editMenu.anchorEl = this.$refs.editButton
     this.$refs.actionMenu.anchorEl = this.$refs.actionButton
   // #endregion menus-anchorEl

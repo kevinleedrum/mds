@@ -19,16 +19,17 @@ export class MxMenu {
 
   /** The element that will open the menu when clicked */
   @Prop() anchorEl: HTMLElement;
-  /** An object with `x` and `y` offsets in pixels */
+  /** An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`.  The second is the distance from the `anchorEl`. */
   @Prop() offset: PopoverOffset;
-  /** The placement of the menu. */
+  /** The placement of the menu, relative to the `anchorEl`. */
   @Prop() placement: PopoverPlacement = 'bottom-start';
   /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
   @Prop({ mutable: true, reflect: true }) isOpen: boolean = false;
 
   @Element() element: HTMLMxMenuElement;
 
-  @Event() mxClose: EventEmitter;
+  /** Emitted when the menu closes. */
+  @Event() mxClose: EventEmitter<void>;
 
   @Listen('mxClick')
   onMenuItemClick() {
