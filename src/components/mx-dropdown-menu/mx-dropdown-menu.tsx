@@ -74,7 +74,7 @@ export class MxDropdownMenu {
 
   get inputClass() {
     let str =
-      'absolute inset-0 w-full pl-16 overflow-hidden outline-none appearance-none bg-transparent cursor-pointer disabled:cursor-auto';
+      'absolute inset-0 w-full pl-16 overflow-hidden outline-none appearance-none select-none bg-transparent cursor-pointer disabled:cursor-auto';
     if (this.isFocused) str += ' -m-1'; // prevent shifting due to border-width change
     return str;
   }
