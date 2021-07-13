@@ -140,7 +140,7 @@ Closes the item's submenu.
 
 Focuses the menu item.
 
-## CSS Variables
+### CSS Variables
 
 <<< @/src/tailwind/variables/index.scss#menus
 
