@@ -24,7 +24,7 @@ export class MxMenu {
   /** The placement of the menu.  Defaults to `bottom-start` (or `bottom` when the `anchorEl` is an `mx-input`) */
   @Prop() placement: PopoverPlacement;
   /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
-  @Prop({ mutable: true }) isOpen: boolean = false;
+  @Prop({ mutable: true, reflect: true }) isOpen: boolean = false;
 
   @Element() element: HTMLMxMenuElement;
 
