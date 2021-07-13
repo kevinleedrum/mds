@@ -1,3 +1,5 @@
+import { queryPrefersReducedMotion } from './utils';
+
 export type TransitionOptions = {
   /** Property to animate */
   property: string;
@@ -49,6 +51,7 @@ function executeTransition(
   transformOrigin?: string,
 ): Promise<void> {
   return new Promise(async resolve => {
+    if (queryPrefersReducedMotion()) return resolve();
     // Set the start value for each property
     transitionOptions.forEach(transition => {
       setStyleProperty(el, transition.property, transition.startValue);
