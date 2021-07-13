@@ -92,8 +92,7 @@ export class MxMenu {
     if (this.isOpen || !this.anchorEl) return false;
     this.isOpen = true;
     const offset: PopoverOffset = this.offset || (this.isSubMenu ? [-8, 0] : null); // Offset submenus by -8px to line up menu items
-    const placement = this.placement || this.defaultPlacement;
-    this.popoverInstance = await createPopover(this.anchorEl, this.element, placement, offset);
+    this.popoverInstance = await createPopover(this.anchorEl, this.element, this.placement, offset);
     await fadeScaleIn(this.menuElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
     return true;
   }
@@ -129,12 +128,6 @@ export class MxMenu {
 
   get menuItems(): HTMLMxMenuItemElement[] {
     return (Array.from(this.scrollElem.querySelectorAll(':scope > mx-menu-item')) || []) as HTMLMxMenuItemElement[];
-  }
-
-  get defaultPlacement() {
-    // TODO: exposed dropdown menu
-    if (this.anchorEl.tagName === 'MX-INPUT') return 'bottom';
-    return 'bottom-start';
   }
 
   get isSubMenu() {
