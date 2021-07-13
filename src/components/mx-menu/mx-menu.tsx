@@ -21,8 +21,8 @@ export class MxMenu {
   @Prop() anchorEl: HTMLElement;
   /** An object with `x` and `y` offsets in pixels */
   @Prop() offset: PopoverOffset;
-  /** The placement of the menu.  Defaults to `bottom-start` (or `bottom` when the `anchorEl` is an `mx-input`) */
-  @Prop() placement: PopoverPlacement;
+  /** The placement of the menu. */
+  @Prop() placement: PopoverPlacement = 'bottom-start';
   /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
   @Prop({ mutable: true, reflect: true }) isOpen: boolean = false;
 
