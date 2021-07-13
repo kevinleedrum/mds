@@ -1,4 +1,5 @@
-import { Component, Host, h, Element, Prop, Event, EventEmitter, Listen, Method } from '@stencil/core';
+import { Component, Host, h, Element, Prop, Event, EventEmitter, Listen, Method, State } from '@stencil/core';
+import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import checkSvg from '../../assets/svg/check.svg';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 @Component({
@@ -13,12 +14,14 @@ export class MxMenuItem {
   /** If `multiSelect` is false, this will render a checkmark on the right side of the menu item.  If both `multiSelect` and `checked` are `true`, then the rendered multi-select checkbox will be checked. */
   @Prop() checked: boolean = false;
   @Prop() disabled: boolean = false;
-  /** The class name of the icon to display on the left.  Internally, this may also be set to `null` to add an empty icon (to align with sibling menu items that have icons). */
+  /** The class name of the icon to display on the left. This is sometimes automatically set to `null` to add an empty icon for alignment purposes (when a sibling menu item has an icon). */
   @Prop() icon: string;
   /** A label to display above the menu item */
   @Prop() label: string;
   /** Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right. */
   @Prop() multiSelect: boolean = false;
+
+  @State() minWidths = new MinWidths();
 
   @Element() element: HTMLMxMenuItemElement;
 
@@ -60,6 +63,14 @@ export class MxMenuItem {
 
   componentWillLoad() {
     this.subMenu = this.element.querySelector('[slot="subMenu"]');
+  }
+
+  connectedCallback() {
+    minWidthSync.subscribeComponent(this);
+  }
+
+  disconnectedCallback() {
+    minWidthSync.unsubscribeComponent(this);
   }
 
   @Method()
@@ -165,9 +176,10 @@ export class MxMenuItem {
           {this.multiSelect && (
             <mx-checkbox
               class="flex items-stretch w-full h-48 sm:h-32"
-              label-class="px-12"
+              label-class="pl-12 pr-16"
               checked={this.checked}
               label-name={this.element.innerText}
+              label-left={!this.minWidths.sm}
             />
           )}
         </div>
