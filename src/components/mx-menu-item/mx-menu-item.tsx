@@ -9,6 +9,7 @@ import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 export class MxMenuItem {
   menuItemElem: HTMLElement;
   submenu: HTMLMxMenuElement;
+  slotWrapper: HTMLElement;
   submenuDelayTimeout;
 
   /** If `multiSelect` is false, this will render a checkmark on the right side of the menu item.  If both `multiSelect` and `checked` are `true`, then the rendered multi-select checkbox will be checked. */
@@ -142,6 +143,12 @@ export class MxMenuItem {
     if (!this.multiSelect) this.mxClick.emit(e);
   }
 
+  get checkboxLabel() {
+    // After initial render, the text must be read from the slotWrapper because
+    // this.element.innerText will include both the slot text AND the checkbox label.
+    return (this.slotWrapper || this.element).innerText;
+  }
+
   render() {
     return (
       <Host class={'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '')}>
@@ -169,7 +176,7 @@ export class MxMenuItem {
               {this.icon !== undefined && (
                 <i class={'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon}></i>
               )}
-              <span class="overflow-hidden overflow-ellipsis">
+              <span ref={el => (this.slotWrapper = el)} class="overflow-hidden overflow-ellipsis">
                 <slot></slot>
               </span>
             </div>
@@ -183,7 +190,7 @@ export class MxMenuItem {
               class="flex items-stretch w-full h-48 sm:h-32"
               label-class="pl-12 pr-16"
               checked={this.checked}
-              label-name={this.element.innerText}
+              label-name={this.checkboxLabel}
               label-left={!this.minWidths.sm}
             />
           )}
