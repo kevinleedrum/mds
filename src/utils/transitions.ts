@@ -51,7 +51,7 @@ function executeTransition(
   transformOrigin?: string,
 ): Promise<void> {
   return new Promise(async resolve => {
-    if (queryPrefersReducedMotion() || process.env.JEST_WORKER_ID) return resolve();
+    if (queryPrefersReducedMotion() || typeof jest !== 'undefined') return resolve();
     // Set the start value for each property
     transitionOptions.forEach(transition => {
       setStyleProperty(el, transition.property, transition.startValue);
