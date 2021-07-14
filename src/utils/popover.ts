@@ -41,7 +41,7 @@ function getModifiers(placement: PopoverPlacement, offset: PopoverOffset) {
       },
     },
     <PreventOverflowModifier>{
-      name: 'preventOverflow', // Add shift as needed if there is no room
+      name: 'preventOverflow', // Add skidding offset as needed if there is no room
       options: {
         padding: { top: 32, bottom: 32 },
         boundary: document.body,
