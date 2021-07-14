@@ -148,6 +148,7 @@ export class MxMenuItem {
         <div
           ref={el => (this.menuItemElem = el)}
           role="menuitem"
+          aria-selected={this.checked}
           aria-disabled={this.disabled}
           tabindex={this.disabled || this.multiSelect ? '-1' : '0'}
           class="block w-full cursor-pointer select-none text-4 outline-none"
