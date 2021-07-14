@@ -2,7 +2,6 @@ import '../../../utils/matchMedia.mock';
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { MxDropdownMenu } from '../mx-dropdown-menu';
 import { MxMenuItem } from '../../mx-menu-item/mx-menu-item';
-import { list } from 'postcss';
 
 // Behavior not tested due to spec page testing limitations:
 // - opening the menu when the anchorEl is clicked (because `anchorEl.contains(e.target)` is always false)
