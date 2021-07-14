@@ -150,7 +150,7 @@ export class MxMenuItem {
           role="menuitem"
           aria-disabled={this.disabled}
           tabindex={this.disabled || this.multiSelect ? '-1' : '0'}
-          class="block w-full cursor-pointer text-4 outline-none"
+          class="block w-full cursor-pointer select-none text-4 outline-none"
           onClick={this.onClick.bind(this)}
         >
           {this.label && (
