@@ -128,7 +128,8 @@ export class MxMenu {
   }
 
   get menuItems(): HTMLMxMenuItemElement[] {
-    return (Array.from(this.scrollElem.querySelectorAll(':scope > mx-menu-item')) || []) as HTMLMxMenuItemElement[];
+    return (Array.from(this.scrollElem.children).filter(e => e.tagName === 'MX-MENU-ITEM') ||
+      []) as HTMLMxMenuItemElement[];
   }
 
   get isSubMenu() {

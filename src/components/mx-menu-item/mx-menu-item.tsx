@@ -172,8 +172,10 @@ export class MxMenuItem {
                 <slot></slot>
               </span>
             </div>
-            {this.checked && !this.multiSelect && <span class="check ml-12" innerHTML={checkSvg}></span>}
-            {!!this.submenu && <span class="transform -rotate-90" innerHTML={arrowSvg}></span>}
+            {this.checked && !this.multiSelect && (
+              <span class="check ml-12" data-testid="check" innerHTML={checkSvg}></span>
+            )}
+            {!!this.submenu && <span class="transform -rotate-90" data-testid="arrow" innerHTML={arrowSvg}></span>}
           </div>
           {this.multiSelect && (
             <mx-checkbox
