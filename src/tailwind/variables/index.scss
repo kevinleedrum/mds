@@ -159,6 +159,21 @@
   /* #endregion inputs */
 
   /* #region dropdowns */
+  /* Dropdown Menus */
+  --mds-bg-dropdown-elevated-focus: #f0f0f0;
+  --mds-bg-dropdown-elevated-hover: #f5f5f5;
+  --mds-bg-dropdown-flat-focus: #f0f0f0;
+  --mds-bg-dropdown-flat-hover: #f5f5f5;
+  --mds-bg-dropdown: #fff;
+  --mds-border-dropdown-elevated: transparent;
+  --mds-border-dropdown-flat-focus: transparent;
+  --mds-border-dropdown-flat: #eaeaea;
+  --mds-border-dropdown-focus: #0457af;
+  --mds-border-dropdown-hover: #2d2d2d;
+  --mds-border-dropdown: #a9a9a9;
+  --mds-text-dropdown-label: #7a7a7a;
+  --mds-text-dropdown: #454545;
+
   /* Selects */
   --mds-bg-select: #fff;
   --mds-border-select-elevated: transparent;
@@ -247,6 +262,20 @@
   --mds-text-tab-selected: #0457af;
   --mds-text-tab: #434343;
   /* #endregion tabs */
+
+  /* #region menus */
+  /* Menus & Menu Items */
+  --mds-bg-menu-item-focus: #e0e0e0;
+  --mds-bg-menu-item: transparent;
+  --mds-bg-menu-scroll-thumb: #d4d4d4;
+  --mds-bg-menu: #fafafa;
+  --mds-border-menu-divider: #eaeaea;
+  --mds-text-menu-item-check: #0457af;
+  --mds-text-menu-item-disabled: #909090;
+  --mds-text-menu-item-label: #828282;
+  --mds-text-menu-item: #333;
+  --mds-text-menu-section-label: #0457af;
+  /* #endregion menus */
 
   /* #region page-headers */
   /* Page Headers */

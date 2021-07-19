@@ -32,6 +32,9 @@
 @import './mx-linear-progress/index.scss';
 @import './mx-tab/index.scss';
 @import './mx-select/index.scss';
+@import './mx-dropdown-menu/index.scss';
+@import './mx-menu/index.scss';
+@import './mx-menu-item/index.scss';
 @import './mx-page-header/index.scss';
 @import './ripple.scss';
 

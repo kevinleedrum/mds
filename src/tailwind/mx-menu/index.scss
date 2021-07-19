@@ -1,0 +1,23 @@
+.mx-menu > div {
+  background: var(--mds-bg-menu);
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    background: var(--mds-bg-menu);
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    border: 0.25rem solid var(--mds-bg-menu);
+    background: var(--mds-bg-menu-scroll-thumb);
+  }
+
+  hr {
+    @apply h-8 border-0;
+    border-bottom: 1px solid var(--mds-border-menu-divider);
+  }
+
+  p[role='heading'] {
+    @apply flex items-center h-48 sm:h-32 m-0 px-12 uppercase subtitle5;
+    color: var(--mds-text-menu-section-label);
+  }
+}

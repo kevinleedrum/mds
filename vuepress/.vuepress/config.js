@@ -145,6 +145,7 @@ module.exports = {
         'progress',
         'tabs',
         'dropdowns',
+        'menus',
         'page-headers',
       ],
     },

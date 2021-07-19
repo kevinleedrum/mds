@@ -48,6 +48,7 @@
     "minify:css": "minify dist/styles/mds-core.css > dist/styles/mds-core.min.css"
   },
   "dependencies": {
+    "@popperjs/core": "^2.9.2",
     "@juggle/resize-observer": "^3.3.1",
     "@stencil/core": "^2.0.1",
     "nanoid": "^3.1.22",

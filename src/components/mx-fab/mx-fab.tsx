@@ -1,5 +1,5 @@
 import { Component, Element, Host, h, Prop, State } from '@stencil/core';
-import ripple from '../ripple';
+import ripple from '../../utils/ripple';
 import { MinWidths, minWidthSync } from '../../utils/minWidthSync';
 
 @Component({

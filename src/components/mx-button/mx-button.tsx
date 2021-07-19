@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import ripple from '../ripple';
+import ripple from '../../utils/ripple';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
 
 export type BtnType = 'contained' | 'outlined' | 'action' | 'text';
