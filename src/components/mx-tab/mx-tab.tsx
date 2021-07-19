@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import ripple from '../ripple';
+import ripple from '../../utils/ripple';
 
 export interface IMxTabProps {
   label?: string;

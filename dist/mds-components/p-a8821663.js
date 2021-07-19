@@ -1,0 +1,1 @@
+function e(){const e=window.matchMedia("(prefers-reduced-motion: reduce)");return!e||e.matches}export{e as q}

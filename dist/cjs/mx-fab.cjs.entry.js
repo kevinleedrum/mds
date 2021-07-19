@@ -2,8 +2,8 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-2d451529.js');
-const ripple = require('./ripple-b35647b1.js');
+const index = require('./index-3b63d393.js');
+const ripple = require('./ripple-93b636e3.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 
 const MxFab = class {

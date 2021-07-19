@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-2d451529.js');
+const index = require('./index-3b63d393.js');
 
 const MxBadge = class {
   constructor(hostRef) {

@@ -1,14 +1,11 @@
-import { r as registerInstance, c as createEvent, h, H as Host } from './index-51a85981.js';
-import { r as ripple } from './ripple-a99cb795.js';
+import { r as registerInstance, c as createEvent, h, H as Host } from './index-ede217a8.js';
+import { r as ripple } from './ripple-54ef50dc.js';
+import { c as checkSvg } from './check-754da8c1.js';
 
 const removeSvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M12 10.87L10.87 12L8 9.13L5.13 12L4 10.87L6.87 8L4 5.13L5.13 4L8 6.87L10.87 4L12 5.13L9.13 8L12 10.87ZM8 0C3.58 0 0 3.58 0 8C0 12.42 3.58 16 8 16C12.42 16 16 12.42 16 8C16 3.58 12.42 0 8 0Z" fill="currentColor" />
 </svg>
 `;
-
-const checkSvg = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M6.18875 12.9387L3.06125 9.81125L2 10.8725L6.18875 15.0612L15.1888 6.06125L14.1275 5L6.18875 12.9387Z" fill="currentColor"/>
-</svg>`;
 
 const MxChip = class {
   constructor(hostRef) {
