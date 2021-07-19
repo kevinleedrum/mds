@@ -2,13 +2,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-2d451529.js');
+const index = require('./index-3b63d393.js');
+const utils = require('./utils-a2794400.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
-
-function queryPrefersReducedMotion() {
-  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  return !mediaQuery || mediaQuery.matches;
-}
 
 const MxTabs = class {
   constructor(hostRef) {
@@ -24,7 +20,7 @@ const MxTabs = class {
     minWidthSync.minWidthSync.subscribeComponent(this);
   }
   animateIndicator(tabIndex, previousTabIndex) {
-    if (queryPrefersReducedMotion())
+    if (utils.queryPrefersReducedMotion())
       return;
     if (tabIndex == null || previousTabIndex == null)
       return;

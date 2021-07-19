@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
+import { PopoverOffset, PopoverPlacement } from "./utils/popover";
 import { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
 import { IMxTabProps } from "./components/mx-tab/mx-tab";
 export namespace Components {
@@ -72,6 +73,8 @@ export namespace Components {
     }
     interface MxCheckbox {
         "checked": boolean;
+        "labelClass": string;
+        "labelLeft": boolean;
         "labelName": string;
         "name": string;
         "value": string;
@@ -128,6 +131,29 @@ export namespace Components {
           * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
          */
         "value": number;
+    }
+    interface MxDropdownMenu {
+        "ariaLabel": string;
+        "dense": boolean;
+        /**
+          * The `id` attribute for the internal input element
+         */
+        "dropdownId": string;
+        /**
+          * Style as a filter dropdown with a 1dp elevation
+         */
+        "elevated": boolean;
+        /**
+          * Style as a filter dropdown with a "flat" border color
+         */
+        "flat": boolean;
+        "label": string;
+        "name": string;
+        /**
+          * Text shown to the left of the arrow
+         */
+        "suffix": string;
+        "value": any;
     }
     interface MxFab {
         "ariaLabel": string;
@@ -192,6 +218,59 @@ export namespace Components {
           * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
          */
         "value": number;
+    }
+    interface MxMenu {
+        /**
+          * The element that will open the menu when clicked
+         */
+        "anchorEl": HTMLElement;
+        /**
+          * Close the menu.  Returns a promise that resolves to false if the menu was already closed.
+         */
+        "closeMenu": () => Promise<boolean>;
+        /**
+          * This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes.
+         */
+        "isOpen": boolean;
+        /**
+          * An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`.  The second is the distance from the `anchorEl`.
+         */
+        "offset": PopoverOffset;
+        /**
+          * Open the menu.  Returns a promise that resolves to false if the menu was already open.
+         */
+        "openMenu": () => Promise<boolean>;
+        /**
+          * The placement of the menu, relative to the `anchorEl`.
+         */
+        "placement": PopoverPlacement;
+    }
+    interface MxMenuItem {
+        /**
+          * If `multiSelect` is false, this will render a checkmark on the right side of the menu item.  If both `multiSelect` and `checked` are `true`, then the rendered multi-select checkbox will be checked.
+         */
+        "checked": boolean;
+        /**
+          * Close the item's submenu.
+         */
+        "closeSubMenu": () => Promise<boolean>;
+        "disabled": boolean;
+        /**
+          * Focuses the menu item.
+         */
+        "focusMenuItem": () => Promise<void>;
+        /**
+          * The class name of the icon to display on the left. This is sometimes automatically set to `null` to add an empty icon for alignment purposes (when a sibling menu item has an icon).
+         */
+        "icon": string;
+        /**
+          * A label to display above the menu item
+         */
+        "label": string;
+        /**
+          * Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right.
+         */
+        "multiSelect": boolean;
     }
     interface MxPageHeader {
         /**
@@ -368,6 +447,12 @@ declare global {
         prototype: HTMLMxCircularProgressElement;
         new (): HTMLMxCircularProgressElement;
     };
+    interface HTMLMxDropdownMenuElement extends Components.MxDropdownMenu, HTMLStencilElement {
+    }
+    var HTMLMxDropdownMenuElement: {
+        prototype: HTMLMxDropdownMenuElement;
+        new (): HTMLMxDropdownMenuElement;
+    };
     interface HTMLMxFabElement extends Components.MxFab, HTMLStencilElement {
     }
     var HTMLMxFabElement: {
@@ -391,6 +476,18 @@ declare global {
     var HTMLMxLinearProgressElement: {
         prototype: HTMLMxLinearProgressElement;
         new (): HTMLMxLinearProgressElement;
+    };
+    interface HTMLMxMenuElement extends Components.MxMenu, HTMLStencilElement {
+    }
+    var HTMLMxMenuElement: {
+        prototype: HTMLMxMenuElement;
+        new (): HTMLMxMenuElement;
+    };
+    interface HTMLMxMenuItemElement extends Components.MxMenuItem, HTMLStencilElement {
+    }
+    var HTMLMxMenuItemElement: {
+        prototype: HTMLMxMenuItemElement;
+        new (): HTMLMxMenuItemElement;
     };
     interface HTMLMxPageHeaderElement extends Components.MxPageHeader, HTMLStencilElement {
     }
@@ -459,10 +556,13 @@ declare global {
         "mx-chip": HTMLMxChipElement;
         "mx-chip-group": HTMLMxChipGroupElement;
         "mx-circular-progress": HTMLMxCircularProgressElement;
+        "mx-dropdown-menu": HTMLMxDropdownMenuElement;
         "mx-fab": HTMLMxFabElement;
         "mx-icon-button": HTMLMxIconButtonElement;
         "mx-input": HTMLMxInputElement;
         "mx-linear-progress": HTMLMxLinearProgressElement;
+        "mx-menu": HTMLMxMenuElement;
+        "mx-menu-item": HTMLMxMenuItemElement;
         "mx-page-header": HTMLMxPageHeaderElement;
         "mx-radio": HTMLMxRadioElement;
         "mx-search": HTMLMxSearchElement;
@@ -539,6 +639,8 @@ declare namespace LocalJSX {
     }
     interface MxCheckbox {
         "checked"?: boolean;
+        "labelClass"?: string;
+        "labelLeft"?: boolean;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
@@ -604,6 +706,29 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
+    interface MxDropdownMenu {
+        "ariaLabel"?: string;
+        "dense"?: boolean;
+        /**
+          * The `id` attribute for the internal input element
+         */
+        "dropdownId"?: string;
+        /**
+          * Style as a filter dropdown with a 1dp elevation
+         */
+        "elevated"?: boolean;
+        /**
+          * Style as a filter dropdown with a "flat" border color
+         */
+        "flat"?: boolean;
+        "label"?: string;
+        "name"?: string;
+        /**
+          * Text shown to the left of the arrow
+         */
+        "suffix"?: string;
+        "value"?: any;
+    }
     interface MxFab {
         "ariaLabel"?: string;
         /**
@@ -667,6 +792,51 @@ declare namespace LocalJSX {
           * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
          */
         "value"?: number;
+    }
+    interface MxMenu {
+        /**
+          * The element that will open the menu when clicked
+         */
+        "anchorEl"?: HTMLElement;
+        /**
+          * This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes.
+         */
+        "isOpen"?: boolean;
+        /**
+          * An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`.  The second is the distance from the `anchorEl`.
+         */
+        "offset"?: PopoverOffset;
+        /**
+          * Emitted when the menu closes.
+         */
+        "onMxClose"?: (event: CustomEvent<void>) => void;
+        /**
+          * The placement of the menu, relative to the `anchorEl`.
+         */
+        "placement"?: PopoverPlacement;
+    }
+    interface MxMenuItem {
+        /**
+          * If `multiSelect` is false, this will render a checkmark on the right side of the menu item.  If both `multiSelect` and `checked` are `true`, then the rendered multi-select checkbox will be checked.
+         */
+        "checked"?: boolean;
+        "disabled"?: boolean;
+        /**
+          * The class name of the icon to display on the left. This is sometimes automatically set to `null` to add an empty icon for alignment purposes (when a sibling menu item has an icon).
+         */
+        "icon"?: string;
+        /**
+          * A label to display above the menu item
+         */
+        "label"?: string;
+        /**
+          * Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right.
+         */
+        "multiSelect"?: boolean;
+        /**
+          * Fired when an enabled menu item without a submenu is clicked. Used interally to close all ancestor menus.
+         */
+        "onMxClick"?: (event: CustomEvent<MouseEvent>) => void;
     }
     interface MxPageHeader {
         /**
@@ -820,10 +990,13 @@ declare namespace LocalJSX {
         "mx-chip": MxChip;
         "mx-chip-group": MxChipGroup;
         "mx-circular-progress": MxCircularProgress;
+        "mx-dropdown-menu": MxDropdownMenu;
         "mx-fab": MxFab;
         "mx-icon-button": MxIconButton;
         "mx-input": MxInput;
         "mx-linear-progress": MxLinearProgress;
+        "mx-menu": MxMenu;
+        "mx-menu-item": MxMenuItem;
         "mx-page-header": MxPageHeader;
         "mx-radio": MxRadio;
         "mx-search": MxSearch;
@@ -846,10 +1019,13 @@ declare module "@stencil/core" {
             "mx-chip": LocalJSX.MxChip & JSXBase.HTMLAttributes<HTMLMxChipElement>;
             "mx-chip-group": LocalJSX.MxChipGroup & JSXBase.HTMLAttributes<HTMLMxChipGroupElement>;
             "mx-circular-progress": LocalJSX.MxCircularProgress & JSXBase.HTMLAttributes<HTMLMxCircularProgressElement>;
+            "mx-dropdown-menu": LocalJSX.MxDropdownMenu & JSXBase.HTMLAttributes<HTMLMxDropdownMenuElement>;
             "mx-fab": LocalJSX.MxFab & JSXBase.HTMLAttributes<HTMLMxFabElement>;
             "mx-icon-button": LocalJSX.MxIconButton & JSXBase.HTMLAttributes<HTMLMxIconButtonElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
             "mx-linear-progress": LocalJSX.MxLinearProgress & JSXBase.HTMLAttributes<HTMLMxLinearProgressElement>;
+            "mx-menu": LocalJSX.MxMenu & JSXBase.HTMLAttributes<HTMLMxMenuElement>;
+            "mx-menu-item": LocalJSX.MxMenuItem & JSXBase.HTMLAttributes<HTMLMxMenuItemElement>;
             "mx-page-header": LocalJSX.MxPageHeader & JSXBase.HTMLAttributes<HTMLMxPageHeaderElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;
             "mx-search": LocalJSX.MxSearch & JSXBase.HTMLAttributes<HTMLMxSearchElement>;
