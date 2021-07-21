@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-
+import { uuidv4 } from '../../utils/utils';
 @Component({
   tag: 'mx-input',
   shadow: false,
@@ -8,10 +8,15 @@ export class MxInput {
   containerElem!: HTMLDivElement;
   textInput!: HTMLInputElement;
   textArea!: HTMLTextAreaElement;
+  uuid: string = uuidv4();
 
+  /** The `name` attribute for the text input */
   @Prop() name: string;
+  /** The `id` attribute for the text input */
+  @Prop() inputId: string;
   @Prop() label: string;
   @Prop() value: string;
+  /** The `type` attribute for the text input */
   @Prop() type: string = 'text';
   @Prop() dense: boolean = false;
   @Prop() disabled: boolean = false;
@@ -23,6 +28,7 @@ export class MxInput {
   @Prop({ mutable: true }) labelClass: string = '';
   @Prop({ mutable: true }) error: boolean = false;
   @Prop() assistiveText: string;
+  /** Display a multi-line `textarea` instead of an `input` */
   @Prop() textarea: boolean = false;
   @Prop({ mutable: true }) textareaHeight: string = '250px';
 
@@ -105,7 +111,7 @@ export class MxInput {
               </div>
             )}
             {this.label && (
-              <label class={this.labelClass} onClick={() => this.focusOnInput()}>
+              <label htmlFor={this.inputId || this.uuid} class={this.labelClass} onClick={() => this.focusOnInput()}>
                 {this.label}
               </label>
             )}
@@ -114,6 +120,7 @@ export class MxInput {
                 <input
                   type={this.type}
                   name={this.name}
+                  id={this.inputId || this.uuid}
                   value={this.value}
                   disabled={this.disabled}
                   onFocus={() => this.handleFocus()}
@@ -125,6 +132,7 @@ export class MxInput {
               <textarea
                 style={this.returnTaHeight()}
                 name={this.name}
+                id={this.inputId || this.uuid}
                 disabled={this.disabled}
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
