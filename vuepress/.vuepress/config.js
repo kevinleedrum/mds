@@ -147,6 +147,7 @@ module.exports = {
         'dropdowns',
         'menus',
         'page-headers',
+        'modals',
       ],
     },
   },

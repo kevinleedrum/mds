@@ -1,0 +1,26 @@
+.mx-modal {
+  .modal-backdrop {
+    background: rgba(0, 0, 0, 0.6);
+  }
+  .modal {
+    min-width: 300px;
+    max-width: 800px;
+    max-height: calc(100vh - 80px);
+
+    .modal-header {
+      background: #fefefe;
+    }
+
+    .modal-content {
+      background: #f8f8f8;
+
+      .content-card {
+        background: #fff;
+      }
+    }
+
+    .modal-footer {
+      background: #fefefe;
+    }
+  }
+}

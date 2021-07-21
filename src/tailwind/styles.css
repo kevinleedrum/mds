@@ -36,11 +36,17 @@
 @import './mx-menu/index.scss';
 @import './mx-menu-item/index.scss';
 @import './mx-page-header/index.scss';
+@import './mx-modal/index.scss';
 @import './ripple.scss';
 
 /***************************
 * Custom CSS
 ***************************/
+.mds-portal {
+  position: relative;
+  z-index: 9999;
+}
+
 .mds {
   *:not(code, code *) {
     font-family: 'Open Sans', sans-serif;
