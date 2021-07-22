@@ -6,8 +6,8 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
 
 <br />
 <section class="mds">
-  <div class="flex flex-row flex-nowrap justify-between">
-    <div style="width: 47%;">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-40">
+    <div>
       <strong>Regular</strong>
       <div class="my-20">
         <mx-input label="Placeholder"></mx-input>
@@ -24,8 +24,11 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
       <div class="my-20">
         <mx-input label="Placeholder & Right Icon" value="Some Error" error></mx-input>
       </div>
+      <div class="my-20">
+        <mx-input label="Disabled" assistive-text="This input is disabled" disabled></mx-input>
+      </div>
     </div>
-    <div style="width: 47%;">
+    <div>
       <strong>Dense</strong>
       <div class="my-20">
         <mx-input label="Placeholder" dense></mx-input>
@@ -42,6 +45,9 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
       <div class="my-20">
         <mx-input label="Placeholder & Right Icon" right-icon="ph-apple-logo" value="Some Error" error dense></mx-input>
       </div>
+      <div class="my-20">
+        <mx-input label="Disabled" assistive-text="This input is disabled" disabled dense></mx-input>
+      </div>
     </div>
   </div>
 </section>
@@ -53,23 +59,25 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
 
 ### Properties
 
-| Property              | Attribute               | Description | Type      | Default     |
-| --------------------- | ----------------------- | ----------- | --------- | ----------- |
-| `assistiveText`       | `assistive-text`        |             | `string`  | `undefined` |
-| `dense`               | `dense`                 |             | `boolean` | `false`     |
-| `error`               | `error`                 |             | `boolean` | `false`     |
-| `isActive`            | `is-active`             |             | `boolean` | `false`     |
-| `isFocused`           | `is-focused`            |             | `boolean` | `false`     |
-| `label`               | `label`                 |             | `string`  | `undefined` |
-| `labelClass`          | `label-class`           |             | `string`  | `''`        |
-| `leftIcon`            | `left-icon`             |             | `string`  | `undefined` |
-| `name`                | `name`                  |             | `string`  | `undefined` |
-| `outerContainerClass` | `outer-container-class` |             | `string`  | `''`        |
-| `rightIcon`           | `right-icon`            |             | `string`  | `undefined` |
-| `textarea`            | `textarea`              |             | `boolean` | `false`     |
-| `textareaHeight`      | `textarea-height`       |             | `string`  | `'250px'`   |
-| `type`                | `type`                  |             | `string`  | `'text'`    |
-| `value`               | `value`                 |             | `string`  | `undefined` |
+| Property              | Attribute               | Description                                           | Type      | Default     |
+| --------------------- | ----------------------- | ----------------------------------------------------- | --------- | ----------- |
+| `assistiveText`       | `assistive-text`        |                                                       | `string`  | `undefined` |
+| `dense`               | `dense`                 |                                                       | `boolean` | `false`     |
+| `disabled`            | `disabled`              |                                                       | `boolean` | `false`     |
+| `error`               | `error`                 |                                                       | `boolean` | `false`     |
+| `inputId`             | `input-id`              | The `id` attribute for the text input                 | `string`  | `undefined` |
+| `isActive`            | `is-active`             |                                                       | `boolean` | `false`     |
+| `isFocused`           | `is-focused`            |                                                       | `boolean` | `false`     |
+| `label`               | `label`                 |                                                       | `string`  | `undefined` |
+| `labelClass`          | `label-class`           |                                                       | `string`  | `''`        |
+| `leftIcon`            | `left-icon`             |                                                       | `string`  | `undefined` |
+| `name`                | `name`                  | The `name` attribute for the text input               | `string`  | `undefined` |
+| `outerContainerClass` | `outer-container-class` |                                                       | `string`  | `''`        |
+| `rightIcon`           | `right-icon`            |                                                       | `string`  | `undefined` |
+| `textarea`            | `textarea`              | Display a multi-line `textarea` instead of an `input` | `boolean` | `false`     |
+| `textareaHeight`      | `textarea-height`       |                                                       | `string`  | `'250px'`   |
+| `type`                | `type`                  | The `type` attribute for the text input               | `string`  | `'text'`    |
+| `value`               | `value`                 |                                                       | `string`  | `undefined` |
 
 ## CSS Variables
 
