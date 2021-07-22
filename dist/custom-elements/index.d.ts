@@ -38,6 +38,12 @@ export const MxCircularProgress: {
   new (): MxCircularProgress;
 };
 
+interface MxDropdownMenu extends Components.MxDropdownMenu, HTMLElement {}
+export const MxDropdownMenu: {
+  prototype: MxDropdownMenu;
+  new (): MxDropdownMenu;
+};
+
 interface MxFab extends Components.MxFab, HTMLElement {}
 export const MxFab: {
   prototype: MxFab;
@@ -60,6 +66,18 @@ interface MxLinearProgress extends Components.MxLinearProgress, HTMLElement {}
 export const MxLinearProgress: {
   prototype: MxLinearProgress;
   new (): MxLinearProgress;
+};
+
+interface MxMenu extends Components.MxMenu, HTMLElement {}
+export const MxMenu: {
+  prototype: MxMenu;
+  new (): MxMenu;
+};
+
+interface MxMenuItem extends Components.MxMenuItem, HTMLElement {}
+export const MxMenuItem: {
+  prototype: MxMenuItem;
+  new (): MxMenuItem;
 };
 
 interface MxPageHeader extends Components.MxPageHeader, HTMLElement {}

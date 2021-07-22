@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host } from './index-5253f6cc.js';
+import { r as registerInstance, h, f as Host } from './index-b9cec9f1.js';
 import { c as chevronSvg } from './chevron-down-6a7bb36b.js';
 
 const MxIconButton = class {

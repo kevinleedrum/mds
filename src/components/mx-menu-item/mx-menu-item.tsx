@@ -52,7 +52,7 @@ export class MxMenuItem {
   }
 
   @Listen('keydown')
-  async onKeyDown(e: KeyboardEvent) {
+  onKeyDown(e: KeyboardEvent) {
     if (this.submenu) return this.onKeyDownSubMenu(e);
     // Treat Enter or Space as a click
     if (['Enter', ' '].includes(e.key)) {
@@ -126,7 +126,7 @@ export class MxMenuItem {
     siblingMenuItems.forEach((m: HTMLMxMenuItemElement) => m.closeSubMenu());
   }
 
-  async openSubMenu() {
+  openSubMenu() {
     if (this.submenu) {
       this.submenu.placement = 'right-start';
       this.submenu.anchorEl = this.element;

@@ -5,6 +5,7 @@
 
   .btn-toggle {
     background: var(--mds-bg-btn-toggle);
+    outline-offset: -1px;
 
     &:focus:not([aria-disabled]) {
       background: var(--mds-bg-btn-toggle-focus);

@@ -56,7 +56,8 @@ On smaller screens, the size of the text and buttons will be reduced. Additional
           { label: 'Tab 2' },
           { label: 'Tab 3' },
         ]"
-        value="0"
+        :value="activeTab"
+        @mxChange="e => activeTab = e.detail"
       />
     </mx-page-header>
     <mx-page-header
@@ -75,7 +76,8 @@ On smaller screens, the size of the text and buttons will be reduced. Additional
           { label: 'Tab 2' },
           { label: 'Tab 3' },
         ]"
-        value="0"
+        :value="activeTab"
+        @mxChange="e => activeTab = e.detail"
       />
     </mx-page-header>
   </div>
@@ -99,6 +101,11 @@ On smaller screens, the size of the text and buttons will be reduced. Additional
 
 <script>
 export default {
+  data() {
+    return {
+      activeTab: 0
+    }
+  },
   methods: {
     clickHandlerGoesHere() {
       console.log('Button clicked!')
