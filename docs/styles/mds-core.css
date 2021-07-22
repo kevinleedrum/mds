@@ -156,8 +156,10 @@
   --mds-bg-input: #fff;
   --mds-border-input-error: #ff0c3e;
   --mds-border-input-focus: #0457af;
+  --mds-border-input-hover: #2d2d2d;
   --mds-border-input: #a9a9a9;
   --mds-text-input-assistive: #787878;
+  --mds-text-input-disabled: #a9a9a9;
   --mds-text-input-error: #ff0c3e;
   --mds-text-input-label: #7a7a7a;
   --mds-text-input: #454545;
@@ -5449,6 +5451,10 @@ video {
 
   gap: 1.25rem;
 }
+.mds .gap-40{
+
+  gap: 2.5rem;
+}
 .mds .gap-4{
 
   gap: 0.25rem;
@@ -5496,10 +5502,6 @@ video {
 .mds .gap-28{
 
   gap: 1.75rem;
-}
-.mds .gap-40{
-
-  gap: 2.5rem;
 }
 .mds .gap-44{
 
@@ -10216,6 +10218,16 @@ video {
       color: #ff0c3e;
       color: var(--mds-text-input-error);
     }
+.mx-input .mx-input-wrapper:hover:not(.error, .focused, .disabled) {
+      border: 1px solid #2d2d2d;
+      border: 1px solid var(--mds-border-input-hover);
+    }
+.mx-input .mx-input-wrapper.disabled label,
+    .mx-input .mx-input-wrapper.disabled + .assistive-text {
+      color: #a9a9a9;
+      color: var(--mds-text-input-disabled);
+      cursor: default;
+    }
 .mx-input .mx-input-wrapper label {
       position: absolute;
       left: 10px;
@@ -10232,7 +10244,6 @@ video {
       margin-top: 0px;
       font-size: 16px;
       z-index: 10;
-      cursor: pointer;
     }
 @media (prefers-reduced-motion: reduce) {
 .mx-input .mx-input-wrapper label {
@@ -10544,6 +10555,7 @@ video {
 .mx-toggle-button .btn-toggle {
     background: #fff;
     background: var(--mds-bg-btn-toggle);
+    outline-offset: -1px;
   }
 .mx-toggle-button .btn-toggle:focus:not([aria-disabled]) {
       background: #dcdcdc;
