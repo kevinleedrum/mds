@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
+import { uuidv4 } from '../../utils/utils';
 
 @Component({
   tag: 'mx-input',
@@ -8,12 +9,18 @@ export class MxInput {
   containerElem!: HTMLDivElement;
   textInput!: HTMLInputElement;
   textArea!: HTMLTextAreaElement;
+  uuid: string = uuidv4();
 
+  /** The `name` attribute for the text input */
   @Prop() name: string;
+  /** The `id` attribute for the text input */
+  @Prop() inputId: string;
   @Prop() label: string;
   @Prop() value: string;
+  /** The `type` attribute for the text input */
   @Prop() type: string = 'text';
   @Prop() dense: boolean = false;
+  @Prop() disabled: boolean = false;
   @Prop() leftIcon: string;
   @Prop() rightIcon: string;
   @Prop({ mutable: true }) isActive: boolean = false;
@@ -22,6 +29,7 @@ export class MxInput {
   @Prop({ mutable: true }) labelClass: string = '';
   @Prop({ mutable: true }) error: boolean = false;
   @Prop() assistiveText: string;
+  /** Display a multi-line `textarea` instead of an `input` */
   @Prop() textarea: boolean = false;
   @Prop({ mutable: true }) textareaHeight: string = '250px';
 
@@ -48,9 +56,13 @@ export class MxInput {
     this.labelClass += ' indented';
   }
 
-  makeTypeClass() {
-    const type = this.dense ? 'dense' : 'standard';
-    return `mx-input-wrapper ${type}`;
+  get containerClass() {
+    let str = 'mx-input-wrapper';
+    str += this.dense ? ' dense' : ' standard';
+    if (this.isFocused) str += ' focused';
+    if (this.error) str += ' error';
+    if (this.disabled) str += ' disabled';
+    return str;
   }
 
   handleFocus() {
@@ -92,10 +104,7 @@ export class MxInput {
   render() {
     return (
       <Host class="mx-input">
-        <div
-          class={`${this.makeTypeClass()} ${this.isFocused ? 'focused' : ''} ${this.error ? 'error' : ''}`}
-          ref={el => (this.containerElem = el as HTMLDivElement)}
-        >
+        <div class={this.containerClass} ref={el => (this.containerElem = el as HTMLDivElement)}>
           <div class={`mx-input-inner-wrapper ${this.isTextarea()}`} style={this.overrideTextArea()}>
             {this.leftIcon && (
               <div class="mds-input-left-content">
@@ -103,7 +112,7 @@ export class MxInput {
               </div>
             )}
             {this.label && (
-              <label class={this.labelClass} onClick={() => this.focusOnInput()}>
+              <label htmlFor={this.inputId || this.uuid} class={this.labelClass} onClick={() => this.focusOnInput()}>
                 {this.label}
               </label>
             )}
@@ -112,7 +121,9 @@ export class MxInput {
                 <input
                   type={this.type}
                   name={this.name}
+                  id={this.inputId || this.uuid}
                   value={this.value}
+                  disabled={this.disabled}
                   onFocus={() => this.handleFocus()}
                   onBlur={() => this.handleBlur()}
                   ref={el => (this.textInput = el as HTMLInputElement)}
@@ -122,6 +133,8 @@ export class MxInput {
               <textarea
                 style={this.returnTaHeight()}
                 name={this.name}
+                id={this.inputId || this.uuid}
+                disabled={this.disabled}
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
                 ref={el => (this.textArea = el as HTMLTextAreaElement)}

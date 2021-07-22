@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-5253f6cc.js';
+import { r as registerInstance, h, f as Host, g as getElement } from './index-b9cec9f1.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
 var resizeObservers = [];
@@ -524,6 +524,18 @@ const arrowSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xm
 </svg>
 `;
 
+var __rest = (undefined && undefined.__rest) || function (s, e) {
+  var t = {};
+  for (var p in s)
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+      t[p] = s[p];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function")
+    for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+      if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+        t[p[i]] = s[p[i]];
+    }
+  return t;
+};
 const MxPageHeader = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
@@ -562,12 +574,18 @@ const MxPageHeader = class {
     const { right: containerRight } = this.buttonRow.getBoundingClientRect();
     const isOverflowing = buttonRight > containerRight;
     this.renderTertiaryButtonAsMenu = isOverflowing;
+    if (isOverflowing) {
+      requestAnimationFrame(() => {
+        if (this.tertiaryMenu)
+          this.tertiaryMenu.anchorEl = this.menuButton;
+      });
+    }
   }
   componentDidLoad() {
     this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
     this.resizeObserver.observe(this.element);
-    // HACK: We wait 100ms for layout shifts in order to detect overflow correctly.
-    setTimeout(this.updateRenderTertiaryButtonAsMenu.bind(this), 100);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
   get hostClass() {
     let str = 'mx-page-header flex flex-col px-24 lg:px-72';
@@ -598,7 +616,8 @@ const MxPageHeader = class {
       if (!btnType)
         btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
       const isTertiary = index === 2;
-      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" }, h("mx-icon-button", { ref: el => (this.menuButton = el), innerHTML: dotsSvg }))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
+      const { label } = button, menuItemProps = __rest(button, ["label"]); // Do not use button label as menu item label (use in slot instead)
+      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" }, h("mx-icon-button", { ref: el => (this.menuButton = el), innerHTML: dotsSvg }), h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {

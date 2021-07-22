@@ -195,17 +195,31 @@ export namespace Components {
     interface MxInput {
         "assistiveText": string;
         "dense": boolean;
+        "disabled": boolean;
         "error": boolean;
+        /**
+          * The `id` attribute for the text input
+         */
+        "inputId": string;
         "isActive": boolean;
         "isFocused": boolean;
         "label": string;
         "labelClass": string;
         "leftIcon": string;
+        /**
+          * The `name` attribute for the text input
+         */
         "name": string;
         "outerContainerClass": string;
         "rightIcon": string;
+        /**
+          * Display a multi-line `textarea` instead of an `input`
+         */
         "textarea": boolean;
         "textareaHeight": string;
+        /**
+          * The `type` attribute for the text input
+         */
         "type": string;
         "value": string;
     }
@@ -769,17 +783,31 @@ declare namespace LocalJSX {
     interface MxInput {
         "assistiveText"?: string;
         "dense"?: boolean;
+        "disabled"?: boolean;
         "error"?: boolean;
+        /**
+          * The `id` attribute for the text input
+         */
+        "inputId"?: string;
         "isActive"?: boolean;
         "isFocused"?: boolean;
         "label"?: string;
         "labelClass"?: string;
         "leftIcon"?: string;
+        /**
+          * The `name` attribute for the text input
+         */
         "name"?: string;
         "outerContainerClass"?: string;
         "rightIcon"?: string;
+        /**
+          * Display a multi-line `textarea` instead of an `input`
+         */
         "textarea"?: boolean;
         "textareaHeight"?: string;
+        /**
+          * The `type` attribute for the text input
+         */
         "type"?: string;
         "value"?: string;
     }

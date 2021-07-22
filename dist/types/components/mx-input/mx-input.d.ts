@@ -2,11 +2,17 @@ export declare class MxInput {
   containerElem: HTMLDivElement;
   textInput: HTMLInputElement;
   textArea: HTMLTextAreaElement;
+  uuid: string;
+  /** The `name` attribute for the text input */
   name: string;
+  /** The `id` attribute for the text input */
+  inputId: string;
   label: string;
   value: string;
+  /** The `type` attribute for the text input */
   type: string;
   dense: boolean;
+  disabled: boolean;
   leftIcon: string;
   rightIcon: string;
   isActive: boolean;
@@ -15,12 +21,13 @@ export declare class MxInput {
   labelClass: string;
   error: boolean;
   assistiveText: string;
+  /** Display a multi-line `textarea` instead of an `input` */
   textarea: boolean;
   textareaHeight: string;
   connectedCallback(): void;
   setLabelClass(target?: any): void;
   setIndentedLabel(): void;
-  makeTypeClass(): string;
+  get containerClass(): string;
   handleFocus(): void;
   handleBlur(): void;
   focusOnInput(): void;

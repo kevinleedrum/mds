@@ -1,5 +1,5 @@
 import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-ede217a8.js';
-import { q as queryPrefersReducedMotion } from './utils-d42be301.js';
+import { q as queryPrefersReducedMotion } from './utils-43415dd2.js';
 
 var top = 'top';
 var bottom = 'bottom';
