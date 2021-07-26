@@ -106,6 +106,10 @@ const config = {
       },
     },
   },
+  variants: {
+    borderWidth: ({ after }) => after(['first-of-type', 'last-of-type']),
+    borderRadius: ({ after }) => after(['first-of-type', 'last-of-type']),
+  },
   plugins: [
     plugin(function({ addVariant, e }) {
       // Make "disabled:" variant work for aria-disabled as well
