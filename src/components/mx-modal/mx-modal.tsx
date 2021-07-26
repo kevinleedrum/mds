@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Watch, Element, Event, EventEmitter, State, Listen } from '@stencil/core';
+import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { moveToPortal } from '../../utils/portal';
 import { fadeIn, fadeOut, fadeScaleIn } from '../../utils/transitions';
 import { IMxButtonProps } from '../mx-button/mx-button';
@@ -18,9 +19,10 @@ export class MxModal {
   firstFocusElement: HTMLElement;
   lastFocusElement: HTMLElement;
   hasHeader: boolean = false;
-  hasFooter: boolean = false;
   modal: HTMLElement;
   ancestorFocusedElement: HTMLElement;
+  headerBottomSlotWrapper: HTMLElement;
+  mobilePageHeader: HTMLMxPageHeaderElement;
 
   /** An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text. */
   @Prop() buttons: IModalButton[] = [];
@@ -35,6 +37,7 @@ export class MxModal {
   /** The URL for the previous page link */
   @Prop() previousPageUrl: string = '';
 
+  @State() minWidths = new MinWidths();
   @State() isVisible: boolean = false;
 
   @Element() element: HTMLMxModalElement;
@@ -70,14 +73,23 @@ export class MxModal {
     }
   }
 
-  componentWillLoad() {
+  componentWillRender() {
     this.hasHeader =
       !!this.element.querySelector('[slot="header-left"]') || !!this.element.querySelector('[slot="header-right"]');
-    this.hasFooter =
-      !!this.previousPageUrl ||
-      this.buttons.length > 0 ||
-      !!this.element.querySelector('[slot="footer-left"]') ||
-      !!this.element.querySelector('[slot="footer-right"]');
+    const tabs = this.element.querySelector('mx-tabs');
+    // Place mx-tabs in either the header-bottom slot OR the mobile mx-page-header tabs slot
+    if (tabs && this.headerBottomSlotWrapper && this.mobilePageHeader) {
+      if (this.minWidths.md) this.headerBottomSlotWrapper.appendChild(tabs);
+      else this.mobilePageHeader.appendChild(tabs);
+    }
+  }
+
+  connectedCallback() {
+    minWidthSync.subscribeComponent(this);
+  }
+
+  disconnectedCallback() {
+    minWidthSync.unsubscribeComponent(this);
   }
 
   async openModal() {
@@ -113,6 +125,14 @@ export class MxModal {
     if (this.closeOnOutsideClick) this.mxClose.emit();
   }
 
+  get hasFooter() {
+    return (
+      (this.minWidths.md && (!!this.previousPageUrl || this.buttons.length > 0)) ||
+      !!this.element.querySelector('[slot="footer-left"]') ||
+      !!this.element.querySelector('[slot="footer-right"]')
+    );
+  }
+
   get buttonsJsx() {
     return (
       <div
@@ -134,6 +154,8 @@ export class MxModal {
   }
 
   render() {
+    const headerLeftSlotContent = this.element.querySelector('[slot="header-left"]');
+
     return (
       <Host
         class={'mx-modal fixed inset-0 flex items-center justify-center' + (this.isVisible ? '' : ' hidden')}
@@ -183,7 +205,17 @@ export class MxModal {
             </div>
           </footer>
           {/* Modal Header - Placed last in the DOM so it is also the last in the tab focus order */}
-          <header class={'modal-header order-1 px-40' + (this.hasHeader ? '' : ' hidden')}>
+          <mx-page-header
+            ref={el => (this.mobilePageHeader = el)}
+            class="md:hidden order-1"
+            buttons={this.buttons}
+            previous-page-title={this.previousPageTitle}
+            previous-page-url={this.previousPageUrl}
+          >
+            {/* Inject header-left slot content into mobile mx-page-header's default slot. */}
+            {headerLeftSlotContent && headerLeftSlotContent.innerHTML}
+          </mx-page-header>
+          <header class="hidden md:block modal-header order-1 px-40">
             <div class="flex items-center justify-between min-h-80">
               <div id="headerText" class="text-h5 emphasis !my-0" data-testid="header-text">
                 <slot name="header-left"></slot>
@@ -196,7 +228,9 @@ export class MxModal {
                 </slot>
               </div>
             </div>
-            <slot name="header-bottom"></slot>
+            <div ref={el => (this.headerBottomSlotWrapper = el)}>
+              <slot name="header-bottom"></slot>
+            </div>
           </header>
         </div>
       </Host>
