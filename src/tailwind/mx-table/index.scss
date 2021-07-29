@@ -1,0 +1,40 @@
+.mx-table > table {
+  tr,
+  th,
+  td {
+    @apply border-0;
+  }
+  tr {
+    background: var(--mds-bg-table);
+    &:not(tbody > tr:last-of-type) {
+      @apply border-b;
+    }
+  }
+  th {
+    @apply subtitle2 px-16 py-18;
+  }
+  td {
+    @apply text-4 p-16;
+  }
+  tr:first-of-type > th:first-of-type {
+    @apply rounded-tl-2xl;
+  }
+  tr:first-of-type > th:last-of-type {
+    @apply rounded-tr-2xl;
+  }
+  tr:last-of-type > td:first-of-type {
+    @apply rounded-bl-2xl;
+  }
+  tr:last-of-type > td:last-of-type {
+    @apply rounded-br-2xl;
+  }
+  & > thead > tr {
+    border-color: var(--mds-border-table-header);
+  }
+  & > tbody > tr {
+    border-color: var(--mds-border-table-cell);
+    &.hoverable:hover > td {
+      background: var(--mds-bg-table-hover);
+    }
+  }
+}

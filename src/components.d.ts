@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
 import { PopoverOffset, PopoverPlacement } from "./utils/popover";
 import { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
+import { ITableColumn } from "./components/mx-table/mx-table";
 import { IMxTabProps } from "./components/mx-tab/mx-tab";
 export namespace Components {
     interface MxBadge {
@@ -239,6 +240,10 @@ export namespace Components {
          */
         "anchorEl": HTMLElement;
         /**
+          * A CSS selector to find the `anchorEl`
+         */
+        "anchorElSelector": string;
+        /**
           * Close the menu.  Returns a promise that resolves to false if the menu was already closed.
          */
         "closeMenu": () => Promise<boolean>;
@@ -396,6 +401,48 @@ export namespace Components {
          */
         "value": number;
     }
+    interface MxTable {
+        /**
+          * Set to `true` to allow smaller tables to shrink to less than 100% width
+         */
+        "autoWidth": boolean;
+        /**
+          * An array of column definitions.  If not specified, a column will be generated for each property on the row object.
+         */
+        "columns": ITableColumn[];
+        "hoverable": boolean;
+        /**
+          * Set to `true` to render the table in a loading state
+         */
+        "isLoading": boolean;
+        /**
+          * The zero-based index of the page to display
+         */
+        "page": number;
+        /**
+          * Show the pagination component.  Setting this to `false` will show all rows.
+         */
+        "paginate": boolean;
+        /**
+          * An array of objects that defines the table's dataset.
+         */
+        "rows": Object[];
+        "rowsPerPage": number;
+        "rowsPerPageOptions": number[];
+        /**
+          * Do not sort or paginate client-side. Use events to send server requests instead.
+         */
+        "serverPaginate": boolean;
+        "sortAscending": boolean;
+        /**
+          * The property on the row objects that will be used for sorting
+         */
+        "sortBy": string;
+        /**
+          * Additional classes for the `table` element
+         */
+        "tableClass": string;
+    }
     interface MxTabs {
         /**
           * Stretch tabs to fill the entire width
@@ -545,6 +592,12 @@ declare global {
         prototype: HTMLMxTabContentElement;
         new (): HTMLMxTabContentElement;
     };
+    interface HTMLMxTableElement extends Components.MxTable, HTMLStencilElement {
+    }
+    var HTMLMxTableElement: {
+        prototype: HTMLMxTableElement;
+        new (): HTMLMxTableElement;
+    };
     interface HTMLMxTabsElement extends Components.MxTabs, HTMLStencilElement {
     }
     var HTMLMxTabsElement: {
@@ -584,6 +637,7 @@ declare global {
         "mx-switch": HTMLMxSwitchElement;
         "mx-tab": HTMLMxTabElement;
         "mx-tab-content": HTMLMxTabContentElement;
+        "mx-table": HTMLMxTableElement;
         "mx-tabs": HTMLMxTabsElement;
         "mx-toggle-button": HTMLMxToggleButtonElement;
         "mx-toggle-button-group": HTMLMxToggleButtonGroupElement;
@@ -827,6 +881,10 @@ declare namespace LocalJSX {
          */
         "anchorEl"?: HTMLElement;
         /**
+          * A CSS selector to find the `anchorEl`
+         */
+        "anchorElSelector"?: string;
+        /**
           * This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes.
          */
         "isOpen"?: boolean;
@@ -976,6 +1034,49 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
+    interface MxTable {
+        /**
+          * Set to `true` to allow smaller tables to shrink to less than 100% width
+         */
+        "autoWidth"?: boolean;
+        /**
+          * An array of column definitions.  If not specified, a column will be generated for each property on the row object.
+         */
+        "columns"?: ITableColumn[];
+        "hoverable"?: boolean;
+        /**
+          * Set to `true` to render the table in a loading state
+         */
+        "isLoading"?: boolean;
+        "onMxVisibleRowsChange"?: (event: CustomEvent<Object[]>) => void;
+        /**
+          * The zero-based index of the page to display
+         */
+        "page"?: number;
+        /**
+          * Show the pagination component.  Setting this to `false` will show all rows.
+         */
+        "paginate"?: boolean;
+        /**
+          * An array of objects that defines the table's dataset.
+         */
+        "rows"?: Object[];
+        "rowsPerPage"?: number;
+        "rowsPerPageOptions"?: number[];
+        /**
+          * Do not sort or paginate client-side. Use events to send server requests instead.
+         */
+        "serverPaginate"?: boolean;
+        "sortAscending"?: boolean;
+        /**
+          * The property on the row objects that will be used for sorting
+         */
+        "sortBy"?: string;
+        /**
+          * Additional classes for the `table` element
+         */
+        "tableClass"?: string;
+    }
     interface MxTabs {
         /**
           * Stretch tabs to fill the entire width
@@ -1032,6 +1133,7 @@ declare namespace LocalJSX {
         "mx-switch": MxSwitch;
         "mx-tab": MxTab;
         "mx-tab-content": MxTabContent;
+        "mx-table": MxTable;
         "mx-tabs": MxTabs;
         "mx-toggle-button": MxToggleButton;
         "mx-toggle-button-group": MxToggleButtonGroup;
@@ -1061,6 +1163,7 @@ declare module "@stencil/core" {
             "mx-switch": LocalJSX.MxSwitch & JSXBase.HTMLAttributes<HTMLMxSwitchElement>;
             "mx-tab": LocalJSX.MxTab & JSXBase.HTMLAttributes<HTMLMxTabElement>;
             "mx-tab-content": LocalJSX.MxTabContent & JSXBase.HTMLAttributes<HTMLMxTabContentElement>;
+            "mx-table": LocalJSX.MxTable & JSXBase.HTMLAttributes<HTMLMxTableElement>;
             "mx-tabs": LocalJSX.MxTabs & JSXBase.HTMLAttributes<HTMLMxTabsElement>;
             "mx-toggle-button": LocalJSX.MxToggleButton & JSXBase.HTMLAttributes<HTMLMxToggleButtonElement>;
             "mx-toggle-button-group": LocalJSX.MxToggleButtonGroup & JSXBase.HTMLAttributes<HTMLMxToggleButtonGroupElement>;

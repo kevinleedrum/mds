@@ -146,6 +146,7 @@ module.exports = {
         'tabs',
         'dropdowns',
         'menus',
+        'tables',
         'page-headers',
       ],
     },
