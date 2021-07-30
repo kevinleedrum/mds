@@ -25,7 +25,7 @@ export class MxTab implements IMxTabProps {
   @Prop() icon: string = '';
   /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
   @Prop({ reflect: true }) selected: boolean = false;
-  /** Display a dot badge */
+  /** Display a circular badge */
   @Prop() badge: boolean = false;
   /** Additional classes for the badge */
   @Prop() badgeClass: string = '';
@@ -48,7 +48,7 @@ export class MxTab implements IMxTabProps {
   }
 
   get badgeEl() {
-    return <mx-badge dot badgeClass={['w-8 h-8', this.badgeClass].join(' ')} />;
+    return <mx-badge indicator badgeClass={['w-8 h-8', this.badgeClass].join(' ')} />;
   }
 
   get isTextOnly() {

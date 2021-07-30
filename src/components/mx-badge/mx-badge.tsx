@@ -1,5 +1,10 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
-
+import circleSvg from '../../assets/svg/badge-circle.svg';
+import hexagonSvg from '../../assets/svg/badge-hexagon.svg';
+import squareSvg from '../../assets/svg/badge-square.svg';
+import starSvg from '../../assets/svg/badge-star.svg';
+import triangleDownSvg from '../../assets/svg/badge-triangle-down.svg';
+import triangleUpSvg from '../../assets/svg/badge-triangle-up.svg';
 @Component({
   tag: 'mx-badge',
   shadow: false,
@@ -13,8 +18,8 @@ export class MxBadge {
   @Prop() value: any;
   /** Make the corners a little more square (best for standalone text) */
   @Prop() squared: boolean = false;
-  /** Display as a small dot (no value) */
-  @Prop() dot: boolean = false;
+  /** Render as a small indicator shape with no inner text.  If the prop is present, but no string value is passed, the shape will default to `circle`. */
+  @Prop() indicator: boolean | 'square' | 'triangle-up' | 'hexagon' | 'triangle-down' | 'star';
   /** Additional classes to add to the badge itself */
   @Prop() badgeClass: string;
   /** Class name of icon */
@@ -25,6 +30,15 @@ export class MxBadge {
   @Prop() bottom: boolean = false;
   /** Anchor the badge to the left of the wrapped content */
   @Prop() left: boolean = false;
+
+  get indicatorSvg() {
+    if (this.indicator === 'star') return starSvg;
+    if (this.indicator === 'triangle-down') return triangleDownSvg;
+    if (this.indicator === 'hexagon') return hexagonSvg;
+    if (this.indicator === 'triangle-up') return triangleUpSvg;
+    if (this.indicator === 'square') return squareSvg;
+    return circleSvg;
+  }
 
   get isStandalone() {
     return !this.element.firstElementChild;
@@ -38,7 +52,7 @@ export class MxBadge {
     let str = 'badge inline-flex items-center justify-center text-4 font-semibold pointer-events-none';
 
     // Border-Radius
-    if (this.dot || this.isIconOnly) {
+    if (this.isIconOnly) {
       str += ' rounded-full';
     } else if (this.squared) {
       str += ' rounded';
@@ -47,7 +61,7 @@ export class MxBadge {
     }
 
     // Width & Height
-    if (this.dot) {
+    if (this.indicator != null) {
       str += ' w-12 h-12';
     } else if (this.isStandalone) {
       str += ' h-24';
@@ -77,10 +91,18 @@ export class MxBadge {
     return (
       <Host class="mx-badge inline-flex relative">
         <slot></slot>
-        <span class={this.badgeClassNames}>
-          {this.icon && <i class={this.icon + (this.isIconOnly ? '' : ' mr-4')}></i>}
-          {this.value}
-        </span>
+        {this.indicator != null ? (
+          <span
+            class={this.badgeClassNames}
+            data-testid={'indicator-' + (this.indicator || 'circle')}
+            innerHTML={this.indicatorSvg}
+          ></span>
+        ) : (
+          <span class={this.badgeClassNames}>
+            {this.icon && <i class={this.icon + (this.isIconOnly ? '' : ' mr-4')}></i>}
+            {this.value}
+          </span>
+        )}
       </Host>
     );
   }
