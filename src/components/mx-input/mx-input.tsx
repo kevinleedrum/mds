@@ -35,9 +35,10 @@ export class MxInput {
   @Prop({ mutable: true }) textareaHeight: string = '250px';
 
   connectedCallback() {
-    if (this.error) {
+    if (this.error || this.value) {
       this.isActive = true;
-      this.labelClass += ' active error';
+      this.labelClass += ' active';
+      if (this.error) this.labelClass += ' error';
     } else {
       this.setLabelClass();
     }
