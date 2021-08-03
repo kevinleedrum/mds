@@ -27,6 +27,7 @@
     }
 
     &.disabled label,
+    &.disabled .mds-input input,
     &.disabled + .assistive-text {
       color: var(--mds-text-input-disabled);
       cursor: default;
