@@ -32,6 +32,13 @@
       cursor: default;
     }
 
+    &.readonly {
+      background: var(--mds-bg-input-readonly);
+      label {
+        background: var(--mds-bg-input-readonly);
+      }
+    }
+
     label {
       position: absolute;
       left: 10px;

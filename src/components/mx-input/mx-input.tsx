@@ -21,6 +21,7 @@ export class MxInput {
   @Prop() type: string = 'text';
   @Prop() dense: boolean = false;
   @Prop() disabled: boolean = false;
+  @Prop() readonly: boolean = false;
   @Prop() leftIcon: string;
   @Prop() rightIcon: string;
   @Prop({ mutable: true }) isActive: boolean = false;
@@ -62,6 +63,7 @@ export class MxInput {
     if (this.isFocused) str += ' focused';
     if (this.error) str += ' error';
     if (this.disabled) str += ' disabled';
+    if (this.readonly) str += ' readonly';
     return str;
   }
 
@@ -124,6 +126,7 @@ export class MxInput {
                   id={this.inputId || this.uuid}
                   value={this.value}
                   disabled={this.disabled}
+                  readonly={this.readonly}
                   onFocus={() => this.handleFocus()}
                   onBlur={() => this.handleBlur()}
                   ref={el => (this.textInput = el as HTMLInputElement)}
@@ -135,6 +138,7 @@ export class MxInput {
                 name={this.name}
                 id={this.inputId || this.uuid}
                 disabled={this.disabled}
+                readonly={this.readonly}
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
                 ref={el => (this.textArea = el as HTMLTextAreaElement)}
