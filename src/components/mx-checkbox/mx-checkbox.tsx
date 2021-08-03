@@ -19,7 +19,8 @@ export class MxCheckbox {
       <Host class="mx-checkbox">
         <label
           class={[
-            'relative flex-1 inline-flex flex-nowrap align-center items-center cursor-pointer text-4',
+            'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
+              (this.disabled ? '' : ' cursor-pointer'),
             this.labelClass,
           ].join(' ')}
         >
@@ -31,7 +32,7 @@ export class MxCheckbox {
             checked={this.checked}
             disabled={this.disabled}
           />
-          <span class={'flex h-18 w-18 cursor-pointer' + (this.labelLeft ? ' order-2 ml-16' : ' order-1')}></span>
+          <span class={'flex h-18 w-18' + (this.labelLeft ? ' order-2 ml-16' : ' order-1')}></span>
           <div
             class={'checkbox-label inline-block' + (this.labelLeft ? ' order-1 flex-1' : ' order-2 ml-16')}
             data-testid="labelName"
