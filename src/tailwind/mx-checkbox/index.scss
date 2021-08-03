@@ -67,8 +67,8 @@
     top: 6px;
     width: 10px;
     height: 0;
-    border: solid var(--mds-border-checkbox-check);
-    border-width: 1px;
+    border: 0;
+    border-top: 2px solid var(--mds-border-checkbox-check);
     transform: rotate(0deg);
   }
 
