@@ -1,5 +1,5 @@
-import { Component, Host, h, Prop, Element, Event, EventEmitter, Watch } from '@stencil/core';
-import { capitalize } from '../../utils/utils';
+import { Component, Host, h, Prop, Element, Event, EventEmitter, Watch, Listen, Method } from '@stencil/core';
+import { capitalize, isDateObject } from '../../utils/utils';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 
 /** Defines a data table column */
@@ -41,8 +41,8 @@ export interface ITableColumn {
   shadow: false,
 })
 export class MxTable {
-  tableElem: HTMLTableElement;
   hasSlot: boolean = false;
+  hasAccessoryRow: boolean = false;
 
   /** An array of objects that defines the table's dataset. */
   @Prop() rows: Object[] = [];
@@ -50,6 +50,7 @@ export class MxTable {
   @Prop() columns: ITableColumn[] = [];
   /** Additional classes for the `table` element */
   @Prop() tableClass: string;
+  @Prop() checkable: boolean = false;
   @Prop() hoverable: boolean = true;
   /** Set to `true` to allow smaller tables to shrink to less than 100% width */
   @Prop() autoWidth: boolean = false;
@@ -71,6 +72,11 @@ export class MxTable {
 
   @Event() mxVisibleRowsChange: EventEmitter<Object[]>;
 
+  // @Listen('mxCheck')
+  // onMxCheck(e: CustomEvent) {
+  //   this.mxRowCheck.emit(this.getCheckedRows())
+  // }
+
   @Watch('sortBy')
   @Watch('sortAscending')
   @Watch('page')
@@ -80,13 +86,29 @@ export class MxTable {
     this.mxVisibleRowsChange.emit(this.visibleRows);
   }
 
+  @Watch('checkable')
+  setRowsCheckable() {
+    const rowElements = this.element.querySelectorAll('mx-table-row:not(.header-row, .pagination-row)') as NodeListOf<
+      HTMLMxTableRowElement
+    >;
+    rowElements.forEach(row => (row.checkable = this.checkable));
+  }
+
   componentWillLoad() {
-    this.hasSlot = !!this.element.querySelector('tbody');
+    this.hasSlot = !!this.element.children.length;
+    this.hasAccessoryRow = !!this.element.querySelector('[slot="accessory-row"]');
   }
 
   componentDidLoad() {
+    // Emit paginated rows right away.
     this.onVisibleRowsChange();
+    this.setRowsCheckable();
   }
+
+  // @Method()
+  // getCheckedRows(): Object[] {
+
+  // }
 
   get cols(): ITableColumn[] {
     // If `columns` prop is not provided, create a column for each row object property
@@ -100,10 +122,18 @@ export class MxTable {
   }
 
   get visibleRows(): Object[] {
-    if (this.serverPaginate || !this.paginate) return this.rows;
+    if (this.serverPaginate || (!this.paginate && !this.sortBy)) return this.rows;
+    // TODO: paginate
     const rows = this.rows.slice();
     if (this.sortBy) this.sortRows(rows);
     return rows;
+  }
+
+  get gridStyle(): any {
+    const display = this.autoWidth ? 'inline-grid' : 'grid';
+    let gridTemplateColumns = this.checkable ? 'min-content ' : '';
+    gridTemplateColumns += `repeat(${this.cols.length}, minmax(0, 1fr))`;
+    return { display, gridTemplateColumns };
   }
 
   sortRows(rows: Object[]) {
@@ -124,21 +154,23 @@ export class MxTable {
 
   getCellSortableValue(row: Object, col: ITableColumn): number | string {
     if (col.getValue) return col.getValue(row);
-    if (['date', 'dateTime'].includes(col.type)) return new Date(row[col.property]).getTime();
-    if (col.type === 'boolean') return row[col.property] ? 1 : 0;
-    return row[col.property];
+    const val = row[col.property];
+    if (['date', 'dateTime'].includes(col.type) || isDateObject(val)) return new Date(val).getTime();
+    if (col.type === 'boolean') return val ? 1 : 0;
+    return val;
   }
 
   getCellValue(row: Object, col: ITableColumn, rowIndex: number) {
     if (col.getValue) return col.getValue(row, rowIndex);
-    if (col.type === 'date') return new Date(row[col.property]).toLocaleDateString();
-    if (col.type === 'dateTime') return new Date(row[col.property]).toLocaleString();
-    if (col.type === 'boolean') return row[col.property] ? 'Yes' : ''; // TODO: verify
-    return row[col.property];
+    const val = row[col.property];
+    if (col.type === 'date' || isDateObject(val)) return new Date(val).toLocaleDateString();
+    if (col.type === 'dateTime' || isDateObject(val)) return new Date(val).toLocaleString();
+    if (col.type === 'boolean') return val ? 'Yes' : ''; // TODO: verify
+    return val;
   }
 
   getHeaderClass(col: ITableColumn) {
-    let str = this.getAlignClass(col);
+    let str = 'flex items-center subtitle2 px-16 py-18 ' + this.getAlignClass(col);
     if (col.sortable && col.property) str += ' group cursor-pointer';
     if (col.headerClass) str += col.headerClass;
     return str;
@@ -153,7 +185,7 @@ export class MxTable {
 
   getAlignClass(col: ITableColumn) {
     let alignment = col.align || (col.type === 'number' ? 'right' : 'left');
-    return alignment === 'right' ? 'text-right' : alignment === 'center' ? 'text-center' : 'text-left';
+    return alignment === 'right' ? 'justify-end' : alignment === 'center' ? 'justify-center' : 'justify-start';
   }
 
   onHeaderClick(col: ITableColumn) {
@@ -172,42 +204,51 @@ export class MxTable {
 
   render() {
     return (
-      <Host class="mx-table block">
-        <table ref={el => (this.tableElem = el)} class={'table' + (this.autoWidth ? '' : ' w-full')}>
-          <thead>
-            <tr>
-              {this.cols.map((col: ITableColumn) => {
-                return (
-                  <th class={this.getHeaderClass(col)} onClick={this.onHeaderClick.bind(this, col)}>
-                    <div class="inline-flex items-center whitespace-nowrap select-none">
-                      <span innerHTML={col.heading}></span>
-                      {col.sortable && col.property && (
-                        <div class={this.getHeaderArrowClass(col)} data-testid="arrow" innerHTML={arrowSvg}></div>
-                      )}
-                    </div>
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
+      <Host class={'mx-table block' + (this.hoverable ? ' hoverable' : '')}>
+        <slot name="accessory-row"></slot>
+        <div style={this.gridStyle}>
+          {/* Header Row */}
+          <mx-table-row class="header-row">
+            {this.checkable && <mx-checkbox></mx-checkbox>}
+            {this.cols.map((col: ITableColumn, colIndex: number) => {
+              return (
+                <div
+                  id={`column-header-${colIndex}`}
+                  role="columnheader"
+                  class={this.getHeaderClass(col)}
+                  onClick={this.onHeaderClick.bind(this, col)}
+                >
+                  <div class="inline-flex items-center whitespace-nowrap select-none">
+                    <span innerHTML={col.heading}></span>
+                    {col.sortable && col.property && (
+                      <div class={this.getHeaderArrowClass(col)} data-testid="arrow" innerHTML={arrowSvg}></div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </mx-table-row>
+
           <slot></slot>
-          {!this.hasSlot && (
-            <tbody>
-              {this.visibleRows.map((row, rowIndex) => (
-                <tr class={this.hoverable ? 'hoverable' : null}>
-                  {this.cols.map((col: ITableColumn) => {
-                    return (
-                      <td
-                        class={[this.getAlignClass(col), col.cellClass].join(' ')}
-                        innerHTML={this.getCellValue(row, col, rowIndex)}
-                      ></td>
-                    );
-                  })}
-                </tr>
-              ))}
-            </tbody>
+          {/* HACK: Stencil refuses to render this as default slot content. :( */}
+          {!this.hasSlot &&
+            this.visibleRows.map((row, rowIndex) => (
+              <mx-table-row>
+                {this.cols.map((col: ITableColumn, colIndex: number) => (
+                  <mx-table-cell
+                    aria-describedby={`column-header-${colIndex}`}
+                    class={[this.getAlignClass(col), col.cellClass].join(' ')}
+                    innerHTML={this.getCellValue(row, col, rowIndex)}
+                  ></mx-table-cell>
+                ))}
+              </mx-table-row>
+            ))}
+          {this.paginate && (
+            <mx-table-row class="pagination-row">
+              <div class="col-span-full">PAGINATION GOES HERE</div>
+            </mx-table-row>
           )}
-        </table>
+        </div>
       </Host>
     );
   }

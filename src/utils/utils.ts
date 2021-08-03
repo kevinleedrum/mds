@@ -15,3 +15,8 @@ export function queryPrefersReducedMotion(): boolean {
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function isDateObject(val: any): boolean {
+  if (typeof val !== 'object') return false;
+  return 'getTime' in val;
+}
