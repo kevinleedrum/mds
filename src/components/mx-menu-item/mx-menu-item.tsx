@@ -2,11 +2,20 @@ import { Component, Host, h, Element, Prop, Event, EventEmitter, Listen, Method,
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import checkSvg from '../../assets/svg/check.svg';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
+
+export interface IMxMenuItemProps {
+  checked?: boolean;
+  disabled?: boolean;
+  icon?: string;
+  label?: string;
+  multiSelect?: boolean;
+}
+
 @Component({
   tag: 'mx-menu-item',
   shadow: false,
 })
-export class MxMenuItem {
+export class MxMenuItem implements IMxMenuItemProps {
   menuItemElem: HTMLElement;
   submenu: HTMLMxMenuElement;
   slotWrapper: HTMLElement;

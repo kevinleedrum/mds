@@ -4,7 +4,7 @@
     & > :first-child {
       @apply pl-24;
     }
-    & > :last-child {
+    & > :last-child:not(.pr-0, .p-0) {
       @apply pr-24;
     }
     &.header-row > :first-child {

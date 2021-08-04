@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, Element, Event, EventEmitter, Watch, Listen, Method, State } from '@stencil/core';
 import { capitalize, isDateObject } from '../../utils/utils';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
+import { ITableRowAction } from '../mx-table-row/mx-table-row';
 
 /** Defines a data table column */
 export interface ITableColumn {
@@ -71,6 +72,7 @@ export class MxTable {
   /** Do not sort or paginate client-side. Use events to send server requests instead. */
   @Prop() serverPaginate: boolean = false;
   @Prop() showOperationsBar: boolean = false;
+  @Prop() getRowActions: (row: Object) => ITableRowAction[];
 
   @Element() element: HTMLMxTableElement;
 
@@ -182,7 +184,8 @@ export class MxTable {
   get gridStyle(): any {
     const display = this.autoWidth ? 'inline-grid' : 'grid';
     let gridTemplateColumns = this.checkable ? 'min-content ' : '';
-    gridTemplateColumns += `repeat(${this.cols.length}, minmax(0, 1fr))`;
+    const autoColumnCount = this.cols.length + (this.getRowActions ? 1 : 0);
+    gridTemplateColumns += `repeat(${autoColumnCount}, minmax(0, 1fr))`;
     return { display, gridTemplateColumns };
   }
 
@@ -219,8 +222,9 @@ export class MxTable {
     return val;
   }
 
-  getHeaderClass(col: ITableColumn) {
+  getHeaderClass(col: ITableColumn, colIndex: number) {
     let str = 'flex items-center subtitle2 px-16 py-18 ' + this.getAlignClass(col);
+    if (colIndex === 0 && this.showOperationsBar) str += ' col-span-2';
     if (col.sortable && col.property) str += ' group cursor-pointer';
     if (col.headerClass) str += col.headerClass;
     return str;
@@ -276,18 +280,18 @@ export class MxTable {
                   </span>
                 </mx-button>
               </div>
-              <mx-search class="w-240" dense></mx-search>
+              <mx-search class="w-240" dense placeholder="Search"></mx-search>
             </div>
           )}
           {/* Header Row */}
           <mx-table-row class="header-row">
-            {this.checkable && (this.showOperationsBar ? <div></div> : checkAllCheckbox)}
+            {this.checkable && !this.showOperationsBar && checkAllCheckbox}
             {this.cols.map((col: ITableColumn, colIndex: number) => {
               return (
                 <div
                   id={`column-header-${colIndex}`}
                   role="columnheader"
-                  class={this.getHeaderClass(col)}
+                  class={this.getHeaderClass(col, colIndex)}
                   onClick={this.onHeaderClick.bind(this, col)}
                 >
                   <div class="inline-flex items-center whitespace-nowrap select-none">
@@ -299,15 +303,18 @@ export class MxTable {
                 </div>
               );
             })}
+            {this.getRowActions && <div></div>}
           </mx-table-row>
 
           <slot></slot>
           {/* HACK: Stencil refuses to render this as default slot content. :( */}
           {!this.hasSlot &&
             this.visibleRows.map((row, rowIndex) => (
+              // Generated Body Rows
               <mx-table-row
                 key={this.rowIdProperty ? row[this.rowIdProperty] : null}
                 row-id={this.rowIdProperty ? row[this.rowIdProperty] : null}
+                actions={this.getRowActions ? this.getRowActions(row) : undefined}
               >
                 {this.cols.map((col: ITableColumn, colIndex: number) => (
                   <mx-table-cell
@@ -319,6 +326,7 @@ export class MxTable {
               </mx-table-row>
             ))}
           {this.paginate && (
+            // Pagination Row
             <mx-table-row class="pagination-row">
               <div class="col-span-full">PAGINATION GOES HERE</div>
             </mx-table-row>
