@@ -10,9 +10,26 @@ export class MxCheckbox {
   @Prop() labelLeft: boolean = false;
   @Prop() labelName: string = '';
   @Prop() labelClass: string = '';
+  /** Hide the label text visibly, but still make it accessible for screen readers */
+  @Prop() hideLabel: boolean = false;
   @Prop() checked: boolean = false;
   @Prop() disabled: boolean = false;
   @Prop() indeterminate: boolean = false;
+
+  get checkClass(): string {
+    let str = 'flex h-18 w-18';
+    str += this.labelLeft ? ' order-2' : ' order-1';
+    if (this.labelLeft && !this.hideLabel) str += ' ml-16';
+    return str;
+  }
+
+  get checkLabelClass(): string {
+    let str = 'checkbox-label inline-block';
+    if (this.hideLabel) str += ' sr-only';
+    str += this.labelLeft ? ' order-1 flex-1' : ' order-2';
+    if (!this.labelLeft && !this.hideLabel) str += ' ml-16';
+    return str;
+  }
 
   render() {
     return (
@@ -32,11 +49,8 @@ export class MxCheckbox {
             checked={this.checked}
             disabled={this.disabled}
           />
-          <span class={'flex h-18 w-18' + (this.labelLeft ? ' order-2 ml-16' : ' order-1')}></span>
-          <div
-            class={'checkbox-label inline-block' + (this.labelLeft ? ' order-1 flex-1' : ' order-2 ml-16')}
-            data-testid="labelName"
-          >
+          <span class={this.checkClass}></span>
+          <div class={this.checkLabelClass} data-testid="labelName">
             {this.labelName}
           </div>
         </label>
