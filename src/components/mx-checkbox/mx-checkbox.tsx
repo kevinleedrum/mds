@@ -10,7 +10,7 @@ export class MxCheckbox {
   @Prop() labelLeft: boolean = false;
   @Prop() labelName: string = '';
   @Prop() labelClass: string = '';
-  /** Hide the label text visibly, but still make it accessible for screen readers */
+  /** Hide the label text visually, but still make it accessible for screen readers */
   @Prop() hideLabel: boolean = false;
   @Prop() checked: boolean = false;
   @Prop() disabled: boolean = false;
