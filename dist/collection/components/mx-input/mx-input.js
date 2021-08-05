@@ -7,6 +7,7 @@ export class MxInput {
     this.type = 'text';
     this.dense = false;
     this.disabled = false;
+    this.readonly = false;
     this.isActive = false;
     this.isFocused = false;
     this.outerContainerClass = '';
@@ -17,9 +18,11 @@ export class MxInput {
     this.textareaHeight = '250px';
   }
   connectedCallback() {
-    if (this.error) {
+    if (this.error || this.value) {
       this.isActive = true;
-      this.labelClass += ' active error';
+      this.labelClass += ' active';
+      if (this.error)
+        this.labelClass += ' error';
     }
     else {
       this.setLabelClass();
@@ -46,6 +49,8 @@ export class MxInput {
       str += ' error';
     if (this.disabled)
       str += ' disabled';
+    if (this.readonly)
+      str += ' readonly';
     return str;
   }
   handleFocus() {
@@ -86,7 +91,7 @@ export class MxInput {
             h("i", { class: this.leftIcon }))),
           this.label && (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClass, onClick: () => this.focusOnInput() }, this.label)),
           !this.textarea ? (h("div", { class: "mds-input" },
-            h("input", { type: this.type, name: this.name, id: this.inputId || this.uuid, value: this.value, disabled: this.disabled, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textInput = el) }))) : (h("textarea", { style: this.returnTaHeight(), name: this.name, id: this.inputId || this.uuid, disabled: this.disabled, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textArea = el) }, this.value)),
+            h("input", { type: this.type, name: this.name, id: this.inputId || this.uuid, value: this.value, disabled: this.disabled, readonly: this.readonly, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textInput = el) }))) : (h("textarea", { style: this.returnTaHeight(), name: this.name, id: this.inputId || this.uuid, disabled: this.disabled, readonly: this.readonly, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textArea = el) }, this.value)),
           (this.rightIcon || this.error) && (h("div", { class: "mds-input-right-content" }, this.error ? h("i", { class: "ph-warning-circle" }) : h("i", { class: this.rightIcon }))))),
       this.assistiveText && h("div", { class: "assistive-text" }, this.assistiveText)));
   }
@@ -211,6 +216,24 @@ export class MxInput {
         "text": ""
       },
       "attribute": "disabled",
+      "reflect": false,
+      "defaultValue": "false"
+    },
+    "readonly": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "readonly",
       "reflect": false,
       "defaultValue": "false"
     },

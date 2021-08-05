@@ -16,7 +16,7 @@ export declare class MxTab implements IMxTabProps {
   icon: string;
   /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
   selected: boolean;
-  /** Display a dot badge */
+  /** Display a circular badge */
   badge: boolean;
   /** Additional classes for the badge */
   badgeClass: string;

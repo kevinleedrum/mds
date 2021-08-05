@@ -21,6 +21,7 @@
 | `leftIcon`            | `left-icon`             |                                                       | `string`  | `undefined` |
 | `name`                | `name`                  | The `name` attribute for the text input               | `string`  | `undefined` |
 | `outerContainerClass` | `outer-container-class` |                                                       | `string`  | `''`        |
+| `readonly`            | `readonly`              |                                                       | `boolean` | `false`     |
 | `rightIcon`           | `right-icon`            |                                                       | `string`  | `undefined` |
 | `textarea`            | `textarea`              | Display a multi-line `textarea` instead of an `input` | `boolean` | `false`     |
 | `textareaHeight`      | `textarea-height`       |                                                       | `string`  | `'250px'`   |
