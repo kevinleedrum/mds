@@ -141,7 +141,7 @@ module.exports = {
         'fabs',
         'chips',
         'selection-controls',
-        'data-display',
+        'badges',
         'progress',
         'tabs',
         'dropdowns',
