@@ -27,6 +27,9 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
       <div class="my-20">
         <mx-input label="Disabled" assistive-text="This input is disabled" disabled></mx-input>
       </div>
+      <div class="my-20">
+        <mx-input label="Read-only" assistive-text="This input is read-only" readonly value="Input text"></mx-input>
+      </div>
     </div>
     <div>
       <strong>Dense</strong>
@@ -47,6 +50,9 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
       </div>
       <div class="my-20">
         <mx-input label="Disabled" assistive-text="This input is disabled" disabled dense></mx-input>
+      </div>
+      <div class="my-20">
+        <mx-input label="Read-only" assistive-text="This input is read-only" readonly dense value="Input text"></mx-input>
       </div>
     </div>
   </div>
@@ -73,6 +79,7 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
 | `leftIcon`            | `left-icon`             |                                                       | `string`  | `undefined` |
 | `name`                | `name`                  | The `name` attribute for the text input               | `string`  | `undefined` |
 | `outerContainerClass` | `outer-container-class` |                                                       | `string`  | `''`        |
+| `readonly`            | `readonly`              |                                                       | `boolean` | `false`     |
 | `rightIcon`           | `right-icon`            |                                                       | `string`  | `undefined` |
 | `textarea`            | `textarea`              | Display a multi-line `textarea` instead of an `input` | `boolean` | `false`     |
 | `textareaHeight`      | `textarea-height`       |                                                       | `string`  | `'250px'`   |
