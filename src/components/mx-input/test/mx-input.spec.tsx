@@ -3,7 +3,8 @@ import { MxInput } from '../mx-input';
 
 describe('mx-input', () => {
   let page;
-  let root;
+  let root: HTMLMxInputElement;
+  let input: HTMLInputElement;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxInput],
@@ -20,6 +21,7 @@ describe('mx-input', () => {
       `,
     });
     root = page.root;
+    input = root.querySelector('input');
   });
 
   it('assigns proper value for placeholder', async () => {
@@ -28,7 +30,6 @@ describe('mx-input', () => {
   });
 
   it('has the right name, value and type', async () => {
-    const input = root.querySelector('input');
     expect(input.getAttribute('name')).toBe('testInput');
     expect(input.getAttribute('value')).toBe('foo');
     expect(input.getAttribute('type')).toBe('email');
@@ -47,6 +48,20 @@ describe('mx-input', () => {
   it('should have proper assistive text', async () => {
     const assitive = root.querySelector('.assistive-text');
     expect(assitive.textContent).toBe('Enter your test input');
+  });
+
+  it('disables the input based on the disabled prop', async () => {
+    expect(input.getAttribute('disabled')).toBeNull();
+    root.disabled = true;
+    await page.waitForChanges();
+    expect(input.getAttribute('disabled')).not.toBeNull();
+  });
+
+  it('sets the inputs to read-only if the readonly prop is set', async () => {
+    expect(input.getAttribute('readonly')).toBeNull();
+    root.readonly = true;
+    await page.waitForChanges();
+    expect(input.getAttribute('readonly')).not.toBeNull();
   });
 });
 

@@ -13,6 +13,7 @@ const MxInput = class {
     this.type = 'text';
     this.dense = false;
     this.disabled = false;
+    this.readonly = false;
     this.isActive = false;
     this.isFocused = false;
     this.outerContainerClass = '';
@@ -23,9 +24,11 @@ const MxInput = class {
     this.textareaHeight = '250px';
   }
   connectedCallback() {
-    if (this.error) {
+    if (this.error || this.value) {
       this.isActive = true;
-      this.labelClass += ' active error';
+      this.labelClass += ' active';
+      if (this.error)
+        this.labelClass += ' error';
     }
     else {
       this.setLabelClass();
@@ -52,6 +55,8 @@ const MxInput = class {
       str += ' error';
     if (this.disabled)
       str += ' disabled';
+    if (this.readonly)
+      str += ' readonly';
     return str;
   }
   handleFocus() {
@@ -85,7 +90,7 @@ const MxInput = class {
     return this.textarea ? 'textarea' : '';
   }
   render() {
-    return (index.h(index.Host, { class: "mx-input" }, index.h("div", { class: this.containerClass, ref: el => (this.containerElem = el) }, index.h("div", { class: `mx-input-inner-wrapper ${this.isTextarea()}`, style: this.overrideTextArea() }, this.leftIcon && (index.h("div", { class: "mds-input-left-content" }, index.h("i", { class: this.leftIcon }))), this.label && (index.h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClass, onClick: () => this.focusOnInput() }, this.label)), !this.textarea ? (index.h("div", { class: "mds-input" }, index.h("input", { type: this.type, name: this.name, id: this.inputId || this.uuid, value: this.value, disabled: this.disabled, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textInput = el) }))) : (index.h("textarea", { style: this.returnTaHeight(), name: this.name, id: this.inputId || this.uuid, disabled: this.disabled, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textArea = el) }, this.value)), (this.rightIcon || this.error) && (index.h("div", { class: "mds-input-right-content" }, this.error ? index.h("i", { class: "ph-warning-circle" }) : index.h("i", { class: this.rightIcon }))))), this.assistiveText && index.h("div", { class: "assistive-text" }, this.assistiveText)));
+    return (index.h(index.Host, { class: "mx-input" }, index.h("div", { class: this.containerClass, ref: el => (this.containerElem = el) }, index.h("div", { class: `mx-input-inner-wrapper ${this.isTextarea()}`, style: this.overrideTextArea() }, this.leftIcon && (index.h("div", { class: "mds-input-left-content" }, index.h("i", { class: this.leftIcon }))), this.label && (index.h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClass, onClick: () => this.focusOnInput() }, this.label)), !this.textarea ? (index.h("div", { class: "mds-input" }, index.h("input", { type: this.type, name: this.name, id: this.inputId || this.uuid, value: this.value, disabled: this.disabled, readonly: this.readonly, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textInput = el) }))) : (index.h("textarea", { style: this.returnTaHeight(), name: this.name, id: this.inputId || this.uuid, disabled: this.disabled, readonly: this.readonly, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textArea = el) }, this.value)), (this.rightIcon || this.error) && (index.h("div", { class: "mds-input-right-content" }, this.error ? index.h("i", { class: "ph-warning-circle" }) : index.h("i", { class: this.rightIcon }))))), this.assistiveText && index.h("div", { class: "assistive-text" }, this.assistiveText)));
   }
 };
 

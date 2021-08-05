@@ -3,7 +3,7 @@ import { MxCheckbox } from '../mx-checkbox';
 
 describe('mx-checkbox', () => {
   let page;
-  let root;
+  let root: HTMLMxCheckboxElement;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxCheckbox],
@@ -19,7 +19,7 @@ describe('mx-checkbox', () => {
 
   it('has the proper name and label', async () => {
     const input = root.querySelector('input');
-    const labelName = root.querySelector('[data-testid="labelName"]');
+    const labelName = root.querySelector('[data-testid="labelName"]') as HTMLElement;
     expect(input.getAttribute('name')).toBe('foo');
     expect(labelName.innerText).toBe('Premier');
   });
@@ -27,5 +27,19 @@ describe('mx-checkbox', () => {
   it('is checked', async () => {
     const input = root.querySelector('input');
     expect(input.checked).toBeTruthy();
+  });
+
+  it('disables the input when the disabled prop is set', async () => {
+    root.disabled = true;
+    await page.waitForChanges();
+    const input = root.querySelector('input');
+    expect(input.disabled).toBeTruthy();
+  });
+
+  it('adds an indeterminate class when the indeterminate prop is set', async () => {
+    root.indeterminate = true;
+    await page.waitForChanges();
+    const input = root.querySelector('input');
+    expect(input.getAttribute('class').includes('indeterminate')).toBe(true);
   });
 });

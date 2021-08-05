@@ -10,7 +10,7 @@
 | Property     | Attribute     | Description                                                                                | Type      | Default |
 | ------------ | ------------- | ------------------------------------------------------------------------------------------ | --------- | ------- |
 | `ariaLabel`  | `aria-label`  | If you are not providing a `label`, this should be provided instead for accessibility      | `string`  | `''`    |
-| `badge`      | `badge`       | Display a dot badge                                                                        | `boolean` | `false` |
+| `badge`      | `badge`       | Display a circular badge                                                                   | `boolean` | `false` |
 | `badgeClass` | `badge-class` | Additional classes for the badge                                                           | `string`  | `''`    |
 | `icon`       | `icon`        | Class name of icon to display                                                              | `string`  | `''`    |
 | `label`      | `label`       | Label text to display                                                                      | `string`  | `''`    |

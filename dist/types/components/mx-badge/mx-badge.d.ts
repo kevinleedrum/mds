@@ -5,8 +5,8 @@ export declare class MxBadge {
   value: any;
   /** Make the corners a little more square (best for standalone text) */
   squared: boolean;
-  /** Display as a small dot (no value) */
-  dot: boolean;
+  /** Render as a small indicator shape with no inner text.  If the prop is present, but no string value is passed, the shape will default to `circle`. */
+  indicator: boolean | 'square' | 'triangle-up' | 'hexagon' | 'triangle-down' | 'star';
   /** Additional classes to add to the badge itself */
   badgeClass: string;
   /** Class name of icon */
@@ -17,6 +17,7 @@ export declare class MxBadge {
   bottom: boolean;
   /** Anchor the badge to the left of the wrapped content */
   left: boolean;
+  get indicatorSvg(): string;
   get isStandalone(): boolean;
   get isIconOnly(): boolean;
   get badgeClassNames(): string;

@@ -153,6 +153,7 @@
 
   /* #region inputs */
   /* Text Inputs & Textareas */
+  --mds-bg-input-readonly: #f5f5f5;
   --mds-bg-input: #fff;
   --mds-border-input-error: #ff0c3e;
   --mds-border-input-focus: #0457af;
@@ -232,14 +233,18 @@
 
   /* Checkboxes */
   --mds-bg-checkbox-checked: #0457af;
+  --mds-bg-checkbox-disabled: #a4a4a4;
   --mds-bg-checkbox-overlay-active: rgba(0, 0, 0, 0.12);
   --mds-bg-checkbox-overlay-checked-active: rgba(4, 87, 175, 0.32);
   --mds-bg-checkbox-overlay-checked-focus: rgba(4, 87, 175, 0.24);
   --mds-bg-checkbox-overlay-checked-hover: rgba(4, 87, 175, 0.08);
   --mds-bg-checkbox-overlay-focus: rgba(0, 0, 0, 0.12);
   --mds-bg-checkbox-overlay-hover: rgba(0, 0, 0, 0.04);
+  --mds-border-checkbox-disabled: #a4a4a4;
   --mds-border-checkbox-check: #fff;
   --mds-border-checkbox: #505050;
+  --mds-text-checkbox-disabled: #a4a4a4;
+  --mds-text-checkbox: #2d2d2d;
   /* #endregion selection-controls */
 
   /* #region progress */
@@ -2293,6 +2298,14 @@ video {
 
   right: 0px;
 }
+.mds .bottom-10{
+
+  bottom: 0.625rem;
+}
+.mds .left-10{
+
+  left: 0.625rem;
+}
 .mds .top-24{
 
   top: 1.5rem;
@@ -2476,14 +2489,6 @@ video {
 .mds .right-10{
 
   right: 0.625rem;
-}
-.mds .bottom-10{
-
-  bottom: 0.625rem;
-}
-.mds .left-10{
-
-  left: 0.625rem;
 }
 .mds .-top-10{
 
@@ -4257,13 +4262,13 @@ video {
 
   height: 2.25rem;
 }
-.mds .h-0{
-
-  height: 0px;
-}
 .mds .h-18{
 
   height: 1.125rem;
+}
+.mds .h-0{
+
+  height: 0px;
 }
 .mds .h-32{
 
@@ -4605,13 +4610,13 @@ video {
 
   width: 1px;
 }
-.mds .w-0{
-
-  width: 0px;
-}
 .mds .w-18{
 
   width: 1.125rem;
+}
+.mds .w-0{
+
+  width: 0px;
 }
 .mds .w-56{
 
@@ -7999,11 +8004,11 @@ video {
 
   background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
 }
-.mds .bg-yellow-300{
+.mds .bg-blue-700{
 
   --tw-bg-opacity: 1;
 
-  background-color: rgba(252, 211, 77, var(--tw-bg-opacity));
+  background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
 }
 .mds .bg-white{
 
@@ -9225,6 +9230,42 @@ video {
 
   color: rgba(6, 95, 70, var(--tw-text-opacity));
 }
+.mds .text-green-500{
+
+  --tw-text-opacity: 1;
+
+  color: rgba(16, 185, 129, var(--tw-text-opacity));
+}
+.mds .text-black{
+
+  --tw-text-opacity: 1;
+
+  color: rgba(0, 0, 0, var(--tw-text-opacity));
+}
+.mds .text-yellow-300{
+
+  --tw-text-opacity: 1;
+
+  color: rgba(252, 211, 77, var(--tw-text-opacity));
+}
+.mds .text-yellow-600{
+
+  --tw-text-opacity: 1;
+
+  color: rgba(217, 119, 6, var(--tw-text-opacity));
+}
+.mds .text-red-600{
+
+  --tw-text-opacity: 1;
+
+  color: rgba(220, 38, 38, var(--tw-text-opacity));
+}
+.mds .text-blue-400{
+
+  --tw-text-opacity: 1;
+
+  color: rgba(96, 165, 250, var(--tw-text-opacity));
+}
 .mds .text-gray-600{
 
   --tw-text-opacity: 1;
@@ -10223,11 +10264,20 @@ video {
       border: 1px solid var(--mds-border-input-hover);
     }
 .mx-input .mx-input-wrapper.disabled label,
+    .mx-input .mx-input-wrapper.disabled .mds-input input,
     .mx-input .mx-input-wrapper.disabled + .assistive-text {
       color: #a9a9a9;
       color: var(--mds-text-input-disabled);
       cursor: default;
     }
+.mx-input .mx-input-wrapper.readonly {
+      background: #f5f5f5;
+      background: var(--mds-bg-input-readonly);
+    }
+.mx-input .mx-input-wrapper.readonly label {
+        background: #f5f5f5;
+        background: var(--mds-bg-input-readonly);
+      }
 .mx-input .mx-input-wrapper label {
       position: absolute;
       left: 10px;
@@ -10746,6 +10796,10 @@ video {
       background: #00696b;
       background: var(--mds-bg-fab-secondary-active);
     }
+.mx-checkbox .checkbox-label {
+    color: #2d2d2d;
+    color: var(--mds-text-checkbox);
+  }
 .mx-checkbox span {
     position: relative;
     z-index: 1;
@@ -10767,10 +10821,10 @@ video {
       content: '';
       position: absolute;
       display: none;
-      left: 5px;
-      top: 1px;
-      width: 5px;
-      height: 10px;
+      left: 4px;
+      top: -1px;
+      width: 6px;
+      height: 12px;
       border: solid #fff;
       border: solid var(--mds-border-checkbox-check);
       border-width: 0 2px 2px 0;
@@ -10789,25 +10843,59 @@ video {
       background: rgba(0, 0, 0, 0.12);
       background: var(--mds-bg-checkbox-overlay-focus);
     }
-.mx-checkbox :focus-within:focus-visible:checked ~ span::before {
+.mx-checkbox :focus-within:focus-visible:checked ~ span::before,
+    .mx-checkbox :focus-within:focus-visible.indeterminate ~ span::before {
       background: rgba(4, 87, 175, 0.24);
       background: var(--mds-bg-checkbox-overlay-checked-focus);
     }
-.mx-checkbox input:checked ~ span {
+.mx-checkbox input.indeterminate ~ span::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 2px;
+    top: 6px;
+    width: 10px;
+    height: 0;
+    border: 0;
+    border-top: 2px solid #fff;
+    border-top: 2px solid var(--mds-border-checkbox-check);
+    transform: rotate(0deg);
+  }
+.mx-checkbox input:checked ~ span,
+  .mx-checkbox input.indeterminate ~ span {
     background-color: #0457af;
     background-color: var(--mds-bg-checkbox-checked);
+    border-color: #0457af;
+    border-color: var(--mds-bg-checkbox-checked);
   }
-.mx-checkbox input:checked ~ span::after {
+.mx-checkbox input:checked ~ span::after, .mx-checkbox input.indeterminate ~ span::after {
       display: block;
     }
-.mx-checkbox input:checked ~ span:hover::before {
+.mx-checkbox input:checked ~ span:hover::before, .mx-checkbox input.indeterminate ~ span:hover::before {
         background: rgba(4, 87, 175, 0.08);
         background: var(--mds-bg-checkbox-overlay-checked-hover);
       }
-.mx-checkbox input:checked ~ span:active::before {
+.mx-checkbox input:checked ~ span:active::before, .mx-checkbox input.indeterminate ~ span:active::before {
         background: rgba(4, 87, 175, 0.32);
         background: var(--mds-bg-checkbox-overlay-checked-active);
       }
+.mx-checkbox input:disabled ~ span {
+    border-color: #a4a4a4;
+    border-color: var(--mds-bg-checkbox-disabled);
+  }
+.mx-checkbox input:disabled ~ span:hover::before,
+    .mx-checkbox input:disabled ~ span:active::before {
+      background: transparent;
+    }
+.mx-checkbox input:checked:disabled ~ span,
+  .mx-checkbox input.indeterminate:disabled ~ span {
+    background-color: #a4a4a4;
+    background-color: var(--mds-bg-checkbox-disabled);
+  }
+.mx-checkbox input:disabled ~ .checkbox-label {
+    color: #a4a4a4;
+    color: var(--mds-text-checkbox-disabled);
+  }
 .mx-radio span {
     position: relative;
     z-index: 1;
