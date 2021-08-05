@@ -7,10 +7,14 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 <!-- #region checkboxes -->
 <div class="mds">
   <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
-    <div><mx-checkbox name="foo" label-name="Premier" checked="true" /></div>
+    <div><mx-checkbox name="foo" label-name="Premier" checked /></div>
     <div><mx-checkbox name="foo" label-name="W Collection" /></div>
     <div><mx-checkbox name="foo" label-name="Equestrian" /></div>
     <div><mx-checkbox name="foo" label-name="Warlock" /></div>
+    <div><mx-checkbox name="foo" disabled label-name="Disabled" /></div>
+    <div><mx-checkbox name="foo" checked disabled label-name="Disabled" /></div>
+    <div><mx-checkbox name="foo" indeterminate label-name="Indeterminate" /></div>
+    <div><mx-checkbox name="foo" indeterminate disabled label-name="Indeterminate" /></div>
   </div>
 </div>
 <!-- #endregion checkboxes -->
@@ -19,14 +23,17 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 
 ### Properties
 
-| Property     | Attribute     | Description | Type      | Default |
-| ------------ | ------------- | ----------- | --------- | ------- |
-| `checked`    | `checked`     |             | `boolean` | `false` |
-| `labelClass` | `label-class` |             | `string`  | `''`    |
-| `labelLeft`  | `label-left`  |             | `boolean` | `false` |
-| `labelName`  | `label-name`  |             | `string`  | `''`    |
-| `name`       | `name`        |             | `string`  | `''`    |
-| `value`      | `value`       |             | `string`  | `''`    |
+| Property        | Attribute       | Description                                                                   | Type      | Default |
+| --------------- | --------------- | ----------------------------------------------------------------------------- | --------- | ------- |
+| `checked`       | `checked`       |                                                                               | `boolean` | `false` |
+| `disabled`      | `disabled`      |                                                                               | `boolean` | `false` |
+| `hideLabel`     | `hide-label`    | Hide the label text visually, but still make it accessible for screen readers | `boolean` | `false` |
+| `indeterminate` | `indeterminate` |                                                                               | `boolean` | `false` |
+| `labelClass`    | `label-class`   |                                                                               | `string`  | `''`    |
+| `labelLeft`     | `label-left`    |                                                                               | `boolean` | `false` |
+| `labelName`     | `label-name`    |                                                                               | `string`  | `''`    |
+| `name`          | `name`          |                                                                               | `string`  | `''`    |
+| `value`         | `value`         |                                                                               | `string`  | `''`    |
 
 ## Radio Buttons
 
