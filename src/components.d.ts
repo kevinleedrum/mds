@@ -21,13 +21,13 @@ export namespace Components {
          */
         "bottom": boolean;
         /**
-          * Display as a small dot (no value)
-         */
-        "dot": boolean;
-        /**
           * Class name of icon
          */
         "icon": string;
+        /**
+          * Render as a small indicator shape with no inner text.  If the prop is present, but no string value is passed, the shape will default to `circle`.
+         */
+        "indicator": boolean | 'square' | 'triangle-up' | 'hexagon' | 'triangle-down' | 'star';
         /**
           * Anchor the badge to the left of the wrapped content
          */
@@ -74,6 +74,12 @@ export namespace Components {
     }
     interface MxCheckbox {
         "checked": boolean;
+        "disabled": boolean;
+        /**
+          * Hide the label text visually, but still make it accessible for screen readers
+         */
+        "hideLabel": boolean;
+        "indeterminate": boolean;
         "labelClass": string;
         "labelLeft": boolean;
         "labelName": string;
@@ -212,6 +218,7 @@ export namespace Components {
          */
         "name": string;
         "outerContainerClass": string;
+        "readonly": boolean;
         "rightIcon": string;
         /**
           * Display a multi-line `textarea` instead of an `input`
@@ -371,7 +378,7 @@ export namespace Components {
          */
         "ariaLabel": string;
         /**
-          * Display a dot badge
+          * Display a circular badge
          */
         "badge": boolean;
         /**
@@ -654,13 +661,13 @@ declare namespace LocalJSX {
          */
         "bottom"?: boolean;
         /**
-          * Display as a small dot (no value)
-         */
-        "dot"?: boolean;
-        /**
           * Class name of icon
          */
         "icon"?: string;
+        /**
+          * Render as a small indicator shape with no inner text.  If the prop is present, but no string value is passed, the shape will default to `circle`.
+         */
+        "indicator"?: boolean | 'square' | 'triangle-up' | 'hexagon' | 'triangle-down' | 'star';
         /**
           * Anchor the badge to the left of the wrapped content
          */
@@ -707,6 +714,12 @@ declare namespace LocalJSX {
     }
     interface MxCheckbox {
         "checked"?: boolean;
+        "disabled"?: boolean;
+        /**
+          * Hide the label text visually, but still make it accessible for screen readers
+         */
+        "hideLabel"?: boolean;
+        "indeterminate"?: boolean;
         "labelClass"?: string;
         "labelLeft"?: boolean;
         "labelName"?: string;
@@ -853,6 +866,7 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         "outerContainerClass"?: string;
+        "readonly"?: boolean;
         "rightIcon"?: string;
         /**
           * Display a multi-line `textarea` instead of an `input`
@@ -1004,7 +1018,7 @@ declare namespace LocalJSX {
          */
         "ariaLabel"?: string;
         /**
-          * Display a dot badge
+          * Display a circular badge
          */
         "badge"?: boolean;
         /**

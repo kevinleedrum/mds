@@ -27,9 +27,17 @@
     }
 
     &.disabled label,
+    &.disabled .mds-input input,
     &.disabled + .assistive-text {
       color: var(--mds-text-input-disabled);
       cursor: default;
+    }
+
+    &.readonly {
+      background: var(--mds-bg-input-readonly);
+      label {
+        background: var(--mds-bg-input-readonly);
+      }
     }
 
     label {

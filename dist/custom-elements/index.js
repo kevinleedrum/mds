@@ -1,20 +1,55 @@
 import { h, Host, createEvent, proxyCustomElement } from '@stencil/core/internal/client';
 export { setAssetPath, setPlatformOptions } from '@stencil/core/internal/client';
 
+const circleSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+  <circle cx="6" cy="6" r="6" fill="currentColor"/>
+</svg>`;
+
+const hexagonSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+  <path d="M6 0L11.1962 3V9L6 12L0.803848 9V3L6 0Z" fill="currentColor"/>
+</svg>`;
+
+const squareSvg = `<svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+  <rect width="10" height="10" fill="currentColor"/>
+</svg>`;
+
+const starSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+  <path d="M6 0.5L7.76336 4.07295L11.7063 4.6459L8.85317 7.42705L9.52671 11.3541L6 9.5L2.47329 11.3541L3.14683 7.42705L0.293661 4.6459L4.23664 4.07295L6 0.5Z" fill="currentColor"/>
+</svg>`;
+
+const triangleDownSvg = `<svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+  <path d="M6.00011 10L12 0H0L6.00011 10Z" fill="currentColor"/>
+</svg>`;
+
+const triangleUpSvg = `<svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+  <path d="M6.00011 0L12 10H0L6.00011 0Z" fill="currentColor"/>
+</svg>`;
+
 const MxBadge$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
     /** Make the corners a little more square (best for standalone text) */
     this.squared = false;
-    /** Display as a small dot (no value) */
-    this.dot = false;
     /** Offset badge inward by this many pixels (e.g. 10 for icon buttons) */
     this.offset = 0;
     /** Anchor the badge to the bottom of the wrapped content */
     this.bottom = false;
     /** Anchor the badge to the left of the wrapped content */
     this.left = false;
+  }
+  get indicatorSvg() {
+    if (this.indicator === 'star')
+      return starSvg;
+    if (this.indicator === 'triangle-down')
+      return triangleDownSvg;
+    if (this.indicator === 'hexagon')
+      return hexagonSvg;
+    if (this.indicator === 'triangle-up')
+      return triangleUpSvg;
+    if (this.indicator === 'square')
+      return squareSvg;
+    return circleSvg;
   }
   get isStandalone() {
     return !this.element.firstElementChild;
@@ -25,7 +60,7 @@ const MxBadge$1 = class extends HTMLElement {
   get badgeClassNames() {
     let str = 'badge inline-flex items-center justify-center text-4 font-semibold pointer-events-none';
     // Border-Radius
-    if (this.dot || this.isIconOnly) {
+    if (this.isIconOnly) {
       str += ' rounded-full';
     }
     else if (this.squared) {
@@ -35,7 +70,7 @@ const MxBadge$1 = class extends HTMLElement {
       str += ' rounded-xl';
     }
     // Width & Height
-    if (this.dot) {
+    if (this.indicator != null) {
       str += ' w-12 h-12';
     }
     else if (this.isStandalone) {
@@ -62,7 +97,7 @@ const MxBadge$1 = class extends HTMLElement {
     return [str, this.badgeClass].join(' ');
   }
   render() {
-    return (h(Host, { class: "mx-badge inline-flex relative" }, h("slot", null), h("span", { class: this.badgeClassNames }, this.icon && h("i", { class: this.icon + (this.isIconOnly ? '' : ' mr-4') }), this.value)));
+    return (h(Host, { class: "mx-badge inline-flex relative" }, h("slot", null), this.indicator != null ? (h("span", { class: this.badgeClassNames, "data-testid": 'indicator-' + (this.indicator || 'circle'), innerHTML: this.indicatorSvg })) : (h("span", { class: this.badgeClassNames }, this.icon && h("i", { class: this.icon + (this.isIconOnly ? '' : ' mr-4') }), this.value))));
   }
   get element() { return this; }
 };
@@ -166,13 +201,34 @@ const MxCheckbox$1 = class extends HTMLElement {
     this.labelLeft = false;
     this.labelName = '';
     this.labelClass = '';
+    /** Hide the label text visually, but still make it accessible for screen readers */
+    this.hideLabel = false;
     this.checked = false;
+    this.disabled = false;
+    this.indeterminate = false;
+  }
+  get checkClass() {
+    let str = 'flex h-18 w-18';
+    str += this.labelLeft ? ' order-2' : ' order-1';
+    if (this.labelLeft && !this.hideLabel)
+      str += ' ml-16';
+    return str;
+  }
+  get checkLabelClass() {
+    let str = 'checkbox-label inline-block';
+    if (this.hideLabel)
+      str += ' sr-only';
+    str += this.labelLeft ? ' order-1 flex-1' : ' order-2';
+    if (!this.labelLeft && !this.hideLabel)
+      str += ' ml-16';
+    return str;
   }
   render() {
     return (h(Host, { class: "mx-checkbox" }, h("label", { class: [
-        'relative flex-1 inline-flex flex-nowrap align-center items-center cursor-pointer text-4',
+        'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
+          (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,
-      ].join(' ') }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "checkbox", name: this.name, value: this.value, checked: this.checked }), h("span", { class: 'flex h-18 w-18 cursor-pointer' + (this.labelLeft ? ' order-2 ml-16' : ' order-1') }), h("div", { class: 'inline-block' + (this.labelLeft ? ' order-1 flex-1' : ' order-2 ml-16'), "data-testid": "labelName" }, this.labelName))));
+      ].join(' ') }, h("input", { class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }), h("span", { class: this.checkClass }), h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
 };
 
@@ -613,6 +669,7 @@ const MxInput$1 = class extends HTMLElement {
     this.type = 'text';
     this.dense = false;
     this.disabled = false;
+    this.readonly = false;
     this.isActive = false;
     this.isFocused = false;
     this.outerContainerClass = '';
@@ -623,9 +680,11 @@ const MxInput$1 = class extends HTMLElement {
     this.textareaHeight = '250px';
   }
   connectedCallback() {
-    if (this.error) {
+    if (this.error || this.value) {
       this.isActive = true;
-      this.labelClass += ' active error';
+      this.labelClass += ' active';
+      if (this.error)
+        this.labelClass += ' error';
     }
     else {
       this.setLabelClass();
@@ -652,6 +711,8 @@ const MxInput$1 = class extends HTMLElement {
       str += ' error';
     if (this.disabled)
       str += ' disabled';
+    if (this.readonly)
+      str += ' readonly';
     return str;
   }
   handleFocus() {
@@ -685,7 +746,7 @@ const MxInput$1 = class extends HTMLElement {
     return this.textarea ? 'textarea' : '';
   }
   render() {
-    return (h(Host, { class: "mx-input" }, h("div", { class: this.containerClass, ref: el => (this.containerElem = el) }, h("div", { class: `mx-input-inner-wrapper ${this.isTextarea()}`, style: this.overrideTextArea() }, this.leftIcon && (h("div", { class: "mds-input-left-content" }, h("i", { class: this.leftIcon }))), this.label && (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClass, onClick: () => this.focusOnInput() }, this.label)), !this.textarea ? (h("div", { class: "mds-input" }, h("input", { type: this.type, name: this.name, id: this.inputId || this.uuid, value: this.value, disabled: this.disabled, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textInput = el) }))) : (h("textarea", { style: this.returnTaHeight(), name: this.name, id: this.inputId || this.uuid, disabled: this.disabled, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textArea = el) }, this.value)), (this.rightIcon || this.error) && (h("div", { class: "mds-input-right-content" }, this.error ? h("i", { class: "ph-warning-circle" }) : h("i", { class: this.rightIcon }))))), this.assistiveText && h("div", { class: "assistive-text" }, this.assistiveText)));
+    return (h(Host, { class: "mx-input" }, h("div", { class: this.containerClass, ref: el => (this.containerElem = el) }, h("div", { class: `mx-input-inner-wrapper ${this.isTextarea()}`, style: this.overrideTextArea() }, this.leftIcon && (h("div", { class: "mds-input-left-content" }, h("i", { class: this.leftIcon }))), this.label && (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClass, onClick: () => this.focusOnInput() }, this.label)), !this.textarea ? (h("div", { class: "mds-input" }, h("input", { type: this.type, name: this.name, id: this.inputId || this.uuid, value: this.value, disabled: this.disabled, readonly: this.readonly, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textInput = el) }))) : (h("textarea", { style: this.returnTaHeight(), name: this.name, id: this.inputId || this.uuid, disabled: this.disabled, readonly: this.readonly, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textArea = el) }, this.value)), (this.rightIcon || this.error) && (h("div", { class: "mds-input-right-content" }, this.error ? h("i", { class: "ph-warning-circle" }) : h("i", { class: this.rightIcon }))))), this.assistiveText && h("div", { class: "assistive-text" }, this.assistiveText)));
   }
 };
 
@@ -3596,7 +3657,7 @@ const MxTab$1 = class extends HTMLElement {
     this.icon = '';
     /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
     this.selected = false;
-    /** Display a dot badge */
+    /** Display a circular badge */
     this.badge = false;
     /** Additional classes for the badge */
     this.badgeClass = '';
@@ -3617,7 +3678,7 @@ const MxTab$1 = class extends HTMLElement {
     return str;
   }
   get badgeEl() {
-    return h("mx-badge", { dot: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
+    return h("mx-badge", { indicator: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
   }
   get isTextOnly() {
     return this.label && !this.icon;
@@ -3773,16 +3834,16 @@ const MxToggleButtonGroup$1 = class extends HTMLElement {
   }; }
 };
 
-const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"dot":[4],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
+const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"indicator":[8],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
 const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
-const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelLeft":[4,"label-left"],"labelName":[1,"label-name"],"labelClass":[1,"label-class"],"checked":[4]}]);
+const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelLeft":[4,"label-left"],"labelName":[1,"label-name"],"labelClass":[1,"label-class"],"hideLabel":[4,"hide-label"],"checked":[4],"disabled":[4],"indeterminate":[4]}]);
 const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined":[4],"disabled":[4],"selected":[516],"clickable":[4],"removable":[4],"avatarUrl":[1,"avatar-url"],"icon":[1],"value":[8],"choice":[4],"filter":[4]}]);
 const MxChipGroup = /*@__PURE__*/proxyCustomElement(MxChipGroup$1, [4,"mx-chip-group",{"value":[1032]},[[0,"click","onChipClick"]]]);
 const MxCircularProgress = /*@__PURE__*/proxyCustomElement(MxCircularProgress$1, [0,"mx-circular-progress",{"value":[2],"size":[1],"appearDelay":[2,"appear-delay"]}]);
 const MxDropdownMenu = /*@__PURE__*/proxyCustomElement(MxDropdownMenu$1, [4,"mx-dropdown-menu",{"ariaLabel":[1,"aria-label"],"dense":[4],"elevated":[4],"flat":[4],"label":[1],"dropdownId":[1,"dropdown-id"],"name":[1],"suffix":[1],"value":[1032],"isFocused":[32]},[[0,"click","onClick"]]]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"ariaLabel":[1,"aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
 const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"value":[1],"disabled":[4],"ariaLabel":[1,"aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
-const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"value":[1],"type":[1],"dense":[4],"disabled":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
+const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"value":[1],"type":[1],"dense":[4],"disabled":[4],"readonly":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
 const MxLinearProgress = /*@__PURE__*/proxyCustomElement(MxLinearProgress$1, [0,"mx-linear-progress",{"value":[2],"appearDelay":[2,"appear-delay"]}]);
 const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
 const MxMenuItem = /*@__PURE__*/proxyCustomElement(MxMenuItem$1, [4,"mx-menu-item",{"checked":[4],"disabled":[4],"icon":[1],"label":[1],"multiSelect":[4,"multi-select"],"minWidths":[32]},[[1,"mouseenter","onMouseEnter"],[1,"mouseleave","onMouseLeave"],[0,"focus","onFocus"],[0,"keydown","onKeyDown"]]]);

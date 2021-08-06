@@ -13,6 +13,7 @@ export declare class MxInput {
   type: string;
   dense: boolean;
   disabled: boolean;
+  readonly: boolean;
   leftIcon: string;
   rightIcon: string;
   isActive: boolean;
