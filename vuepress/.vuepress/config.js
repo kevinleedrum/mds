@@ -148,6 +148,7 @@ module.exports = {
         'menus',
         'tables',
         'page-headers',
+        'pagination',
       ],
     },
   },

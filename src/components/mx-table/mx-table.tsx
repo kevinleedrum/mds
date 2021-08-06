@@ -1,7 +1,13 @@
-import { Component, Host, h, Prop, Element, Event, EventEmitter, Watch, Listen, Method, State } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Event, EventEmitter, Watch, Listen, State, Method } from '@stencil/core';
 import { capitalize, isDateObject } from '../../utils/utils';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
-import { ITableRowAction } from '../mx-table-row/mx-table-row';
+import { IMxMenuItemProps } from '../mx-menu-item/mx-menu-item';
+import { PaginationChangeEventDetail } from '../mx-pagination/mx-pagination';
+
+export interface ITableRowAction extends IMxMenuItemProps {
+  /* The menu item text for the row action */
+  value: string;
+}
 
 /** Defines a data table column */
 export interface ITableColumn {
@@ -42,8 +48,9 @@ export interface ITableColumn {
   shadow: false,
 })
 export class MxTable {
+  actionMenu: HTMLMxMenuElement;
+  actionMenuButton: HTMLMxButtonElement;
   hasSlot: boolean = false;
-  hasAccessoryRow: boolean = false;
 
   /** An array of objects that defines the table's dataset. */
   @Prop() rows: Object[] = [];
@@ -54,7 +61,11 @@ export class MxTable {
   @Prop() rowIdProperty: string;
   /** Additional classes for the `table` element */
   @Prop() tableClass: string;
+  /** Make rows checkable.  You must either provide a `rowIdProperty` (for generated rows), or
+   * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
   @Prop() checkable: boolean = false;
+  /** Set to false to prevent checking rows by clicking on them (outside the checkboxes). */
+  @Prop() checkOnRowClick: boolean = true;
   @Prop() hoverable: boolean = true;
   /** Set to `true` to allow smaller tables to shrink to less than 100% width */
   @Prop() autoWidth: boolean = false;
@@ -68,18 +79,23 @@ export class MxTable {
   /** The zero-based index of the page to display */
   @Prop({ mutable: true }) page: number = 0;
   @Prop({ mutable: true }) rowsPerPage: number = 10;
-  @Prop() rowsPerPageOptions: number[] = [10, 25, 50, 100];
+  /** The total number of unpaginated rows.  This is ignored for client-side pagination.
+   * For server-side pagination, omitting this prop will remove the last-page button.
+   */
+  @Prop() totalRows: number;
+  @Prop() rowsPerPageOptions: number[];
   /** Do not sort or paginate client-side. Use events to send server requests instead. */
   @Prop() serverPaginate: boolean = false;
   @Prop() showOperationsBar: boolean = false;
   @Prop() getRowActions: (row: Object) => ITableRowAction[];
+  @Prop() getMultiRowActions: (rows: string[]) => ITableRowAction[];
+
+  @State() checkedRowIds: string[] = [];
 
   @Element() element: HTMLMxTableElement;
 
-  @Event() mxRowCheck: EventEmitter<Array<number | string>>;
+  @Event() mxRowCheck: EventEmitter<string[]>;
   @Event() mxVisibleRowsChange: EventEmitter<Object[]>;
-
-  @State() checkedRowIds: Array<number | string> = [];
 
   @Listen('mxCheck')
   onMxCheck(e: CustomEvent) {
@@ -101,6 +117,42 @@ export class MxTable {
     this.mxVisibleRowsChange.emit(this.visibleRows);
   }
 
+  @Watch('page')
+  onPageChange() {
+    // Scroll back to the top of the table on page change (if necessary)
+    if (this.element.getBoundingClientRect().top < 0) this.element.scrollIntoView();
+  }
+
+  @Watch('sortBy')
+  @Watch('sortAscending')
+  onSortChange() {
+    this.page = 0;
+  }
+
+  @Method()
+  async getCheckedRowIds(): Promise<string[]> {
+    return this.checkedRowIds;
+  }
+
+  @Method()
+  async setCheckedRowIds(checkedRowIds: string[] = []) {
+    this.checkedRowIds = checkedRowIds;
+  }
+
+  @Method()
+  async checkAll() {
+    if (this.rowIdProperty) {
+      this.checkedRowIds = this.rows.map(row => row[this.rowIdProperty].toString());
+    } else {
+      this.checkedRowIds = this.getTableRows().map(row => row.rowId);
+    }
+  }
+
+  @Method()
+  async checkNone() {
+    this.checkedRowIds = [];
+  }
+
   getTableRows(): HTMLMxTableRowElement[] {
     return Array.from(
       this.element.querySelectorAll('mx-table-row:not(.header-row, .pagination-row)') as NodeListOf<
@@ -109,49 +161,33 @@ export class MxTable {
     );
   }
 
-  @Watch('checkable')
-  setRowsCheckable() {
-    this.getTableRows().forEach(row => (row.checkable = this.checkable));
-  }
-
-  setRowsChecked() {
-    if (!this.checkable) return;
-    this.getTableRows().forEach(row => (row.checked = this.checkedRowIds.includes(row.rowId)));
-  }
-
-  onCheckAll(e: InputEvent) {
+  onCheckAllClick(e: InputEvent) {
     e.preventDefault();
     if (this.checkedRowIds.length === 0) {
-      // Select all
-      if (this.rowIdProperty) {
-        this.checkedRowIds = this.rows.map(row => row[this.rowIdProperty]);
-      } else {
-        this.checkedRowIds = this.getTableRows().map(row => row.rowId);
-      }
+      this.checkAll();
     } else {
-      // Select none
       this.checkedRowIds = [];
     }
   }
 
-  componentWillLoad() {
-    this.hasSlot = !!this.element.children.length;
-    this.hasAccessoryRow = !!this.element.querySelector('[slot="accessory-row"]');
+  setRowsChecked() {
+    this.getTableRows().forEach(row => (row.checked = this.checkedRowIds.includes(row.rowId)));
   }
 
-  componentWillRender() {
+  componentWillLoad() {
+    this.hasSlot = !!this.element.children.length;
+  }
+
+  componentDidRender() {
+    if (this.actionMenu && !this.actionMenu.anchorEl) {
+      this.actionMenu.anchorEl = this.actionMenuButton;
+    }
     this.setRowsChecked();
   }
 
   componentDidLoad() {
     // Emit paginated rows right away.
     this.onVisibleRowsChange();
-    this.setRowsCheckable();
-  }
-
-  @Method()
-  async getCheckedRowIds(): Promise<Array<number | string>> {
-    return this.checkedRowIds;
   }
 
   get cols(): ITableColumn[] {
@@ -167,9 +203,10 @@ export class MxTable {
 
   get visibleRows(): Object[] {
     if (this.serverPaginate || (!this.paginate && !this.sortBy)) return this.rows;
-    // TODO: paginate
-    const rows = this.rows.slice();
+    const offset = this.page * this.rowsPerPage;
+    let rows = this.rows.slice();
     if (this.sortBy) this.sortRows(rows);
+    rows = rows.slice(offset, offset + this.rowsPerPage);
     return rows;
   }
 
@@ -179,6 +216,11 @@ export class MxTable {
 
   get someRowsChecked(): boolean {
     return this.checkedRowIds.length > 0 && this.checkedRowIds.length < this.rows.length;
+  }
+
+  get multiRowActions(): ITableRowAction[] {
+    if (!this.getMultiRowActions) return [];
+    return this.getMultiRowActions(this.checkedRowIds);
   }
 
   get gridStyle(): any {
@@ -205,7 +247,7 @@ export class MxTable {
     if (!this.sortAscending) rows.reverse();
   }
 
-  getCellSortableValue(row: Object, col: ITableColumn): number | string {
+  getCellSortableValue(row: Object, col: ITableColumn): string | number {
     if (col.getValue) return col.getValue(row);
     const val = row[col.property];
     if (['date', 'dateTime'].includes(col.type) || isDateObject(val)) return new Date(val).getTime();
@@ -256,33 +298,64 @@ export class MxTable {
     }
   }
 
+  onPaginationChange(e: { detail: PaginationChangeEventDetail }) {
+    this.page = e.detail.page;
+    this.rowsPerPage = e.detail.rowsPerPage;
+  }
+
   render() {
     const checkAllCheckbox = (
       <mx-checkbox
         checked={this.allRowsChecked}
         class={this.showOperationsBar ? 'ml-24' : null}
         indeterminate={this.someRowsChecked}
-        onClick={this.onCheckAll.bind(this)}
+        onClick={this.onCheckAllClick.bind(this)}
         label-name="Select all rows"
         hide-label
       />
     );
+
+    let multiRowActionUI;
+    if (this.checkable) {
+      multiRowActionUI =
+        this.multiRowActions.length === 1 ? (
+          <mx-button
+            btn-type="outlined"
+            {...this.multiRowActions[0]}
+            class={!this.checkedRowIds.length ? 'hidden' : null}
+          >
+            {this.multiRowActions[0].value}
+          </mx-button>
+        ) : (
+          <span class={!this.checkedRowIds.length ? 'hidden' : null}>
+            <mx-button ref={el => (this.actionMenuButton = el)} btn-type="text" dropdown>
+              <span class="h-full flex items-center">
+                <i class="ph-gear text-1"></i>
+              </span>
+            </mx-button>
+            <mx-menu ref={el => (this.actionMenu = el)}>
+              {this.multiRowActions.map(action => (
+                <mx-menu-item {...action}>{action.value}</mx-menu-item>
+              ))}
+            </mx-menu>
+          </span>
+        );
+    }
+
     return (
       <Host class={'mx-table block' + (this.hoverable ? ' hoverable' : '')}>
         <div style={this.gridStyle}>
+          {/* Operations Bar */}
           {this.showOperationsBar && (
             <div class="col-span-full py-12 flex items-center justify-between">
               <div class="flex items-center space-x-16">
                 {this.checkable && checkAllCheckbox}
-                <mx-button btn-type="text" dropdown>
-                  <span class="h-full flex items-center">
-                    <i class="ph-gear text-1"></i>
-                  </span>
-                </mx-button>
+                {multiRowActionUI}
               </div>
               <mx-search class="w-240" dense placeholder="Search"></mx-search>
             </div>
           )}
+
           {/* Header Row */}
           <mx-table-row class="header-row">
             {this.checkable && !this.showOperationsBar && checkAllCheckbox}
@@ -312,7 +385,6 @@ export class MxTable {
             this.visibleRows.map((row, rowIndex) => (
               // Generated Body Rows
               <mx-table-row
-                key={this.rowIdProperty ? row[this.rowIdProperty] : null}
                 row-id={this.rowIdProperty ? row[this.rowIdProperty] : null}
                 actions={this.getRowActions ? this.getRowActions(row) : undefined}
               >
@@ -328,7 +400,14 @@ export class MxTable {
           {this.paginate && (
             // Pagination Row
             <mx-table-row class="pagination-row">
-              <div class="col-span-full">PAGINATION GOES HERE</div>
+              <mx-pagination
+                page={this.page}
+                rows-per-page={this.rowsPerPage}
+                rows-per-page-options={this.rowsPerPageOptions}
+                total-rows={this.serverPaginate ? this.totalRows : this.rows.length}
+                class="col-span-full p-0"
+                onMxChange={this.onPaginationChange.bind(this)}
+              />
             </mx-table-row>
           )}
         </div>

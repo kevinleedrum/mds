@@ -37,3 +37,7 @@
     background: var(--mds-bg-table-hover);
   }
 }
+
+.mx-table-cell {
+  @apply p-16;
+}

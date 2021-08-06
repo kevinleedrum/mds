@@ -1,11 +1,6 @@
-import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
-import { IMxMenuItemProps } from '../mx-menu-item/mx-menu-item';
+import { Component, Host, h, Prop, Element, Event, EventEmitter, State } from '@stencil/core';
 import dotsSvg from '../../assets/svg/dots-vertical.svg';
-
-export interface ITableRowAction extends IMxMenuItemProps {
-  /* The menu item text for the row action */
-  value: string;
-}
+import { ITableRowAction } from '../mx-table/mx-table';
 
 @Component({
   tag: 'mx-table-row',
@@ -16,19 +11,31 @@ export class MxTableRow {
   actionMenu: HTMLMxMenuElement;
   checkbox: HTMLMxCheckboxElement;
 
-  @Prop() checkable: boolean = false;
-  @Prop({ mutable: true }) checked: boolean = false;
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
-  @Prop() rowId: string | number;
+  @Prop() rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   @Prop() actions: ITableRowAction[] = [];
+  @Prop({ mutable: true }) checked: boolean = false;
+
+  @Element() element: HTMLMxTableRowElement;
+
+  @State() checkable: boolean = false;
+  @State() checkOnRowClick: boolean = false;
 
   @Event() mxCheck: EventEmitter<{ rowId: string | number; checked: boolean }>;
 
   connectedCallback() {
-    if (this.checkable && this.rowId == null) throw new Error('Checkable table rows must have a rowId!');
     if (this.actions.length && this.rowId == null) throw new Error('Table rows with actions must have a rowId!');
     if (this.actions.some(action => !action.value)) throw new Error('Table row actions must have a value property!');
+  }
+
+  componentWillRender() {
+    // Determine `checkable` and `checked` by pulling props from parent table.
+    // This avoids having to manually pass these as props when using mx-table-row inside the table's
+    // default slot.
+    const table = this.element.closest('mx-table') as HTMLMxTableElement;
+    this.checkable = table.checkable && this.rowId != null;
+    if (this.checkable) this.checkOnRowClick = table.checkOnRowClick;
   }
 
   componentDidLoad() {
@@ -36,7 +43,7 @@ export class MxTableRow {
   }
 
   onClick(e: MouseEvent) {
-    if (!this.checkable) return;
+    if (!this.checkable || !this.checkOnRowClick) return;
     if (!!(e.target as HTMLElement).closest('button, input, mx-menu')) return; // Ignore clicks on buttons, etc.
     this.checked = !this.checked;
     this.mxCheck.emit({ rowId: this.rowId, checked: this.checked });

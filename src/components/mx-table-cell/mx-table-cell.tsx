@@ -8,7 +8,7 @@ import { Component, Host, h } from '@stencil/core';
 export class MxTableCell {
   render() {
     return (
-      <Host role="gridcell" class="mx-table-cell flex items-center text-4 p-16">
+      <Host role="gridcell" class="mx-table-cell flex items-center text-4">
         <slot></slot>
       </Host>
     );
