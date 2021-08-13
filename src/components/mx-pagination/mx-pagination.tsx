@@ -3,6 +3,7 @@ import chevronLeftSvg from '../../assets/svg/chevron-left.svg';
 import chevronRightSvg from '../../assets/svg/chevron-right.svg';
 import pageFirstSvg from '../../assets/svg/page-first.svg';
 import pageLastSvg from '../../assets/svg/page-last.svg';
+import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 
 export type PaginationChangeEventDetail = {
   rowsPerPage: number;
@@ -14,6 +15,9 @@ export type PaginationChangeEventDetail = {
   shadow: false,
 })
 export class MxPagination {
+  rowsMenuAnchor: HTMLElement;
+  rowsMenu: HTMLMxMenuElement;
+
   @Prop() page: number = 0;
   @Prop() rowsPerPageOptions: number[] = [10, 25, 50, 100];
   @Prop() rowsPerPage: number = 100;
@@ -21,6 +25,10 @@ export class MxPagination {
   @Prop() totalRows: number;
 
   @Event() mxChange: EventEmitter<PaginationChangeEventDetail>;
+
+  componentDidLoad() {
+    this.rowsMenu.anchorEl = this.rowsMenuAnchor;
+  }
 
   onClickFirstPage() {
     this.mxChange.emit({ page: 0, rowsPerPage: this.rowsPerPage });
@@ -57,7 +65,7 @@ export class MxPagination {
 
   render() {
     return (
-      <Host class="mx-pagination block text-4 overflow-hidden">
+      <Host class="mx-pagination block text-4 overflow-hidden select-none">
         {this.simple ? (
           // Simple pagination
           <div class="simple flex items-center justify-center h-48">
@@ -78,10 +86,18 @@ export class MxPagination {
         ) : (
           // Standard pagination
           <div class="flex items-center justify-end h-56 space-x-36 px-4">
-            <div>
-              Rows per page: {this.rowsPerPage}
-              {/* TODO: menu */}
+            <div class="flex items-center">
+              Rows per page: &nbsp;
+              <div ref={el => (this.rowsMenuAnchor = el)} class="flex items-center cursor-pointer">
+                {this.rowsPerPage}
+                <span class="ml-12" innerHTML={arrowSvg}></span>
+              </div>
             </div>
+            <mx-menu ref={el => (this.rowsMenu = el)}>
+              {this.rowsPerPageOptions.map(option => (
+                <mx-menu-item onClick={this.onChangeResultsPerPage.bind(this, option)}>{option}</mx-menu-item>
+              ))}
+            </mx-menu>
             {this.totalRows > 0 && (
               <div>
                 {this.currentRange} of {this.totalRows}
