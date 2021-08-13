@@ -1,4 +1,26 @@
 .mx-table {
+  .table-grid > :not(.operations-bar) {
+    /* Only place table cell elements into the grid (not row elements). */
+    @apply contents;
+  }
+
+  .header-row > * {
+    background: var(--mds-bg-table-header);
+    border-color: var(--mds-border-table-header);
+    @apply border-b;
+    &:first-child {
+      @apply rounded-tl-2xl pl-24;
+    }
+    &:last-child {
+      @apply rounded-tr-2xl pr-24;
+    }
+  }
+
+  .mx-table-row > *,
+  .pagination-row > * {
+    background: var(--mds-bg-table);
+  }
+
   .mx-table-row {
     border-color: var(--mds-border-table-cell);
     & > :first-child {
@@ -7,34 +29,34 @@
     & > :last-child:not(.pr-0, .p-0) {
       @apply pr-24;
     }
-    &.header-row > :first-child {
-      @apply rounded-tl-2xl;
-    }
-    &.header-row > :last-child {
-      @apply rounded-tr-2xl;
-    }
-    &:last-of-type > :first-child {
+    &:last-child > :first-child {
       @apply rounded-bl-2xl;
     }
-    &:last-of-type > :last-child {
+    &:last-child > :last-child {
       @apply rounded-br-2xl;
     }
-    &:not(:last-of-type) > * {
+    &:not(:last-child) > * {
       @apply border-b;
     }
-    & > * {
-      background: var(--mds-bg-table);
-    }
-    &.header-row > * {
-      background: var(--mds-bg-table-header);
-      border-color: var(--mds-border-table-header);
-    }
-    &:not(.header-row):focus-within > .mx-table-cell {
+    &:focus-within > .mx-table-cell {
       background: var(--mds-bg-table-focus);
     }
   }
-  &.hoverable .mx-table-row:not(.header-row, :focus-within):hover > .mx-table-cell {
+
+  &.hoverable .mx-table-row:not(:focus-within):hover > .mx-table-cell {
     background: var(--mds-bg-table-hover);
+  }
+
+  &.paginated {
+    .mx-table-row {
+      &:last-child > * {
+        @apply border-b;
+      }
+      &:last-child > :first-child,
+      &:last-child > :last-child {
+        @apply rounded-none;
+      }
+    }
   }
 }
 

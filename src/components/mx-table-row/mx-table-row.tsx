@@ -25,7 +25,6 @@ export class MxTableRow {
   @Event() mxCheck: EventEmitter<{ rowId: string | number; checked: boolean }>;
 
   connectedCallback() {
-    if (this.actions.length && this.rowId == null) throw new Error('Table rows with actions must have a rowId!');
     if (this.actions.some(action => !action.value)) throw new Error('Table row actions must have a value property!');
   }
 
@@ -34,12 +33,14 @@ export class MxTableRow {
     // This avoids having to manually pass these as props when using mx-table-row inside the table's
     // default slot.
     const table = this.element.closest('mx-table') as HTMLMxTableElement;
-    this.checkable = table.checkable && this.rowId != null;
+    this.checkable = table && table.checkable;
+    if (this.checkable && this.rowId == null)
+      throw new Error('Checkable rows require either a getRowId prop on the table, or a rowId on the row!');
     if (this.checkable) this.checkOnRowClick = table.checkOnRowClick;
   }
 
   componentDidLoad() {
-    if (this.actions.length) this.actionMenu.anchorEl = this.actionMenuButton;
+    if (this.actions.length > 1) this.actionMenu.anchorEl = this.actionMenuButton;
   }
 
   onClick(e: MouseEvent) {
@@ -55,7 +56,7 @@ export class MxTableRow {
 
   get rowClass(): string {
     let str = 'mx-table-row contents';
-    if (this.checkable) str += ' cursor-pointer';
+    if (this.checkable && this.checkOnRowClick) str += ' cursor-pointer';
     return str;
   }
 
@@ -74,7 +75,14 @@ export class MxTableRow {
           </mx-table-cell>
         )}
         <slot></slot>
-        {this.actions.length > 0 && (
+        {this.actions.length === 1 && (
+          <mx-table-cell class="justify-end">
+            <mx-button btn-type="text" {...this.actions[0]}>
+              {this.actions[0].value}
+            </mx-button>
+          </mx-table-cell>
+        )}
+        {this.actions.length > 1 && (
           <mx-table-cell class="p-0 justify-end">
             <mx-icon-button ref={el => (this.actionMenuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
             <mx-menu ref={el => (this.actionMenu = el)}>

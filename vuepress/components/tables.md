@@ -1,6 +1,8 @@
 # Data Tables
 
-## Basic Data-Driven Table
+## Basic data-driven table
+
+To create a basic data table with auto-generated rows, provide a `rows` prop containing your data, as well as a `columns` prop, which is an array of `ITableColumn` objects that define the tables columns.
 
 <section class="mds">
   <div class="mt-20">
@@ -23,12 +25,16 @@
 <<< @/vuepress/components/tables.md#basic
 <<< @/vuepress/components/tables.md#beatles
 
-## Paginated Table
+## Pagination
+
+By default, the `paginate` prop is set to `true`, which will break the rows up into pages that are limited to `rowsPerPage` (the default is 10).
 
 <section class="mds">
-  <div class="mt-20">
+  <div class="mt-20"></div>
     <!-- #region paginated -->
     <mx-table
+      rows-per-page="5"
+      :rows-per-page-options.prop="[5, 10, 25, 50]"
       :rows.prop="albums"
       :columns.prop="[
         { property: 'entertainer', heading: 'Artist', sortable: false },
@@ -43,7 +49,9 @@
 
 <<< @/vuepress/components/tables.md#paginated
 
-## Using HTML in Cells
+## Cell value getters
+
+You can use the `getValue` property of `ITableColumn` to pass a value getter for a column. This can even return HTML.
 
 <section class="mds">
   <div class="mt-20">
@@ -66,15 +74,54 @@
 <<< @/vuepress/components/tables.md#components
 <<< @/vuepress/components/tables.md#build-html
 
-## Row Selection
+## Row actions
+
+The `getRowActions` prop is function that accepts the `row` as a parameter and returns an array of props to generate [Menu Items](/components/menus.html) (or a [Text Button](/components/buttons.html#text-buttons) if there is only one action). For the inner text of the menu item / button, pass it as a `value` property.
+
+<section class="mds">
+  <div class="mt-20">
+    <!-- #region action-menu -->
+    <mx-table
+      :rows.prop="beatles"
+      :columns.prop="[
+        { property: 'firstName', heading: 'First Name' },
+        { property: 'lastName', heading: 'Last Name' },
+        { property: 'credits', heading: 'Song Credits', type: 'number' }
+      ]"
+      :get-row-actions.prop="row => ([
+        { value: 'Edit ' + row.firstName, onClick: () => clickHandler(row) },
+        { value: 'Delete', onClick: () => clickHandler(row) }
+      ])"
+    />
+    <mx-table
+      class="mt-20"
+      :rows.prop="beatles"
+      :columns.prop="[
+        { property: 'firstName', heading: 'First Name' },
+        { property: 'lastName', heading: 'Last Name' },
+        { property: 'birthdate', heading: 'Birthdate', type: 'date' },
+        { property: 'credits', heading: 'Song Credits', type: 'number' }
+      ]"
+      :get-row-actions.prop="row => ([
+        { value: 'Edit', icon: 'ph-pencil', onClick: () => clickHandler(row) }
+      ])"
+    />
+    <!-- #endregion action-menu -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#action-menu
+
+## Row selection
+
+Setting the `checkable` prop on a table adds checkboxes to the rows to allow selecting one or more rows. When this is set, each row must be given a unique identifier in order to track the selected rows. This can be done by providing a `getRowId` function that tells the table how to generate the `rowId` for each row.
 
 <section class="mds">
   <div class="mt-20">
     <!-- #region checkboxes -->
     <mx-table
       checkable
-      row-id-property="id"
-      rows-per-page="5"
+      :get-row-id.prop="row => row.id"
       :rows.prop="albums"
       :columns.prop="[
         { property: 'entertainer', heading: 'Artist', sortable: false },
@@ -89,39 +136,68 @@
 
 <<< @/vuepress/components/tables.md#checkboxes
 
-## Row Action Menu
+## Multi-row actions
+
+The `getMultiRowActions` prop can be used to generate an action menu/button for the selected rows. The `getMultiRowActions` function receives the selected `rowId`s as its only parameter. Similar to the [inline row actions](#row-actions), the function should return an array of [Menu Item](/components/menus.html) or [Text Button](/components/buttons.html#text-buttons) prop objects with a `value` property for the inner text of the menu item.
 
 <section class="mds">
   <div class="mt-20">
-    <!-- #region action-menu -->
+    <!-- #region multi-row -->
     <mx-table
-      row-id-property="firstName"
+      ref="multitable1"
+      checkable
+      :get-row-id.prop="row => row.firstName"
       :rows.prop="beatles"
       :columns.prop="[
         { property: 'firstName', heading: 'First Name' },
         { property: 'lastName', heading: 'Last Name' },
-        { property: 'credits', heading: 'Song Credits', type: 'number' }
+        { property: 'birthdate', heading: 'Birthdate', type: 'date' },
+        { property: 'eyeColor', heading: 'Eye Color' },
       ]"
-      :get-row-actions.prop="row => ([
-        { value: 'Edit ' + row.firstName, onClick: () => clickHandler(row) },
-        { value: 'Delete', onClick: () => clickHandler(row) }
+      :get-multi-row-actions.prop="rowIds => ([
+        {
+          value: `Merge ${rowIds.length > 1 ? rowIds.length : ''} rows`,
+          disabled: rowIds.length < 2,
+          onClick: () => multiRowClickHandler(rowIds)
+        },
+        { value: 'Delete', onClick: () => multiRowClickHandler(rowIds) },
       ])"
     />
-    <!-- #endregion action-menu -->
+    <mx-table
+      ref="multitable2"
+      class="mt-20"
+      checkable
+      :get-row-id.prop="row => row.firstName"
+      :rows.prop="beatles"
+      :columns.prop="[
+        { property: 'firstName', heading: 'First Name' },
+        { property: 'lastName', heading: 'Last Name' },
+        { property: 'birthdate', heading: 'Birthdate', type: 'date' },
+      ]"
+      :get-multi-row-actions.prop="rowIds => ([
+        { value: 'Delete', icon: 'ph-trash', onClick: () => multiRowClickHandler(rowIds) }
+      ])"
+    />
+    <!-- #endregion multi-row -->
   </div>
 </section>
 
-<<< @/vuepress/components/tables.md#action-menu
+<<< @/vuepress/components/tables.md#multi-row
+<<< @/vuepress/components/tables.md#multi-row-click-handler
 
-## Advanced Slot Layout
+## Custom layouts
+
+Table rows can be manually templated using `mx-table-row` and `mx-table-cell` components within the table's default slot.
+
+If you are relying on client-side sorting and pagination, you should iterate over the sorted/paginated array of rows that is emitted via the table's `mxVisibleRowsChange` event when creating your `mx-table-row` instances. This event fires once after the table first loads, as well as any time the sorting, pagination, or `rows` data is altered.
+
+For checkable tables, you do not need to add the checkboxes to your custom layout; those will be added automatically. The action button/menu for each row is also generated for you if you provide an `actions` prop.
 
 <section class="mds">
   <div class="mt-20">
     <!-- #region slot -->
     <mx-table
-      ref="table"
       checkable
-      show-operations-bar
       :rows.prop="beatles"
       :columns.prop="[
         { property: 'firstName', heading: 'First Name' },
@@ -130,35 +206,124 @@
         { property: 'eyeColor', heading: 'Eye Color' },
         {} // Row actions header (Only add this empty object when using the table slot.)
       ]"
-      :get-multi-row-actions.prop="rows => ([
-        {
-          value: `Merge ${rows.length > 1 ? rows.length : ''} rows`,
-          disabled: rows.length < 2,
-          onClick: () => multiRowClickHandler(rows)
-        },
-        { value: 'Delete', onClick: () => multiRowClickHandler(rows) },
-      ])"
       @mxVisibleRowsChange="e => visibleRows = e.detail"
     >
-      <mx-table-row v-for="(row, i) in visibleRows" :key="i" :row-id="row.firstName" :actions.prop="getRowActions(row)">
-        <mx-table-cell>{{ row.firstName }}</mx-table-cell>
-        <mx-table-cell>{{ row.lastName }}</mx-table-cell>
-        <mx-table-cell>{{ row.birthdate.toLocaleDateString() }}</mx-table-cell>
-        <mx-table-cell>
-          <mx-badge
-            indicator="hexagon"
-            :style="{ color: getEyeColorHex(row.eyeColor) }"
-            :title="row.eyeColor"
-          ></mx-badge>
-        </mx-table-cell>
-      </mx-table-row>
+      <div>
+        <mx-table-row
+          v-for="(row, i) in visibleRows"
+          :key="row.firstName"
+          :row-id="row.firstName"
+          :actions.prop="[{ value: 'Delete', onClick: () => clickHandler(row) }]"
+        >
+          <mx-table-cell>{{ row.firstName }}</mx-table-cell>
+          <mx-table-cell>{{ row.lastName }}</mx-table-cell>
+          <mx-table-cell>{{ row.birthdate.toLocaleDateString() }}</mx-table-cell>
+          <mx-table-cell>
+            <mx-badge
+              indicator
+              :style="{ color: getEyeColorHex(row.eyeColor) }"
+              :title="row.eyeColor"
+            ></mx-badge>
+          </mx-table-cell>
+        </mx-table-row>
+      </div>
     </mx-table>
     <!-- #endregion slot -->
   </div>
 </section>
 
 <<< @/vuepress/components/tables.md#slot
-<<< @/vuepress/components/tables.md#get-row-actions
+
+## Search & filter slots
+
+The `mx-table` component has both a `search` slot to accomodate a Search field, and a `filter` slot for any additional filter components.
+
+<section class="mds">
+  <div class="mt-20"></div>
+    <!-- #region search-filter -->
+    <mx-table
+      rows-per-page="5"
+      :rows-per-page-options.prop="[5, 10, 25, 50]"
+      :rows.prop="filteredAlbums"
+      :columns.prop="[
+        { property: 'entertainer', heading: 'Artist', sortable: false },
+        { property: 'album', heading: 'Album' },
+        { property: 'releasedate', heading: 'Release Date', type: 'date' },
+        { property: 'label', heading: 'Label' },
+      ]"
+    >
+      <mx-search
+        slot="search"
+        :value="albumSearch"
+        class="w-240"
+        dense
+        placeholder="Search"
+        @input="albumSearch = $event.target.value"
+      />
+      <div slot="filter">
+        <mx-button ref="labelMenuButton" btn-type="action" dropdown>
+          {{ (this.albumLabelFilters.length || 'All') +
+          (this.albumLabelFilters.length === 1 ? ' Label' : ' Labels') }}
+        </mx-button>
+        <mx-menu ref="labelMenu">
+          <mx-menu-item
+            v-for="label in albumLabels"
+            :key="label"
+            multi-select
+            :checked="albumLabelFilters.includes(label)"
+            @input="toggleLabelFilter(label)"
+          >
+            {{ label }}
+          </mx-menu-item>
+        </mx-menu>
+      </div>
+    </mx-table>
+    <!-- #endregion search-filter -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#search-filter
+<<< @/vuepress/components/tables.md#filtered-albums
+
+## Advanced usage
+
+<section class="mds">
+  <div class="mt-20">
+    <!-- #region advanced -->
+    <mx-table
+      ref="table"
+      checkable
+      :get-row-id.prop="row => row.firstName"
+      :rows.prop="filteredBeatles"
+      :columns.prop="[
+        { property: 'firstName', heading: 'First Name' },
+        { property: 'lastName', heading: 'Last Name' },
+        { property: 'birthdate', heading: 'Birthdate', type: 'date' },
+        { property: 'eyeColor', heading: 'Eye Color' },
+      ]"
+      :get-multi-row-actions.prop="rowIds => ([
+        {
+          value: `Merge ${rowIds.length > 1 ? rowIds.length : ''} rows`,
+          disabled: rowIds.length < 2,
+          onClick: () => multiRowClickHandler(rowIds)
+        },
+        { value: 'Delete', onClick: () => multiRowClickHandler(rowIds) },
+      ])"
+    >
+      <mx-search
+        slot="search"
+        :value="beatlesSearch"
+        class="w-240"
+        dense
+        placeholder="Search"
+        @input="beatlesSearch = $event.target.value"
+      />
+    </mx-table>
+    <!-- #endregion advanced -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#advanced
 <<< @/vuepress/components/tables.md#multi-row-click-handler
 
 <script>
@@ -310,7 +475,7 @@ const albums = [
     "album": "The Beatles Collection",
     "entertainer": "The Beatles",
     "releasedate": "1978-12-02T00:00:00",
-    "label": "EMI"
+    "label": "E.M.I."
   },
   {
     "id": 27,
@@ -459,12 +624,51 @@ export default {
     return {
       albums,
       beatles,
-      visibleRows: beatles
+      visibleRows: beatles,
+      albumSearch: '',
+      albumLabelFilters: [],
+      beatlesSearch: '',
+      draggingRowId: null,
     }
   },
-  // mounted() {
-  //   this.
-  // },
+  computed: {
+    // #region filtered-albums
+    albumLabels() {
+      return [...new Set(this.albums.map(album => album.label))].sort()
+    },
+    filteredAlbums() {
+      if (!this.albumSearch && !this.albumLabelFilters.length) return this.albums
+      let filteredAlbums = this.albums
+      if (this.albumSearch) {
+        const albumSearch = this.albumSearch.toLocaleLowerCase()
+        filteredAlbums = filteredAlbums.filter(row => 
+          row.album.toLocaleLowerCase().includes(albumSearch)
+        )
+      }
+      if (this.albumLabelFilters.length) {
+        filteredAlbums = filteredAlbums.filter(row => 
+          this.albumLabelFilters.includes(row.label)
+        )
+      }
+      return filteredAlbums
+    },
+    // #endregion filtered-albums
+    filteredBeatles() {
+      if (!this.beatlesSearch) return this.beatles
+      else {
+        const beatlesSearch = this.beatlesSearch.toLocaleLowerCase()
+        return this.beatles.filter(row => (
+          row.firstName.toLocaleLowerCase().includes(beatlesSearch) ||
+          row.lastName.toLocaleLowerCase().includes(beatlesSearch)
+        ))
+      }
+    }
+  },
+  mounted() {
+    this.$refs.labelMenu.anchorEl = this.$refs.labelMenuButton
+    this.$refs.multitable1.setCheckedRowIds(['John', 'Paul'])
+    this.$refs.multitable2.setCheckedRowIds(['John', 'Paul'])
+  },
   methods: {
     // #region build-html
     buildBadge(row) {
@@ -472,17 +676,9 @@ export default {
       const color = row.isLeftHanded ? 'bg-purple-300' : 'bg-blue-300'
       return `<mx-badge squared badge-class="${color}" value="${handedness}"></mx-badge>`
     },
-      // #endregion build-html
-    // #region get-row-actions
-    getRowActions(row) {
-      return [
-        { value: 'Edit ' + row.firstName, onClick: () => this.clickHandler(row) },
-        { value: 'Delete', onClick: () => this.clickHandler(row) }
-      ]
-    },
-    // #endregion get-row-actions
+    // #endregion build-html
     clickHandler(row) {
-      console.log(`Menu item for ${row.firstName} clicked!`)
+      console.log(`Action for ${row.firstName} clicked!`)
     },
     getEyeColorHex(eyeColor) {
       const colors = {
@@ -493,11 +689,19 @@ export default {
       return colors[eyeColor]
     },
     // #region multi-row-click-handler
-    async multiRowClickHandler() {
-      const checkedRowIds = await this.$refs.table.getCheckedRowIds()
-      console.log(`Action selected with ${checkedRowIds.length} row(s)!`)
-    }
+    async multiRowClickHandler(rowIds) {
+      console.log(`Action selected with ${rowIds.length} row(s)!`)
+      this.$refs.multitable1.checkNone()
+      this.$refs.multitable2.checkNone()
+    },
     // #endregion multi-row-click-handler
+    toggleLabelFilter(label) {
+      if (this.albumLabelFilters.includes(label)) {
+        this.albumLabelFilters = this.albumLabelFilters.filter(l => l !== label)
+      } else {
+        this.albumLabelFilters = [...this.albumLabelFilters, label]
+      }
+    }
   }
 }
 </script>
