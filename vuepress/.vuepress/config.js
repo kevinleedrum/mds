@@ -39,12 +39,20 @@ module.exports = {
         link: '/examples/grid.html',
       },
       {
+        text: 'Patterns',
+        link: '/patterns/introduction.html',
+      },
+      {
         text: 'Components',
         link: '/components/inputs.html',
       },
     ],
     sidebar: {
       '/getting-started.html': ['getting-started'],
+      '/patterns/': [
+        'introduction',
+        'filters',
+      ],
       '/examples/': ['grid', 'flex'],
       '/css-documentation/': [
         {
