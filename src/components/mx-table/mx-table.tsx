@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Element, Event, EventEmitter, Watch, Listen, State, Method } from '@stencil/core';
+import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { capitalize, isDateObject } from '../../utils/utils';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 import { IMxMenuItemProps } from '../mx-menu-item/mx-menu-item';
@@ -75,8 +76,6 @@ export class MxTable {
   /** The property on the row objects that will be used for sorting */
   @Prop({ mutable: true }) sortBy: string;
   @Prop({ mutable: true }) sortAscending: boolean = true;
-  /** Set to `true` to render the table in a loading state */
-  @Prop() isLoading: boolean = false; // TODO: needed?
   /** Show the pagination component.  Setting this to `false` will show all rows. */
   @Prop() paginate: boolean = true;
   /** The zero-based index of the page to display */
@@ -86,6 +85,8 @@ export class MxTable {
    * For server-side pagination, omitting this prop will remove the last-page button.
    */
   @Prop() totalRows: number;
+  /** Disable the next-page button.  Useful when the total number of rows is unknown. */
+  @Prop() disableNextPage: boolean = false;
   @Prop() rowsPerPageOptions: number[];
   /** Do not sort or paginate client-side. Use events to send server requests instead. */
   @Prop() serverPaginate: boolean = false;
@@ -93,12 +94,15 @@ export class MxTable {
   @Prop() getMultiRowActions: (rows: string[]) => ITableRowAction[];
   /** Show a progress bar below the header row */
   @Prop() showProgressBar: boolean = false;
+  /** Disable the pagination buttons (i.e. while loading results) */
+  @Prop() disablePagination: boolean = false;
   /** The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed. */
   @Prop() progressValue: number = null;
   /** Delay the appearance of the progress bar for this many milliseconds */
   @Prop() progressAppearDelay: number = 0;
 
   @State() checkedRowIds: string[] = [];
+  @State() minWidths = new MinWidths();
 
   @Element() element: HTMLMxTableElement;
 
@@ -140,7 +144,7 @@ export class MxTable {
   @Watch('rowsPerPage')
   @Watch('rows')
   resetPage() {
-    this.page = 0;
+    if (!this.serverPaginate) this.page = 0;
   }
 
   @Method()
@@ -184,6 +188,10 @@ export class MxTable {
     this.getTableRows().forEach(row => (row.checked = this.checkedRowIds.includes(row.rowId)));
   }
 
+  connectedCallback() {
+    minWidthSync.subscribeComponent(this);
+  }
+
   componentWillLoad() {
     this.hasDefaultSlot = Array.from(this.element.children).some(el => !el.getAttribute('slot'));
   }
@@ -205,6 +213,10 @@ export class MxTable {
   componentDidLoad() {
     // Emit paginated rows right away.
     this.onVisibleRowsChange();
+  }
+
+  disconnectedCallback() {
+    minWidthSync.unsubscribeComponent(this);
   }
 
   get cols(): ITableColumn[] {
@@ -317,6 +329,7 @@ export class MxTable {
   }
 
   onPaginationChange(e: { detail: PaginationChangeEventDetail }) {
+    if (this.serverPaginate) return;
     this.page = e.detail.page;
     this.rowsPerPage = e.detail.rowsPerPage;
   }
@@ -340,7 +353,7 @@ export class MxTable {
           <mx-button
             btn-type="outlined"
             {...this.multiRowActions[0]}
-            class={!this.checkedRowIds.length ? 'hidden' : null}
+            class={'whitespace-nowrap' + (!this.checkedRowIds.length ? ' hidden' : '')}
           >
             {this.multiRowActions[0].value}
           </mx-button>
@@ -360,21 +373,29 @@ export class MxTable {
         );
     }
 
+    let operationsBar;
+    if (this.showOperationsBar) {
+      if (this.minWidths.sm) {
+        operationsBar = (
+          <div class="py-12 flex items-center justify-between">
+            <div class="flex items-center min-h-36 space-x-16">
+              {checkAllCheckbox}
+              {multiRowActionUI}
+              <slot name="filter"></slot>
+            </div>
+            <slot name="search"></slot>
+          </div>
+        );
+      } else {
+        // TODO
+      }
+    }
+
     return (
       <Host class={'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '')}>
-        <div class="table-grid" style={this.gridStyle}>
-          {/* Operations Bar */}
-          {this.showOperationsBar && (
-            <div class="operations-bar col-span-full py-12 flex items-center justify-between">
-              <div class="flex items-center min-h-36 space-x-16">
-                {checkAllCheckbox}
-                {multiRowActionUI}
-                <slot name="filter"></slot>
-              </div>
-              <slot name="search"></slot>
-            </div>
-          )}
+        {operationsBar}
 
+        <div class="table-grid" style={this.gridStyle}>
           {/* Header Row */}
           <div class="header-row">
             {!this.showOperationsBar && checkAllCheckbox}
@@ -400,12 +421,14 @@ export class MxTable {
 
           {/* Progress Bar */}
           {this.showProgressBar && (
-            <div class="block h-0 col-span-full">
-              <mx-linear-progress
-                class="transform -translate-y-1/2"
-                value={this.progressValue}
-                appear-delay={this.progressAppearDelay}
-              />
+            <div>
+              <div class="block h-0 col-span-full">
+                <mx-linear-progress
+                  class="transform -translate-y-1/2"
+                  value={this.progressValue}
+                  appear-delay={this.progressAppearDelay}
+                />
+              </div>
             </div>
           )}
 
@@ -439,7 +462,9 @@ export class MxTable {
                 rowsPerPageOptions={this.rowsPerPageOptions}
                 total-rows={this.serverPaginate ? this.totalRows : this.rows.length}
                 class="col-span-full p-0 rounded-b-2xl"
-                onMxChange={this.onPaginationChange.bind(this)}
+                onMxPageChange={this.onPaginationChange.bind(this)}
+                disabled={this.disablePagination}
+                disableNextPage={this.disableNextPage}
               />
             </div>
           )}

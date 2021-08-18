@@ -1,5 +1,9 @@
 .mx-table {
-  .table-grid > :not(.operations-bar) {
+  [slot='search'] {
+    @apply sm:w-240;
+  }
+
+  .table-grid > * {
     /* Only place table cell elements into the grid (not row elements). */
     @apply contents;
   }

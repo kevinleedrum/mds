@@ -255,7 +255,6 @@ The `mx-table` component has both a `search` slot to accomodate a Search field, 
       <mx-search
         slot="search"
         :value="albumSearch"
-        class="w-240"
         dense
         placeholder="Search"
         @input="albumSearch = $event.target.value"
@@ -285,46 +284,120 @@ The `mx-table` component has both a `search` slot to accomodate a Search field, 
 <<< @/vuepress/components/tables.md#search-filter
 <<< @/vuepress/components/tables.md#filtered-albums
 
-## Advanced usage
+## Server-side pagination
+
+This example uses paginated data from [An API of Ice And Fire](https://anapioficeandfire.com/). To prevent client-side pagination, the `server-paginate` prop must be passed, and the pagination component's `mxPageChange` event should be leveraged to update the request parameters.
+
+Other props that may be helpful when using server-side pagination include `showProgressBar`, `progressAppearDelay`, `totalRows`, `disablePagination`, and `disableNextPage`.
 
 <section class="mds">
-  <div class="mt-20">
+    <!-- #region server -->
+  <mx-checkbox
+    class="my-20"
+    label-name="Add a 1500ms delay to emulate a slow connection"
+    :value="apiSlowRequest"
+    @input="apiSlowRequest = !apiSlowRequest"
+  />
+    <mx-table
+      server-paginate
+      :page="this.apiPage"
+      :rows-per-page="this.apiPageSize"
+      :rows-per-page-options.prop="[5, 10, 25, 50]"
+      :disable-pagination="apiLoading"
+      :disable-next-page="apiDisableNextPage"
+      :rows.prop="apiHouses"
+      :columns.prop="[
+        { property: 'name', heading: 'Name', sortable: false },
+        { property: 'region', heading: 'Region', sortable: false },
+        { property: 'words', heading: 'Words', sortable: false }
+      ]"
+      :show-progress-bar="apiLoading"
+      progress-appear-delay="150"
+      @mxPageChange="onPageChange"
+    />
+    <!-- #endregion server -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#server
+<<< @/vuepress/components/tables.md#seed-data
+<<< @/vuepress/components/tables.md#api-request
+
+## Advanced Usage
+
+<section class="mds">
+  <div class="mt-20"></div>
     <!-- #region advanced -->
     <mx-table
-      ref="table"
       checkable
-      :get-row-id.prop="row => row.firstName"
-      :rows.prop="filteredBeatles"
+      :rows.prop="filteredAlbums2"
       :columns.prop="[
-        { property: 'firstName', heading: 'First Name' },
-        { property: 'lastName', heading: 'Last Name' },
-        { property: 'birthdate', heading: 'Birthdate', type: 'date' },
-        { property: 'eyeColor', heading: 'Eye Color' },
+        { property: 'entertainer', heading: 'Artist', sortable: false },
+        { property: 'album', heading: 'Album' },
+        { property: 'releasedate', heading: 'Release Date', type: 'date' },
+        { property: 'label', heading: 'Label' },
+        {}
       ]"
       :get-multi-row-actions.prop="rowIds => ([
         {
-          value: `Merge ${rowIds.length > 1 ? rowIds.length : ''} rows`,
-          disabled: rowIds.length < 2,
+          value: 'Like',
+          icon: 'ph-heart',
           onClick: () => multiRowClickHandler(rowIds)
         },
-        { value: 'Delete', onClick: () => multiRowClickHandler(rowIds) },
+        {
+          value: 'Delete',
+          icon: 'ph-trash',
+          onClick: () => multiRowClickHandler(rowIds)
+        }
       ])"
+      @mxVisibleRowsChange="e => albumRows = e.detail"
     >
       <mx-search
         slot="search"
-        :value="beatlesSearch"
-        class="w-240"
+        :value="albumSearch2"
         dense
         placeholder="Search"
-        @input="beatlesSearch = $event.target.value"
+        @input="albumSearch2 = $event.target.value"
       />
+      <div slot="filter">
+        <mx-button ref="labelMenuButton2" class="whitespace-nowrap" btn-type="action" dropdown>
+          {{ (this.albumLabelFilters2.length || 'All') +
+          (this.albumLabelFilters2.length === 1 ? ' Label' : ' Labels') }}
+        </mx-button>
+        <mx-menu ref="labelMenu2">
+          <mx-menu-item
+            v-for="label in albumLabels"
+            :key="label"
+            multi-select
+            :checked="albumLabelFilters2.includes(label)"
+            @input="toggleLabelFilter2(label)"
+          >
+            {{ label }}
+          </mx-menu-item>
+        </mx-menu>
+      </div>
+      <div>
+        <mx-table-row
+          v-for="(row, i) in albumRows"
+          :key="row.album"
+          :row-id="row.album"
+          :actions.prop="[
+            { value: 'Like', icon: 'ph-heart', onClick: () => clickHandler(row) },
+            { value: 'Delete', icon: 'ph-trash', onClick: () => clickHandler(row) },
+          ]"
+        >
+          <mx-table-cell>{{ row.entertainer }}</mx-table-cell>
+          <mx-table-cell>{{ row.album }}</mx-table-cell>
+          <mx-table-cell>{{ new Date(row.releasedate).toLocaleDateString() }}</mx-table-cell>
+          <mx-table-cell>{{ row.label }}</mx-table-cell>
+        </mx-table-row>
+      </div>
     </mx-table>
     <!-- #endregion advanced -->
   </div>
 </section>
 
 <<< @/vuepress/components/tables.md#advanced
-<<< @/vuepress/components/tables.md#multi-row-click-handler
 
 <script>
 // #region beatles
@@ -625,10 +698,19 @@ export default {
       albums,
       beatles,
       visibleRows: beatles,
+      albumRows: albums,
       albumSearch: '',
+      albumSearch2: '',
       albumLabelFilters: [],
+      albumLabelFilters2: [],
       beatlesSearch: '',
       draggingRowId: null,
+      apiHouses: [],
+      apiPage: 0,
+      apiPageSize: 5,
+      apiLoading: false,
+      apiDisableNextPage: false,
+      apiSlowRequest: false,
     }
   },
   computed: {
@@ -653,6 +735,22 @@ export default {
       return filteredAlbums
     },
     // #endregion filtered-albums
+    filteredAlbums2() {
+      if (!this.albumSearch2 && !this.albumLabelFilters2.length) return this.albums
+      let filteredAlbums = this.albums
+      if (this.albumSearch2) {
+        const albumSearch2 = this.albumSearch2.toLocaleLowerCase()
+        filteredAlbums = filteredAlbums.filter(row => 
+          row.album.toLocaleLowerCase().includes(albumSearch2)
+        )
+      }
+      if (this.albumLabelFilters2.length) {
+        filteredAlbums = filteredAlbums.filter(row => 
+          this.albumLabelFilters2.includes(row.label)
+        )
+      }
+      return filteredAlbums
+    },
     filteredBeatles() {
       if (!this.beatlesSearch) return this.beatles
       else {
@@ -664,8 +762,13 @@ export default {
       }
     }
   },
+  // #region seed-data
   mounted() {
+    this.getApiData()
+    // ...
+  // #endregion seed-data
     this.$refs.labelMenu.anchorEl = this.$refs.labelMenuButton
+    this.$refs.labelMenu2.anchorEl = this.$refs.labelMenuButton2
     this.$refs.multitable1.setCheckedRowIds(['John', 'Paul'])
     this.$refs.multitable2.setCheckedRowIds(['John', 'Paul'])
   },
@@ -701,7 +804,37 @@ export default {
       } else {
         this.albumLabelFilters = [...this.albumLabelFilters, label]
       }
+    },
+    toggleLabelFilter2(label) {
+      if (this.albumLabelFilters2.includes(label)) {
+        this.albumLabelFilters2 = this.albumLabelFilters2.filter(l => l !== label)
+      } else {
+        this.albumLabelFilters2 = [...this.albumLabelFilters2, label]
+      }
+    },
+    // #region api-request
+    async getApiData() {
+      this.apiLoading = true
+      let url = 'https://www.anapioficeandfire.com/api/houses?'
+      url += 'page=' + (this.apiPage + 1)
+      url += '&pageSize=' + this.apiPageSize
+        const response = await fetch(url)
+        // Parse last page number from "link" header since API does not give us total row count
+        const pages = response.headers.get('link').match(/page\=[0-9]+/g)
+        const lastPage = +/[0-9]+/.exec(pages[pages.length - 1])[0]
+        // Disable next-page button if this is the last page
+        this.apiDisableNextPage = lastPage === (this.apiPage + 1)
+        setTimeout(async () => {
+          this.apiHouses = await response.json()
+          this.apiLoading = false
+        }, this.apiSlowRequest ? 1500 : 0)
+    },
+    onPageChange(e) {
+      this.apiPage = e.detail.page
+      this.apiPageSize = e.detail.rowsPerPage
+      this.getApiData()
     }
+    // #endregion api-request
   }
 }
 </script>
