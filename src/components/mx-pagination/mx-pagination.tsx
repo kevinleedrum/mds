@@ -5,7 +5,7 @@ import pageFirstSvg from '../../assets/svg/page-first.svg';
 import pageLastSvg from '../../assets/svg/page-last.svg';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 
-export type ChangeEventDetail = {
+export type PaginationChangeEventDetail = {
   rowsPerPage: number;
   page: number;
 };
@@ -23,32 +23,34 @@ export class MxPagination {
   @Prop() rowsPerPage: number = 100;
   @Prop() simple: boolean = false;
   @Prop() totalRows: number;
+  @Prop() disabled: boolean = false;
+  @Prop() disableNextPage: boolean = false;
 
-  @Event() mxChange: EventEmitter<ChangeEventDetail>;
+  @Event() mxPageChange: EventEmitter<PaginationChangeEventDetail>;
 
   componentDidLoad() {
     this.rowsMenu.anchorEl = this.rowsMenuAnchor;
   }
 
   onClickFirstPage() {
-    this.mxChange.emit({ page: 0, rowsPerPage: this.rowsPerPage });
+    this.mxPageChange.emit({ page: 0, rowsPerPage: this.rowsPerPage });
   }
 
   onClickPreviousPage() {
-    this.mxChange.emit({ page: this.page - 1, rowsPerPage: this.rowsPerPage });
+    this.mxPageChange.emit({ page: this.page - 1, rowsPerPage: this.rowsPerPage });
   }
 
   onClickNextPage() {
-    this.mxChange.emit({ page: this.page + 1, rowsPerPage: this.rowsPerPage });
+    this.mxPageChange.emit({ page: this.page + 1, rowsPerPage: this.rowsPerPage });
   }
 
   onClickLastPage() {
-    this.mxChange.emit({ page: this.lastPage, rowsPerPage: this.rowsPerPage });
+    this.mxPageChange.emit({ page: this.lastPage, rowsPerPage: this.rowsPerPage });
   }
 
-  onChangerowsPerPage(rowsPerPage) {
+  onChangeRowsPerPage(rowsPerPage) {
     // Return to first page whenever the results-per-page changes
-    this.mxChange.emit({ page: 0, rowsPerPage });
+    this.mxPageChange.emit({ page: 0, rowsPerPage });
   }
 
   get lastPage() {
@@ -94,7 +96,9 @@ export class MxPagination {
             </div>
             <mx-menu ref={el => (this.rowsMenu = el)}>
               {this.rowsPerPageOptions.map(option => (
-                <mx-menu-item onClick={this.onChangerowsPerPage.bind(this, option)}>{option}</mx-menu-item>
+                <mx-menu-item disabled={this.disabled} onClick={this.onChangeRowsPerPage.bind(this, option)}>
+                  {option}
+                </mx-menu-item>
               ))}
             </mx-menu>
             {this.totalRows > 0 && (
@@ -106,27 +110,29 @@ export class MxPagination {
               <mx-icon-button
                 aria-label="First page"
                 innerHTML={pageFirstSvg}
-                disabled={this.page === 0}
+                disabled={this.page === 0 || this.disabled}
                 onClick={this.onClickFirstPage.bind(this)}
               />
               <mx-icon-button
                 aria-label="Previous page"
                 innerHTML={chevronLeftSvg}
-                disabled={this.page === 0}
+                disabled={this.page === 0 || this.disabled}
                 onClick={this.onClickPreviousPage.bind(this)}
               />
               <mx-icon-button
                 aria-label="Next page"
                 innerHTML={chevronRightSvg}
-                disabled={this.page === this.lastPage}
+                disabled={this.page === this.lastPage || this.disabled || this.disableNextPage}
                 onClick={this.onClickNextPage.bind(this)}
               />
-              <mx-icon-button
-                aria-label="Last page"
-                innerHTML={pageLastSvg}
-                disabled={this.page === this.lastPage}
-                onClick={this.onClickLastPage.bind(this)}
-              />
+              {this.lastPage !== null && (
+                <mx-icon-button
+                  aria-label="Last page"
+                  innerHTML={pageLastSvg}
+                  disabled={this.page === this.lastPage || this.disabled}
+                  onClick={this.onClickLastPage.bind(this)}
+                />
+              )}
             </div>
           </div>
         )}
