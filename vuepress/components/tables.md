@@ -286,7 +286,7 @@ The `mx-table` component has both a `search` slot to accomodate a Search field, 
 
 ## Server-side pagination
 
-This example uses paginated data from [An API of Ice And Fire](https://anapioficeandfire.com/). To prevent client-side pagination, the `server-paginate` prop must be passed, and the pagination component's `mxPageChange` event should be leveraged to update the request parameters.
+This example uses paginated data from [An API of Ice And Fire](https://anapioficeandfire.com/). To prevent client-side pagination, the `server-paginate` prop must be passed, and the pagination component's `mxPageChange` event should be leveraged to update the request parameters. If the API request needs to include sorting parameters as well, attach a listener to the `mxSortChange` event as well.
 
 Other props that may be helpful when using server-side pagination include `showProgressBar`, `progressAppearDelay`, `totalRows`, `disablePagination`, and `disableNextPage`.
 

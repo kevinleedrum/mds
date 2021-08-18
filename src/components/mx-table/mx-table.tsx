@@ -3,12 +3,17 @@ import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { capitalize, isDateObject } from '../../utils/utils';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 import { IMxMenuItemProps } from '../mx-menu-item/mx-menu-item';
-import { PaginationChangeEventDetail } from '../mx-pagination/mx-pagination';
+import { PageChangeEventDetail } from '../mx-pagination/mx-pagination';
 
 export interface ITableRowAction extends IMxMenuItemProps {
   /* The menu item text for the row action */
   value: string;
 }
+
+export type SortChangeEventDetail = {
+  sortBy: string;
+  sortAscending: boolean;
+};
 
 /** Defines a data table column */
 export interface ITableColumn {
@@ -106,6 +111,8 @@ export class MxTable {
 
   @Element() element: HTMLMxTableElement;
 
+  /** Emitted when a sortable column's header is clicked. */
+  @Event() mxSortChange: EventEmitter<SortChangeEventDetail>;
   /** Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s. */
   @Event() mxRowCheck: EventEmitter<string[]>;
   /** Emitted when the sorting, pagination, or rows data changes.
@@ -326,9 +333,10 @@ export class MxTable {
         this.sortAscending = true;
       }
     }
+    this.mxSortChange.emit({ sortBy: this.sortBy, sortAscending: this.sortAscending });
   }
 
-  onPaginationChange(e: { detail: PaginationChangeEventDetail }) {
+  onMxPageChange(e: { detail: PageChangeEventDetail }) {
     if (this.serverPaginate) return;
     this.page = e.detail.page;
     this.rowsPerPage = e.detail.rowsPerPage;
@@ -462,7 +470,7 @@ export class MxTable {
                 rowsPerPageOptions={this.rowsPerPageOptions}
                 total-rows={this.serverPaginate ? this.totalRows : this.rows.length}
                 class="col-span-full p-0 rounded-b-2xl"
-                onMxPageChange={this.onPaginationChange.bind(this)}
+                onMxPageChange={this.onMxPageChange.bind(this)}
                 disabled={this.disablePagination}
                 disableNextPage={this.disableNextPage}
               />

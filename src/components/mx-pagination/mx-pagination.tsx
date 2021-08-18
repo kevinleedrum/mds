@@ -5,7 +5,7 @@ import pageFirstSvg from '../../assets/svg/page-first.svg';
 import pageLastSvg from '../../assets/svg/page-last.svg';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 
-export type PaginationChangeEventDetail = {
+export type PageChangeEventDetail = {
   rowsPerPage: number;
   page: number;
 };
@@ -26,7 +26,7 @@ export class MxPagination {
   @Prop() disabled: boolean = false;
   @Prop() disableNextPage: boolean = false;
 
-  @Event() mxPageChange: EventEmitter<PaginationChangeEventDetail>;
+  @Event() mxPageChange: EventEmitter<PageChangeEventDetail>;
 
   componentDidLoad() {
     this.rowsMenu.anchorEl = this.rowsMenuAnchor;
