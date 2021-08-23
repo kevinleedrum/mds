@@ -41,7 +41,7 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
         <mx-input label="Label & Suffix" suffix="SQFT" dense></mx-input>
       </div>
       <div class="my-20">
-        <mx-input maxlength="40" label="Label" assistive-text="This input has a maxlength attribute" :value="inputValue" @input="inputValue = $event.target.value"></mx-input>
+        <mx-input maxlength="100" label="Label" assistive-text="This input has a maxlength attribute" :value="inputValue" @input="inputValue = $event.target.value"></mx-input>
       </div>
     </div>
     <div>
@@ -77,7 +77,7 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
         <mx-input label="Label & Suffix" suffix="SQFT" dense></mx-input>
       </div>
       <div class="my-20">
-        <mx-input maxlength="40" label="Label" assistive-text="This input has a maxlength attribute" dense :value="inputValue" @input="inputValue = $event.target.value"></mx-input>
+        <mx-input maxlength="100" label="Label" assistive-text="This input has a maxlength attribute" dense :value="inputValue" @input="inputValue = $event.target.value"></mx-input>
       </div>
     </div>
   </div>

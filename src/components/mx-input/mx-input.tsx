@@ -80,9 +80,8 @@ export class MxInput {
   }
 
   get containerClass() {
-    let str = 'mx-input-wrapper relative border rounded-lg';
+    let str = 'mx-input-wrapper flex items-center relative border rounded-lg';
     if (!this.textarea) {
-      str += ' flex items-center';
       str += this.dense ? ' h-36' : ' h-48';
     }
     if (this.error || this.isFocused) str += ' border-2';
@@ -93,9 +92,9 @@ export class MxInput {
   }
 
   get inputClass() {
-    let str = 'w-full overflow-hidden outline-none appearance-none bg-transparent';
+    let str = 'flex-1 overflow-hidden outline-none appearance-none bg-transparent';
     if (!this.textarea) {
-      str += ' absolute inset-0 pl-16';
+      str += ' pr-16';
       str += this.leftIcon ? ' pl-48 left-2' : ' pl-16';
     } else {
       str += ' p-16 resize-none';
@@ -128,7 +127,7 @@ export class MxInput {
   }
 
   get rightContentClass() {
-    let str = 'icon-suffix absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
+    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8 pointer-events-none';
     if (this.isFocused) str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
   }
@@ -189,7 +188,7 @@ export class MxInput {
             </textarea>
           )}
 
-          {!this.textarea && (
+          {!this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (
             <span class={this.rightContentClass}>
               {this.maxlength && (
                 <span data-testid="character-count" class="character-count">
