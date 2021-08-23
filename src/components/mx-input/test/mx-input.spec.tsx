@@ -79,6 +79,15 @@ describe('mx-input', () => {
     const characterCount = root.querySelector('[data-testid="character-count"]');
     expect(characterCount.textContent).toBe('3/10');
   });
+
+  it('renders a floating label if the float-label prop is set', async () => {
+    let label = root.querySelector('label');
+    expect(label.classList.contains('floating')).toBe(false);
+    root.floatLabel = true;
+    await page.waitForChanges();
+    label = root.querySelector('label');
+    expect(label.classList.contains('floating')).toBe(true);
+  });
 });
 
 describe('mx-input as a textarea', () => {

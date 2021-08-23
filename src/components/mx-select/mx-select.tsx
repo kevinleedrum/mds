@@ -112,7 +112,7 @@ export class MxSelect {
       <Host class={'mx-select' + (this.disabled ? ' disabled' : '')}>
         {this.label && !this.floatLabel && labelJsx}
 
-        <div class={this.selectWrapperClass}>
+        <div data-testid="select-wrapper" class={this.selectWrapperClass}>
           <select
             aria-label={this.label || this.ariaLabel}
             class={this.selectClass}
