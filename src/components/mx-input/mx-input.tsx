@@ -22,7 +22,9 @@ export class MxInput {
   @Prop() disabled: boolean = false;
   @Prop() readonly: boolean = false;
   @Prop() maxlength: number;
+  /** The class name of the icon to show on the left side of the input */
   @Prop() leftIcon: string;
+  /** The class name of the icon to show on the right side of the input */
   @Prop() rightIcon: string;
   /** Text shown to the right of the input value */
   @Prop() suffix: string;
@@ -190,11 +192,15 @@ export class MxInput {
           {!this.textarea && (
             <span class={this.rightContentClass}>
               {this.maxlength && (
-                <span class="character-count">
+                <span data-testid="character-count" class="character-count">
                   {this.characterCount}/{this.maxlength}
                 </span>
               )}
-              {this.suffix && <span class="suffix flex items-center h-full px-4">{this.suffix}</span>}
+              {this.suffix && (
+                <span data-testid="suffix" class="suffix flex items-center h-full px-4">
+                  {this.suffix}
+                </span>
+              )}
               {this.error && <i class="ph-warning-circle"></i>}
               {this.rightIcon && !this.error && <i class={this.rightIcon}></i>}
             </span>
@@ -203,9 +209,11 @@ export class MxInput {
 
         {(this.assistiveText || (this.textarea && this.maxlength)) && (
           <div class="flex justify-between caption1 mt-4 ml-16 space-x-32">
-            <span class="assistive-text">{this.assistiveText}</span>
+            <span data-testid="assistive-text" class="assistive-text">
+              {this.assistiveText}
+            </span>
             {this.textarea && this.maxlength && (
-              <span class="character-count">
+              <span data-testid="character-count" class="character-count">
                 {this.characterCount}/{this.maxlength}
               </span>
             )}
