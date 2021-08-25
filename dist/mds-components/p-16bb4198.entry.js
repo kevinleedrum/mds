@@ -1,0 +1,1 @@
+import{r as t,h as s,H as r}from"./p-252a16a5.js";const a=class{constructor(s){t(this,s)}get isActiveTab(){return this.value>=0&&this.index===this.value}render(){return s(r,{class:this.isActiveTab?"":"hidden"},s("slot",null))}};export{a as mx_tab_content}
