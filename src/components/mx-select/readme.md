@@ -16,6 +16,7 @@
 | `elevated`      | `elevated`       | Style with a 1dp elevation                | `boolean` | `false`     |
 | `error`         | `error`          |                                           | `boolean` | `false`     |
 | `flat`          | `flat`           | Style with a "flat" border color          | `boolean` | `false`     |
+| `floatLabel`    | `float-label`    |                                           | `boolean` | `false`     |
 | `label`         | `label`          |                                           | `string`  | `undefined` |
 | `labelClass`    | `label-class`    | Additional classes for the label          | `string`  | `''`        |
 | `name`          | `name`           |                                           | `string`  | `undefined` |

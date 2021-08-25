@@ -1,4 +1,11 @@
 .mx-select {
+  label {
+    color: var(--mds-text-select-label);
+  }
+  &.disabled label {
+    color: var(--mds-text-select-disabled);
+  }
+
   .mx-select-wrapper {
     color: var(--mds-text-select);
     background: var(--mds-bg-select);
@@ -17,7 +24,6 @@
     }
 
     label {
-      color: var(--mds-text-input-label);
       background: var(--mds-bg-select);
       transform-origin: 0 0;
       transition: transform 0.1s ease-out;
@@ -26,7 +32,7 @@
         --translate-y: -16px;
       }
       &.floating {
-        transform: translate3d(-4px, var(--translate-y), 0) scale(0.8);
+        transform: translate3d(0, var(--translate-y), 0) scale(0.8);
       }
       @media (prefers-reduced-motion: reduce) {
         transition: none;
@@ -42,7 +48,7 @@
       }
     }
 
-    &.disabled label {
+    &.disabled {
       color: var(--mds-text-select-disabled);
     }
 

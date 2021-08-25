@@ -1,13 +1,16 @@
-import { Component, Host, h, Prop, Element, Watch, State } from '@stencil/core';
+import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
+import { uuidv4 } from '../../utils/utils';
 export class MxSelect {
   constructor() {
+    this.uuid = uuidv4();
     this.dense = false;
     this.disabled = false;
     /** Style with a 1dp elevation */
     this.elevated = false;
     /** Style with a "flat" border color */
     this.flat = false;
+    this.floatLabel = false;
     this.error = false;
     /** Additional classes for the label */
     this.labelClass = '';
@@ -54,13 +57,19 @@ export class MxSelect {
     return str;
   }
   get labelClassNames() {
-    let str = 'absolute block pointer-events-none mt-0 left-12 px-4';
-    if (this.dense)
-      str += ' dense text-4';
-    if (this.isFocused || this.hasValue)
-      str += ' floating';
-    if (this.isFocused)
-      str += ' -ml-1'; // prevent shifting due to border-width change
+    let str = 'block pointer-events-none';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 left-12 px-4';
+      if (this.dense)
+        str += ' dense text-4';
+      if (this.isFocused || this.hasValue)
+        str += ' floating';
+      if (this.isFocused)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+    }
+    else {
+      str += ' subtitle2 mb-4';
+    }
     return (str += ' ' + this.labelClass);
   }
   get iconSuffixClass() {
@@ -76,11 +85,13 @@ export class MxSelect {
     return icon;
   }
   render() {
-    return (h(Host, { class: "mx-select" },
-      h("div", { class: this.selectWrapperClass },
-        h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) },
+    const labelJsx = (h("label", { htmlFor: this.selectId || this.uuid, class: this.labelClassNames }, this.label));
+    return (h(Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') },
+      this.label && !this.floatLabel && labelJsx,
+      h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass },
+        h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) },
           h("slot", null)),
-        this.label && h("label", { class: this.labelClassNames }, this.label),
+        this.label && this.floatLabel && labelJsx,
         h("span", { class: this.iconSuffixClass },
           this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix),
           this.iconEl)),
@@ -193,6 +204,24 @@ export class MxSelect {
       },
       "attribute": "label",
       "reflect": false
+    },
+    "floatLabel": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "float-label",
+      "reflect": false,
+      "defaultValue": "false"
     },
     "ariaLabel": {
       "type": "string",
@@ -319,7 +348,6 @@ export class MxSelect {
   static get states() { return {
     "isFocused": {}
   }; }
-  static get elementRef() { return "element"; }
   static get watchers() { return [{
       "propName": "value",
       "methodName": "onValueChange"

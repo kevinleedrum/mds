@@ -1,15 +1,18 @@
-import { r as registerInstance, h, f as Host, g as getElement } from './index-b9cec9f1.js';
+import { r as registerInstance, h, f as Host } from './index-b9cec9f1.js';
 import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
+import { u as uuidv4 } from './utils-43415dd2.js';
 
 const MxSelect = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
+    this.uuid = uuidv4();
     this.dense = false;
     this.disabled = false;
     /** Style with a 1dp elevation */
     this.elevated = false;
     /** Style with a "flat" border color */
     this.flat = false;
+    this.floatLabel = false;
     this.error = false;
     /** Additional classes for the label */
     this.labelClass = '';
@@ -56,13 +59,19 @@ const MxSelect = class {
     return str;
   }
   get labelClassNames() {
-    let str = 'absolute block pointer-events-none mt-0 left-12 px-4';
-    if (this.dense)
-      str += ' dense text-4';
-    if (this.isFocused || this.hasValue)
-      str += ' floating';
-    if (this.isFocused)
-      str += ' -ml-1'; // prevent shifting due to border-width change
+    let str = 'block pointer-events-none';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 left-12 px-4';
+      if (this.dense)
+        str += ' dense text-4';
+      if (this.isFocused || this.hasValue)
+        str += ' floating';
+      if (this.isFocused)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+    }
+    else {
+      str += ' subtitle2 mb-4';
+    }
     return (str += ' ' + this.labelClass);
   }
   get iconSuffixClass() {
@@ -78,9 +87,9 @@ const MxSelect = class {
     return icon;
   }
   render() {
-    return (h(Host, { class: "mx-select" }, h("div", { class: this.selectWrapperClass }, h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, h("slot", null)), this.label && h("label", { class: this.labelClassNames }, this.label), h("span", { class: this.iconSuffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
+    const labelJsx = (h("label", { htmlFor: this.selectId || this.uuid, class: this.labelClassNames }, this.label));
+    return (h(Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass }, h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, h("slot", null)), this.label && this.floatLabel && labelJsx, h("span", { class: this.iconSuffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
   }
-  get element() { return getElement(this); }
   static get watchers() { return {
     "value": ["onValueChange"]
   }; }
