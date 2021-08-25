@@ -1,5 +1,4 @@
 export declare class MxInput {
-  containerElem: HTMLDivElement;
   textInput: HTMLInputElement;
   textArea: HTMLTextAreaElement;
   uuid: string;
@@ -14,33 +13,37 @@ export declare class MxInput {
   dense: boolean;
   disabled: boolean;
   readonly: boolean;
+  maxlength: number;
+  /** The class name of the icon to show on the left side of the input */
   leftIcon: string;
+  /** The class name of the icon to show on the right side of the input */
   rightIcon: string;
-  isActive: boolean;
-  isFocused: boolean;
+  /** Text shown to the right of the input value */
+  suffix: string;
   outerContainerClass: string;
   labelClass: string;
   error: boolean;
   assistiveText: string;
+  floatLabel: boolean;
   /** Display a multi-line `textarea` instead of an `input` */
   textarea: boolean;
   textareaHeight: string;
+  isFocused: boolean;
+  characterCount: number;
   connectedCallback(): void;
-  setLabelClass(target?: any): void;
-  setIndentedLabel(): void;
+  componentDidLoad(): void;
+  onValueChange(): void;
+  updateValue(): void;
+  onFocus(): void;
+  onBlur(): void;
+  onInput(e: InputEvent): void;
+  get workingElem(): HTMLInputElement | HTMLTextAreaElement;
+  get hasValue(): boolean;
   get containerClass(): string;
-  handleFocus(): void;
-  handleBlur(): void;
-  focusOnInput(): void;
-  removeError(): void;
-  returnTaHeight(): {
-    height: string;
-  };
-  overrideTextArea(): {
-    alignItems?: undefined;
-  } | {
-    alignItems: string;
-  };
-  isTextarea(): "" | "textarea";
+  get inputClass(): string;
+  get labelClassNames(): string;
+  get leftIconWrapperClass(): string;
+  get rightContentClass(): string;
+  get textareaClass(): "" | " textarea items-start";
   render(): any;
 }
