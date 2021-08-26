@@ -57,6 +57,10 @@
     color: var(--mds-text-link);
   }
 
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   /***************************
   * Typography
   ***************************/

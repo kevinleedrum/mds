@@ -13,10 +13,10 @@
     border-color: var(--mds-border-table-header);
     @apply border-b;
     &:first-child {
-      @apply rounded-tl-2xl pl-24;
+      @apply pl-24;
     }
     &:last-child {
-      @apply rounded-tr-2xl pr-24;
+      @apply sm:pr-24;
     }
   }
 
@@ -27,43 +27,46 @@
 
   .mx-table-row {
     border-color: var(--mds-border-table-cell);
+    transition: max-height 0.15s ease;
     & > :first-child {
       @apply pl-24;
     }
     & > :last-child:not(.pr-0, .p-0) {
-      @apply pr-24;
+      @apply sm:pr-24;
     }
-    &:last-child > :first-child {
-      @apply rounded-bl-2xl;
-    }
-    &:last-child > :last-child {
-      @apply rounded-br-2xl;
+    &:not(:last-child) {
+      @apply border-b sm:border-b-0;
     }
     &:not(:last-child) > * {
-      @apply border-b;
+      @apply sm:border-b;
     }
-    &:focus-within > .mx-table-cell {
+    &:focus-within > * {
       background: var(--mds-bg-table-focus);
+    }
+    .mobile-row-chevron {
+      color: var(--mds-text-table-mobile-row-chevron);
+      transition: transform 0.15s ease;
     }
   }
 
-  &.hoverable .mx-table-row:not(:focus-within):hover > .mx-table-cell {
-    background: var(--mds-bg-table-hover);
+  @media (hover: hover) {
+    &.hoverable .mx-table-row:not(:focus-within):hover > * {
+      background: var(--mds-bg-table-hover);
+    }
   }
 
   &.paginated {
     .mx-table-row {
-      &:last-child > * {
+      &:last-child {
         @apply border-b;
-      }
-      &:last-child > :first-child,
-      &:last-child > :last-child {
-        @apply rounded-none;
+        & > * {
+          @apply sm:border-b;
+        }
       }
     }
   }
 }
 
 .mx-table-cell {
-  @apply p-16;
+  @apply pl-24 sm:pl-16 p-16;
 }

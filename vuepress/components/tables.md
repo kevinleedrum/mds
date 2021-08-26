@@ -204,7 +204,6 @@ For checkable tables, you do not need to add the checkboxes to your custom layou
         { property: 'lastName', heading: 'Last Name' },
         { property: 'birthdate', heading: 'Birthdate', type: 'date' },
         { property: 'eyeColor', heading: 'Eye Color' },
-        {} // Row actions header (Only add this empty object when using the table slot.)
       ]"
       @mxVisibleRowsChange="e => visibleRows = e.detail"
     >
@@ -249,7 +248,7 @@ The `mx-table` component has both a `search` slot to accomodate a Search field, 
         { property: 'entertainer', heading: 'Artist', sortable: false },
         { property: 'album', heading: 'Album' },
         { property: 'releasedate', heading: 'Release Date', type: 'date' },
-        { property: 'label', heading: 'Label' },
+        { property: 'label', heading: 'Label' }
       ]"
     >
       <mx-search
@@ -335,8 +334,7 @@ Other props that may be helpful when using server-side pagination include `showP
         { property: 'entertainer', heading: 'Artist', sortable: false },
         { property: 'album', heading: 'Album' },
         { property: 'releasedate', heading: 'Release Date', type: 'date' },
-        { property: 'label', heading: 'Label' },
-        {}
+        { property: 'label', heading: 'Label' }
       ]"
       :get-multi-row-actions.prop="rowIds => ([
         {
