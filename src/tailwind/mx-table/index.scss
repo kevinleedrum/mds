@@ -21,8 +21,13 @@
   }
 
   .mx-table-row > *,
+  .empty-state > *,
   .pagination-row > * {
     background: var(--mds-bg-table);
+  }
+
+  .empty-state:not(:last-child) > * {
+    @apply border-b;
   }
 
   .mx-table-row {
