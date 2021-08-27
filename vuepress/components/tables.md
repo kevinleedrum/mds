@@ -283,7 +283,7 @@ The `mx-table` component has both a `search` slot to accomodate a Search field, 
 <<< @/vuepress/components/tables.md#search-filter
 <<< @/vuepress/components/tables.md#filtered-albums
 
-## Empty State
+## Empty state
 
 The `mx-table` component has a default empty state for when there are no visible rows, which can be overridden using the `empty-state` slot.
 
