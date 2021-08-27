@@ -29,7 +29,7 @@ export class MxPagination {
   @Event() mxPageChange: EventEmitter<PaginationChangeEventDetail>;
 
   componentDidLoad() {
-    this.rowsMenu.anchorEl = this.rowsMenuAnchor;
+    if (this.rowsMenu && this.rowsMenuAnchor) this.rowsMenu.anchorEl = this.rowsMenuAnchor;
   }
 
   onClickFirstPage() {
@@ -48,17 +48,17 @@ export class MxPagination {
     this.mxPageChange.emit({ page: this.lastPage, rowsPerPage: this.rowsPerPage });
   }
 
-  onChangeRowsPerPage(rowsPerPage) {
+  onChangeRowsPerPage(rowsPerPage: number) {
     // Return to first page whenever the results-per-page changes
     this.mxPageChange.emit({ page: 0, rowsPerPage });
   }
 
-  get lastPage() {
+  get lastPage(): number {
     if (this.totalRows === 0) return 0;
     return Math.ceil(this.totalRows / this.rowsPerPage) - 1;
   }
 
-  get currentRange() {
+  get currentRange(): string {
     let start = this.rowsPerPage * this.page + 1;
     let end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
     return start + '–' + end;
