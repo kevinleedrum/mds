@@ -26,7 +26,7 @@ describe('mx-select', () => {
     });
     root = page.root;
     select = root.querySelector('select');
-    selectWrapper = root.firstElementChild;
+    selectWrapper = root.querySelector('[data-testid="select-wrapper"]');
   });
 
   it('renders a select', async () => {
@@ -34,7 +34,7 @@ describe('mx-select', () => {
   });
 
   it('renders the label with any additional classes from the labelClass prop', async () => {
-    const label = selectWrapper.querySelector('label');
+    const label = root.querySelector('label');
     expect(label.innerText).toBe('Test Label');
     expect(label.getAttribute('class')).toContain('text-blue-500');
   });
@@ -116,5 +116,14 @@ describe('mx-select', () => {
     root.error = false;
     await page.waitForChanges();
     expect(selectWrapper.querySelector('[data-testid=arrow]')).not.toBeNull();
+  });
+
+  it('renders a floating label if the float-label prop is set', async () => {
+    let label = root.querySelector('label');
+    expect(label.classList.contains('floating')).toBe(false);
+    root.floatLabel = true;
+    await page.waitForChanges();
+    label = selectWrapper.querySelector('label');
+    expect(label.classList.contains('floating')).toBe(true);
   });
 });

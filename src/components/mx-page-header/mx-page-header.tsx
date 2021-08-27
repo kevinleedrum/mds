@@ -20,6 +20,7 @@ export class MxPageHeader {
   resizeObserver: ResizeObserver;
   tabSlot: HTMLElement;
   tertiaryButtonWrapper: HTMLElement;
+  tertiaryMenu: HTMLMxMenuElement;
 
   /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
   @Prop() buttons: IPageHeaderButton[] = [];
@@ -60,13 +61,18 @@ export class MxPageHeader {
     const { right: containerRight } = this.buttonRow.getBoundingClientRect();
     const isOverflowing = buttonRight > containerRight;
     this.renderTertiaryButtonAsMenu = isOverflowing;
+    if (isOverflowing) {
+      requestAnimationFrame(() => {
+        if (this.tertiaryMenu) this.tertiaryMenu.anchorEl = this.menuButton;
+      });
+    }
   }
 
   componentDidLoad() {
     this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
     this.resizeObserver.observe(this.element);
-    // HACK: We wait 100ms for layout shifts in order to detect overflow correctly.
-    setTimeout(this.updateRenderTertiaryButtonAsMenu.bind(this), 100);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
 
   get hostClass() {
@@ -97,6 +103,7 @@ export class MxPageHeader {
           let { btnType } = button;
           if (!btnType) btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
           const isTertiary = index === 2;
+          const { label, ...menuItemProps } = button; // Do not use button label as menu item label (use in slot instead)
           return (
             <div
               ref={el => isTertiary && (this.tertiaryButtonWrapper = el)}
@@ -106,9 +113,9 @@ export class MxPageHeader {
               {isTertiary && this.renderTertiaryButtonAsMenu && (
                 <div class="absolute !ml-auto -top-6">
                   <mx-icon-button ref={el => (this.menuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
-                  {/* <mx-menu anchor-el={this.menuButton}>
-                    <mx-menu-item {...button}>{button.label}</mx-menu-item>
-                  </mx-menu> */}
+                  <mx-menu ref={el => (this.tertiaryMenu = el)} anchor-el={this.menuButton}>
+                    <mx-menu-item {...menuItemProps}>{button.label}</mx-menu-item>
+                  </mx-menu>
                 </div>
               )}
               {/* The tertiary button is always rendered so we always know when it is overflowing the viewport. */}

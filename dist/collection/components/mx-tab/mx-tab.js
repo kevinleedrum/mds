@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import ripple from '../ripple';
+import ripple from '../../utils/ripple';
 export class MxTab {
   constructor() {
     /** Label text to display */
@@ -10,7 +10,7 @@ export class MxTab {
     this.icon = '';
     /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
     this.selected = false;
-    /** Display a dot badge */
+    /** Display a circular badge */
     this.badge = false;
     /** Additional classes for the badge */
     this.badgeClass = '';
@@ -31,7 +31,7 @@ export class MxTab {
     return str;
   }
   get badgeEl() {
-    return h("mx-badge", { dot: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
+    return h("mx-badge", { indicator: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
   }
   get isTextOnly() {
     return this.label && !this.icon;
@@ -135,7 +135,7 @@ export class MxTab {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": "Display a dot badge"
+        "text": "Display a circular badge"
       },
       "attribute": "badge",
       "reflect": false,

@@ -20,13 +20,18 @@
 ### Depends on
 
 - [mx-icon-button](../mx-icon-button)
+- [mx-menu](../mx-menu)
+- [mx-menu-item](../mx-menu-item)
 - [mx-button](../mx-button)
 
 ### Graph
 ```mermaid
 graph TD;
   mx-page-header --> mx-icon-button
+  mx-page-header --> mx-menu
+  mx-page-header --> mx-menu-item
   mx-page-header --> mx-button
+  mx-menu-item --> mx-checkbox
   style mx-page-header fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

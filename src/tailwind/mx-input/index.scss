@@ -1,167 +1,77 @@
 .mx-input {
+  label {
+    color: var(--mds-text-input-label);
+  }
+  &.disabled label {
+    color: var(--mds-text-input-disabled);
+  }
+
+  caret-color: var(--mds-caret-input);
+
   .mx-input-wrapper {
-    position: relative;
     color: var(--mds-text-input);
     background: var(--mds-bg-input);
-    border: 1px solid var(--mds-border-input);
-    border-radius: 8px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-    align-content: center;
+    border-color: var(--mds-border-input);
+    &:hover:not(.disabled, .error, :focus-within) {
+      border-color: var(--mds-border-input-hover);
+    }
+    &:focus-within {
+      border-color: var(--mds-border-input-focus);
+    }
 
     i {
-      color: inherit;
       font-size: 24px;
     }
 
-    &.error {
-      border: 2px solid var(--mds-border-input-error);
-      color: var(--mds-text-input-error);
-    }
-
     label {
-      position: absolute;
-      left: 10px;
-      display: block;
-      color: var(--mds-text-input-label);
       background: var(--mds-bg-input);
-      cursor: text;
-      -webkit-transition: color 0.1s ease-out, -webkit-transform 0.1s ease-out;
-      transition: color 0.1s ease-out, -webkit-transform 0.1s ease-out;
-      transition: transform 0.1s ease-out, color 0.1s ease-out;
-      transition: transform 0.1s ease-out, color 0.1s ease-out, -webkit-transform 0.1s ease-out;
-      -webkit-transform-origin: 0% 100%;
-      transform-origin: 0% 100%;
-      text-align: initial;
-      padding: 0 5px;
-      margin-top: 0px;
-      font-size: 16px;
-      z-index: 10;
-      cursor: pointer;
-
+      transform-origin: 0 0;
+      transition: transform 0.1s ease-out;
+      --translate-y: -22px;
+      &.dense {
+        --translate-y: -16px;
+      }
+      &.floating {
+        transform: translate3d(0, var(--translate-y), 0) scale(0.8);
+        &.has-left-icon {
+          transform: translate3d(-36px, var(--translate-y), 0) scale(0.8);
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         transition: none;
       }
+    }
 
-      &.indented {
-        left: 50px;
-      }
+    &.error {
+      border-color: var(--mds-border-input-error);
 
-      &.active {
-        -webkit-transform-origin: 0 0;
-        transform-origin: 0 0;
-      }
-
-      &.error {
+      label,
+      i {
         color: var(--mds-text-input-error);
       }
     }
 
-    &.focused {
-      border: 2px solid var(--mds-border-input-focus);
-
-      .mx-input-inner-wrapper {
-        padding: 0 15px;
-      }
-
-      .mx-input-inner-wrapper.textarea {
-        margin: -1px 0;
-      }
+    &.disabled {
+      color: var(--mds-text-input-disabled);
     }
 
-    &.standard {
-      min-height: 48px;
-
-      label {
-        top: 11px;
-
-        &.active {
-          -webkit-transform: translateY(-22px) scale(0.8);
-          transform: translateY(-22px) scale(0.8);
-        }
-      }
-
-      &.focused {
-        label {
-          &.active {
-            padding: 0 4px;
-            top: 10px !important;
-          }
-        }
-      }
+    &.readonly {
+      background: var(--mds-bg-input-readonly);
     }
-    &.dense {
-      min-height: 36px;
-      max-height: 36px;
 
-      label {
-        top: 6px;
-        font-size: 14px;
-
-        &.active {
-          -webkit-transform: translateY(-16px) scale(0.8);
-          transform: translateY(-16px) scale(0.8);
-        }
+    .icon-suffix {
+      .suffix,
+      .character-count {
+        color: var(--mds-text-input-label);
       }
-
-      &.focused {
-        label {
-          &.active {
-            padding: 0 4px;
-            top: 5px !important;
-          }
-        }
-      }
-    }
-  }
-
-  .mx-input-inner-wrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-    align-content: center;
-    width: 100%;
-    padding: 0 16px;
-
-    .mds-input-left-content {
-      display: flex;
-      width: 24px;
-      flex-shrink: 0;
-      margin-right: 11px; /* Label has 5px of margin */
-    }
-    .mds-input {
-      flex-grow: 1;
-
-      input {
-        width: 100%;
-        outline: 0;
-        color: inherit;
-        background: transparent;
-      }
-    }
-    .mds-input-right-content {
-      display: flex;
-      width: 24px;
-      flex-shrink: 0;
-      margin-left: 16px;
     }
   }
 
   .assistive-text {
-    font-size: 12px;
     color: var(--mds-text-input-assistive);
-    margin: 5px 0 0 16px;
   }
 
-  textarea {
-    background: transparent;
-    width: 100%;
-    padding: 16px 0;
-    outline: none;
+  .error + * > .assistive-text {
+    color: var(--mds-text-input-error);
   }
 }

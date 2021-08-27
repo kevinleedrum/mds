@@ -1,10 +1,6 @@
-import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-51a85981.js';
+import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-ede217a8.js';
+import { q as queryPrefersReducedMotion } from './utils-43415dd2.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-
-function queryPrefersReducedMotion() {
-  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  return !mediaQuery || mediaQuery.matches;
-}
 
 const MxTabs = class {
   constructor(hostRef) {

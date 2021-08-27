@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, Event } from '@stencil/core';
-import ripple from '../ripple';
+import ripple from '../../utils/ripple';
 import removeSvg from '../../assets/svg/remove.svg';
 import checkSvg from '../../assets/svg/check.svg';
 export class MxChip {

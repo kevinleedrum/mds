@@ -1,13 +1,6 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-5253f6cc.js';
+import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-b9cec9f1.js';
+import { q as queryPrefersReducedMotion } from './utils-43415dd2.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-
-function format(first, middle, last) {
-  return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
-}
-function queryPrefersReducedMotion() {
-  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  return !mediaQuery || mediaQuery.matches;
-}
 
 const MxTabs = class {
   constructor(hostRef) {

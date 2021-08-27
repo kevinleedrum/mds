@@ -1,5 +1,5 @@
-import { r as registerInstance, h, e as Host } from './index-5253f6cc.js';
-import { r as ripple } from './ripple-a99cb795.js';
+import { r as registerInstance, h, f as Host } from './index-b9cec9f1.js';
+import { r as ripple } from './ripple-54ef50dc.js';
 
 const MxTab = class {
   constructor(hostRef) {
@@ -12,7 +12,7 @@ const MxTab = class {
     this.icon = '';
     /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
     this.selected = false;
-    /** Display a dot badge */
+    /** Display a circular badge */
     this.badge = false;
     /** Additional classes for the badge */
     this.badgeClass = '';
@@ -33,7 +33,7 @@ const MxTab = class {
     return str;
   }
   get badgeEl() {
-    return h("mx-badge", { dot: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
+    return h("mx-badge", { indicator: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
   }
   get isTextOnly() {
     return this.label && !this.icon;

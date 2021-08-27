@@ -2,26 +2,22 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-2d451529.js');
-const ripple = require('./ripple-b35647b1.js');
-
-const arrowSvg = `<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path
-    d="M9.9654 0.757212C9.93099 0.681077 9.87273 0.616004 9.79798 0.57022C9.72323 0.524437 9.63535 0.5 9.54545 0.5H0.454547C0.364646 0.5 0.276763 0.524437 0.202012 0.570222C0.127262 0.616007 0.0690015 0.681082 0.0345985 0.757219C0.000195557 0.833357 -0.00880479 0.917136 0.00873577 0.997962C0.0262763 1.07879 0.0695701 1.15303 0.133142 1.2113L4.67859 5.37795C4.7208 5.41665 4.77091 5.44734 4.82605 5.46828C4.8812 5.48922 4.94031 5.5 5 5.5C5.05969 5.5 5.1188 5.48922 5.17394 5.46828C5.22909 5.44734 5.2792 5.41665 5.3214 5.37795L9.86686 1.2113C9.93043 1.15303 9.97372 1.07879 9.99126 0.997958C10.0088 0.917131 9.9998 0.833351 9.9654 0.757212Z"
-    fill="currentColor"
-  />
-</svg>
-`;
+const index = require('./index-3b63d393.js');
+const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
+const utils = require('./utils-d3da0bf4.js');
+const ripple = require('./ripple-93b636e3.js');
 
 const MxSelect = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
+    this.uuid = utils.uuidv4();
     this.dense = false;
     this.disabled = false;
     /** Style with a 1dp elevation */
     this.elevated = false;
     /** Style with a "flat" border color */
     this.flat = false;
+    this.floatLabel = false;
     this.error = false;
     /** Additional classes for the label */
     this.labelClass = '';
@@ -68,13 +64,19 @@ const MxSelect = class {
     return str;
   }
   get labelClassNames() {
-    let str = 'absolute block pointer-events-none mt-0 left-12 px-4';
-    if (this.dense)
-      str += ' dense text-4';
-    if (this.isFocused || this.hasValue)
-      str += ' floating';
-    if (this.isFocused)
-      str += ' -ml-1'; // prevent shifting due to border-width change
+    let str = 'block pointer-events-none';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 left-12 px-4';
+      if (this.dense)
+        str += ' dense text-4';
+      if (this.isFocused || this.hasValue)
+        str += ' floating';
+      if (this.isFocused)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+    }
+    else {
+      str += ' subtitle2 mb-4';
+    }
     return (str += ' ' + this.labelClass);
   }
   get iconSuffixClass() {
@@ -84,15 +86,15 @@ const MxSelect = class {
     return str;
   }
   get iconEl() {
-    let icon = index.h("span", { "data-testid": "arrow", innerHTML: arrowSvg });
+    let icon = index.h("span", { "data-testid": "arrow", innerHTML: arrowTriangleDown.arrowSvg });
     if (this.error)
       icon = index.h("i", { "data-testid": "error-icon", class: "ph-warning-circle -mr-4" });
     return icon;
   }
   render() {
-    return (index.h(index.Host, { class: "mx-select" }, index.h("div", { class: this.selectWrapperClass }, index.h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, index.h("slot", null)), this.label && index.h("label", { class: this.labelClassNames }, this.label), index.h("span", { class: this.iconSuffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && index.h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
+    const labelJsx = (index.h("label", { htmlFor: this.selectId || this.uuid, class: this.labelClassNames }, this.label));
+    return (index.h(index.Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass }, index.h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, index.h("slot", null)), this.label && this.floatLabel && labelJsx, index.h("span", { class: this.iconSuffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && index.h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
   }
-  get element() { return index.getElement(this); }
   static get watchers() { return {
     "value": ["onValueChange"]
   }; }
@@ -109,7 +111,7 @@ const MxTab = class {
     this.icon = '';
     /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
     this.selected = false;
-    /** Display a dot badge */
+    /** Display a circular badge */
     this.badge = false;
     /** Additional classes for the badge */
     this.badgeClass = '';
@@ -130,7 +132,7 @@ const MxTab = class {
     return str;
   }
   get badgeEl() {
-    return index.h("mx-badge", { dot: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
+    return index.h("mx-badge", { indicator: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
   }
   get isTextOnly() {
     return this.label && !this.icon;

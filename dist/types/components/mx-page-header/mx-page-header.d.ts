@@ -11,6 +11,7 @@ export declare class MxPageHeader {
   resizeObserver: ResizeObserver;
   tabSlot: HTMLElement;
   tertiaryButtonWrapper: HTMLElement;
+  tertiaryMenu: HTMLMxMenuElement;
   /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
   buttons: IPageHeaderButton[];
   /** The URL for the previous page link */
