@@ -1,6 +1,8 @@
 # Pagination
 
-The `mx-pagination` component is designed to provide pagination controls within data tables, as well as cards, etc. In addition to the standard style, there is a simplified style (via the `simple` prop). The standard pagination provides a `status` slot, ideally for short textual content.
+The `mx-pagination` component is designed to provide pagination controls within Data Tables, as well as cards, etc. The component has both a standard and a "simple" mode (via the `simple` prop).
+
+The standard UI provides a `status` slot, ideally for short textual content. Some elements of the standard UI are removed or relocated when the component width is too small to accomodate everything.
 
 An `mxPageChange` event is emitted whenever the page or rows-per-page are changed. The `Event.detail` is an object containing the new `page` and `rowsPerPage`.
 
