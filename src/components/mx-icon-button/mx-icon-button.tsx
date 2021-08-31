@@ -11,7 +11,7 @@ export class MxIconButton {
 
   @Prop() type: 'button' | 'submit' | 'reset' = 'button';
   @Prop() value: string;
-  @Prop() disabled: boolean = false;
+  @Prop({ reflect: true }) disabled: boolean = false;
   /** An aria-label is highly recommended */
   @Prop() ariaLabel: string;
   /** Show downward chevron icon */
