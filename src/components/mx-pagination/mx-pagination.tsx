@@ -103,7 +103,7 @@ export class MxPagination {
     return start + '–' + end;
   }
 
-  get pageRangeClass(): string {
+  get rowRangeClass(): string {
     let str = 'text-center flex-shrink min-w-0';
     str += this.isSmallMinWidth ? ' px-24' : ' px-16';
     if (!this.isXSmallMinWidth) str += ' whitespace-normal';
@@ -147,7 +147,7 @@ export class MxPagination {
           <div ref={el => (this.paginationWrapper = el)} class={this.paginationWrapperClass}>
             {/* Status */}
             {this.hasStatus && (
-              <div class="px-24 py-10 flex relative items-center justify-self-start">
+              <div data-testid="status" class="px-24 py-10 flex relative items-center justify-self-start">
                 <slot name="status"></slot>
               </div>
             )}
@@ -162,7 +162,11 @@ export class MxPagination {
                   }
                 >
                   Rows per page: &nbsp;
-                  <div ref={el => (this.rowsMenuAnchor = el)} class="flex items-center cursor-pointer">
+                  <div
+                    data-testid="rows-per-page"
+                    ref={el => (this.rowsMenuAnchor = el)}
+                    class="flex items-center cursor-pointer"
+                  >
                     {this.rowsPerPage}
                     <span class="ml-12" innerHTML={arrowSvg}></span>
                   </div>
@@ -175,9 +179,9 @@ export class MxPagination {
                   </mx-menu>
                 </div>
               )}
-              {/* Page Range */}
+              {/* Row Range */}
               {this.totalRows > 0 && (
-                <div class={this.pageRangeClass}>
+                <div data-testid="row-range" class={this.rowRangeClass}>
                   {this.currentRange} of {this.totalRows}
                 </div>
               )}
