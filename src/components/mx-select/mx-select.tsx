@@ -1,5 +1,6 @@
-import { Component, Host, h, Prop, Element, Watch, State } from '@stencil/core';
+import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
+import { uuidv4 } from '../../utils/utils';
 
 @Component({
   tag: 'mx-select',
@@ -8,6 +9,7 @@ import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 export class MxSelect {
   selectElem!: HTMLSelectElement;
   textArea!: HTMLTextAreaElement;
+  uuid: string = uuidv4();
 
   /** Helpful text to show below the select */
   @Prop() assistiveText: string;
@@ -18,6 +20,7 @@ export class MxSelect {
   /** Style with a "flat" border color */
   @Prop() flat: boolean = false;
   @Prop() label: string;
+  @Prop() floatLabel: boolean = false;
   @Prop() ariaLabel: string;
   /** The `id` attribute for the select element */
   @Prop() selectId: string;
@@ -30,8 +33,6 @@ export class MxSelect {
   @Prop({ mutable: true }) value: any;
 
   @State() isFocused: boolean = false;
-
-  @Element() element: HTMLMxSelectElement;
 
   componentDidLoad() {
     this.updateSelectValue();
@@ -77,10 +78,15 @@ export class MxSelect {
   }
 
   get labelClassNames() {
-    let str = 'absolute block pointer-events-none mt-0 left-12 px-4';
-    if (this.dense) str += ' dense text-4';
-    if (this.isFocused || this.hasValue) str += ' floating';
-    if (this.isFocused) str += ' -ml-1'; // prevent shifting due to border-width change
+    let str = 'block pointer-events-none';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 left-12 px-4';
+      if (this.dense) str += ' dense text-4';
+      if (this.isFocused || this.hasValue) str += ' floating';
+      if (this.isFocused) str += ' -ml-1'; // prevent shifting due to border-width change
+    } else {
+      str += ' subtitle2 mb-4';
+    }
     return (str += ' ' + this.labelClass);
   }
 
@@ -97,14 +103,21 @@ export class MxSelect {
   }
 
   render() {
+    const labelJsx = (
+      <label htmlFor={this.selectId || this.uuid} class={this.labelClassNames}>
+        {this.label}
+      </label>
+    );
     return (
-      <Host class="mx-select">
-        <div class={this.selectWrapperClass}>
+      <Host class={'mx-select' + (this.disabled ? ' disabled' : '')}>
+        {this.label && !this.floatLabel && labelJsx}
+
+        <div data-testid="select-wrapper" class={this.selectWrapperClass}>
           <select
             aria-label={this.label || this.ariaLabel}
             class={this.selectClass}
             disabled={this.disabled}
-            id={this.selectId}
+            id={this.selectId || this.uuid}
             name={this.name}
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
@@ -112,12 +125,15 @@ export class MxSelect {
           >
             <slot></slot>
           </select>
-          {this.label && <label class={this.labelClassNames}>{this.label}</label>}
+
+          {this.label && this.floatLabel && labelJsx}
+
           <span class={this.iconSuffixClass}>
             {this.suffix && <span class="suffix flex items-center h-full px-4">{this.suffix}</span>}
             {this.iconEl}
           </span>
         </div>
+
         {this.assistiveText && <div class="assistive-text caption1 mt-4 ml-16">{this.assistiveText}</div>}
       </Host>
     );

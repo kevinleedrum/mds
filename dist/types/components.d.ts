@@ -203,22 +203,32 @@ export namespace Components {
         "dense": boolean;
         "disabled": boolean;
         "error": boolean;
+        "floatLabel": boolean;
         /**
           * The `id` attribute for the text input
          */
         "inputId": string;
-        "isActive": boolean;
-        "isFocused": boolean;
         "label": string;
         "labelClass": string;
+        /**
+          * The class name of the icon to show on the left side of the input
+         */
         "leftIcon": string;
+        "maxlength": number;
         /**
           * The `name` attribute for the text input
          */
         "name": string;
         "outerContainerClass": string;
         "readonly": boolean;
+        /**
+          * The class name of the icon to show on the right side of the input
+         */
         "rightIcon": string;
+        /**
+          * Text shown to the right of the input value
+         */
+        "suffix": string;
         /**
           * Display a multi-line `textarea` instead of an `input`
          */
@@ -345,6 +355,7 @@ export namespace Components {
           * Style with a "flat" border color
          */
         "flat": boolean;
+        "floatLabel": boolean;
         "label": string;
         /**
           * Additional classes for the label
@@ -798,22 +809,32 @@ declare namespace LocalJSX {
         "dense"?: boolean;
         "disabled"?: boolean;
         "error"?: boolean;
+        "floatLabel"?: boolean;
         /**
           * The `id` attribute for the text input
          */
         "inputId"?: string;
-        "isActive"?: boolean;
-        "isFocused"?: boolean;
         "label"?: string;
         "labelClass"?: string;
+        /**
+          * The class name of the icon to show on the left side of the input
+         */
         "leftIcon"?: string;
+        "maxlength"?: number;
         /**
           * The `name` attribute for the text input
          */
         "name"?: string;
         "outerContainerClass"?: string;
         "readonly"?: boolean;
+        /**
+          * The class name of the icon to show on the right side of the input
+         */
         "rightIcon"?: string;
+        /**
+          * Text shown to the right of the input value
+         */
+        "suffix"?: string;
         /**
           * Display a multi-line `textarea` instead of an `input`
          */
@@ -932,6 +953,7 @@ declare namespace LocalJSX {
           * Style with a "flat" border color
          */
         "flat"?: boolean;
+        "floatLabel"?: boolean;
         "label"?: string;
         /**
           * Additional classes for the label

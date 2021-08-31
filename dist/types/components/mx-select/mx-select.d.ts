@@ -1,6 +1,7 @@
 export declare class MxSelect {
   selectElem: HTMLSelectElement;
   textArea: HTMLTextAreaElement;
+  uuid: string;
   /** Helpful text to show below the select */
   assistiveText: string;
   dense: boolean;
@@ -10,6 +11,7 @@ export declare class MxSelect {
   /** Style with a "flat" border color */
   flat: boolean;
   label: string;
+  floatLabel: boolean;
   ariaLabel: string;
   /** The `id` attribute for the select element */
   selectId: string;
@@ -21,7 +23,6 @@ export declare class MxSelect {
   labelClass: string;
   value: any;
   isFocused: boolean;
-  element: HTMLMxSelectElement;
   componentDidLoad(): void;
   onValueChange(): void;
   updateSelectValue(): void;
