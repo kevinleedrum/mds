@@ -111,7 +111,7 @@ export class MxPagination {
   }
 
   get paginationWrapperClass(): string {
-    let str = 'flex';
+    let str = 'flex relative';
     if (this.moveStatusToBottom) {
       str += ' flex-col-reverse items-end';
     } else {
@@ -151,8 +151,10 @@ export class MxPagination {
                 <slot name="status"></slot>
               </div>
             )}
-            {/* Rows per page */}
-            <div class="flex relative items-center h-56 pr-4">
+            <div
+              class={'flex flex-grow-0 items-center justify-end h-56 pr-4' + (this.hideRowsPerPage ? ' relative' : '')}
+            >
+              {/* Rows per page */}
               {this.rowsPerPageOptions && this.rowsPerPageOptions.length > 1 && (
                 <div
                   ref={el => (this.rowsPerPageWrapper = el)}
