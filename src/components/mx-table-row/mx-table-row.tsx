@@ -119,7 +119,7 @@ export class MxTableRow {
   get rowStyle(): any {
     if (this.minWidths.sm) return {};
     return {
-      gridTemplateColumns: 'minmax(0, min-content) minmax(0, auto) minmax(0, min-content)',
+      gridTemplateColumns: 'minmax(0, min-content) minmax(min-content, auto) minmax(0, min-content)',
     };
   }
 
