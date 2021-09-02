@@ -4,7 +4,7 @@ import dotsSvg from '../../assets/svg/dots-vertical.svg';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
 import { ITableRowAction } from '../mx-table/mx-table';
 
-const MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
+const DEFAULT_MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
 
 @Component({
   tag: 'mx-table-row',
@@ -27,6 +27,7 @@ export class MxTableRow {
   @State() checkable: boolean = false;
   @State() checkOnRowClick: boolean = false;
   @State() isMobileExpanded: boolean = false;
+  @State() isMobileCollapsing: boolean = false;
 
   /** Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked */
   @Event() mxCheck: EventEmitter<{ rowId: string | number; checked: boolean }>;
@@ -38,7 +39,7 @@ export class MxTableRow {
 
   componentWillRender() {
     // Render collapsed mobile row
-    if (!this.minWidths.sm && !this.isMobileExpanded) this.element.style.maxHeight = MAX_HEIGHT;
+    if (!this.minWidths.sm && !this.isMobileExpanded) this.element.style.maxHeight = this.getCollapsedHeight();
     // Determine `checkable` and `checked` by pulling props from parent table.
     // This avoids having to manually pass these as props when using mx-table-row inside the table's
     // default slot.
@@ -65,8 +66,7 @@ export class MxTableRow {
     if (!!(e.target as HTMLElement).closest('button, input, mx-menu')) return; // Ignore clicks on buttons, etc.
     if (!this.minWidths.sm) {
       // Collapse/expand row when the exposed column cell is clicked
-      const cells = Array.from(this.element.querySelectorAll('mx-table-cell'));
-      const exposedCell = cells.find((cell: HTMLMxTableCellElement) => cell.isExposedMobileColumn);
+      const exposedCell = this.getExposedCell();
       if (!exposedCell) return;
       if ((e.target as HTMLElement).closest('mx-table-cell') === exposedCell) this.accordion();
     } else if (this.checkable && this.checkOnRowClick) {
@@ -84,16 +84,17 @@ export class MxTableRow {
   @Method()
   async collapse() {
     if (!this.isMobileExpanded) return;
-    this.isMobileExpanded = false;
+    this.isMobileCollapsing = true;
     this.element.style.maxHeight = this.element.scrollHeight + 'px';
     requestAnimationFrame(() => {
-      this.element.style.maxHeight = MAX_HEIGHT;
+      this.element.style.maxHeight = this.getCollapsedHeight();
     });
   }
 
   @Method()
   async expand() {
     if (this.isMobileExpanded) return;
+    this.element.style.maxHeight = this.element.scrollHeight + 'px';
     this.isMobileExpanded = true;
     requestAnimationFrame(() => {
       this.element.style.maxHeight = this.element.scrollHeight + 'px';
@@ -101,18 +102,35 @@ export class MxTableRow {
   }
 
   onTransitionEnd() {
+    if (this.isMobileCollapsing) {
+      this.isMobileExpanded = false;
+      this.isMobileCollapsing = false;
+    }
     // Remove explicit max-height after expanding to avoid issues with window resizing, etc.
-    if (this.isMobileExpanded) this.element.style.maxHeight = '';
+    this.element.style.maxHeight = '';
   }
 
   onCheckboxInput(e: InputEvent) {
     this.mxCheck.emit({ rowId: this.rowId, checked: (e.target as HTMLInputElement).checked });
   }
 
+  getExposedCell(): HTMLMxTableCellElement {
+    const cells = Array.from(this.element.querySelectorAll('mx-table-cell')) || [];
+    return cells.find((cell: HTMLMxTableCellElement) => cell.isExposedMobileColumn);
+  }
+
+  getCollapsedHeight(): string {
+    const exposedCell = this.getExposedCell();
+    if (!exposedCell) return DEFAULT_MAX_HEIGHT;
+    return exposedCell.offsetHeight + 1 + 'px';
+  }
+
   get rowClass(): string {
     let str = 'mx-table-row';
     str += this.minWidths.sm ? ' contents' : ' grid overflow-hidden';
+    if (this.checkable) str += ' checkable-row';
     if (this.checkable && this.checkOnRowClick) str += ' cursor-pointer';
+    if (!this.minWidths.sm && !this.isMobileExpanded) str += ' mobile-collapsed';
     return str;
   }
 
@@ -120,6 +138,7 @@ export class MxTableRow {
     if (this.minWidths.sm) return {};
     return {
       gridTemplateColumns: 'minmax(0, min-content) minmax(min-content, auto) minmax(0, min-content)',
+      maxHeight: '',
     };
   }
 
@@ -154,14 +173,17 @@ export class MxTableRow {
         {!this.minWidths.sm && (
           <div class="flex items-center justify-end px-16 row-start-1" onClick={this.accordion.bind(this)}>
             <span
-              class={'mobile-row-chevron text-1 transform' + (this.isMobileExpanded ? ' rotate-180' : '')}
+              class={
+                'mobile-row-chevron text-1 transform' +
+                (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : '')
+              }
               innerHTML={chevronSvg}
             ></span>
           </div>
         )}
         {/* Single Action Button */}
         {this.actions.length === 1 && (
-          <div class="flex items-center p-16 sm:p-0 justify-end col-span-3 sm:col-span-1">
+          <div class="action-cell flex items-center p-16 sm:p-0 justify-end col-span-3 sm:col-span-1">
             <mx-button btn-type="text" {...this.actions[0]}>
               {this.actions[0].value}
             </mx-button>
@@ -169,7 +191,7 @@ export class MxTableRow {
         )}
         {/* Action Menu */}
         {this.actions.length > 1 && (
-          <div class="flex items-center p-0 justify-end col-span-3 sm:col-span-1">
+          <div class="action-cell flex items-center p-0 justify-end col-span-3 sm:col-span-1">
             <mx-icon-button ref={el => (this.actionMenuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
             <mx-menu ref={el => (this.actionMenu = el)}>
               {this.actions.map(action => (

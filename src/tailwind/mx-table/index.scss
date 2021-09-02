@@ -32,7 +32,7 @@
   .mx-table-row {
     border-color: var(--mds-border-table-cell);
     transition: max-height 0.15s ease;
-    & > :first-child {
+    & > :first-child:not(:empty) {
       @apply pl-24;
     }
     & > :last-child:not(.pr-0, .p-0) {
@@ -50,6 +50,15 @@
     .mobile-row-chevron {
       color: var(--mds-text-table-mobile-row-chevron);
       transition: transform 0.15s ease;
+    }
+    &.mobile-collapsed {
+      .mx-table-cell:not(.exposed-cell),
+      .action-cell {
+        @apply sr-only;
+      }
+    }
+    &.checkable-row .exposed-cell {
+      @apply pl-16;
     }
   }
 

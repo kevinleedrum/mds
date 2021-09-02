@@ -371,7 +371,8 @@ export class MxTable {
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
     if (this.minWidths.sm && colIndex === 0 && this.checkable && !isCheckAllInHeader) str += ' col-span-2';
-    if (!this.minWidths.sm && colIndex === 0 && this.checkable && isCheckAllInHeader) str += ' px-16';
+    if (!this.minWidths.sm && colIndex === this.exposedMobileColumnIndex && this.checkable && isCheckAllInHeader)
+      str += ' px-16';
     if (col.sortable && col.property) str += ' group cursor-pointer';
     if (col.headerClass) str += col.headerClass;
     return str;
@@ -391,7 +392,7 @@ export class MxTable {
   }
 
   onHeaderClick(col: ITableColumn) {
-    if (!col.sortable || !col.property) return;
+    if (!col || !col.sortable || !col.property) return;
     if (this.sortBy !== col.property) {
       this.sortBy = col.property;
       this.sortAscending = true;
@@ -403,6 +404,12 @@ export class MxTable {
       }
     }
     this.mxSortChange.emit({ sortBy: this.sortBy, sortAscending: this.sortAscending });
+  }
+
+  changeExposedColumnIndex(delta: number) {
+    const newColumnIndex = this.exposedMobileColumnIndex + delta;
+    if (newColumnIndex < 0 || newColumnIndex >= this.cols.length) return;
+    this.exposedMobileColumnIndex = newColumnIndex;
   }
 
   onMxPageChange(e: { detail: PageChangeEventDetail }) {
@@ -524,12 +531,12 @@ export class MxTable {
                   <mx-icon-button
                     chevronLeft
                     disabled={this.exposedMobileColumnIndex === 0}
-                    onClick={() => this.exposedMobileColumnIndex--}
+                    onClick={this.changeExposedColumnIndex.bind(this, -1)}
                   />
                   <mx-icon-button
                     chevronRight
                     disabled={this.exposedMobileColumnIndex === this.cols.length - 1}
-                    onClick={() => this.exposedMobileColumnIndex++}
+                    onClick={this.changeExposedColumnIndex.bind(this, 1)}
                   />
                 </div>
               </div>
