@@ -6,7 +6,7 @@ import pageFirstSvg from '../../assets/svg/page-first.svg';
 import pageLastSvg from '../../assets/svg/page-last.svg';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 
-export type PaginationChangeEventDetail = {
+export type PageChangeEventDetail = {
   rowsPerPage: number;
   page: number;
 };
@@ -43,7 +43,7 @@ export class MxPagination {
 
   @Element() element: HTMLMxPaginationElement;
 
-  @Event() mxPageChange: EventEmitter<PaginationChangeEventDetail>;
+  @Event() mxPageChange: EventEmitter<PageChangeEventDetail>;
 
   componentWillRender() {
     this.hasStatus = !!this.element.querySelector('[slot="status"]');
