@@ -202,7 +202,7 @@ export class MxTable {
     }
   }
 
-  setMobileCellProps() {
+  setCellProps() {
     const cells = this.element.querySelectorAll('mx-table-cell');
     let colIndex = 0;
     cells.forEach((cell: HTMLMxTableCellElement) => {
@@ -232,7 +232,7 @@ export class MxTable {
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
-    if (!this.minWidths.sm) requestAnimationFrame(this.setMobileCellProps.bind(this));
+    requestAnimationFrame(this.setCellProps.bind(this));
   }
 
   componentDidRender() {
@@ -567,11 +567,8 @@ export class MxTable {
                   row-id={this.getRowId ? this.getRowId(row) : null}
                   actions={this.getRowActions ? this.getRowActions(row) : undefined}
                 >
-                  {this.cols.map((col: ITableColumn, colIndex: number) => (
-                    <mx-table-cell
-                      aria-describedby={`column-header-${colIndex}`}
-                      class={[this.getAlignClass(col), col.cellClass].join(' ')}
-                    >
+                  {this.cols.map((col: ITableColumn) => (
+                    <mx-table-cell class={[this.getAlignClass(col), col.cellClass].join(' ')}>
                       <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
                     </mx-table-cell>
                   ))}
