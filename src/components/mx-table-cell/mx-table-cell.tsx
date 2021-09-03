@@ -5,10 +5,12 @@ import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
   tag: 'mx-table-cell',
   shadow: false,
 })
-// TODO: set aria-describedby or colindex for cells?
 export class MxTableCell {
+  /** This is automatically set by the parent `mx-table`. */
   @Prop({ reflect: true }) isExposedMobileColumn: boolean = true;
+  /** This is automatically set by the parent `mx-table`. */
   @Prop({ reflect: true }) columnIndex: number;
+  /** This is automatically set by the parent `mx-table`. */
   @Prop() heading: string;
 
   @State() minWidths = new MinWidths();
@@ -32,7 +34,7 @@ export class MxTableCell {
 
   render() {
     return (
-      <Host role="gridcell" class={this.cellClass}>
+      <Host role="gridcell" aria-describedby={`column-header-${this.columnIndex}`} class={this.cellClass}>
         <div class="whitespace-normal">
           {!this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (
             <p class="subtitle5 my-0 mb-4" innerHTML={this.heading}></p>
