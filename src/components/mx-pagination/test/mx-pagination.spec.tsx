@@ -1,7 +1,7 @@
 import '../../../utils/resizeObserver.mock';
 import '../../../utils/matchMedia.mock';
 import { newSpecPage } from '@stencil/core/testing';
-import { MxPagination, PaginationChangeEventDetail } from '../mx-pagination';
+import { MxPagination, PageChangeEventDetail } from '../mx-pagination';
 import { MxIconButton } from '../../mx-icon-button/mx-icon-button';
 import { MxMenu } from '../../mx-menu/mx-menu';
 import { MxMenuItem } from '../../mx-menu-item/mx-menu-item';
@@ -91,7 +91,7 @@ describe('mx-pagination (standard)', () => {
   });
 
   it('emits an mxPageChange event when the rows-per-page is changed', async () => {
-    let emittedValue: PaginationChangeEventDetail;
+    let emittedValue: PageChangeEventDetail;
     root.addEventListener('mxPageChange', (e: CustomEvent) => (emittedValue = e.detail));
     const firstMenuItem = root.querySelector('mx-menu-item');
     firstMenuItem.click();
@@ -100,7 +100,7 @@ describe('mx-pagination (standard)', () => {
   });
 
   it('emits an mxPageChange event when the page is changed', async () => {
-    let emittedValue: PaginationChangeEventDetail;
+    let emittedValue: PageChangeEventDetail;
     root.addEventListener('mxPageChange', (e: CustomEvent) => (emittedValue = e.detail));
     nextPageButton.click();
     expect(emittedValue.page).toBe(3);
@@ -167,7 +167,7 @@ describe('mx-pagination (simple)', () => {
   });
 
   it('emits an mxPageChange event when the page is changed', async () => {
-    let emittedValue: PaginationChangeEventDetail;
+    let emittedValue: PageChangeEventDetail;
     root.addEventListener('mxPageChange', (e: CustomEvent) => (emittedValue = e.detail));
     nextPageButton.click();
     expect(emittedValue.page).toBe(3);
