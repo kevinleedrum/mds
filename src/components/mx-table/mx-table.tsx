@@ -76,7 +76,7 @@ export class MxTable {
   /** Set to false to hide the (un)check all checkbox at the top of the table. */
   @Prop() showCheckAll: boolean = true;
   @Prop() hoverable: boolean = true;
-  /** Set to `true` to allow smaller tables to shrink to less than 100% width */
+  /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
   @Prop() autoWidth: boolean = false;
   /** The property on the row objects that will be used for sorting */
   @Prop({ mutable: true }) sortBy: string;
@@ -90,7 +90,7 @@ export class MxTable {
    * For server-side pagination, omitting this prop will remove the last-page button.
    */
   @Prop() totalRows: number;
-  /** Disable the next-page button.  Useful when the total number of rows is unknown. */
+  /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
   @Prop() disableNextPage: boolean = false;
   @Prop() rowsPerPageOptions: number[];
   /** Do not sort or paginate client-side. Use events to send server requests instead. */
