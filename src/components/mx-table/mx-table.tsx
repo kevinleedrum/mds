@@ -68,8 +68,6 @@ export class MxTable {
   /** A function that returns the `rowId` prop for each generated `mx-table-row`.
    * This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). */
   @Prop() getRowId: (row: Object) => string;
-  /** Additional classes for the `table` element */
-  @Prop() tableClass: string;
   /** Make rows checkable.  You must either provide a `rowIdProperty` (for generated rows), or
    * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
   @Prop() checkable: boolean = false;
