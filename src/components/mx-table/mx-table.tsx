@@ -261,7 +261,7 @@ export class MxTable {
   }
 
   get exposedMobileColumn(): ITableColumn {
-    return this.cols[this.exposedMobileColumnIndex];
+    return this.cols[this.exposedMobileColumnIndex] || {};
   }
 
   get visibleRows(): Object[] {
@@ -365,6 +365,7 @@ export class MxTable {
   }
 
   getHeaderClass(col: ITableColumn, colIndex: number) {
+    if (!col) return '';
     let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClass(col);
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
@@ -481,7 +482,7 @@ export class MxTable {
         {/* Operations Bar */}
         {this.showOperationsBar && operationsBar}
 
-        <div class="table-grid rounded-2xl overflow-hidden" style={this.gridStyle}>
+        <div data-testid="grid" class="table-grid rounded-2xl overflow-hidden" style={this.gridStyle}>
           {/* Header Row */}
           <div class="header-row">
             {this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox}
