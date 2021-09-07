@@ -339,7 +339,7 @@ export class MxTable {
       sortCompare = (a, b) => {
         const valueA = this.getCellSortableValue(a, sortByColumn);
         const valueB = this.getCellSortableValue(b, sortByColumn);
-        if (typeof valueA === 'number' && typeof valueB === 'number') return valueB - valueA;
+        if (typeof valueA === 'number' && typeof valueB === 'number') return valueA - valueB;
         return (valueA as string).localeCompare(valueB as string);
       };
     }
