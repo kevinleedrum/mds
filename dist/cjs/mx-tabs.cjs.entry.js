@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-3b63d393.js');
+const index = require('./index-447342ec.js');
 const utils = require('./utils-d3da0bf4.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 

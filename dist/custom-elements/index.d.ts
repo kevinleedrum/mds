@@ -86,6 +86,12 @@ export const MxPageHeader: {
   new (): MxPageHeader;
 };
 
+interface MxPagination extends Components.MxPagination, HTMLElement {}
+export const MxPagination: {
+  prototype: MxPagination;
+  new (): MxPagination;
+};
+
 interface MxRadio extends Components.MxRadio, HTMLElement {}
 export const MxRadio: {
   prototype: MxRadio;
