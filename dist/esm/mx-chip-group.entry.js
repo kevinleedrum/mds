@@ -1,4 +1,4 @@
-import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-ede217a8.js';
+import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-62f53352.js';
 
 const MxChipGroup = class {
   constructor(hostRef) {

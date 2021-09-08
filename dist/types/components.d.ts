@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "./stencil-public-runtime";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
 import { PopoverOffset, PopoverPlacement } from "./utils/popover";
 import { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
+import { PageChangeEventDetail } from "./components/mx-pagination/mx-pagination";
 import { IMxTabProps } from "./components/mx-tab/mx-tab";
 export namespace Components {
     interface MxBadge {
@@ -321,6 +322,24 @@ export namespace Components {
          */
         "previousPageUrl": string;
     }
+    interface MxPagination {
+        /**
+          * Disable the next page button (i.e. when the last page was loaded from an API)
+         */
+        "disableNextPage": boolean;
+        /**
+          * Disable the page buttons (i.e. when loading results)
+         */
+        "disabled": boolean;
+        "page": number;
+        "rowsPerPage": number;
+        "rowsPerPageOptions": number[];
+        /**
+          * Reduce the UI to only a page
+         */
+        "simple": boolean;
+        "totalRows": number;
+    }
     interface MxRadio {
         "checked": boolean;
         "labelName": string;
@@ -527,6 +546,12 @@ declare global {
         prototype: HTMLMxPageHeaderElement;
         new (): HTMLMxPageHeaderElement;
     };
+    interface HTMLMxPaginationElement extends Components.MxPagination, HTMLStencilElement {
+    }
+    var HTMLMxPaginationElement: {
+        prototype: HTMLMxPaginationElement;
+        new (): HTMLMxPaginationElement;
+    };
     interface HTMLMxRadioElement extends Components.MxRadio, HTMLStencilElement {
     }
     var HTMLMxRadioElement: {
@@ -596,6 +621,7 @@ declare global {
         "mx-menu": HTMLMxMenuElement;
         "mx-menu-item": HTMLMxMenuItemElement;
         "mx-page-header": HTMLMxPageHeaderElement;
+        "mx-pagination": HTMLMxPaginationElement;
         "mx-radio": HTMLMxRadioElement;
         "mx-search": HTMLMxSearchElement;
         "mx-select": HTMLMxSelectElement;
@@ -919,6 +945,25 @@ declare namespace LocalJSX {
          */
         "previousPageUrl"?: string;
     }
+    interface MxPagination {
+        /**
+          * Disable the next page button (i.e. when the last page was loaded from an API)
+         */
+        "disableNextPage"?: boolean;
+        /**
+          * Disable the page buttons (i.e. when loading results)
+         */
+        "disabled"?: boolean;
+        "onMxPageChange"?: (event: CustomEvent<PageChangeEventDetail>) => void;
+        "page"?: number;
+        "rowsPerPage"?: number;
+        "rowsPerPageOptions"?: number[];
+        /**
+          * Reduce the UI to only a page
+         */
+        "simple"?: boolean;
+        "totalRows"?: number;
+    }
     interface MxRadio {
         "checked"?: boolean;
         "labelName"?: string;
@@ -1062,6 +1107,7 @@ declare namespace LocalJSX {
         "mx-menu": MxMenu;
         "mx-menu-item": MxMenuItem;
         "mx-page-header": MxPageHeader;
+        "mx-pagination": MxPagination;
         "mx-radio": MxRadio;
         "mx-search": MxSearch;
         "mx-select": MxSelect;
@@ -1091,6 +1137,7 @@ declare module "@stencil/core" {
             "mx-menu": LocalJSX.MxMenu & JSXBase.HTMLAttributes<HTMLMxMenuElement>;
             "mx-menu-item": LocalJSX.MxMenuItem & JSXBase.HTMLAttributes<HTMLMxMenuItemElement>;
             "mx-page-header": LocalJSX.MxPageHeader & JSXBase.HTMLAttributes<HTMLMxPageHeaderElement>;
+            "mx-pagination": LocalJSX.MxPagination & JSXBase.HTMLAttributes<HTMLMxPaginationElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;
             "mx-search": LocalJSX.MxSearch & JSXBase.HTMLAttributes<HTMLMxSearchElement>;
             "mx-select": LocalJSX.MxSelect & JSXBase.HTMLAttributes<HTMLMxSelectElement>;

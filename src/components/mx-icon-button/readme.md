@@ -24,11 +24,13 @@
 ### Used by
 
  - [mx-page-header](../mx-page-header)
+ - [mx-pagination](../mx-pagination)
 
 ### Graph
 ```mermaid
 graph TD;
   mx-page-header --> mx-icon-button
+  mx-pagination --> mx-icon-button
   style mx-icon-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

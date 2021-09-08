@@ -1,4 +1,4 @@
-import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-b9cec9f1.js';
+import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-a4e4d6b0.js';
 import { q as queryPrefersReducedMotion } from './utils-43415dd2.js';
 
 var top = 'top';

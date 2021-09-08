@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host, g as getElement } from './index-b9cec9f1.js';
+import { r as registerInstance, h, f as Host, g as getElement } from './index-a4e4d6b0.js';
 
 const MxLinearProgress = class {
   constructor(hostRef) {
