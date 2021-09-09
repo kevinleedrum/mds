@@ -374,7 +374,7 @@ export class MxTable {
 
   getHeaderArrowClass(col: ITableColumn) {
     let str = 'ml-12 transform scale-75';
-    if (col.property !== this.sortBy) str += ' opacity-0 sm:group-hover:opacity-40 rotate-180';
+    if (col.property !== this.sortBy) str += ' opacity-30 sm:opacity-0 sm:group-hover:opacity-30 rotate-180';
     else if (this.sortAscending) str += ' rotate-180';
     return str;
   }
