@@ -1,8 +1,15 @@
 # Data Tables
 
+The `mx-table` component can be used one of two ways:
+
+- &bull; by providing an array of data via the `rows` prop, allowing the table to automatically generate rows and cells
+- &bull; by templating the rows and cells manually using `mx-table-row` and `mx-table-cell` components
+
+On smaller, mobile-sized screens, the Data Table component shows one column of data at a time for each row, though rows may be expanded to reveal the remaining data.
+
 ## Basic data-driven table
 
-To create a basic data table with auto-generated rows, provide a `rows` prop containing your data, as well as a `columns` prop, which is an array of `ITableColumn` objects that define the tables columns.
+To create a basic data table with auto-generated rows, provide a `rows` prop containing your data, as well as a `columns` prop, which is an array of [`ITableColumn`](#itablecolumn) objects that define the tables columns.
 
 <section class="mds">
   <div class="mt-20">
@@ -359,6 +366,8 @@ Other props that may be helpful when using server-side pagination include `showP
 
 ## Advanced Usage
 
+The following example combines checkable, slotted table rows with pagination, row actions, multi-row actions, searching, and filtering.
+
 <section class="mds">
   <div class="mt-20"></div>
     <!-- #region advanced -->
@@ -431,6 +440,100 @@ Other props that may be helpful when using server-side pagination include `showP
 </section>
 
 <<< @/vuepress/components/tables.md#advanced
+
+### Table Properties
+
+| Property              | Attribute               | Description                                                                                                                                                                             | Type                                    | Default     |
+| --------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- | ----------- |
+| `autoWidth`           | `auto-width`            | Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens                                                                                               | `boolean`                               | `false`     |
+| `checkOnRowClick`     | `check-on-row-click`    | Set to false to prevent checking rows by clicking on them (outside the checkboxes).                                                                                                     | `boolean`                               | `true`      |
+| `checkable`           | `checkable`             | Make rows checkable. You must either provide a `rowIdProperty` (for generated rows), or provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot.   | `boolean`                               | `false`     |
+| `columns`             | --                      | An array of [`ITableColumn`](#itablecolumn) column definitions. If not specified, a column will be generated for each property on the row object.                                       | [`ITableColumn[]`](#itablecolumn)       | `[]`        |
+| `disableNextPage`     | `disable-next-page`     | Disable the next-page button. Useful when using server-side pagination and the total number of rows is unknown.                                                                         | `boolean`                               | `false`     |
+| `disablePagination`   | `disable-pagination`    | Disable the pagination buttons (i.e. while loading results)                                                                                                                             | `boolean`                               | `false`     |
+| `getMultiRowActions`  | --                      |                                                                                                                                                                                         | `(rows: string[]) => ITableRowAction[]` | `undefined` |
+| `getRowActions`       | --                      |                                                                                                                                                                                         | `(row: Object) => ITableRowAction[]`    | `undefined` |
+| `getRowId`            | --                      | A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). | `(row: Object) => string`               | `undefined` |
+| `hoverable`           | `hoverable`             |                                                                                                                                                                                         | `boolean`                               | `true`      |
+| `page`                | `page`                  | The zero-based index of the page to display                                                                                                                                             | `number`                                | `0`         |
+| `paginate`            | `paginate`              | Show the pagination component. Setting this to `false` will show all rows.                                                                                                              | `boolean`                               | `true`      |
+| `progressAppearDelay` | `progress-appear-delay` | Delay the appearance of the progress bar for this many milliseconds                                                                                                                     | `number`                                | `0`         |
+| `progressValue`       | `progress-value`        | The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed.                                                         | `number`                                | `null`      |
+| `rows`                | --                      | An array of objects that defines the table's dataset.                                                                                                                                   | `Object[]`                              | `[]`        |
+| `rowsPerPage`         | `rows-per-page`         |                                                                                                                                                                                         | `number`                                | `10`        |
+| `rowsPerPageOptions`  | --                      |                                                                                                                                                                                         | `number[]`                              | `undefined` |
+| `serverPaginate`      | `server-paginate`       | Do not sort or paginate client-side. Use events to send server requests instead.                                                                                                        | `boolean`                               | `false`     |
+| `showCheckAll`        | `show-check-all`        | Set to false to hide the (un)check all checkbox at the top of the table.                                                                                                                | `boolean`                               | `true`      |
+| `showProgressBar`     | `show-progress-bar`     | Show a progress bar below the header row                                                                                                                                                | `boolean`                               | `false`     |
+| `sortAscending`       | `sort-ascending`        |                                                                                                                                                                                         | `boolean`                               | `true`      |
+| `sortBy`              | `sort-by`               | The property on the row objects that will be used for sorting                                                                                                                           | `string`                                | `undefined` |
+| `totalRows`           | `total-rows`            | The total number of unpaginated rows. This is ignored for client-side pagination. For server-side pagination, omitting this prop will remove the last-page button.                      | `number`                                | `undefined` |
+
+### ITableColumn
+
+The `ITableColumn` interface describes the objects passed to the `columns` prop.
+
+| Property      | Description                                                                                                                                                                                                                                                                                       | Type                                                    | Default                                 |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | --------------------------------------- |
+| `property`    | The property on each row object that will supply the column's cell values (as HTML). You may also supply a `getValue` function for the value. If both are provided, the `property` will only be used for sorting.                                                                                 | `string`                                                | `undefined`                             |
+| `heading`     | The displayed column heading                                                                                                                                                                                                                                                                      | `string`                                                | `undefined`                             |
+| `type`        | The value type, which may affect sorting and how the value is displayed                                                                                                                                                                                                                           | `'string' | 'number' | 'date' | 'dateTime' | 'boolean'` | `string`                                |
+| `align`       |                                                                                                                                                                                                                                                                                                   | `'left' | 'center' | 'right'`                           | `left` for strings, `right` for numbers |
+| `sortable`    | Whether the column may be sorted by clicking the header. The column must specify a `property` to be sortable.                                                                                                                                                                                     | `boolean`                                               | `true`                                  |
+| `getValue`    | A getter function for the column cells' inner HTML. Note that a `property` is required to make a column with a value getter sortable. If sorting client-side, the property does not necessarily have to exist on the row objects; it is simply a unique identifier for the table's `sortBy` prop. | `(row: Object, rowIndex?: number) => any`               | `undefined`                             |
+| `sortCompare` | A custom compare function for sorting by this column (if sorting client-side)                                                                                                                                                                                                                     | `(rowA: Object, rowB: Object) => number`                | `undefined`                             |
+| `headerClass` | Additional classes to add to the header cell for this column                                                                                                                                                                                                                                      | `string`                                                | `undefined`                             |
+| `cellClass`   | Additional classes to add to the body cells in this column                                                                                                                                                                                                                                        | `string`                                                | `undefined`                             |
+
+### Table Row Properties
+
+| Property  | Attribute | Description                                                                                                           | Type                | Default     |
+| --------- | --------- | --------------------------------------------------------------------------------------------------------------------- | ------------------- | ----------- |
+| `actions` | --        | An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. | `ITableRowAction[]` | `[]`        |
+| `checked` | `checked` |                                                                                                                       | `boolean`           | `false`     |
+| `rowId`   | `row-id`  | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
+
+### Table Events
+
+| Event                 | Description                                                                                                                                                                                                    | Type                                                       |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `mxRowCheck`          | Emitted when a row is (un)checked. The `Event.detail` will be the array of checked `rowId`s.                                                                                                                   | `CustomEvent<string[]>`                                    |
+| `mxSortChange`        | Emitted when a sortable column's header is clicked.                                                                                                                                                            | `CustomEvent<{ sortBy: string; sortAscending: boolean; }>` |
+| `mxVisibleRowsChange` | Emitted when the sorting, pagination, or rows data changes. The `Event.detail` will contain the sorted, paginated array of visible rows. This is useful for building a custom row layout via the default slot. | `CustomEvent<Object[]>`                                    |
+
+### Table Row Events
+
+| Event     | Description                                                                                      | Type                                                          |
+| --------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| `mxCheck` | Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked | `CustomEvent<{ rowId: string \| number; checked: boolean; }>` |
+
+### Table Methods
+
+#### `checkAll() => Promise<void>`
+
+Check all rows. For server-side pagination, only the visible rows will be checked since the unique identifiers for rows on other pages are not yet known.
+
+#### `checkNone() => Promise<void>`
+
+Uncheck all rows.
+
+#### `getCheckedRowIds() => Promise<string[]>`
+
+Returns an array of IDs for all checked rows.
+
+#### `setCheckedRowIds(checkedRowIds?: string[]) => Promise<void>`
+
+Sets which rows are checked by passing an array of row IDs.
+
+### Table Row Methods
+
+#### `collapse() => Promise<void>`
+
+Collapses the row (on mobile)
+
+#### `expand() => Promise<void>`
+
+Expands the row (on mobile)
 
 <script>
 // #region beatles
