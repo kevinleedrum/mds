@@ -180,11 +180,6 @@ export class MxTable {
     this.checkedRowIds = [];
   }
 
-  @Method()
-  async getExposedMobileColumnIndex() {
-    return this.exposedMobileColumnIndex;
-  }
-
   @State() hasActionsColumnFromSlot: boolean = false;
 
   getTableRows(): HTMLMxTableRowElement[] {
@@ -196,7 +191,7 @@ export class MxTable {
     if (this.checkedRowIds.length === 0) {
       this.checkAll();
     } else {
-      this.checkedRowIds = [];
+      this.checkNone();
     }
   }
 
@@ -433,7 +428,9 @@ export class MxTable {
     if (this.checkable) {
       multiRowActionUI =
         this.multiRowActions.length === 1 ? (
+          // Multi-Row Action Button
           <mx-button
+            data-testid="multi-action-button"
             btn-type="outlined"
             {...this.multiRowActions[0]}
             class={'whitespace-nowrap' + (!this.checkedRowIds.length ? ' hidden' : '')}
@@ -441,13 +438,14 @@ export class MxTable {
             {this.multiRowActions[0].value}
           </mx-button>
         ) : (
+          // Multi-Row Action Menu
           <span class={!this.checkedRowIds.length ? 'hidden' : null}>
             <mx-button ref={el => (this.actionMenuButton = el)} btn-type="text" dropdown>
               <span class="h-full flex items-center">
                 <i class="ph-gear text-1"></i>
               </span>
             </mx-button>
-            <mx-menu ref={el => (this.actionMenu = el)}>
+            <mx-menu data-testid="multi-action-menu" ref={el => (this.actionMenu = el)}>
               {this.multiRowActions.map(action => (
                 <mx-menu-item {...action}>{action.value}</mx-menu-item>
               ))}
@@ -528,11 +526,13 @@ export class MxTable {
                 </div>
                 <div class="flex items-center">
                   <mx-icon-button
+                    data-testid="previous-column-button"
                     chevronLeft
                     disabled={this.exposedMobileColumnIndex === 0}
                     onClick={this.changeExposedColumnIndex.bind(this, -1)}
                   />
                   <mx-icon-button
+                    data-testid="next-column-button"
                     chevronRight
                     disabled={this.exposedMobileColumnIndex === this.cols.length - 1}
                     onClick={this.changeExposedColumnIndex.bind(this, 1)}

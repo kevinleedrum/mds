@@ -184,7 +184,7 @@ export class MxTableRow {
         {/* Single Action Button */}
         {this.actions.length === 1 && (
           <div class="action-cell flex items-center p-16 sm:p-0 justify-end col-span-3 sm:col-span-1">
-            <mx-button btn-type="text" {...this.actions[0]}>
+            <mx-button data-testid="action-button" btn-type="text" {...this.actions[0]}>
               {this.actions[0].value}
             </mx-button>
           </div>
@@ -193,7 +193,7 @@ export class MxTableRow {
         {this.actions.length > 1 && (
           <div class="action-cell flex items-center p-0 justify-end col-span-3 sm:col-span-1">
             <mx-icon-button ref={el => (this.actionMenuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
-            <mx-menu ref={el => (this.actionMenu = el)}>
+            <mx-menu data-testid="action-menu" ref={el => (this.actionMenu = el)}>
               {this.actions.map(action => (
                 <mx-menu-item {...action}>{action.value}</mx-menu-item>
               ))}
