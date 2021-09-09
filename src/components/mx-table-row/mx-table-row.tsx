@@ -161,6 +161,7 @@ export class MxTableRow {
               ref={el => (this.checkbox = el)}
               checked={this.checked}
               onInput={this.onCheckboxInput.bind(this)}
+              onClick={e => e.stopPropagation()}
               label-name="Select row"
               hide-label
             ></mx-checkbox>
