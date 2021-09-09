@@ -355,7 +355,7 @@ export class MxTable {
     const val = row[col.property];
     if (col.type === 'date' || isDateObject(val)) return new Date(val).toLocaleDateString();
     if (col.type === 'dateTime' || isDateObject(val)) return new Date(val).toLocaleString();
-    if (col.type === 'boolean') return val ? 'Yes' : ''; // TODO: verify
+    if (col.type === 'boolean') return val ? 'Yes' : '';
     return val;
   }
 
