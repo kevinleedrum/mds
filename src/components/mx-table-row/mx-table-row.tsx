@@ -137,7 +137,7 @@ export class MxTableRow {
   get rowStyle(): any {
     if (this.minWidths.sm) return {};
     return {
-      gridTemplateColumns: 'minmax(0, min-content) minmax(min-content, auto) minmax(0, min-content)',
+      gridTemplateColumns: 'minmax(0, min-content) minmax(0, auto) minmax(0, min-content)',
       maxHeight: '',
     };
   }
@@ -169,7 +169,7 @@ export class MxTableRow {
         )}
         <slot></slot>
         {/* Mobile checkbox column filler (prevents having to hack a column span into slotted content) */}
-        {!this.checkable && !this.minWidths.sm && <div class="row-start-1 col-start-1"></div>}
+        {!this.checkable && !this.minWidths.sm && <div class="row-start-1 col-start-1 w-0"></div>}
         {/* Mobile accordion chevron */}
         {!this.minWidths.sm && (
           <div class="flex items-center justify-end px-16 row-start-1" onClick={this.accordion.bind(this)}>
