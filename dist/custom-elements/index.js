@@ -643,7 +643,7 @@ const MxIconButton$1 = class extends HTMLElement {
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-1', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" }, h("span", { "data-testid": "chevron", class: this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : '', innerHTML: chevronSvg })))));
-    return (h(Host, { class: "mx-icon-button" }, h("button", { type: this.type, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, buttonContent)));
+    return (h(Host, { class: "mx-icon-button inline-block" }, h("button", { type: this.type, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, buttonContent)));
   }
 };
 
@@ -3541,6 +3541,129 @@ const MxPageHeader$1 = class extends HTMLElement {
   get element() { return this; }
 };
 
+const chevronLeftSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 7.41L10.42 12L15 16.59L13.59 18L7.59 12L13.59 6L15 7.41Z" fill="currentColor"/>
+</svg>
+`;
+
+const chevronRightSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8.58997 16.59L13.17 12L8.58997 7.41L9.99997 6L16 12L9.99997 18L8.58997 16.59Z" fill="currentColor"/>
+</svg>
+`;
+
+const pageFirstSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M18.41 16.59L13.82 12L18.41 7.41L17 6L11 12L17 18L18.41 16.59ZM6 6H8V18H6V6Z" fill="currentColor" />
+</svg>
+`;
+
+const pageLastSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5.58997 7.41L10.18 12L5.58997 16.59L6.99997 18L13 12L6.99997 6L5.58997 7.41ZM16 6H18V18H16V6Z" fill="currentColor"/>
+</svg>
+`;
+
+const MxPagination$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxPageChange = createEvent(this, "mxPageChange", 7);
+    this.hasStatus = false;
+    this.page = 0;
+    this.rowsPerPageOptions = [10, 25, 50, 100];
+    this.rowsPerPage = 100;
+    /** Reduce the UI to only a page */
+    this.simple = false;
+    /** Disable the page buttons (i.e. when loading results) */
+    this.disabled = false;
+    /** Disable the next page button (i.e. when the last page was loaded from an API) */
+    this.disableNextPage = false;
+    this.hideRowsPerPage = false;
+    this.moveStatusToBottom = false;
+    /** Whether the component width (not viewport width) is >= 320px */
+    this.isXSmallMinWidth = false;
+    /** Whether the component width (not viewport width) is >= 640px */
+    this.isSmallMinWidth = false;
+  }
+  componentWillRender() {
+    this.hasStatus = !!this.element.querySelector('[slot="status"]');
+  }
+  componentDidLoad() {
+    if (this.rowsMenu && this.rowsMenuAnchor)
+      this.rowsMenu.anchorEl = this.rowsMenuAnchor;
+    this.resizeObserver = new ResizeObserver(() => this.updateResponsiveElements());
+    this.resizeObserver.observe(this.element);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateResponsiveElements.bind(this));
+  }
+  updateResponsiveElements() {
+    if (!this.paginationWrapper)
+      return;
+    let totalNeededWidth = Array.from(this.paginationWrapper.children).reduce((total, child) => {
+      return total + child.scrollWidth;
+    }, 0);
+    if (this.hideRowsPerPage && this.rowsPerPageWrapper)
+      totalNeededWidth += this.rowsPerPageWrapper.scrollWidth;
+    const excessWidth = totalNeededWidth - this.element.offsetWidth;
+    this.hideRowsPerPage = excessWidth > 0;
+    this.moveStatusToBottom = excessWidth > this.rowsPerPageWrapper.scrollWidth;
+    this.isXSmallMinWidth = this.element.offsetWidth >= 320;
+    this.isSmallMinWidth = this.element.offsetWidth >= 640;
+  }
+  onClickFirstPage() {
+    this.mxPageChange.emit({ page: 0, rowsPerPage: this.rowsPerPage });
+  }
+  onClickPreviousPage() {
+    this.mxPageChange.emit({ page: this.page - 1, rowsPerPage: this.rowsPerPage });
+  }
+  onClickNextPage() {
+    this.mxPageChange.emit({ page: this.page + 1, rowsPerPage: this.rowsPerPage });
+  }
+  onClickLastPage() {
+    this.mxPageChange.emit({ page: this.lastPage, rowsPerPage: this.rowsPerPage });
+  }
+  onChangeRowsPerPage(rowsPerPage) {
+    // Return to first page whenever the results-per-page changes
+    this.mxPageChange.emit({ page: 0, rowsPerPage });
+  }
+  get lastPage() {
+    if (this.totalRows === 0)
+      return 0;
+    if (this.totalRows == null)
+      return null;
+    return Math.ceil(this.totalRows / this.rowsPerPage) - 1;
+  }
+  get currentRange() {
+    let start = this.rowsPerPage * this.page + 1;
+    let end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
+    return start + '–' + end;
+  }
+  get rowRangeClass() {
+    let str = 'text-center flex-shrink min-w-0';
+    str += this.isSmallMinWidth ? ' px-24' : ' px-16';
+    if (!this.isXSmallMinWidth)
+      str += ' whitespace-normal';
+    return str;
+  }
+  get paginationWrapperClass() {
+    let str = 'flex relative';
+    if (this.moveStatusToBottom) {
+      str += ' flex-col-reverse items-end';
+    }
+    else {
+      str += ' items-center';
+      str += this.hasStatus ? ' justify-between' : ' justify-end';
+    }
+    return str;
+  }
+  render() {
+    return (h(Host, { class: "mx-pagination relative block text-4 whitespace-nowrap select-none" }, !this.simple && h("div", { class: "pagination-bg absolute top-0 left-0 w-full h-56 rounded-b-2xl" }), this.simple ? (
+    // Simple pagination
+    h("div", { class: "simple flex items-center justify-center h-48" }, h("mx-icon-button", { "aria-label": "Previous page", "chevron-left": true, disabled: this.page === 0 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), this.lastPage !== null ? this.page + 1 + ' of ' + (this.lastPage + 1) : '', h("mx-icon-button", { "aria-label": "Next page", "chevron-right": true, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }))) : (
+    // Standard pagination
+    h("div", { ref: el => (this.paginationWrapper = el), class: this.paginationWrapperClass }, this.hasStatus && (h("div", { "data-testid": "status", class: "px-24 py-10 flex relative items-center justify-self-start" }, h("slot", { name: "status" }))), h("div", { class: 'flex flex-grow-0 items-center justify-end h-56 pr-4' + (this.hideRowsPerPage ? ' relative' : '') }, this.rowsPerPageOptions && this.rowsPerPageOptions.length > 1 && (h("div", { ref: el => (this.rowsPerPageWrapper = el), "aria-hidden": this.hideRowsPerPage, class: 'flex items-center px-24' + (this.hideRowsPerPage ? ' absolute opacity-0 pointer-events-none' : '') }, "Rows per page: \u00A0", h("div", { "data-testid": "rows-per-page", ref: el => (this.rowsMenuAnchor = el), class: "flex items-center cursor-pointer" }, this.rowsPerPage, h("span", { class: "ml-12", innerHTML: arrowSvg$1 })), h("mx-menu", { ref: el => (this.rowsMenu = el) }, this.rowsPerPageOptions.map(option => (h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))), this.totalRows > 0 && (h("div", { "data-testid": "row-range", class: this.rowRangeClass }, this.currentRange, " of ", this.totalRows)), h("div", { class: "flex items-center sm:space-x-8" }, h("mx-icon-button", { "aria-label": "First page", innerHTML: pageFirstSvg, disabled: this.page === 0 || this.disabled, onClick: this.onClickFirstPage.bind(this) }), h("mx-icon-button", { "aria-label": "Previous page", innerHTML: chevronLeftSvg, disabled: this.page === 0 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), h("mx-icon-button", { "aria-label": "Next page", innerHTML: chevronRightSvg, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }), this.lastPage !== null && (h("mx-icon-button", { "aria-label": "Last page", innerHTML: pageLastSvg, disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
+  }
+  get element() { return this; }
+};
+
 const MxRadio$1 = class extends HTMLElement {
   constructor() {
     super();
@@ -3884,12 +4007,13 @@ const MxChipGroup = /*@__PURE__*/proxyCustomElement(MxChipGroup$1, [4,"mx-chip-g
 const MxCircularProgress = /*@__PURE__*/proxyCustomElement(MxCircularProgress$1, [0,"mx-circular-progress",{"value":[2],"size":[1],"appearDelay":[2,"appear-delay"]}]);
 const MxDropdownMenu = /*@__PURE__*/proxyCustomElement(MxDropdownMenu$1, [4,"mx-dropdown-menu",{"ariaLabel":[1,"aria-label"],"dense":[4],"elevated":[4],"flat":[4],"label":[1],"dropdownId":[1,"dropdown-id"],"name":[1],"suffix":[1],"value":[1032],"isFocused":[32]},[[0,"click","onClick"]]]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"ariaLabel":[1,"aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
-const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"value":[1],"disabled":[4],"ariaLabel":[1,"aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
+const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"value":[1],"disabled":[516],"ariaLabel":[1,"aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"value":[1025],"type":[1],"dense":[4],"disabled":[4],"readonly":[4],"maxlength":[2],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"suffix":[1],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"floatLabel":[4,"float-label"],"textarea":[4],"textareaHeight":[1025,"textarea-height"],"isFocused":[32],"characterCount":[32]}]);
 const MxLinearProgress = /*@__PURE__*/proxyCustomElement(MxLinearProgress$1, [0,"mx-linear-progress",{"value":[2],"appearDelay":[2,"appear-delay"]}]);
 const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
 const MxMenuItem = /*@__PURE__*/proxyCustomElement(MxMenuItem$1, [4,"mx-menu-item",{"checked":[4],"disabled":[4],"icon":[1],"label":[1],"multiSelect":[4,"multi-select"],"minWidths":[32]},[[1,"mouseenter","onMouseEnter"],[1,"mouseleave","onMouseLeave"],[0,"focus","onFocus"],[0,"keydown","onKeyDown"]]]);
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);
+const MxPagination = /*@__PURE__*/proxyCustomElement(MxPagination$1, [4,"mx-pagination",{"page":[2],"rowsPerPageOptions":[16],"rowsPerPage":[2,"rows-per-page"],"simple":[4],"totalRows":[2,"total-rows"],"disabled":[4],"disableNextPage":[4,"disable-next-page"],"hideRowsPerPage":[32],"moveStatusToBottom":[32],"isXSmallMinWidth":[32],"isSmallMinWidth":[32]}]);
 const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxSearch = /*@__PURE__*/proxyCustomElement(MxSearch$1, [0,"mx-search",{"ariaLabel":[1,"aria-label"],"dense":[4],"flat":[4],"name":[1],"placeholder":[1],"value":[1]}]);
 const MxSelect = /*@__PURE__*/proxyCustomElement(MxSelect$1, [4,"mx-select",{"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elevated":[4],"flat":[4],"label":[1],"floatLabel":[4,"float-label"],"ariaLabel":[1,"aria-label"],"selectId":[1,"select-id"],"name":[1],"suffix":[1],"error":[1028],"labelClass":[1025,"label-class"],"value":[1032],"isFocused":[32]}]);
@@ -3916,6 +4040,7 @@ const defineCustomElements = (opts) => {
   MxMenu,
   MxMenuItem,
   MxPageHeader,
+  MxPagination,
   MxRadio,
   MxSearch,
   MxSelect,
@@ -3933,4 +4058,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxRadio, MxSearch, MxSelect, MxSwitch, MxTab, MxTabContent, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSwitch, MxTab, MxTabContent, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
