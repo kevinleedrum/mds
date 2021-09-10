@@ -480,7 +480,7 @@ export class MxTable {
         {/* Operations Bar */}
         {this.showOperationsBar && operationsBar}
 
-        <div data-testid="grid" class="table-grid rounded-2xl" style={this.gridStyle}>
+        <div data-testid="grid" class="table-grid" style={this.gridStyle}>
           {/* Header Row */}
           <div class="header-row">
             {this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox}
