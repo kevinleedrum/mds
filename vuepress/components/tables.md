@@ -332,32 +332,31 @@ This example uses paginated data from [An API of Ice And Fire](https://anapiofic
 Other props that may be helpful when using server-side pagination include `showProgressBar`, `progressAppearDelay`, `totalRows`, `disablePagination`, and `disableNextPage`.
 
 <section class="mds">
-    <!-- #region server -->
   <mx-checkbox
     class="my-20"
     label-name="Add a 1500ms delay to emulate a slow connection"
     :value="apiSlowRequest"
     @input="apiSlowRequest = !apiSlowRequest"
   />
-    <mx-table
-      server-paginate
-      :page="this.apiPage"
-      :rows-per-page="this.apiPageSize"
-      :rows-per-page-options.prop="[5, 10, 25, 50]"
-      :disable-pagination="apiLoading"
-      :disable-next-page="apiDisableNextPage"
-      :rows.prop="apiHouses"
-      :columns.prop="[
-        { property: 'name', heading: 'Name', sortable: false },
-        { property: 'region', heading: 'Region', sortable: false },
-        { property: 'words', heading: 'Words', sortable: false }
-      ]"
-      :show-progress-bar="apiLoading"
-      progress-appear-delay="150"
-      @mxPageChange="onPageChange"
-    />
-    <!-- #endregion server -->
-  </div>
+  <!-- #region server -->
+  <mx-table
+    server-paginate
+    :page="this.apiPage"
+    :rows-per-page="this.apiPageSize"
+    :rows-per-page-options.prop="[5, 10, 25, 50]"
+    :disable-pagination="apiLoading"
+    :disable-next-page="apiDisableNextPage"
+    :rows.prop="apiHouses"
+    :columns.prop="[
+      { property: 'name', heading: 'Name', sortable: false },
+      { property: 'region', heading: 'Region', sortable: false },
+      { property: 'words', heading: 'Words', sortable: false }
+    ]"
+    :show-progress-bar="apiLoading"
+    progress-appear-delay="150"
+    @mxPageChange="onPageChange"
+  />
+  <!-- #endregion server -->
 </section>
 
 <<< @/vuepress/components/tables.md#server
@@ -446,8 +445,8 @@ The following example combines checkable, slotted table rows with pagination, ro
 | Property              | Attribute               | Description                                                                                                                                                                             | Type                                    | Default     |
 | --------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- | ----------- |
 | `autoWidth`           | `auto-width`            | Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens                                                                                               | `boolean`                               | `false`     |
-| `checkOnRowClick`     | `check-on-row-click`    | Set to false to prevent checking rows by clicking on them (outside the checkboxes).                                                                                                     | `boolean`                               | `true`      |
-| `checkable`           | `checkable`             | Make rows checkable. You must either provide a `rowIdProperty` (for generated rows), or provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot.   | `boolean`                               | `false`     |
+| `checkOnRowClick`     | `check-on-row-click`    | Set to `false` to prevent checking rows by clicking on them (outside the checkboxes).                                                                                                   | `boolean`                               | `true`      |
+| `checkable`           | `checkable`             | Make rows checkable. You must either provide a `getRowId` getter (for generated rows), or provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. | `boolean`                               | `false`     |
 | `columns`             | --                      | An array of [`ITableColumn`](#itablecolumn) column definitions. If not specified, a column will be generated for each property on the row object.                                       | [`ITableColumn[]`](#itablecolumn)       | `[]`        |
 | `disableNextPage`     | `disable-next-page`     | Disable the next-page button. Useful when using server-side pagination and the total number of rows is unknown.                                                                         | `boolean`                               | `false`     |
 | `disablePagination`   | `disable-pagination`    | Disable the pagination buttons (i.e. while loading results)                                                                                                                             | `boolean`                               | `false`     |
@@ -463,7 +462,7 @@ The following example combines checkable, slotted table rows with pagination, ro
 | `rowsPerPage`         | `rows-per-page`         |                                                                                                                                                                                         | `number`                                | `10`        |
 | `rowsPerPageOptions`  | --                      |                                                                                                                                                                                         | `number[]`                              | `undefined` |
 | `serverPaginate`      | `server-paginate`       | Do not sort or paginate client-side. Use events to send server requests instead.                                                                                                        | `boolean`                               | `false`     |
-| `showCheckAll`        | `show-check-all`        | Set to false to hide the (un)check all checkbox at the top of the table.                                                                                                                | `boolean`                               | `true`      |
+| `showCheckAll`        | `show-check-all`        | Set to `false` to hide the (un)check all checkbox at the top of the table.                                                                                                              | `boolean`                               | `true`      |
 | `showProgressBar`     | `show-progress-bar`     | Show a progress bar below the header row                                                                                                                                                | `boolean`                               | `false`     |
 | `sortAscending`       | `sort-ascending`        |                                                                                                                                                                                         | `boolean`                               | `true`      |
 | `sortBy`              | `sort-by`               | The property on the row objects that will be used for sorting                                                                                                                           | `string`                                | `undefined` |
@@ -954,16 +953,16 @@ export default {
       let url = 'https://www.anapioficeandfire.com/api/houses?'
       url += 'page=' + (this.apiPage + 1)
       url += '&pageSize=' + this.apiPageSize
-        const response = await fetch(url)
-        // Parse last page number from "link" header since API does not give us total row count
-        const pages = response.headers.get('link').match(/page\=[0-9]+/g)
-        const lastPage = +/[0-9]+/.exec(pages[pages.length - 1])[0]
-        // Disable next-page button if this is the last page
-        this.apiDisableNextPage = lastPage === (this.apiPage + 1)
-        setTimeout(async () => {
-          this.apiHouses = await response.json()
-          this.apiLoading = false
-        }, this.apiSlowRequest ? 1500 : 0)
+      const response = await fetch(url)
+      // Parse last page number from "link" header since API does not give us total row count
+      const pages = response.headers.get('link').match(/page\=[0-9]+/g)
+      const lastPage = +/[0-9]+/.exec(pages[pages.length - 1])[0]
+      // Disable next-page button if this is the last page
+      this.apiDisableNextPage = lastPage === (this.apiPage + 1)
+      setTimeout(async () => {
+        this.apiHouses = await response.json()
+        this.apiLoading = false
+      }, this.apiSlowRequest ? 1500 : 0)
     },
     onPageChange(e) {
       this.apiPage = e.detail.page

@@ -68,12 +68,12 @@ export class MxTable {
   /** A function that returns the `rowId` prop for each generated `mx-table-row`.
    * This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). */
   @Prop() getRowId: (row: Object) => string;
-  /** Make rows checkable.  You must either provide a `rowIdProperty` (for generated rows), or
+  /** Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or
    * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
   @Prop() checkable: boolean = false;
-  /** Set to false to prevent checking rows by clicking on them (outside the checkboxes). */
+  /** Set to `false` to prevent checking rows by clicking on them (outside the checkboxes). */
   @Prop() checkOnRowClick: boolean = true;
-  /** Set to false to hide the (un)check all checkbox at the top of the table. */
+  /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
   @Prop() showCheckAll: boolean = true;
   @Prop() hoverable: boolean = true;
   /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
