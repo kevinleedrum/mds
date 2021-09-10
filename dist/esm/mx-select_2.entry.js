@@ -1,6 +1,6 @@
-import { r as registerInstance, h, H as Host } from './index-62f53352.js';
+import { r as registerInstance, h, H as Host } from './index-d7d68a6b.js';
 import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
-import { u as uuidv4 } from './utils-43415dd2.js';
+import { u as uuidv4 } from './utils-98c5c01c.js';
 import { r as ripple } from './ripple-54ef50dc.js';
 
 const MxSelect = class {

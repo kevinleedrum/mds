@@ -52,6 +52,8 @@ Type: `Promise<boolean>`
  - [mx-dropdown-menu](../mx-dropdown-menu)
  - [mx-page-header](../mx-page-header)
  - [mx-pagination](../mx-pagination)
+ - [mx-table](../mx-table)
+ - [mx-table-row](../mx-table-row)
 
 ### Graph
 ```mermaid
@@ -59,6 +61,8 @@ graph TD;
   mx-dropdown-menu --> mx-menu
   mx-page-header --> mx-menu
   mx-pagination --> mx-menu
+  mx-table --> mx-menu
+  mx-table-row --> mx-menu
   style mx-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

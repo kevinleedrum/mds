@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host } from './index-a4e4d6b0.js';
+import { r as registerInstance, h, f as Host } from './index-935f3e8d.js';
 
 const MxCheckbox = class {
   constructor(hostRef) {
@@ -31,7 +31,7 @@ const MxCheckbox = class {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-checkbox" }, h("label", { class: [
+    return (h(Host, { class: "mx-checkbox inline-flex items-center overflow-hidden" }, h("label", { class: [
         'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
           (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,

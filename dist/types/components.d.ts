@@ -9,6 +9,8 @@ import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
 import { PopoverOffset, PopoverPlacement } from "./utils/popover";
 import { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
 import { PageChangeEventDetail } from "./components/mx-pagination/mx-pagination";
+import { ITableColumn, ITableRowAction, SortChangeEventDetail } from "./components/mx-table/mx-table";
+import { ITableRowAction as ITableRowAction1 } from "./components/mx-table/mx-table";
 import { IMxTabProps } from "./components/mx-tab/mx-tab";
 export namespace Components {
     interface MxBadge {
@@ -433,6 +435,113 @@ export namespace Components {
          */
         "value": number;
     }
+    interface MxTable {
+        /**
+          * Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens
+         */
+        "autoWidth": boolean;
+        "checkAll": () => Promise<void>;
+        "checkNone": () => Promise<void>;
+        /**
+          * Set to `false` to prevent checking rows by clicking on them (outside the checkboxes).
+         */
+        "checkOnRowClick": boolean;
+        /**
+          * Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot.
+         */
+        "checkable": boolean;
+        /**
+          * An array of column definitions.  If not specified, a column will be generated for each property on the row object.
+         */
+        "columns": ITableColumn[];
+        /**
+          * Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown.
+         */
+        "disableNextPage": boolean;
+        /**
+          * Disable the pagination buttons (i.e. while loading results)
+         */
+        "disablePagination": boolean;
+        "getCheckedRowIds": () => Promise<string[]>;
+        "getMultiRowActions": (rows: string[]) => ITableRowAction[];
+        "getRowActions": (row: Object) => ITableRowAction[];
+        /**
+          * A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).
+         */
+        "getRowId": (row: Object) => string;
+        "hoverable": boolean;
+        /**
+          * The zero-based index of the page to display
+         */
+        "page": number;
+        /**
+          * Show the pagination component.  Setting this to `false` will show all rows.
+         */
+        "paginate": boolean;
+        /**
+          * Delay the appearance of the progress bar for this many milliseconds
+         */
+        "progressAppearDelay": number;
+        /**
+          * The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed.
+         */
+        "progressValue": number;
+        /**
+          * An array of objects that defines the table's dataset.
+         */
+        "rows": Object[];
+        "rowsPerPage": number;
+        "rowsPerPageOptions": number[];
+        /**
+          * Do not sort or paginate client-side. Use events to send server requests instead.
+         */
+        "serverPaginate": boolean;
+        "setCheckedRowIds": (checkedRowIds?: string[]) => Promise<void>;
+        /**
+          * Set to `false` to hide the (un)check all checkbox at the top of the table.
+         */
+        "showCheckAll": boolean;
+        /**
+          * Show a progress bar below the header row
+         */
+        "showProgressBar": boolean;
+        "sortAscending": boolean;
+        /**
+          * The property on the row objects that will be used for sorting
+         */
+        "sortBy": string;
+        /**
+          * The total number of unpaginated rows.  This is ignored for client-side pagination. For server-side pagination, omitting this prop will remove the last-page button.
+         */
+        "totalRows": number;
+    }
+    interface MxTableCell {
+        /**
+          * This is automatically set by the parent `mx-table`.
+         */
+        "columnIndex": number;
+        /**
+          * This is automatically set by the parent `mx-table`.
+         */
+        "heading": string;
+        /**
+          * This is automatically set by the parent `mx-table`.
+         */
+        "isExposedMobileColumn": boolean;
+    }
+    interface MxTableRow {
+        /**
+          * An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text.
+         */
+        "actions": ITableRowAction[];
+        "checked": boolean;
+        "collapse": () => Promise<void>;
+        "expand": () => Promise<void>;
+        /**
+          * This is required for checkable rows in order to persist the checked state through sorting and pagination.
+         */
+        "rowId": string;
+    }
     interface MxTabs {
         /**
           * Stretch tabs to fill the entire width
@@ -588,6 +697,24 @@ declare global {
         prototype: HTMLMxTabContentElement;
         new (): HTMLMxTabContentElement;
     };
+    interface HTMLMxTableElement extends Components.MxTable, HTMLStencilElement {
+    }
+    var HTMLMxTableElement: {
+        prototype: HTMLMxTableElement;
+        new (): HTMLMxTableElement;
+    };
+    interface HTMLMxTableCellElement extends Components.MxTableCell, HTMLStencilElement {
+    }
+    var HTMLMxTableCellElement: {
+        prototype: HTMLMxTableCellElement;
+        new (): HTMLMxTableCellElement;
+    };
+    interface HTMLMxTableRowElement extends Components.MxTableRow, HTMLStencilElement {
+    }
+    var HTMLMxTableRowElement: {
+        prototype: HTMLMxTableRowElement;
+        new (): HTMLMxTableRowElement;
+    };
     interface HTMLMxTabsElement extends Components.MxTabs, HTMLStencilElement {
     }
     var HTMLMxTabsElement: {
@@ -628,6 +755,9 @@ declare global {
         "mx-switch": HTMLMxSwitchElement;
         "mx-tab": HTMLMxTabElement;
         "mx-tab-content": HTMLMxTabContentElement;
+        "mx-table": HTMLMxTableElement;
+        "mx-table-cell": HTMLMxTableCellElement;
+        "mx-table-row": HTMLMxTableRowElement;
         "mx-tabs": HTMLMxTabsElement;
         "mx-toggle-button": HTMLMxToggleButtonElement;
         "mx-toggle-button-group": HTMLMxToggleButtonGroupElement;
@@ -1057,6 +1187,123 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
+    interface MxTable {
+        /**
+          * Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens
+         */
+        "autoWidth"?: boolean;
+        /**
+          * Set to `false` to prevent checking rows by clicking on them (outside the checkboxes).
+         */
+        "checkOnRowClick"?: boolean;
+        /**
+          * Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot.
+         */
+        "checkable"?: boolean;
+        /**
+          * An array of column definitions.  If not specified, a column will be generated for each property on the row object.
+         */
+        "columns"?: ITableColumn[];
+        /**
+          * Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown.
+         */
+        "disableNextPage"?: boolean;
+        /**
+          * Disable the pagination buttons (i.e. while loading results)
+         */
+        "disablePagination"?: boolean;
+        "getMultiRowActions"?: (rows: string[]) => ITableRowAction[];
+        "getRowActions"?: (row: Object) => ITableRowAction[];
+        /**
+          * A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).
+         */
+        "getRowId"?: (row: Object) => string;
+        "hoverable"?: boolean;
+        /**
+          * Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s.
+         */
+        "onMxRowCheck"?: (event: CustomEvent<string[]>) => void;
+        /**
+          * Emitted when a sortable column's header is clicked.
+         */
+        "onMxSortChange"?: (event: CustomEvent<SortChangeEventDetail>) => void;
+        /**
+          * Emitted when the sorting, pagination, or rows data changes. The `Event.detail` will contain the sorted, paginated array of visible rows.  This is useful for building a custom row layout via the default slot.
+         */
+        "onMxVisibleRowsChange"?: (event: CustomEvent<Object[]>) => void;
+        /**
+          * The zero-based index of the page to display
+         */
+        "page"?: number;
+        /**
+          * Show the pagination component.  Setting this to `false` will show all rows.
+         */
+        "paginate"?: boolean;
+        /**
+          * Delay the appearance of the progress bar for this many milliseconds
+         */
+        "progressAppearDelay"?: number;
+        /**
+          * The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed.
+         */
+        "progressValue"?: number;
+        /**
+          * An array of objects that defines the table's dataset.
+         */
+        "rows"?: Object[];
+        "rowsPerPage"?: number;
+        "rowsPerPageOptions"?: number[];
+        /**
+          * Do not sort or paginate client-side. Use events to send server requests instead.
+         */
+        "serverPaginate"?: boolean;
+        /**
+          * Set to `false` to hide the (un)check all checkbox at the top of the table.
+         */
+        "showCheckAll"?: boolean;
+        /**
+          * Show a progress bar below the header row
+         */
+        "showProgressBar"?: boolean;
+        "sortAscending"?: boolean;
+        /**
+          * The property on the row objects that will be used for sorting
+         */
+        "sortBy"?: string;
+        /**
+          * The total number of unpaginated rows.  This is ignored for client-side pagination. For server-side pagination, omitting this prop will remove the last-page button.
+         */
+        "totalRows"?: number;
+    }
+    interface MxTableCell {
+        /**
+          * This is automatically set by the parent `mx-table`.
+         */
+        "columnIndex"?: number;
+        /**
+          * This is automatically set by the parent `mx-table`.
+         */
+        "heading"?: string;
+        /**
+          * This is automatically set by the parent `mx-table`.
+         */
+        "isExposedMobileColumn"?: boolean;
+    }
+    interface MxTableRow {
+        /**
+          * An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text.
+         */
+        "actions"?: ITableRowAction[];
+        "checked"?: boolean;
+        /**
+          * Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked
+         */
+        "onMxCheck"?: (event: CustomEvent<{ rowId: string | number; checked: boolean }>) => void;
+        /**
+          * This is required for checkable rows in order to persist the checked state through sorting and pagination.
+         */
+        "rowId"?: string;
+    }
     interface MxTabs {
         /**
           * Stretch tabs to fill the entire width
@@ -1114,6 +1361,9 @@ declare namespace LocalJSX {
         "mx-switch": MxSwitch;
         "mx-tab": MxTab;
         "mx-tab-content": MxTabContent;
+        "mx-table": MxTable;
+        "mx-table-cell": MxTableCell;
+        "mx-table-row": MxTableRow;
         "mx-tabs": MxTabs;
         "mx-toggle-button": MxToggleButton;
         "mx-toggle-button-group": MxToggleButtonGroup;
@@ -1144,6 +1394,9 @@ declare module "@stencil/core" {
             "mx-switch": LocalJSX.MxSwitch & JSXBase.HTMLAttributes<HTMLMxSwitchElement>;
             "mx-tab": LocalJSX.MxTab & JSXBase.HTMLAttributes<HTMLMxTabElement>;
             "mx-tab-content": LocalJSX.MxTabContent & JSXBase.HTMLAttributes<HTMLMxTabContentElement>;
+            "mx-table": LocalJSX.MxTable & JSXBase.HTMLAttributes<HTMLMxTableElement>;
+            "mx-table-cell": LocalJSX.MxTableCell & JSXBase.HTMLAttributes<HTMLMxTableCellElement>;
+            "mx-table-row": LocalJSX.MxTableRow & JSXBase.HTMLAttributes<HTMLMxTableRowElement>;
             "mx-tabs": LocalJSX.MxTabs & JSXBase.HTMLAttributes<HTMLMxTabsElement>;
             "mx-toggle-button": LocalJSX.MxToggleButton & JSXBase.HTMLAttributes<HTMLMxToggleButtonElement>;
             "mx-toggle-button-group": LocalJSX.MxToggleButtonGroup & JSXBase.HTMLAttributes<HTMLMxToggleButtonGroupElement>;

@@ -1,0 +1,107 @@
+.mx-table {
+  [slot='search'] {
+    @apply sm:w-240;
+  }
+
+  .table-grid > * {
+    /* Only place table cell elements into the grid (not row elements). */
+    @apply contents;
+  }
+
+  .header-row > * {
+    background: var(--mds-bg-table-header);
+    border-color: var(--mds-border-table-header);
+    @apply border-b;
+    &:first-child {
+      @apply pl-24 rounded-tl-2xl;
+    }
+    &:last-child {
+      @apply sm:pr-24 rounded-tr-2xl;
+    }
+  }
+
+  .mx-table-row > *,
+  .empty-state > * {
+    background: var(--mds-bg-table);
+  }
+
+  .empty-state {
+    &:last-child {
+      & > :first-child {
+        @apply rounded-bl-2xl;
+      }
+      & > :last-child {
+        @apply rounded-br-2xl;
+      }
+    }
+    &:not(:last-child) > * {
+      @apply border-b;
+    }
+  }
+
+  .mx-table-row {
+    border-color: var(--mds-border-table-cell);
+    transition: max-height 0.15s ease;
+    & > :first-child:not(:empty) {
+      @apply pl-24;
+    }
+    & > :last-child:not(.pr-0, .p-0) {
+      @apply sm:pr-24;
+    }
+    &:last-child {
+      & > :first-child {
+        @apply rounded-bl-2xl;
+      }
+      & > :last-child {
+        @apply rounded-br-2xl;
+      }
+    }
+    &:not(:last-child) {
+      @apply border-b sm:border-b-0;
+    }
+    &:not(:last-child) > * {
+      @apply sm:border-b;
+    }
+    &:focus-within > * {
+      background: var(--mds-bg-table-focus);
+    }
+    .mobile-row-chevron {
+      color: var(--mds-text-table-mobile-row-chevron);
+      transition: transform 0.15s ease;
+    }
+    &.mobile-collapsed {
+      .mx-table-cell:not(.exposed-cell),
+      .action-cell {
+        @apply sr-only;
+      }
+    }
+    &.checkable-row .exposed-cell {
+      @apply pl-16;
+    }
+  }
+
+  @media (hover: hover) {
+    &.hoverable .mx-table-row:not(:focus-within):hover > * {
+      background: var(--mds-bg-table-hover);
+    }
+  }
+
+  &.paginated {
+    .mx-table-row:last-child {
+      @apply border-b;
+      & > * {
+        @apply sm:border-b;
+      }
+      & > :first-child {
+        @apply rounded-bl-none;
+      }
+      & > :last-child {
+        @apply rounded-br-none;
+      }
+    }
+  }
+}
+
+.mx-table-cell {
+  @apply pl-24 sm:pl-16 p-16;
+}

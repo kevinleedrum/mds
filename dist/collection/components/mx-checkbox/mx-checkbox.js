@@ -29,7 +29,7 @@ export class MxCheckbox {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-checkbox" },
+    return (h(Host, { class: "mx-checkbox inline-flex items-center overflow-hidden" },
       h("label", { class: [
           'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
             (this.disabled ? '' : ' cursor-pointer'),

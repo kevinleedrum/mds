@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host } from './index-a4e4d6b0.js';
+import { r as registerInstance, h, f as Host } from './index-935f3e8d.js';
 import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
 
 const MxDropdownMenu = class {

@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host } from './index-a4e4d6b0.js';
+import { r as registerInstance, h, f as Host } from './index-935f3e8d.js';
 import { r as ripple } from './ripple-54ef50dc.js';
 import { c as chevronSvg } from './chevron-down-6a7bb36b.js';
 
@@ -28,7 +28,8 @@ const MxButton = class {
     if (this.dropdown)
       str += ' dropdown';
     // Common classes
-    str += ' flex items-center justify-center relative overflow-hidden cursor-pointer hover:no-underline';
+    str +=
+      ' flex items-center justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto hover:no-underline';
     // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
       str += ' w-full rounded-lg font-semibold uppercase';

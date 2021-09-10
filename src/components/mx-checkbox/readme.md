@@ -25,11 +25,15 @@
 ### Used by
 
  - [mx-menu-item](../mx-menu-item)
+ - [mx-table](../mx-table)
+ - [mx-table-row](../mx-table-row)
 
 ### Graph
 ```mermaid
 graph TD;
   mx-menu-item --> mx-checkbox
+  mx-table --> mx-checkbox
+  mx-table-row --> mx-checkbox
   style mx-checkbox fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

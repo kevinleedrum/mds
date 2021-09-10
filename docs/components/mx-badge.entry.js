@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host, g as getElement } from './index-a4e4d6b0.js';
+import { r as registerInstance, h, f as Host, g as getElement } from './index-935f3e8d.js';
 
 const circleSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
   <circle cx="6" cy="6" r="6" fill="currentColor"/>

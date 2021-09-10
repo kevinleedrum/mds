@@ -10,3 +10,11 @@ export function queryPrefersReducedMotion() {
   const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   return !mediaQuery || mediaQuery.matches;
 }
+export function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+export function isDateObject(val) {
+  if (typeof val !== 'object')
+    return false;
+  return 'getTime' in val;
+}
