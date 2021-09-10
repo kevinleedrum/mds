@@ -1,5 +1,5 @@
-import { r as registerInstance, h, f as Host } from './index-a4e4d6b0.js';
-import { u as uuidv4 } from './utils-43415dd2.js';
+import { r as registerInstance, h, f as Host } from './index-935f3e8d.js';
+import { u as uuidv4 } from './utils-98c5c01c.js';
 
 const MxInput = class {
   constructor(hostRef) {

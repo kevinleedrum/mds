@@ -26,7 +26,8 @@ export class MxButton {
     if (this.dropdown)
       str += ' dropdown';
     // Common classes
-    str += ' flex items-center justify-center relative overflow-hidden cursor-pointer hover:no-underline';
+    str +=
+      ' flex items-center justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto hover:no-underline';
     // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
       str += ' w-full rounded-lg font-semibold uppercase';

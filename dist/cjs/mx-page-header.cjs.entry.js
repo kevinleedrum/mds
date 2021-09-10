@@ -2,25 +2,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-447342ec.js');
+const index = require('./index-c246f020.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
-const ResizeObserver = require('./ResizeObserver-6bb15032.js');
-
-const dotsSvg = `<svg width="4" height="20" viewBox="0 0 4 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path
-    d="M2 12C3.10457 12 4 11.1046 4 10C4 8.89543 3.10457 8 2 8C0.89543 8 0 8.89543 0 10C0 11.1046 0.89543 12 2 12Z"
-    fill="currentColor"
-  />
-  <path
-    d="M2 4C3.10457 4 4 3.10457 4 2C4 0.89543 3.10457 0 2 0C0.89543 0 0 0.89543 0 2C0 3.10457 0.89543 4 2 4Z"
-    fill="currentColor"
-  />
-  <path
-    d="M2 20C3.10457 20 4 19.1046 4 18C4 16.8954 3.10457 16 2 16C0.89543 16 0 16.8954 0 18C0 19.1046 0.89543 20 2 20Z"
-    fill="currentColor"
-  />
-</svg>
-`;
+const dotsVertical = require('./dots-vertical-8fe5a309.js');
 
 const arrowSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path
@@ -88,7 +72,7 @@ const MxPageHeader = class {
     }
   }
   componentDidLoad() {
-    this.resizeObserver = new ResizeObserver.ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
+    this.resizeObserver = new dotsVertical.ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
     this.resizeObserver.observe(this.element);
     // Wait one tick for layout shifts in order to detect overflow correctly.
     requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
@@ -123,7 +107,7 @@ const MxPageHeader = class {
         btnType = index$1 === 0 ? 'contained' : index$1 === 1 ? 'outlined' : 'text';
       const isTertiary = index$1 === 2;
       const menuItemProps = __rest(button, ["label"]); // Do not use button label as menu item label (use in slot instead)
-      return (index.h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (index.h("div", { class: "absolute !ml-auto -top-6" }, index.h("mx-icon-button", { ref: el => (this.menuButton = el), innerHTML: dotsSvg }), index.h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, index.h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), index.h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
+      return (index.h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (index.h("div", { class: "absolute !ml-auto -top-6" }, index.h("mx-icon-button", { ref: el => (this.menuButton = el), innerHTML: dotsVertical.dotsSvg }), index.h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, index.h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), index.h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {

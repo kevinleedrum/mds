@@ -27,6 +27,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [mx-table](../mx-table)
+
 ### Depends on
 
 - [mx-icon-button](../mx-icon-button)
@@ -40,6 +44,7 @@ graph TD;
   mx-pagination --> mx-menu
   mx-pagination --> mx-menu-item
   mx-menu-item --> mx-checkbox
+  mx-table --> mx-pagination
   style mx-pagination fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

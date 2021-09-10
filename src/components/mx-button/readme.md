@@ -24,11 +24,15 @@
 ### Used by
 
  - [mx-page-header](../mx-page-header)
+ - [mx-table](../mx-table)
+ - [mx-table-row](../mx-table-row)
 
 ### Graph
 ```mermaid
 graph TD;
   mx-page-header --> mx-button
+  mx-table --> mx-button
+  mx-table-row --> mx-button
   style mx-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -25,12 +25,16 @@
 
  - [mx-page-header](../mx-page-header)
  - [mx-pagination](../mx-pagination)
+ - [mx-table](../mx-table)
+ - [mx-table-row](../mx-table-row)
 
 ### Graph
 ```mermaid
 graph TD;
   mx-page-header --> mx-icon-button
   mx-pagination --> mx-icon-button
+  mx-table --> mx-icon-button
+  mx-table-row --> mx-icon-button
   style mx-icon-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

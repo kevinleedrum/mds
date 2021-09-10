@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-447342ec.js');
+const index = require('./index-c246f020.js');
 const ripple = require('./ripple-93b636e3.js');
 
 const MxToggleButton = class {

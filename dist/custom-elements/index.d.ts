@@ -128,6 +128,24 @@ export const MxTabContent: {
   new (): MxTabContent;
 };
 
+interface MxTable extends Components.MxTable, HTMLElement {}
+export const MxTable: {
+  prototype: MxTable;
+  new (): MxTable;
+};
+
+interface MxTableCell extends Components.MxTableCell, HTMLElement {}
+export const MxTableCell: {
+  prototype: MxTableCell;
+  new (): MxTableCell;
+};
+
+interface MxTableRow extends Components.MxTableRow, HTMLElement {}
+export const MxTableRow: {
+  prototype: MxTableRow;
+  new (): MxTableRow;
+};
+
 interface MxTabs extends Components.MxTabs, HTMLElement {}
 export const MxTabs: {
   prototype: MxTabs;
