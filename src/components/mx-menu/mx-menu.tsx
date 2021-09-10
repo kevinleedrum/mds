@@ -18,9 +18,7 @@ export class MxMenu {
   scrollElem: HTMLElement;
 
   /** The element that will open the menu when clicked */
-  @Prop({ mutable: true }) anchorEl: HTMLElement;
-  /** A CSS selector to find the `anchorEl` */
-  @Prop() anchorElSelector: string;
+  @Prop() anchorEl: HTMLElement;
   /** An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`.  The second is the distance from the `anchorEl`. */
   @Prop() offset: PopoverOffset;
   /** The placement of the menu, relative to the `anchorEl`. */
@@ -115,7 +113,6 @@ export class MxMenu {
   }
 
   connectedCallback() {
-    if (!this.anchorEl && this.anchorElSelector) this.anchorEl = document.querySelector(this.anchorElSelector);
     this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
   }
 
