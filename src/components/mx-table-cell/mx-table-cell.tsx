@@ -26,7 +26,7 @@ export class MxTableCell {
   }
 
   get cellClass() {
-    let str = 'mx-table-cell flex items-center whitespace-nowrap text-4';
+    let str = 'mx-table-cell flex items-center text-4';
     if (!this.minWidths.sm && this.isExposedMobileColumn) str += ' row-start-1 exposed-cell';
     else if (!this.minWidths.sm) str += ' py-0 pb-12 col-span-3';
     return str;
@@ -35,7 +35,7 @@ export class MxTableCell {
   render() {
     return (
       <Host role="gridcell" aria-describedby={`column-header-${this.columnIndex}`} class={this.cellClass}>
-        <div class="whitespace-normal min-h-20">
+        <div class="min-h-20">
           {!this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (
             <p class="subtitle5 my-0 mb-4" innerHTML={this.heading}></p>
           )}
