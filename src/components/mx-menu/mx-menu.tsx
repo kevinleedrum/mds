@@ -17,8 +17,10 @@ export class MxMenu {
   menuElem: HTMLElement;
   scrollElem: HTMLElement;
 
-  /** The element that will open the menu when clicked */
+  /** The element to which the menu's position will be anchored */
   @Prop() anchorEl: HTMLElement;
+  /** The element that will open the menu when clicked.  If not provided, the `anchorEl' will be used. */
+  @Prop() triggerEl: HTMLElement;
   /** An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`.  The second is the distance from the `anchorEl`. */
   @Prop() offset: PopoverOffset;
   /** The placement of the menu, relative to the `anchorEl`. */
@@ -31,6 +33,9 @@ export class MxMenu {
   /** Emitted when the menu closes. */
   @Event() mxClose: EventEmitter<void>;
 
+  /** Emitted when the menu opens. */
+  @Event() mxOpen: EventEmitter<void>;
+
   @Listen('mxClick')
   onMenuItemClick() {
     // Close menu when a descendent menu item is clicked
@@ -39,12 +44,15 @@ export class MxMenu {
 
   @Listen('click', { target: 'document', capture: true })
   onClick(e: MouseEvent) {
-    const anchorWasClicked = this.anchorEl && this.anchorEl.contains(e.target as Node);
-    if (!this.isOpen && anchorWasClicked) {
+    const triggerEl = this.triggerEl || this.anchorEl;
+    const triggerElWasClicked = triggerEl && triggerEl.contains(e.target as Node);
+    if (triggerElWasClicked) e.preventDefault();
+    if (!this.isOpen && triggerElWasClicked) {
       // Open closed menu when the anchorEl is clicked
       this.openMenu();
+      e.preventDefault();
     } else if (this.isOpen && this.element && !this.element.contains(e.target as Node)) {
-      if (this.isSubMenu && anchorWasClicked) return; // Do not close submenu when its anchor is clicked
+      if (this.isSubMenu && triggerElWasClicked) return; // Do not close submenu when its anchor is clicked
       // Otherwise, close menu when a click occurs outside the menu
       this.closeMenu();
     }
@@ -92,6 +100,7 @@ export class MxMenu {
   async openMenu() {
     if (this.isOpen || !this.anchorEl) return false;
     this.isOpen = true;
+    this.mxOpen.emit();
     const offset: PopoverOffset = this.offset || (this.isSubMenu ? [-8, 0] : null); // Offset submenus by -8px to line up menu items
     this.popoverInstance = await createPopover(this.anchorEl, this.element, this.placement, offset);
     await fadeScaleIn(this.menuElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));

@@ -193,6 +193,21 @@
   --mds-text-select: #454545;
   /* #endregion dropdowns */
 
+  /* #region pickers */
+  /* Pickers */
+  --mds-bg-picker: #fff;
+  --mds-border-picker-error: #ff0c3e;
+  --mds-border-picker-focus: #0457af;
+  --mds-border-picker-hover: #2d2d2d;
+  --mds-border-picker: #a9a9a9;
+  --mds-text-picker-disabled: #a9a9a9;
+  --mds-text-picker-error: #ff0c3e;
+  --mds-text-picker-focus: #454545;
+  --mds-text-picker-icon: #454545;
+  --mds-text-picker-label: #7a7a7a;
+  --mds-text-picker: #454545;
+  /* #endregion pickers */
+
   /* #region search */
   /* Search */
   --mds-border-search: transparent;
