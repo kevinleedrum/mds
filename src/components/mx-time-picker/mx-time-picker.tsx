@@ -15,7 +15,7 @@ for (let i = 0; i < 24; i++) {
 })
 export class MxTimePicker {
   pickerWrapper: HTMLElement;
-  iconButton: HTMLElement;
+  menuButton: HTMLElement;
   inputElem: HTMLInputElement;
   menu: HTMLMxMenuElement;
   isTimeInputSupported: boolean = false;
@@ -52,7 +52,7 @@ export class MxTimePicker {
 
   componentDidLoad() {
     this.menu.anchorEl = this.pickerWrapper;
-    this.menu.triggerEl = this.iconButton;
+    this.menu.triggerEl = this.menuButton;
     // HTMLInputElement.type will return "text" if the "time" value is not supported (i.e. Safari <14.1)
     this.isTimeInputSupported = this.inputElem.type === 'time';
     this.updateInputValue();
@@ -164,8 +164,8 @@ export class MxTimePicker {
     return str;
   }
 
-  get iconButtonClass() {
-    let str = 'icon-button cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
+  get menuButtonClass() {
+    let str = 'menu-button cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
     if (this.disabled) str += ' pointer-events-none';
     if (this.isFocused || this.error) str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
@@ -199,9 +199,9 @@ export class MxTimePicker {
           />
           {this.label && this.floatLabel && labelJsx}
           <button
-            ref={el => (this.iconButton = el)}
-            class={this.iconButtonClass}
-            data-testid="clock"
+            ref={el => (this.menuButton = el)}
+            class={this.menuButtonClass}
+            data-testid="menu-button"
             innerHTML={this.error ? warningCircleSvg : clockSvg}
             disabled={this.disabled}
           ></button>
