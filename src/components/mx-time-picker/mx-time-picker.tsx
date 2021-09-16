@@ -1,14 +1,9 @@
 import { Component, Host, h, Prop, State, Watch, Listen } from '@stencil/core';
 import clockSvg from '../../assets/svg/clock.svg';
 import warningCircleSvg from '../../assets/svg/warning-circle.svg';
-import { uuidv4 } from '../../utils/utils';
+import { parseTimeString, uuidv4 } from '../../utils/utils';
 
-export interface ITimeOption {
-  hours: number;
-  minutes: number;
-}
-
-const timeOptions: ITimeOption[] = [];
+const timeOptions: { hours: number; minutes: number }[] = [];
 for (let i = 0; i < 24; i++) {
   timeOptions.push({ hours: i, minutes: 0 });
   timeOptions.push({ hours: i, minutes: 30 });
@@ -76,8 +71,8 @@ export class MxTimePicker {
       this.isFocused = false;
     }
     if (!this.isTimeInputSupported && this.isInputDirty) {
-      const time = this.parseTimeString(this.inputElem.value);
-      if (!time) return;
+      const time = parseTimeString(this.inputElem.value);
+      if (time === null) return; // Invalid time
       this.setValue(time);
       this.updateInputValue();
     }
@@ -105,30 +100,9 @@ export class MxTimePicker {
   }
 
   /** This is only called if <input type="time"> is not supported. */
-  parseTimeString(str: string): ITimeOption {
-    if (str == null || str.trim() === '') return;
-    const isExplicitAM = str.toLowerCase().includes('a');
-    const isExplicitPM = str.toLowerCase().includes('p');
-    let digits = str.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-    if (!digits.length || digits.length > 4) {
-      this.error = true;
-      return;
-    }
-    // If only 1 or 2 digits entered, assume only an hour was entered
-    let hours = digits.length <= 2 ? Number(digits) : Number(digits.slice(0, -2));
-    const minutes = digits.length <= 2 ? 0 : Number(digits.slice(-2));
-    if (hours === 12 && isExplicitAM) hours = 0; // '12:00AM' -> 0 hours
-    if (hours < 12 && isExplicitPM) hours += 12; // '2:00PM' -> 14 hours
-    if (hours > 23 || minutes > 59) {
-      this.error = true;
-      return;
-    }
-    return { hours, minutes };
-  }
 
-  setValue(timeOption: ITimeOption) {
+  setValue({ hours, minutes }: { hours: number; minutes: number }) {
     if (this.disabled) return;
-    const { hours, minutes } = timeOption;
     this.error = false;
     this.value = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
     this.updateInputValue();
@@ -149,9 +123,9 @@ export class MxTimePicker {
     }
   }
 
-  getLocalizedTimeString(timeOption: ITimeOption) {
+  getLocalizedTimeString({ hours, minutes }: { hours: number; minutes: number }) {
     const date = new Date();
-    date.setHours(timeOption.hours, timeOption.minutes);
+    date.setHours(hours, minutes);
     return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
   }
 
