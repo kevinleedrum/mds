@@ -4,8 +4,8 @@
 
 <!-- #region standard-buttons -->
 <section class="mds">
-  <div class="flex flex-row flex-nowrap justify-between mt-10">
-    <div style="width: 47%;">
+  <div class="grid grid-cols-1 lg:grid-cols-2">
+    <div>
       <strong>Contained</strong>
       <div class="my-20">
         <mx-button>button</mx-button>
@@ -23,7 +23,7 @@
         <mx-button href="https://google.com" target="_blank">Button as Link</mx-button>
       </div>
     </div>
-    <div style="width: 47%;">
+    <div>
       <strong>Outline</strong>
       <div class="my-20">
         <mx-button btn-type="outlined">Outlined button</mx-button>
