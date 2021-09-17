@@ -13,13 +13,17 @@ export class MxMenu {
     this.closeMenu();
   }
   onClick(e) {
-    const anchorWasClicked = this.anchorEl && this.anchorEl.contains(e.target);
-    if (!this.isOpen && anchorWasClicked) {
+    const triggerEl = this.triggerEl || this.anchorEl;
+    const triggerElWasClicked = triggerEl && triggerEl.contains(e.target);
+    if (triggerElWasClicked)
+      e.preventDefault();
+    if (!this.isOpen && triggerElWasClicked) {
       // Open closed menu when the anchorEl is clicked
       this.openMenu();
+      e.preventDefault();
     }
     else if (this.isOpen && this.element && !this.element.contains(e.target)) {
-      if (this.isSubMenu && anchorWasClicked)
+      if (this.isSubMenu && triggerElWasClicked)
         return; // Do not close submenu when its anchor is clicked
       // Otherwise, close menu when a click occurs outside the menu
       this.closeMenu();
@@ -68,6 +72,7 @@ export class MxMenu {
     if (this.isOpen || !this.anchorEl)
       return false;
     this.isOpen = true;
+    this.mxOpen.emit();
     const offset = this.offset || (this.isSubMenu ? [-8, 0] : null); // Offset submenus by -8px to line up menu items
     this.popoverInstance = await createPopover(this.anchorEl, this.element, this.placement, offset);
     await fadeScaleIn(this.menuElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
@@ -132,7 +137,26 @@ export class MxMenu {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": "The element that will open the menu when clicked"
+        "text": "The element to which the menu's position will be anchored"
+      }
+    },
+    "triggerEl": {
+      "type": "unknown",
+      "mutable": false,
+      "complexType": {
+        "original": "HTMLElement",
+        "resolved": "HTMLElement",
+        "references": {
+          "HTMLElement": {
+            "location": "global"
+          }
+        }
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "The element that will open the menu when clicked.  If not provided, the `anchorEl' will be used."
       }
     },
     "offset": {
@@ -206,6 +230,21 @@ export class MxMenu {
       "docs": {
         "tags": [],
         "text": "Emitted when the menu closes."
+      },
+      "complexType": {
+        "original": "void",
+        "resolved": "void",
+        "references": {}
+      }
+    }, {
+      "method": "mxOpen",
+      "name": "mxOpen",
+      "bubbles": true,
+      "cancelable": true,
+      "composed": true,
+      "docs": {
+        "tags": [],
+        "text": "Emitted when the menu opens."
       },
       "complexType": {
         "original": "void",

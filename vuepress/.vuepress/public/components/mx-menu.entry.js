@@ -1,5 +1,5 @@
 import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-935f3e8d.js';
-import { q as queryPrefersReducedMotion } from './utils-98c5c01c.js';
+import { q as queryPrefersReducedMotion } from './utils-bad68038.js';
 
 var top = 'top';
 var bottom = 'bottom';
@@ -2037,6 +2037,7 @@ const MxMenu = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.mxClose = createEvent(this, "mxClose", 7);
+    this.mxOpen = createEvent(this, "mxOpen", 7);
     /** The placement of the menu, relative to the `anchorEl`. */
     this.placement = 'bottom-start';
     /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
@@ -2047,13 +2048,17 @@ const MxMenu = class {
     this.closeMenu();
   }
   onClick(e) {
-    const anchorWasClicked = this.anchorEl && this.anchorEl.contains(e.target);
-    if (!this.isOpen && anchorWasClicked) {
+    const triggerEl = this.triggerEl || this.anchorEl;
+    const triggerElWasClicked = triggerEl && triggerEl.contains(e.target);
+    if (triggerElWasClicked)
+      e.preventDefault();
+    if (!this.isOpen && triggerElWasClicked) {
       // Open closed menu when the anchorEl is clicked
       this.openMenu();
+      e.preventDefault();
     }
     else if (this.isOpen && this.element && !this.element.contains(e.target)) {
-      if (this.isSubMenu && anchorWasClicked)
+      if (this.isSubMenu && triggerElWasClicked)
         return; // Do not close submenu when its anchor is clicked
       // Otherwise, close menu when a click occurs outside the menu
       this.closeMenu();
@@ -2102,6 +2107,7 @@ const MxMenu = class {
     if (this.isOpen || !this.anchorEl)
       return false;
     this.isOpen = true;
+    this.mxOpen.emit();
     const offset = this.offset || (this.isSubMenu ? [-8, 0] : null); // Offset submenus by -8px to line up menu items
     this.popoverInstance = await createPopover(this.anchorEl, this.element, this.placement, offset);
     await fadeScaleIn(this.menuElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));

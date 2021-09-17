@@ -255,7 +255,7 @@ export namespace Components {
     }
     interface MxMenu {
         /**
-          * The element that will open the menu when clicked
+          * The element to which the menu's position will be anchored
          */
         "anchorEl": HTMLElement;
         /**
@@ -278,6 +278,10 @@ export namespace Components {
           * The placement of the menu, relative to the `anchorEl`.
          */
         "placement": PopoverPlacement;
+        /**
+          * The element that will open the menu when clicked.  If not provided, the `anchorEl' will be used.
+         */
+        "triggerEl": HTMLElement;
     }
     interface MxMenuItem {
         /**
@@ -556,6 +560,27 @@ export namespace Components {
          */
         "value": number;
     }
+    interface MxTimePicker {
+        "ariaLabel": string;
+        /**
+          * Helpful text to show below the picker
+         */
+        "assistiveText": string;
+        "dense": boolean;
+        "disabled": boolean;
+        "error": boolean;
+        "floatLabel": boolean;
+        /**
+          * The `id` attribute for the internal input element
+         */
+        "inputId": string;
+        "label": string;
+        "name": string;
+        /**
+          * The time in 24-hour hh:mm format
+         */
+        "value": string;
+    }
     interface MxToggleButton {
         "ariaLabel": string;
         "disabled": boolean;
@@ -721,6 +746,12 @@ declare global {
         prototype: HTMLMxTabsElement;
         new (): HTMLMxTabsElement;
     };
+    interface HTMLMxTimePickerElement extends Components.MxTimePicker, HTMLStencilElement {
+    }
+    var HTMLMxTimePickerElement: {
+        prototype: HTMLMxTimePickerElement;
+        new (): HTMLMxTimePickerElement;
+    };
     interface HTMLMxToggleButtonElement extends Components.MxToggleButton, HTMLStencilElement {
     }
     var HTMLMxToggleButtonElement: {
@@ -759,6 +790,7 @@ declare global {
         "mx-table-cell": HTMLMxTableCellElement;
         "mx-table-row": HTMLMxTableRowElement;
         "mx-tabs": HTMLMxTabsElement;
+        "mx-time-picker": HTMLMxTimePickerElement;
         "mx-toggle-button": HTMLMxToggleButtonElement;
         "mx-toggle-button-group": HTMLMxToggleButtonGroupElement;
     }
@@ -1014,7 +1046,7 @@ declare namespace LocalJSX {
     }
     interface MxMenu {
         /**
-          * The element that will open the menu when clicked
+          * The element to which the menu's position will be anchored
          */
         "anchorEl"?: HTMLElement;
         /**
@@ -1030,9 +1062,17 @@ declare namespace LocalJSX {
          */
         "onMxClose"?: (event: CustomEvent<void>) => void;
         /**
+          * Emitted when the menu opens.
+         */
+        "onMxOpen"?: (event: CustomEvent<void>) => void;
+        /**
           * The placement of the menu, relative to the `anchorEl`.
          */
         "placement"?: PopoverPlacement;
+        /**
+          * The element that will open the menu when clicked.  If not provided, the `anchorEl' will be used.
+         */
+        "triggerEl"?: HTMLElement;
     }
     interface MxMenuItem {
         /**
@@ -1322,6 +1362,27 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
+    interface MxTimePicker {
+        "ariaLabel"?: string;
+        /**
+          * Helpful text to show below the picker
+         */
+        "assistiveText"?: string;
+        "dense"?: boolean;
+        "disabled"?: boolean;
+        "error"?: boolean;
+        "floatLabel"?: boolean;
+        /**
+          * The `id` attribute for the internal input element
+         */
+        "inputId"?: string;
+        "label"?: string;
+        "name"?: string;
+        /**
+          * The time in 24-hour hh:mm format
+         */
+        "value"?: string;
+    }
     interface MxToggleButton {
         "ariaLabel"?: string;
         "disabled"?: boolean;
@@ -1365,6 +1426,7 @@ declare namespace LocalJSX {
         "mx-table-cell": MxTableCell;
         "mx-table-row": MxTableRow;
         "mx-tabs": MxTabs;
+        "mx-time-picker": MxTimePicker;
         "mx-toggle-button": MxToggleButton;
         "mx-toggle-button-group": MxToggleButtonGroup;
     }
@@ -1398,6 +1460,7 @@ declare module "@stencil/core" {
             "mx-table-cell": LocalJSX.MxTableCell & JSXBase.HTMLAttributes<HTMLMxTableCellElement>;
             "mx-table-row": LocalJSX.MxTableRow & JSXBase.HTMLAttributes<HTMLMxTableRowElement>;
             "mx-tabs": LocalJSX.MxTabs & JSXBase.HTMLAttributes<HTMLMxTabsElement>;
+            "mx-time-picker": LocalJSX.MxTimePicker & JSXBase.HTMLAttributes<HTMLMxTimePickerElement>;
             "mx-toggle-button": LocalJSX.MxToggleButton & JSXBase.HTMLAttributes<HTMLMxToggleButtonElement>;
             "mx-toggle-button-group": LocalJSX.MxToggleButtonGroup & JSXBase.HTMLAttributes<HTMLMxToggleButtonGroupElement>;
         }

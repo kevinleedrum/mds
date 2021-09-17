@@ -172,17 +172,17 @@ const MxButton$1 = class extends HTMLElement {
       if (this.btnType === 'outlined')
         str += ' border';
       if (this.xl)
-        str += ' h-48 px-32 text-3 tracking-1-5';
+        str += ' min-h-48 px-32 text-3 tracking-1-5';
       else
-        str += ' h-36 px-16 text-4 tracking tracking-1-25';
+        str += ' min-h-36 px-16 text-4 tracking tracking-1-25';
     }
     // Action Button
     if (this.btnType === 'action') {
-      str += ' w-full h-36 px-16 border rounded-3xl text-4';
+      str += ' w-full min-h-36 px-16 border rounded-3xl text-4';
     }
     // Text Button
     if (this.btnType === 'text') {
-      str += ' w-full h-36 px-8 py-10 text-4 rounded-lg';
+      str += ' w-full min-h-36 px-8 py-10 text-4 rounded-lg';
       str += this.dropdown ? ' font-normal' : ' font-semibold uppercase tracking-1-25';
     }
     return str;
@@ -497,7 +497,7 @@ const MxDropdownMenu$1 = class extends HTMLElement {
   get inputClass() {
     let str = 'absolute inset-0 w-full h-full pl-16 overflow-hidden outline-none appearance-none select-none bg-transparent cursor-pointer disabled:cursor-auto';
     if (this.isFocused)
-      str += ' -m-1'; // prevent shifting due to border-width change
+      str += ' -ml-1'; // prevent shifting due to border-width change
     return str;
   }
   get suffixClass() {
@@ -648,6 +648,13 @@ const MxIconButton$1 = class extends HTMLElement {
   }
 };
 
+const warningCircleSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.75C12.4142 6.75 12.75 7.08579 12.75 7.5V12.75C12.75 13.1642 12.4142 13.5 12 13.5C11.5858 13.5 11.25 13.1642 11.25 12.75V7.5C11.25 7.08579 11.5858 6.75 12 6.75Z" fill="currentColor"/>
+  <path d="M12 17.0625C12.5178 17.0625 12.9375 16.6428 12.9375 16.125C12.9375 15.6072 12.5178 15.1875 12 15.1875C11.4822 15.1875 11.0625 15.6072 11.0625 16.125C11.0625 16.6428 11.4822 17.0625 12 17.0625Z" fill="currentColor"/>
+</svg>
+`;
+
 // https://github.com/ionic-team/capacitor/blob/b893a57aaaf3a16e13db9c33037a12f1a5ac92e0/cli/src/util/uuid.ts
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
@@ -666,7 +673,28 @@ function capitalize(str) {
 function isDateObject(val) {
   if (typeof val !== 'object')
     return false;
-  return 'getTime' in val;
+  return 'getTime' in val && !isNaN(val.getTime()); // "Invalid Date" objects return NaN for getTime()
+}
+/** Converts a time string such as "15:30" or "3:30PM" into `{ hours: 15, minutes: 30 }` */
+/** @returns Time object, or `null` if the string could not be parsed as a valid time */
+function parseTimeString(str) {
+  if (str == null || str.trim() === '')
+    return;
+  const isExplicitAM = str.toLowerCase().includes('a');
+  const isExplicitPM = str.toLowerCase().includes('p');
+  let digits = str.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+  if (!digits.length || digits.length > 4)
+    return null;
+  // If only 1 or 2 digits entered, assume only an hour was entered
+  let hours = digits.length <= 2 ? Number(digits) : Number(digits.slice(0, -2));
+  const minutes = digits.length <= 2 ? 0 : Number(digits.slice(-2));
+  if (hours === 12 && isExplicitAM)
+    hours = 0; // '12:00AM' -> 0 hours
+  if (hours < 12 && isExplicitPM)
+    hours += 12; // '2:00PM' -> 14 hours
+  if (hours > 23 || minutes > 59)
+    return null;
+  return { hours, minutes };
 }
 
 const MxInput$1 = class extends HTMLElement {
@@ -736,14 +764,13 @@ const MxInput$1 = class extends HTMLElement {
   get inputClass() {
     let str = 'flex-1 overflow-hidden outline-none appearance-none bg-transparent';
     if (!this.textarea) {
-      str += ' pr-16';
-      str += this.leftIcon ? ' pl-48 left-2' : ' pl-16';
+      str += ' px-16';
     }
     else {
       str += ' p-16 resize-none';
     }
-    if (this.isFocused)
-      str += ' -m-1'; // prevent shifting due to border-width change
+    if (this.isFocused || this.error)
+      str += this.leftIcon ? ' -mr-1' : ' -m-1'; // prevent shifting due to border-width change
     return str;
   }
   get labelClassNames() {
@@ -757,9 +784,9 @@ const MxInput$1 = class extends HTMLElement {
         str += ' dense text-4';
       if (this.isFocused || this.characterCount > 0)
         str += ' floating';
-      if (this.isFocused)
+      if (this.isFocused || this.error)
         str += ' -ml-1'; // prevent shifting due to border-width change
-      if (this.isFocused && this.textarea)
+      if ((this.isFocused || this.error) && this.textarea)
         str += ' -mt-1';
     }
     else {
@@ -771,13 +798,13 @@ const MxInput$1 = class extends HTMLElement {
   }
   get leftIconWrapperClass() {
     let str = 'flex items-center h-full pointer-events-none pl-16';
-    if (this.isFocused)
+    if (this.isFocused || this.error)
       str += ' -ml-1'; // prevent shifting due to border-width change
     return str;
   }
   get rightContentClass() {
     let str = 'icon-suffix flex items-center h-full pr-16 space-x-8 pointer-events-none';
-    if (this.isFocused)
+    if (this.isFocused || this.error)
       str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
   }
@@ -786,7 +813,7 @@ const MxInput$1 = class extends HTMLElement {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames }, this.label));
-    return (h(Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { class: this.containerClass }, this.leftIcon && (h("div", { class: this.leftIconWrapperClass }, h("i", { class: this.leftIcon }))), this.label && this.floatLabel && labelJsx, !this.textarea ? (h("input", { type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) })) : (h("textarea", { class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass }, this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength)), this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)), this.error && h("i", { class: "ph-warning-circle" }), this.rightIcon && !this.error && h("i", { class: this.rightIcon })))), (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
+    return (h(Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { class: this.containerClass }, this.leftIcon && (h("div", { class: this.leftIconWrapperClass }, h("i", { class: this.leftIcon }))), this.label && this.floatLabel && labelJsx, !this.textarea ? (h("input", { type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) })) : (h("textarea", { class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass }, this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength)), this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)), this.error && h("span", { innerHTML: warningCircleSvg }), this.rightIcon && !this.error && h("i", { class: this.rightIcon })))), (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
   }
   static get watchers() { return {
     "value": ["onValueChange"]
@@ -2690,6 +2717,7 @@ const MxMenu$1 = class extends HTMLElement {
     super();
     this.__registerHost();
     this.mxClose = createEvent(this, "mxClose", 7);
+    this.mxOpen = createEvent(this, "mxOpen", 7);
     /** The placement of the menu, relative to the `anchorEl`. */
     this.placement = 'bottom-start';
     /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
@@ -2700,13 +2728,17 @@ const MxMenu$1 = class extends HTMLElement {
     this.closeMenu();
   }
   onClick(e) {
-    const anchorWasClicked = this.anchorEl && this.anchorEl.contains(e.target);
-    if (!this.isOpen && anchorWasClicked) {
+    const triggerEl = this.triggerEl || this.anchorEl;
+    const triggerElWasClicked = triggerEl && triggerEl.contains(e.target);
+    if (triggerElWasClicked)
+      e.preventDefault();
+    if (!this.isOpen && triggerElWasClicked) {
       // Open closed menu when the anchorEl is clicked
       this.openMenu();
+      e.preventDefault();
     }
     else if (this.isOpen && this.element && !this.element.contains(e.target)) {
-      if (this.isSubMenu && anchorWasClicked)
+      if (this.isSubMenu && triggerElWasClicked)
         return; // Do not close submenu when its anchor is clicked
       // Otherwise, close menu when a click occurs outside the menu
       this.closeMenu();
@@ -2755,6 +2787,7 @@ const MxMenu$1 = class extends HTMLElement {
     if (this.isOpen || !this.anchorEl)
       return false;
     this.isOpen = true;
+    this.mxOpen.emit();
     const offset = this.offset || (this.isSubMenu ? [-8, 0] : null); // Offset submenus by -8px to line up menu items
     this.popoverInstance = await createPopover(this.anchorEl, this.element, this.placement, offset);
     await fadeScaleIn(this.menuElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
@@ -3793,7 +3826,7 @@ const MxSelect$1 = class extends HTMLElement {
   get iconEl() {
     let icon = h("span", { "data-testid": "arrow", innerHTML: arrowSvg$1 });
     if (this.error)
-      icon = h("i", { "data-testid": "error-icon", class: "ph-warning-circle -mr-4" });
+      icon = h("span", { "data-testid": "error-icon", innerHTML: warningCircleSvg });
     return icon;
   }
   render() {
@@ -3875,6 +3908,12 @@ const MxTabContent$1 = class extends HTMLElement {
     return (h(Host, { class: !this.isActiveTab ? 'hidden' : '' }, h("slot", null)));
   }
 };
+
+const gearSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7.5C9.51472 7.5 7.5 9.51472 7.5 12C7.5 14.4853 9.51472 16.5 12 16.5C14.4853 16.5 16.5 14.4853 16.5 12C16.5 9.51472 14.4853 7.5 12 7.5ZM6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18C8.68629 18 6 15.3137 6 12Z" fill="#333333"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M8.95058 1.96137C9.16383 1.8994 9.38813 1.88522 9.6075 1.91982C9.82576 1.95425 10.0338 2.03613 10.2169 2.15968L11.4772 2.9998H12.523L13.7833 2.15968C13.9664 2.03615 14.1744 1.95428 14.3927 1.91986C14.6121 1.88527 14.8364 1.89946 15.0496 1.96144L15.0535 1.96257C16.5923 2.41876 18.0015 3.23235 19.166 4.33691L19.1689 4.33971C19.3292 4.49341 19.4537 4.68057 19.5334 4.88785C19.6127 5.09406 19.6458 5.31514 19.6304 5.5355C19.6303 5.53664 19.6302 5.53779 19.6301 5.53894L19.5329 7.04702L20.0558 7.95276L21.4104 8.62261C21.4115 8.6231 21.4125 8.62359 21.4135 8.62409C21.612 8.72093 21.787 8.86015 21.9259 9.03197C22.0656 9.20465 22.1654 9.406 22.2184 9.62167L22.2193 9.62558C22.5937 11.1864 22.5937 12.8135 22.2193 14.3743L22.2184 14.3782C22.1654 14.5939 22.0656 14.7952 21.9259 14.9679C21.787 15.1397 21.612 15.279 21.4134 15.3758C21.4124 15.3763 21.4114 15.3768 21.4104 15.3773L20.0558 16.0471L19.5329 16.9529L19.6301 18.4609C19.6301 18.4621 19.6302 18.4632 19.6303 18.4644C19.6457 18.6847 19.6126 18.9058 19.5333 19.112C19.4536 19.3193 19.3291 19.5064 19.1688 19.6601L19.1659 19.6629C18.0014 20.7675 16.5922 21.5811 15.0534 22.0373L15.0495 22.0384C14.8363 22.1004 14.612 22.1146 14.3926 22.08C14.1743 22.0455 13.9663 21.9637 13.7832 21.8401C13.7822 21.8395 13.7813 21.8388 13.7803 21.8382L12.5229 21H11.4771L10.2197 21.8382C10.2188 21.8388 10.2179 21.8394 10.217 21.84C10.0338 21.9636 9.8257 22.0455 9.6074 22.0799C9.38804 22.1145 9.16374 22.1003 8.95047 22.0383L8.94661 22.0372C7.40778 21.581 5.99861 20.7674 4.83411 19.6629L4.83117 19.6601C4.67087 19.5064 4.54643 19.3192 4.46672 19.1119C4.38741 18.9057 4.3543 18.6846 4.36972 18.4642L4.46717 16.9528L3.94424 16.047L2.58663 15.3757C2.38804 15.2789 2.21311 15.1396 2.07417 14.9678C1.93452 14.7951 1.83467 14.5938 1.78171 14.3781L1.78075 14.3742C1.40642 12.8134 1.40642 11.1863 1.78074 9.62551L1.78169 9.62155C1.83466 9.40588 1.93453 9.20454 2.07418 9.03187C2.21312 8.86007 2.38804 8.72086 2.5866 8.62402L3.9443 7.95267L4.46723 7.04693L4.3698 5.53551C4.35438 5.31512 4.38749 5.09402 4.46681 4.8878C4.54653 4.68052 4.67098 4.49336 4.83128 4.33967L4.83419 4.33688C5.99868 3.23231 7.40784 2.41873 8.94667 1.96252L8.95058 1.96137ZM9.36956 3.40168C8.05996 3.79052 6.86062 4.48298 5.86908 5.42272C5.8681 5.42374 5.86733 5.42495 5.86682 5.42627C5.86626 5.42773 5.86603 5.4293 5.86614 5.43086L5.86656 5.43663L5.97873 7.17704C5.98826 7.32479 5.95383 7.47206 5.8798 7.60028L5.1298 8.89932C5.05577 9.02755 4.94544 9.131 4.81272 9.19662L3.24415 9.97224C3.24273 9.97293 3.24148 9.9739 3.24049 9.97512C3.2396 9.97622 3.23893 9.97749 3.23854 9.97886C2.9205 11.3074 2.92049 12.6922 3.23853 14.0207C3.23892 14.0222 3.23959 14.0235 3.24051 14.0246C3.2415 14.0258 3.24274 14.0268 3.24415 14.0275L3.24935 14.03L4.81266 14.8031C4.94539 14.8687 5.05571 14.9721 5.12974 15.1004L5.87974 16.3994C5.95378 16.5276 5.9882 16.6749 5.97867 16.8227L5.86609 18.5689C5.86598 18.5705 5.86619 18.572 5.86675 18.5735C5.86726 18.5748 5.86802 18.576 5.869 18.5771C6.86059 19.5168 8.06 20.2093 9.36967 20.5981C9.37099 20.5984 9.37237 20.5984 9.37373 20.5982C9.37457 20.5981 9.37539 20.5979 9.37617 20.5975C9.37683 20.5973 9.37745 20.5969 9.37805 20.5965L9.38283 20.5933L10.834 19.6259C10.9572 19.5438 11.1019 19.5 11.25 19.5H12.75C12.8981 19.5 13.0428 19.5438 13.166 19.6259L14.622 20.5966C14.6233 20.5974 14.6248 20.598 14.6263 20.5983C14.6277 20.5985 14.6291 20.5984 14.6305 20.5981C15.9401 20.2093 17.1394 19.5169 18.1309 18.5772C18.1319 18.5761 18.1327 18.5749 18.1333 18.5735C18.1338 18.5721 18.1341 18.5705 18.1339 18.5689L18.1335 18.5632L18.0214 16.8228C18.0118 16.675 18.0463 16.5277 18.1203 16.3995L18.8703 15.1005C18.9443 14.9722 19.0546 14.8688 19.1874 14.8032L20.7559 14.0276C20.7574 14.0269 20.7586 14.0259 20.7596 14.0247C20.7602 14.024 20.7606 14.0232 20.761 14.0225M20.7616 14.0209C21.0799 12.6912 21.0796 11.3051 20.7607 9.97543L21.49 9.80051L20.7616 9.97934C20.7613 9.97782 20.7606 9.97639 20.7596 9.97518C20.7586 9.97396 20.7574 9.97297 20.7559 9.97229L20.7507 9.96977L19.1874 9.19671C19.0547 9.13108 18.9444 9.02764 18.8703 8.89941L18.1203 7.60037C18.0463 7.47214 18.0119 7.32487 18.0214 7.17712L18.134 5.43088C18.1341 5.42931 18.1339 5.42774 18.1333 5.42628C18.1328 5.42495 18.1321 5.42374 18.1311 5.42272C17.1387 4.48217 15.9381 3.78935 14.6271 3.40071L14.8403 2.68164L14.631 3.40184C14.6295 3.40141 14.6279 3.40131 14.6264 3.40155C14.6248 3.40179 14.6233 3.40238 14.622 3.40326L14.6173 3.4065L13.1661 4.37384C13.0429 4.45597 12.8982 4.4998 12.7501 4.4998H11.2501C11.102 4.4998 10.9573 4.45597 10.8341 4.37384L9.3781 3.40323C9.37679 3.40234 9.37533 3.40174 9.37378 3.4015C9.37237 3.40128 9.37094 3.40134 9.36956 3.40168" fill="currentColor"/>
+</svg>
+`;
 
 const MxTable$1 = class extends HTMLElement {
   constructor() {
@@ -4205,7 +4244,7 @@ const MxTable$1 = class extends HTMLElement {
         // Multi-Row Action Button
         h("mx-button", Object.assign({ "data-testid": "multi-action-button", "btn-type": "outlined" }, this.multiRowActions[0], { class: 'whitespace-nowrap' + (!this.checkedRowIds.length ? ' hidden' : '') }), this.multiRowActions[0].value)) : (
         // Multi-Row Action Menu
-        h("span", { class: !this.checkedRowIds.length ? 'hidden' : null }, h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true }, h("span", { class: "h-full flex items-center" }, h("i", { class: "ph-gear text-1" }))), h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
+        h("span", { class: !this.checkedRowIds.length ? 'hidden' : null }, h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true }, h("span", { class: "h-full flex items-center px-2" }, h("span", { innerHTML: gearSvg }))), h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
     const operationsBar = (h("div", { class: "grid gap-x-16 gap-y-12 pb-12", style: this.operationsBarStyle }, this.checkable && this.showCheckAll && (h("div", { class: "col-start-1 flex items-center min-h-36 space-x-16" }, checkAllCheckbox, multiRowActionUI)), this.hasFilter && (h("div", { class: "flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1" }, h("slot", { name: "filter" }))), this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle }, h("slot", { name: "search" })))));
     return (h(Host, { class: 'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '') }, this.showOperationsBar && operationsBar, h("div", { "data-testid": "grid", class: "table-grid", style: this.gridStyle }, h("div", { class: "header-row" }, this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, this.minWidths.sm ? (
@@ -4462,6 +4501,166 @@ const MxTabs$1 = class extends HTMLElement {
   }; }
 };
 
+const clockSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12Z" fill="currentColor" fill-opacity="0.87" />
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6C12.4142 6 12.75 6.33579 12.75 6.75V11.25H17.25C17.6642 11.25 18 11.5858 18 12C18 12.4142 17.6642 12.75 17.25 12.75H12C11.5858 12.75 11.25 12.4142 11.25 12V6.75C11.25 6.33579 11.5858 6 12 6Z" fill="currentColor" fill-opacity="0.87"/>
+</svg>
+`;
+
+const timeOptions = [];
+for (let i = 0; i < 24; i++) {
+  timeOptions.push({ hours: i, minutes: 0 });
+  timeOptions.push({ hours: i, minutes: 30 });
+}
+const MxTimePicker$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.isTimeInputSupported = false;
+    this.uuid = uuidv4();
+    this.dense = false;
+    this.disabled = false;
+    this.error = false;
+    this.floatLabel = false;
+    this.isFocused = false;
+    this.isInputDirty = false;
+  }
+  onClick(e) {
+    e.stopPropagation();
+    // Resize the menu width to match the input.  This is done every click in case the input is resized after initial load.
+    this.menu.style.width = this.pickerWrapper.getBoundingClientRect().width + 'px';
+  }
+  onValueChange() {
+    this.updateInputValue();
+  }
+  componentDidLoad() {
+    this.menu.anchorEl = this.pickerWrapper;
+    this.menu.triggerEl = this.menuButton;
+    // HTMLInputElement.type will return "text" if the "time" value is not supported (i.e. Safari <14.1)
+    this.isTimeInputSupported = this.inputElem.type === 'time';
+    this.updateInputValue();
+  }
+  onInput(e) {
+    if (!this.isTimeInputSupported) {
+      e.stopPropagation(); // For <input type="text">, the input event will be dispatched on blur
+      if (this.isFocused)
+        this.isInputDirty = true;
+    }
+  }
+  onBlur() {
+    if (!this.menu || !this.menu.isOpen) {
+      // Style as focused/active while menu is open
+      this.isFocused = false;
+    }
+    if (!this.isTimeInputSupported && this.isInputDirty) {
+      const time = parseTimeString(this.inputElem.value);
+      if (time === null)
+        return; // Invalid time
+      this.setValue(time);
+      this.updateInputValue();
+    }
+  }
+  onFocus() {
+    this.isFocused = true;
+    this.error = false;
+    this.isInputDirty = false;
+  }
+  /** Focus the input when clicking the floating label.
+   * Using `pointer-events: none` on the label could cause the user to unknowingly click on
+   * the minutes/AM/PM entry, which would be annoying. */
+  onClickLabel() {
+    this.inputElem.focus();
+  }
+  onMenuClose() {
+    if (!this.inputElem.contains(document.activeElement))
+      this.isFocused = false;
+  }
+  onMenuOpen() {
+    this.isFocused = true;
+  }
+  /** This is only called if <input type="time"> is not supported. */
+  setValue({ hours, minutes }) {
+    if (this.disabled)
+      return;
+    this.error = false;
+    this.value = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+    this.updateInputValue();
+    this.inputElem.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
+  }
+  updateInputValue() {
+    if (this.value == null) {
+      this.inputElem.value = '';
+      return;
+    }
+    this.inputElem.value = this.value;
+    if (!this.isTimeInputSupported) {
+      this.inputElem.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
+      // If time input is not supported, format text input value for locale
+      const [hours, minutes] = this.value.split(':').map(Number);
+      this.inputElem.value = this.getLocalizedTimeString({ hours, minutes });
+    }
+  }
+  getLocalizedTimeString({ hours, minutes }) {
+    const date = new Date();
+    date.setHours(hours, minutes);
+    return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  }
+  get labelClassNames() {
+    let str = 'block';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 left-12 px-4';
+      if (this.dense)
+        str += ' dense text-4';
+      if (this.isFocused || this.inputHasText)
+        str += ' floating';
+      if (this.isFocused)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+    }
+    else {
+      str += ' subtitle2 mb-4 pointer-events-none';
+    }
+    return str;
+  }
+  get inputHasText() {
+    // HTMLInputElement.validity.badInput is true if a partial time has been typed.
+    return this.value || (this.inputElem && this.inputElem.validity.badInput);
+  }
+  get pickerWrapperClass() {
+    let str = 'picker-wrapper flex items-center relative border rounded-lg';
+    str += this.dense ? ' h-36' : ' h-48';
+    if (this.error || this.isFocused)
+      str += ' border-2';
+    if (this.disabled)
+      str += ' disabled';
+    if (this.isFocused)
+      str += ' focused';
+    return str;
+  }
+  get inputClass() {
+    let str = 'absolute inset-0 w-full h-full pl-12 overflow-hidden outline-none appearance-none select-none bg-transparent';
+    if (this.isFocused || this.error)
+      str += ' -ml-1'; // prevent shifting due to border-width change
+    if (this.floatLabel && !this.isFocused && !this.inputHasText)
+      str += ' opacity-0'; // Hide input placeholder while floating label is inside input
+    return str;
+  }
+  get menuButtonClass() {
+    let str = 'menu-button cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
+    if (this.disabled)
+      str += ' pointer-events-none';
+    if (this.isFocused || this.error)
+      str += ' -mr-1'; // prevent shifting due to border-width change
+    return str;
+  }
+  render() {
+    const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
+    return (h(Host, { class: 'mx-time-picker block w-152' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", { "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", innerHTML: this.error ? warningCircleSvg : clockSvg, disabled: this.disabled })), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this), onMxOpen: this.onMenuOpen.bind(this) }, timeOptions.map(timeOption => (h("mx-menu-item", { onClick: this.setValue.bind(this, timeOption) }, this.getLocalizedTimeString(timeOption)))))));
+  }
+  static get watchers() { return {
+    "value": ["onValueChange"]
+  }; }
+};
+
 const MxToggleButton$1 = class extends HTMLElement {
   constructor() {
     super();
@@ -4532,7 +4731,7 @@ const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"
 const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"value":[1],"disabled":[516],"ariaLabel":[1,"aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"value":[1025],"type":[1],"dense":[4],"disabled":[4],"readonly":[4],"maxlength":[2],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"suffix":[1],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"floatLabel":[4,"float-label"],"textarea":[4],"textareaHeight":[1025,"textarea-height"],"isFocused":[32],"characterCount":[32]}]);
 const MxLinearProgress = /*@__PURE__*/proxyCustomElement(MxLinearProgress$1, [0,"mx-linear-progress",{"value":[2],"appearDelay":[2,"appear-delay"]}]);
-const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
+const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"triggerEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
 const MxMenuItem = /*@__PURE__*/proxyCustomElement(MxMenuItem$1, [4,"mx-menu-item",{"checked":[4],"disabled":[4],"icon":[1],"label":[1],"multiSelect":[4,"multi-select"],"minWidths":[32]},[[1,"mouseenter","onMouseEnter"],[1,"mouseleave","onMouseLeave"],[0,"focus","onFocus"],[0,"keydown","onKeyDown"]]]);
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);
 const MxPagination = /*@__PURE__*/proxyCustomElement(MxPagination$1, [4,"mx-pagination",{"page":[2],"rowsPerPageOptions":[16],"rowsPerPage":[2,"rows-per-page"],"simple":[4],"totalRows":[2,"total-rows"],"disabled":[4],"disableNextPage":[4,"disable-next-page"],"hideRowsPerPage":[32],"moveStatusToBottom":[32],"isXSmallMinWidth":[32],"isSmallMinWidth":[32]}]);
@@ -4546,6 +4745,7 @@ const MxTable = /*@__PURE__*/proxyCustomElement(MxTable$1, [4,"mx-table",{"rows"
 const MxTableCell = /*@__PURE__*/proxyCustomElement(MxTableCell$1, [4,"mx-table-cell",{"isExposedMobileColumn":[516,"is-exposed-mobile-column"],"columnIndex":[514,"column-index"],"heading":[1],"minWidths":[32]}]);
 const MxTableRow = /*@__PURE__*/proxyCustomElement(MxTableRow$1, [4,"mx-table-row",{"rowId":[1,"row-id"],"actions":[16],"checked":[1028],"minWidths":[32],"checkable":[32],"checkOnRowClick":[32],"isMobileExpanded":[32],"isMobileCollapsing":[32]}]);
 const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [0,"mx-tabs",{"fill":[4],"value":[2],"tabs":[16],"minWidths":[32]},[[0,"click","onClick"]]]);
+const MxTimePicker = /*@__PURE__*/proxyCustomElement(MxTimePicker$1, [0,"mx-time-picker",{"ariaLabel":[1,"aria-label"],"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[0,"click","onClick"]]]);
 const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"ariaLabel":[1,"aria-label"],"value":[8]}]);
 const MxToggleButtonGroup = /*@__PURE__*/proxyCustomElement(MxToggleButtonGroup$1, [4,"mx-toggle-button-group",{"value":[1032]},[[0,"click","onToggleButtonClick"]]]);
 const defineCustomElements = (opts) => {
@@ -4576,6 +4776,7 @@ const defineCustomElements = (opts) => {
   MxTableCell,
   MxTableRow,
   MxTabs,
+  MxTimePicker,
   MxToggleButton,
   MxToggleButtonGroup
     ].forEach(cmp => {
@@ -4586,4 +4787,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
