@@ -95,12 +95,11 @@ export class MxInput {
   get inputClass() {
     let str = 'flex-1 overflow-hidden outline-none appearance-none bg-transparent';
     if (!this.textarea) {
-      str += ' pr-16';
-      str += this.leftIcon ? ' pl-48 left-2' : ' pl-16';
+      str += ' px-16';
     } else {
       str += ' p-16 resize-none';
     }
-    if (this.isFocused) str += ' -m-1'; // prevent shifting due to border-width change
+    if (this.isFocused) str += this.leftIcon ? ' -mr-1' : ' -m-1'; // prevent shifting due to border-width change
     return str;
   }
 
