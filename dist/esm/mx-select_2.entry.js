@@ -1,6 +1,7 @@
 import { r as registerInstance, h, H as Host } from './index-d7d68a6b.js';
 import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
-import { u as uuidv4 } from './utils-98c5c01c.js';
+import { w as warningCircleSvg } from './warning-circle-7e1a7781.js';
+import { u as uuidv4 } from './utils-bad68038.js';
 import { r as ripple } from './ripple-54ef50dc.js';
 
 const MxSelect = class {
@@ -84,7 +85,7 @@ const MxSelect = class {
   get iconEl() {
     let icon = h("span", { "data-testid": "arrow", innerHTML: arrowSvg });
     if (this.error)
-      icon = h("i", { "data-testid": "error-icon", class: "ph-warning-circle -mr-4" });
+      icon = h("span", { "data-testid": "error-icon", innerHTML: warningCircleSvg });
     return icon;
   }
   render() {

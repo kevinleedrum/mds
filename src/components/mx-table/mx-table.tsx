@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, Element, Event, EventEmitter, Watch, Listen, 
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { capitalize, isDateObject } from '../../utils/utils';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
+import gearSvg from '../../assets/svg/gear.svg';
 import { IMxMenuItemProps } from '../mx-menu-item/mx-menu-item';
 import { PageChangeEventDetail } from '../mx-pagination/mx-pagination';
 
@@ -441,8 +442,8 @@ export class MxTable {
           // Multi-Row Action Menu
           <span class={!this.checkedRowIds.length ? 'hidden' : null}>
             <mx-button ref={el => (this.actionMenuButton = el)} btn-type="text" dropdown>
-              <span class="h-full flex items-center">
-                <i class="ph-gear text-1"></i>
+              <span class="h-full flex items-center px-2">
+                <span innerHTML={gearSvg}></span>
               </span>
             </mx-button>
             <mx-menu data-testid="multi-action-menu" ref={el => (this.actionMenu = el)}>

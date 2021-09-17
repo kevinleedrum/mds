@@ -4,7 +4,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-c246f020.js');
 const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
-const utils = require('./utils-09c7ff86.js');
+const warningCircle = require('./warning-circle-453368c1.js');
+const utils = require('./utils-04d102b7.js');
 const ripple = require('./ripple-93b636e3.js');
 
 const MxSelect = class {
@@ -88,7 +89,7 @@ const MxSelect = class {
   get iconEl() {
     let icon = index.h("span", { "data-testid": "arrow", innerHTML: arrowTriangleDown.arrowSvg });
     if (this.error)
-      icon = index.h("i", { "data-testid": "error-icon", class: "ph-warning-circle -mr-4" });
+      icon = index.h("span", { "data-testid": "error-icon", innerHTML: warningCircle.warningCircleSvg });
     return icon;
   }
   render() {

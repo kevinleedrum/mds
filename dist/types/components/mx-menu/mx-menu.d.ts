@@ -4,8 +4,10 @@ export declare class MxMenu {
   popoverInstance: PopoverInstance;
   menuElem: HTMLElement;
   scrollElem: HTMLElement;
-  /** The element that will open the menu when clicked */
+  /** The element to which the menu's position will be anchored */
   anchorEl: HTMLElement;
+  /** The element that will open the menu when clicked.  If not provided, the `anchorEl' will be used. */
+  triggerEl: HTMLElement;
   /** An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`.  The second is the distance from the `anchorEl`. */
   offset: PopoverOffset;
   /** The placement of the menu, relative to the `anchorEl`. */
@@ -15,6 +17,8 @@ export declare class MxMenu {
   element: HTMLMxMenuElement;
   /** Emitted when the menu closes. */
   mxClose: EventEmitter<void>;
+  /** Emitted when the menu opens. */
+  mxOpen: EventEmitter<void>;
   onMenuItemClick(): void;
   onClick(e: MouseEvent): void;
   onDocumentKeyDown(e: KeyboardEvent): void;

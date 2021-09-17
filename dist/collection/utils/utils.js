@@ -16,5 +16,26 @@ export function capitalize(str) {
 export function isDateObject(val) {
   if (typeof val !== 'object')
     return false;
-  return 'getTime' in val;
+  return 'getTime' in val && !isNaN(val.getTime()); // "Invalid Date" objects return NaN for getTime()
+}
+/** Converts a time string such as "15:30" or "3:30PM" into `{ hours: 15, minutes: 30 }` */
+/** @returns Time object, or `null` if the string could not be parsed as a valid time */
+export function parseTimeString(str) {
+  if (str == null || str.trim() === '')
+    return;
+  const isExplicitAM = str.toLowerCase().includes('a');
+  const isExplicitPM = str.toLowerCase().includes('p');
+  let digits = str.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+  if (!digits.length || digits.length > 4)
+    return null;
+  // If only 1 or 2 digits entered, assume only an hour was entered
+  let hours = digits.length <= 2 ? Number(digits) : Number(digits.slice(0, -2));
+  const minutes = digits.length <= 2 ? 0 : Number(digits.slice(-2));
+  if (hours === 12 && isExplicitAM)
+    hours = 0; // '12:00AM' -> 0 hours
+  if (hours < 12 && isExplicitPM)
+    hours += 12; // '2:00PM' -> 14 hours
+  if (hours > 23 || minutes > 59)
+    return null;
+  return { hours, minutes };
 }

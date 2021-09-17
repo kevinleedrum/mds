@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
+import warningCircleSvg from '../../assets/svg/warning-circle.svg';
 import { uuidv4 } from '../../utils/utils';
 
 @Component({
@@ -98,7 +99,7 @@ export class MxSelect {
 
   get iconEl() {
     let icon = <span data-testid="arrow" innerHTML={arrowSvg}></span>;
-    if (this.error) icon = <i data-testid="error-icon" class="ph-warning-circle -mr-4"></i>;
+    if (this.error) icon = <span data-testid="error-icon" innerHTML={warningCircleSvg}></span>;
     return icon;
   }
 

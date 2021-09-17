@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import warningCircleSvg from '../../assets/svg/warning-circle.svg';
 import { uuidv4 } from '../../utils/utils';
 export class MxInput {
   constructor() {
@@ -65,14 +66,13 @@ export class MxInput {
   get inputClass() {
     let str = 'flex-1 overflow-hidden outline-none appearance-none bg-transparent';
     if (!this.textarea) {
-      str += ' pr-16';
-      str += this.leftIcon ? ' pl-48 left-2' : ' pl-16';
+      str += ' px-16';
     }
     else {
       str += ' p-16 resize-none';
     }
-    if (this.isFocused)
-      str += ' -m-1'; // prevent shifting due to border-width change
+    if (this.isFocused || this.error)
+      str += this.leftIcon ? ' -mr-1' : ' -m-1'; // prevent shifting due to border-width change
     return str;
   }
   get labelClassNames() {
@@ -86,9 +86,9 @@ export class MxInput {
         str += ' dense text-4';
       if (this.isFocused || this.characterCount > 0)
         str += ' floating';
-      if (this.isFocused)
+      if (this.isFocused || this.error)
         str += ' -ml-1'; // prevent shifting due to border-width change
-      if (this.isFocused && this.textarea)
+      if ((this.isFocused || this.error) && this.textarea)
         str += ' -mt-1';
     }
     else {
@@ -100,13 +100,13 @@ export class MxInput {
   }
   get leftIconWrapperClass() {
     let str = 'flex items-center h-full pointer-events-none pl-16';
-    if (this.isFocused)
+    if (this.isFocused || this.error)
       str += ' -ml-1'; // prevent shifting due to border-width change
     return str;
   }
   get rightContentClass() {
     let str = 'icon-suffix flex items-center h-full pr-16 space-x-8 pointer-events-none';
-    if (this.isFocused)
+    if (this.isFocused || this.error)
       str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
   }
@@ -128,7 +128,7 @@ export class MxInput {
             "/",
             this.maxlength)),
           this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)),
-          this.error && h("i", { class: "ph-warning-circle" }),
+          this.error && h("span", { innerHTML: warningCircleSvg }),
           this.rightIcon && !this.error && h("i", { class: this.rightIcon })))),
       (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" },
         h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText),

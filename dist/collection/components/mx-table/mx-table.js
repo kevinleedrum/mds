@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, Element, Event, Watch, Listen, State, Method 
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { capitalize, isDateObject } from '../../utils/utils';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
+import gearSvg from '../../assets/svg/gear.svg';
 export class MxTable {
   constructor() {
     this.hasDefaultSlot = false;
@@ -328,8 +329,8 @@ export class MxTable {
         // Multi-Row Action Menu
         h("span", { class: !this.checkedRowIds.length ? 'hidden' : null },
           h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true },
-            h("span", { class: "h-full flex items-center" },
-              h("i", { class: "ph-gear text-1" }))),
+            h("span", { class: "h-full flex items-center px-2" },
+              h("span", { innerHTML: gearSvg }))),
           h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
     const operationsBar = (h("div", { class: "grid gap-x-16 gap-y-12 pb-12", style: this.operationsBarStyle },

@@ -25,6 +25,7 @@
     "./components/mx-table-cell/mx-table-cell.js",
     "./components/mx-table-row/mx-table-row.js",
     "./components/mx-tabs/mx-tabs.js",
+    "./components/mx-time-picker/mx-time-picker.js",
     "./components/mx-toggle-button/mx-toggle-button.js",
     "./components/mx-toggle-button-group/mx-toggle-button-group.js"
   ],

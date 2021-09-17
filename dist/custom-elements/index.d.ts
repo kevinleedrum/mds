@@ -152,6 +152,12 @@ export const MxTabs: {
   new (): MxTabs;
 };
 
+interface MxTimePicker extends Components.MxTimePicker, HTMLElement {}
+export const MxTimePicker: {
+  prototype: MxTimePicker;
+  new (): MxTimePicker;
+};
+
 interface MxToggleButton extends Components.MxToggleButton, HTMLElement {}
 export const MxToggleButton: {
   prototype: MxToggleButton;
