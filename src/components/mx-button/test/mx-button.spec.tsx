@@ -38,9 +38,9 @@ describe('mx-button', () => {
     expect(icon).not.toBeNull();
   });
 
-  it('has a height of 36px', async () => {
+  it('has a min-height of 36px', async () => {
     const btn = root.querySelector('button');
-    expect(btn.getAttribute('class')).toContain('h-36');
+    expect(btn.getAttribute('class')).toContain('min-h-36');
   });
 });
 
@@ -72,10 +72,10 @@ describe('mx-button as XL and full', () => {
     root = page.root;
   });
 
-  it('is a flex container and is 48px in height', async () => {
+  it('is a flex container and is 48px in min-height', async () => {
     const btn = root.querySelector('button');
     expect(root.getAttribute('class')).toContain('flex');
-    expect(btn.getAttribute('class')).toContain('h-48');
+    expect(btn.getAttribute('class')).toContain('min-h-48');
   });
 });
 
