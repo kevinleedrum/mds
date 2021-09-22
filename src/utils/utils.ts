@@ -38,9 +38,23 @@ export function parseTimeString(str: string): { hours: number; minutes: number }
   return { hours, minutes };
 }
 
-/** Returns the `clientX` and `clientY` from any MouseEvent or TouchEvent. */
-export function getCursorCoords(e: MouseEvent | TouchEvent): { clientX: number; clientY: number } {
+/** Returns the `pageX` and `pageY` from any MouseEvent or TouchEvent. */
+export function getCursorCoords(e: MouseEvent | TouchEvent): { pageX: number; pageY: number } {
   if ((e as TouchEvent).changedTouches) return (e as TouchEvent).changedTouches[0];
   else if ((e as TouchEvent).touches) return (e as TouchEvent).touches[0];
   else return e as MouseEvent;
+}
+
+/** Returns a DOMRect for an element similar to getBoundingClientRect, however the
+ * position ignores CSS transforms and accounts for scrolling. */
+export function getPageRect(el: HTMLElement): Partial<DOMRect> {
+  const { height, width } = el.getBoundingClientRect();
+  let top = 0;
+  let left = 0;
+  do {
+    top += el.offsetTop;
+    left += el.offsetLeft;
+    el = el.offsetParent as HTMLElement;
+  } while (el);
+  return { top, left, width, height, bottom: top + height, right: left + width };
 }

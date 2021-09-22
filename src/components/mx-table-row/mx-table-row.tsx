@@ -91,9 +91,9 @@ export class MxTableRow {
     e.stopPropagation();
     e.preventDefault();
     this.isDragging = true;
-    const { clientX, clientY } = getCursorCoords(e);
-    this.dragOrigin.x = clientX;
-    this.dragOrigin.y = clientY;
+    const { pageX, pageY } = getCursorCoords(e);
+    this.dragOrigin.x = pageX;
+    this.dragOrigin.y = pageY;
     this.element.classList.add('drag-row', 'pointer-events-none');
     this.createDragShadowEl();
     for (let i = 0; i < this.element.children.length; i++) {
@@ -109,9 +109,9 @@ export class MxTableRow {
     const onMouseMove = (e: MouseEvent | TouchEvent) => {
       requestAnimationFrame(() => {
         if (!this.isDragging) return;
-        const { clientX, clientY } = getCursorCoords(e);
-        const translateX = clientX - this.dragOrigin.x + 'px';
-        const translateY = clientY - this.dragOrigin.y + 'px';
+        const { pageX, pageY } = getCursorCoords(e);
+        const translateX = pageX - this.dragOrigin.x + 'px';
+        const translateY = pageY - this.dragOrigin.y + 'px';
         if (this.dragShadowEl) this.dragShadowEl.style.transform = `translate3d(${translateX}, ${translateY}, 0)`;
         for (let i = 0; i < this.element.children.length; i++) {
           const child = this.element.children[i] as HTMLElement;

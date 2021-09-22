@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, Element, Event, EventEmitter, Watch, Listen, State, Method } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
-import { capitalize, getCursorCoords, isDateObject } from '../../utils/utils';
+import { capitalize, getCursorCoords, getPageRect, isDateObject } from '../../utils/utils';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 import gearSvg from '../../assets/svg/gear.svg';
 import { IMxMenuItemProps } from '../mx-menu-item/mx-menu-item';
@@ -63,7 +63,6 @@ export class MxTable {
   showOperationsBar: boolean = false;
   dragRowIndex: number;
   dragOverRowIndex: number;
-  rowDomRectCache: DOMRect[];
   dragMoveHandler: (e: MouseEvent) => any;
 
   /** An array of objects that defines the table's dataset. */
@@ -149,8 +148,6 @@ export class MxTable {
     this.dragRowIndex = rows.indexOf(dragRow);
     this.dragOverRowIndex = this.dragRowIndex;
     this.dragMoveHandler = this.onDragMove.bind(this);
-    // Cache the DOMRect for each table row BEFORE any rows are translated
-    this.rowDomRectCache = rows.map(row => row.children[0].getBoundingClientRect());
     // Add transitions to the rows not being dragged
     rows.forEach(row => {
       if (row === dragRow) return;
@@ -252,15 +249,15 @@ export class MxTable {
       if (this.dragRowIndex == null) return;
       const rows = this.getTableRows();
       rows.forEach((row, rowIndex) => {
-        const { top, bottom, height } = this.rowDomRectCache[rowIndex];
+        let { top, bottom, height } = getPageRect(row.children[0] as HTMLElement);
         const rowChildren = Array.from(row.children) as HTMLElement[];
-        const { clientY } = getCursorCoords(e);
-        if (clientY >= top && clientY <= bottom) this.dragOverRowIndex = rowIndex;
+        const { pageY } = getCursorCoords(e);
+        if (pageY >= top && pageY <= bottom) this.dragOverRowIndex = rowIndex;
         if (rowIndex === this.dragRowIndex) return; // Do not shift row that is being dragged
-        if (clientY >= top && rowIndex > this.dragRowIndex) {
+        if (pageY >= top && rowIndex > this.dragRowIndex) {
           // Shift rows that are below the dragged row UP
           rowChildren.forEach(child => (child.style.transform = `translateY(-${height}px)`));
-        } else if (clientY <= bottom && rowIndex < this.dragRowIndex) {
+        } else if (pageY <= bottom && rowIndex < this.dragRowIndex) {
           // Shift rows that are above the dragged row DOWN
           rowChildren.forEach(child => (child.style.transform = `translateY(${height}px)`));
         } else {
