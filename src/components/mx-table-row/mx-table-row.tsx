@@ -1,8 +1,10 @@
 import { Component, Host, h, Prop, Element, Event, EventEmitter, State, Method } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import dotsSvg from '../../assets/svg/dots-vertical.svg';
+import dragDotsSvg from '../../assets/svg/drag-dots.svg';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
 import { ITableRowAction } from '../mx-table/mx-table';
+import { getCursorCoords } from '../../utils/utils';
 
 const DEFAULT_MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
 
@@ -14,6 +16,8 @@ export class MxTableRow {
   actionMenuButton: HTMLMxIconButtonElement;
   actionMenu: HTMLMxMenuElement;
   checkbox: HTMLMxCheckboxElement;
+  dragOrigin = { x: 0, y: 0 };
+  dragShadowEl: HTMLElement;
 
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   @Prop() rowId: string;
@@ -26,11 +30,17 @@ export class MxTableRow {
   @State() minWidths = new MinWidths();
   @State() checkable: boolean = false;
   @State() checkOnRowClick: boolean = false;
+  @State() isDraggable: boolean = false;
+  @State() isDragging: boolean = false;
   @State() isMobileExpanded: boolean = false;
   @State() isMobileCollapsing: boolean = false;
 
   /** Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked */
-  @Event() mxCheck: EventEmitter<{ rowId: string | number; checked: boolean }>;
+  @Event() mxCheck: EventEmitter<{ rowId: string; checked: boolean }>;
+  /** Emits the `rowId` when dragging starts */
+  @Event() mxRowDragStart: EventEmitter<string>;
+  /** Emits the `rowId` when row dragging ends */
+  @Event() mxRowDragEnd: EventEmitter<string>;
 
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
@@ -45,6 +55,7 @@ export class MxTableRow {
     // default slot.
     const table = this.element.closest('mx-table') as HTMLMxTableElement;
     this.checkable = table && table.checkable;
+    this.isDraggable = table && table.draggableRows;
     if (this.checkable && this.rowId == null)
       throw new Error('Checkable rows require either a getRowId prop on the table, or a rowId on the row!');
     if (this.checkable) this.checkOnRowClick = table.checkOnRowClick;
@@ -74,6 +85,75 @@ export class MxTableRow {
       this.checked = !this.checked;
       this.mxCheck.emit({ rowId: this.rowId, checked: this.checked });
     }
+  }
+
+  startDragging(e: MouseEvent | TouchEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.isDragging = true;
+    const { clientX, clientY } = getCursorCoords(e);
+    this.dragOrigin.x = clientX;
+    this.dragOrigin.y = clientY;
+    this.element.classList.add('drag-row', 'pointer-events-none');
+    this.createDragShadowEl();
+    for (let i = 0; i < this.element.children.length; i++) {
+      const child = this.element.children[i] as HTMLElement;
+      child.style.zIndex = '9999';
+    }
+    this.addDragListeners(e.type === 'touchstart');
+    this.mxRowDragStart.emit(this.rowId);
+  }
+
+  addDragListeners(isTouch: boolean) {
+    /** Move all the row children and dragShadowEl with the mouse cursor (via CSS transform) */
+    const onMouseMove = (e: MouseEvent | TouchEvent) => {
+      requestAnimationFrame(() => {
+        if (!this.isDragging) return;
+        const { clientX, clientY } = getCursorCoords(e);
+        const translateX = clientX - this.dragOrigin.x + 'px';
+        const translateY = clientY - this.dragOrigin.y + 'px';
+        if (this.dragShadowEl) this.dragShadowEl.style.transform = `translate3d(${translateX}, ${translateY}, 0)`;
+        for (let i = 0; i < this.element.children.length; i++) {
+          const child = this.element.children[i] as HTMLElement;
+          child.style.transform = `translate3d(${translateX}, ${translateY}, 0)`;
+        }
+      });
+    };
+    const onMouseUp = () => {
+      document.removeEventListener(isTouch ? 'touchmove' : 'mousemove', onMouseMove);
+      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', onMouseUp);
+      if (isTouch) document.removeEventListener('touchcancel', onMouseUp);
+      this.stopDragging();
+    };
+    document.addEventListener(isTouch ? 'touchmove' : 'mousemove', onMouseMove);
+    document.addEventListener(isTouch ? 'touchend' : 'mouseup', onMouseUp);
+    if (isTouch) document.addEventListener('touchcancel', onMouseUp);
+  }
+
+  /** Clear transforms and remove dragShadowEl */
+  stopDragging() {
+    this.isDragging = false;
+    this.element.classList.remove('drag-row', 'pointer-events-none');
+    if (this.dragShadowEl) this.dragShadowEl.remove();
+    this.dragShadowEl = undefined;
+    for (let i = 0; i < this.element.children.length; i++) {
+      const child = this.element.children[i] as HTMLElement;
+      child.style.transform = '';
+      child.style.zIndex = '';
+    }
+    this.mxRowDragEnd.emit(this.rowId);
+  }
+
+  /** When dragging, add an element behind the row children that has a box shadow.
+   * This is simpler than trying to change the row to `display: flex` and adding a box shadow to it. */
+  createDragShadowEl() {
+    this.dragShadowEl = document.createElement('div');
+    this.dragShadowEl.classList.add('absolute', 'w-full', 'shadow-9');
+    this.dragShadowEl.style.zIndex = '9998';
+    this.dragShadowEl.style.height = (this.element.children[0] as HTMLElement).offsetHeight + 'px';
+    this.dragShadowEl.style.top = (this.element.children[0] as HTMLElement).offsetTop + 'px';
+    this.dragShadowEl.style.left = (this.element.children[0] as HTMLElement).offsetLeft + 'px';
+    this.element.parentNode.insertBefore(this.dragShadowEl, this.element);
   }
 
   accordion() {
@@ -127,7 +207,7 @@ export class MxTableRow {
 
   get rowClass(): string {
     let str = 'mx-table-row';
-    str += this.minWidths.sm ? ' contents' : ' grid overflow-hidden';
+    str += this.minWidths.sm ? ' contents' : ' grid';
     if (this.checkable) str += ' checkable-row';
     if (this.checkable && this.checkOnRowClick) str += ' cursor-pointer';
     if (!this.minWidths.sm && !this.isMobileExpanded) str += ' mobile-collapsed';
@@ -137,7 +217,7 @@ export class MxTableRow {
   get rowStyle(): any {
     if (this.minWidths.sm) return {};
     return {
-      gridTemplateColumns: 'minmax(0, min-content) minmax(0, auto) minmax(0, min-content)',
+      gridTemplateColumns: 'minmax(0, min-content) minmax(0, min-content) minmax(0, auto) minmax(0, min-content)',
       maxHeight: '',
     };
   }
@@ -167,9 +247,21 @@ export class MxTableRow {
             ></mx-checkbox>
           </div>
         )}
+        {/* Drag Handle */}
+        {this.isDraggable && (
+          <div
+            class="flex items-center col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move"
+            onMouseDown={this.startDragging.bind(this)}
+            onTouchStart={this.startDragging.bind(this)}
+          >
+            <span class={'pointer-events-none' + (this.checkable ? ' mx-8' : '')} innerHTML={dragDotsSvg}></span>
+          </div>
+        )}
         <slot></slot>
         {/* Mobile checkbox column filler (prevents having to hack a column span into slotted content) */}
         {!this.checkable && !this.minWidths.sm && <div class="row-start-1 col-start-1 w-0"></div>}
+        {/* Mobile drag-handle column filler */}
+        {!this.isDraggable && !this.minWidths.sm && <div class="row-start-1 col-start-2 w-0"></div>}
         {/* Mobile accordion chevron */}
         {!this.minWidths.sm && (
           <div class="flex items-center justify-end px-16 row-start-1" onClick={this.accordion.bind(this)}>
@@ -184,7 +276,7 @@ export class MxTableRow {
         )}
         {/* Single Action Button */}
         {this.actions.length === 1 && (
-          <div class="action-cell flex items-center p-16 sm:p-0 justify-end col-span-3 sm:col-span-1">
+          <div class="action-cell flex items-center p-16 sm:p-0 justify-end col-span-4 sm:col-span-1">
             <mx-button data-testid="action-button" btn-type="text" {...this.actions[0]}>
               {this.actions[0].value}
             </mx-button>
@@ -192,7 +284,7 @@ export class MxTableRow {
         )}
         {/* Action Menu */}
         {this.actions.length > 1 && (
-          <div class="action-cell flex items-center p-0 justify-end col-span-3 sm:col-span-1">
+          <div class="action-cell flex items-center p-0 justify-end col-span-4 sm:col-span-1">
             <mx-icon-button ref={el => (this.actionMenuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
             <mx-menu data-testid="action-menu" ref={el => (this.actionMenu = el)}>
               {this.actions.map(action => (

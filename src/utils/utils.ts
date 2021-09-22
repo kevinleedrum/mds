@@ -37,3 +37,10 @@ export function parseTimeString(str: string): { hours: number; minutes: number }
   if (hours > 23 || minutes > 59) return null;
   return { hours, minutes };
 }
+
+/** Returns the `clientX` and `clientY` from any MouseEvent or TouchEvent. */
+export function getCursorCoords(e: MouseEvent | TouchEvent): { clientX: number; clientY: number } {
+  if ((e as TouchEvent).changedTouches) return (e as TouchEvent).changedTouches[0];
+  else if ((e as TouchEvent).touches) return (e as TouchEvent).touches[0];
+  else return e as MouseEvent;
+}
