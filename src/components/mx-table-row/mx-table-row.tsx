@@ -264,7 +264,11 @@ export class MxTableRow {
         {!this.isDraggable && !this.minWidths.sm && <div class="row-start-1 col-start-2 w-0"></div>}
         {/* Mobile accordion chevron */}
         {!this.minWidths.sm && (
-          <div class="flex items-center justify-end px-16 row-start-1" onClick={this.accordion.bind(this)}>
+          <button
+            class="flex border-0 items-center justify-end px-16 row-start-1"
+            aria-hidden="true"
+            onClick={this.accordion.bind(this)}
+          >
             <span
               class={
                 'mobile-row-chevron text-1 transform' +
@@ -272,7 +276,7 @@ export class MxTableRow {
               }
               innerHTML={chevronSvg}
             ></span>
-          </div>
+          </button>
         )}
         {/* Single Action Button */}
         {this.actions.length === 1 && (
