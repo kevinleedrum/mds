@@ -248,18 +248,19 @@ export class MxTable {
     requestAnimationFrame(() => {
       if (this.dragRowIndex == null) return;
       const rows = this.getTableRows();
+      const dragRowHeight = (rows[this.dragRowIndex].children[0] as HTMLElement).offsetHeight;
       rows.forEach((row, rowIndex) => {
-        let { top, bottom, height } = getPageRect(row.children[0] as HTMLElement);
+        let { top, bottom } = getPageRect(row.children[0] as HTMLElement);
         const rowChildren = Array.from(row.children) as HTMLElement[];
         const { pageY } = getCursorCoords(e);
         if (pageY >= top && pageY <= bottom) this.dragOverRowIndex = rowIndex;
         if (rowIndex === this.dragRowIndex) return; // Do not shift row that is being dragged
         if (pageY >= top && rowIndex > this.dragRowIndex) {
           // Shift rows that are below the dragged row UP
-          rowChildren.forEach(child => (child.style.transform = `translateY(-${height}px)`));
+          rowChildren.forEach(child => (child.style.transform = `translateY(-${dragRowHeight}px)`));
         } else if (pageY <= bottom && rowIndex < this.dragRowIndex) {
           // Shift rows that are above the dragged row DOWN
-          rowChildren.forEach(child => (child.style.transform = `translateY(${height}px)`));
+          rowChildren.forEach(child => (child.style.transform = `translateY(${dragRowHeight}px)`));
         } else {
           rowChildren.forEach(child => (child.style.transform = ''));
         }
