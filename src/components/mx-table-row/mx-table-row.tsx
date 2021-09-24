@@ -288,11 +288,11 @@ export class MxTableRow {
         {this.isDraggable && (
           <div
             class="flex items-center col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move"
-            aria-label="Press Space or Enter to move this row"
             onMouseDown={this.startDragging.bind(this)}
             onTouchStart={this.startDragging.bind(this)}
           >
             <span
+              aria-label="Press Space or Enter to move this row"
               ref={el => (this.keyboardDragHandle = el)}
               tabindex="0"
               class={'pointer-events-none' + (this.checkable ? ' mx-8' : '')}
