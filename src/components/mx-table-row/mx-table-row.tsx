@@ -99,48 +99,35 @@ export class MxTableRow {
   }
 
   onDragKeyDown(e: KeyboardEvent) {
-    if ([' ', 'Enter'].includes(e.key)) {
-      // Pick up / place row
-      this.isDragging ? this.stopDragging(true) : this.startDragging();
-    } else if (this.isDragging && e.key === 'Escape') {
-      // Cancel dragging row
-      this.stopDragging(true, true);
-    } else if (this.isDragging && e.key.includes('Arrow')) {
-      // Parent table determines where to move row
-      this.mxDragKeyDown.emit(e.key);
-    } else {
-      return;
-    }
-    e.stopPropagation();
-    e.preventDefault();
+    if (!this.isDragging && [' ', 'Enter'].includes(e.key)) this.startDragging(e);
   }
 
-  startDragging(e?: MouseEvent | TouchEvent) {
-    if (e) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
+  startDragging(e: MouseEvent | TouchEvent | KeyboardEvent) {
+    e.stopPropagation();
+    e.preventDefault();
     this.isDragging = true;
-    if (e) {
-      const { pageX, pageY } = getCursorCoords(e);
+    if (e.type !== 'keydown') {
+      // If using a mouse or touch, set drag origin to current cursor coordinates
+      const { pageX, pageY } = getCursorCoords(e as MouseEvent | TouchEvent);
       this.dragOrigin.x = pageX;
       this.dragOrigin.y = pageY;
     } else {
+      // If using a keyboard, set drag origin to the row's coordinates on the page
       const { top, left } = getPageRect(this.element.children[0] as HTMLElement);
       this.dragOrigin.x = left;
       this.dragOrigin.y = top;
     }
-    this.element.classList.add('drag-row', 'pointer-events-none');
+    this.element.classList.add('pointer-events-none');
     this.createDragShadowEl();
     for (let i = 0; i < this.element.children.length; i++) {
       const child = this.element.children[i] as HTMLElement;
       child.style.zIndex = '9999';
     }
-    if (e) this.addDragListeners(e.type === 'touchstart');
-    this.mxRowDragStart.emit({ isKeyboard: !e });
+    this.addDragListeners(e);
+    this.mxRowDragStart.emit({ isKeyboard: e.type === 'keydown' });
   }
 
-  addDragListeners(isTouch: boolean) {
+  addDragListeners(startEvent: MouseEvent | TouchEvent | KeyboardEvent) {
     /** Move all the row children and dragShadowEl with the mouse cursor (via CSS transform) */
     const onMouseMove = (e: MouseEvent | TouchEvent) => {
       requestAnimationFrame(() => {
@@ -151,15 +138,42 @@ export class MxTableRow {
         this.translateRow(x, y);
       });
     };
+    /** Stop dragging when the mouse button is released or touch ends */
     const onMouseUp = (e: MouseEvent | TouchEvent) => {
-      document.removeEventListener(isTouch ? 'touchmove' : 'mousemove', onMouseMove);
-      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', onMouseUp);
-      if (isTouch) document.removeEventListener('touchcancel', onMouseUp);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchmove', onMouseMove);
+      document.removeEventListener('touchend', onMouseUp);
+      document.removeEventListener('touchcancel', onMouseUp);
       this.stopDragging(e.type === 'touchcancel');
     };
-    document.addEventListener(isTouch ? 'touchmove' : 'mousemove', onMouseMove);
-    document.addEventListener(isTouch ? 'touchend' : 'mouseup', onMouseUp);
-    if (isTouch) document.addEventListener('touchcancel', onMouseUp);
+    /** Move row or cancel dragging based on keypress */
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ([' ', 'Enter'].includes(e.key)) {
+        document.removeEventListener('keydown', onKeyDown);
+        this.stopDragging(true);
+      } else if (e.key === 'Escape') {
+        document.removeEventListener('keydown', onKeyDown);
+        this.stopDragging(true, true);
+      } else if (e.key.includes('Arrow')) {
+        this.mxDragKeyDown.emit(e.key);
+      } else {
+        return;
+      }
+      e.stopPropagation();
+      e.preventDefault();
+    };
+    // Add the above listeners based on the type of input device being used
+    if (startEvent.type === 'keydown') {
+      document.addEventListener('keydown', onKeyDown);
+    } else if (startEvent.type === 'touchstart') {
+      document.addEventListener('touchmove', onMouseMove);
+      document.addEventListener('touchend', onMouseUp);
+      document.addEventListener('touchcancel', onMouseUp);
+    } else {
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
   }
 
   /** Clear transforms and remove dragShadowEl */
