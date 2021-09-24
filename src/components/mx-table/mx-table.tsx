@@ -148,28 +148,49 @@ export class MxTable {
     this.dragRowIndex = rows.indexOf(dragRow);
     this.dragOverRowIndex = this.dragRowIndex;
     this.dragMoveHandler = this.onDragMove.bind(this);
-    // Add transitions to the rows not being dragged
+    // Add transitions to the rows
     rows.forEach(row => {
-      if (row === dragRow) return;
+      if (!e.detail.isKeyboard && row === dragRow) return; // Do not transition a row dragged with a mouse
       Array.from(row.children).forEach((rowChild: HTMLElement) => {
         rowChild.classList.add('transition-transform', 'pointer-events-none');
       });
     });
     document.body.style.cursor = 'move';
-    document.addEventListener('touchmove', this.dragMoveHandler);
-    document.addEventListener('mousemove', this.dragMoveHandler);
+    if (!e.detail.isKeyboard) {
+      document.addEventListener('touchmove', this.dragMoveHandler);
+      document.addEventListener('mousemove', this.dragMoveHandler);
+    }
+  }
+
+  @Listen('mxDragKeyDown')
+  onDragKeyDown(e: CustomEvent) {
+    let direction: -1 | 1;
+    const key = e.detail;
+    if (['ArrowUp', 'ArrowLeft'].includes(key)) direction = -1;
+    if (['ArrowDown', 'ArrowRight'].includes(key)) direction = 1;
+    if (!direction) return;
+    if (direction === -1 && this.dragOverRowIndex === 0) return; // Row is at the top
+    const rows = this.getTableRows();
+    if (direction === 1 && this.dragOverRowIndex === rows.length - 1) return; // Row is at the bottom
+    this.dragOverRowIndex += direction;
+    const dragRow = rows[this.dragRowIndex];
+    const indexDelta = this.dragOverRowIndex - this.dragRowIndex;
+    const translateY = (dragRow.children[0] as HTMLElement).offsetHeight * indexDelta;
+    dragRow.translateRow(0, translateY);
+    this.onDragMove();
   }
 
   @Listen('mxRowDragEnd')
   onMxRowDragEnd(e: CustomEvent) {
     document.removeEventListener('mousemove', this.dragMoveHandler);
     document.removeEventListener('touchmove', this.dragMoveHandler);
-    if (this.dragOverRowIndex !== this.dragRowIndex) {
-      // If row was dragged to a new position, emit the mxRowMove event
+    const rows = this.getTableRows();
+    if (!e.detail.isCancel && this.dragOverRowIndex !== this.dragRowIndex) {
+      // If row was dragged to a new position AND dragging wasn't cancelled, emit the mxRowMove event
       this.mxRowMove.emit({ rowId: e.detail, oldIndex: this.dragRowIndex, newIndex: this.dragOverRowIndex });
+      if (e.detail.isKeyboard) rows[this.dragOverRowIndex].focusDragHandle(); // Focus the handle at the new index
     }
     this.dragRowIndex = null;
-    const rows = this.getTableRows();
     // Remove transitions and transforms from rows
     rows.forEach(row => {
       Array.from(row.children).forEach((rowChild: HTMLElement) => {
@@ -244,7 +265,7 @@ export class MxTable {
   }
 
   /** Animate table rows while dragging a row */
-  onDragMove(e: MouseEvent) {
+  onDragMove(e?: MouseEvent) {
     requestAnimationFrame(() => {
       if (this.dragRowIndex == null) return;
       const rows = this.getTableRows();
@@ -252,13 +273,15 @@ export class MxTable {
       rows.forEach((row, rowIndex) => {
         let { top, bottom } = getPageRect(row.children[0] as HTMLElement);
         const rowChildren = Array.from(row.children) as HTMLElement[];
-        const { pageY } = getCursorCoords(e);
-        if (pageY >= top && pageY <= bottom) this.dragOverRowIndex = rowIndex;
+        if (e) {
+          const { pageY } = getCursorCoords(e);
+          if (pageY >= top && pageY <= bottom) this.dragOverRowIndex = rowIndex;
+        }
         if (rowIndex === this.dragRowIndex) return; // Do not shift row that is being dragged
-        if (pageY >= top && rowIndex > this.dragRowIndex) {
+        if (rowIndex <= this.dragOverRowIndex && rowIndex > this.dragRowIndex) {
           // Shift rows that are below the dragged row UP
           rowChildren.forEach(child => (child.style.transform = `translateY(-${dragRowHeight}px)`));
-        } else if (pageY <= bottom && rowIndex < this.dragRowIndex) {
+        } else if (rowIndex >= this.dragOverRowIndex && rowIndex < this.dragRowIndex) {
           // Shift rows that are above the dragged row DOWN
           rowChildren.forEach(child => (child.style.transform = `translateY(${dragRowHeight}px)`));
         } else {

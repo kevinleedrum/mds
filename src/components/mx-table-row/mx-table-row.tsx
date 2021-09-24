@@ -4,7 +4,7 @@ import dotsSvg from '../../assets/svg/dots-vertical.svg';
 import dragDotsSvg from '../../assets/svg/drag-dots.svg';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
 import { ITableRowAction } from '../mx-table/mx-table';
-import { getCursorCoords } from '../../utils/utils';
+import { getCursorCoords, getPageRect } from '../../utils/utils';
 
 const DEFAULT_MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
 
@@ -18,6 +18,7 @@ export class MxTableRow {
   checkbox: HTMLMxCheckboxElement;
   dragOrigin = { x: 0, y: 0 };
   dragShadowEl: HTMLElement;
+  keyboardDragHandle: HTMLElement;
 
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   @Prop() rowId: string;
@@ -37,10 +38,20 @@ export class MxTableRow {
 
   /** Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked */
   @Event() mxCheck: EventEmitter<{ rowId: string; checked: boolean }>;
-  /** Emits the `rowId` when dragging starts */
-  @Event() mxRowDragStart: EventEmitter<string>;
-  /** Emits the `rowId` when row dragging ends */
-  @Event() mxRowDragEnd: EventEmitter<string>;
+  /** Emitted when dragging starts.  Handled by the parent table. */
+  @Event() mxRowDragStart: EventEmitter<{ isKeyboard: boolean }>;
+  /** Emitted when dragging ends.  Handled by the parent table. */
+  @Event() mxRowDragEnd: EventEmitter<{ isKeyboard: boolean; isCancel: boolean }>;
+  /** Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table. */
+  @Event() mxDragKeyDown: EventEmitter<string>;
+
+  /** Apply a CSS transform to translate the row by `x` and `y` pixels */
+  @Method()
+  async translateRow(x: number, y: number) {
+    const transform = `translate3d(${x}px, ${y}px, 0)`;
+    if (this.dragShadowEl) this.dragShadowEl.style.transform = transform;
+    Array.from(this.element.children).forEach((child: HTMLElement) => (child.style.transform = transform));
+  }
 
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
@@ -87,21 +98,44 @@ export class MxTableRow {
     }
   }
 
-  startDragging(e: MouseEvent | TouchEvent) {
+  onDragKeyDown(e: KeyboardEvent) {
+    if (!this.isDragging) return;
+    if (![' ', 'Enter'].includes(e.key)) return;
+    if (e.key === 'Escape' && this.isDragging) {
+      this.stopDragging(true, true);
+    } else if (this.isDragging) {
+      this.mxDragKeyDown.emit(e.key);
+    } else if ([' ', 'Enter'].includes(e.key)) {
+      if (!this.isDragging) this.startDragging();
+      else this.stopDragging(true);
+    }
     e.stopPropagation();
     e.preventDefault();
+  }
+
+  startDragging(e?: MouseEvent | TouchEvent) {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
     this.isDragging = true;
-    const { pageX, pageY } = getCursorCoords(e);
-    this.dragOrigin.x = pageX;
-    this.dragOrigin.y = pageY;
+    if (e) {
+      const { pageX, pageY } = getCursorCoords(e);
+      this.dragOrigin.x = pageX;
+      this.dragOrigin.y = pageY;
+    } else {
+      const { top, left } = getPageRect(this.element.children[0] as HTMLElement);
+      this.dragOrigin.x = left;
+      this.dragOrigin.y = top;
+    }
     this.element.classList.add('drag-row', 'pointer-events-none');
     this.createDragShadowEl();
     for (let i = 0; i < this.element.children.length; i++) {
       const child = this.element.children[i] as HTMLElement;
       child.style.zIndex = '9999';
     }
-    this.addDragListeners(e.type === 'touchstart');
-    this.mxRowDragStart.emit(this.rowId);
+    if (e) this.addDragListeners(e.type === 'touchstart');
+    this.mxRowDragStart.emit({ isKeyboard: !e });
   }
 
   addDragListeners(isTouch: boolean) {
@@ -110,20 +144,16 @@ export class MxTableRow {
       requestAnimationFrame(() => {
         if (!this.isDragging) return;
         const { pageX, pageY } = getCursorCoords(e);
-        const translateX = pageX - this.dragOrigin.x + 'px';
-        const translateY = pageY - this.dragOrigin.y + 'px';
-        if (this.dragShadowEl) this.dragShadowEl.style.transform = `translate3d(${translateX}, ${translateY}, 0)`;
-        for (let i = 0; i < this.element.children.length; i++) {
-          const child = this.element.children[i] as HTMLElement;
-          child.style.transform = `translate3d(${translateX}, ${translateY}, 0)`;
-        }
+        const x = pageX - this.dragOrigin.x;
+        const y = pageY - this.dragOrigin.y;
+        this.translateRow(x, y);
       });
     };
-    const onMouseUp = () => {
+    const onMouseUp = (e: MouseEvent | TouchEvent) => {
       document.removeEventListener(isTouch ? 'touchmove' : 'mousemove', onMouseMove);
       document.removeEventListener(isTouch ? 'touchend' : 'mouseup', onMouseUp);
       if (isTouch) document.removeEventListener('touchcancel', onMouseUp);
-      this.stopDragging();
+      this.stopDragging(e.type === 'touchcancel');
     };
     document.addEventListener(isTouch ? 'touchmove' : 'mousemove', onMouseMove);
     document.addEventListener(isTouch ? 'touchend' : 'mouseup', onMouseUp);
@@ -131,7 +161,7 @@ export class MxTableRow {
   }
 
   /** Clear transforms and remove dragShadowEl */
-  stopDragging() {
+  stopDragging(isKeyboard = false, isCancel = false) {
     this.isDragging = false;
     this.element.classList.remove('drag-row', 'pointer-events-none');
     if (this.dragShadowEl) this.dragShadowEl.remove();
@@ -141,7 +171,7 @@ export class MxTableRow {
       child.style.transform = '';
       child.style.zIndex = '';
     }
-    this.mxRowDragEnd.emit(this.rowId);
+    this.mxRowDragEnd.emit({ isKeyboard, isCancel });
   }
 
   /** When dragging, add an element behind the row children that has a box shadow.
@@ -179,6 +209,11 @@ export class MxTableRow {
     requestAnimationFrame(() => {
       this.element.style.maxHeight = this.element.scrollHeight + 'px';
     });
+  }
+
+  @Method()
+  async focusDragHandle() {
+    if (this.keyboardDragHandle) this.keyboardDragHandle.focus();
   }
 
   onTransitionEnd() {
@@ -251,10 +286,22 @@ export class MxTableRow {
         {this.isDraggable && (
           <div
             class="flex items-center col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move"
+            aria-label="Press Space or Enter to move this row"
             onMouseDown={this.startDragging.bind(this)}
             onTouchStart={this.startDragging.bind(this)}
           >
-            <span class={'pointer-events-none' + (this.checkable ? ' mx-8' : '')} innerHTML={dragDotsSvg}></span>
+            <span
+              ref={el => (this.keyboardDragHandle = el)}
+              tabindex="0"
+              class={'pointer-events-none' + (this.checkable ? ' mx-8' : '')}
+              innerHTML={dragDotsSvg}
+              onKeyDown={this.onDragKeyDown.bind(this)}
+            ></span>
+            {this.isDragging && (
+              <p class="sr-only" role="alert">
+                Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to cancel.
+              </p>
+            )}
           </div>
         )}
         <slot></slot>
