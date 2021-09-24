@@ -99,15 +99,17 @@ export class MxTableRow {
   }
 
   onDragKeyDown(e: KeyboardEvent) {
-    if (!this.isDragging) return;
-    if (![' ', 'Enter'].includes(e.key)) return;
-    if (e.key === 'Escape' && this.isDragging) {
+    if ([' ', 'Enter'].includes(e.key)) {
+      // Pick up / place row
+      this.isDragging ? this.stopDragging(true) : this.startDragging();
+    } else if (this.isDragging && e.key === 'Escape') {
+      // Cancel dragging row
       this.stopDragging(true, true);
-    } else if (this.isDragging) {
+    } else if (this.isDragging && e.key.includes('Arrow')) {
+      // Parent table determines where to move row
       this.mxDragKeyDown.emit(e.key);
-    } else if ([' ', 'Enter'].includes(e.key)) {
-      if (!this.isDragging) this.startDragging();
-      else this.stopDragging(true);
+    } else {
+      return;
     }
     e.stopPropagation();
     e.preventDefault();
