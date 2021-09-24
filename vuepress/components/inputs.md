@@ -11,7 +11,7 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
     <div>
       <strong>Regular</strong>
       <div class="my-20">
-        <mx-input label="Label"></mx-input>
+        <mx-input label="Label" placeholder="Placeholder"></mx-input>
       </div>
       <div class="my-20">
         <mx-input label="Floating Label" float-label></mx-input>
@@ -47,7 +47,7 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
     <div>
       <strong>Dense</strong>
       <div class="my-20">
-        <mx-input label="Label" dense></mx-input>
+        <mx-input label="Label" placeholder="Placeholder" dense></mx-input>
       </div>
       <div class="my-20">
         <mx-input label="Floating Label" float-label dense></mx-input>
@@ -91,7 +91,7 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
 <br />
 <section class="mds">
   <!-- #region textareas -->
-  <mx-input label="Label" textarea assistive-text="This textarea has a height of 100px" textarea-height="100px"></mx-input>
+  <mx-input label="Label" placeholder="Placeholder" textarea assistive-text="This textarea has a height of 100px" textarea-height="100px"></mx-input>
   <mx-input class="mt-40" label="Label & Error" textarea error assistive-text="Error message"></mx-input>
   <mx-input class="my-40" label="Floating Label" textarea float-label maxlength="255" assistive-text="This textarea has a maxlength and really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really long assistive text"></mx-input>
   <!-- #endregion textareas -->
@@ -101,27 +101,28 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
 
 ### Properties
 
-| Property              | Attribute               | Description                                                       | Type      | Default     |
-| --------------------- | ----------------------- | ----------------------------------------------------------------- | --------- | ----------- |
-| `assistiveText`       | `assistive-text`        |                                                                   | `string`  | `undefined` |
-| `dense`               | `dense`                 |                                                                   | `boolean` | `false`     |
-| `disabled`            | `disabled`              |                                                                   | `boolean` | `false`     |
-| `error`               | `error`                 |                                                                   | `boolean` | `false`     |
-| `floatLabel`          | `float-label`           |                                                                   | `boolean` | `false`     |
-| `inputId`             | `input-id`              | The `id` attribute for the text input                             | `string`  | `undefined` |
-| `label`               | `label`                 |                                                                   | `string`  | `undefined` |
-| `labelClass`          | `label-class`           |                                                                   | `string`  | `''`        |
-| `leftIcon`            | `left-icon`             | The class name of the icon to show on the left side of the input  | `string`  | `undefined` |
-| `maxlength`           | `maxlength`             |                                                                   | `number`  | `undefined` |
-| `name`                | `name`                  | The `name` attribute for the text input                           | `string`  | `undefined` |
-| `outerContainerClass` | `outer-container-class` |                                                                   | `string`  | `''`        |
-| `readonly`            | `readonly`              |                                                                   | `boolean` | `false`     |
-| `rightIcon`           | `right-icon`            | The class name of the icon to show on the right side of the input | `string`  | `undefined` |
-| `suffix`              | `suffix`                | Text shown to the right of the input value                        | `string`  | `undefined` |
-| `textarea`            | `textarea`              | Display a multi-line `textarea` instead of an `input`             | `boolean` | `false`     |
-| `textareaHeight`      | `textarea-height`       |                                                                   | `string`  | `'250px'`   |
-| `type`                | `type`                  | The `type` attribute for the text input                           | `string`  | `'text'`    |
-| `value`               | `value`                 |                                                                   | `string`  | `undefined` |
+| Property              | Attribute               | Description                                                                     | Type      | Default     |
+| --------------------- | ----------------------- | ------------------------------------------------------------------------------- | --------- | ----------- |
+| `assistiveText`       | `assistive-text`        |                                                                                 | `string`  | `undefined` |
+| `dense`               | `dense`                 |                                                                                 | `boolean` | `false`     |
+| `disabled`            | `disabled`              |                                                                                 | `boolean` | `false`     |
+| `error`               | `error`                 |                                                                                 | `boolean` | `false`     |
+| `floatLabel`          | `float-label`           |                                                                                 | `boolean` | `false`     |
+| `inputId`             | `input-id`              | The `id` attribute for the text input                                           | `string`  | `undefined` |
+| `label`               | `label`                 | Text for the label element                                                      | `string`  | `undefined` |
+| `labelClass`          | `label-class`           |                                                                                 | `string`  | `''`        |
+| `leftIcon`            | `left-icon`             | The class name of the icon to show on the left side of the input                | `string`  | `undefined` |
+| `maxlength`           | `maxlength`             |                                                                                 | `number`  | `undefined` |
+| `name`                | `name`                  | The `name` attribute for the text input                                         | `string`  | `undefined` |
+| `outerContainerClass` | `outer-container-class` |                                                                                 | `string`  | `''`        |
+| `placeholder`         | `placeholder`           | Placeholder text for the input. This will be ignored if `floatLabel` is `true`. | `string`  | `undefined` |
+| `readonly`            | `readonly`              |                                                                                 | `boolean` | `false`     |
+| `rightIcon`           | `right-icon`            | The class name of the icon to show on the right side of the input               | `string`  | `undefined` |
+| `suffix`              | `suffix`                | Text shown to the right of the input value                                      | `string`  | `undefined` |
+| `textarea`            | `textarea`              | Display a multi-line `textarea` instead of an `input`                           | `boolean` | `false`     |
+| `textareaHeight`      | `textarea-height`       |                                                                                 | `string`  | `'250px'`   |
+| `type`                | `type`                  | The `type` attribute for the text input                                         | `string`  | `'text'`    |
+| `value`               | `value`                 |                                                                                 | `string`  | `undefined` |
 
 ### CSS Variables
 
