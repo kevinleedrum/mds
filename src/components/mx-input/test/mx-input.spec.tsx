@@ -14,6 +14,7 @@ describe('mx-input', () => {
           left-icon="ph-apple-logo"
           name="testInput"
           value="foo"
+          placeholder="bar"
           maxlength="10"
           suffix="BAR"
           type="email"
@@ -31,9 +32,10 @@ describe('mx-input', () => {
     expect(placeholder.textContent).toBe('Placeholder');
   });
 
-  it('has the right name, value and type', async () => {
+  it('has the right name, value, placeholder and type', async () => {
     expect(input.getAttribute('name')).toBe('testInput');
     expect(input.value).toBe('foo');
+    expect(input.placeholder).toBe('bar');
     expect(input.getAttribute('type')).toBe('email');
   });
 

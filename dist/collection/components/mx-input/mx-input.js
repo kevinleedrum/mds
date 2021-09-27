@@ -121,7 +121,7 @@ export class MxInput {
         this.leftIcon && (h("div", { class: this.leftIconWrapperClass },
           h("i", { class: this.leftIcon }))),
         this.label && this.floatLabel && labelJsx,
-        !this.textarea ? (h("input", { type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) })) : (h("textarea", { class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.value)),
+        !this.textarea ? (h("input", { type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) })) : (h("textarea", { class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.value)),
         !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass },
           this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" },
             this.characterCount,
@@ -185,9 +185,26 @@ export class MxInput {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": ""
+        "text": "Text for the label element"
       },
       "attribute": "label",
+      "reflect": false
+    },
+    "placeholder": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Placeholder text for the input.  This will be ignored if `floatLabel` is `true`."
+      },
+      "attribute": "placeholder",
       "reflect": false
     },
     "value": {
