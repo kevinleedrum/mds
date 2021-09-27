@@ -109,7 +109,7 @@ describe('mx-select', () => {
   });
 
   it('displays an error icon when the error prop is set', async () => {
-    expect(selectWrapper.querySelector('i[data-testId=error-icon]')).not.toBeNull();
+    expect(selectWrapper.querySelector('[data-testid="error-icon"]')).not.toBeNull();
   });
 
   it('displays an arrow SVG when the error prop is NOT set', async () => {
