@@ -2,6 +2,7 @@ export declare class MxIconButton {
   btnElem: HTMLButtonElement;
   anchorElem: HTMLAnchorElement;
   type: 'button' | 'submit' | 'reset';
+  formaction: string;
   value: string;
   disabled: boolean;
   /** An aria-label is highly recommended */

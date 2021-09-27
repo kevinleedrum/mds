@@ -4,6 +4,7 @@ export interface IMxButtonProps {
   btnType?: BtnType;
   type?: ButtonTypeAttribute;
   value?: string;
+  formaction?: string;
   disabled?: boolean;
   xl?: boolean;
   href?: string;
@@ -17,6 +18,7 @@ export declare class MxButton implements IMxButtonProps {
   btnType: BtnType;
   type: ButtonTypeAttribute;
   value: string;
+  formaction: string;
   disabled: boolean;
   xl: boolean;
   /** Create button as link */

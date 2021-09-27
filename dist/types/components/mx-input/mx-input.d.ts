@@ -6,7 +6,10 @@ export declare class MxInput {
   name: string;
   /** The `id` attribute for the text input */
   inputId: string;
+  /** Text for the label element */
   label: string;
+  /** Placeholder text for the input.  This will be ignored if `floatLabel` is `true`. */
+  placeholder: string;
   value: string;
   /** The `type` attribute for the text input */
   type: string;

@@ -54,6 +54,7 @@ export namespace Components {
           * Show chevron icon
          */
         "dropdown": boolean;
+        "formaction": string;
         /**
           * Sets display to flex instead of inline-flex
          */
@@ -194,6 +195,7 @@ export namespace Components {
          */
         "chevronRight": boolean;
         "disabled": boolean;
+        "formaction": string;
         /**
           * Class name of icon (for icon font)
          */
@@ -211,6 +213,9 @@ export namespace Components {
           * The `id` attribute for the text input
          */
         "inputId": string;
+        /**
+          * Text for the label element
+         */
         "label": string;
         "labelClass": string;
         /**
@@ -223,6 +228,10 @@ export namespace Components {
          */
         "name": string;
         "outerContainerClass": string;
+        /**
+          * Placeholder text for the input.  This will be ignored if `floatLabel` is `true`.
+         */
+        "placeholder": string;
         "readonly": boolean;
         /**
           * The class name of the icon to show on the right side of the input
@@ -837,6 +846,7 @@ declare namespace LocalJSX {
           * Show chevron icon
          */
         "dropdown"?: boolean;
+        "formaction"?: string;
         /**
           * Sets display to flex instead of inline-flex
          */
@@ -985,6 +995,7 @@ declare namespace LocalJSX {
          */
         "chevronRight"?: boolean;
         "disabled"?: boolean;
+        "formaction"?: string;
         /**
           * Class name of icon (for icon font)
          */
@@ -1002,6 +1013,9 @@ declare namespace LocalJSX {
           * The `id` attribute for the text input
          */
         "inputId"?: string;
+        /**
+          * Text for the label element
+         */
         "label"?: string;
         "labelClass"?: string;
         /**
@@ -1014,6 +1028,10 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         "outerContainerClass"?: string;
+        /**
+          * Placeholder text for the input.  This will be ignored if `floatLabel` is `true`.
+         */
+        "placeholder"?: string;
         "readonly"?: boolean;
         /**
           * The class name of the icon to show on the right side of the input

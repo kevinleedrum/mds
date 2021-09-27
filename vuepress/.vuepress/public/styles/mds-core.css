@@ -10314,7 +10314,16 @@ video {
 /***************************
 * Import Component CSS
 ***************************/
-.mx-input label {
+.mx-input ::-moz-placeholder {
+    color: #7a7a7a;
+    color: var(--mds-text-input-label);
+  }
+.mx-input :-ms-input-placeholder {
+    color: #7a7a7a;
+    color: var(--mds-text-input-label);
+  }
+.mx-input label,
+  .mx-input ::placeholder {
     color: #7a7a7a;
     color: var(--mds-text-input-label);
   }
