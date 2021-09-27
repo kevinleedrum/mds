@@ -9,6 +9,7 @@ export interface IMxButtonProps {
   btnType?: BtnType;
   type?: ButtonTypeAttribute;
   value?: string;
+  formaction?: string;
   disabled?: boolean;
   xl?: boolean;
   href?: string;
@@ -28,6 +29,7 @@ export class MxButton implements IMxButtonProps {
   @Prop() btnType: BtnType = 'contained';
   @Prop() type: ButtonTypeAttribute = 'button';
   @Prop() value: string;
+  @Prop() formaction: string;
   @Prop() disabled: boolean = false;
   @Prop() xl: boolean = false;
   /** Create button as link */
@@ -115,6 +117,7 @@ export class MxButton implements IMxButtonProps {
         ) : (
           <button
             type={this.type}
+            formaction={this.formaction}
             value={this.value}
             class={this.buttonClass}
             ref={el => (this.btnElem = el as HTMLButtonElement)}

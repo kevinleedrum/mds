@@ -10,6 +10,7 @@ export class MxIconButton {
   anchorElem!: HTMLAnchorElement;
 
   @Prop() type: 'button' | 'submit' | 'reset' = 'button';
+  @Prop() formaction: string;
   @Prop() value: string;
   @Prop({ reflect: true }) disabled: boolean = false;
   /** An aria-label is highly recommended */
@@ -58,6 +59,7 @@ export class MxIconButton {
       <Host class="mx-icon-button inline-block">
         <button
           type={this.type}
+          formaction={this.formaction}
           value={this.value}
           class="flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto"
           ref={el => (this.btnElem = el as HTMLButtonElement)}

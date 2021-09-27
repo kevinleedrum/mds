@@ -7,7 +7,7 @@ describe('mx-button', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxButton],
-      html: `<mx-button icon="ph-apple-logo" btn-type="contained" value="foo">button</mx-button>`,
+      html: `<mx-button icon="ph-apple-logo" btn-type="contained" value="foo" formaction="/foo">button</mx-button>`,
     });
     root = page.root;
   });
@@ -28,9 +28,10 @@ describe('mx-button', () => {
     expect(innerText).toBe('button');
   });
 
-  it('has the correct value', async () => {
+  it('has the correct value and formaction', async () => {
     const btn = root.querySelector('button');
     expect(btn.getAttribute('value')).toBe('foo');
+    expect(btn.getAttribute('formaction')).toBe('/foo');
   });
 
   it('has a left icon', async () => {
