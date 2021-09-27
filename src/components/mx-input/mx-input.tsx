@@ -15,7 +15,10 @@ export class MxInput {
   @Prop() name: string;
   /** The `id` attribute for the text input */
   @Prop() inputId: string;
+  /** Text for the label element */
   @Prop() label: string;
+  /** Placeholder text for the input.  This will be ignored if `floatLabel` is `true`. */
+  @Prop() placeholder: string;
   @Prop({ mutable: true }) value: string;
   /** The `type` attribute for the text input */
   @Prop() type: string = 'text';
@@ -162,6 +165,7 @@ export class MxInput {
               name={this.name}
               id={this.inputId || this.uuid}
               value={this.value}
+              placeholder={this.floatLabel ? null : this.placeholder}
               maxlength={this.maxlength}
               disabled={this.disabled}
               readonly={this.readonly}
@@ -176,6 +180,7 @@ export class MxInput {
               style={{ height: this.textareaHeight }}
               name={this.name}
               id={this.inputId || this.uuid}
+              placeholder={this.floatLabel ? null : this.placeholder}
               maxlength={this.maxlength}
               disabled={this.disabled}
               readonly={this.readonly}
