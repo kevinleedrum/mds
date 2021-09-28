@@ -98,7 +98,7 @@ export class MxTableRow {
     }
   }
 
-  onDragKeyDown(e: KeyboardEvent) {
+  onKeyboardHandleKeyDown(e: KeyboardEvent) {
     if (!this.isDragging && [' ', 'Enter'].includes(e.key)) this.startDragging(e);
   }
 
@@ -152,7 +152,7 @@ export class MxTableRow {
       if ([' ', 'Enter'].includes(e.key)) {
         document.removeEventListener('keydown', onKeyDown);
         this.stopDragging(true);
-      } else if (e.key === 'Escape') {
+      } else if (['Escape', 'Tab'].includes(e.key)) {
         document.removeEventListener('keydown', onKeyDown);
         this.stopDragging(true, true);
       } else if (e.key.includes('Arrow')) {
@@ -311,7 +311,7 @@ export class MxTableRow {
               tabindex="0"
               class={'pointer-events-none' + (this.checkable ? ' mx-8' : '')}
               innerHTML={dragDotsSvg}
-              onKeyDown={this.onDragKeyDown.bind(this)}
+              onKeyDown={this.onKeyboardHandleKeyDown.bind(this)}
             ></span>
             {this.isDragging && (
               <p class="sr-only" role="alert">
