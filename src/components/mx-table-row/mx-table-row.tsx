@@ -5,6 +5,7 @@ import dragDotsSvg from '../../assets/svg/drag-dots.svg';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
 import { ITableRowAction } from '../mx-table/mx-table';
 import { getCursorCoords, getPageRect } from '../../utils/utils';
+import DragScroller from '../../utils/DragScroller';
 
 const DEFAULT_MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
 
@@ -19,6 +20,7 @@ export class MxTableRow {
   dragOrigin = { x: 0, y: 0 };
   dragShadowEl: HTMLElement;
   keyboardDragHandle: HTMLElement;
+  dragScroller: DragScroller;
 
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   @Prop() rowId: string;
@@ -136,15 +138,19 @@ export class MxTableRow {
         const x = pageX - this.dragOrigin.x;
         const y = pageY - this.dragOrigin.y;
         this.translateRow(x, y);
+        this.dragScroller && this.dragScroller.update(e);
       });
     };
     /** Stop dragging when the mouse button is released or touch ends */
     const onMouseUp = (e: MouseEvent | TouchEvent) => {
+      e.stopPropagation();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
       document.removeEventListener('touchmove', onMouseMove);
       document.removeEventListener('touchend', onMouseUp);
       document.removeEventListener('touchcancel', onMouseUp);
+      this.dragScroller.stop();
+      this.dragScroller = null;
       this.stopDragging(e.type === 'touchcancel');
     };
     /** Move row or cancel dragging based on keypress */
@@ -167,10 +173,12 @@ export class MxTableRow {
     if (startEvent.type === 'keydown') {
       document.addEventListener('keydown', onKeyDown);
     } else if (startEvent.type === 'touchstart') {
+      this.dragScroller = new DragScroller(this.element);
       document.addEventListener('touchmove', onMouseMove);
       document.addEventListener('touchend', onMouseUp);
       document.addEventListener('touchcancel', onMouseUp);
     } else {
+      this.dragScroller = new DragScroller(this.element);
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     }
@@ -194,7 +202,7 @@ export class MxTableRow {
    * This is simpler than trying to change the row to `display: flex` and adding a box shadow to it. */
   createDragShadowEl() {
     this.dragShadowEl = document.createElement('div');
-    this.dragShadowEl.classList.add('absolute', 'w-full', 'shadow-9');
+    this.dragShadowEl.classList.add('absolute', 'w-full', 'shadow-24');
     this.dragShadowEl.style.zIndex = '9998';
     this.dragShadowEl.style.height = (this.element.children[0] as HTMLElement).offsetHeight + 'px';
     this.dragShadowEl.style.top = (this.element.children[0] as HTMLElement).offsetTop + 'px';
