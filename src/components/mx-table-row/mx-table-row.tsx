@@ -4,7 +4,7 @@ import dotsSvg from '../../assets/svg/dots-vertical.svg';
 import dragDotsSvg from '../../assets/svg/drag-dots.svg';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
 import { ITableRowAction } from '../mx-table/mx-table';
-import { getCursorCoords, getPageRect } from '../../utils/utils';
+import { getCursorCoords, getPageRect, isScrolledOutOfView } from '../../utils/utils';
 import DragScroller from '../../utils/DragScroller';
 
 const DEFAULT_MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
@@ -240,13 +240,18 @@ export class MxTableRow {
     if (this.keyboardDragHandle) this.keyboardDragHandle.focus();
   }
 
-  onTransitionEnd() {
-    if (this.isMobileCollapsing) {
-      this.isMobileExpanded = false;
-      this.isMobileCollapsing = false;
+  onTransitionEnd(e) {
+    if (e.target === this.element) {
+      if (this.isMobileCollapsing) {
+        this.isMobileExpanded = false;
+        this.isMobileCollapsing = false;
+      }
+      // Remove explicit max-height after expanding to avoid issues with window resizing, etc.
+      this.element.style.maxHeight = '';
     }
-    // Remove explicit max-height after expanding to avoid issues with window resizing, etc.
-    this.element.style.maxHeight = '';
+    // When keyboard dragging, scroll the first element into view if moved out of bounds
+    if (e.target === this.element.children[0] && isScrolledOutOfView(this.element.children[0] as HTMLElement))
+      this.element.children[0].scrollIntoView();
   }
 
   onCheckboxInput(e: InputEvent) {

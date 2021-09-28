@@ -1,4 +1,4 @@
-import { getCursorCoords } from './utils';
+import { getBounds, getCursorCoords, getScrollingParent } from './utils';
 
 const SCROLL_PX = 5; // Scroll by 5px ...
 const SCROLL_INTERVAL_MS = 5; // ... every 5ms
@@ -14,15 +14,9 @@ export default class DragScroller {
   /** Update (start/stop/speed up/slow down) auto-scrolling based on cursor coordinates */
   update(e: MouseEvent | TouchEvent) {
     clearInterval(this.interval);
-    let bounds = { top: 0, right: window.innerWidth, bottom: window.innerHeight, left: 0 };
-    if (this.scrollingContainer !== window) {
-      bounds.top = (this.scrollingContainer as HTMLElement).clientTop;
-      bounds.left = (this.scrollingContainer as HTMLElement).clientLeft;
-      bounds.bottom = bounds.top + (this.scrollingContainer as HTMLElement).clientHeight;
-      bounds.right = bounds.left + (this.scrollingContainer as HTMLElement).clientWidth;
-    }
     const { clientX, clientY } = getCursorCoords(e);
     // If not dragging outside bounds, stop
+    const bounds = getBounds(this.scrollingContainer);
     if (clientY >= bounds.top && clientY <= bounds.bottom && clientX >= bounds.left && clientX <= bounds.right) return;
     let directionX = 1;
     let directionY = 1;
@@ -36,17 +30,4 @@ export default class DragScroller {
   stop() {
     clearInterval(this.interval);
   }
-}
-
-function getScrollingParent(el: HTMLElement): HTMLElement | Window {
-  if (!(el instanceof HTMLElement)) return window;
-  if (isScrollable(el)) return el;
-  return getScrollingParent(el.parentNode as HTMLElement);
-}
-
-function isScrollable(el: HTMLElement) {
-  const computedStyle = window.getComputedStyle(el);
-  const overflowRegex = /(auto|scroll)/;
-  const properties = ['overflow', 'overflowX', 'overflowY'];
-  return properties.find(property => overflowRegex.test(computedStyle[property]));
 }

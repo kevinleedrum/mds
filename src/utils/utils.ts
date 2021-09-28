@@ -60,3 +60,37 @@ export function getPageRect(el: HTMLElement): Partial<DOMRect> {
   } while (el);
   return { top, left, width, height, bottom: top + height, right: left + width };
 }
+
+/** Return the client boundaries of an element (or the window) */
+export function getBounds(container: HTMLElement | Window): Partial<DOMRect> {
+  let bounds = { top: 0, right: window.innerWidth, bottom: window.innerHeight, left: 0 };
+  if (container !== window) {
+    bounds = (container as HTMLElement).getBoundingClientRect();
+  }
+  return bounds;
+}
+
+/** Determines whether an element needs to be scrolled into view */
+export function isScrolledOutOfView(el: HTMLElement) {
+  const bounds = el.getBoundingClientRect(); // getBoundingClientRect accounts for CSS translate
+  const scrollBounds = getBounds(getScrollingParent(el));
+  if (bounds.top < scrollBounds.top) return true;
+  if (bounds.bottom > scrollBounds.bottom) return true;
+  if (bounds.left < scrollBounds.left) return true;
+  if (bounds.left > scrollBounds.right) return true; // It's okay if the right edge is out of bounds
+  return false;
+}
+
+/** Get the nearest scrolling ancestor, which could be the window */
+export function getScrollingParent(el: HTMLElement): HTMLElement | Window {
+  if (!(el instanceof HTMLElement)) return window;
+  if (isScrollable(el)) return el;
+  return getScrollingParent(el.parentNode as HTMLElement);
+}
+
+function isScrollable(el: HTMLElement) {
+  const computedStyle = window.getComputedStyle(el);
+  const overflowRegex = /(auto|scroll)/;
+  const properties = ['overflow', 'overflowX', 'overflowY'];
+  return properties.find(property => overflowRegex.test(computedStyle[property]));
+}
