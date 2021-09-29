@@ -11,20 +11,16 @@ export default class DragScroller {
     this.scrollingContainer = getScrollingParent(dragEl);
   }
 
-  /** Update (start/stop/speed up/slow down) auto-scrolling based on cursor coordinates */
+  /** Start/stop auto-scrolling based on cursor coordinates */
   update(e: MouseEvent | TouchEvent) {
     clearInterval(this.interval);
     const { clientX, clientY } = getCursorCoords(e);
-    // If not dragging outside bounds, stop
     const bounds = getBounds(this.scrollingContainer);
+    // If not dragging outside bounds, stop
     if (clientY >= bounds.top && clientY <= bounds.bottom && clientX >= bounds.left && clientX <= bounds.right) return;
-    let directionX = 1;
-    let directionY = 1;
-    if (clientX < bounds.left) directionX = -1;
-    if (clientY < bounds.top) directionY = -1;
-    this.interval = setInterval(() => {
-      window.scrollBy(SCROLL_PX * directionX, SCROLL_PX * directionY);
-    }, SCROLL_INTERVAL_MS);
+    const directionX = clientX < bounds.left ? -1 : 1;
+    const directionY = clientY < bounds.top ? -1 : 1;
+    this.interval = setInterval(window.scrollBy, SCROLL_INTERVAL_MS, SCROLL_PX * directionX, SCROLL_PX * directionY);
   }
 
   stop() {

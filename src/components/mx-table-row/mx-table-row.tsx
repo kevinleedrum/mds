@@ -344,6 +344,7 @@ export class MxTableRow {
             class="flex border-0 items-center justify-end px-16 row-start-1"
             aria-hidden="true"
             onClick={this.accordion.bind(this)}
+            onMouseDown={e => e.preventDefault() /* Do not focus on click */}
           >
             <span
               class={

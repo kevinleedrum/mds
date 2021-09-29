@@ -63,15 +63,14 @@ export function getPageRect(el: HTMLElement): Partial<DOMRect> {
 
 /** Return the client boundaries of an element (or the window) */
 export function getBounds(container: HTMLElement | Window): Partial<DOMRect> {
-  let bounds = { top: 0, right: window.innerWidth, bottom: window.innerHeight, left: 0 };
-  if (container !== window) {
-    bounds = (container as HTMLElement).getBoundingClientRect();
+  if (container === window) {
+    return { top: 0, right: window.innerWidth, bottom: window.innerHeight, left: 0 };
   }
-  return bounds;
+  return (container as HTMLElement).getBoundingClientRect();
 }
 
 /** Determines whether an element needs to be scrolled into view */
-export function isScrolledOutOfView(el: HTMLElement) {
+export function isScrolledOutOfView(el: HTMLElement): boolean {
   const bounds = el.getBoundingClientRect(); // getBoundingClientRect accounts for CSS translate
   const scrollBounds = getBounds(getScrollingParent(el));
   if (bounds.top < scrollBounds.top) return true;
