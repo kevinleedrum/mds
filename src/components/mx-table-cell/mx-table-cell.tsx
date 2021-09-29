@@ -26,7 +26,7 @@ export class MxTableCell {
   }
 
   get cellClass() {
-    let str = 'mx-table-cell relative flex items-center text-4';
+    let str = 'mx-table-cell flex items-center text-4';
     if (!this.minWidths.sm && this.isExposedMobileColumn) str += ' row-start-1 exposed-cell';
     else if (!this.minWidths.sm) str += ' py-0 pb-12 col-span-4';
     return str;

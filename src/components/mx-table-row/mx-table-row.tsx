@@ -101,6 +101,7 @@ export class MxTableRow {
   }
 
   onKeyboardHandleKeyDown(e: KeyboardEvent) {
+    // Start keyboard dragging on Space/Enter if not already dragging
     if (!this.isDragging && [' ', 'Enter'].includes(e.key)) this.startDragging(e);
   }
 
@@ -199,7 +200,7 @@ export class MxTableRow {
   }
 
   /** When dragging, add an element behind the row children that has a box shadow.
-   * This is simpler than trying to change the row to `display: flex` and adding a box shadow to it. */
+   * This is simpler than trying to change the row to `display: flex` to add a box shadow to it. */
   createDragShadowEl() {
     this.dragShadowEl = document.createElement('div');
     this.dragShadowEl.classList.add('absolute', 'w-full', 'shadow-24');
@@ -212,6 +213,7 @@ export class MxTableRow {
 
   accordion() {
     if (this.minWidths.sm) return;
+    this.element.classList.add('overflow-hidden');
     this.isMobileExpanded ? this.collapse() : this.expand();
   }
 
@@ -242,6 +244,7 @@ export class MxTableRow {
 
   onTransitionEnd(e) {
     if (e.target === this.element) {
+      this.element.classList.remove('overflow-hidden');
       if (this.isMobileCollapsing) {
         this.isMobileExpanded = false;
         this.isMobileCollapsing = false;
@@ -315,6 +318,7 @@ export class MxTableRow {
         {this.isDraggable && (
           <div
             class="flex items-center col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move"
+            data-testid="drag-handle"
             onMouseDown={this.startDragging.bind(this)}
             onTouchStart={this.startDragging.bind(this)}
           >
