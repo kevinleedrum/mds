@@ -155,7 +155,6 @@ export class MxTable {
         rowChild.classList.add('transition-transform', 'pointer-events-none');
       });
     });
-    document.body.style.cursor = 'move';
     if (!e.detail.isKeyboard) {
       document.addEventListener('touchmove', this.dragMoveHandler);
       document.addEventListener('mousemove', this.dragMoveHandler);
