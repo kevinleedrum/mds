@@ -39,6 +39,7 @@
 @import './mx-page-header/index.scss';
 @import './mx-table/index.scss';
 @import './mx-pagination/index.scss';
+@import './mx-snackbar/index.scss';
 @import './ripple.scss';
 
 /***************************
