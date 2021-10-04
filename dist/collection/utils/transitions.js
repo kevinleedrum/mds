@@ -48,8 +48,10 @@ function executeTransition(el, transitionOptions, duration, transformOrigin) {
         return `${transition.property} ${duration}ms ${transition.timing}`;
       })
         .join(', ');
-      transitionOptions.forEach(transition => {
-        setStyleProperty(el, transition.property, transition.endValue);
+      requestAnimationFrame(() => {
+        transitionOptions.forEach(transition => {
+          setStyleProperty(el, transition.property, transition.endValue);
+        });
       });
     });
     // Resolve once the duration passes (setTimeout is safer than transition events)

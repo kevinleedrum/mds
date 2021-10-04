@@ -329,6 +329,12 @@
   --mds-bg-pagination: #fff;
   --mds-text-pagination: #333;
   /* #endregion pagination */
+
+  /* #region snackbars */
+  /* Snackbars */
+  --mds-bg-snackbar: #202020;
+  --mds-text-snackbar: #fff;
+  /* #endregion snackbars */
 }
 /***************************
 * Import Font
@@ -2333,6 +2339,10 @@ video {
 
   left: 1rem;
 }
+.mds .bottom-40{
+
+  bottom: 2.5rem;
+}
 .mds .bottom-0{
 
   bottom: 0px;
@@ -2792,10 +2802,6 @@ video {
 .mds .right-40{
 
   right: 2.5rem;
-}
-.mds .bottom-40{
-
-  bottom: 2.5rem;
 }
 .mds .left-40{
 
@@ -3984,6 +3990,10 @@ video {
 .mds .mr-10{
 
   margin-right: 0.625rem;
+}
+.mds .ml-auto{
+
+  margin-left: auto;
 }
 .mds .ml-24{
 
@@ -8579,6 +8589,12 @@ video {
 
   padding-bottom: 0.75rem;
 }
+.mds .py-14{
+
+  padding-top: 0.875rem;
+
+  padding-bottom: 0.875rem;
+}
 .mds .py-18{
 
   padding-top: 1.125rem;
@@ -9661,6 +9677,14 @@ video {
 
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+.mds .shadow-6{
+
+  --tw-shadow: 0px 6px 10px rgba(0, 0, 0, 0.06), 0px 1px 18px rgba(0, 0, 0, 0.04), 0px 3px 5px rgba(0, 0, 0, 0.06);
+
+  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 .mds .shadow-2{
 
   --tw-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px 3px 4px rgba(0, 0, 0, 0.02), 0px 1px 5px rgba(0, 0, 0, 0.04);
@@ -9680,14 +9704,6 @@ video {
 .mds .shadow-3{
 
   --tw-shadow: 0px 3px 3px rgba(0, 0, 0, 0.06), 0px 3px 4px rgba(0, 0, 0, 0.04), 0px 1px 8px rgba(0, 0, 0, 0.06);
-
-  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
-
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-.mds .shadow-6{
-
-  --tw-shadow: 0px 6px 10px rgba(0, 0, 0, 0.06), 0px 1px 18px rgba(0, 0, 0, 0.04), 0px 3px 5px rgba(0, 0, 0, 0.06);
 
   box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
 
@@ -11888,6 +11904,12 @@ video {
     background: #f5f5f5;
     background: var(--mds-bg-pagination-simple);
   }
+.mx-snackbar-alert {
+  background: #202020;
+  background: var(--mds-bg-snackbar);
+  color: #fff;
+  color: var(--mds-text-snackbar);
+}
 :root {
   --ripple-color: rgba(255, 255, 255, 0.32);
 }
@@ -12283,6 +12305,10 @@ span.ripple {
   .mds .sm\:w-auto{
 
     width: auto;
+  }
+  .mds .sm\:w-360{
+
+    width: 22.5rem;
   }
   .mds .sm\:grid-cols-2{
 
