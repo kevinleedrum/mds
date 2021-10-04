@@ -20,6 +20,7 @@
     "./components/mx-radio/mx-radio.js",
     "./components/mx-search/mx-search.js",
     "./components/mx-select/mx-select.js",
+    "./components/mx-snackbar/mx-snackbar.js",
     "./components/mx-switch/mx-switch.js",
     "./components/mx-tab-content/mx-tab-content.js",
     "./components/mx-table-cell/mx-table-cell.js",

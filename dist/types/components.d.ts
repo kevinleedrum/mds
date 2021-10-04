@@ -406,6 +406,10 @@ export namespace Components {
         "suffix": string;
         "value": any;
     }
+    interface MxSnackbar {
+        "duration": number;
+        "isOpen": boolean;
+    }
     interface MxSwitch {
         "checked": boolean;
         "labelName": string;
@@ -713,6 +717,12 @@ declare global {
         prototype: HTMLMxSelectElement;
         new (): HTMLMxSelectElement;
     };
+    interface HTMLMxSnackbarElement extends Components.MxSnackbar, HTMLStencilElement {
+    }
+    var HTMLMxSnackbarElement: {
+        prototype: HTMLMxSnackbarElement;
+        new (): HTMLMxSnackbarElement;
+    };
     interface HTMLMxSwitchElement extends Components.MxSwitch, HTMLStencilElement {
     }
     var HTMLMxSwitchElement: {
@@ -792,6 +802,7 @@ declare global {
         "mx-radio": HTMLMxRadioElement;
         "mx-search": HTMLMxSearchElement;
         "mx-select": HTMLMxSelectElement;
+        "mx-snackbar": HTMLMxSnackbarElement;
         "mx-switch": HTMLMxSwitchElement;
         "mx-tab": HTMLMxTabElement;
         "mx-tab-content": HTMLMxTabContentElement;
@@ -1203,6 +1214,11 @@ declare namespace LocalJSX {
         "suffix"?: string;
         "value"?: any;
     }
+    interface MxSnackbar {
+        "duration"?: number;
+        "isOpen"?: boolean;
+        "onMxClose"?: (event: CustomEvent<void>) => void;
+    }
     interface MxSwitch {
         "checked"?: boolean;
         "labelName"?: string;
@@ -1437,6 +1453,7 @@ declare namespace LocalJSX {
         "mx-radio": MxRadio;
         "mx-search": MxSearch;
         "mx-select": MxSelect;
+        "mx-snackbar": MxSnackbar;
         "mx-switch": MxSwitch;
         "mx-tab": MxTab;
         "mx-tab-content": MxTabContent;
@@ -1471,6 +1488,7 @@ declare module "@stencil/core" {
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;
             "mx-search": LocalJSX.MxSearch & JSXBase.HTMLAttributes<HTMLMxSearchElement>;
             "mx-select": LocalJSX.MxSelect & JSXBase.HTMLAttributes<HTMLMxSelectElement>;
+            "mx-snackbar": LocalJSX.MxSnackbar & JSXBase.HTMLAttributes<HTMLMxSnackbarElement>;
             "mx-switch": LocalJSX.MxSwitch & JSXBase.HTMLAttributes<HTMLMxSwitchElement>;
             "mx-tab": LocalJSX.MxTab & JSXBase.HTMLAttributes<HTMLMxTabElement>;
             "mx-tab-content": LocalJSX.MxTabContent & JSXBase.HTMLAttributes<HTMLMxTabContentElement>;

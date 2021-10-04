@@ -110,6 +110,12 @@ export const MxSelect: {
   new (): MxSelect;
 };
 
+interface MxSnackbar extends Components.MxSnackbar, HTMLElement {}
+export const MxSnackbar: {
+  prototype: MxSnackbar;
+  new (): MxSnackbar;
+};
+
 interface MxSwitch extends Components.MxSwitch, HTMLElement {}
 export const MxSwitch: {
   prototype: MxSwitch;

@@ -2683,8 +2683,10 @@ function executeTransition(el, transitionOptions, duration, transformOrigin) {
         return `${transition.property} ${duration}ms ${transition.timing}`;
       })
         .join(', ');
-      transitionOptions.forEach(transition => {
-        setStyleProperty(el, transition.property, transition.endValue);
+      requestAnimationFrame(() => {
+        transitionOptions.forEach(transition => {
+          setStyleProperty(el, transition.property, transition.endValue);
+        });
       });
     });
     // Resolve once the duration passes (setTimeout is safer than transition events)
@@ -3838,6 +3840,82 @@ const MxSelect$1 = class extends HTMLElement {
   }; }
 };
 
+const snackbarQueue = []; // Deferred promises
+const MxSnackbar$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxClose = createEvent(this, "mxClose", 7);
+    this.duration = 6000;
+    this.isOpen = false;
+    this.isVisible = false;
+  }
+  async toggleSnackbar() {
+    clearTimeout(this.durationTimer);
+    if (this.isOpen) {
+      try {
+        await this.waitForOtherSnackbars();
+        this.durationTimer = setTimeout(this.close.bind(this), this.duration);
+        this.isVisible = true;
+        fadeScaleIn(this.alertEl, undefined, 'center');
+      }
+      catch (err) {
+        // Snackbar was closed programmatically before leaving the queue; do nothing.
+      }
+    }
+    else {
+      this.removeFromQueue();
+      this.isVisible = false;
+      this.mxClose.emit();
+    }
+  }
+  waitForOtherSnackbars() {
+    return new Promise((resolve, reject) => {
+      this.queueItem = { resolve, reject };
+      snackbarQueue.push(this.queueItem);
+      if (snackbarQueue.length === 1)
+        return resolve();
+    });
+  }
+  removeFromQueue() {
+    if (!this.queueItem)
+      return;
+    const queueIndex = snackbarQueue.indexOf(this.queueItem);
+    snackbarQueue.splice(snackbarQueue.indexOf(this.queueItem), 1);
+    if (queueIndex === 0 && snackbarQueue.length > 0)
+      snackbarQueue[0].resolve(); // Show next snackbar in queue
+  }
+  componentWillLoad() {
+    this.createSnackbarPortal();
+    this.portal.append(this.element);
+  }
+  createSnackbarPortal() {
+    this.portal = document.querySelector('.snackbar-portal');
+    if (this.portal)
+      return;
+    this.portal = document.createElement('div');
+    this.portal.classList.add('snackbar-portal', 'mds');
+    document.body.append(this.portal);
+  }
+  async close() {
+    if (!this.isOpen)
+      return;
+    await fadeOut(this.alertEl);
+    this.isOpen = false;
+  }
+  get alertClass() {
+    let str = 'mx-snackbar-alert flex flex-wrap items-center justify-between rounded-lg text-4 max-w-360 sm:w-360 shadow-6 px-16 py-14';
+    return str;
+  }
+  render() {
+    return (h(Host, { class: 'flex fixed w-full z-50 left-0 bottom-40 px-16 justify-center' + (this.isVisible ? '' : ' hidden') }, h("div", { ref: el => (this.alertEl = el), role: "alert", class: this.alertClass }, h("p", { class: "my-0" }, h("slot", null)), h("div", { class: "ml-auto", onClick: this.close.bind(this) }, h("slot", { name: "action" })))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "isOpen": ["toggleSnackbar"]
+  }; }
+};
+
 const MxSwitch$1 = class extends HTMLElement {
   constructor() {
     super();
@@ -4738,6 +4816,7 @@ const MxPagination = /*@__PURE__*/proxyCustomElement(MxPagination$1, [4,"mx-pagi
 const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxSearch = /*@__PURE__*/proxyCustomElement(MxSearch$1, [0,"mx-search",{"ariaLabel":[1,"aria-label"],"dense":[4],"flat":[4],"name":[1],"placeholder":[1],"value":[1]}]);
 const MxSelect = /*@__PURE__*/proxyCustomElement(MxSelect$1, [4,"mx-select",{"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elevated":[4],"flat":[4],"label":[1],"floatLabel":[4,"float-label"],"ariaLabel":[1,"aria-label"],"selectId":[1,"select-id"],"name":[1],"suffix":[1],"error":[1028],"labelClass":[1025,"label-class"],"value":[1032],"isFocused":[32]}]);
+const MxSnackbar = /*@__PURE__*/proxyCustomElement(MxSnackbar$1, [4,"mx-snackbar",{"duration":[2],"isOpen":[1540,"is-open"],"isVisible":[32]}]);
 const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxTab = /*@__PURE__*/proxyCustomElement(MxTab$1, [0,"mx-tab",{"label":[1],"ariaLabel":[1,"aria-label"],"icon":[1],"selected":[516],"badge":[4],"badgeClass":[1,"badge-class"]}]);
 const MxTabContent = /*@__PURE__*/proxyCustomElement(MxTabContent$1, [4,"mx-tab-content",{"index":[2],"value":[2]}]);
@@ -4769,6 +4848,7 @@ const defineCustomElements = (opts) => {
   MxRadio,
   MxSearch,
   MxSelect,
+  MxSnackbar,
   MxSwitch,
   MxTab,
   MxTabContent,
@@ -4787,4 +4867,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, defineCustomElements };

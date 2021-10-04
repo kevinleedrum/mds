@@ -150,6 +150,7 @@ module.exports = {
         'tables',
         'page-headers',
         'pagination',
+        'snackbars',
       ],
     },
   },

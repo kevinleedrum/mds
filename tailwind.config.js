@@ -77,6 +77,7 @@ const config = {
       256: '16rem',
       288: '18rem',
       320: '20rem',
+      360: '22.5rem',
       384: '24rem',
     },
     extend: {
