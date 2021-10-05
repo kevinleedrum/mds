@@ -196,7 +196,7 @@ export class MxMenuItem implements IMxMenuItemProps {
           </div>
           {this.multiSelect && (
             <mx-checkbox
-              class="flex items-stretch w-full h-48 sm:h-32"
+              class="flex items-stretch w-full overflow-hidden h-48 sm:h-32"
               label-class="pl-12 pr-16"
               checked={this.checked}
               label-name={this.checkboxLabel}

@@ -363,7 +363,50 @@ Other props that may be helpful when using server-side pagination include `showP
 <<< @/vuepress/components/tables.md#seed-data
 <<< @/vuepress/components/tables.md#api-request
 
-## Advanced Usage
+## Draggable rows
+
+Set the `draggableRows` prop to allow reordering rows via drag and drop. The component emits an `mxRowMove` event containing the `rowId` (if set), `oldIndex`, and `newIndex` for the dragged row.
+
+The `rows` array is not mutated by the component, so you must update the array using the event data.
+
+<section class="mds">
+  <div class="mt-20">
+    <!-- #region draggable -->
+    <mx-table
+      draggable-rows
+      paginate="false"
+      :rows.prop="draggableBeatles"
+      :columns.prop="[
+        { property: 'firstName', heading: 'First Name' },
+        { property: 'lastName', heading: 'Last Name' },
+        { property: 'credits', heading: 'Song Credits', type: 'number' },
+        { property: 'birthdate', heading: 'Birthdate', type: 'date' },
+      ]"
+      @mxRowMove="onRowMove"
+    />
+    <mx-table
+      draggable-rows
+      checkable
+      class="mt-20"
+      paginate="false"
+      :get-row-id.prop="row => row.firstName"
+      :rows.prop="draggableBeatles"
+      :columns.prop="[
+        { property: 'firstName', heading: 'First Name' },
+        { property: 'lastName', heading: 'Last Name' },
+        { property: 'credits', heading: 'Song Credits', type: 'number' },
+        { property: 'birthdate', heading: 'Birthdate', type: 'date' },
+      ]"
+      @mxRowMove="onRowMove"
+    />
+    <!-- #endregion draggable -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#draggable
+<<< @/vuepress/components/tables.md#row-move
+
+## Advanced usage
 
 The following example combines checkable, slotted table rows with pagination, row actions, multi-row actions, searching, and filtering.
 
@@ -450,6 +493,7 @@ The following example combines checkable, slotted table rows with pagination, ro
 | `columns`             | --                      | An array of [`ITableColumn`](#itablecolumn) column definitions. If not specified, a column will be generated for each property on the row object.                                       | [`ITableColumn[]`](#itablecolumn)       | `[]`        |
 | `disableNextPage`     | `disable-next-page`     | Disable the next-page button. Useful when using server-side pagination and the total number of rows is unknown.                                                                         | `boolean`                               | `false`     |
 | `disablePagination`   | `disable-pagination`    | Disable the pagination buttons (i.e. while loading results)                                                                                                                             | `boolean`                               | `false`     |
+| `draggableRows`       | `draggable-rows`        | Enables reordering of rows via drag and drop.                                                                                                                                           | `boolean`                               | `false`     |
 | `getMultiRowActions`  | --                      |                                                                                                                                                                                         | `(rows: string[]) => ITableRowAction[]` | `undefined` |
 | `getRowActions`       | --                      |                                                                                                                                                                                         | `(row: Object) => ITableRowAction[]`    | `undefined` |
 | `getRowId`            | --                      | A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). | `(row: Object) => string`               | `undefined` |
@@ -497,14 +541,17 @@ The `ITableColumn` interface describes the objects passed to the `columns` prop.
 | Event                 | Description                                                                                                                                                                                                    | Type                                                       |
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `mxRowCheck`          | Emitted when a row is (un)checked. The `Event.detail` will be the array of checked `rowId`s.                                                                                                                   | `CustomEvent<string[]>`                                    |
+| `mxRowMove`           | Emitted when a row is dragged to a new position. The `Event.detail` object will contain the `rowId` (if set), `oldIndex`, and `newIndex`.                                                                      | `CustomEvent<any>`                                         |
 | `mxSortChange`        | Emitted when a sortable column's header is clicked.                                                                                                                                                            | `CustomEvent<{ sortBy: string; sortAscending: boolean; }>` |
 | `mxVisibleRowsChange` | Emitted when the sorting, pagination, or rows data changes. The `Event.detail` will contain the sorted, paginated array of visible rows. This is useful for building a custom row layout via the default slot. | `CustomEvent<Object[]>`                                    |
 
 ### Table Row Events
 
-| Event     | Description                                                                                      | Type                                                          |
-| --------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
-| `mxCheck` | Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked | `CustomEvent<{ rowId: string \| number; checked: boolean; }>` |
+| Event            | Description                                                                                      | Type                                                |
+| ---------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------- |
+| `mxCheck`        | Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked | `CustomEvent<{ rowId: string; checked: boolean; }>` |
+| `mxRowDragEnd`   | Emits the `rowId` when row dragging ends                                                         | `CustomEvent<string>`                               |
+| `mxRowDragStart` | Emits the `rowId` when dragging starts                                                           | `CustomEvent<string>`                               |
 
 ### Table Methods
 
@@ -833,13 +880,13 @@ export default {
       albums,
       beatles,
       visibleRows: beatles,
+      draggableBeatles: beatles.slice(),
       albumRows: albums,
       albumSearch: '',
       albumSearch2: '',
       albumLabelFilters: [],
       albumLabelFilters2: [],
       beatlesSearch: '',
-      draggingRowId: null,
       apiHouses: [],
       apiPage: 0,
       apiPageSize: 5,
@@ -947,6 +994,15 @@ export default {
         this.albumLabelFilters2 = [...this.albumLabelFilters2, label]
       }
     },
+    // #region row-move
+    onRowMove(e) {
+      const { oldIndex, newIndex } = e.detail
+      const beatles = this.draggableBeatles.slice()
+      const row = beatles.splice(oldIndex, 1)[0]
+      beatles.splice(newIndex, 0, row)
+      this.draggableBeatles = beatles
+    },
+    // #endregion row-move
     // #region api-request
     async getApiData() {
       this.apiLoading = true
