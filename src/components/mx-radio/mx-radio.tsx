@@ -21,7 +21,7 @@ export class MxRadio {
             value={this.value}
             checked={this.checked}
           />
-          <span class="flex h-20 w-20 cursor-pointer rounded-full"></span>
+          <span class="flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full"></span>
           <div class="ml-16 inline-block" data-testid="labelName">
             {this.labelName}
           </div>
