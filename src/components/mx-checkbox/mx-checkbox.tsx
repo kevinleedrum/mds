@@ -17,7 +17,7 @@ export class MxCheckbox {
   @Prop() indeterminate: boolean = false;
 
   get checkClass(): string {
-    let str = 'flex h-18 w-18';
+    let str = 'flex h-18 w-18 flex-shrink-0';
     str += this.labelLeft ? ' order-2' : ' order-1';
     if (this.labelLeft && !this.hideLabel) str += ' ml-16';
     return str;
@@ -33,7 +33,7 @@ export class MxCheckbox {
 
   render() {
     return (
-      <Host class="mx-checkbox inline-flex items-center overflow-hidden">
+      <Host class="mx-checkbox inline-flex items-center">
         <label
           class={[
             'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +

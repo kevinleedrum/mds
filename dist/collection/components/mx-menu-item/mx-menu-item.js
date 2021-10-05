@@ -128,7 +128,7 @@ export class MxMenuItem {
               h("slot", null))),
           this.checked && !this.multiSelect && (h("span", { class: "check ml-12", "data-testid": "check", innerHTML: checkSvg })),
           !!this.submenu && h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowSvg })),
-        this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))),
+        this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))),
       h("slot", { name: "submenu" })));
   }
   static get is() { return "mx-menu-item"; }

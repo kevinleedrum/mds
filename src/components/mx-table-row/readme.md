@@ -16,9 +16,12 @@
 
 ## Events
 
-| Event     | Description                                                                                      | Type                                                          |
-| --------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
-| `mxCheck` | Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked | `CustomEvent<{ rowId: string \| number; checked: boolean; }>` |
+| Event            | Description                                                                                                | Type                                                       |
+| ---------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `mxCheck`        | Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked           | `CustomEvent<{ rowId: string; checked: boolean; }>`        |
+| `mxDragKeyDown`  | Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table. | `CustomEvent<string>`                                      |
+| `mxRowDragEnd`   | Emitted when dragging ends.  Handled by the parent table.                                                  | `CustomEvent<{ isKeyboard: boolean; isCancel: boolean; }>` |
+| `mxRowDragStart` | Emitted when dragging starts.  Handled by the parent table.                                                | `CustomEvent<{ isKeyboard: boolean; }>`                    |
 
 
 ## Methods
@@ -36,6 +39,26 @@ Type: `Promise<void>`
 ### `expand() => Promise<void>`
 
 
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `focusDragHandle() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `translateRow(x: number, y: number) => Promise<void>`
+
+Apply a CSS transform to translate the row by `x` and `y` pixels
 
 #### Returns
 

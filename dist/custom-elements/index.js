@@ -209,7 +209,7 @@ const MxCheckbox$1 = class extends HTMLElement {
     this.indeterminate = false;
   }
   get checkClass() {
-    let str = 'flex h-18 w-18';
+    let str = 'flex h-18 w-18 flex-shrink-0';
     str += this.labelLeft ? ' order-2' : ' order-1';
     if (this.labelLeft && !this.hideLabel)
       str += ' ml-16';
@@ -225,7 +225,7 @@ const MxCheckbox$1 = class extends HTMLElement {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-checkbox inline-flex items-center overflow-hidden" }, h("label", { class: [
+    return (h(Host, { class: "mx-checkbox inline-flex items-center" }, h("label", { class: [
         'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
           (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,
@@ -695,6 +695,63 @@ function parseTimeString(str) {
   if (hours > 23 || minutes > 59)
     return null;
   return { hours, minutes };
+}
+/** Returns the `clientX`, `clientY`, `pageX`, `pageY` from any MouseEvent or TouchEvent. */
+function getCursorCoords(e) {
+  if (e.changedTouches)
+    return e.changedTouches[0];
+  else if (e.touches)
+    return e.touches[0];
+  else
+    return e;
+}
+/** Returns a DOMRect for an element similar to getBoundingClientRect, however the
+ * position ignores CSS transforms and accounts for scrolling. */
+function getPageRect(el) {
+  const { height, width } = el.getBoundingClientRect();
+  let top = 0;
+  let left = 0;
+  do {
+    top += el.offsetTop;
+    left += el.offsetLeft;
+    el = el.offsetParent;
+  } while (el);
+  return { top, left, width, height, bottom: top + height, right: left + width };
+}
+/** Return the client boundaries of an element (or the window) */
+function getBounds(container) {
+  if (container === window) {
+    return { top: 0, right: window.innerWidth, bottom: window.innerHeight, left: 0 };
+  }
+  return container.getBoundingClientRect();
+}
+/** Determines whether an element needs to be scrolled into view */
+function isScrolledOutOfView(el) {
+  const bounds = el.getBoundingClientRect(); // getBoundingClientRect accounts for CSS translate
+  const scrollBounds = getBounds(getScrollingParent(el));
+  if (bounds.top < scrollBounds.top)
+    return true;
+  if (bounds.bottom > scrollBounds.bottom)
+    return true;
+  if (bounds.left < scrollBounds.left)
+    return true;
+  if (bounds.left > scrollBounds.right)
+    return true; // It's okay if the right edge is out of bounds
+  return false;
+}
+/** Get the nearest scrolling ancestor, which could be the window */
+function getScrollingParent(el) {
+  if (!(el instanceof HTMLElement))
+    return window;
+  if (isScrollable(el))
+    return el;
+  return getScrollingParent(el.parentNode);
+}
+function isScrollable(el) {
+  const computedStyle = window.getComputedStyle(el);
+  const overflowRegex = /(auto|scroll)/;
+  const properties = ['overflow', 'overflowX', 'overflowY'];
+  return properties.find(property => overflowRegex.test(computedStyle[property]));
 }
 
 const MxInput$1 = class extends HTMLElement {
@@ -2954,7 +3011,7 @@ const MxMenuItem$1 = class extends HTMLElement {
   }
   render() {
     return (h(Host, { class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') }, h("div", { ref: el => (this.menuItemElem = el), role: "menuitem", "aria-selected": this.checked, "aria-disabled": this.disabled, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) }, this.label && (h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" }, h("span", { class: "block -mb-4" }, this.label))), h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +
-        (this.multiSelect ? ' hidden' : '') }, h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), h("span", { ref: el => (this.slotWrapper = el), class: "overflow-hidden overflow-ellipsis" }, h("slot", null))), this.checked && !this.multiSelect && (h("span", { class: "check ml-12", "data-testid": "check", innerHTML: checkSvg })), !!this.submenu && h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowSvg$1 })), this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), h("slot", { name: "submenu" })));
+        (this.multiSelect ? ' hidden' : '') }, h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), h("span", { ref: el => (this.slotWrapper = el), class: "overflow-hidden overflow-ellipsis" }, h("slot", null))), this.checked && !this.multiSelect && (h("span", { class: "check ml-12", "data-testid": "check", innerHTML: checkSvg })), !!this.submenu && h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowSvg$1 })), this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), h("slot", { name: "submenu" })));
   }
   get element() { return this; }
 };
@@ -3718,7 +3775,7 @@ const MxRadio$1 = class extends HTMLElement {
     this.checked = false;
   }
   render() {
-    return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }), h("span", { class: "flex h-20 w-20 cursor-pointer rounded-full" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
+    return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }), h("span", { class: "flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
 };
 
@@ -3926,7 +3983,7 @@ const MxSwitch$1 = class extends HTMLElement {
     this.checked = false;
   }
   render() {
-    return (h(Host, { class: "mx-switch" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4 w-36 h-14" }, h("input", { class: "absolute h-0 w-0 opacity-0", role: "switch", type: "checkbox", name: this.name, checked: this.checked }), h("span", { class: "slider round" }), h("div", { class: "pl-48 inline-block whitespace-nowrap", "data-testid": "labelName" }, this.labelName))));
+    return (h(Host, { class: "mx-switch" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", { class: "absolute h-0 w-0 opacity-0", role: "switch", type: "checkbox", name: this.name, checked: this.checked }), h("div", { class: "slider relative cursor-pointer round w-36 h-14 flex-shrink-0" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
 };
 
@@ -4000,6 +4057,7 @@ const MxTable$1 = class extends HTMLElement {
     this.mxSortChange = createEvent(this, "mxSortChange", 7);
     this.mxRowCheck = createEvent(this, "mxRowCheck", 7);
     this.mxVisibleRowsChange = createEvent(this, "mxVisibleRowsChange", 7);
+    this.mxRowMove = createEvent(this, "mxRowMove", 7);
     this.hasDefaultSlot = false;
     this.hasSearch = false;
     this.hasFilter = false;
@@ -4015,6 +4073,8 @@ const MxTable$1 = class extends HTMLElement {
     this.checkOnRowClick = true;
     /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
     this.showCheckAll = true;
+    /** Enables reordering of rows via drag and drop. */
+    this.draggableRows = false;
     this.hoverable = true;
     /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
     this.autoWidth = false;
@@ -4050,6 +4110,66 @@ const MxTable$1 = class extends HTMLElement {
       this.checkedRowIds = [...this.checkedRowIds, rowId];
     }
     this.mxRowCheck.emit(this.checkedRowIds);
+  }
+  onMxRowDragStart(e) {
+    const dragRow = e.target.closest('mx-table-row');
+    const rows = this.getTableRows();
+    this.dragRowIndex = rows.indexOf(dragRow);
+    this.dragOverRowIndex = this.dragRowIndex;
+    this.dragMoveHandler = this.onDragMove.bind(this);
+    // Add transitions to the rows
+    rows.forEach(row => {
+      if (!e.detail.isKeyboard && row === dragRow)
+        return; // Do not transition a row dragged with a mouse
+      Array.from(row.children).forEach((rowChild) => {
+        rowChild.classList.add('transition-transform', 'pointer-events-none');
+      });
+    });
+    if (!e.detail.isKeyboard) {
+      document.addEventListener('touchmove', this.dragMoveHandler);
+      document.addEventListener('mousemove', this.dragMoveHandler);
+    }
+  }
+  onDragKeyDown(e) {
+    let direction;
+    const key = e.detail;
+    if (['ArrowUp', 'ArrowLeft'].includes(key))
+      direction = -1;
+    if (['ArrowDown', 'ArrowRight'].includes(key))
+      direction = 1;
+    if (!direction)
+      return;
+    if (direction === -1 && this.dragOverRowIndex === 0)
+      return; // Row is at the top
+    const rows = this.getTableRows();
+    if (direction === 1 && this.dragOverRowIndex === rows.length - 1)
+      return; // Row is at the bottom
+    this.dragOverRowIndex += direction;
+    const dragRow = rows[this.dragRowIndex];
+    const indexDelta = this.dragOverRowIndex - this.dragRowIndex;
+    const translateY = dragRow.children[0].offsetHeight * indexDelta;
+    dragRow.translateRow(0, translateY);
+    this.onDragMove();
+  }
+  onMxRowDragEnd(e) {
+    document.removeEventListener('mousemove', this.dragMoveHandler);
+    document.removeEventListener('touchmove', this.dragMoveHandler);
+    const rows = this.getTableRows();
+    if (!e.detail.isCancel && this.dragOverRowIndex !== this.dragRowIndex) {
+      // If row was dragged to a new position AND dragging wasn't cancelled, emit the mxRowMove event
+      this.mxRowMove.emit({ rowId: e.detail, oldIndex: this.dragRowIndex, newIndex: this.dragOverRowIndex });
+      if (e.detail.isKeyboard)
+        rows[this.dragOverRowIndex].focusDragHandle(); // Focus the handle at the new index
+    }
+    this.dragRowIndex = null;
+    // Remove transitions and transforms from rows
+    rows.forEach(row => {
+      Array.from(row.children).forEach((rowChild) => {
+        rowChild.classList.remove('transition-transform', 'pointer-events-none');
+        rowChild.style.transform = '';
+      });
+    });
+    document.body.style.cursor = '';
   }
   onVisibleRowsChange() {
     this.getTableRows().forEach(row => row.collapse());
@@ -4092,6 +4212,37 @@ const MxTable$1 = class extends HTMLElement {
     else {
       this.checkNone();
     }
+  }
+  /** Animate table rows while dragging a row */
+  onDragMove(e) {
+    requestAnimationFrame(() => {
+      if (this.dragRowIndex == null)
+        return;
+      const rows = this.getTableRows();
+      const dragRowHeight = rows[this.dragRowIndex].children[0].offsetHeight;
+      rows.forEach((row, rowIndex) => {
+        let { top, bottom } = getPageRect(row.children[0]);
+        const rowChildren = Array.from(row.children);
+        if (e) {
+          const { pageY } = getCursorCoords(e);
+          if (pageY >= top && pageY <= bottom)
+            this.dragOverRowIndex = rowIndex;
+        }
+        if (rowIndex === this.dragRowIndex)
+          return; // Do not shift row that is being dragged
+        if (rowIndex <= this.dragOverRowIndex && rowIndex > this.dragRowIndex) {
+          // Shift rows that are below the dragged row UP
+          rowChildren.forEach(child => (child.style.transform = `translateY(-${dragRowHeight}px)`));
+        }
+        else if (rowIndex >= this.dragOverRowIndex && rowIndex < this.dragRowIndex) {
+          // Shift rows that are above the dragged row DOWN
+          rowChildren.forEach(child => (child.style.transform = `translateY(${dragRowHeight}px)`));
+        }
+        else {
+          rowChildren.forEach(child => (child.style.transform = ''));
+        }
+      });
+    });
   }
   setCellProps() {
     const cells = this.element.querySelectorAll('mx-table-cell');
@@ -4209,7 +4360,9 @@ const MxTable$1 = class extends HTMLElement {
     if (!this.minWidths.sm)
       return { display: 'flex', flexDirection: 'column' };
     const display = this.autoWidth ? 'inline-grid' : 'grid';
-    let gridTemplateColumns = this.checkable ? 'minmax(0, min-content) ' : '';
+    let gridTemplateColumns = this.checkable ? 'minmax(0, 48px) ' : '';
+    if (this.draggableRows)
+      gridTemplateColumns += 'minmax(0, 48px) ';
     const autoColumnCount = this.cols.length + (this.hasActionsColumn ? 1 : 0);
     gridTemplateColumns += `repeat(${autoColumnCount}, minmax(0, auto))`;
     return { display, gridTemplateColumns };
@@ -4260,11 +4413,15 @@ const MxTable$1 = class extends HTMLElement {
     let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClass(col);
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
+    let firstColSpan = 1;
+    if (this.minWidths.sm && colIndex === 0 && this.draggableRows)
+      firstColSpan++;
     if (this.minWidths.sm && colIndex === 0 && this.checkable && !isCheckAllInHeader)
-      str += ' col-span-2';
+      firstColSpan++;
+    str += ' col-span-' + firstColSpan;
     if (!this.minWidths.sm && colIndex === this.exposedMobileColumnIndex && this.checkable && isCheckAllInHeader)
       str += ' px-16';
-    if (col.sortable && col.property)
+    if (!this.draggableRows && col.sortable && col.property)
       str += ' group cursor-pointer';
     if (col.headerClass)
       str += col.headerClass;
@@ -4285,7 +4442,7 @@ const MxTable$1 = class extends HTMLElement {
     return alignment === 'right' ? 'justify-end' : alignment === 'center' ? 'justify-center' : 'justify-start';
   }
   onHeaderClick(col) {
-    if (!col || !col.sortable || !col.property)
+    if (this.draggableRows || !col || !col.sortable || !col.property)
       return;
     if (this.sortBy !== col.property) {
       this.sortBy = col.property;
@@ -4325,13 +4482,13 @@ const MxTable$1 = class extends HTMLElement {
         h("span", { class: !this.checkedRowIds.length ? 'hidden' : null }, h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true }, h("span", { class: "h-full flex items-center px-2" }, h("span", { innerHTML: gearSvg }))), h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
     const operationsBar = (h("div", { class: "grid gap-x-16 gap-y-12 pb-12", style: this.operationsBarStyle }, this.checkable && this.showCheckAll && (h("div", { class: "col-start-1 flex items-center min-h-36 space-x-16" }, checkAllCheckbox, multiRowActionUI)), this.hasFilter && (h("div", { class: "flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1" }, h("slot", { name: "filter" }))), this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle }, h("slot", { name: "search" })))));
-    return (h(Host, { class: 'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '') }, this.showOperationsBar && operationsBar, h("div", { "data-testid": "grid", class: "table-grid", style: this.gridStyle }, h("div", { class: "header-row" }, this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, this.minWidths.sm ? (
+    return (h(Host, { class: 'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '') }, this.showOperationsBar && operationsBar, h("div", { "data-testid": "grid", class: "table-grid relative", style: this.gridStyle }, h("div", { class: "header-row" }, this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, this.minWidths.sm ? (
     // Non-Mobile Column Headers
     this.cols.map((col, colIndex) => {
-      return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: col.heading }), col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg$1 })))));
+      return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: col.heading }), !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg$1 })))));
     })) : (
     // Mobile Column Header Navigation
-    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg$1 })))), h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) })))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && (h("div", null, this.visibleRows.map((row, rowIndex) => (
+    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg$1 })))), h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) })))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && (h("div", null, this.visibleRows.map((row, rowIndex) => (
     // Generated Body Rows
     h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", { class: [this.getAlignClass(col), col.cellClass].join(' ') }, h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))), this.visibleRows && this.visibleRows.length === 0 && (h("div", { class: "empty-state" }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found."))))), this.paginate && (
     // Pagination Row
@@ -4366,7 +4523,7 @@ const MxTableCell$1 = class extends HTMLElement {
     if (!this.minWidths.sm && this.isExposedMobileColumn)
       str += ' row-start-1 exposed-cell';
     else if (!this.minWidths.sm)
-      str += ' py-0 pb-12 col-span-3';
+      str += ' py-0 pb-12 col-span-4';
     return str;
   }
   render() {
@@ -4375,20 +4532,70 @@ const MxTableCell$1 = class extends HTMLElement {
   get element() { return this; }
 };
 
+const dragDotsSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14 13C14.5523 13 15 12.5523 15 12C15 11.4477 14.5523 11 14 11C13.4477 11 13 11.4477 13 12C13 12.5523 13.4477 13 14 13Z" fill="currentColor"/>
+  <path d="M14 5C14.5523 5 15 4.55228 15 4C15 3.44772 14.5523 3 14 3C13.4477 3 13 3.44772 13 4C13 4.55228 13.4477 5 14 5Z" fill="currentColor"/>
+  <path d="M14 21C14.5523 21 15 20.5523 15 20C15 19.4477 14.5523 19 14 19C13.4477 19 13 19.4477 13 20C13 20.5523 13.4477 21 14 21Z" fill="currentColor"/>
+  <path d="M10 13C10.5523 13 11 12.5523 11 12C11 11.4477 10.5523 11 10 11C9.44772 11 9 11.4477 9 12C9 12.5523 9.44772 13 10 13Z" fill="currentColor"/>
+  <path d="M10 5C10.5523 5 11 4.55228 11 4C11 3.44772 10.5523 3 10 3C9.44772 3 9 3.44772 9 4C9 4.55228 9.44772 5 10 5Z" fill="currentColor"/>
+  <path d="M14 9C14.5523 9 15 8.55228 15 8C15 7.44772 14.5523 7 14 7C13.4477 7 13 7.44772 13 8C13 8.55228 13.4477 9 14 9Z" fill="currentColor"/>
+  <path d="M14 17C14.5523 17 15 16.5523 15 16C15 15.4477 14.5523 15 14 15C13.4477 15 13 15.4477 13 16C13 16.5523 13.4477 17 14 17Z" fill="currentColor"/>
+  <path d="M10 9C10.5523 9 11 8.55228 11 8C11 7.44772 10.5523 7 10 7C9.44772 7 9 7.44772 9 8C9 8.55228 9.44772 9 10 9Z" fill="currentColor"/>
+  <path d="M10 17C10.5523 17 11 16.5523 11 16C11 15.4477 10.5523 15 10 15C9.44772 15 9 15.4477 9 16C9 16.5523 9.44772 17 10 17Z" fill="currentColor"/>
+  <path d="M10 21C10.5523 21 11 20.5523 11 20C11 19.4477 10.5523 19 10 19C9.44772 19 9 19.4477 9 20C9 20.5523 9.44772 21 10 21Z" fill="currentColor"/>
+</svg>
+`;
+
+const SCROLL_PX = 5; // Scroll by 5px ...
+const SCROLL_INTERVAL_MS = 5; // ... every 5ms
+class DragScroller {
+  constructor(dragEl) {
+    this.scrollingContainer = getScrollingParent(dragEl);
+  }
+  /** Start/stop auto-scrolling based on cursor coordinates */
+  update(e) {
+    clearInterval(this.interval);
+    const { clientX, clientY } = getCursorCoords(e);
+    const bounds = getBounds(this.scrollingContainer);
+    // If not dragging outside bounds, stop
+    if (clientY >= bounds.top && clientY <= bounds.bottom && clientX >= bounds.left && clientX <= bounds.right)
+      return;
+    const directionX = clientX < bounds.left ? -1 : 1;
+    const directionY = clientY < bounds.top ? -1 : 1;
+    this.interval = setInterval(window.scrollBy, SCROLL_INTERVAL_MS, SCROLL_PX * directionX, SCROLL_PX * directionY);
+  }
+  stop() {
+    clearInterval(this.interval);
+  }
+}
+
 const DEFAULT_MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
 const MxTableRow$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
     this.mxCheck = createEvent(this, "mxCheck", 7);
+    this.mxRowDragStart = createEvent(this, "mxRowDragStart", 7);
+    this.mxRowDragEnd = createEvent(this, "mxRowDragEnd", 7);
+    this.mxDragKeyDown = createEvent(this, "mxDragKeyDown", 7);
+    this.dragOrigin = { x: 0, y: 0 };
     /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
     this.actions = [];
     this.checked = false;
     this.minWidths = new MinWidths();
     this.checkable = false;
     this.checkOnRowClick = false;
+    this.isDraggable = false;
+    this.isDragging = false;
     this.isMobileExpanded = false;
     this.isMobileCollapsing = false;
+  }
+  /** Apply a CSS transform to translate the row by `x` and `y` pixels */
+  async translateRow(x, y) {
+    const transform = `translate3d(${x}px, ${y}px, 0)`;
+    if (this.dragShadowEl)
+      this.dragShadowEl.style.transform = transform;
+    Array.from(this.element.children).forEach((child) => (child.style.transform = transform));
   }
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
@@ -4404,6 +4611,7 @@ const MxTableRow$1 = class extends HTMLElement {
     // default slot.
     const table = this.element.closest('mx-table');
     this.checkable = table && table.checkable;
+    this.isDraggable = table && table.draggableRows;
     if (this.checkable && this.rowId == null)
       throw new Error('Checkable rows require either a getRowId prop on the table, or a rowId on the row!');
     if (this.checkable)
@@ -4436,9 +4644,125 @@ const MxTableRow$1 = class extends HTMLElement {
       this.mxCheck.emit({ rowId: this.rowId, checked: this.checked });
     }
   }
+  onKeyboardHandleKeyDown(e) {
+    // Start keyboard dragging on Space/Enter if not already dragging
+    if (!this.isDragging && [' ', 'Enter'].includes(e.key))
+      this.startDragging(e);
+  }
+  startDragging(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.isDragging = true;
+    if (e.type !== 'keydown') {
+      // If using a mouse or touch, set drag origin to current cursor coordinates
+      const { pageX, pageY } = getCursorCoords(e);
+      this.dragOrigin.x = pageX;
+      this.dragOrigin.y = pageY;
+    }
+    else {
+      // If using a keyboard, set drag origin to the row's coordinates on the page
+      const { top, left } = getPageRect(this.element.children[0]);
+      this.dragOrigin.x = left;
+      this.dragOrigin.y = top;
+    }
+    this.element.classList.add('pointer-events-none');
+    this.createDragShadowEl();
+    for (let i = 0; i < this.element.children.length; i++) {
+      const child = this.element.children[i];
+      child.style.zIndex = '9999';
+    }
+    this.addDragListeners(e);
+    this.mxRowDragStart.emit({ isKeyboard: e.type === 'keydown' });
+  }
+  addDragListeners(startEvent) {
+    /** Move all the row children and dragShadowEl with the mouse cursor (via CSS transform) */
+    const onMouseMove = (e) => {
+      requestAnimationFrame(() => {
+        if (!this.isDragging)
+          return;
+        const { pageX, pageY } = getCursorCoords(e);
+        const x = pageX - this.dragOrigin.x;
+        const y = pageY - this.dragOrigin.y;
+        this.translateRow(x, y);
+        this.dragScroller && this.dragScroller.update(e);
+      });
+    };
+    /** Stop dragging when the mouse button is released or touch ends */
+    const onMouseUp = (e) => {
+      e.stopPropagation();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchmove', onMouseMove);
+      document.removeEventListener('touchend', onMouseUp);
+      document.removeEventListener('touchcancel', onMouseUp);
+      this.dragScroller.stop();
+      this.dragScroller = null;
+      this.stopDragging(e.type === 'touchcancel');
+    };
+    /** Move row or cancel dragging based on keypress */
+    const onKeyDown = (e) => {
+      if ([' ', 'Enter'].includes(e.key)) {
+        document.removeEventListener('keydown', onKeyDown);
+        this.stopDragging(true);
+      }
+      else if (['Escape', 'Tab'].includes(e.key)) {
+        document.removeEventListener('keydown', onKeyDown);
+        this.stopDragging(true, true);
+      }
+      else if (e.key.includes('Arrow')) {
+        this.mxDragKeyDown.emit(e.key);
+      }
+      else {
+        return;
+      }
+      e.stopPropagation();
+      e.preventDefault();
+    };
+    // Add the above listeners based on the type of input device being used
+    if (startEvent.type === 'keydown') {
+      document.addEventListener('keydown', onKeyDown);
+    }
+    else if (startEvent.type === 'touchstart') {
+      this.dragScroller = new DragScroller(this.element);
+      document.addEventListener('touchmove', onMouseMove);
+      document.addEventListener('touchend', onMouseUp);
+      document.addEventListener('touchcancel', onMouseUp);
+    }
+    else {
+      this.dragScroller = new DragScroller(this.element);
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
+  }
+  /** Clear transforms and remove dragShadowEl */
+  stopDragging(isKeyboard = false, isCancel = false) {
+    this.isDragging = false;
+    this.element.classList.remove('drag-row', 'pointer-events-none');
+    if (this.dragShadowEl)
+      this.dragShadowEl.remove();
+    this.dragShadowEl = undefined;
+    for (let i = 0; i < this.element.children.length; i++) {
+      const child = this.element.children[i];
+      child.style.transform = '';
+      child.style.zIndex = '';
+    }
+    this.mxRowDragEnd.emit({ isKeyboard, isCancel });
+  }
+  /** When dragging, add an element behind the row children that has a box shadow.
+   * This is simpler than trying to change the row to `display: flex` to add a box shadow to it. */
+  createDragShadowEl() {
+    this.dragShadowEl = document.createElement('div');
+    this.dragShadowEl.classList.add('absolute', 'w-full', 'shadow-24');
+    this.dragShadowEl.style.zIndex = '9998';
+    this.dragShadowEl.style.height = this.element.children[0].offsetHeight + 'px';
+    this.dragShadowEl.style.top = this.element.children[0].offsetTop + 'px';
+    this.dragShadowEl.style.left = this.element.children[0].offsetLeft + 'px';
+    this.element.parentNode.insertBefore(this.dragShadowEl, this.element);
+  }
   accordion() {
     if (this.minWidths.sm)
       return;
+    this.element.classList.add('overflow-hidden');
     this.isMobileExpanded ? this.collapse() : this.expand();
   }
   async collapse() {
@@ -4459,13 +4783,23 @@ const MxTableRow$1 = class extends HTMLElement {
       this.element.style.maxHeight = this.element.scrollHeight + 'px';
     });
   }
-  onTransitionEnd() {
-    if (this.isMobileCollapsing) {
-      this.isMobileExpanded = false;
-      this.isMobileCollapsing = false;
+  async focusDragHandle() {
+    if (this.keyboardDragHandle)
+      this.keyboardDragHandle.focus();
+  }
+  onTransitionEnd(e) {
+    if (e.target === this.element) {
+      this.element.classList.remove('overflow-hidden');
+      if (this.isMobileCollapsing) {
+        this.isMobileExpanded = false;
+        this.isMobileCollapsing = false;
+      }
+      // Remove explicit max-height after expanding to avoid issues with window resizing, etc.
+      this.element.style.maxHeight = '';
     }
-    // Remove explicit max-height after expanding to avoid issues with window resizing, etc.
-    this.element.style.maxHeight = '';
+    // When keyboard dragging, scroll the first element into view if moved out of bounds
+    if (e.target === this.element.children[0] && isScrolledOutOfView(this.element.children[0]))
+      this.element.children[0].scrollIntoView();
   }
   onCheckboxInput(e) {
     this.mxCheck.emit({ rowId: this.rowId, checked: e.target.checked });
@@ -4482,7 +4816,7 @@ const MxTableRow$1 = class extends HTMLElement {
   }
   get rowClass() {
     let str = 'mx-table-row';
-    str += this.minWidths.sm ? ' contents' : ' grid overflow-hidden';
+    str += this.minWidths.sm ? ' contents' : ' grid';
     if (this.checkable)
       str += ' checkable-row';
     if (this.checkable && this.checkOnRowClick)
@@ -4495,13 +4829,13 @@ const MxTableRow$1 = class extends HTMLElement {
     if (this.minWidths.sm)
       return {};
     return {
-      gridTemplateColumns: 'minmax(0, min-content) minmax(0, auto) minmax(0, min-content)',
+      gridTemplateColumns: 'minmax(0, min-content) minmax(0, min-content) minmax(0, auto) minmax(0, min-content)',
       maxHeight: '',
     };
   }
   render() {
-    return (h(Host, { role: "row", class: this.rowClass, style: this.rowStyle, onClick: this.onClick.bind(this), onTransitionEnd: this.onTransitionEnd.bind(this) }, this.checkable && (h("div", { class: "flex items-center pr-4 col-start-1 row-start-1 sm:row-start-auto sm:col-start-auto", onClick: this.accordion.bind(this) }, h("mx-checkbox", { ref: el => (this.checkbox = el), checked: this.checked, onInput: this.onCheckboxInput.bind(this), onClick: e => e.stopPropagation(), "label-name": "Select row", "hide-label": true }))), h("slot", null), !this.checkable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-1 w-0" }), !this.minWidths.sm && (h("div", { class: "flex items-center justify-end px-16 row-start-1", onClick: this.accordion.bind(this) }, h("span", { class: 'mobile-row-chevron text-1 transform' +
-        (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : ''), innerHTML: chevronSvg }))), this.actions.length === 1 && (h("div", { class: "action-cell flex items-center p-16 sm:p-0 justify-end col-span-3 sm:col-span-1" }, h("mx-button", Object.assign({ "data-testid": "action-button", "btn-type": "text" }, this.actions[0]), this.actions[0].value))), this.actions.length > 1 && (h("div", { class: "action-cell flex items-center p-0 justify-end col-span-3 sm:col-span-1" }, h("mx-icon-button", { ref: el => (this.actionMenuButton = el), innerHTML: dotsSvg }), h("mx-menu", { "data-testid": "action-menu", ref: el => (this.actionMenu = el) }, this.actions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))))));
+    return (h(Host, { role: "row", class: this.rowClass, style: this.rowStyle, onClick: this.onClick.bind(this), onTransitionEnd: this.onTransitionEnd.bind(this) }, this.checkable && (h("div", { class: "flex items-center pr-4 col-start-1 row-start-1 sm:row-start-auto sm:col-start-auto", onClick: this.accordion.bind(this) }, h("mx-checkbox", { ref: el => (this.checkbox = el), checked: this.checked, onInput: this.onCheckboxInput.bind(this), onClick: e => e.stopPropagation(), "label-name": "Select row", "hide-label": true }))), this.isDraggable && (h("div", { class: "flex items-center col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move", "data-testid": "drag-handle", onMouseDown: this.startDragging.bind(this), onTouchStart: this.startDragging.bind(this) }, h("span", { "aria-label": "Press Space or Enter to move this row", ref: el => (this.keyboardDragHandle = el), tabindex: "0", class: 'pointer-events-none' + (this.checkable ? ' mx-8' : ''), innerHTML: dragDotsSvg, onKeyDown: this.onKeyboardHandleKeyDown.bind(this) }), this.isDragging && (h("p", { class: "sr-only", role: "alert" }, "Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to cancel.")))), h("slot", null), !this.checkable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-1 w-0" }), !this.isDraggable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-2 w-0" }), !this.minWidths.sm && (h("button", { class: "flex border-0 items-center justify-end px-16 row-start-1", "aria-hidden": "true", onClick: this.accordion.bind(this), onMouseDown: e => e.preventDefault() /* Do not focus on click */ }, h("span", { class: 'mobile-row-chevron text-1 transform' +
+        (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : ''), innerHTML: chevronSvg }))), this.actions.length === 1 && (h("div", { class: "action-cell flex items-center p-16 sm:p-0 justify-end col-span-4 sm:col-span-1" }, h("mx-button", Object.assign({ "data-testid": "action-button", "btn-type": "text" }, this.actions[0]), this.actions[0].value))), this.actions.length > 1 && (h("div", { class: "action-cell flex items-center p-0 justify-end col-span-4 sm:col-span-1" }, h("mx-icon-button", { ref: el => (this.actionMenuButton = el), innerHTML: dotsSvg }), h("mx-menu", { "data-testid": "action-menu", ref: el => (this.actionMenu = el) }, this.actions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))))));
   }
   get element() { return this; }
 };
@@ -4820,9 +5154,9 @@ const MxSnackbar = /*@__PURE__*/proxyCustomElement(MxSnackbar$1, [4,"mx-snackbar
 const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxTab = /*@__PURE__*/proxyCustomElement(MxTab$1, [0,"mx-tab",{"label":[1],"ariaLabel":[1,"aria-label"],"icon":[1],"selected":[516],"badge":[4],"badgeClass":[1,"badge-class"]}]);
 const MxTabContent = /*@__PURE__*/proxyCustomElement(MxTabContent$1, [4,"mx-tab-content",{"index":[2],"value":[2]}]);
-const MxTable = /*@__PURE__*/proxyCustomElement(MxTable$1, [4,"mx-table",{"rows":[16],"columns":[16],"getRowId":[16],"checkable":[4],"checkOnRowClick":[4,"check-on-row-click"],"showCheckAll":[4,"show-check-all"],"hoverable":[4],"autoWidth":[4,"auto-width"],"sortBy":[1025,"sort-by"],"sortAscending":[1028,"sort-ascending"],"paginate":[4],"page":[1026],"rowsPerPage":[1026,"rows-per-page"],"totalRows":[2,"total-rows"],"disableNextPage":[4,"disable-next-page"],"rowsPerPageOptions":[16],"serverPaginate":[4,"server-paginate"],"getRowActions":[16],"getMultiRowActions":[16],"showProgressBar":[4,"show-progress-bar"],"disablePagination":[4,"disable-pagination"],"progressValue":[2,"progress-value"],"progressAppearDelay":[2,"progress-appear-delay"],"minWidths":[32],"checkedRowIds":[32],"exposedMobileColumnIndex":[32],"hasActionsColumnFromSlot":[32]},[[0,"mxCheck","onMxCheck"]]]);
+const MxTable = /*@__PURE__*/proxyCustomElement(MxTable$1, [4,"mx-table",{"rows":[16],"columns":[16],"getRowId":[16],"checkable":[4],"checkOnRowClick":[4,"check-on-row-click"],"showCheckAll":[4,"show-check-all"],"draggableRows":[4,"draggable-rows"],"hoverable":[4],"autoWidth":[4,"auto-width"],"sortBy":[1025,"sort-by"],"sortAscending":[1028,"sort-ascending"],"paginate":[4],"page":[1026],"rowsPerPage":[1026,"rows-per-page"],"totalRows":[2,"total-rows"],"disableNextPage":[4,"disable-next-page"],"rowsPerPageOptions":[16],"serverPaginate":[4,"server-paginate"],"getRowActions":[16],"getMultiRowActions":[16],"showProgressBar":[4,"show-progress-bar"],"disablePagination":[4,"disable-pagination"],"progressValue":[2,"progress-value"],"progressAppearDelay":[2,"progress-appear-delay"],"minWidths":[32],"checkedRowIds":[32],"exposedMobileColumnIndex":[32],"hasActionsColumnFromSlot":[32]},[[0,"mxCheck","onMxCheck"],[0,"mxRowDragStart","onMxRowDragStart"],[0,"mxDragKeyDown","onDragKeyDown"],[0,"mxRowDragEnd","onMxRowDragEnd"]]]);
 const MxTableCell = /*@__PURE__*/proxyCustomElement(MxTableCell$1, [4,"mx-table-cell",{"isExposedMobileColumn":[516,"is-exposed-mobile-column"],"columnIndex":[514,"column-index"],"heading":[1],"minWidths":[32]}]);
-const MxTableRow = /*@__PURE__*/proxyCustomElement(MxTableRow$1, [4,"mx-table-row",{"rowId":[1,"row-id"],"actions":[16],"checked":[1028],"minWidths":[32],"checkable":[32],"checkOnRowClick":[32],"isMobileExpanded":[32],"isMobileCollapsing":[32]}]);
+const MxTableRow = /*@__PURE__*/proxyCustomElement(MxTableRow$1, [4,"mx-table-row",{"rowId":[1,"row-id"],"actions":[16],"checked":[1028],"minWidths":[32],"checkable":[32],"checkOnRowClick":[32],"isDraggable":[32],"isDragging":[32],"isMobileExpanded":[32],"isMobileCollapsing":[32]}]);
 const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [0,"mx-tabs",{"fill":[4],"value":[2],"tabs":[16],"minWidths":[32]},[[0,"click","onClick"]]]);
 const MxTimePicker = /*@__PURE__*/proxyCustomElement(MxTimePicker$1, [0,"mx-time-picker",{"ariaLabel":[1,"aria-label"],"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[0,"click","onClick"]]]);
 const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"ariaLabel":[1,"aria-label"],"value":[8]}]);

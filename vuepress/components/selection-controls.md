@@ -10,7 +10,7 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-checkbox name="foo" label-name="Premier" checked /></div>
     <div><mx-checkbox name="foo" label-name="W Collection" /></div>
     <div><mx-checkbox name="foo" label-name="Equestrian" /></div>
-    <div><mx-checkbox name="foo" label-name="Warlock" /></div>
+    <div><mx-checkbox name="foo" label-name="Darkness falls across the land, The midnight hour is close at hand" /></div>
     <div><mx-checkbox name="foo" disabled label-name="Disabled" /></div>
     <div><mx-checkbox name="foo" checked disabled label-name="Disabled" /></div>
     <div><mx-checkbox name="foo" indeterminate label-name="Indeterminate" /></div>
@@ -43,7 +43,7 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-radio name="foo" label-name="Premier" /></div>
     <div><mx-radio name="foo" label-name="W Collection" /></div>
     <div><mx-radio name="foo" label-name="Equestrian" /></div>
-    <div><mx-radio name="foo" label-name="Warlock" /></div>
+    <div><mx-radio name="foo" label-name="Darkness falls across the land, The midnight hour is close at hand" /></div>
   </div>
 </div>
 <!-- #endregion radio-buttons -->
@@ -67,7 +67,7 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-switch name="foo" label-name="Premier" /></div>
     <div><mx-switch name="foo" label-name="W Collection" /></div>
     <div><mx-switch name="foo" label-name="Equestrian" /></div>
-    <div><mx-switch name="foo" label-name="Warlock" /></div>
+    <div><mx-switch name="foo" label-name="Darkness falls across the land, The midnight hour is close at hand" /></div>
   </div>
 </div>
 <!-- #endregion switches -->

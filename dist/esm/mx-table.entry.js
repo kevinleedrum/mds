@@ -1,6 +1,6 @@
 import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-d7d68a6b.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { c as capitalize, i as isDateObject } from './utils-bad68038.js';
+import { g as getPageRect, c as capitalize, i as isDateObject, a as getCursorCoords } from './utils-0f21db35.js';
 import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
 
 const gearSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,6 +15,7 @@ const MxTable = class {
     this.mxSortChange = createEvent(this, "mxSortChange", 7);
     this.mxRowCheck = createEvent(this, "mxRowCheck", 7);
     this.mxVisibleRowsChange = createEvent(this, "mxVisibleRowsChange", 7);
+    this.mxRowMove = createEvent(this, "mxRowMove", 7);
     this.hasDefaultSlot = false;
     this.hasSearch = false;
     this.hasFilter = false;
@@ -30,6 +31,8 @@ const MxTable = class {
     this.checkOnRowClick = true;
     /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
     this.showCheckAll = true;
+    /** Enables reordering of rows via drag and drop. */
+    this.draggableRows = false;
     this.hoverable = true;
     /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
     this.autoWidth = false;
@@ -65,6 +68,66 @@ const MxTable = class {
       this.checkedRowIds = [...this.checkedRowIds, rowId];
     }
     this.mxRowCheck.emit(this.checkedRowIds);
+  }
+  onMxRowDragStart(e) {
+    const dragRow = e.target.closest('mx-table-row');
+    const rows = this.getTableRows();
+    this.dragRowIndex = rows.indexOf(dragRow);
+    this.dragOverRowIndex = this.dragRowIndex;
+    this.dragMoveHandler = this.onDragMove.bind(this);
+    // Add transitions to the rows
+    rows.forEach(row => {
+      if (!e.detail.isKeyboard && row === dragRow)
+        return; // Do not transition a row dragged with a mouse
+      Array.from(row.children).forEach((rowChild) => {
+        rowChild.classList.add('transition-transform', 'pointer-events-none');
+      });
+    });
+    if (!e.detail.isKeyboard) {
+      document.addEventListener('touchmove', this.dragMoveHandler);
+      document.addEventListener('mousemove', this.dragMoveHandler);
+    }
+  }
+  onDragKeyDown(e) {
+    let direction;
+    const key = e.detail;
+    if (['ArrowUp', 'ArrowLeft'].includes(key))
+      direction = -1;
+    if (['ArrowDown', 'ArrowRight'].includes(key))
+      direction = 1;
+    if (!direction)
+      return;
+    if (direction === -1 && this.dragOverRowIndex === 0)
+      return; // Row is at the top
+    const rows = this.getTableRows();
+    if (direction === 1 && this.dragOverRowIndex === rows.length - 1)
+      return; // Row is at the bottom
+    this.dragOverRowIndex += direction;
+    const dragRow = rows[this.dragRowIndex];
+    const indexDelta = this.dragOverRowIndex - this.dragRowIndex;
+    const translateY = dragRow.children[0].offsetHeight * indexDelta;
+    dragRow.translateRow(0, translateY);
+    this.onDragMove();
+  }
+  onMxRowDragEnd(e) {
+    document.removeEventListener('mousemove', this.dragMoveHandler);
+    document.removeEventListener('touchmove', this.dragMoveHandler);
+    const rows = this.getTableRows();
+    if (!e.detail.isCancel && this.dragOverRowIndex !== this.dragRowIndex) {
+      // If row was dragged to a new position AND dragging wasn't cancelled, emit the mxRowMove event
+      this.mxRowMove.emit({ rowId: e.detail, oldIndex: this.dragRowIndex, newIndex: this.dragOverRowIndex });
+      if (e.detail.isKeyboard)
+        rows[this.dragOverRowIndex].focusDragHandle(); // Focus the handle at the new index
+    }
+    this.dragRowIndex = null;
+    // Remove transitions and transforms from rows
+    rows.forEach(row => {
+      Array.from(row.children).forEach((rowChild) => {
+        rowChild.classList.remove('transition-transform', 'pointer-events-none');
+        rowChild.style.transform = '';
+      });
+    });
+    document.body.style.cursor = '';
   }
   onVisibleRowsChange() {
     this.getTableRows().forEach(row => row.collapse());
@@ -107,6 +170,37 @@ const MxTable = class {
     else {
       this.checkNone();
     }
+  }
+  /** Animate table rows while dragging a row */
+  onDragMove(e) {
+    requestAnimationFrame(() => {
+      if (this.dragRowIndex == null)
+        return;
+      const rows = this.getTableRows();
+      const dragRowHeight = rows[this.dragRowIndex].children[0].offsetHeight;
+      rows.forEach((row, rowIndex) => {
+        let { top, bottom } = getPageRect(row.children[0]);
+        const rowChildren = Array.from(row.children);
+        if (e) {
+          const { pageY } = getCursorCoords(e);
+          if (pageY >= top && pageY <= bottom)
+            this.dragOverRowIndex = rowIndex;
+        }
+        if (rowIndex === this.dragRowIndex)
+          return; // Do not shift row that is being dragged
+        if (rowIndex <= this.dragOverRowIndex && rowIndex > this.dragRowIndex) {
+          // Shift rows that are below the dragged row UP
+          rowChildren.forEach(child => (child.style.transform = `translateY(-${dragRowHeight}px)`));
+        }
+        else if (rowIndex >= this.dragOverRowIndex && rowIndex < this.dragRowIndex) {
+          // Shift rows that are above the dragged row DOWN
+          rowChildren.forEach(child => (child.style.transform = `translateY(${dragRowHeight}px)`));
+        }
+        else {
+          rowChildren.forEach(child => (child.style.transform = ''));
+        }
+      });
+    });
   }
   setCellProps() {
     const cells = this.element.querySelectorAll('mx-table-cell');
@@ -224,7 +318,9 @@ const MxTable = class {
     if (!this.minWidths.sm)
       return { display: 'flex', flexDirection: 'column' };
     const display = this.autoWidth ? 'inline-grid' : 'grid';
-    let gridTemplateColumns = this.checkable ? 'minmax(0, min-content) ' : '';
+    let gridTemplateColumns = this.checkable ? 'minmax(0, 48px) ' : '';
+    if (this.draggableRows)
+      gridTemplateColumns += 'minmax(0, 48px) ';
     const autoColumnCount = this.cols.length + (this.hasActionsColumn ? 1 : 0);
     gridTemplateColumns += `repeat(${autoColumnCount}, minmax(0, auto))`;
     return { display, gridTemplateColumns };
@@ -275,11 +371,15 @@ const MxTable = class {
     let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClass(col);
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
+    let firstColSpan = 1;
+    if (this.minWidths.sm && colIndex === 0 && this.draggableRows)
+      firstColSpan++;
     if (this.minWidths.sm && colIndex === 0 && this.checkable && !isCheckAllInHeader)
-      str += ' col-span-2';
+      firstColSpan++;
+    str += ' col-span-' + firstColSpan;
     if (!this.minWidths.sm && colIndex === this.exposedMobileColumnIndex && this.checkable && isCheckAllInHeader)
       str += ' px-16';
-    if (col.sortable && col.property)
+    if (!this.draggableRows && col.sortable && col.property)
       str += ' group cursor-pointer';
     if (col.headerClass)
       str += col.headerClass;
@@ -300,7 +400,7 @@ const MxTable = class {
     return alignment === 'right' ? 'justify-end' : alignment === 'center' ? 'justify-center' : 'justify-start';
   }
   onHeaderClick(col) {
-    if (!col || !col.sortable || !col.property)
+    if (this.draggableRows || !col || !col.sortable || !col.property)
       return;
     if (this.sortBy !== col.property) {
       this.sortBy = col.property;
@@ -340,13 +440,13 @@ const MxTable = class {
         h("span", { class: !this.checkedRowIds.length ? 'hidden' : null }, h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true }, h("span", { class: "h-full flex items-center px-2" }, h("span", { innerHTML: gearSvg }))), h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
     const operationsBar = (h("div", { class: "grid gap-x-16 gap-y-12 pb-12", style: this.operationsBarStyle }, this.checkable && this.showCheckAll && (h("div", { class: "col-start-1 flex items-center min-h-36 space-x-16" }, checkAllCheckbox, multiRowActionUI)), this.hasFilter && (h("div", { class: "flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1" }, h("slot", { name: "filter" }))), this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle }, h("slot", { name: "search" })))));
-    return (h(Host, { class: 'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '') }, this.showOperationsBar && operationsBar, h("div", { "data-testid": "grid", class: "table-grid", style: this.gridStyle }, h("div", { class: "header-row" }, this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, this.minWidths.sm ? (
+    return (h(Host, { class: 'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '') }, this.showOperationsBar && operationsBar, h("div", { "data-testid": "grid", class: "table-grid relative", style: this.gridStyle }, h("div", { class: "header-row" }, this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, this.minWidths.sm ? (
     // Non-Mobile Column Headers
     this.cols.map((col, colIndex) => {
-      return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: col.heading }), col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg })))));
+      return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: col.heading }), !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg })))));
     })) : (
     // Mobile Column Header Navigation
-    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg })))), h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) })))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && (h("div", null, this.visibleRows.map((row, rowIndex) => (
+    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg })))), h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) })))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && (h("div", null, this.visibleRows.map((row, rowIndex) => (
     // Generated Body Rows
     h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", { class: [this.getAlignClass(col), col.cellClass].join(' ') }, h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))), this.visibleRows && this.visibleRows.length === 0 && (h("div", { class: "empty-state" }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found."))))), this.paginate && (
     // Pagination Row

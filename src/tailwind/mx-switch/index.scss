@@ -1,11 +1,5 @@
 .mx-switch {
   .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     background-color: var(--mds-bg-switch-track);
     -webkit-transition: 0.4s;
     transition: 0.4s;

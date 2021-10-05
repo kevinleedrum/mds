@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, Element, Event, Watch, Listen, State, Method } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
-import { capitalize, isDateObject } from '../../utils/utils';
+import { capitalize, getCursorCoords, getPageRect, isDateObject } from '../../utils/utils';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 import gearSvg from '../../assets/svg/gear.svg';
 export class MxTable {
@@ -20,6 +20,8 @@ export class MxTable {
     this.checkOnRowClick = true;
     /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
     this.showCheckAll = true;
+    /** Enables reordering of rows via drag and drop. */
+    this.draggableRows = false;
     this.hoverable = true;
     /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
     this.autoWidth = false;
@@ -55,6 +57,66 @@ export class MxTable {
       this.checkedRowIds = [...this.checkedRowIds, rowId];
     }
     this.mxRowCheck.emit(this.checkedRowIds);
+  }
+  onMxRowDragStart(e) {
+    const dragRow = e.target.closest('mx-table-row');
+    const rows = this.getTableRows();
+    this.dragRowIndex = rows.indexOf(dragRow);
+    this.dragOverRowIndex = this.dragRowIndex;
+    this.dragMoveHandler = this.onDragMove.bind(this);
+    // Add transitions to the rows
+    rows.forEach(row => {
+      if (!e.detail.isKeyboard && row === dragRow)
+        return; // Do not transition a row dragged with a mouse
+      Array.from(row.children).forEach((rowChild) => {
+        rowChild.classList.add('transition-transform', 'pointer-events-none');
+      });
+    });
+    if (!e.detail.isKeyboard) {
+      document.addEventListener('touchmove', this.dragMoveHandler);
+      document.addEventListener('mousemove', this.dragMoveHandler);
+    }
+  }
+  onDragKeyDown(e) {
+    let direction;
+    const key = e.detail;
+    if (['ArrowUp', 'ArrowLeft'].includes(key))
+      direction = -1;
+    if (['ArrowDown', 'ArrowRight'].includes(key))
+      direction = 1;
+    if (!direction)
+      return;
+    if (direction === -1 && this.dragOverRowIndex === 0)
+      return; // Row is at the top
+    const rows = this.getTableRows();
+    if (direction === 1 && this.dragOverRowIndex === rows.length - 1)
+      return; // Row is at the bottom
+    this.dragOverRowIndex += direction;
+    const dragRow = rows[this.dragRowIndex];
+    const indexDelta = this.dragOverRowIndex - this.dragRowIndex;
+    const translateY = dragRow.children[0].offsetHeight * indexDelta;
+    dragRow.translateRow(0, translateY);
+    this.onDragMove();
+  }
+  onMxRowDragEnd(e) {
+    document.removeEventListener('mousemove', this.dragMoveHandler);
+    document.removeEventListener('touchmove', this.dragMoveHandler);
+    const rows = this.getTableRows();
+    if (!e.detail.isCancel && this.dragOverRowIndex !== this.dragRowIndex) {
+      // If row was dragged to a new position AND dragging wasn't cancelled, emit the mxRowMove event
+      this.mxRowMove.emit({ rowId: e.detail, oldIndex: this.dragRowIndex, newIndex: this.dragOverRowIndex });
+      if (e.detail.isKeyboard)
+        rows[this.dragOverRowIndex].focusDragHandle(); // Focus the handle at the new index
+    }
+    this.dragRowIndex = null;
+    // Remove transitions and transforms from rows
+    rows.forEach(row => {
+      Array.from(row.children).forEach((rowChild) => {
+        rowChild.classList.remove('transition-transform', 'pointer-events-none');
+        rowChild.style.transform = '';
+      });
+    });
+    document.body.style.cursor = '';
   }
   onVisibleRowsChange() {
     this.getTableRows().forEach(row => row.collapse());
@@ -97,6 +159,37 @@ export class MxTable {
     else {
       this.checkNone();
     }
+  }
+  /** Animate table rows while dragging a row */
+  onDragMove(e) {
+    requestAnimationFrame(() => {
+      if (this.dragRowIndex == null)
+        return;
+      const rows = this.getTableRows();
+      const dragRowHeight = rows[this.dragRowIndex].children[0].offsetHeight;
+      rows.forEach((row, rowIndex) => {
+        let { top, bottom } = getPageRect(row.children[0]);
+        const rowChildren = Array.from(row.children);
+        if (e) {
+          const { pageY } = getCursorCoords(e);
+          if (pageY >= top && pageY <= bottom)
+            this.dragOverRowIndex = rowIndex;
+        }
+        if (rowIndex === this.dragRowIndex)
+          return; // Do not shift row that is being dragged
+        if (rowIndex <= this.dragOverRowIndex && rowIndex > this.dragRowIndex) {
+          // Shift rows that are below the dragged row UP
+          rowChildren.forEach(child => (child.style.transform = `translateY(-${dragRowHeight}px)`));
+        }
+        else if (rowIndex >= this.dragOverRowIndex && rowIndex < this.dragRowIndex) {
+          // Shift rows that are above the dragged row DOWN
+          rowChildren.forEach(child => (child.style.transform = `translateY(${dragRowHeight}px)`));
+        }
+        else {
+          rowChildren.forEach(child => (child.style.transform = ''));
+        }
+      });
+    });
   }
   setCellProps() {
     const cells = this.element.querySelectorAll('mx-table-cell');
@@ -214,7 +307,9 @@ export class MxTable {
     if (!this.minWidths.sm)
       return { display: 'flex', flexDirection: 'column' };
     const display = this.autoWidth ? 'inline-grid' : 'grid';
-    let gridTemplateColumns = this.checkable ? 'minmax(0, min-content) ' : '';
+    let gridTemplateColumns = this.checkable ? 'minmax(0, 48px) ' : '';
+    if (this.draggableRows)
+      gridTemplateColumns += 'minmax(0, 48px) ';
     const autoColumnCount = this.cols.length + (this.hasActionsColumn ? 1 : 0);
     gridTemplateColumns += `repeat(${autoColumnCount}, minmax(0, auto))`;
     return { display, gridTemplateColumns };
@@ -265,11 +360,15 @@ export class MxTable {
     let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClass(col);
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
+    let firstColSpan = 1;
+    if (this.minWidths.sm && colIndex === 0 && this.draggableRows)
+      firstColSpan++;
     if (this.minWidths.sm && colIndex === 0 && this.checkable && !isCheckAllInHeader)
-      str += ' col-span-2';
+      firstColSpan++;
+    str += ' col-span-' + firstColSpan;
     if (!this.minWidths.sm && colIndex === this.exposedMobileColumnIndex && this.checkable && isCheckAllInHeader)
       str += ' px-16';
-    if (col.sortable && col.property)
+    if (!this.draggableRows && col.sortable && col.property)
       str += ' group cursor-pointer';
     if (col.headerClass)
       str += col.headerClass;
@@ -290,7 +389,7 @@ export class MxTable {
     return alignment === 'right' ? 'justify-end' : alignment === 'center' ? 'justify-center' : 'justify-start';
   }
   onHeaderClick(col) {
-    if (!col || !col.sortable || !col.property)
+    if (this.draggableRows || !col || !col.sortable || !col.property)
       return;
     if (this.sortBy !== col.property) {
       this.sortBy = col.property;
@@ -343,7 +442,7 @@ export class MxTable {
         h("slot", { name: "search" })))));
     return (h(Host, { class: 'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '') },
       this.showOperationsBar && operationsBar,
-      h("div", { "data-testid": "grid", class: "table-grid", style: this.gridStyle },
+      h("div", { "data-testid": "grid", class: "table-grid relative", style: this.gridStyle },
         h("div", { class: "header-row" },
           this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox,
           this.minWidths.sm ? (
@@ -352,7 +451,7 @@ export class MxTable {
             return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) },
               h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" },
                 h("span", { class: "truncate flex-shrink", innerHTML: col.heading }),
-                col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg })))));
+                !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg })))));
           })) : (
           // Mobile Column Header Navigation
           h("div", { class: "flex items-stretch" },
@@ -360,7 +459,7 @@ export class MxTable {
             h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) },
               h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" },
                 h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }),
-                this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg })))),
+                !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg })))),
             h("div", { class: "flex items-center" },
               h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }),
               h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) })))),
@@ -496,6 +595,24 @@ export class MxTable {
       "attribute": "show-check-all",
       "reflect": false,
       "defaultValue": "true"
+    },
+    "draggableRows": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Enables reordering of rows via drag and drop."
+      },
+      "attribute": "draggable-rows",
+      "reflect": false,
+      "defaultValue": "false"
     },
     "hoverable": {
       "type": "boolean",
@@ -863,6 +980,21 @@ export class MxTable {
           }
         }
       }
+    }, {
+      "method": "mxRowMove",
+      "name": "mxRowMove",
+      "bubbles": true,
+      "cancelable": true,
+      "composed": true,
+      "docs": {
+        "tags": [],
+        "text": "Emitted when a row is dragged to a new position.\nThe `Event.detail` object will contain the `rowId` (if set), `oldIndex`, and `newIndex`."
+      },
+      "complexType": {
+        "original": "any",
+        "resolved": "any",
+        "references": {}
+      }
     }]; }
   static get methods() { return {
     "getCheckedRowIds": {
@@ -968,6 +1100,24 @@ export class MxTable {
   static get listeners() { return [{
       "name": "mxCheck",
       "method": "onMxCheck",
+      "target": undefined,
+      "capture": false,
+      "passive": false
+    }, {
+      "name": "mxRowDragStart",
+      "method": "onMxRowDragStart",
+      "target": undefined,
+      "capture": false,
+      "passive": false
+    }, {
+      "name": "mxDragKeyDown",
+      "method": "onDragKeyDown",
+      "target": undefined,
+      "capture": false,
+      "passive": false
+    }, {
+      "name": "mxRowDragEnd",
+      "method": "onMxRowDragEnd",
       "target": undefined,
       "capture": false,
       "passive": false

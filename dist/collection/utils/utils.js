@@ -39,3 +39,60 @@ export function parseTimeString(str) {
     return null;
   return { hours, minutes };
 }
+/** Returns the `clientX`, `clientY`, `pageX`, `pageY` from any MouseEvent or TouchEvent. */
+export function getCursorCoords(e) {
+  if (e.changedTouches)
+    return e.changedTouches[0];
+  else if (e.touches)
+    return e.touches[0];
+  else
+    return e;
+}
+/** Returns a DOMRect for an element similar to getBoundingClientRect, however the
+ * position ignores CSS transforms and accounts for scrolling. */
+export function getPageRect(el) {
+  const { height, width } = el.getBoundingClientRect();
+  let top = 0;
+  let left = 0;
+  do {
+    top += el.offsetTop;
+    left += el.offsetLeft;
+    el = el.offsetParent;
+  } while (el);
+  return { top, left, width, height, bottom: top + height, right: left + width };
+}
+/** Return the client boundaries of an element (or the window) */
+export function getBounds(container) {
+  if (container === window) {
+    return { top: 0, right: window.innerWidth, bottom: window.innerHeight, left: 0 };
+  }
+  return container.getBoundingClientRect();
+}
+/** Determines whether an element needs to be scrolled into view */
+export function isScrolledOutOfView(el) {
+  const bounds = el.getBoundingClientRect(); // getBoundingClientRect accounts for CSS translate
+  const scrollBounds = getBounds(getScrollingParent(el));
+  if (bounds.top < scrollBounds.top)
+    return true;
+  if (bounds.bottom > scrollBounds.bottom)
+    return true;
+  if (bounds.left < scrollBounds.left)
+    return true;
+  if (bounds.left > scrollBounds.right)
+    return true; // It's okay if the right edge is out of bounds
+  return false;
+}
+/** Get the nearest scrolling ancestor, which could be the window */
+export function getScrollingParent(el) {
+  if (!(el instanceof HTMLElement))
+    return window;
+  if (isScrollable(el))
+    return el;
+  return getScrollingParent(el.parentNode);
+}
+function isScrollable(el) {
+  const computedStyle = window.getComputedStyle(el);
+  const overflowRegex = /(auto|scroll)/;
+  const properties = ['overflow', 'overflowX', 'overflowY'];
+  return properties.find(property => overflowRegex.test(computedStyle[property]));
+}

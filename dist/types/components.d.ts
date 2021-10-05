@@ -479,6 +479,10 @@ export namespace Components {
           * Disable the pagination buttons (i.e. while loading results)
          */
         "disablePagination": boolean;
+        /**
+          * Enables reordering of rows via drag and drop.
+         */
+        "draggableRows": boolean;
         "getCheckedRowIds": () => Promise<string[]>;
         "getMultiRowActions": (rows: string[]) => ITableRowAction[];
         "getRowActions": (row: Object) => ITableRowAction[];
@@ -554,10 +558,15 @@ export namespace Components {
         "checked": boolean;
         "collapse": () => Promise<void>;
         "expand": () => Promise<void>;
+        "focusDragHandle": () => Promise<void>;
         /**
           * This is required for checkable rows in order to persist the checked state through sorting and pagination.
          */
         "rowId": string;
+        /**
+          * Apply a CSS transform to translate the row by `x` and `y` pixels
+         */
+        "translateRow": (x: number, y: number) => Promise<void>;
     }
     interface MxTabs {
         /**
@@ -1286,6 +1295,10 @@ declare namespace LocalJSX {
           * Disable the pagination buttons (i.e. while loading results)
          */
         "disablePagination"?: boolean;
+        /**
+          * Enables reordering of rows via drag and drop.
+         */
+        "draggableRows"?: boolean;
         "getMultiRowActions"?: (rows: string[]) => ITableRowAction[];
         "getRowActions"?: (row: Object) => ITableRowAction[];
         /**
@@ -1297,6 +1310,10 @@ declare namespace LocalJSX {
           * Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s.
          */
         "onMxRowCheck"?: (event: CustomEvent<string[]>) => void;
+        /**
+          * Emitted when a row is dragged to a new position. The `Event.detail` object will contain the `rowId` (if set), `oldIndex`, and `newIndex`.
+         */
+        "onMxRowMove"?: (event: CustomEvent<any>) => void;
         /**
           * Emitted when a sortable column's header is clicked.
          */
@@ -1372,7 +1389,19 @@ declare namespace LocalJSX {
         /**
           * Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked
          */
-        "onMxCheck"?: (event: CustomEvent<{ rowId: string | number; checked: boolean }>) => void;
+        "onMxCheck"?: (event: CustomEvent<{ rowId: string; checked: boolean }>) => void;
+        /**
+          * Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table.
+         */
+        "onMxDragKeyDown"?: (event: CustomEvent<string>) => void;
+        /**
+          * Emitted when dragging ends.  Handled by the parent table.
+         */
+        "onMxRowDragEnd"?: (event: CustomEvent<{ isKeyboard: boolean; isCancel: boolean }>) => void;
+        /**
+          * Emitted when dragging starts.  Handled by the parent table.
+         */
+        "onMxRowDragStart"?: (event: CustomEvent<{ isKeyboard: boolean }>) => void;
         /**
           * This is required for checkable rows in order to persist the checked state through sorting and pagination.
          */
