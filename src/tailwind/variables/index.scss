@@ -330,4 +330,14 @@
   --mds-bg-snackbar: #202020;
   --mds-text-snackbar: #fff;
   /* #endregion snackbars */
+
+  /* #region upload */
+  /* Image Uploads */
+  --mds-bg-image-upload-hover: #ebf2f9;
+  --mds-bg-image-upload: #fefefe;
+  --mds-border-image-upload: #333;
+  --mds-text-image-upload-error: #ff0c3e;
+  --mds-text-image-upload-success: #2ad062;
+  --mds-text-image-upload: #333;
+  /* #endregion snackbars */
 }
