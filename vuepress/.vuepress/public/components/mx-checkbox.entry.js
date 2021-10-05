@@ -15,7 +15,7 @@ const MxCheckbox = class {
     this.indeterminate = false;
   }
   get checkClass() {
-    let str = 'flex h-18 w-18';
+    let str = 'flex h-18 w-18 flex-shrink-0';
     str += this.labelLeft ? ' order-2' : ' order-1';
     if (this.labelLeft && !this.hideLabel)
       str += ' ml-16';
@@ -31,7 +31,7 @@ const MxCheckbox = class {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-checkbox inline-flex items-center overflow-hidden" }, h("label", { class: [
+    return (h(Host, { class: "mx-checkbox inline-flex items-center" }, h("label", { class: [
         'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
           (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,

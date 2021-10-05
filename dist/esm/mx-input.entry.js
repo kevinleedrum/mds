@@ -1,6 +1,6 @@
 import { r as registerInstance, h, H as Host } from './index-d7d68a6b.js';
 import { w as warningCircleSvg } from './warning-circle-7e1a7781.js';
-import { u as uuidv4 } from './utils-bad68038.js';
+import { u as uuidv4 } from './utils-0f21db35.js';
 
 const MxInput = class {
   constructor(hostRef) {

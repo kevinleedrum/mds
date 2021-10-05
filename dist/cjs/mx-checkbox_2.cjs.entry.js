@@ -3,8 +3,8 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-c246f020.js');
-const transitions = require('./transitions-a862826f.js');
-require('./utils-04d102b7.js');
+const transitions = require('./transitions-10ae1c85.js');
+require('./utils-821b5149.js');
 
 const MxCheckbox = class {
   constructor(hostRef) {
@@ -21,7 +21,7 @@ const MxCheckbox = class {
     this.indeterminate = false;
   }
   get checkClass() {
-    let str = 'flex h-18 w-18';
+    let str = 'flex h-18 w-18 flex-shrink-0';
     str += this.labelLeft ? ' order-2' : ' order-1';
     if (this.labelLeft && !this.hideLabel)
       str += ' ml-16';
@@ -37,7 +37,7 @@ const MxCheckbox = class {
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: "mx-checkbox inline-flex items-center overflow-hidden" }, index.h("label", { class: [
+    return (index.h(index.Host, { class: "mx-checkbox inline-flex items-center" }, index.h("label", { class: [
         'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
           (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,

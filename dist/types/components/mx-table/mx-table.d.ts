@@ -50,6 +50,9 @@ export declare class MxTable {
   hasSearch: boolean;
   hasFilter: boolean;
   showOperationsBar: boolean;
+  dragRowIndex: number;
+  dragOverRowIndex: number;
+  dragMoveHandler: (e: MouseEvent) => any;
   /** An array of objects that defines the table's dataset. */
   rows: Object[];
   /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
@@ -64,6 +67,8 @@ export declare class MxTable {
   checkOnRowClick: boolean;
   /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
   showCheckAll: boolean;
+  /** Enables reordering of rows via drag and drop. */
+  draggableRows: boolean;
   hoverable: boolean;
   /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
   autoWidth: boolean;
@@ -106,7 +111,13 @@ export declare class MxTable {
    * The `Event.detail` will contain the sorted, paginated array of visible rows.  This is useful
    * for building a custom row layout via the default slot. */
   mxVisibleRowsChange: EventEmitter<Object[]>;
+  /** Emitted when a row is dragged to a new position.
+   * The `Event.detail` object will contain the `rowId` (if set), `oldIndex`, and `newIndex`. */
+  mxRowMove: EventEmitter<any>;
   onMxCheck(e: CustomEvent): void;
+  onMxRowDragStart(e: CustomEvent): void;
+  onDragKeyDown(e: CustomEvent): void;
+  onMxRowDragEnd(e: CustomEvent): void;
   onVisibleRowsChange(): void;
   onPageChange(): void;
   resetPage(): void;
@@ -117,6 +128,8 @@ export declare class MxTable {
   hasActionsColumnFromSlot: boolean;
   getTableRows(): HTMLMxTableRowElement[];
   onCheckAllClick(e: InputEvent): void;
+  /** Animate table rows while dragging a row */
+  onDragMove(e?: MouseEvent): void;
   setCellProps(): void;
   setRowsChecked(): void;
   connectedCallback(): void;

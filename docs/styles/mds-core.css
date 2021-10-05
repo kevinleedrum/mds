@@ -3371,13 +3371,17 @@ video {
 
   order: 0;
 }
-.mds .col-span-2{
-
-  grid-column: span 2 / span 2;
-}
 .mds .col-span-full{
 
   grid-column: 1 / -1;
+}
+.mds .col-span-4{
+
+  grid-column: span 4 / span 4;
+}
+.mds .col-span-2{
+
+  grid-column: span 2 / span 2;
 }
 .mds .col-span-3{
 
@@ -3390,10 +3394,6 @@ video {
 .mds .col-span-1{
 
   grid-column: span 1 / span 1;
-}
-.mds .col-span-4{
-
-  grid-column: span 4 / span 4;
 }
 .mds .col-span-5{
 
@@ -3739,6 +3739,12 @@ video {
 
   margin-bottom: 0px;
 }
+.mds .mx-8{
+
+  margin-left: 0.5rem;
+
+  margin-right: 0.5rem;
+}
 .mds .my-20{
 
   margin-top: 1.25rem;
@@ -3858,12 +3864,6 @@ video {
   margin-left: 0.25rem;
 
   margin-right: 0.25rem;
-}
-.mds .mx-8{
-
-  margin-left: 0.5rem;
-
-  margin-right: 0.5rem;
 }
 .mds .mx-12{
 
@@ -5067,13 +5067,13 @@ video {
 
   flex: 0 1 auto;
 }
-.mds .flex-shrink{
-
-  flex-shrink: 1;
-}
 .mds .flex-shrink-0{
 
   flex-shrink: 0;
+}
+.mds .flex-shrink{
+
+  flex-shrink: 1;
 }
 .mds .flex-grow{
 
@@ -5161,6 +5161,10 @@ video {
 
   cursor: pointer;
 }
+.mds .cursor-move{
+
+  cursor: move;
+}
 .mds .cursor-auto{
 
   cursor: auto;
@@ -5176,10 +5180,6 @@ video {
 .mds .cursor-text{
 
   cursor: text;
-}
-.mds .cursor-move{
-
-  cursor: move;
 }
 .mds .cursor-help{
 
@@ -8763,10 +8763,6 @@ video {
 
   padding-left: 3.5rem;
 }
-.mds .pl-48{
-
-  padding-left: 3rem;
-}
 .mds .pb-16{
 
   padding-bottom: 1rem;
@@ -8930,6 +8926,10 @@ video {
 .mds .pl-40{
 
   padding-left: 2.5rem;
+}
+.mds .pl-48{
+
+  padding-left: 3rem;
 }
 .mds .pl-64{
 
@@ -9685,6 +9685,14 @@ video {
 
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+.mds .shadow-24{
+
+  --tw-shadow: 0px 24px 38px rgba(0, 0, 0, 0.04), 0px 9px 46px rgba(0, 0, 0, 0.02), 0px 11px 15px rgba(0, 0, 0, 0.06);
+
+  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 .mds .shadow-2{
 
   --tw-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px 3px 4px rgba(0, 0, 0, 0.02), 0px 1px 5px rgba(0, 0, 0, 0.04);
@@ -9728,14 +9736,6 @@ video {
 .mds .shadow-16{
 
   --tw-shadow: 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 6px 30px rgba(0, 0, 0, 0.02), 0px 8px 10px rgba(0, 0, 0, 0.06);
-
-  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
-
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-.mds .shadow-24{
-
-  --tw-shadow: 0px 24px 38px rgba(0, 0, 0, 0.04), 0px 9px 46px rgba(0, 0, 0, 0.02), 0px 11px 15px rgba(0, 0, 0, 0.06);
 
   box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
 
@@ -10116,6 +10116,14 @@ video {
   transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
 
   transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  transition-duration: 150ms;
+}
+.mds .transition-transform{
+
+  transition-property: transform;
 
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -10988,12 +10996,6 @@ video {
         background: var(--mds-bg-radio-overlay-checked-active);
       }
 .mx-switch .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     background-color: #b9b9b9;
     background-color: var(--mds-bg-switch-track);
     transition: 0.4s;

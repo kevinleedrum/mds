@@ -3,7 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-c246f020.js');
-const utils = require('./utils-04d102b7.js');
+const utils = require('./utils-821b5149.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 
 const MxTabs = class {

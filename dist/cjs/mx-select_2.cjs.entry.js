@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const index = require('./index-c246f020.js');
 const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
 const warningCircle = require('./warning-circle-453368c1.js');
-const utils = require('./utils-04d102b7.js');
+const utils = require('./utils-821b5149.js');
 const ripple = require('./ripple-93b636e3.js');
 
 const MxSelect = class {
