@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
+import { propagateDataAttributes } from '../../utils/utils';
 
 export type BtnType = 'contained' | 'outlined' | 'action' | 'text';
 export type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
@@ -46,12 +47,7 @@ export class MxButton implements IMxButtonProps {
 
   @Element() element: HTMLMxInputElement;
 
-  componentWillRender() {
-    Object.keys(this.element.dataset).forEach(key => {
-      this.dataAttributes['data-' + key] = this.element.dataset[key];
-      this.element.removeAttribute(`data-${key}`);
-    });
-  }
+  componentWillRender = propagateDataAttributes;
 
   onClick(e: MouseEvent) {
     if (this.disabled) {

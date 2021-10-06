@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Watch, State, Element } from '@stencil/core';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 import warningCircleSvg from '../../assets/svg/warning-circle.svg';
-import { uuidv4 } from '../../utils/utils';
+import { propagateDataAttributes, uuidv4 } from '../../utils/utils';
 
 @Component({
   tag: 'mx-select',
@@ -38,12 +38,7 @@ export class MxSelect {
 
   @Element() element: HTMLMxInputElement;
 
-  componentWillRender() {
-    Object.keys(this.element.dataset).forEach(key => {
-      this.dataAttributes['data-' + key] = this.element.dataset[key];
-      this.element.removeAttribute(`data-${key}`);
-    });
-  }
+  componentWillRender = propagateDataAttributes;
 
   componentDidLoad() {
     this.updateSelectValue();

@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Watch, Listen, Element } from '@stencil/core';
 import clockSvg from '../../assets/svg/clock.svg';
 import warningCircleSvg from '../../assets/svg/warning-circle.svg';
-import { parseTimeString, uuidv4 } from '../../utils/utils';
+import { parseTimeString, propagateDataAttributes, uuidv4 } from '../../utils/utils';
 
 const timeOptions: { hours: number; minutes: number }[] = [];
 for (let i = 0; i < 24; i++) {
@@ -54,12 +54,7 @@ export class MxTimePicker {
     this.updateInputValue();
   }
 
-  componentWillRender() {
-    Object.keys(this.element.dataset).forEach(key => {
-      this.dataAttributes['data-' + key] = this.element.dataset[key];
-      this.element.removeAttribute(`data-${key}`);
-    });
-  }
+  componentWillRender = propagateDataAttributes;
 
   componentDidLoad() {
     this.menu.anchorEl = this.pickerWrapper;

@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Watch, Element } from '@stencil/core';
 import warningCircleSvg from '../../assets/svg/warning-circle.svg';
-import { uuidv4 } from '../../utils/utils';
+import { uuidv4, propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-input',
@@ -51,12 +51,7 @@ export class MxInput {
     this.characterCount = this.hasValue ? this.value.length : 0;
   }
 
-  componentWillRender() {
-    Object.keys(this.element.dataset).forEach(key => {
-      this.dataAttributes['data-' + key] = this.element.dataset[key];
-      this.element.removeAttribute(`data-${key}`);
-    });
-  }
+  componentWillRender = propagateDataAttributes;
 
   componentDidLoad() {
     this.updateValue();

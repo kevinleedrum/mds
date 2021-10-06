@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
+import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-icon-button',
@@ -27,12 +28,7 @@ export class MxIconButton {
 
   @Element() element: HTMLMxInputElement;
 
-  componentWillRender() {
-    Object.keys(this.element.dataset).forEach(key => {
-      this.dataAttributes['data-' + key] = this.element.dataset[key];
-      this.element.removeAttribute(`data-${key}`);
-    });
-  }
+  componentWillRender = propagateDataAttributes;
 
   onClick(e: MouseEvent) {
     if (this.disabled) {

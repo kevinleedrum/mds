@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
+import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-toggle-button',
@@ -18,12 +19,7 @@ export class MxToggleButton {
 
   @Element() element: HTMLMxToggleButtonElement;
 
-  componentWillRender() {
-    Object.keys(this.element.dataset).forEach(key => {
-      this.dataAttributes['data-' + key] = this.element.dataset[key];
-      this.element.removeAttribute(`data-${key}`);
-    });
-  }
+  componentWillRender = propagateDataAttributes;
 
   onClick(e: MouseEvent) {
     if (this.disabled) {

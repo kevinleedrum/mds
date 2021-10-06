@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
 import searchSvg from '../../assets/svg/search.svg';
+import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-search',
@@ -18,12 +19,7 @@ export class MxSearch {
 
   @Element() element: HTMLMxSearchElement;
 
-  componentWillRender() {
-    Object.keys(this.element.dataset).forEach(key => {
-      this.dataAttributes['data-' + key] = this.element.dataset[key];
-      this.element.removeAttribute(`data-${key}`);
-    });
-  }
+  componentWillRender = propagateDataAttributes;
 
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
