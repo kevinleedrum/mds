@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch, Listen } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Listen, Element } from '@stencil/core';
 import clockSvg from '../../assets/svg/clock.svg';
 import warningCircleSvg from '../../assets/svg/warning-circle.svg';
 import { parseTimeString, uuidv4 } from '../../utils/utils';
@@ -14,6 +14,8 @@ for (let i = 0; i < 24; i++) {
   shadow: false,
 })
 export class MxTimePicker {
+  dataAttributes = {};
+
   pickerWrapper: HTMLElement;
   menuButton: HTMLElement;
   inputElem: HTMLInputElement;
@@ -38,6 +40,8 @@ export class MxTimePicker {
   @State() isFocused: boolean = false;
   @State() isInputDirty: boolean = false;
 
+  @Element() element: HTMLMxTimePickerElement;
+
   @Listen('click')
   onClick(e: MouseEvent) {
     e.stopPropagation();
@@ -48,6 +52,13 @@ export class MxTimePicker {
   @Watch('value')
   onValueChange() {
     this.updateInputValue();
+  }
+
+  componentWillRender() {
+    Object.keys(this.element.dataset).forEach(key => {
+      this.dataAttributes['data-' + key] = this.element.dataset[key];
+      this.element.removeAttribute(`data-${key}`);
+    });
   }
 
   componentDidLoad() {
@@ -196,6 +207,7 @@ export class MxTimePicker {
             type="time"
             disabled={this.disabled}
             required
+            {...this.dataAttributes}
           />
           {this.label && this.floatLabel && labelJsx}
           <button

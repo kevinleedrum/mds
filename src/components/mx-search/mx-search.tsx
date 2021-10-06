@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
 import searchSvg from '../../assets/svg/search.svg';
 
 @Component({
@@ -6,6 +6,8 @@ import searchSvg from '../../assets/svg/search.svg';
   shadow: false,
 })
 export class MxSearch {
+  dataAttributes = {};
+
   /** If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search". */
   @Prop() ariaLabel: string;
   @Prop() dense: boolean = false;
@@ -13,6 +15,15 @@ export class MxSearch {
   @Prop() name: string;
   @Prop() placeholder: string;
   @Prop() value: string;
+
+  @Element() element: HTMLMxSearchElement;
+
+  componentWillRender() {
+    Object.keys(this.element.dataset).forEach(key => {
+      this.dataAttributes['data-' + key] = this.element.dataset[key];
+      this.element.removeAttribute(`data-${key}`);
+    });
+  }
 
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
@@ -31,6 +42,7 @@ export class MxSearch {
           placeholder={this.placeholder}
           value={this.value}
           class={this.inputClass}
+          {...this.dataAttributes}
         ></input>
         <span innerHTML={searchSvg} class="absolute left-16 pointer-events-none"></span>
       </Host>

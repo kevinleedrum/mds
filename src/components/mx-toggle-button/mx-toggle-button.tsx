@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
 
 @Component({
@@ -7,6 +7,7 @@ import ripple from '../../utils/ripple';
 })
 export class MxToggleButton {
   btnElem: HTMLButtonElement;
+  dataAttributes = {};
 
   @Prop() icon: string;
   @Prop({ reflect: true }) selected: boolean = false;
@@ -14,6 +15,15 @@ export class MxToggleButton {
   @Prop() ariaLabel: string;
   /** Only used inside a toggle button group */
   @Prop() value: any;
+
+  @Element() element: HTMLMxToggleButtonElement;
+
+  componentWillRender() {
+    Object.keys(this.element.dataset).forEach(key => {
+      this.dataAttributes['data-' + key] = this.element.dataset[key];
+      this.element.removeAttribute(`data-${key}`);
+    });
+  }
 
   onClick(e: MouseEvent) {
     if (this.disabled) {
@@ -43,6 +53,7 @@ export class MxToggleButton {
           aria-checked={this.selected}
           aria-label={this.ariaLabel}
           onClick={this.onClick.bind(this)}
+          {...this.dataAttributes}
         >
           <i class={this.icon}></i>
         </button>

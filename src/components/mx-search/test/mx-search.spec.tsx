@@ -8,7 +8,7 @@ describe('mx-search', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxSearch],
-      html: `<mx-search />`,
+      html: `<mx-search data-test="test" />`,
     });
     root = page.root;
     input = root.querySelector('input[type=search]');
@@ -58,5 +58,9 @@ describe('mx-search', () => {
     root.value = 'Value';
     await page.waitForChanges();
     expect(input.getAttribute('value')).toBe('Value');
+  });
+
+  it('applies any data attributes to the input element', async () => {
+    expect(input.getAttribute('data-test')).toBe('test');
   });
 });
