@@ -4,32 +4,66 @@
 
 The `mx-image-upload` component is used to upload a single image file (or PDF file, if the `acceptPdf` prop is passed).
 
-The component wraps an [`<input type="file">`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file), which will emit a `change` event when a file is selected. The `isUploading` and `isUploaded` props can then be set accordingly.
+The component wraps an [`<input type="file">`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file), which emits both an `input` event and a `change` event whenever a file is selected or removed. The `isUploading` and `isUploaded` props can then be set accordingly.
 
 <section class="mds">
   <div class="flex flex-col my-20 space-y-40">
 <!-- #region image-uploads -->
-    <mx-image-upload @change="onChange">
+    <mx-image-upload @input="onInput">
       <span slot="instructions">Upload instructions go here</span>
     </mx-image-upload>
-    <mx-image-upload show-icon="false" asset-name="logo" @change="onChange">
-    <span slot="instructions">
-      The <code>assetName</code> is set to "logo" in this example.
-    </span>
+    <mx-image-upload show-icon="false" asset-name="logo" @input="onInput">
+      <span slot="instructions">
+        The <code>assetName</code> prop is set to "logo" in this example.
+      </span>
     </mx-image-upload>
-    <mx-image-upload show-dropzone-text="false" icon="ph-file-arrow-up" @change="onChange" />
+    <mx-image-upload show-dropzone-text="false" icon="ph-file-arrow-up" @input="onInput" />
+    <mx-image-upload @input="onInput">
+      <span slot="dropzone-text">
+        Please upload an image.
+      </span>
+      <span slot="instructions">
+        This example uses the <code>dropzone-text</code> slot.
+      </span>
+    </mx-image-upload>
 <!-- #endregion image-uploads -->
   </div>
 </section>
 
 <<< @/vuepress/components/upload.md#image-uploads
-<<< @/vuepress/components/upload.md#onchange
+<<< @/vuepress/components/upload.md#on-input
+
+### Success and error messages
+
+There are two slots for success and error status messages, named `success` and `error` respectively.
+
+<section class="mds">
+  <div class="flex flex-col my-20 space-y-40">
+<!-- #region status-messages -->
+    <mx-image-upload thumbnail-size="cover" thumbnail-url="https://www.fillmurray.com/300/300">
+      <span slot="success">
+        The image was uploaded successfully
+      </span>
+    </mx-image-upload>
+    <mx-image-upload thumbnail-size="cover" thumbnail-url="https://www.fillmurray.com/480/320">
+      <span slot="instructions">
+        Images may be up to 4800px in width or height.
+      </span>
+      <span slot="error">
+        The selected image does not meet requirements.  The width must be less than 4800px.
+      </span>
+    </mx-image-upload>
+<!-- #endregion status-messages -->
+  </div>
+</section>
+
+<<< @/vuepress/components/upload.md#status-messages
 
 ### Avatars
 
 Passing the `avatar` prop sets the `width` and `height` to 80px and changes the icon.
 
-To provide an initial thumbnail image (e.g. if the user has previously uploaded an avatar), set the `thumbnail-url` prop. The component emits an `mxRemove` custom event when the Remove button is clicked.
+To provide an initial thumbnail image (e.g. if the user has previously uploaded an avatar), set the `thumbnail-url` prop.
 
 <section class="mds">
   <div class="flex my-20">  
@@ -37,8 +71,7 @@ To provide an initial thumbnail image (e.g. if the user has previously uploaded 
     <mx-image-upload
       avatar
       thumbnail-url="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" 
-      @mxRemove="onRemove"
-      @change="onChange"
+      @input="onInput"
     />
 <!-- #endregion avatar -->
   </div>
@@ -65,49 +98,62 @@ The `thumbnailSize` prop may also be used to set how the thumbnail fits inside t
 
 <<< @/vuepress/components/upload.md#image-upload-dimensions
 
-### Success and error messages
+### External button
 
-There are two slots for success and error status messages, named `success` and `error` respectively.
+Set the `showButton` prop to `false` if you want to leverage the `selectFile` and `removeFile` methods with an external button.
 
 <section class="mds">
-  <div class="flex flex-col my-20 space-y-40">
-<!-- #region image-upload-dimensions -->
-    <mx-image-upload thumbnail-size="cover" thumbnail-url="https://www.fillmurray.com/300/300">
-      <span slot="success">
-        The image was uploaded successfully
-      </span>
-    </mx-image-upload>
-    <mx-image-upload thumbnail-size="cover" thumbnail-url="https://www.fillmurray.com/480/320">
-      <span slot="instructions">
-        Images may be up to 4800px in width or height.
-      </span>
-      <span slot="error">
-        The selected image does not meet requirements.  The width must be less than 4800px.
-      </span>
-    </mx-image-upload>
-<!-- #endregion image-upload-dimensions -->
+  <div class="inline-flex flex-col items-center space-y-20">
+<!-- #region external-button -->
+    <mx-image-upload ref="upload" show-button="false" width="100%" @change="onChange" />
+    <mx-button
+      btn-type="action"
+      :icon="hasFile ? 'ph-trash-simple' : 'ph-arrow-fat-line-up'"
+      @click="onButtonClick"
+    >
+      {{ hasFile ? 'Remove' : 'Select file ...' }}
+    </mx-button>
+<!-- #endregion external-button -->
   </div>
 </section>
 
+<<< @/vuepress/components/upload.md#external-button
+<<< @/vuepress/components/upload.md#external-button-handlers
+
 <script>
 export default {
+  data() {
+    return {
+      hasFile: false,
+    }
+  },
   methods: {
-    // #region onchange
-    onChange(e) {
-      const upload = e.target.closest('mx-image-upload')
+    // #region on-input
+    onInput(e) {
+      if (e.target.files.length === 0) return console.log('Removed file')
       console.log('Uploading ' + e.target.files[0].name)
-      upload.isUploading = true
+      const mxImageUpload = e.target.closest('mx-image-upload')
+      mxImageUpload.isUploading = true
       // Simulate upload
       setTimeout(() => {
-        upload.isUploaded = true
-        upload.isUploading = false
+        mxImageUpload.isUploaded = true
+        mxImageUpload.isUploading = false
         console.log('Uploaded ' + e.target.files[0].name)
       }, 2000)
-      // #endregion onchange
+      // #endregion on-input
     },
-    onRemove() {
-      console.log('File removed')
-    }
+    // #region external-button-handlers
+    onChange(e) {
+      this.hasFile = e.target.files.length > 0
+    },
+    onButtonClick() {
+      if (this.hasFile) {
+        this.$refs.upload.removeFile()
+      } else {
+        this.$refs.upload.selectFile()
+      }
+    },
+    // #endregion external-button-handlers
   }
 }
 </script>

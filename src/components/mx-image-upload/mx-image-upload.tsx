@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, Element, State, Method } from '@stencil/core';
 import imageSvg from '../../assets/svg/image.svg';
 import userCircleSvg from '../../assets/svg/user-circle.svg';
 
@@ -24,6 +24,7 @@ export class MxImageUpload {
   @Prop({ mutable: true, reflect: true }) isUploaded = false;
   @Prop({ mutable: true, reflect: true }) isUploading = false;
   @Prop() name: string;
+  @Prop() showButton = true;
   @Prop() showIcon = true;
   @Prop() showDropzoneText = true;
   @Prop() thumbnailUrl: string;
@@ -35,9 +36,6 @@ export class MxImageUpload {
 
   @Element() element: HTMLMxTableElement;
 
-  @Event() mxCancel: EventEmitter<void>;
-  @Event() mxRemove: EventEmitter<void>;
-
   connectedCallback() {
     if (this.thumbnailUrl) this.isUploaded = true;
   }
@@ -48,21 +46,37 @@ export class MxImageUpload {
     this.hasError = !!this.element.querySelector('[slot="error"]');
   }
 
+  @Method()
+  async removeFile() {
+    if (!this.hasFile || this.isUploading) return;
+    this.isFileSelected = false;
+    this.isUploaded = false;
+    this.isUploading = false;
+    this.fileInput.value = '';
+    this.fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+    this.fileInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+  }
+
+  @Method()
+  async selectFile() {
+    if (this.hasFile) return;
+    this.isFileSelected = false;
+    this.fileInput.value = '';
+    this.fileInput.click();
+  }
+
   onButtonClick(e: MouseEvent) {
     e.stopPropagation();
     e.preventDefault();
-    this.isFileSelected = false;
-    this.fileInput.value = '';
-    if (!this.isUploaded && !this.isUploading) {
-      this.fileInput.click();
-    } else if (!this.isUploading) {
-      this.isUploaded = false;
-      this.isUploading = false;
-      this.mxRemove.emit();
+    if (this.isUploading) return;
+    if (!this.hasFile) {
+      this.selectFile();
+    } else {
+      this.removeFile();
     }
   }
 
-  onChange(e: Event) {
+  onInput(e: Event) {
     this.isFileSelected = (e.target as HTMLInputElement).files && (e.target as HTMLInputElement).files.length > 0;
     if (this.isFileSelected) this.setThumnailDataUri((e.target as HTMLInputElement).files[0]);
     else this.thumbnailDataUri = null;
@@ -163,7 +177,7 @@ export class MxImageUpload {
               accept={this.accept}
               class="absolute inset-0 opacity-0 cursor-pointer disabled:cursor-auto"
               disabled={this.hasFile}
-              onChange={this.onChange.bind(this)}
+              onInput={this.onInput.bind(this)}
               onDragOver={this.onDragOver.bind(this)}
               onDragLeave={this.onDragLeave.bind(this)}
               onDrop={this.onDragLeave.bind(this)}
@@ -183,14 +197,16 @@ export class MxImageUpload {
             </div>
           )}
         </div>
-        <mx-button
-          class="mt-16"
-          btnType={this.hasFile && !this.isUploading ? 'outlined' : 'contained'}
-          onClick={this.onButtonClick.bind(this)}
-          disabled={this.isUploading}
-        >
-          {this.hasFile && !this.isUploading ? 'Remove' : 'Upload'}
-        </mx-button>
+        {this.showButton && (
+          <mx-button
+            class="mt-16"
+            btnType={this.hasFile && !this.isUploading ? 'outlined' : 'contained'}
+            onClick={this.onButtonClick.bind(this)}
+            disabled={this.isUploading}
+          >
+            {this.hasFile && !this.isUploading ? 'Remove' : 'Upload'}
+          </mx-button>
+        )}
         {this.hasInstructions && (
           <p class="caption1 my-16">
             <slot name="instructions"></slot>
