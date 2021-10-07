@@ -43,12 +43,12 @@ There are two slots for success and error status messages, named `success` and `
 <section class="mds">
   <div class="flex flex-col my-20 space-y-40">
 <!-- #region status-messages -->
-    <mx-image-upload thumbnail-size="cover" thumbnail-url="https://www.fillmurray.com/300/300">
+    <mx-image-upload thumbnail-size="cover" thumbnail-url="https://picsum.photos/300">
       <span slot="success">
         The image was uploaded successfully
       </span>
     </mx-image-upload>
-    <mx-image-upload thumbnail-size="cover" thumbnail-url="https://www.fillmurray.com/480/320">
+    <mx-image-upload thumbnail-size="cover" thumbnail-url="https://picsum.photos/320">
       <span slot="instructions">
         Images may be up to 4800px in width or height.
       </span>
