@@ -85,6 +85,7 @@ export class MxImageUpload {
 
   setThumnailDataUri(file: File) {
     this.thumbnailDataUri = null;
+    if (!/\.(jpe?g|png|gif)$/i.test(file.name)) return;
     const reader = new FileReader();
     reader.onload = () => {
       this.thumbnailDataUri = reader.result as string;
@@ -129,9 +130,8 @@ export class MxImageUpload {
 
   get thumbnailBackgroundImage(): string {
     let url = this.thumbnailUrl;
-    if (this.isFileSelected && this.thumbnailDataUri) {
-      url = this.thumbnailDataUri;
-    }
+    if (this.isFileSelected) url = this.thumbnailDataUri;
+    if (!url) return null;
     return `url(${url})`;
   }
 
@@ -183,14 +183,15 @@ export class MxImageUpload {
               onDrop={this.onDragLeave.bind(this)}
             ></input>
           </div>
-          {this.hasFile && (
+          {this.thumbnailBackgroundImage && (
             <div
-              class="thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none"
+              class="thumbnail absolute inset-0 bg-center bg-no-repeat"
               style={{ backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize }}
-            >
-              <slot name="thumbnail"></slot>
-            </div>
+            ></div>
           )}
+          <div class={'flex items-center justify-center absolute inset-0' + (this.isUploaded ? '' : ' hidden')}>
+            <slot name="uploaded"></slot>
+          </div>
           {this.isUploading && (
             <div class="uploading-progress flex items-center justify-center opacity-50 absolute inset-0">
               <mx-circular-progress size="2rem" />

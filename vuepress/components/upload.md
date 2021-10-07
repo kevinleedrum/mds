@@ -17,13 +17,16 @@ The component wraps an [`<input type="file">`](https://developer.mozilla.org/en-
         The <code>assetName</code> prop is set to "logo" in this example.
       </span>
     </mx-image-upload>
-    <mx-image-upload show-dropzone-text="false" icon="ph-file-arrow-up" @input="onInput" />
-    <mx-image-upload @input="onInput">
-      <span slot="dropzone-text">
-        Please upload an image.
+    <mx-image-upload show-dropzone-text="false" @input="onInput" />
+    <mx-image-upload accept-pdf accept-image="false" icon="ph-file-arrow-up" @input="onInput">
+      <span slot="dropzone-text" class="mt-8">
+        Upload PDF &hellip;
+      </span>
+      <span slot="uploaded">
+        PDF Uploaded! 🎉
       </span>
       <span slot="instructions">
-        This example uses the <code>dropzone-text</code> slot.
+        This example uses the <code>dropzone-text</code> and <code>uploaded</code> slots.
       </span>
     </mx-image-upload>
 <!-- #endregion image-uploads -->
