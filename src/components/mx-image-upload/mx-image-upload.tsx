@@ -12,22 +12,37 @@ export class MxImageUpload {
   hasSuccess = false;
   hasError = false;
 
+  /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
   @Prop() acceptImage = true;
+  /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
   @Prop() acceptPdf = false;
+  /** Replaces the word "image" in the default dropzone text (i.e. "No image to show"). */
   @Prop() assetName = 'image';
+  /** Sets the width and height to 80px and changes the icon. */
   @Prop() avatar = false;
+  /** Sets the thumbnail sizing strategy relative to the container. */
   @Prop() thumbnailSize: 'cover' | 'stretch' | 'contain' | 'auto' = 'cover';
+  /** The height of the dropzone / thumbnail container (e.g. "400px" or "50%"). */
   @Prop() height: string;
+  /** The class name of the icon to use instead of the default icon. */
   @Prop() icon: string;
+  /** The `id` attribute to apply to the input element. */
   @Prop() inputId: string;
-  @Prop({ mutable: true, reflect: true }) isError = false;
+  /** Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content. */
   @Prop({ mutable: true, reflect: true }) isUploaded = false;
+  /** Set to `true` to disable the button and show the circular progress indicator. */
   @Prop({ mutable: true, reflect: true }) isUploading = false;
+  /** The `name` attribute for the `input` element. */
   @Prop() name: string;
+  /** Set to `false` to hide the default Upload/Remove button. */
   @Prop() showButton = true;
+  /** Set to `false` to hide the dropzone icon. */
   @Prop() showIcon = true;
+  /** Set to `false` to hide the dropzone text. */
   @Prop() showDropzoneText = true;
+  /** The URL for the thumbnail of the currently selected image. */
   @Prop() thumbnailUrl: string;
+  /** The width of the dropzone / thumbnail container (e.g. "400px" or "50%"). */
   @Prop() width: string;
 
   @State() isDraggingOver = false;
@@ -80,7 +95,6 @@ export class MxImageUpload {
     this.isFileSelected = (e.target as HTMLInputElement).files && (e.target as HTMLInputElement).files.length > 0;
     if (this.isFileSelected) this.setThumnailDataUri((e.target as HTMLInputElement).files[0]);
     else this.thumbnailDataUri = null;
-    this.isError = false;
   }
 
   setThumnailDataUri(file: File) {
@@ -183,7 +197,7 @@ export class MxImageUpload {
               onDrop={this.onDragLeave.bind(this)}
             ></input>
           </div>
-          {this.thumbnailBackgroundImage && (
+          {this.hasFile && this.thumbnailBackgroundImage && (
             <div
               class="thumbnail absolute inset-0 bg-center bg-no-repeat"
               style={{ backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize }}

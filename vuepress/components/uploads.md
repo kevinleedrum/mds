@@ -1,4 +1,4 @@
-# Upload
+# Uploads
 
 ## Image Uploads
 
@@ -33,8 +33,8 @@ The component wraps an [`<input type="file">`](https://developer.mozilla.org/en-
   </div>
 </section>
 
-<<< @/vuepress/components/upload.md#image-uploads
-<<< @/vuepress/components/upload.md#on-input
+<<< @/vuepress/components/uploads.md#image-uploads
+<<< @/vuepress/components/uploads.md#on-input
 
 ### Success and error messages
 
@@ -60,7 +60,7 @@ There are two slots for success and error status messages, named `success` and `
   </div>
 </section>
 
-<<< @/vuepress/components/upload.md#status-messages
+<<< @/vuepress/components/uploads.md#status-messages
 
 ### Avatars
 
@@ -80,7 +80,7 @@ To provide an initial thumbnail image (e.g. if the user has previously uploaded 
   </div>
 </section>
 
-<<< @/vuepress/components/upload.md#avatar
+<<< @/vuepress/components/uploads.md#avatar
 
 ### Dimensions & thumbnail size
 
@@ -99,7 +99,7 @@ The `thumbnailSize` prop may also be used to set how the thumbnail fits inside t
   </div>
 </section>
 
-<<< @/vuepress/components/upload.md#image-upload-dimensions
+<<< @/vuepress/components/uploads.md#image-upload-dimensions
 
 ### External button
 
@@ -120,8 +120,43 @@ Set the `showButton` prop to `false` if you want to leverage the `selectFile` an
   </div>
 </section>
 
-<<< @/vuepress/components/upload.md#external-button
-<<< @/vuepress/components/upload.md#external-button-handlers
+<<< @/vuepress/components/uploads.md#external-button
+<<< @/vuepress/components/uploads.md#external-button-handlers
+
+### Image Upload Properties
+
+| Property           | Attribute            | Description                                                                                                              | Type                                          | Default     |
+| ------------------ | -------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- | ----------- |
+| `acceptImage`      | `accept-image`       | Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files. Set both to `false` to accept any file. | `boolean`                                     | `true`      |
+| `acceptPdf`        | `accept-pdf`         | Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files. Set both to `false` to accept any file. | `boolean`                                     | `false`     |
+| `assetName`        | `asset-name`         | Replaces the word "image" in the default dropzone text (i.e. "No image to show").                                        | `string`                                      | `'image'`   |
+| `avatar`           | `avatar`             | Sets the width and height to 80px and changes the icon.                                                                  | `boolean`                                     | `false`     |
+| `height`           | `height`             | The height of the dropzone / thumbnail container (e.g. "400px" or "50%").                                                | `string`                                      | `undefined` |
+| `icon`             | `icon`               | The class name of the icon to use instead of the default icon.                                                           | `string`                                      | `undefined` |
+| `inputId`          | `input-id`           | The `id` attribute to apply to the input element.                                                                        | `string`                                      | `undefined` |
+| `isUploaded`       | `is-uploaded`        | Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content.                                         | `boolean`                                     | `false`     |
+| `isUploading`      | `is-uploading`       | Set to `true` to disable the button and show the circular progress indicator.                                            | `boolean`                                     | `false`     |
+| `name`             | `name`               | The `name` attribute for the `input` element.                                                                            | `string`                                      | `undefined` |
+| `showButton`       | `show-button`        | Set to `false` to hide the default Upload/Remove button.                                                                 | `boolean`                                     | `true`      |
+| `showDropzoneText` | `show-dropzone-text` | Set to `false` to hide the dropzone text.                                                                                | `boolean`                                     | `true`      |
+| `showIcon`         | `show-icon`          | Set to `false` to hide the dropzone icon.                                                                                | `boolean`                                     | `true`      |
+| `thumbnailSize`    | `thumbnail-size`     | Sets the thumbnail sizing strategy relative to the container.                                                            | `"auto" \| "contain" \| "cover" \| "stretch"` | `'cover'`   |
+| `thumbnailUrl`     | `thumbnail-url`      | The URL for the thumbnail of the currently selected image.                                                               | `string`                                      | `undefined` |
+| `width`            | `width`              | The width of the dropzone / thumbnail container (e.g. "400px" or "50%").                                                 | `string`                                      | `undefined` |
+
+### Image Upload Methods
+
+#### `removeFile() => Promise<void>`
+
+Remove the currently selected image. This will reset the file input, and it will disregard the `thumbnailUrl` prop value.
+
+#### `selectFile() => Promise<void>`
+
+If no image is selected, open the file dialog.
+
+### CSS Variables
+
+<<< @/src/tailwind/variables/index.scss#uploads
 
 <script>
 export default {
