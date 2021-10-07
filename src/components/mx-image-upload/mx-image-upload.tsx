@@ -43,7 +43,7 @@ export class MxImageUpload {
   }
 
   componentWillRender() {
-    this.hasInstructions = !!this.element.querySelector('[slot="instructions"]') && ;
+    this.hasInstructions = !!this.element.querySelector('[slot="instructions"]');
     this.hasSuccess = !!this.element.querySelector('[slot="success"]');
     this.hasError = !!this.element.querySelector('[slot="error"]');
   }
