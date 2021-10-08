@@ -14,6 +14,19 @@
 | `value`       | `value`        | The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. | `number` | `null`   |
 
 
+## Dependencies
+
+### Used by
+
+ - [mx-image-upload](../mx-image-upload)
+
+### Graph
+```mermaid
+graph TD;
+  mx-image-upload --> mx-circular-progress
+  style mx-circular-progress fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

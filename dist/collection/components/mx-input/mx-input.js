@@ -1,8 +1,9 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Element } from '@stencil/core';
 import warningCircleSvg from '../../assets/svg/warning-circle.svg';
-import { uuidv4 } from '../../utils/utils';
+import { uuidv4, propagateDataAttributes } from '../../utils/utils';
 export class MxInput {
   constructor() {
+    this.dataAttributes = {};
     this.uuid = uuidv4();
     /** The `type` attribute for the text input */
     this.type = 'text';
@@ -18,6 +19,7 @@ export class MxInput {
     this.textareaHeight = '250px';
     this.isFocused = false;
     this.characterCount = 0;
+    this.componentWillRender = propagateDataAttributes;
   }
   connectedCallback() {
     this.characterCount = this.hasValue ? this.value.length : 0;
@@ -121,7 +123,7 @@ export class MxInput {
         this.leftIcon && (h("div", { class: this.leftIconWrapperClass },
           h("i", { class: this.leftIcon }))),
         this.label && this.floatLabel && labelJsx,
-        !this.textarea ? (h("input", { type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) })) : (h("textarea", { class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.value)),
+        !this.textarea ? (h("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (h("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)),
         !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass },
           this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" },
             this.characterCount,
@@ -494,6 +496,7 @@ export class MxInput {
     "isFocused": {},
     "characterCount": {}
   }; }
+  static get elementRef() { return "element"; }
   static get watchers() { return [{
       "propName": "value",
       "methodName": "onValueChange"

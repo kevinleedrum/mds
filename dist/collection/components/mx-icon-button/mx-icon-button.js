@@ -1,7 +1,9 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
+import { propagateDataAttributes } from '../../utils/utils';
 export class MxIconButton {
   constructor() {
+    this.dataAttributes = {};
     this.type = 'button';
     this.disabled = false;
     /** Show downward chevron icon */
@@ -10,6 +12,7 @@ export class MxIconButton {
     this.chevronLeft = false;
     /** Show right-pointing chevron icon */
     this.chevronRight = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     if (this.disabled) {
@@ -29,7 +32,7 @@ export class MxIconButton {
       this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" },
         h("span", { "data-testid": "chevron", class: this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : '', innerHTML: chevronSvg })))));
     return (h(Host, { class: "mx-icon-button inline-block" },
-      h("button", { type: this.type, formaction: this.formaction, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, buttonContent)));
+      h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
   }
   static get is() { return "mx-icon-button"; }
   static get properties() { return {
@@ -192,4 +195,5 @@ export class MxIconButton {
       "reflect": false
     }
   }; }
+  static get elementRef() { return "element"; }
 }

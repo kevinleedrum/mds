@@ -1,6 +1,6 @@
 import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-d7d68a6b.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { g as getPageRect, c as capitalize, i as isDateObject, a as getCursorCoords } from './utils-0f21db35.js';
+import { g as getPageRect, c as capitalize, i as isDateObject, a as getCursorCoords } from './utils-18e3dfde.js';
 import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
 
 const gearSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

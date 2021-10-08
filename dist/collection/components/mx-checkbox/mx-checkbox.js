@@ -1,6 +1,8 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { propagateDataAttributes } from '../../utils/utils';
 export class MxCheckbox {
   constructor() {
+    this.dataAttributes = {};
     this.name = '';
     this.value = '';
     this.labelLeft = false;
@@ -11,6 +13,7 @@ export class MxCheckbox {
     this.checked = false;
     this.disabled = false;
     this.indeterminate = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   get checkClass() {
     let str = 'flex h-18 w-18 flex-shrink-0';
@@ -35,7 +38,7 @@ export class MxCheckbox {
             (this.disabled ? '' : ' cursor-pointer'),
           this.labelClass,
         ].join(' ') },
-        h("input", { class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }),
+        h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes)),
         h("span", { class: this.checkClass }),
         h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
@@ -204,4 +207,5 @@ export class MxCheckbox {
       "defaultValue": "false"
     }
   }; }
+  static get elementRef() { return "element"; }
 }

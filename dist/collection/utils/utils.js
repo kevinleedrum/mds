@@ -96,3 +96,11 @@ function isScrollable(el) {
   const properties = ['overflow', 'overflowX', 'overflowY'];
   return properties.find(property => overflowRegex.test(computedStyle[property]));
 }
+/** Remove data attributes from the host element, and store them in this.dataAttributes,
+ * so they can be applied to the native element in the render function. */
+export function propagateDataAttributes() {
+  Object.keys(this.element.dataset).forEach(key => {
+    this.dataAttributes['data-' + key] = this.element.dataset[key];
+    this.element.removeAttribute(`data-${key}`);
+  });
+}

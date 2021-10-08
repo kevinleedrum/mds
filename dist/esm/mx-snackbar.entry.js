@@ -1,6 +1,6 @@
 import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-d7d68a6b.js';
-import { f as fadeScaleIn, a as fadeOut } from './transitions-fb4b2c95.js';
-import './utils-0f21db35.js';
+import { f as fadeScaleIn, a as fadeOut } from './transitions-3ced5fab.js';
+import './utils-18e3dfde.js';
 
 const snackbarQueue = []; // Deferred promises
 const MxSnackbar = class {

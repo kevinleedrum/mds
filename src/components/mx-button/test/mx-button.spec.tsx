@@ -4,32 +4,39 @@ import { MxButton } from '../mx-button';
 describe('mx-button', () => {
   let page;
   let root;
+  let btn;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxButton],
-      html: `<mx-button icon="ph-apple-logo" btn-type="contained" value="foo" formaction="/foo">button</mx-button>`,
+      html: `
+      <mx-button
+        icon="ph-apple-logo"
+        btn-type="contained"
+        value="foo"
+        formaction="/foo"
+        data-test="test"
+      >
+        button
+      </mx-button>`,
     });
     root = page.root;
+    btn = root.querySelector('button');
   });
 
   it('renders a "contained" button', async () => {
-    const btn = root.querySelector('button');
     expect(btn.getAttribute('class')).toContain('contained');
   });
 
   it('has the correct default type', async () => {
-    const btn = root.querySelector('button');
     expect(btn.getAttribute('type')).toBe('button');
   });
 
   it('has the correct inner text', async () => {
-    const btn = root.querySelector('button');
     const { innerText } = btn;
-    expect(innerText).toBe('button');
+    expect(innerText.trim()).toBe('button');
   });
 
   it('has the correct value and formaction', async () => {
-    const btn = root.querySelector('button');
     expect(btn.getAttribute('value')).toBe('foo');
     expect(btn.getAttribute('formaction')).toBe('/foo');
   });
@@ -40,8 +47,11 @@ describe('mx-button', () => {
   });
 
   it('has a min-height of 36px', async () => {
-    const btn = root.querySelector('button');
     expect(btn.getAttribute('class')).toContain('min-h-36');
+  });
+
+  it('applies any data attributes to the button element', async () => {
+    expect(btn.getAttribute('data-test')).toBe('test');
   });
 });
 

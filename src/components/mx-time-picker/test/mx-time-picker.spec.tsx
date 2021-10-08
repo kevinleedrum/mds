@@ -18,6 +18,7 @@ describe('mx-time-picker', () => {
           name="test-name"
           value="16:30"
           assistive-text="Enter a valid time"
+          data-test="test"
         />
       `,
     });
@@ -77,5 +78,9 @@ describe('mx-time-picker', () => {
     await page.waitForChanges();
     label = root.querySelector('label');
     expect(label.classList.contains('floating')).toBe(true);
+  });
+
+  it('applies any data attributes to the input element', async () => {
+    expect(input.getAttribute('data-test')).toBe('test');
   });
 });

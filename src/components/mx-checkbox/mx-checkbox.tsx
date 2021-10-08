@@ -1,10 +1,13 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-checkbox',
   shadow: false,
 })
 export class MxCheckbox {
+  dataAttributes = {};
+
   @Prop() name: string = '';
   @Prop() value: string = '';
   @Prop() labelLeft: boolean = false;
@@ -15,6 +18,10 @@ export class MxCheckbox {
   @Prop() checked: boolean = false;
   @Prop() disabled: boolean = false;
   @Prop() indeterminate: boolean = false;
+
+  @Element() element: HTMLMxInputElement;
+
+  componentWillRender = propagateDataAttributes;
 
   get checkClass(): string {
     let str = 'flex h-18 w-18 flex-shrink-0';
@@ -48,6 +55,7 @@ export class MxCheckbox {
             value={this.value}
             checked={this.checked}
             disabled={this.disabled}
+            {...this.dataAttributes}
           />
           <span class={this.checkClass}></span>
           <div class={this.checkLabelClass} data-testid="labelName">

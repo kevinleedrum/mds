@@ -24,3 +24,6 @@ export declare function getBounds(container: HTMLElement | Window): Partial<DOMR
 export declare function isScrolledOutOfView(el: HTMLElement): boolean;
 /** Get the nearest scrolling ancestor, which could be the window */
 export declare function getScrollingParent(el: HTMLElement): HTMLElement | Window;
+/** Remove data attributes from the host element, and store them in this.dataAttributes,
+ * so they can be applied to the native element in the render function. */
+export declare function propagateDataAttributes(): void;

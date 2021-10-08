@@ -4,11 +4,12 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-c246f020.js');
 const warningCircle = require('./warning-circle-453368c1.js');
-const utils = require('./utils-821b5149.js');
+const utils = require('./utils-1f7ef40d.js');
 
 const MxInput = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
+    this.dataAttributes = {};
     this.uuid = utils.uuidv4();
     /** The `type` attribute for the text input */
     this.type = 'text';
@@ -24,6 +25,7 @@ const MxInput = class {
     this.textareaHeight = '250px';
     this.isFocused = false;
     this.characterCount = 0;
+    this.componentWillRender = utils.propagateDataAttributes;
   }
   connectedCallback() {
     this.characterCount = this.hasValue ? this.value.length : 0;
@@ -121,8 +123,9 @@ const MxInput = class {
   }
   render() {
     const labelJsx = (index.h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames }, this.label));
-    return (index.h(index.Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { class: this.containerClass }, this.leftIcon && (index.h("div", { class: this.leftIconWrapperClass }, index.h("i", { class: this.leftIcon }))), this.label && this.floatLabel && labelJsx, !this.textarea ? (index.h("input", { type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) })) : (index.h("textarea", { class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (index.h("span", { class: this.rightContentClass }, this.maxlength && (index.h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength)), this.suffix && (index.h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)), this.error && index.h("span", { innerHTML: warningCircle.warningCircleSvg }), this.rightIcon && !this.error && index.h("i", { class: this.rightIcon })))), (this.assistiveText || (this.textarea && this.maxlength)) && (index.h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, index.h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (index.h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
+    return (index.h(index.Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { class: this.containerClass }, this.leftIcon && (index.h("div", { class: this.leftIconWrapperClass }, index.h("i", { class: this.leftIcon }))), this.label && this.floatLabel && labelJsx, !this.textarea ? (index.h("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (index.h("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (index.h("span", { class: this.rightContentClass }, this.maxlength && (index.h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength)), this.suffix && (index.h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)), this.error && index.h("span", { innerHTML: warningCircle.warningCircleSvg }), this.rightIcon && !this.error && index.h("i", { class: this.rightIcon })))), (this.assistiveText || (this.textarea && this.maxlength)) && (index.h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, index.h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (index.h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
   }
+  get element() { return index.getElement(this); }
   static get watchers() { return {
     "value": ["onValueChange"]
   }; }

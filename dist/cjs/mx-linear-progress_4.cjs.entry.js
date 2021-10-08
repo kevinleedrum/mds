@@ -7,7 +7,7 @@ const dotsVertical = require('./dots-vertical-8fe5a309.js');
 const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 const chevronDown = require('./chevron-down-696a796a.js');
-const utils = require('./utils-821b5149.js');
+const utils = require('./utils-1f7ef40d.js');
 
 const MxLinearProgress = class {
   constructor(hostRef) {

@@ -1,8 +1,10 @@
-import { r as registerInstance, h, f as Host } from './index-935f3e8d.js';
+import { r as registerInstance, h, f as Host, g as getElement } from './index-935f3e8d.js';
+import { p as propagateDataAttributes } from './utils-18e3dfde.js';
 
 const MxCheckbox = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
+    this.dataAttributes = {};
     this.name = '';
     this.value = '';
     this.labelLeft = false;
@@ -13,6 +15,7 @@ const MxCheckbox = class {
     this.checked = false;
     this.disabled = false;
     this.indeterminate = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   get checkClass() {
     let str = 'flex h-18 w-18 flex-shrink-0';
@@ -35,8 +38,9 @@ const MxCheckbox = class {
         'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
           (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,
-      ].join(' ') }, h("input", { class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }), h("span", { class: this.checkClass }), h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
+      ].join(' ') }, h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes)), h("span", { class: this.checkClass }), h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
+  get element() { return getElement(this); }
 };
 
 export { MxCheckbox as mx_checkbox };

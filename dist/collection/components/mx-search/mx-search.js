@@ -1,9 +1,12 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
 import searchSvg from '../../assets/svg/search.svg';
+import { propagateDataAttributes } from '../../utils/utils';
 export class MxSearch {
   constructor() {
+    this.dataAttributes = {};
     this.dense = false;
     this.flat = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
@@ -13,7 +16,7 @@ export class MxSearch {
   }
   render() {
     return (h(Host, { class: "mx-search flex items-center relative" },
-      h("input", { type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }),
+      h("input", Object.assign({ type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes)),
       h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
   }
   static get is() { return "mx-search"; }
@@ -123,4 +126,5 @@ export class MxSearch {
       "reflect": false
     }
   }; }
+  static get elementRef() { return "element"; }
 }

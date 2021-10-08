@@ -151,6 +151,7 @@ module.exports = {
         'page-headers',
         'pagination',
         'snackbars',
+        'uploads',
       ],
     },
   },
