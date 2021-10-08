@@ -8,7 +8,7 @@ describe('mx-icon-button', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxIconButton],
-      html: `<mx-icon-button></mx-icon-button>`,
+      html: `<mx-icon-button data-test="test"></mx-icon-button>`,
     });
     root = page.root;
     button = root.querySelector('button');
@@ -78,5 +78,9 @@ describe('mx-icon-button', () => {
     root.type = 'submit';
     await page.waitForChanges();
     expect(button.getAttribute('type')).toBe('submit');
+  });
+
+  it('applies any data attributes to the button element', async () => {
+    expect(button.getAttribute('data-test')).toBe('test');
   });
 });

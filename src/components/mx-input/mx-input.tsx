@@ -1,12 +1,13 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Element } from '@stencil/core';
 import warningCircleSvg from '../../assets/svg/warning-circle.svg';
-import { uuidv4 } from '../../utils/utils';
+import { uuidv4, propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-input',
   shadow: false,
 })
 export class MxInput {
+  dataAttributes = {};
   textInput!: HTMLInputElement;
   textArea!: HTMLTextAreaElement;
   uuid: string = uuidv4();
@@ -44,9 +45,13 @@ export class MxInput {
   @State() isFocused: boolean = false;
   @State() characterCount: number = 0;
 
+  @Element() element: HTMLMxInputElement;
+
   connectedCallback() {
     this.characterCount = this.hasValue ? this.value.length : 0;
   }
+
+  componentWillRender = propagateDataAttributes;
 
   componentDidLoad() {
     this.updateValue();
@@ -173,6 +178,7 @@ export class MxInput {
               onBlur={this.onBlur.bind(this)}
               onInput={this.onInput.bind(this)}
               ref={el => (this.textInput = el as HTMLInputElement)}
+              {...this.dataAttributes}
             />
           ) : (
             <textarea
@@ -188,6 +194,7 @@ export class MxInput {
               onBlur={this.onBlur.bind(this)}
               onInput={this.onInput.bind(this)}
               ref={el => (this.textArea = el as HTMLTextAreaElement)}
+              {...this.dataAttributes}
             >
               {this.value}
             </textarea>

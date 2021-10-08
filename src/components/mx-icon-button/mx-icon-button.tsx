@@ -1,5 +1,6 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
+import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-icon-button',
@@ -8,6 +9,7 @@ import chevronSvg from '../../assets/svg/chevron-down.svg';
 export class MxIconButton {
   btnElem!: HTMLButtonElement;
   anchorElem!: HTMLAnchorElement;
+  dataAttributes = {};
 
   @Prop() type: 'button' | 'submit' | 'reset' = 'button';
   @Prop() formaction: string;
@@ -23,6 +25,10 @@ export class MxIconButton {
   @Prop() chevronRight: boolean = false;
   /** Class name of icon (for icon font) */
   @Prop() icon: string;
+
+  @Element() element: HTMLMxInputElement;
+
+  componentWillRender = propagateDataAttributes;
 
   onClick(e: MouseEvent) {
     if (this.disabled) {
@@ -66,6 +72,7 @@ export class MxIconButton {
           onClick={this.onClick.bind(this)}
           aria-disabled={this.disabled}
           aria-label={this.ariaLabel}
+          {...this.dataAttributes}
         >
           {buttonContent}
         </button>

@@ -1,6 +1,7 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
+import { propagateDataAttributes } from '../../utils/utils';
 
 export type BtnType = 'contained' | 'outlined' | 'action' | 'text';
 export type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
@@ -25,6 +26,7 @@ export interface IMxButtonProps {
 export class MxButton implements IMxButtonProps {
   btnElem!: HTMLButtonElement;
   anchorElem!: HTMLAnchorElement;
+  dataAttributes = {};
 
   @Prop() btnType: BtnType = 'contained';
   @Prop() type: ButtonTypeAttribute = 'button';
@@ -42,6 +44,10 @@ export class MxButton implements IMxButtonProps {
   @Prop() dropdown: boolean = false;
   /** Class name of icon */
   @Prop() icon: string;
+
+  @Element() element: HTMLMxInputElement;
+
+  componentWillRender = propagateDataAttributes;
 
   onClick(e: MouseEvent) {
     if (this.disabled) {
@@ -123,6 +129,7 @@ export class MxButton implements IMxButtonProps {
             ref={el => (this.btnElem = el as HTMLButtonElement)}
             onClick={this.onClick.bind(this)}
             aria-disabled={this.disabled}
+            {...this.dataAttributes}
           >
             {buttonContent}
           </button>

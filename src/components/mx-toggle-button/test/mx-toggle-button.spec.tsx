@@ -4,28 +4,31 @@ import { MxToggleButton } from '../mx-toggle-button';
 describe('mx-toggle-button', () => {
   let page;
   let root;
+  let btn;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxToggleButton],
-      html: `<mx-toggle-button icon="ph-apple-logo"></mx-toggle-button>`,
+      html: `<mx-toggle-button icon="ph-apple-logo" data-test="test"></mx-toggle-button>`,
     });
     root = page.root;
+    btn = root.querySelector('button');
   });
 
   it('renders a toggle button', async () => {
-    const btn = root.querySelector('button');
     expect(btn).not.toBeNull();
   });
 
   it('is not selected by default', async () => {
-    const btn = root.querySelector('button');
     expect(btn.getAttribute('class')).not.toContain('selected');
     expect(btn.getAttribute('aria-checked')).toBeNull();
   });
 
   it('has a switch role by default', async () => {
-    const btn = root.querySelector('button');
     expect(btn.getAttribute('role')).toBe('switch');
+  });
+
+  it('applies any data attributes to the button element', async () => {
+    expect(btn.getAttribute('data-test')).toBe('test');
   });
 });
 

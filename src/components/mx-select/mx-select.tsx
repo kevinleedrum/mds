@@ -1,7 +1,7 @@
-import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
+import { Component, Host, h, Prop, Watch, State, Element } from '@stencil/core';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 import warningCircleSvg from '../../assets/svg/warning-circle.svg';
-import { uuidv4 } from '../../utils/utils';
+import { propagateDataAttributes, uuidv4 } from '../../utils/utils';
 
 @Component({
   tag: 'mx-select',
@@ -11,6 +11,7 @@ export class MxSelect {
   selectElem!: HTMLSelectElement;
   textArea!: HTMLTextAreaElement;
   uuid: string = uuidv4();
+  dataAttributes = {};
 
   /** Helpful text to show below the select */
   @Prop() assistiveText: string;
@@ -34,6 +35,10 @@ export class MxSelect {
   @Prop({ mutable: true }) value: any;
 
   @State() isFocused: boolean = false;
+
+  @Element() element: HTMLMxInputElement;
+
+  componentWillRender = propagateDataAttributes;
 
   componentDidLoad() {
     this.updateSelectValue();
@@ -123,6 +128,7 @@ export class MxSelect {
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
             ref={el => (this.selectElem = el)}
+            {...this.dataAttributes}
           >
             <slot></slot>
           </select>

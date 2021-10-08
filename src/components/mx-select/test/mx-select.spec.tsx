@@ -18,6 +18,7 @@ describe('mx-select', () => {
           name="test-name"
           label-class="text-blue-500"
           error
+          data-test="test"
         >
         <option></option>
         <option>A</option>
@@ -125,5 +126,9 @@ describe('mx-select', () => {
     await page.waitForChanges();
     label = selectWrapper.querySelector('label');
     expect(label.classList.contains('floating')).toBe(true);
+  });
+
+  it('applies any data attributes to the select element', async () => {
+    expect(select.getAttribute('data-test')).toBe('test');
   });
 });

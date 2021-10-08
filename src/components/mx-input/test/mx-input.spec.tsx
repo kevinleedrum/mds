@@ -20,6 +20,7 @@ describe('mx-input', () => {
           type="email"
           dense="true"
           assistive-text="Enter your test input"
+          data-test="test"
         />
       `,
     });
@@ -90,6 +91,10 @@ describe('mx-input', () => {
     label = root.querySelector('label');
     expect(label.classList.contains('floating')).toBe(true);
   });
+
+  it('applies any data attributes to the input element', async () => {
+    expect(input.getAttribute('data-test')).toBe('test');
+  });
 });
 
 describe('mx-input as a textarea', () => {
@@ -107,6 +112,7 @@ describe('mx-input as a textarea', () => {
           value="foo"
           maxlength="100"
           assistive-text="Enter your test input"
+          data-test="test"
         />
       `,
       supportsShadowDom: true,
@@ -136,5 +142,9 @@ describe('mx-input as a textarea', () => {
   it('displays a character count and limit', async () => {
     const characterCount = root.querySelector('[data-testid="character-count"]');
     expect(characterCount.textContent).toBe('3/100');
+  });
+
+  it('applies any data attributes to the textarea element', async () => {
+    expect(tarea.getAttribute('data-test')).toBe('test');
   });
 });
