@@ -1,7 +1,7 @@
-import { Component, Host, h, Prop, State, Watch, Listen } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch, Listen, Element } from '@stencil/core';
 import clockSvg from '../../assets/svg/clock.svg';
 import warningCircleSvg from '../../assets/svg/warning-circle.svg';
-import { parseTimeString, uuidv4 } from '../../utils/utils';
+import { parseTimeString, propagateDataAttributes, uuidv4 } from '../../utils/utils';
 const timeOptions = [];
 for (let i = 0; i < 24; i++) {
   timeOptions.push({ hours: i, minutes: 0 });
@@ -9,6 +9,7 @@ for (let i = 0; i < 24; i++) {
 }
 export class MxTimePicker {
   constructor() {
+    this.dataAttributes = {};
     this.isTimeInputSupported = false;
     this.uuid = uuidv4();
     this.dense = false;
@@ -17,6 +18,7 @@ export class MxTimePicker {
     this.floatLabel = false;
     this.isFocused = false;
     this.isInputDirty = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     e.stopPropagation();
@@ -150,7 +152,7 @@ export class MxTimePicker {
     return (h(Host, { class: 'mx-time-picker block w-152' + (this.error ? ' error' : '') },
       this.label && !this.floatLabel && labelJsx,
       h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass },
-        h("input", { "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }),
+        h("input", Object.assign({ "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }, this.dataAttributes)),
         this.label && this.floatLabel && labelJsx,
         h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", innerHTML: this.error ? warningCircleSvg : clockSvg, disabled: this.disabled })),
       this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" },
@@ -338,6 +340,7 @@ export class MxTimePicker {
     "isFocused": {},
     "isInputDirty": {}
   }; }
+  static get elementRef() { return "element"; }
   static get watchers() { return [{
       "propName": "value",
       "methodName": "onValueChange"

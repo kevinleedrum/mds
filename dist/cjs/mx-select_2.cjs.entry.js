@@ -5,13 +5,14 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const index = require('./index-c246f020.js');
 const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
 const warningCircle = require('./warning-circle-453368c1.js');
-const utils = require('./utils-821b5149.js');
+const utils = require('./utils-1f7ef40d.js');
 const ripple = require('./ripple-93b636e3.js');
 
 const MxSelect = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
     this.uuid = utils.uuidv4();
+    this.dataAttributes = {};
     this.dense = false;
     this.disabled = false;
     /** Style with a 1dp elevation */
@@ -23,6 +24,7 @@ const MxSelect = class {
     /** Additional classes for the label */
     this.labelClass = '';
     this.isFocused = false;
+    this.componentWillRender = utils.propagateDataAttributes;
   }
   componentDidLoad() {
     this.updateSelectValue();
@@ -94,8 +96,9 @@ const MxSelect = class {
   }
   render() {
     const labelJsx = (index.h("label", { htmlFor: this.selectId || this.uuid, class: this.labelClassNames }, this.label));
-    return (index.h(index.Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass }, index.h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, index.h("slot", null)), this.label && this.floatLabel && labelJsx, index.h("span", { class: this.iconSuffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && index.h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
+    return (index.h(index.Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass }, index.h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes), index.h("slot", null)), this.label && this.floatLabel && labelJsx, index.h("span", { class: this.iconSuffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && index.h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
   }
+  get element() { return index.getElement(this); }
   static get watchers() { return {
     "value": ["onValueChange"]
   }; }

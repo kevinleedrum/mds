@@ -1,4 +1,6 @@
+import { propagateDataAttributes } from '../../utils/utils';
 export declare class MxInput {
+  dataAttributes: {};
   textInput: HTMLInputElement;
   textArea: HTMLTextAreaElement;
   uuid: string;
@@ -33,7 +35,9 @@ export declare class MxInput {
   textareaHeight: string;
   isFocused: boolean;
   characterCount: number;
+  element: HTMLMxInputElement;
   connectedCallback(): void;
+  componentWillRender: typeof propagateDataAttributes;
   componentDidLoad(): void;
   onValueChange(): void;
   updateValue(): void;

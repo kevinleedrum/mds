@@ -1,7 +1,9 @@
+import { propagateDataAttributes } from '../../utils/utils';
 export declare class MxSelect {
   selectElem: HTMLSelectElement;
   textArea: HTMLTextAreaElement;
   uuid: string;
+  dataAttributes: {};
   /** Helpful text to show below the select */
   assistiveText: string;
   dense: boolean;
@@ -23,6 +25,8 @@ export declare class MxSelect {
   labelClass: string;
   value: any;
   isFocused: boolean;
+  element: HTMLMxInputElement;
+  componentWillRender: typeof propagateDataAttributes;
   componentDidLoad(): void;
   onValueChange(): void;
   updateSelectValue(): void;

@@ -14,6 +14,7 @@
     "./components/mx-dropdown-menu/mx-dropdown-menu.js",
     "./components/mx-fab/mx-fab.js",
     "./components/mx-icon-button/mx-icon-button.js",
+    "./components/mx-image-upload/mx-image-upload.js",
     "./components/mx-input/mx-input.js",
     "./components/mx-linear-progress/mx-linear-progress.js",
     "./components/mx-menu/mx-menu.js",

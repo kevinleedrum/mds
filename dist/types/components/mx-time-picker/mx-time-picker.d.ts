@@ -1,4 +1,6 @@
+import { propagateDataAttributes } from '../../utils/utils';
 export declare class MxTimePicker {
+  dataAttributes: {};
   pickerWrapper: HTMLElement;
   menuButton: HTMLElement;
   inputElem: HTMLInputElement;
@@ -20,8 +22,10 @@ export declare class MxTimePicker {
   value: string;
   isFocused: boolean;
   isInputDirty: boolean;
+  element: HTMLMxTimePickerElement;
   onClick(e: MouseEvent): void;
   onValueChange(): void;
+  componentWillRender: typeof propagateDataAttributes;
   componentDidLoad(): void;
   onInput(e: InputEvent): void;
   onBlur(): void;

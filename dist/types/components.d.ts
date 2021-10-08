@@ -203,6 +203,74 @@ export namespace Components {
         "type": 'button' | 'submit' | 'reset';
         "value": string;
     }
+    interface MxImageUpload {
+        /**
+          * Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file.
+         */
+        "acceptImage": boolean;
+        /**
+          * Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file.
+         */
+        "acceptPdf": boolean;
+        /**
+          * Replaces the word "image" in the default dropzone text (i.e. "No image to show").
+         */
+        "assetName": string;
+        /**
+          * Sets the width and height to 80px and changes the icon.
+         */
+        "avatar": boolean;
+        /**
+          * The height of the dropzone / thumbnail container (e.g. "400px" or "50%").
+         */
+        "height": string;
+        /**
+          * The class name of the icon to use instead of the default icon.
+         */
+        "icon": string;
+        /**
+          * The `id` attribute to apply to the input element.
+         */
+        "inputId": string;
+        /**
+          * Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content.
+         */
+        "isUploaded": boolean;
+        /**
+          * Set to `true` to disable the button and show the circular progress indicator.
+         */
+        "isUploading": boolean;
+        /**
+          * The `name` attribute for the `input` element.
+         */
+        "name": string;
+        "removeFile": () => Promise<void>;
+        "selectFile": () => Promise<void>;
+        /**
+          * Set to `false` to hide the default Upload/Remove button.
+         */
+        "showButton": boolean;
+        /**
+          * Set to `false` to hide the dropzone text.
+         */
+        "showDropzoneText": boolean;
+        /**
+          * Set to `false` to hide the dropzone icon.
+         */
+        "showIcon": boolean;
+        /**
+          * Sets the thumbnail sizing strategy relative to the container.
+         */
+        "thumbnailSize": 'cover' | 'stretch' | 'contain' | 'auto';
+        /**
+          * The URL for the thumbnail of the currently selected image.
+         */
+        "thumbnailUrl": string;
+        /**
+          * The width of the dropzone / thumbnail container (e.g. "400px" or "50%").
+         */
+        "width": string;
+    }
     interface MxInput {
         "assistiveText": string;
         "dense": boolean;
@@ -672,6 +740,12 @@ declare global {
         prototype: HTMLMxIconButtonElement;
         new (): HTMLMxIconButtonElement;
     };
+    interface HTMLMxImageUploadElement extends Components.MxImageUpload, HTMLStencilElement {
+    }
+    var HTMLMxImageUploadElement: {
+        prototype: HTMLMxImageUploadElement;
+        new (): HTMLMxImageUploadElement;
+    };
     interface HTMLMxInputElement extends Components.MxInput, HTMLStencilElement {
     }
     var HTMLMxInputElement: {
@@ -802,6 +876,7 @@ declare global {
         "mx-dropdown-menu": HTMLMxDropdownMenuElement;
         "mx-fab": HTMLMxFabElement;
         "mx-icon-button": HTMLMxIconButtonElement;
+        "mx-image-upload": HTMLMxImageUploadElement;
         "mx-input": HTMLMxInputElement;
         "mx-linear-progress": HTMLMxLinearProgressElement;
         "mx-menu": HTMLMxMenuElement;
@@ -1022,6 +1097,72 @@ declare namespace LocalJSX {
         "icon"?: string;
         "type"?: 'button' | 'submit' | 'reset';
         "value"?: string;
+    }
+    interface MxImageUpload {
+        /**
+          * Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file.
+         */
+        "acceptImage"?: boolean;
+        /**
+          * Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file.
+         */
+        "acceptPdf"?: boolean;
+        /**
+          * Replaces the word "image" in the default dropzone text (i.e. "No image to show").
+         */
+        "assetName"?: string;
+        /**
+          * Sets the width and height to 80px and changes the icon.
+         */
+        "avatar"?: boolean;
+        /**
+          * The height of the dropzone / thumbnail container (e.g. "400px" or "50%").
+         */
+        "height"?: string;
+        /**
+          * The class name of the icon to use instead of the default icon.
+         */
+        "icon"?: string;
+        /**
+          * The `id` attribute to apply to the input element.
+         */
+        "inputId"?: string;
+        /**
+          * Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content.
+         */
+        "isUploaded"?: boolean;
+        /**
+          * Set to `true` to disable the button and show the circular progress indicator.
+         */
+        "isUploading"?: boolean;
+        /**
+          * The `name` attribute for the `input` element.
+         */
+        "name"?: string;
+        /**
+          * Set to `false` to hide the default Upload/Remove button.
+         */
+        "showButton"?: boolean;
+        /**
+          * Set to `false` to hide the dropzone text.
+         */
+        "showDropzoneText"?: boolean;
+        /**
+          * Set to `false` to hide the dropzone icon.
+         */
+        "showIcon"?: boolean;
+        /**
+          * Sets the thumbnail sizing strategy relative to the container.
+         */
+        "thumbnailSize"?: 'cover' | 'stretch' | 'contain' | 'auto';
+        /**
+          * The URL for the thumbnail of the currently selected image.
+         */
+        "thumbnailUrl"?: string;
+        /**
+          * The width of the dropzone / thumbnail container (e.g. "400px" or "50%").
+         */
+        "width"?: string;
     }
     interface MxInput {
         "assistiveText"?: string;
@@ -1473,6 +1614,7 @@ declare namespace LocalJSX {
         "mx-dropdown-menu": MxDropdownMenu;
         "mx-fab": MxFab;
         "mx-icon-button": MxIconButton;
+        "mx-image-upload": MxImageUpload;
         "mx-input": MxInput;
         "mx-linear-progress": MxLinearProgress;
         "mx-menu": MxMenu;
@@ -1508,6 +1650,7 @@ declare module "@stencil/core" {
             "mx-dropdown-menu": LocalJSX.MxDropdownMenu & JSXBase.HTMLAttributes<HTMLMxDropdownMenuElement>;
             "mx-fab": LocalJSX.MxFab & JSXBase.HTMLAttributes<HTMLMxFabElement>;
             "mx-icon-button": LocalJSX.MxIconButton & JSXBase.HTMLAttributes<HTMLMxIconButtonElement>;
+            "mx-image-upload": LocalJSX.MxImageUpload & JSXBase.HTMLAttributes<HTMLMxImageUploadElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
             "mx-linear-progress": LocalJSX.MxLinearProgress & JSXBase.HTMLAttributes<HTMLMxLinearProgressElement>;
             "mx-menu": LocalJSX.MxMenu & JSXBase.HTMLAttributes<HTMLMxMenuElement>;

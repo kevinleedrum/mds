@@ -3,6 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-c246f020.js');
+const utils = require('./utils-1f7ef40d.js');
 
 const searchSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8748 3.75C6.93979 3.75 3.74982 6.93997 3.74982 10.875C3.74982 14.81 6.93979 18 10.8748 18C14.8098 18 17.9998 14.81 17.9998 10.875C17.9998 6.93997 14.8098 3.75 10.8748 3.75ZM2.24982 10.875C2.24982 6.11154 6.11136 2.25 10.8748 2.25C15.6383 2.25 19.4998 6.11154 19.4998 10.875C19.4998 15.6385 15.6383 19.5 10.8748 19.5C6.11136 19.5 2.24982 15.6385 2.24982 10.875Z" fill="currentColor"/>
@@ -13,8 +14,10 @@ const searchSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" x
 const MxSearch = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
+    this.dataAttributes = {};
     this.dense = false;
     this.flat = false;
+    this.componentWillRender = utils.propagateDataAttributes;
   }
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
@@ -23,8 +26,9 @@ const MxSearch = class {
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: "mx-search flex items-center relative" }, index.h("input", { type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }), index.h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
+    return (index.h(index.Host, { class: "mx-search flex items-center relative" }, index.h("input", Object.assign({ type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes)), index.h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
   }
+  get element() { return index.getElement(this); }
 };
 
 exports.mx_search = MxSearch;

@@ -1,10 +1,11 @@
-import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
+import { Component, Host, h, Prop, Watch, State, Element } from '@stencil/core';
 import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 import warningCircleSvg from '../../assets/svg/warning-circle.svg';
-import { uuidv4 } from '../../utils/utils';
+import { propagateDataAttributes, uuidv4 } from '../../utils/utils';
 export class MxSelect {
   constructor() {
     this.uuid = uuidv4();
+    this.dataAttributes = {};
     this.dense = false;
     this.disabled = false;
     /** Style with a 1dp elevation */
@@ -16,6 +17,7 @@ export class MxSelect {
     /** Additional classes for the label */
     this.labelClass = '';
     this.isFocused = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   componentDidLoad() {
     this.updateSelectValue();
@@ -90,7 +92,7 @@ export class MxSelect {
     return (h(Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') },
       this.label && !this.floatLabel && labelJsx,
       h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass },
-        h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) },
+        h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes),
           h("slot", null)),
         this.label && this.floatLabel && labelJsx,
         h("span", { class: this.iconSuffixClass },
@@ -349,6 +351,7 @@ export class MxSelect {
   static get states() { return {
     "isFocused": {}
   }; }
+  static get elementRef() { return "element"; }
   static get watchers() { return [{
       "propName": "value",
       "methodName": "onValueChange"

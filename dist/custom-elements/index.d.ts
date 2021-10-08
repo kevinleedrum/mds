@@ -56,6 +56,12 @@ export const MxIconButton: {
   new (): MxIconButton;
 };
 
+interface MxImageUpload extends Components.MxImageUpload, HTMLElement {}
+export const MxImageUpload: {
+  prototype: MxImageUpload;
+  new (): MxImageUpload;
+};
+
 interface MxInput extends Components.MxInput, HTMLElement {}
 export const MxInput: {
   prototype: MxInput;

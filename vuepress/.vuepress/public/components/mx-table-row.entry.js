@@ -2,7 +2,7 @@ import { r as registerInstance, e as createEvent, h, f as Host, g as getElement 
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { d as dotsSvg } from './dots-vertical-717ab421.js';
 import { c as chevronSvg } from './chevron-down-6a7bb36b.js';
-import { b as getScrollingParent, a as getCursorCoords, d as getBounds, g as getPageRect, e as isScrolledOutOfView } from './utils-0f21db35.js';
+import { d as getScrollingParent, a as getCursorCoords, e as getBounds, g as getPageRect, f as isScrolledOutOfView } from './utils-18e3dfde.js';
 
 const dragDotsSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M14 13C14.5523 13 15 12.5523 15 12C15 11.4477 14.5523 11 14 11C13.4477 11 13 11.4477 13 12C13 12.5523 13.4477 13 14 13Z" fill="currentColor"/>

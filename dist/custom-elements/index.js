@@ -137,10 +137,118 @@ const chevronSvg = `<svg width="13" height="7" viewBox="0 0 13 7" fill="none" xm
 </svg>
 `;
 
+// https://github.com/ionic-team/capacitor/blob/b893a57aaaf3a16e13db9c33037a12f1a5ac92e0/cli/src/util/uuid.ts
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = (Math.random() * 16) | 0;
+    const v = c == 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+function queryPrefersReducedMotion() {
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  return !mediaQuery || mediaQuery.matches;
+}
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+function isDateObject(val) {
+  if (typeof val !== 'object')
+    return false;
+  return 'getTime' in val && !isNaN(val.getTime()); // "Invalid Date" objects return NaN for getTime()
+}
+/** Converts a time string such as "15:30" or "3:30PM" into `{ hours: 15, minutes: 30 }` */
+/** @returns Time object, or `null` if the string could not be parsed as a valid time */
+function parseTimeString(str) {
+  if (str == null || str.trim() === '')
+    return;
+  const isExplicitAM = str.toLowerCase().includes('a');
+  const isExplicitPM = str.toLowerCase().includes('p');
+  let digits = str.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+  if (!digits.length || digits.length > 4)
+    return null;
+  // If only 1 or 2 digits entered, assume only an hour was entered
+  let hours = digits.length <= 2 ? Number(digits) : Number(digits.slice(0, -2));
+  const minutes = digits.length <= 2 ? 0 : Number(digits.slice(-2));
+  if (hours === 12 && isExplicitAM)
+    hours = 0; // '12:00AM' -> 0 hours
+  if (hours < 12 && isExplicitPM)
+    hours += 12; // '2:00PM' -> 14 hours
+  if (hours > 23 || minutes > 59)
+    return null;
+  return { hours, minutes };
+}
+/** Returns the `clientX`, `clientY`, `pageX`, `pageY` from any MouseEvent or TouchEvent. */
+function getCursorCoords(e) {
+  if (e.changedTouches)
+    return e.changedTouches[0];
+  else if (e.touches)
+    return e.touches[0];
+  else
+    return e;
+}
+/** Returns a DOMRect for an element similar to getBoundingClientRect, however the
+ * position ignores CSS transforms and accounts for scrolling. */
+function getPageRect(el) {
+  const { height, width } = el.getBoundingClientRect();
+  let top = 0;
+  let left = 0;
+  do {
+    top += el.offsetTop;
+    left += el.offsetLeft;
+    el = el.offsetParent;
+  } while (el);
+  return { top, left, width, height, bottom: top + height, right: left + width };
+}
+/** Return the client boundaries of an element (or the window) */
+function getBounds(container) {
+  if (container === window) {
+    return { top: 0, right: window.innerWidth, bottom: window.innerHeight, left: 0 };
+  }
+  return container.getBoundingClientRect();
+}
+/** Determines whether an element needs to be scrolled into view */
+function isScrolledOutOfView(el) {
+  const bounds = el.getBoundingClientRect(); // getBoundingClientRect accounts for CSS translate
+  const scrollBounds = getBounds(getScrollingParent(el));
+  if (bounds.top < scrollBounds.top)
+    return true;
+  if (bounds.bottom > scrollBounds.bottom)
+    return true;
+  if (bounds.left < scrollBounds.left)
+    return true;
+  if (bounds.left > scrollBounds.right)
+    return true; // It's okay if the right edge is out of bounds
+  return false;
+}
+/** Get the nearest scrolling ancestor, which could be the window */
+function getScrollingParent(el) {
+  if (!(el instanceof HTMLElement))
+    return window;
+  if (isScrollable(el))
+    return el;
+  return getScrollingParent(el.parentNode);
+}
+function isScrollable(el) {
+  const computedStyle = window.getComputedStyle(el);
+  const overflowRegex = /(auto|scroll)/;
+  const properties = ['overflow', 'overflowX', 'overflowY'];
+  return properties.find(property => overflowRegex.test(computedStyle[property]));
+}
+/** Remove data attributes from the host element, and store them in this.dataAttributes,
+ * so they can be applied to the native element in the render function. */
+function propagateDataAttributes() {
+  Object.keys(this.element.dataset).forEach(key => {
+    this.dataAttributes['data-' + key] = this.element.dataset[key];
+    this.element.removeAttribute(`data-${key}`);
+  });
+}
+
 const MxButton$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.btnType = 'contained';
     this.type = 'button';
     this.disabled = false;
@@ -149,6 +257,7 @@ const MxButton$1 = class extends HTMLElement {
     this.full = false;
     /** Show chevron icon */
     this.dropdown = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     if (this.disabled) {
@@ -189,14 +298,16 @@ const MxButton$1 = class extends HTMLElement {
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("span", { "data-testid": "chevron", class: this.btnType === 'text' ? 'chevron-icon ml-4' : 'ml-8', innerHTML: chevronSvg }))));
-    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", { type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled }, buttonContent))));
+    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled }, this.dataAttributes), buttonContent))));
   }
+  get element() { return this; }
 };
 
 const MxCheckbox$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.name = '';
     this.value = '';
     this.labelLeft = false;
@@ -207,6 +318,7 @@ const MxCheckbox$1 = class extends HTMLElement {
     this.checked = false;
     this.disabled = false;
     this.indeterminate = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   get checkClass() {
     let str = 'flex h-18 w-18 flex-shrink-0';
@@ -229,8 +341,9 @@ const MxCheckbox$1 = class extends HTMLElement {
         'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
           (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,
-      ].join(' ') }, h("input", { class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }), h("span", { class: this.checkClass }), h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
+      ].join(' ') }, h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes)), h("span", { class: this.checkClass }), h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
+  get element() { return this; }
 };
 
 const removeSvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -623,6 +736,7 @@ const MxIconButton$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.type = 'button';
     this.disabled = false;
     /** Show downward chevron icon */
@@ -631,6 +745,7 @@ const MxIconButton$1 = class extends HTMLElement {
     this.chevronLeft = false;
     /** Show right-pointing chevron icon */
     this.chevronRight = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     if (this.disabled) {
@@ -644,8 +759,182 @@ const MxIconButton$1 = class extends HTMLElement {
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-1', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" }, h("span", { "data-testid": "chevron", class: this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : '', innerHTML: chevronSvg })))));
-    return (h(Host, { class: "mx-icon-button inline-block" }, h("button", { type: this.type, formaction: this.formaction, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, buttonContent)));
+    return (h(Host, { class: "mx-icon-button inline-block" }, h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
   }
+  get element() { return this; }
+};
+
+const imageSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M19.5 21H4.5C3.67 21 3 20.33 3 19.5V4.5C3 3.67 3.67 3 4.5 3H19.5C20.33 3 21 3.67 21 4.5V19.5C21 20.33 20.33 21 19.5 21ZM4.5 4.5V19.5H19.5V4.5H4.5Z" fill="currentColor"/>
+  <path d="M3.74994 17.2498C3.55994 17.2498 3.36994 17.1798 3.21994 17.0298C2.92994 16.7398 2.92994 16.2598 3.21994 15.9698L6.43994 12.7498C6.99994 12.1898 7.99994 12.1898 8.55994 12.7498L10.4999 14.6898L14.6899 10.4998C15.2599 9.92977 16.2399 9.92977 16.8099 10.4998L20.7799 14.4698C21.0699 14.7598 21.0699 15.2398 20.7799 15.5298C20.4899 15.8198 20.0099 15.8198 19.7199 15.5298L15.7499 11.5598L11.5599 15.7498C10.9999 16.3098 9.99994 16.3098 9.43994 15.7498L7.49994 13.8098L4.27994 17.0298C4.12994 17.1798 3.93994 17.2498 3.74994 17.2498Z" fill="currentColor"/>
+  <path d="M9.37994 9.55994C9.89994 9.55994 10.3199 9.13994 10.3199 8.61994C10.3199 8.09994 9.88994 7.68994 9.37994 7.68994C8.86994 7.68994 8.43994 8.10994 8.43994 8.61994C8.43994 9.12994 8.85994 9.55994 9.37994 9.55994Z" fill="currentColor"/>
+</svg>
+`;
+
+const userCircleSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.25C10.3431 8.25 9 9.59315 9 11.25C9 12.9069 10.3431 14.25 12 14.25C13.6569 14.25 15 12.9069 15 11.25C15 9.59315 13.6569 8.25 12 8.25ZM7.5 11.25C7.5 8.76472 9.51472 6.75 12 6.75C14.4853 6.75 16.5 8.76472 16.5 11.25C16.5 13.7353 14.4853 15.75 12 15.75C9.51472 15.75 7.5 13.7353 7.5 11.25Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9999 15.75C10.8922 15.75 9.80605 16.0565 8.86175 16.6357C7.91744 17.2148 7.15182 18.044 6.64962 19.0313C6.46183 19.4005 6.01031 19.5476 5.6411 19.3598C5.2719 19.172 5.12483 18.7205 5.31262 18.3513C5.94031 17.1172 6.89726 16.0809 8.07754 15.357C9.25782 14.6331 10.6154 14.25 11.9999 14.25C13.3845 14.25 14.7421 14.6331 15.9223 15.357C17.1026 16.0808 18.0596 17.1172 18.6873 18.3513C18.8751 18.7205 18.728 19.172 18.3588 19.3598C17.9896 19.5476 17.5381 19.4005 17.3503 19.0313C16.8481 18.0439 16.0824 17.2148 15.1381 16.6357C14.1938 16.0565 13.1077 15.75 11.9999 15.75Z" fill="currentColor"/>
+</svg>
+`;
+
+const MxImageUpload$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.hasInstructions = false;
+    this.hasSuccess = false;
+    this.hasError = false;
+    /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
+    this.acceptImage = true;
+    /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
+    this.acceptPdf = false;
+    /** Replaces the word "image" in the default dropzone text (i.e. "No image to show"). */
+    this.assetName = 'image';
+    /** Sets the width and height to 80px and changes the icon. */
+    this.avatar = false;
+    /** Sets the thumbnail sizing strategy relative to the container. */
+    this.thumbnailSize = 'cover';
+    /** Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content. */
+    this.isUploaded = false;
+    /** Set to `true` to disable the button and show the circular progress indicator. */
+    this.isUploading = false;
+    /** Set to `false` to hide the default Upload/Remove button. */
+    this.showButton = true;
+    /** Set to `false` to hide the dropzone icon. */
+    this.showIcon = true;
+    /** Set to `false` to hide the dropzone text. */
+    this.showDropzoneText = true;
+    this.isDraggingOver = false;
+    this.isFileSelected = false;
+  }
+  onThumbnailUrlChange() {
+    if (this.thumbnailUrl)
+      this.isUploaded = true;
+  }
+  connectedCallback() {
+    this.onThumbnailUrlChange();
+  }
+  componentWillRender() {
+    this.hasInstructions = !!this.element.querySelector('[slot="instructions"]');
+    this.hasSuccess = !!this.element.querySelector('[slot="success"]');
+    this.hasError = !!this.element.querySelector('[slot="error"]');
+  }
+  async removeFile() {
+    if (!this.hasFile || this.isUploading)
+      return;
+    this.isFileSelected = false;
+    this.isUploaded = false;
+    this.isUploading = false;
+    this.fileInput.value = '';
+    this.fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+    this.fileInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+  }
+  async selectFile() {
+    if (this.hasFile)
+      return;
+    this.isFileSelected = false;
+    this.fileInput.value = '';
+    this.fileInput.click();
+  }
+  onButtonClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    if (this.isUploading)
+      return;
+    if (!this.hasFile) {
+      this.selectFile();
+    }
+    else {
+      this.removeFile();
+    }
+  }
+  onInput(e) {
+    this.isFileSelected = e.target.files && e.target.files.length > 0;
+    if (this.isFileSelected)
+      this.setThumnailDataUri(e.target.files[0]);
+    else
+      this.thumbnailDataUri = null;
+  }
+  setThumnailDataUri(file) {
+    this.thumbnailDataUri = null;
+    if (!/\.(jpe?g|png|gif)$/i.test(file.name))
+      return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.thumbnailDataUri = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+  onDragOver() {
+    this.isDraggingOver = true;
+  }
+  onDragLeave() {
+    this.isDraggingOver = false;
+  }
+  get accept() {
+    let accept = [];
+    if (this.acceptImage)
+      accept.push('image/*');
+    if (this.acceptPdf)
+      accept.push('.pdf');
+    return accept.join(',') || null;
+  }
+  /** The width is applied to the host element in order to support percent-based widths */
+  get dropzoneWidth() {
+    if (this.width)
+      return this.width;
+    return this.avatar ? '80px' : '308px';
+  }
+  get dropzoneHeight() {
+    if (this.height)
+      return this.height;
+    return this.avatar ? '80px' : 'auto';
+  }
+  get dropzoneClass() {
+    let str = 'dropzone relative w-full h-full px-16 rounded-2xl overflow-hidden';
+    if (this.hasFile)
+      str += ' opacity-0';
+    if (this.isDraggingOver)
+      str += ' drag-over';
+    str += this.showIcon && this.showDropzoneText ? ' py-24' : ' py-16';
+    return str;
+  }
+  get hasFile() {
+    return this.isFileSelected || this.isUploaded;
+  }
+  get thumbnailBackgroundImage() {
+    let url = this.thumbnailUrl;
+    if (this.isFileSelected)
+      url = this.thumbnailDataUri;
+    if (!url)
+      return null;
+    return `url(${url})`;
+  }
+  get thumbnailBackgroundSize() {
+    if (!['contain', 'cover', 'auto', 'stretch'].includes(this.thumbnailSize))
+      return 'cover';
+    if (this.thumbnailSize === 'stretch')
+      return '100% 100%';
+    return this.thumbnailSize;
+  }
+  render() {
+    let iconJsx;
+    if (this.icon) {
+      iconJsx = h("i", { "data-testid": "upload-icon", class: 'dropzone-icon ' + this.icon });
+    }
+    else if (this.avatar) {
+      iconJsx = h("span", { "data-testid": "avatar-icon", innerHTML: userCircleSvg });
+    }
+    else {
+      iconJsx = h("span", { "data-testid": "image-icon", class: this.showDropzoneText ? 'mb-8' : '', innerHTML: imageSvg });
+    }
+    return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 opacity-0 cursor-pointer disabled:cursor-auto", disabled: this.hasFile, onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0' + (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? 'Remove' : 'Upload')), this.hasInstructions && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "thumbnailUrl": ["onThumbnailUrlChange"]
+  }; }
 };
 
 const warningCircleSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -655,109 +944,11 @@ const warningCircleSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="
 </svg>
 `;
 
-// https://github.com/ionic-team/capacitor/blob/b893a57aaaf3a16e13db9c33037a12f1a5ac92e0/cli/src/util/uuid.ts
-function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    const r = (Math.random() * 16) | 0;
-    const v = c == 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
-function queryPrefersReducedMotion() {
-  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  return !mediaQuery || mediaQuery.matches;
-}
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-function isDateObject(val) {
-  if (typeof val !== 'object')
-    return false;
-  return 'getTime' in val && !isNaN(val.getTime()); // "Invalid Date" objects return NaN for getTime()
-}
-/** Converts a time string such as "15:30" or "3:30PM" into `{ hours: 15, minutes: 30 }` */
-/** @returns Time object, or `null` if the string could not be parsed as a valid time */
-function parseTimeString(str) {
-  if (str == null || str.trim() === '')
-    return;
-  const isExplicitAM = str.toLowerCase().includes('a');
-  const isExplicitPM = str.toLowerCase().includes('p');
-  let digits = str.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-  if (!digits.length || digits.length > 4)
-    return null;
-  // If only 1 or 2 digits entered, assume only an hour was entered
-  let hours = digits.length <= 2 ? Number(digits) : Number(digits.slice(0, -2));
-  const minutes = digits.length <= 2 ? 0 : Number(digits.slice(-2));
-  if (hours === 12 && isExplicitAM)
-    hours = 0; // '12:00AM' -> 0 hours
-  if (hours < 12 && isExplicitPM)
-    hours += 12; // '2:00PM' -> 14 hours
-  if (hours > 23 || minutes > 59)
-    return null;
-  return { hours, minutes };
-}
-/** Returns the `clientX`, `clientY`, `pageX`, `pageY` from any MouseEvent or TouchEvent. */
-function getCursorCoords(e) {
-  if (e.changedTouches)
-    return e.changedTouches[0];
-  else if (e.touches)
-    return e.touches[0];
-  else
-    return e;
-}
-/** Returns a DOMRect for an element similar to getBoundingClientRect, however the
- * position ignores CSS transforms and accounts for scrolling. */
-function getPageRect(el) {
-  const { height, width } = el.getBoundingClientRect();
-  let top = 0;
-  let left = 0;
-  do {
-    top += el.offsetTop;
-    left += el.offsetLeft;
-    el = el.offsetParent;
-  } while (el);
-  return { top, left, width, height, bottom: top + height, right: left + width };
-}
-/** Return the client boundaries of an element (or the window) */
-function getBounds(container) {
-  if (container === window) {
-    return { top: 0, right: window.innerWidth, bottom: window.innerHeight, left: 0 };
-  }
-  return container.getBoundingClientRect();
-}
-/** Determines whether an element needs to be scrolled into view */
-function isScrolledOutOfView(el) {
-  const bounds = el.getBoundingClientRect(); // getBoundingClientRect accounts for CSS translate
-  const scrollBounds = getBounds(getScrollingParent(el));
-  if (bounds.top < scrollBounds.top)
-    return true;
-  if (bounds.bottom > scrollBounds.bottom)
-    return true;
-  if (bounds.left < scrollBounds.left)
-    return true;
-  if (bounds.left > scrollBounds.right)
-    return true; // It's okay if the right edge is out of bounds
-  return false;
-}
-/** Get the nearest scrolling ancestor, which could be the window */
-function getScrollingParent(el) {
-  if (!(el instanceof HTMLElement))
-    return window;
-  if (isScrollable(el))
-    return el;
-  return getScrollingParent(el.parentNode);
-}
-function isScrollable(el) {
-  const computedStyle = window.getComputedStyle(el);
-  const overflowRegex = /(auto|scroll)/;
-  const properties = ['overflow', 'overflowX', 'overflowY'];
-  return properties.find(property => overflowRegex.test(computedStyle[property]));
-}
-
 const MxInput$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.uuid = uuidv4();
     /** The `type` attribute for the text input */
     this.type = 'text';
@@ -773,6 +964,7 @@ const MxInput$1 = class extends HTMLElement {
     this.textareaHeight = '250px';
     this.isFocused = false;
     this.characterCount = 0;
+    this.componentWillRender = propagateDataAttributes;
   }
   connectedCallback() {
     this.characterCount = this.hasValue ? this.value.length : 0;
@@ -870,8 +1062,9 @@ const MxInput$1 = class extends HTMLElement {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames }, this.label));
-    return (h(Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { class: this.containerClass }, this.leftIcon && (h("div", { class: this.leftIconWrapperClass }, h("i", { class: this.leftIcon }))), this.label && this.floatLabel && labelJsx, !this.textarea ? (h("input", { type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) })) : (h("textarea", { class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass }, this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength)), this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)), this.error && h("span", { innerHTML: warningCircleSvg }), this.rightIcon && !this.error && h("i", { class: this.rightIcon })))), (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
+    return (h(Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { class: this.containerClass }, this.leftIcon && (h("div", { class: this.leftIconWrapperClass }, h("i", { class: this.leftIcon }))), this.label && this.floatLabel && labelJsx, !this.textarea ? (h("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (h("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass }, this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength)), this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)), this.error && h("span", { innerHTML: warningCircleSvg }), this.rightIcon && !this.error && h("i", { class: this.rightIcon })))), (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
   }
+  get element() { return this; }
   static get watchers() { return {
     "value": ["onValueChange"]
   }; }
@@ -3769,14 +3962,17 @@ const MxRadio$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.name = '';
     this.value = '';
     this.labelName = '';
     this.checked = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   render() {
-    return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }), h("span", { class: "flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
+    return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }, this.dataAttributes)), h("span", { class: "flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
+  get element() { return this; }
 };
 
 const searchSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -3789,8 +3985,10 @@ const MxSearch$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.dense = false;
     this.flat = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
@@ -3799,8 +3997,9 @@ const MxSearch$1 = class extends HTMLElement {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", { type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }), h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
+    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", Object.assign({ type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes)), h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
   }
+  get element() { return this; }
 };
 
 const MxSelect$1 = class extends HTMLElement {
@@ -3808,6 +4007,7 @@ const MxSelect$1 = class extends HTMLElement {
     super();
     this.__registerHost();
     this.uuid = uuidv4();
+    this.dataAttributes = {};
     this.dense = false;
     this.disabled = false;
     /** Style with a 1dp elevation */
@@ -3819,6 +4019,7 @@ const MxSelect$1 = class extends HTMLElement {
     /** Additional classes for the label */
     this.labelClass = '';
     this.isFocused = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   componentDidLoad() {
     this.updateSelectValue();
@@ -3890,8 +4091,9 @@ const MxSelect$1 = class extends HTMLElement {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.selectId || this.uuid, class: this.labelClassNames }, this.label));
-    return (h(Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass }, h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, h("slot", null)), this.label && this.floatLabel && labelJsx, h("span", { class: this.iconSuffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
+    return (h(Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass }, h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes), h("slot", null)), this.label && this.floatLabel && labelJsx, h("span", { class: this.iconSuffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
   }
+  get element() { return this; }
   static get watchers() { return {
     "value": ["onValueChange"]
   }; }
@@ -3977,14 +4179,17 @@ const MxSwitch$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.name = '';
     this.value = '';
     this.labelName = '';
     this.checked = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   render() {
-    return (h(Host, { class: "mx-switch" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", { class: "absolute h-0 w-0 opacity-0", role: "switch", type: "checkbox", name: this.name, checked: this.checked }), h("div", { class: "slider relative cursor-pointer round w-36 h-14 flex-shrink-0" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
+    return (h(Host, { class: "mx-switch" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", role: "switch", type: "checkbox", name: this.name, checked: this.checked }, this.dataAttributes)), h("div", { class: "slider relative cursor-pointer round w-36 h-14 flex-shrink-0" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
+  get element() { return this; }
 };
 
 const MxTab$1 = class extends HTMLElement {
@@ -4928,6 +5133,7 @@ const MxTimePicker$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.isTimeInputSupported = false;
     this.uuid = uuidv4();
     this.dense = false;
@@ -4936,6 +5142,7 @@ const MxTimePicker$1 = class extends HTMLElement {
     this.floatLabel = false;
     this.isFocused = false;
     this.isInputDirty = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     e.stopPropagation();
@@ -5066,8 +5273,9 @@ const MxTimePicker$1 = class extends HTMLElement {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
-    return (h(Host, { class: 'mx-time-picker block w-152' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", { "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", innerHTML: this.error ? warningCircleSvg : clockSvg, disabled: this.disabled })), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this), onMxOpen: this.onMenuOpen.bind(this) }, timeOptions.map(timeOption => (h("mx-menu-item", { onClick: this.setValue.bind(this, timeOption) }, this.getLocalizedTimeString(timeOption)))))));
+    return (h(Host, { class: 'mx-time-picker block w-152' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", innerHTML: this.error ? warningCircleSvg : clockSvg, disabled: this.disabled })), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this), onMxOpen: this.onMenuOpen.bind(this) }, timeOptions.map(timeOption => (h("mx-menu-item", { onClick: this.setValue.bind(this, timeOption) }, this.getLocalizedTimeString(timeOption)))))));
   }
+  get element() { return this; }
   static get watchers() { return {
     "value": ["onValueChange"]
   }; }
@@ -5077,8 +5285,10 @@ const MxToggleButton$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.selected = false;
     this.disabled = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     if (this.disabled) {
@@ -5089,9 +5299,10 @@ const MxToggleButton$1 = class extends HTMLElement {
     ripple(e, this.btnElem);
   }
   render() {
-    return (h(Host, { class: "mx-toggle-button inline-flex overflow-hidden border-l\n      first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl\n      last-of-type:rounded-tr last-of-type:rounded-br" }, h("button", { class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer' +
-        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), "aria-disabled": this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, h("i", { class: this.icon }))));
+    return (h(Host, { class: "mx-toggle-button inline-flex overflow-hidden border-l\n      first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl\n      last-of-type:rounded-tr last-of-type:rounded-br" }, h("button", Object.assign({ class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer' +
+        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), "aria-disabled": this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, this.dataAttributes), h("i", { class: this.icon }))));
   }
+  get element() { return this; }
 };
 
 const MxToggleButtonGroup$1 = class extends HTMLElement {
@@ -5141,6 +5352,7 @@ const MxCircularProgress = /*@__PURE__*/proxyCustomElement(MxCircularProgress$1,
 const MxDropdownMenu = /*@__PURE__*/proxyCustomElement(MxDropdownMenu$1, [4,"mx-dropdown-menu",{"ariaLabel":[1,"aria-label"],"dense":[4],"elevated":[4],"flat":[4],"label":[1],"dropdownId":[1,"dropdown-id"],"name":[1],"suffix":[1],"value":[1032],"isFocused":[32]},[[0,"click","onClick"]]]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"ariaLabel":[1,"aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
 const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"formaction":[1],"value":[1],"disabled":[516],"ariaLabel":[1,"aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
+const MxImageUpload = /*@__PURE__*/proxyCustomElement(MxImageUpload$1, [4,"mx-image-upload",{"acceptImage":[4,"accept-image"],"acceptPdf":[4,"accept-pdf"],"assetName":[1,"asset-name"],"avatar":[4],"thumbnailSize":[1,"thumbnail-size"],"height":[1],"icon":[1],"inputId":[1,"input-id"],"isUploaded":[1540,"is-uploaded"],"isUploading":[1540,"is-uploading"],"name":[1],"showButton":[4,"show-button"],"showIcon":[4,"show-icon"],"showDropzoneText":[4,"show-dropzone-text"],"thumbnailUrl":[1,"thumbnail-url"],"width":[1],"isDraggingOver":[32],"isFileSelected":[32],"thumbnailDataUri":[32]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"placeholder":[1],"value":[1025],"type":[1],"dense":[4],"disabled":[4],"readonly":[4],"maxlength":[2],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"suffix":[1],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"floatLabel":[4,"float-label"],"textarea":[4],"textareaHeight":[1025,"textarea-height"],"isFocused":[32],"characterCount":[32]}]);
 const MxLinearProgress = /*@__PURE__*/proxyCustomElement(MxLinearProgress$1, [0,"mx-linear-progress",{"value":[2],"appearDelay":[2,"appear-delay"]}]);
 const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"triggerEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
@@ -5173,6 +5385,7 @@ const defineCustomElements = (opts) => {
   MxDropdownMenu,
   MxFab,
   MxIconButton,
+  MxImageUpload,
   MxInput,
   MxLinearProgress,
   MxMenu,
@@ -5201,4 +5414,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, defineCustomElements };

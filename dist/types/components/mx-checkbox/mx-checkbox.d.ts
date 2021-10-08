@@ -1,4 +1,6 @@
+import { propagateDataAttributes } from '../../utils/utils';
 export declare class MxCheckbox {
+  dataAttributes: {};
   name: string;
   value: string;
   labelLeft: boolean;
@@ -9,6 +11,8 @@ export declare class MxCheckbox {
   checked: boolean;
   disabled: boolean;
   indeterminate: boolean;
+  element: HTMLMxInputElement;
+  componentWillRender: typeof propagateDataAttributes;
   get checkClass(): string;
   get checkLabelClass(): string;
   render(): any;
