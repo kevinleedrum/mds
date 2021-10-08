@@ -51,8 +51,13 @@ export class MxImageUpload {
 
   @Element() element: HTMLMxTableElement;
 
-  connectedCallback() {
+  @Watch('thumbnailUrl')
+  onThumbnailUrlChange() {
     if (this.thumbnailUrl) this.isUploaded = true;
+  }
+
+  connectedCallback() {
+    this.onThumbnailUrlChange();
   }
 
   componentWillRender() {
