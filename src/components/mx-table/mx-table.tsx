@@ -422,6 +422,12 @@ export class MxTable {
     return { display, gridTemplateColumns };
   }
 
+  get emptyStateClass(): string {
+    let str = 'empty-state';
+    if (this.rows.length > 0 || this.getTableRows().length > 0) str += ' hidden';
+    return str;
+  }
+
   sortRows(rows: Object[]) {
     const sortByColumn = this.cols.find(c => c.property === this.sortBy);
     if (!sortByColumn) return;
@@ -675,15 +681,13 @@ export class MxTable {
             </div>
           )}
           {/* Empty State */}
-          {this.getTableRows().length === 0 && (
-            <div class="empty-state">
-              <div class="col-span-full p-16 text-4">
-                <slot name="empty-state">
-                  <span>No results found.</span>
-                </slot>
-              </div>
+          <div data-testid="empty-state" class={this.emptyStateClass}>
+            <div class="col-span-full p-16 text-4">
+              <slot name="empty-state">
+                <span>No results found.</span>
+              </slot>
             </div>
-          )}
+          </div>
           {this.paginate && (
             // Pagination Row
             <div class="pagination-row">
