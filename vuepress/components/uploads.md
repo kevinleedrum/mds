@@ -91,10 +91,10 @@ The `thumbnailSize` prop may also be used to set how the thumbnail fits inside t
 <section class="mds">
   <div class="flex flex-col my-20 space-y-40">
 <!-- #region image-upload-dimensions -->
-    <mx-image-upload width="100%" height="150px" thumbnail-size="cover" thumbnail-url="https://via.placeholder.com/200x100" />
-    <mx-image-upload width="100%" height="150px" thumbnail-size="stretch" thumbnail-url="https://via.placeholder.com/200x100" />
-    <mx-image-upload width="100%" height="150px" thumbnail-size="contain" thumbnail-url="https://via.placeholder.com/200x100" />
-    <mx-image-upload width="100%" height="150px" thumbnail-size="auto" thumbnail-url="https://via.placeholder.com/200x100" />
+    <mx-image-upload width="75%" height="150px" thumbnail-size="cover" thumbnail-url="https://via.placeholder.com/200x100" />
+    <mx-image-upload width="75%" height="150px" thumbnail-size="stretch" thumbnail-url="https://via.placeholder.com/200x100" />
+    <mx-image-upload width="75%" height="150px" thumbnail-size="contain" thumbnail-url="https://via.placeholder.com/200x100" />
+    <mx-image-upload width="75%" height="150px" thumbnail-size="auto" thumbnail-url="https://via.placeholder.com/200x100" />
 <!-- #endregion image-upload-dimensions -->
   </div>
 </section>

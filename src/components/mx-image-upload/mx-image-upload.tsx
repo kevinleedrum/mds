@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, State, Method } from '@stencil/core';
+import { Component, Host, h, Prop, Element, State, Method, Watch } from '@stencil/core';
 import imageSvg from '../../assets/svg/image.svg';
 import userCircleSvg from '../../assets/svg/user-circle.svg';
 
@@ -127,12 +127,15 @@ export class MxImageUpload {
     return accept.join(',') || null;
   }
 
-  get dropzoneWrapperStyle(): any {
-    let width = this.avatar ? '80px' : '308px';
-    let height = this.avatar ? '80px' : 'auto';
-    if (this.width) width = this.width;
-    if (this.height) height = this.height;
-    return { width, height };
+  /** The width is applied to the host element in order to support percent-based widths */
+  get dropzoneWidth(): string {
+    if (this.width) return this.width;
+    return this.avatar ? '80px' : '308px';
+  }
+
+  get dropzoneHeight(): string {
+    if (this.height) return this.height;
+    return this.avatar ? '80px' : 'auto';
   }
 
   get dropzoneClass(): string {
@@ -163,24 +166,28 @@ export class MxImageUpload {
   render() {
     let iconJsx;
     if (this.icon) {
-      iconJsx = <i class={'dropzone-icon ' + this.icon}></i>;
+      iconJsx = <i data-testid="upload-icon" class={'dropzone-icon ' + this.icon}></i>;
     } else if (this.avatar) {
-      iconJsx = <span innerHTML={userCircleSvg}></span>;
+      iconJsx = <span data-testid="avatar-icon" innerHTML={userCircleSvg}></span>;
     } else {
-      iconJsx = <span class={this.showDropzoneText ? 'mb-8' : ''} innerHTML={imageSvg}></span>;
+      iconJsx = <span data-testid="image-icon" class={this.showDropzoneText ? 'mb-8' : ''} innerHTML={imageSvg}></span>;
     }
 
     return (
-      <Host class="mx-image-upload inline-block" style={{ width: this.width }}>
+      <Host class="mx-image-upload inline-block" style={{ width: this.dropzoneWidth }}>
         <div
-          class="dropzone-wrapper flex items-center justify-center relative rounded-2xl text-3 overflow-hidden"
-          style={this.dropzoneWrapperStyle}
+          data-testid="dropzone-wrapper"
+          class="dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden"
+          style={{ height: this.dropzoneHeight }}
         >
           <div class={this.dropzoneClass}>
             <div class="flex flex-col items-center justify-center w-full h-full">
               {this.showIcon && iconJsx}
               <slot name="dropzone-text">
-                <div class={'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden')}>
+                <div
+                  data-testid="dropzone-text"
+                  class={'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden')}
+                >
                   <p class="subtitle1 my-0">No {this.assetName} to show</p>
                   <p class="text-4 my-0 mt-4">Click to add {this.assetName}</p>
                 </div>
@@ -192,6 +199,8 @@ export class MxImageUpload {
             </svg>
             <input
               ref={el => (this.fileInput = el)}
+              id={this.inputId}
+              name={this.name}
               type="file"
               accept={this.accept}
               class="absolute inset-0 opacity-0 cursor-pointer disabled:cursor-auto"
@@ -204,21 +213,29 @@ export class MxImageUpload {
           </div>
           {this.hasFile && this.thumbnailBackgroundImage && (
             <div
+              data-testid="thumbnail"
               class="thumbnail absolute inset-0 bg-center bg-no-repeat"
               style={{ backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize }}
             ></div>
           )}
-          <div class={'flex items-center justify-center absolute inset-0' + (this.isUploaded ? '' : ' hidden')}>
+          <div
+            data-testid="uploaded"
+            class={'flex items-center justify-center absolute inset-0' + (this.isUploaded ? '' : ' hidden')}
+          >
             <slot name="uploaded"></slot>
           </div>
           {this.isUploading && (
-            <div class="uploading-progress flex items-center justify-center opacity-50 absolute inset-0">
+            <div
+              data-testid="progress"
+              class="uploading-progress flex items-center justify-center opacity-50 absolute inset-0"
+            >
               <mx-circular-progress size="2rem" />
             </div>
           )}
         </div>
         {this.showButton && (
           <mx-button
+            data-testid="upload-button"
             class="mt-16"
             btnType={this.hasFile && !this.isUploading ? 'outlined' : 'contained'}
             onClick={this.onButtonClick.bind(this)}
