@@ -1,0 +1,38 @@
+.mx-image-upload {
+  color: var(--mds-text-image-upload);
+
+  .dropzone-wrapper,
+  .uploading-progress {
+    background: var(--mds-bg-image-upload);
+  }
+
+  .dropzone {
+    &:hover,
+    &.drag-over {
+      background: var(--mds-bg-image-upload-hover);
+    }
+
+    i.dropzone-icon {
+      font-size: 1.5rem;
+    }
+
+    svg.dashed-border {
+      stroke: var(--mds-border-image-upload);
+      &.upload-error {
+        color: var(--mds-text-image-upload-error);
+      }
+    }
+
+    input:not(:disabled)::-webkit-file-upload-button {
+      @apply cursor-pointer;
+    }
+  }
+
+  .upload-success {
+    color: var(--mds-text-image-upload-success);
+  }
+
+  .upload-error {
+    color: var(--mds-text-image-upload-error);
+  }
+}
