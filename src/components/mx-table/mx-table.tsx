@@ -675,7 +675,7 @@ export class MxTable {
             </div>
           )}
           {/* Empty State */}
-          {this.visibleRows && this.visibleRows.length === 0 && (
+          {this.getTableRows().length === 0 && (
             <div class="empty-state">
               <div class="col-span-full p-16 text-4">
                 <slot name="empty-state">
