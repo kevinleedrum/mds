@@ -1,5 +1,6 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
 import chevronSvg from '../../assets/svg/chevron-down.svg';
+import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-icon-button',
@@ -8,10 +9,12 @@ import chevronSvg from '../../assets/svg/chevron-down.svg';
 export class MxIconButton {
   btnElem!: HTMLButtonElement;
   anchorElem!: HTMLAnchorElement;
+  dataAttributes = {};
 
   @Prop() type: 'button' | 'submit' | 'reset' = 'button';
+  @Prop() formaction: string;
   @Prop() value: string;
-  @Prop() disabled: boolean = false;
+  @Prop({ reflect: true }) disabled: boolean = false;
   /** An aria-label is highly recommended */
   @Prop() ariaLabel: string;
   /** Show downward chevron icon */
@@ -22,6 +25,10 @@ export class MxIconButton {
   @Prop() chevronRight: boolean = false;
   /** Class name of icon (for icon font) */
   @Prop() icon: string;
+
+  @Element() element: HTMLMxInputElement;
+
+  componentWillRender = propagateDataAttributes;
 
   onClick(e: MouseEvent) {
     if (this.disabled) {
@@ -55,15 +62,17 @@ export class MxIconButton {
     );
 
     return (
-      <Host class="mx-icon-button">
+      <Host class="mx-icon-button inline-block">
         <button
           type={this.type}
+          formaction={this.formaction}
           value={this.value}
-          class="flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer"
+          class="flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto"
           ref={el => (this.btnElem = el as HTMLButtonElement)}
           onClick={this.onClick.bind(this)}
           aria-disabled={this.disabled}
           aria-label={this.ariaLabel}
+          {...this.dataAttributes}
         >
           {buttonContent}
         </button>

@@ -1,14 +1,21 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-radio',
   shadow: false,
 })
 export class MxRadio {
+  dataAttributes = {};
+
   @Prop() name: string = '';
   @Prop() value: string = '';
   @Prop() labelName: string = '';
   @Prop() checked: boolean = false;
+
+  @Element() element: HTMLMxInputElement;
+
+  componentWillRender = propagateDataAttributes;
 
   render() {
     return (
@@ -20,8 +27,9 @@ export class MxRadio {
             name={this.name}
             value={this.value}
             checked={this.checked}
+            {...this.dataAttributes}
           />
-          <span class="flex h-20 w-20 cursor-pointer rounded-full"></span>
+          <span class="flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full"></span>
           <div class="ml-16 inline-block" data-testid="labelName">
             {this.labelName}
           </div>

@@ -65,6 +65,7 @@ const config = {
       112: '7rem',
       128: '8rem',
       144: '9rem',
+      152: '9.5rem',
       160: '10rem',
       164: '10.25rem',
       176: '11rem',
@@ -76,6 +77,7 @@ const config = {
       256: '16rem',
       288: '18rem',
       320: '20rem',
+      360: '22.5rem',
       384: '24rem',
     },
     extend: {
@@ -105,6 +107,10 @@ const config = {
         center: true,
       },
     },
+  },
+  variants: {
+    borderWidth: ({ after }) => after(['first-of-type', 'last-of-type']),
+    borderRadius: ({ after }) => after(['first-of-type', 'last-of-type']),
   },
   plugins: [
     plugin(function({ addVariant, e }) {

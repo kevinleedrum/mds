@@ -51,6 +51,10 @@ Type: `Promise<void>`
 ### Used by
 
  - [mx-page-header](../mx-page-header)
+ - [mx-pagination](../mx-pagination)
+ - [mx-table](../mx-table)
+ - [mx-table-row](../mx-table-row)
+ - [mx-time-picker](../mx-time-picker)
 
 ### Depends on
 
@@ -61,6 +65,10 @@ Type: `Promise<void>`
 graph TD;
   mx-menu-item --> mx-checkbox
   mx-page-header --> mx-menu-item
+  mx-pagination --> mx-menu-item
+  mx-table --> mx-menu-item
+  mx-table-row --> mx-menu-item
+  mx-time-picker --> mx-menu-item
   style mx-menu-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

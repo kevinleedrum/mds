@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-3b63d393.js');
+const index = require('./index-c246f020.js');
 const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
 
 const MxDropdownMenu = class {
@@ -61,7 +61,7 @@ const MxDropdownMenu = class {
   get inputClass() {
     let str = 'absolute inset-0 w-full h-full pl-16 overflow-hidden outline-none appearance-none select-none bg-transparent cursor-pointer disabled:cursor-auto';
     if (this.isFocused)
-      str += ' -m-1'; // prevent shifting due to border-width change
+      str += ' -ml-1'; // prevent shifting due to border-width change
     return str;
   }
   get suffixClass() {

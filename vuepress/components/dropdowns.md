@@ -228,8 +228,8 @@ The `mx-select` component wraps the browser's native `select` element. It is des
           </mx-select>
         </div>
         <div class="my-20">
-          <mx-select label="Disabled Select" disabled>
-            <option></option>
+          <mx-select label="Disabled Select" disabled value="Value">
+            <option>Value</option>
           </mx-select>
         </div>
       </div>
@@ -293,8 +293,8 @@ The `mx-select` component wraps the browser's native `select` element. It is des
           </mx-select>
         </div>
         <div class="my-20">
-          <mx-select label="Disabled Select" disabled dense>
-            <option></option>
+          <mx-select label="Disabled Select" disabled dense value="Value">
+            <option>Value</option>
           </mx-select>
         </div>
       </div>
@@ -304,20 +304,20 @@ The `mx-select` component wraps the browser's native `select` element. It is des
 
 <<< @/vuepress/components/dropdowns.md#selects
 
-### Alternate Label / No Label
+### Floating Label / No Label
 
-The Select component's floating label is optional. A sibling `label` element may be used instead, or the Select could simply have an `aria-label` for screen readers.
+Add the `floatLabel` prop to create a floating label. The Select component's label is also optional; the Select could simply have an `aria-label` for screen readers.
 
 <!-- #region select-labels -->
 <section class="mds">
   <div>
-    <div class="my-20 w-192">
-      <label for="favorite-animal" class="block text-4 mb-4 font-semibold tracking-0-4">
-        Favorite Animal
-      </label>
+    <div class="my-20 w-320">
       <mx-select
-        id="favorite-animal"
+        label="Favorite Animal"
         :value="animal"
+        float-label
+        assistive-text="This select has a floating label"
+        dense
         @input="animal = $event.target.value"
       >
         <option></option>
@@ -427,6 +427,7 @@ Like the [Dropdown Menu](#dropdown-menus), the Select component also has `flat` 
 | `elevated`      | `elevated`       | Style with a 1dp elevation                | `boolean` | `false`     |
 | `error`         | `error`          |                                           | `boolean` | `false`     |
 | `flat`          | `flat`           | Style with a "flat" border color          | `boolean` | `false`     |
+| `floatLabel`    | `float-label`    |                                           | `boolean` | `false`     |
 | `label`         | `label`          |                                           | `string`  | `undefined` |
 | `labelClass`    | `label-class`    | Additional classes for the label          | `string`  | `''`        |
 | `name`          | `name`           |                                           | `string`  | `undefined` |

@@ -35,8 +35,13 @@
 @import './mx-dropdown-menu/index.scss';
 @import './mx-menu/index.scss';
 @import './mx-menu-item/index.scss';
+@import './mx-time-picker/index.scss';
 @import './mx-page-header/index.scss';
 @import './mx-modal/index.scss';
+@import './mx-table/index.scss';
+@import './mx-pagination/index.scss';
+@import './mx-snackbar/index.scss';
+@import './mx-image-upload/index.scss';
 @import './ripple.scss';
 
 /***************************
@@ -59,6 +64,10 @@
 
   a {
     color: var(--mds-text-link);
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
   }
 
   /***************************

@@ -3,7 +3,8 @@ import { MxInput } from '../mx-input';
 
 describe('mx-input', () => {
   let page;
-  let root;
+  let root: HTMLMxInputElement;
+  let input: HTMLInputElement;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxInput],
@@ -13,13 +14,18 @@ describe('mx-input', () => {
           left-icon="ph-apple-logo"
           name="testInput"
           value="foo"
+          placeholder="bar"
+          maxlength="10"
+          suffix="BAR"
           type="email"
           dense="true"
           assistive-text="Enter your test input"
+          data-test="test"
         />
       `,
     });
     root = page.root;
+    input = root.querySelector('input');
   });
 
   it('assigns proper value for placeholder', async () => {
@@ -27,10 +33,10 @@ describe('mx-input', () => {
     expect(placeholder.textContent).toBe('Placeholder');
   });
 
-  it('has the right name, value and type', async () => {
-    const input = root.querySelector('input');
+  it('has the right name, value, placeholder and type', async () => {
     expect(input.getAttribute('name')).toBe('testInput');
-    expect(input.getAttribute('value')).toBe('foo');
+    expect(input.value).toBe('foo');
+    expect(input.placeholder).toBe('bar');
     expect(input.getAttribute('type')).toBe('email');
   });
 
@@ -39,20 +45,62 @@ describe('mx-input', () => {
     expect(icon).not.toBeNull();
   });
 
-  it('is a dense input represented by the class', async () => {
+  it('is a dense input with a height of 36px', async () => {
     const elem = root.querySelector('.mx-input-wrapper');
-    expect(elem.getAttribute('class')).toContain('dense');
+    expect(elem.getAttribute('class')).toContain('h-36');
   });
 
   it('should have proper assistive text', async () => {
-    const assitive = root.querySelector('.assistive-text');
+    const assitive = root.querySelector('[data-testid="assistive-text"]');
     expect(assitive.textContent).toBe('Enter your test input');
+  });
+
+  it('disables the input based on the disabled prop', async () => {
+    expect(input.getAttribute('disabled')).toBeNull();
+    root.disabled = true;
+    await page.waitForChanges();
+    expect(input.getAttribute('disabled')).not.toBeNull();
+  });
+
+  it('sets the inputs to read-only if the readonly prop is set', async () => {
+    expect(input.getAttribute('readonly')).toBeNull();
+    root.readonly = true;
+    await page.waitForChanges();
+    expect(input.getAttribute('readonly')).not.toBeNull();
+  });
+
+  it('displays the suffix', async () => {
+    const characterCount = root.querySelector('[data-testid="suffix"]');
+    expect(characterCount.textContent).toBe('BAR');
+  });
+
+  it('sets the maxlength attribute on the input', async () => {
+    expect(input.getAttribute('maxlength')).toBe('10');
+  });
+
+  it('displays a character count and limit', async () => {
+    const characterCount = root.querySelector('[data-testid="character-count"]');
+    expect(characterCount.textContent).toBe('3/10');
+  });
+
+  it('renders a floating label if the float-label prop is set', async () => {
+    let label = root.querySelector('label');
+    expect(label.classList.contains('floating')).toBe(false);
+    root.floatLabel = true;
+    await page.waitForChanges();
+    label = root.querySelector('label');
+    expect(label.classList.contains('floating')).toBe(true);
+  });
+
+  it('applies any data attributes to the input element', async () => {
+    expect(input.getAttribute('data-test')).toBe('test');
   });
 });
 
 describe('mx-input as a textarea', () => {
   let page;
-  let root;
+  let root: HTMLMxInputElement;
+  let tarea: HTMLTextAreaElement;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxInput],
@@ -62,16 +110,41 @@ describe('mx-input as a textarea', () => {
           textarea="true"
           name="testInput"
           value="foo"
+          maxlength="100"
           assistive-text="Enter your test input"
+          data-test="test"
         />
       `,
       supportsShadowDom: true,
     });
     root = page.root;
+    tarea = root.querySelector('textarea');
   });
 
-  it('assigns proper value for placeholder', async () => {
-    const tarea = root.querySelector('textarea');
+  it('renders a textarea element', async () => {
     expect(tarea).not.toBeNull();
+  });
+
+  it('has the right name and value', async () => {
+    expect(tarea.getAttribute('name')).toBe('testInput');
+    expect(tarea.value).toBe('foo');
+  });
+
+  it('sets the maxlength attribute on the textarea', async () => {
+    expect(tarea.getAttribute('maxlength')).toBe('100');
+  });
+
+  it('should have proper assistive text', async () => {
+    const assitive = root.querySelector('[data-testid="assistive-text"]');
+    expect(assitive.textContent).toBe('Enter your test input');
+  });
+
+  it('displays a character count and limit', async () => {
+    const characterCount = root.querySelector('[data-testid="character-count"]');
+    expect(characterCount.textContent).toBe('3/100');
+  });
+
+  it('applies any data attributes to the textarea element', async () => {
+    expect(tarea.getAttribute('data-test')).toBe('test');
   });
 });

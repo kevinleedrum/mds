@@ -1,22 +1,46 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { propagateDataAttributes } from '../../utils/utils';
 export class MxCheckbox {
   constructor() {
+    this.dataAttributes = {};
     this.name = '';
     this.value = '';
     this.labelLeft = false;
     this.labelName = '';
     this.labelClass = '';
+    /** Hide the label text visually, but still make it accessible for screen readers */
+    this.hideLabel = false;
     this.checked = false;
+    this.disabled = false;
+    this.indeterminate = false;
+    this.componentWillRender = propagateDataAttributes;
+  }
+  get checkClass() {
+    let str = 'flex h-18 w-18 flex-shrink-0';
+    str += this.labelLeft ? ' order-2' : ' order-1';
+    if (this.labelLeft && !this.hideLabel)
+      str += ' ml-16';
+    return str;
+  }
+  get checkLabelClass() {
+    let str = 'checkbox-label inline-block';
+    if (this.hideLabel)
+      str += ' sr-only';
+    str += this.labelLeft ? ' order-1 flex-1' : ' order-2';
+    if (!this.labelLeft && !this.hideLabel)
+      str += ' ml-16';
+    return str;
   }
   render() {
-    return (h(Host, { class: "mx-checkbox" },
+    return (h(Host, { class: "mx-checkbox inline-flex items-center" },
       h("label", { class: [
-          'relative flex-1 inline-flex flex-nowrap align-center items-center cursor-pointer text-4',
+          'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
+            (this.disabled ? '' : ' cursor-pointer'),
           this.labelClass,
         ].join(' ') },
-        h("input", { class: "absolute h-0 w-0 opacity-0", type: "checkbox", name: this.name, value: this.value, checked: this.checked }),
-        h("span", { class: 'flex h-18 w-18 cursor-pointer' + (this.labelLeft ? ' order-2 ml-16' : ' order-1') }),
-        h("div", { class: 'inline-block' + (this.labelLeft ? ' order-1 flex-1' : ' order-2 ml-16'), "data-testid": "labelName" }, this.labelName))));
+        h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes)),
+        h("span", { class: this.checkClass }),
+        h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
   static get is() { return "mx-checkbox"; }
   static get properties() { return {
@@ -110,6 +134,24 @@ export class MxCheckbox {
       "reflect": false,
       "defaultValue": "''"
     },
+    "hideLabel": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Hide the label text visually, but still make it accessible for screen readers"
+      },
+      "attribute": "hide-label",
+      "reflect": false,
+      "defaultValue": "false"
+    },
     "checked": {
       "type": "boolean",
       "mutable": false,
@@ -127,6 +169,43 @@ export class MxCheckbox {
       "attribute": "checked",
       "reflect": false,
       "defaultValue": "false"
+    },
+    "disabled": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "disabled",
+      "reflect": false,
+      "defaultValue": "false"
+    },
+    "indeterminate": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "indeterminate",
+      "reflect": false,
+      "defaultValue": "false"
     }
   }; }
+  static get elementRef() { return "element"; }
 }

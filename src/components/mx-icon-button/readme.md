@@ -14,6 +14,7 @@
 | `chevronLeft`  | `chevron-left`  | Show left-pointing chevron icon     | `boolean`                         | `false`     |
 | `chevronRight` | `chevron-right` | Show right-pointing chevron icon    | `boolean`                         | `false`     |
 | `disabled`     | `disabled`      |                                     | `boolean`                         | `false`     |
+| `formaction`   | `formaction`    |                                     | `string`                          | `undefined` |
 | `icon`         | `icon`          | Class name of icon (for icon font)  | `string`                          | `undefined` |
 | `type`         | `type`          |                                     | `"button" \| "reset" \| "submit"` | `'button'`  |
 | `value`        | `value`         |                                     | `string`                          | `undefined` |
@@ -24,11 +25,17 @@
 ### Used by
 
  - [mx-page-header](../mx-page-header)
+ - [mx-pagination](../mx-pagination)
+ - [mx-table](../mx-table)
+ - [mx-table-row](../mx-table-row)
 
 ### Graph
 ```mermaid
 graph TD;
   mx-page-header --> mx-icon-button
+  mx-pagination --> mx-icon-button
+  mx-table --> mx-icon-button
+  mx-table-row --> mx-icon-button
   style mx-icon-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

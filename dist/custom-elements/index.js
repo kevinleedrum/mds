@@ -1,20 +1,55 @@
 import { h, Host, createEvent, proxyCustomElement } from '@stencil/core/internal/client';
 export { setAssetPath, setPlatformOptions } from '@stencil/core/internal/client';
 
+const circleSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+  <circle cx="6" cy="6" r="6" fill="currentColor"/>
+</svg>`;
+
+const hexagonSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+  <path d="M6 0L11.1962 3V9L6 12L0.803848 9V3L6 0Z" fill="currentColor"/>
+</svg>`;
+
+const squareSvg = `<svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+  <rect width="10" height="10" fill="currentColor"/>
+</svg>`;
+
+const starSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+  <path d="M6 0.5L7.76336 4.07295L11.7063 4.6459L8.85317 7.42705L9.52671 11.3541L6 9.5L2.47329 11.3541L3.14683 7.42705L0.293661 4.6459L4.23664 4.07295L6 0.5Z" fill="currentColor"/>
+</svg>`;
+
+const triangleDownSvg = `<svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+  <path d="M6.00011 10L12 0H0L6.00011 10Z" fill="currentColor"/>
+</svg>`;
+
+const triangleUpSvg = `<svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+  <path d="M6.00011 0L12 10H0L6.00011 0Z" fill="currentColor"/>
+</svg>`;
+
 const MxBadge$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
     /** Make the corners a little more square (best for standalone text) */
     this.squared = false;
-    /** Display as a small dot (no value) */
-    this.dot = false;
     /** Offset badge inward by this many pixels (e.g. 10 for icon buttons) */
     this.offset = 0;
     /** Anchor the badge to the bottom of the wrapped content */
     this.bottom = false;
     /** Anchor the badge to the left of the wrapped content */
     this.left = false;
+  }
+  get indicatorSvg() {
+    if (this.indicator === 'star')
+      return starSvg;
+    if (this.indicator === 'triangle-down')
+      return triangleDownSvg;
+    if (this.indicator === 'hexagon')
+      return hexagonSvg;
+    if (this.indicator === 'triangle-up')
+      return triangleUpSvg;
+    if (this.indicator === 'square')
+      return squareSvg;
+    return circleSvg;
   }
   get isStandalone() {
     return !this.element.firstElementChild;
@@ -25,7 +60,7 @@ const MxBadge$1 = class extends HTMLElement {
   get badgeClassNames() {
     let str = 'badge inline-flex items-center justify-center text-4 font-semibold pointer-events-none';
     // Border-Radius
-    if (this.dot || this.isIconOnly) {
+    if (this.isIconOnly) {
       str += ' rounded-full';
     }
     else if (this.squared) {
@@ -35,7 +70,7 @@ const MxBadge$1 = class extends HTMLElement {
       str += ' rounded-xl';
     }
     // Width & Height
-    if (this.dot) {
+    if (this.indicator != null) {
       str += ' w-12 h-12';
     }
     else if (this.isStandalone) {
@@ -62,7 +97,7 @@ const MxBadge$1 = class extends HTMLElement {
     return [str, this.badgeClass].join(' ');
   }
   render() {
-    return (h(Host, { class: "mx-badge inline-flex relative" }, h("slot", null), h("span", { class: this.badgeClassNames }, this.icon && h("i", { class: this.icon + (this.isIconOnly ? '' : ' mr-4') }), this.value)));
+    return (h(Host, { class: "mx-badge inline-flex relative" }, h("slot", null), this.indicator != null ? (h("span", { class: this.badgeClassNames, "data-testid": 'indicator-' + (this.indicator || 'circle'), innerHTML: this.indicatorSvg })) : (h("span", { class: this.badgeClassNames }, this.icon && h("i", { class: this.icon + (this.isIconOnly ? '' : ' mr-4') }), this.value))));
   }
   get element() { return this; }
 };
@@ -102,10 +137,118 @@ const chevronSvg = `<svg width="13" height="7" viewBox="0 0 13 7" fill="none" xm
 </svg>
 `;
 
+// https://github.com/ionic-team/capacitor/blob/b893a57aaaf3a16e13db9c33037a12f1a5ac92e0/cli/src/util/uuid.ts
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = (Math.random() * 16) | 0;
+    const v = c == 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+function queryPrefersReducedMotion() {
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  return !mediaQuery || mediaQuery.matches;
+}
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+function isDateObject(val) {
+  if (typeof val !== 'object')
+    return false;
+  return 'getTime' in val && !isNaN(val.getTime()); // "Invalid Date" objects return NaN for getTime()
+}
+/** Converts a time string such as "15:30" or "3:30PM" into `{ hours: 15, minutes: 30 }` */
+/** @returns Time object, or `null` if the string could not be parsed as a valid time */
+function parseTimeString(str) {
+  if (str == null || str.trim() === '')
+    return;
+  const isExplicitAM = str.toLowerCase().includes('a');
+  const isExplicitPM = str.toLowerCase().includes('p');
+  let digits = str.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+  if (!digits.length || digits.length > 4)
+    return null;
+  // If only 1 or 2 digits entered, assume only an hour was entered
+  let hours = digits.length <= 2 ? Number(digits) : Number(digits.slice(0, -2));
+  const minutes = digits.length <= 2 ? 0 : Number(digits.slice(-2));
+  if (hours === 12 && isExplicitAM)
+    hours = 0; // '12:00AM' -> 0 hours
+  if (hours < 12 && isExplicitPM)
+    hours += 12; // '2:00PM' -> 14 hours
+  if (hours > 23 || minutes > 59)
+    return null;
+  return { hours, minutes };
+}
+/** Returns the `clientX`, `clientY`, `pageX`, `pageY` from any MouseEvent or TouchEvent. */
+function getCursorCoords(e) {
+  if (e.changedTouches)
+    return e.changedTouches[0];
+  else if (e.touches)
+    return e.touches[0];
+  else
+    return e;
+}
+/** Returns a DOMRect for an element similar to getBoundingClientRect, however the
+ * position ignores CSS transforms and accounts for scrolling. */
+function getPageRect(el) {
+  const { height, width } = el.getBoundingClientRect();
+  let top = 0;
+  let left = 0;
+  do {
+    top += el.offsetTop;
+    left += el.offsetLeft;
+    el = el.offsetParent;
+  } while (el);
+  return { top, left, width, height, bottom: top + height, right: left + width };
+}
+/** Return the client boundaries of an element (or the window) */
+function getBounds(container) {
+  if (container === window) {
+    return { top: 0, right: window.innerWidth, bottom: window.innerHeight, left: 0 };
+  }
+  return container.getBoundingClientRect();
+}
+/** Determines whether an element needs to be scrolled into view */
+function isScrolledOutOfView(el) {
+  const bounds = el.getBoundingClientRect(); // getBoundingClientRect accounts for CSS translate
+  const scrollBounds = getBounds(getScrollingParent(el));
+  if (bounds.top < scrollBounds.top)
+    return true;
+  if (bounds.bottom > scrollBounds.bottom)
+    return true;
+  if (bounds.left < scrollBounds.left)
+    return true;
+  if (bounds.left > scrollBounds.right)
+    return true; // It's okay if the right edge is out of bounds
+  return false;
+}
+/** Get the nearest scrolling ancestor, which could be the window */
+function getScrollingParent(el) {
+  if (!(el instanceof HTMLElement))
+    return window;
+  if (isScrollable(el))
+    return el;
+  return getScrollingParent(el.parentNode);
+}
+function isScrollable(el) {
+  const computedStyle = window.getComputedStyle(el);
+  const overflowRegex = /(auto|scroll)/;
+  const properties = ['overflow', 'overflowX', 'overflowY'];
+  return properties.find(property => overflowRegex.test(computedStyle[property]));
+}
+/** Remove data attributes from the host element, and store them in this.dataAttributes,
+ * so they can be applied to the native element in the render function. */
+function propagateDataAttributes() {
+  Object.keys(this.element.dataset).forEach(key => {
+    this.dataAttributes['data-' + key] = this.element.dataset[key];
+    this.element.removeAttribute(`data-${key}`);
+  });
+}
+
 const MxButton$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.btnType = 'contained';
     this.type = 'button';
     this.disabled = false;
@@ -114,6 +257,7 @@ const MxButton$1 = class extends HTMLElement {
     this.full = false;
     /** Show chevron icon */
     this.dropdown = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     if (this.disabled) {
@@ -129,51 +273,77 @@ const MxButton$1 = class extends HTMLElement {
     if (this.dropdown)
       str += ' dropdown';
     // Common classes
-    str += ' flex items-center justify-center relative overflow-hidden cursor-pointer hover:no-underline';
+    str +=
+      ' flex items-center justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto hover:no-underline';
     // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
       str += ' w-full rounded-lg font-semibold uppercase';
       if (this.btnType === 'outlined')
         str += ' border';
       if (this.xl)
-        str += ' h-48 px-32 text-3 tracking-1-5';
+        str += ' min-h-48 px-32 text-3 tracking-1-5';
       else
-        str += ' h-36 px-16 text-4 tracking tracking-1-25';
+        str += ' min-h-36 px-16 text-4 tracking tracking-1-25';
     }
     // Action Button
     if (this.btnType === 'action') {
-      str += ' w-full h-36 px-16 border rounded-3xl text-4';
+      str += ' w-full min-h-36 px-16 border rounded-3xl text-4';
     }
     // Text Button
     if (this.btnType === 'text') {
-      str += ' w-full h-36 px-8 py-10 text-4 rounded-lg';
+      str += ' w-full min-h-36 px-8 py-10 text-4 rounded-lg';
       str += this.dropdown ? ' font-normal' : ' font-semibold uppercase tracking-1-25';
     }
     return str;
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("span", { "data-testid": "chevron", class: this.btnType === 'text' ? 'chevron-icon ml-4' : 'ml-8', innerHTML: chevronSvg }))));
-    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", { type: this.type, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled }, buttonContent))));
+    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled }, this.dataAttributes), buttonContent))));
   }
+  get element() { return this; }
 };
 
 const MxCheckbox$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.name = '';
     this.value = '';
     this.labelLeft = false;
     this.labelName = '';
     this.labelClass = '';
+    /** Hide the label text visually, but still make it accessible for screen readers */
+    this.hideLabel = false;
     this.checked = false;
+    this.disabled = false;
+    this.indeterminate = false;
+    this.componentWillRender = propagateDataAttributes;
+  }
+  get checkClass() {
+    let str = 'flex h-18 w-18 flex-shrink-0';
+    str += this.labelLeft ? ' order-2' : ' order-1';
+    if (this.labelLeft && !this.hideLabel)
+      str += ' ml-16';
+    return str;
+  }
+  get checkLabelClass() {
+    let str = 'checkbox-label inline-block';
+    if (this.hideLabel)
+      str += ' sr-only';
+    str += this.labelLeft ? ' order-1 flex-1' : ' order-2';
+    if (!this.labelLeft && !this.hideLabel)
+      str += ' ml-16';
+    return str;
   }
   render() {
-    return (h(Host, { class: "mx-checkbox" }, h("label", { class: [
-        'relative flex-1 inline-flex flex-nowrap align-center items-center cursor-pointer text-4',
+    return (h(Host, { class: "mx-checkbox inline-flex items-center" }, h("label", { class: [
+        'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
+          (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,
-      ].join(' ') }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "checkbox", name: this.name, value: this.value, checked: this.checked }), h("span", { class: 'flex h-18 w-18 cursor-pointer' + (this.labelLeft ? ' order-2 ml-16' : ' order-1') }), h("div", { class: 'inline-block' + (this.labelLeft ? ' order-1 flex-1' : ' order-2 ml-16'), "data-testid": "labelName" }, this.labelName))));
+      ].join(' ') }, h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes)), h("span", { class: this.checkClass }), h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
+  get element() { return this; }
 };
 
 const removeSvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -440,7 +610,7 @@ const MxDropdownMenu$1 = class extends HTMLElement {
   get inputClass() {
     let str = 'absolute inset-0 w-full h-full pl-16 overflow-hidden outline-none appearance-none select-none bg-transparent cursor-pointer disabled:cursor-auto';
     if (this.isFocused)
-      str += ' -m-1'; // prevent shifting due to border-width change
+      str += ' -ml-1'; // prevent shifting due to border-width change
     return str;
   }
   get suffixClass() {
@@ -566,6 +736,7 @@ const MxIconButton$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.type = 'button';
     this.disabled = false;
     /** Show downward chevron icon */
@@ -574,6 +745,7 @@ const MxIconButton$1 = class extends HTMLElement {
     this.chevronLeft = false;
     /** Show right-pointing chevron icon */
     this.chevronRight = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     if (this.disabled) {
@@ -587,106 +759,315 @@ const MxIconButton$1 = class extends HTMLElement {
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-1', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" }, h("span", { "data-testid": "chevron", class: this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : '', innerHTML: chevronSvg })))));
-    return (h(Host, { class: "mx-icon-button" }, h("button", { type: this.type, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, buttonContent)));
+    return (h(Host, { class: "mx-icon-button inline-block" }, h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
   }
+  get element() { return this; }
 };
 
-// https://github.com/ionic-team/capacitor/blob/b893a57aaaf3a16e13db9c33037a12f1a5ac92e0/cli/src/util/uuid.ts
-function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    const r = (Math.random() * 16) | 0;
-    const v = c == 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
-function queryPrefersReducedMotion() {
-  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  return !mediaQuery || mediaQuery.matches;
-}
+const imageSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M19.5 21H4.5C3.67 21 3 20.33 3 19.5V4.5C3 3.67 3.67 3 4.5 3H19.5C20.33 3 21 3.67 21 4.5V19.5C21 20.33 20.33 21 19.5 21ZM4.5 4.5V19.5H19.5V4.5H4.5Z" fill="currentColor"/>
+  <path d="M3.74994 17.2498C3.55994 17.2498 3.36994 17.1798 3.21994 17.0298C2.92994 16.7398 2.92994 16.2598 3.21994 15.9698L6.43994 12.7498C6.99994 12.1898 7.99994 12.1898 8.55994 12.7498L10.4999 14.6898L14.6899 10.4998C15.2599 9.92977 16.2399 9.92977 16.8099 10.4998L20.7799 14.4698C21.0699 14.7598 21.0699 15.2398 20.7799 15.5298C20.4899 15.8198 20.0099 15.8198 19.7199 15.5298L15.7499 11.5598L11.5599 15.7498C10.9999 16.3098 9.99994 16.3098 9.43994 15.7498L7.49994 13.8098L4.27994 17.0298C4.12994 17.1798 3.93994 17.2498 3.74994 17.2498Z" fill="currentColor"/>
+  <path d="M9.37994 9.55994C9.89994 9.55994 10.3199 9.13994 10.3199 8.61994C10.3199 8.09994 9.88994 7.68994 9.37994 7.68994C8.86994 7.68994 8.43994 8.10994 8.43994 8.61994C8.43994 9.12994 8.85994 9.55994 9.37994 9.55994Z" fill="currentColor"/>
+</svg>
+`;
+
+const userCircleSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.25C10.3431 8.25 9 9.59315 9 11.25C9 12.9069 10.3431 14.25 12 14.25C13.6569 14.25 15 12.9069 15 11.25C15 9.59315 13.6569 8.25 12 8.25ZM7.5 11.25C7.5 8.76472 9.51472 6.75 12 6.75C14.4853 6.75 16.5 8.76472 16.5 11.25C16.5 13.7353 14.4853 15.75 12 15.75C9.51472 15.75 7.5 13.7353 7.5 11.25Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9999 15.75C10.8922 15.75 9.80605 16.0565 8.86175 16.6357C7.91744 17.2148 7.15182 18.044 6.64962 19.0313C6.46183 19.4005 6.01031 19.5476 5.6411 19.3598C5.2719 19.172 5.12483 18.7205 5.31262 18.3513C5.94031 17.1172 6.89726 16.0809 8.07754 15.357C9.25782 14.6331 10.6154 14.25 11.9999 14.25C13.3845 14.25 14.7421 14.6331 15.9223 15.357C17.1026 16.0808 18.0596 17.1172 18.6873 18.3513C18.8751 18.7205 18.728 19.172 18.3588 19.3598C17.9896 19.5476 17.5381 19.4005 17.3503 19.0313C16.8481 18.0439 16.0824 17.2148 15.1381 16.6357C14.1938 16.0565 13.1077 15.75 11.9999 15.75Z" fill="currentColor"/>
+</svg>
+`;
+
+const MxImageUpload$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.hasInstructions = false;
+    this.hasSuccess = false;
+    this.hasError = false;
+    /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
+    this.acceptImage = true;
+    /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
+    this.acceptPdf = false;
+    /** Replaces the word "image" in the default dropzone text (i.e. "No image to show"). */
+    this.assetName = 'image';
+    /** Sets the width and height to 80px and changes the icon. */
+    this.avatar = false;
+    /** Sets the thumbnail sizing strategy relative to the container. */
+    this.thumbnailSize = 'cover';
+    /** Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content. */
+    this.isUploaded = false;
+    /** Set to `true` to disable the button and show the circular progress indicator. */
+    this.isUploading = false;
+    /** Set to `false` to hide the default Upload/Remove button. */
+    this.showButton = true;
+    /** Set to `false` to hide the dropzone icon. */
+    this.showIcon = true;
+    /** Set to `false` to hide the dropzone text. */
+    this.showDropzoneText = true;
+    this.isDraggingOver = false;
+    this.isFileSelected = false;
+  }
+  onThumbnailUrlChange() {
+    if (this.thumbnailUrl)
+      this.isUploaded = true;
+  }
+  connectedCallback() {
+    this.onThumbnailUrlChange();
+  }
+  componentWillRender() {
+    this.hasInstructions = !!this.element.querySelector('[slot="instructions"]');
+    this.hasSuccess = !!this.element.querySelector('[slot="success"]');
+    this.hasError = !!this.element.querySelector('[slot="error"]');
+  }
+  async removeFile() {
+    if (!this.hasFile || this.isUploading)
+      return;
+    this.isFileSelected = false;
+    this.isUploaded = false;
+    this.isUploading = false;
+    this.fileInput.value = '';
+    this.fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+    this.fileInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+  }
+  async selectFile() {
+    if (this.hasFile)
+      return;
+    this.isFileSelected = false;
+    this.fileInput.value = '';
+    this.fileInput.click();
+  }
+  onButtonClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    if (this.isUploading)
+      return;
+    if (!this.hasFile) {
+      this.selectFile();
+    }
+    else {
+      this.removeFile();
+    }
+  }
+  onInput(e) {
+    this.isFileSelected = e.target.files && e.target.files.length > 0;
+    if (this.isFileSelected)
+      this.setThumnailDataUri(e.target.files[0]);
+    else
+      this.thumbnailDataUri = null;
+  }
+  setThumnailDataUri(file) {
+    this.thumbnailDataUri = null;
+    if (!/\.(jpe?g|png|gif)$/i.test(file.name))
+      return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.thumbnailDataUri = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+  onDragOver() {
+    this.isDraggingOver = true;
+  }
+  onDragLeave() {
+    this.isDraggingOver = false;
+  }
+  get accept() {
+    let accept = [];
+    if (this.acceptImage)
+      accept.push('image/*');
+    if (this.acceptPdf)
+      accept.push('.pdf');
+    return accept.join(',') || null;
+  }
+  /** The width is applied to the host element in order to support percent-based widths */
+  get dropzoneWidth() {
+    if (this.width)
+      return this.width;
+    return this.avatar ? '80px' : '308px';
+  }
+  get dropzoneHeight() {
+    if (this.height)
+      return this.height;
+    return this.avatar ? '80px' : 'auto';
+  }
+  get dropzoneClass() {
+    let str = 'dropzone relative w-full h-full px-16 rounded-2xl overflow-hidden';
+    if (this.hasFile)
+      str += ' opacity-0';
+    if (this.isDraggingOver)
+      str += ' drag-over';
+    str += this.showIcon && this.showDropzoneText ? ' py-24' : ' py-16';
+    return str;
+  }
+  get hasFile() {
+    return this.isFileSelected || this.isUploaded;
+  }
+  get thumbnailBackgroundImage() {
+    let url = this.thumbnailUrl;
+    if (this.isFileSelected)
+      url = this.thumbnailDataUri;
+    if (!url)
+      return null;
+    return `url(${url})`;
+  }
+  get thumbnailBackgroundSize() {
+    if (!['contain', 'cover', 'auto', 'stretch'].includes(this.thumbnailSize))
+      return 'cover';
+    if (this.thumbnailSize === 'stretch')
+      return '100% 100%';
+    return this.thumbnailSize;
+  }
+  render() {
+    let iconJsx;
+    if (this.icon) {
+      iconJsx = h("i", { "data-testid": "upload-icon", class: 'dropzone-icon ' + this.icon });
+    }
+    else if (this.avatar) {
+      iconJsx = h("span", { "data-testid": "avatar-icon", innerHTML: userCircleSvg });
+    }
+    else {
+      iconJsx = h("span", { "data-testid": "image-icon", class: this.showDropzoneText ? 'mb-8' : '', innerHTML: imageSvg });
+    }
+    return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 opacity-0 cursor-pointer disabled:cursor-auto", disabled: this.hasFile, onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0' + (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? 'Remove' : 'Upload')), this.hasInstructions && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "thumbnailUrl": ["onThumbnailUrlChange"]
+  }; }
+};
+
+const warningCircleSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.75C12.4142 6.75 12.75 7.08579 12.75 7.5V12.75C12.75 13.1642 12.4142 13.5 12 13.5C11.5858 13.5 11.25 13.1642 11.25 12.75V7.5C11.25 7.08579 11.5858 6.75 12 6.75Z" fill="currentColor"/>
+  <path d="M12 17.0625C12.5178 17.0625 12.9375 16.6428 12.9375 16.125C12.9375 15.6072 12.5178 15.1875 12 15.1875C11.4822 15.1875 11.0625 15.6072 11.0625 16.125C11.0625 16.6428 11.4822 17.0625 12 17.0625Z" fill="currentColor"/>
+</svg>
+`;
 
 const MxInput$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.uuid = uuidv4();
     /** The `type` attribute for the text input */
     this.type = 'text';
     this.dense = false;
     this.disabled = false;
-    this.isActive = false;
-    this.isFocused = false;
+    this.readonly = false;
     this.outerContainerClass = '';
     this.labelClass = '';
     this.error = false;
+    this.floatLabel = false;
     /** Display a multi-line `textarea` instead of an `input` */
     this.textarea = false;
     this.textareaHeight = '250px';
+    this.isFocused = false;
+    this.characterCount = 0;
+    this.componentWillRender = propagateDataAttributes;
   }
   connectedCallback() {
-    if (this.error) {
-      this.isActive = true;
-      this.labelClass += ' active error';
-    }
-    else {
-      this.setLabelClass();
-    }
+    this.characterCount = this.hasValue ? this.value.length : 0;
   }
-  setLabelClass(target = undefined) {
-    this.labelClass = '';
-    if ((this.leftIcon && !this.isActive) || (this.leftIcon && target && target.value === '')) {
-      this.setIndentedLabel();
-    }
-    if (target && target.value !== '') {
-      this.labelClass += ' active';
-    }
+  componentDidLoad() {
+    this.updateValue();
   }
-  setIndentedLabel() {
-    this.labelClass += ' indented';
+  onValueChange() {
+    this.updateValue();
+    this.characterCount = this.hasValue ? this.value.length : 0;
+  }
+  updateValue() {
+    this.workingElem.value = this.hasValue ? this.value : '';
+  }
+  onFocus() {
+    this.isFocused = true;
+    this.error = false;
+  }
+  onBlur() {
+    this.isFocused = false;
+  }
+  onInput(e) {
+    this.characterCount = e.target.value.length;
+  }
+  get workingElem() {
+    return this.textarea ? this.textArea : this.textInput;
+  }
+  get hasValue() {
+    return this.value !== null && this.value !== '' && this.value !== undefined;
   }
   get containerClass() {
-    let str = 'mx-input-wrapper';
-    str += this.dense ? ' dense' : ' standard';
-    if (this.isFocused)
-      str += ' focused';
+    let str = 'mx-input-wrapper flex items-center relative border rounded-lg';
+    if (!this.textarea) {
+      str += this.dense ? ' h-36' : ' h-48';
+    }
+    if (this.error || this.isFocused)
+      str += ' border-2';
     if (this.error)
       str += ' error';
     if (this.disabled)
       str += ' disabled';
+    if (this.readonly)
+      str += ' readonly';
     return str;
   }
-  handleFocus() {
-    this.isActive = true;
-    this.isFocused = true;
-    this.labelClass = ' active focus';
-    this.removeError();
+  get inputClass() {
+    let str = 'flex-1 overflow-hidden outline-none appearance-none bg-transparent';
+    if (!this.textarea) {
+      str += ' px-16';
+    }
+    else {
+      str += ' p-16 resize-none';
+    }
+    if (this.isFocused || this.error)
+      str += this.leftIcon ? ' -mr-1' : ' -m-1'; // prevent shifting due to border-width change
+    return str;
   }
-  handleBlur() {
-    const workingElem = this.textarea ? this.textArea : this.textInput;
-    this.isFocused = false;
-    this.setLabelClass(workingElem);
+  get labelClassNames() {
+    let str = 'block pointer-events-none';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 px-4';
+      if (this.textarea)
+        str += ' top-12';
+      str += this.leftIcon && !this.textarea ? ' left-48 has-left-icon' : ' left-12';
+      if (this.dense && !this.textarea)
+        str += ' dense text-4';
+      if (this.isFocused || this.characterCount > 0)
+        str += ' floating';
+      if (this.isFocused || this.error)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+      if ((this.isFocused || this.error) && this.textarea)
+        str += ' -mt-1';
+    }
+    else {
+      str += ' subtitle2 mb-4';
+    }
+    if (this.labelClass)
+      str += this.labelClass;
+    return str;
   }
-  focusOnInput() {
-    const workingElem = this.textarea ? this.textArea : this.textInput;
-    workingElem.focus();
+  get leftIconWrapperClass() {
+    let str = 'flex items-center h-full pointer-events-none pl-16';
+    if (this.isFocused || this.error)
+      str += ' -ml-1'; // prevent shifting due to border-width change
+    return str;
   }
-  removeError() {
-    this.error = false;
-    this.containerElem.classList.remove('error');
+  get rightContentClass() {
+    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8 pointer-events-none';
+    if (this.isFocused || this.error)
+      str += ' -mr-1'; // prevent shifting due to border-width change
+    return str;
   }
-  returnTaHeight() {
-    return { height: this.textareaHeight };
-  }
-  overrideTextArea() {
-    if (!this.textarea)
-      return {};
-    return { alignItems: 'start' }; // For icon placement.
-  }
-  isTextarea() {
-    return this.textarea ? 'textarea' : '';
+  get textareaClass() {
+    return this.textarea ? ' textarea items-start' : '';
   }
   render() {
-    return (h(Host, { class: "mx-input" }, h("div", { class: this.containerClass, ref: el => (this.containerElem = el) }, h("div", { class: `mx-input-inner-wrapper ${this.isTextarea()}`, style: this.overrideTextArea() }, this.leftIcon && (h("div", { class: "mds-input-left-content" }, h("i", { class: this.leftIcon }))), this.label && (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClass, onClick: () => this.focusOnInput() }, this.label)), !this.textarea ? (h("div", { class: "mds-input" }, h("input", { type: this.type, name: this.name, id: this.inputId || this.uuid, value: this.value, disabled: this.disabled, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textInput = el) }))) : (h("textarea", { style: this.returnTaHeight(), name: this.name, id: this.inputId || this.uuid, disabled: this.disabled, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textArea = el) }, this.value)), (this.rightIcon || this.error) && (h("div", { class: "mds-input-right-content" }, this.error ? h("i", { class: "ph-warning-circle" }) : h("i", { class: this.rightIcon }))))), this.assistiveText && h("div", { class: "assistive-text" }, this.assistiveText)));
+    const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames }, this.label));
+    return (h(Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { class: this.containerClass }, this.leftIcon && (h("div", { class: this.leftIconWrapperClass }, h("i", { class: this.leftIcon }))), this.label && this.floatLabel && labelJsx, !this.textarea ? (h("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (h("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass }, this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength)), this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)), this.error && h("span", { innerHTML: warningCircleSvg }), this.rightIcon && !this.error && h("i", { class: this.rightIcon })))), (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
   }
+  get element() { return this; }
+  static get watchers() { return {
+    "value": ["onValueChange"]
+  }; }
 };
 
 const MxLinearProgress$1 = class extends HTMLElement {
@@ -2552,8 +2933,10 @@ function executeTransition(el, transitionOptions, duration, transformOrigin) {
         return `${transition.property} ${duration}ms ${transition.timing}`;
       })
         .join(', ');
-      transitionOptions.forEach(transition => {
-        setStyleProperty(el, transition.property, transition.endValue);
+      requestAnimationFrame(() => {
+        transitionOptions.forEach(transition => {
+          setStyleProperty(el, transition.property, transition.endValue);
+        });
       });
     });
     // Resolve once the duration passes (setTimeout is safer than transition events)
@@ -2586,6 +2969,7 @@ const MxMenu$1 = class extends HTMLElement {
     super();
     this.__registerHost();
     this.mxClose = createEvent(this, "mxClose", 7);
+    this.mxOpen = createEvent(this, "mxOpen", 7);
     /** The placement of the menu, relative to the `anchorEl`. */
     this.placement = 'bottom-start';
     /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
@@ -2596,13 +2980,17 @@ const MxMenu$1 = class extends HTMLElement {
     this.closeMenu();
   }
   onClick(e) {
-    const anchorWasClicked = this.anchorEl && this.anchorEl.contains(e.target);
-    if (!this.isOpen && anchorWasClicked) {
+    const triggerEl = this.triggerEl || this.anchorEl;
+    const triggerElWasClicked = triggerEl && triggerEl.contains(e.target);
+    if (triggerElWasClicked)
+      e.preventDefault();
+    if (!this.isOpen && triggerElWasClicked) {
       // Open closed menu when the anchorEl is clicked
       this.openMenu();
+      e.preventDefault();
     }
     else if (this.isOpen && this.element && !this.element.contains(e.target)) {
-      if (this.isSubMenu && anchorWasClicked)
+      if (this.isSubMenu && triggerElWasClicked)
         return; // Do not close submenu when its anchor is clicked
       // Otherwise, close menu when a click occurs outside the menu
       this.closeMenu();
@@ -2651,6 +3039,7 @@ const MxMenu$1 = class extends HTMLElement {
     if (this.isOpen || !this.anchorEl)
       return false;
     this.isOpen = true;
+    this.mxOpen.emit();
     const offset = this.offset || (this.isSubMenu ? [-8, 0] : null); // Offset submenus by -8px to line up menu items
     this.popoverInstance = await createPopover(this.anchorEl, this.element, this.placement, offset);
     await fadeScaleIn(this.menuElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
@@ -2815,7 +3204,7 @@ const MxMenuItem$1 = class extends HTMLElement {
   }
   render() {
     return (h(Host, { class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') }, h("div", { ref: el => (this.menuItemElem = el), role: "menuitem", "aria-selected": this.checked, "aria-disabled": this.disabled, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) }, this.label && (h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" }, h("span", { class: "block -mb-4" }, this.label))), h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +
-        (this.multiSelect ? ' hidden' : '') }, h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), h("span", { ref: el => (this.slotWrapper = el), class: "overflow-hidden overflow-ellipsis" }, h("slot", null))), this.checked && !this.multiSelect && (h("span", { class: "check ml-12", "data-testid": "check", innerHTML: checkSvg })), !!this.submenu && h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowSvg$1 })), this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), h("slot", { name: "submenu" })));
+        (this.multiSelect ? ' hidden' : '') }, h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), h("span", { ref: el => (this.slotWrapper = el), class: "overflow-hidden overflow-ellipsis" }, h("slot", null))), this.checked && !this.multiSelect && (h("span", { class: "check ml-12", "data-testid": "check", innerHTML: checkSvg })), !!this.submenu && h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowSvg$1 })), this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), h("slot", { name: "submenu" })));
   }
   get element() { return this; }
 };
@@ -3446,18 +3835,144 @@ const MxPageHeader$1 = class extends HTMLElement {
   get element() { return this; }
 };
 
+const chevronLeftSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 7.41L10.42 12L15 16.59L13.59 18L7.59 12L13.59 6L15 7.41Z" fill="currentColor"/>
+</svg>
+`;
+
+const chevronRightSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8.58997 16.59L13.17 12L8.58997 7.41L9.99997 6L16 12L9.99997 18L8.58997 16.59Z" fill="currentColor"/>
+</svg>
+`;
+
+const pageFirstSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M18.41 16.59L13.82 12L18.41 7.41L17 6L11 12L17 18L18.41 16.59ZM6 6H8V18H6V6Z" fill="currentColor" />
+</svg>
+`;
+
+const pageLastSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5.58997 7.41L10.18 12L5.58997 16.59L6.99997 18L13 12L6.99997 6L5.58997 7.41ZM16 6H18V18H16V6Z" fill="currentColor"/>
+</svg>
+`;
+
+const MxPagination$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxPageChange = createEvent(this, "mxPageChange", 7);
+    this.hasStatus = false;
+    this.page = 0;
+    this.rowsPerPageOptions = [10, 25, 50, 100];
+    this.rowsPerPage = 100;
+    /** Reduce the UI to only a page */
+    this.simple = false;
+    /** Disable the page buttons (i.e. when loading results) */
+    this.disabled = false;
+    /** Disable the next page button (i.e. when the last page was loaded from an API) */
+    this.disableNextPage = false;
+    this.hideRowsPerPage = false;
+    this.moveStatusToBottom = false;
+    /** Whether the component width (not viewport width) is >= 320px */
+    this.isXSmallMinWidth = false;
+    /** Whether the component width (not viewport width) is >= 640px */
+    this.isSmallMinWidth = false;
+  }
+  componentWillRender() {
+    this.hasStatus = !!this.element.querySelector('[slot="status"]');
+  }
+  componentDidLoad() {
+    if (this.rowsMenu && this.rowsMenuAnchor)
+      this.rowsMenu.anchorEl = this.rowsMenuAnchor;
+    this.resizeObserver = new ResizeObserver(() => this.updateResponsiveElements());
+    this.resizeObserver.observe(this.element);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateResponsiveElements.bind(this));
+  }
+  updateResponsiveElements() {
+    if (!this.paginationWrapper)
+      return;
+    let totalNeededWidth = Array.from(this.paginationWrapper.children).reduce((total, child) => {
+      return total + child.scrollWidth;
+    }, 0);
+    if (this.hideRowsPerPage && this.rowsPerPageWrapper)
+      totalNeededWidth += this.rowsPerPageWrapper.scrollWidth;
+    const excessWidth = totalNeededWidth - this.element.offsetWidth;
+    this.hideRowsPerPage = excessWidth > 0;
+    this.moveStatusToBottom = excessWidth > this.rowsPerPageWrapper.scrollWidth;
+    this.isXSmallMinWidth = this.element.offsetWidth >= 320;
+    this.isSmallMinWidth = this.element.offsetWidth >= 640;
+  }
+  onClickFirstPage() {
+    this.mxPageChange.emit({ page: 0, rowsPerPage: this.rowsPerPage });
+  }
+  onClickPreviousPage() {
+    this.mxPageChange.emit({ page: this.page - 1, rowsPerPage: this.rowsPerPage });
+  }
+  onClickNextPage() {
+    this.mxPageChange.emit({ page: this.page + 1, rowsPerPage: this.rowsPerPage });
+  }
+  onClickLastPage() {
+    this.mxPageChange.emit({ page: this.lastPage, rowsPerPage: this.rowsPerPage });
+  }
+  onChangeRowsPerPage(rowsPerPage) {
+    // Return to first page whenever the results-per-page changes
+    this.mxPageChange.emit({ page: 0, rowsPerPage });
+  }
+  get lastPage() {
+    if (this.totalRows === 0)
+      return 0;
+    if (this.totalRows == null)
+      return null;
+    return Math.ceil(this.totalRows / this.rowsPerPage) - 1;
+  }
+  get currentRange() {
+    let start = this.rowsPerPage * this.page + 1;
+    let end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
+    return start + '–' + end;
+  }
+  get rowRangeClass() {
+    let str = 'text-center flex-shrink min-w-0';
+    str += this.isSmallMinWidth ? ' px-24' : ' px-16';
+    if (!this.isXSmallMinWidth)
+      str += ' whitespace-normal';
+    return str;
+  }
+  get paginationWrapperClass() {
+    let str = 'flex relative';
+    if (this.moveStatusToBottom) {
+      str += ' flex-col-reverse items-end';
+    }
+    else {
+      str += ' items-center';
+      str += this.hasStatus ? ' justify-between' : ' justify-end';
+    }
+    return str;
+  }
+  render() {
+    return (h(Host, { class: "mx-pagination relative block text-4 whitespace-nowrap select-none" }, !this.simple && h("div", { class: "pagination-bg absolute top-0 left-0 w-full h-56 rounded-b-2xl" }), this.simple ? (
+    // Simple pagination
+    h("div", { class: "simple flex items-center justify-center h-48" }, h("mx-icon-button", { "aria-label": "Previous page", "chevron-left": true, disabled: this.page === 0 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), this.lastPage !== null ? this.page + 1 + ' of ' + (this.lastPage + 1) : '', h("mx-icon-button", { "aria-label": "Next page", "chevron-right": true, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }))) : (
+    // Standard pagination
+    h("div", { ref: el => (this.paginationWrapper = el), class: this.paginationWrapperClass }, this.hasStatus && (h("div", { "data-testid": "status", class: "px-24 py-10 flex relative items-center justify-self-start" }, h("slot", { name: "status" }))), h("div", { class: 'flex flex-grow-0 items-center justify-end h-56 pr-4' + (this.hideRowsPerPage ? ' relative' : '') }, this.rowsPerPageOptions && this.rowsPerPageOptions.length > 1 && (h("div", { ref: el => (this.rowsPerPageWrapper = el), "aria-hidden": this.hideRowsPerPage, class: 'flex items-center px-24' + (this.hideRowsPerPage ? ' absolute opacity-0 pointer-events-none' : '') }, "Rows per page: \u00A0", h("div", { "data-testid": "rows-per-page", ref: el => (this.rowsMenuAnchor = el), class: "flex items-center cursor-pointer" }, this.rowsPerPage, h("span", { class: "ml-12", innerHTML: arrowSvg$1 })), h("mx-menu", { ref: el => (this.rowsMenu = el) }, this.rowsPerPageOptions.map(option => (h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))), this.totalRows > 0 && (h("div", { "data-testid": "row-range", class: this.rowRangeClass }, this.currentRange, " of ", this.totalRows)), h("div", { class: "flex items-center sm:space-x-8" }, h("mx-icon-button", { "aria-label": "First page", innerHTML: pageFirstSvg, disabled: this.page === 0 || this.disabled, onClick: this.onClickFirstPage.bind(this) }), h("mx-icon-button", { "aria-label": "Previous page", innerHTML: chevronLeftSvg, disabled: this.page === 0 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), h("mx-icon-button", { "aria-label": "Next page", innerHTML: chevronRightSvg, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }), this.lastPage !== null && (h("mx-icon-button", { "aria-label": "Last page", innerHTML: pageLastSvg, disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
+  }
+  get element() { return this; }
+};
+
 const MxRadio$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.name = '';
     this.value = '';
     this.labelName = '';
     this.checked = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   render() {
-    return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", { class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }), h("span", { class: "flex h-20 w-20 cursor-pointer rounded-full" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
+    return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }, this.dataAttributes)), h("span", { class: "flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
+  get element() { return this; }
 };
 
 const searchSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -3470,8 +3985,10 @@ const MxSearch$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.dense = false;
     this.flat = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
@@ -3480,24 +3997,29 @@ const MxSearch$1 = class extends HTMLElement {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", { type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }), h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
+    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", Object.assign({ type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes)), h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
   }
+  get element() { return this; }
 };
 
 const MxSelect$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.uuid = uuidv4();
+    this.dataAttributes = {};
     this.dense = false;
     this.disabled = false;
     /** Style with a 1dp elevation */
     this.elevated = false;
     /** Style with a "flat" border color */
     this.flat = false;
+    this.floatLabel = false;
     this.error = false;
     /** Additional classes for the label */
     this.labelClass = '';
     this.isFocused = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   componentDidLoad() {
     this.updateSelectValue();
@@ -3540,13 +4062,19 @@ const MxSelect$1 = class extends HTMLElement {
     return str;
   }
   get labelClassNames() {
-    let str = 'absolute block pointer-events-none mt-0 left-12 px-4';
-    if (this.dense)
-      str += ' dense text-4';
-    if (this.isFocused || this.hasValue)
-      str += ' floating';
-    if (this.isFocused)
-      str += ' -ml-1'; // prevent shifting due to border-width change
+    let str = 'block pointer-events-none';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 left-12 px-4';
+      if (this.dense)
+        str += ' dense text-4';
+      if (this.isFocused || this.hasValue)
+        str += ' floating';
+      if (this.isFocused)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+    }
+    else {
+      str += ' subtitle2 mb-4';
+    }
     return (str += ' ' + this.labelClass);
   }
   get iconSuffixClass() {
@@ -3558,11 +4086,12 @@ const MxSelect$1 = class extends HTMLElement {
   get iconEl() {
     let icon = h("span", { "data-testid": "arrow", innerHTML: arrowSvg$1 });
     if (this.error)
-      icon = h("i", { "data-testid": "error-icon", class: "ph-warning-circle -mr-4" });
+      icon = h("span", { "data-testid": "error-icon", innerHTML: warningCircleSvg });
     return icon;
   }
   render() {
-    return (h(Host, { class: "mx-select" }, h("div", { class: this.selectWrapperClass }, h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, h("slot", null)), this.label && h("label", { class: this.labelClassNames }, this.label), h("span", { class: this.iconSuffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
+    const labelJsx = (h("label", { htmlFor: this.selectId || this.uuid, class: this.labelClassNames }, this.label));
+    return (h(Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass }, h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes), h("slot", null)), this.label && this.floatLabel && labelJsx, h("span", { class: this.iconSuffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
   }
   get element() { return this; }
   static get watchers() { return {
@@ -3570,18 +4099,97 @@ const MxSelect$1 = class extends HTMLElement {
   }; }
 };
 
+const snackbarQueue = []; // Deferred promises
+const MxSnackbar$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxClose = createEvent(this, "mxClose", 7);
+    this.duration = 6000;
+    this.isOpen = false;
+    this.isVisible = false;
+  }
+  async toggleSnackbar() {
+    clearTimeout(this.durationTimer);
+    if (this.isOpen) {
+      try {
+        await this.waitForOtherSnackbars();
+        this.durationTimer = setTimeout(this.close.bind(this), this.duration);
+        this.isVisible = true;
+        fadeScaleIn(this.alertEl, undefined, 'center');
+      }
+      catch (err) {
+        // Snackbar was closed programmatically before leaving the queue; do nothing.
+      }
+    }
+    else {
+      this.removeFromQueue();
+      this.isVisible = false;
+      this.mxClose.emit();
+    }
+  }
+  waitForOtherSnackbars() {
+    return new Promise((resolve, reject) => {
+      this.queueItem = { resolve, reject };
+      snackbarQueue.push(this.queueItem);
+      if (snackbarQueue.length === 1)
+        return resolve();
+    });
+  }
+  removeFromQueue() {
+    if (!this.queueItem)
+      return;
+    const queueIndex = snackbarQueue.indexOf(this.queueItem);
+    snackbarQueue.splice(snackbarQueue.indexOf(this.queueItem), 1);
+    if (queueIndex === 0 && snackbarQueue.length > 0)
+      snackbarQueue[0].resolve(); // Show next snackbar in queue
+  }
+  componentWillLoad() {
+    this.createSnackbarPortal();
+    this.portal.append(this.element);
+  }
+  createSnackbarPortal() {
+    this.portal = document.querySelector('.snackbar-portal');
+    if (this.portal)
+      return;
+    this.portal = document.createElement('div');
+    this.portal.classList.add('snackbar-portal', 'mds');
+    document.body.append(this.portal);
+  }
+  async close() {
+    if (!this.isOpen)
+      return;
+    await fadeOut(this.alertEl);
+    this.isOpen = false;
+  }
+  get alertClass() {
+    let str = 'mx-snackbar-alert flex flex-wrap items-center justify-between rounded-lg text-4 max-w-360 sm:w-360 shadow-6 px-16 py-14';
+    return str;
+  }
+  render() {
+    return (h(Host, { class: 'flex fixed w-full z-50 left-0 bottom-40 px-16 justify-center' + (this.isVisible ? '' : ' hidden') }, h("div", { ref: el => (this.alertEl = el), role: "alert", class: this.alertClass }, h("p", { class: "my-0" }, h("slot", null)), h("div", { class: "ml-auto", onClick: this.close.bind(this) }, h("slot", { name: "action" })))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "isOpen": ["toggleSnackbar"]
+  }; }
+};
+
 const MxSwitch$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.name = '';
     this.value = '';
     this.labelName = '';
     this.checked = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   render() {
-    return (h(Host, { class: "mx-switch" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4 w-36 h-14" }, h("input", { class: "absolute h-0 w-0 opacity-0", role: "switch", type: "checkbox", name: this.name, checked: this.checked }), h("span", { class: "slider round" }), h("div", { class: "pl-48 inline-block whitespace-nowrap", "data-testid": "labelName" }, this.labelName))));
+    return (h(Host, { class: "mx-switch" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", role: "switch", type: "checkbox", name: this.name, checked: this.checked }, this.dataAttributes)), h("div", { class: "slider relative cursor-pointer round w-36 h-14 flex-shrink-0" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
+  get element() { return this; }
 };
 
 const MxTab$1 = class extends HTMLElement {
@@ -3596,7 +4204,7 @@ const MxTab$1 = class extends HTMLElement {
     this.icon = '';
     /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
     this.selected = false;
-    /** Display a dot badge */
+    /** Display a circular badge */
     this.badge = false;
     /** Additional classes for the badge */
     this.badgeClass = '';
@@ -3617,7 +4225,7 @@ const MxTab$1 = class extends HTMLElement {
     return str;
   }
   get badgeEl() {
-    return h("mx-badge", { dot: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
+    return h("mx-badge", { indicator: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
   }
   get isTextOnly() {
     return this.label && !this.icon;
@@ -3639,6 +4247,802 @@ const MxTabContent$1 = class extends HTMLElement {
   render() {
     return (h(Host, { class: !this.isActiveTab ? 'hidden' : '' }, h("slot", null)));
   }
+};
+
+const gearSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7.5C9.51472 7.5 7.5 9.51472 7.5 12C7.5 14.4853 9.51472 16.5 12 16.5C14.4853 16.5 16.5 14.4853 16.5 12C16.5 9.51472 14.4853 7.5 12 7.5ZM6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18C8.68629 18 6 15.3137 6 12Z" fill="#333333"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M8.95058 1.96137C9.16383 1.8994 9.38813 1.88522 9.6075 1.91982C9.82576 1.95425 10.0338 2.03613 10.2169 2.15968L11.4772 2.9998H12.523L13.7833 2.15968C13.9664 2.03615 14.1744 1.95428 14.3927 1.91986C14.6121 1.88527 14.8364 1.89946 15.0496 1.96144L15.0535 1.96257C16.5923 2.41876 18.0015 3.23235 19.166 4.33691L19.1689 4.33971C19.3292 4.49341 19.4537 4.68057 19.5334 4.88785C19.6127 5.09406 19.6458 5.31514 19.6304 5.5355C19.6303 5.53664 19.6302 5.53779 19.6301 5.53894L19.5329 7.04702L20.0558 7.95276L21.4104 8.62261C21.4115 8.6231 21.4125 8.62359 21.4135 8.62409C21.612 8.72093 21.787 8.86015 21.9259 9.03197C22.0656 9.20465 22.1654 9.406 22.2184 9.62167L22.2193 9.62558C22.5937 11.1864 22.5937 12.8135 22.2193 14.3743L22.2184 14.3782C22.1654 14.5939 22.0656 14.7952 21.9259 14.9679C21.787 15.1397 21.612 15.279 21.4134 15.3758C21.4124 15.3763 21.4114 15.3768 21.4104 15.3773L20.0558 16.0471L19.5329 16.9529L19.6301 18.4609C19.6301 18.4621 19.6302 18.4632 19.6303 18.4644C19.6457 18.6847 19.6126 18.9058 19.5333 19.112C19.4536 19.3193 19.3291 19.5064 19.1688 19.6601L19.1659 19.6629C18.0014 20.7675 16.5922 21.5811 15.0534 22.0373L15.0495 22.0384C14.8363 22.1004 14.612 22.1146 14.3926 22.08C14.1743 22.0455 13.9663 21.9637 13.7832 21.8401C13.7822 21.8395 13.7813 21.8388 13.7803 21.8382L12.5229 21H11.4771L10.2197 21.8382C10.2188 21.8388 10.2179 21.8394 10.217 21.84C10.0338 21.9636 9.8257 22.0455 9.6074 22.0799C9.38804 22.1145 9.16374 22.1003 8.95047 22.0383L8.94661 22.0372C7.40778 21.581 5.99861 20.7674 4.83411 19.6629L4.83117 19.6601C4.67087 19.5064 4.54643 19.3192 4.46672 19.1119C4.38741 18.9057 4.3543 18.6846 4.36972 18.4642L4.46717 16.9528L3.94424 16.047L2.58663 15.3757C2.38804 15.2789 2.21311 15.1396 2.07417 14.9678C1.93452 14.7951 1.83467 14.5938 1.78171 14.3781L1.78075 14.3742C1.40642 12.8134 1.40642 11.1863 1.78074 9.62551L1.78169 9.62155C1.83466 9.40588 1.93453 9.20454 2.07418 9.03187C2.21312 8.86007 2.38804 8.72086 2.5866 8.62402L3.9443 7.95267L4.46723 7.04693L4.3698 5.53551C4.35438 5.31512 4.38749 5.09402 4.46681 4.8878C4.54653 4.68052 4.67098 4.49336 4.83128 4.33967L4.83419 4.33688C5.99868 3.23231 7.40784 2.41873 8.94667 1.96252L8.95058 1.96137ZM9.36956 3.40168C8.05996 3.79052 6.86062 4.48298 5.86908 5.42272C5.8681 5.42374 5.86733 5.42495 5.86682 5.42627C5.86626 5.42773 5.86603 5.4293 5.86614 5.43086L5.86656 5.43663L5.97873 7.17704C5.98826 7.32479 5.95383 7.47206 5.8798 7.60028L5.1298 8.89932C5.05577 9.02755 4.94544 9.131 4.81272 9.19662L3.24415 9.97224C3.24273 9.97293 3.24148 9.9739 3.24049 9.97512C3.2396 9.97622 3.23893 9.97749 3.23854 9.97886C2.9205 11.3074 2.92049 12.6922 3.23853 14.0207C3.23892 14.0222 3.23959 14.0235 3.24051 14.0246C3.2415 14.0258 3.24274 14.0268 3.24415 14.0275L3.24935 14.03L4.81266 14.8031C4.94539 14.8687 5.05571 14.9721 5.12974 15.1004L5.87974 16.3994C5.95378 16.5276 5.9882 16.6749 5.97867 16.8227L5.86609 18.5689C5.86598 18.5705 5.86619 18.572 5.86675 18.5735C5.86726 18.5748 5.86802 18.576 5.869 18.5771C6.86059 19.5168 8.06 20.2093 9.36967 20.5981C9.37099 20.5984 9.37237 20.5984 9.37373 20.5982C9.37457 20.5981 9.37539 20.5979 9.37617 20.5975C9.37683 20.5973 9.37745 20.5969 9.37805 20.5965L9.38283 20.5933L10.834 19.6259C10.9572 19.5438 11.1019 19.5 11.25 19.5H12.75C12.8981 19.5 13.0428 19.5438 13.166 19.6259L14.622 20.5966C14.6233 20.5974 14.6248 20.598 14.6263 20.5983C14.6277 20.5985 14.6291 20.5984 14.6305 20.5981C15.9401 20.2093 17.1394 19.5169 18.1309 18.5772C18.1319 18.5761 18.1327 18.5749 18.1333 18.5735C18.1338 18.5721 18.1341 18.5705 18.1339 18.5689L18.1335 18.5632L18.0214 16.8228C18.0118 16.675 18.0463 16.5277 18.1203 16.3995L18.8703 15.1005C18.9443 14.9722 19.0546 14.8688 19.1874 14.8032L20.7559 14.0276C20.7574 14.0269 20.7586 14.0259 20.7596 14.0247C20.7602 14.024 20.7606 14.0232 20.761 14.0225M20.7616 14.0209C21.0799 12.6912 21.0796 11.3051 20.7607 9.97543L21.49 9.80051L20.7616 9.97934C20.7613 9.97782 20.7606 9.97639 20.7596 9.97518C20.7586 9.97396 20.7574 9.97297 20.7559 9.97229L20.7507 9.96977L19.1874 9.19671C19.0547 9.13108 18.9444 9.02764 18.8703 8.89941L18.1203 7.60037C18.0463 7.47214 18.0119 7.32487 18.0214 7.17712L18.134 5.43088C18.1341 5.42931 18.1339 5.42774 18.1333 5.42628C18.1328 5.42495 18.1321 5.42374 18.1311 5.42272C17.1387 4.48217 15.9381 3.78935 14.6271 3.40071L14.8403 2.68164L14.631 3.40184C14.6295 3.40141 14.6279 3.40131 14.6264 3.40155C14.6248 3.40179 14.6233 3.40238 14.622 3.40326L14.6173 3.4065L13.1661 4.37384C13.0429 4.45597 12.8982 4.4998 12.7501 4.4998H11.2501C11.102 4.4998 10.9573 4.45597 10.8341 4.37384L9.3781 3.40323C9.37679 3.40234 9.37533 3.40174 9.37378 3.4015C9.37237 3.40128 9.37094 3.40134 9.36956 3.40168" fill="currentColor"/>
+</svg>
+`;
+
+const MxTable$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxSortChange = createEvent(this, "mxSortChange", 7);
+    this.mxRowCheck = createEvent(this, "mxRowCheck", 7);
+    this.mxVisibleRowsChange = createEvent(this, "mxVisibleRowsChange", 7);
+    this.mxRowMove = createEvent(this, "mxRowMove", 7);
+    this.hasDefaultSlot = false;
+    this.hasSearch = false;
+    this.hasFilter = false;
+    this.showOperationsBar = false;
+    /** An array of objects that defines the table's dataset. */
+    this.rows = [];
+    /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
+    this.columns = [];
+    /** Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or
+     * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
+    this.checkable = false;
+    /** Set to `false` to prevent checking rows by clicking on them (outside the checkboxes). */
+    this.checkOnRowClick = true;
+    /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
+    this.showCheckAll = true;
+    /** Enables reordering of rows via drag and drop. */
+    this.draggableRows = false;
+    this.hoverable = true;
+    /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
+    this.autoWidth = false;
+    this.sortAscending = true;
+    /** Show the pagination component.  Setting this to `false` will show all rows. */
+    this.paginate = true;
+    /** The zero-based index of the page to display */
+    this.page = 0;
+    this.rowsPerPage = 10;
+    /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
+    this.disableNextPage = false;
+    /** Do not sort or paginate client-side. Use events to send server requests instead. */
+    this.serverPaginate = false;
+    /** Show a progress bar below the header row */
+    this.showProgressBar = false;
+    /** Disable the pagination buttons (i.e. while loading results) */
+    this.disablePagination = false;
+    /** The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed. */
+    this.progressValue = null;
+    /** Delay the appearance of the progress bar for this many milliseconds */
+    this.progressAppearDelay = 0;
+    this.minWidths = new MinWidths();
+    this.checkedRowIds = [];
+    this.exposedMobileColumnIndex = 0;
+    this.hasActionsColumnFromSlot = false;
+  }
+  onMxCheck(e) {
+    const { rowId, checked } = e.detail;
+    if (!checked && this.checkedRowIds.includes(rowId)) {
+      this.checkedRowIds = this.checkedRowIds.filter(id => id !== rowId);
+    }
+    else if (checked && !this.checkedRowIds.includes(rowId)) {
+      this.checkedRowIds = [...this.checkedRowIds, rowId];
+    }
+    this.mxRowCheck.emit(this.checkedRowIds);
+  }
+  onMxRowDragStart(e) {
+    const dragRow = e.target.closest('mx-table-row');
+    const rows = this.getTableRows();
+    this.dragRowIndex = rows.indexOf(dragRow);
+    this.dragOverRowIndex = this.dragRowIndex;
+    this.dragMoveHandler = this.onDragMove.bind(this);
+    // Add transitions to the rows
+    rows.forEach(row => {
+      if (!e.detail.isKeyboard && row === dragRow)
+        return; // Do not transition a row dragged with a mouse
+      Array.from(row.children).forEach((rowChild) => {
+        rowChild.classList.add('transition-transform', 'pointer-events-none');
+      });
+    });
+    if (!e.detail.isKeyboard) {
+      document.addEventListener('touchmove', this.dragMoveHandler);
+      document.addEventListener('mousemove', this.dragMoveHandler);
+    }
+  }
+  onDragKeyDown(e) {
+    let direction;
+    const key = e.detail;
+    if (['ArrowUp', 'ArrowLeft'].includes(key))
+      direction = -1;
+    if (['ArrowDown', 'ArrowRight'].includes(key))
+      direction = 1;
+    if (!direction)
+      return;
+    if (direction === -1 && this.dragOverRowIndex === 0)
+      return; // Row is at the top
+    const rows = this.getTableRows();
+    if (direction === 1 && this.dragOverRowIndex === rows.length - 1)
+      return; // Row is at the bottom
+    this.dragOverRowIndex += direction;
+    const dragRow = rows[this.dragRowIndex];
+    const indexDelta = this.dragOverRowIndex - this.dragRowIndex;
+    const translateY = dragRow.children[0].offsetHeight * indexDelta;
+    dragRow.translateRow(0, translateY);
+    this.onDragMove();
+  }
+  onMxRowDragEnd(e) {
+    document.removeEventListener('mousemove', this.dragMoveHandler);
+    document.removeEventListener('touchmove', this.dragMoveHandler);
+    const rows = this.getTableRows();
+    if (!e.detail.isCancel && this.dragOverRowIndex !== this.dragRowIndex) {
+      // If row was dragged to a new position AND dragging wasn't cancelled, emit the mxRowMove event
+      this.mxRowMove.emit({ rowId: e.detail, oldIndex: this.dragRowIndex, newIndex: this.dragOverRowIndex });
+      if (e.detail.isKeyboard)
+        rows[this.dragOverRowIndex].focusDragHandle(); // Focus the handle at the new index
+    }
+    this.dragRowIndex = null;
+    // Remove transitions and transforms from rows
+    rows.forEach(row => {
+      Array.from(row.children).forEach((rowChild) => {
+        rowChild.classList.remove('transition-transform', 'pointer-events-none');
+        rowChild.style.transform = '';
+      });
+    });
+    document.body.style.cursor = '';
+  }
+  onVisibleRowsChange() {
+    this.getTableRows().forEach(row => row.collapse());
+    this.mxVisibleRowsChange.emit(this.visibleRows);
+  }
+  onPageChange() {
+    // Scroll back to the top of the table on page change (if necessary)
+    if (this.element.getBoundingClientRect().top < 0)
+      this.element.scrollIntoView();
+  }
+  resetPage() {
+    if (!this.serverPaginate)
+      this.page = 0;
+  }
+  async getCheckedRowIds() {
+    return this.checkedRowIds;
+  }
+  async setCheckedRowIds(checkedRowIds = []) {
+    this.checkedRowIds = checkedRowIds;
+  }
+  async checkAll() {
+    if (this.getRowId) {
+      this.checkedRowIds = this.rows.map(this.getRowId).map(id => id.toString());
+    }
+    else {
+      this.checkedRowIds = this.getTableRows().map(row => row.rowId);
+    }
+  }
+  async checkNone() {
+    this.checkedRowIds = [];
+  }
+  getTableRows() {
+    return Array.from(this.element.querySelectorAll('mx-table-row'));
+  }
+  onCheckAllClick(e) {
+    e.preventDefault();
+    if (this.checkedRowIds.length === 0) {
+      this.checkAll();
+    }
+    else {
+      this.checkNone();
+    }
+  }
+  /** Animate table rows while dragging a row */
+  onDragMove(e) {
+    requestAnimationFrame(() => {
+      if (this.dragRowIndex == null)
+        return;
+      const rows = this.getTableRows();
+      const dragRowHeight = rows[this.dragRowIndex].children[0].offsetHeight;
+      rows.forEach((row, rowIndex) => {
+        let { top, bottom } = getPageRect(row.children[0]);
+        const rowChildren = Array.from(row.children);
+        if (e) {
+          const { pageY } = getCursorCoords(e);
+          if (pageY >= top && pageY <= bottom)
+            this.dragOverRowIndex = rowIndex;
+        }
+        if (rowIndex === this.dragRowIndex)
+          return; // Do not shift row that is being dragged
+        if (rowIndex <= this.dragOverRowIndex && rowIndex > this.dragRowIndex) {
+          // Shift rows that are below the dragged row UP
+          rowChildren.forEach(child => (child.style.transform = `translateY(-${dragRowHeight}px)`));
+        }
+        else if (rowIndex >= this.dragOverRowIndex && rowIndex < this.dragRowIndex) {
+          // Shift rows that are above the dragged row DOWN
+          rowChildren.forEach(child => (child.style.transform = `translateY(${dragRowHeight}px)`));
+        }
+        else {
+          rowChildren.forEach(child => (child.style.transform = ''));
+        }
+      });
+    });
+  }
+  setCellProps() {
+    const cells = this.element.querySelectorAll('mx-table-cell');
+    let colIndex = 0;
+    cells.forEach((cell) => {
+      cell.columnIndex = colIndex;
+      cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
+      cell.heading = this.cols[colIndex].heading;
+      if (colIndex === this.cols.length - 1)
+        colIndex = 0;
+      else
+        colIndex++;
+    });
+  }
+  setRowsChecked() {
+    this.getTableRows().forEach(row => (row.checked = this.checkedRowIds.includes(row.rowId)));
+  }
+  connectedCallback() {
+    minWidthSync.subscribeComponent(this);
+  }
+  componentWillLoad() {
+    this.hasDefaultSlot = Array.from(this.element.children).some(el => !el.getAttribute('slot'));
+  }
+  componentWillRender() {
+    this.hasFilter = !!this.element.querySelector('[slot="filter"]');
+    this.hasSearch = !!this.element.querySelector('[slot="search"]');
+    this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
+    this.hasActionsColumnFromSlot =
+      this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
+    requestAnimationFrame(this.setCellProps.bind(this));
+  }
+  componentDidRender() {
+    if (this.actionMenu && !this.actionMenu.anchorEl) {
+      this.actionMenu.anchorEl = this.actionMenuButton;
+    }
+    if (this.checkable)
+      this.setRowsChecked();
+  }
+  componentDidLoad() {
+    // Emit paginated rows right away.
+    this.onVisibleRowsChange();
+  }
+  disconnectedCallback() {
+    minWidthSync.unsubscribeComponent(this);
+  }
+  get cols() {
+    // If `columns` prop is not provided, create a column for each row object property
+    if (!this.columns.length && this.rows.length) {
+      return Object.keys(this.rows[0]).map(property => ({ property, heading: capitalize(property), sortable: true }));
+    }
+    return this.columns.map(col => (Object.assign(Object.assign({}, col), { sortable: col.sortable === false ? false : true })));
+  }
+  get exposedMobileColumn() {
+    return this.cols[this.exposedMobileColumnIndex] || {};
+  }
+  get visibleRows() {
+    if (this.serverPaginate || (!this.paginate && !this.sortBy))
+      return this.rows;
+    const offset = this.page * this.rowsPerPage;
+    let rows = this.rows.slice();
+    if (this.sortBy)
+      this.sortRows(rows);
+    rows = rows.slice(offset, offset + this.rowsPerPage);
+    return rows;
+  }
+  get allRowsChecked() {
+    return this.rows.length && this.rows.length === this.checkedRowIds.length;
+  }
+  get someRowsChecked() {
+    return this.checkedRowIds.length > 0 && this.checkedRowIds.length < this.rows.length;
+  }
+  get multiRowActions() {
+    if (!this.getMultiRowActions)
+      return [];
+    return this.getMultiRowActions(this.checkedRowIds);
+  }
+  get hasActionsColumn() {
+    return !!this.getRowActions || this.hasActionsColumnFromSlot;
+  }
+  get operationsBarStyle() {
+    if (this.minWidths.sm) {
+      // On larger screens, use a three-column grid
+      return {
+        gridTemplateColumns: 'max-content 1fr max-content',
+      };
+    }
+    else if (this.checkable && this.showCheckAll) {
+      // If checkbox on mobile, use a two-column grid
+      return {
+        gridTemplateColumns: 'minmax(0, max-content) 1fr',
+      };
+    }
+    else {
+      // If no checkbox on mobile, use a single column
+      return {
+        gridTemplateColumns: '1fr',
+      };
+    }
+  }
+  get searchStyle() {
+    if (this.minWidths.sm) {
+      // On larger screens, place in last column of first grid row
+      return { width: '240px', gridColumnStart: '-1' };
+    }
+    else if (!(this.checkable && this.showCheckAll)) {
+      // If no checkbox on mobile, span the entire first grid row
+      return { width: '100%', gridColumnStart: '1' };
+    }
+    else {
+      // If checkbox on mobile, span remaining space in first grid row (up to 240px)
+      return { width: '100%', maxWidth: '240px', gridColumnStart: '2' };
+    }
+  }
+  get gridStyle() {
+    if (!this.minWidths.sm)
+      return { display: 'flex', flexDirection: 'column' };
+    const display = this.autoWidth ? 'inline-grid' : 'grid';
+    let gridTemplateColumns = this.checkable ? 'minmax(0, 48px) ' : '';
+    if (this.draggableRows)
+      gridTemplateColumns += 'minmax(0, 48px) ';
+    const autoColumnCount = this.cols.length + (this.hasActionsColumn ? 1 : 0);
+    gridTemplateColumns += `repeat(${autoColumnCount}, minmax(0, auto))`;
+    return { display, gridTemplateColumns };
+  }
+  sortRows(rows) {
+    const sortByColumn = this.cols.find(c => c.property === this.sortBy);
+    if (!sortByColumn)
+      return;
+    let sortCompare = sortByColumn.sortCompare;
+    if (!sortCompare) {
+      sortCompare = (a, b) => {
+        const valueA = this.getCellSortableValue(a, sortByColumn);
+        const valueB = this.getCellSortableValue(b, sortByColumn);
+        if (typeof valueA === 'number' && typeof valueB === 'number')
+          return valueA - valueB;
+        return valueA.localeCompare(valueB);
+      };
+    }
+    rows.sort(sortCompare);
+    if (!this.sortAscending)
+      rows.reverse();
+  }
+  getCellSortableValue(row, col) {
+    if (col.getValue)
+      return col.getValue(row);
+    const val = row[col.property];
+    if (['date', 'dateTime'].includes(col.type) || isDateObject(val))
+      return -new Date(val).getTime();
+    if (col.type === 'boolean')
+      return val ? 1 : 0;
+    return val;
+  }
+  getCellValue(row, col, rowIndex) {
+    if (col.getValue)
+      return col.getValue(row, rowIndex);
+    const val = row[col.property];
+    if (col.type === 'date' || isDateObject(val))
+      return new Date(val).toLocaleDateString();
+    if (col.type === 'dateTime' || isDateObject(val))
+      return new Date(val).toLocaleString();
+    if (col.type === 'boolean')
+      return val ? 'Yes' : '';
+    return val;
+  }
+  getHeaderClass(col, colIndex) {
+    if (!col)
+      return '';
+    let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClass(col);
+    str += this.minWidths.sm ? ' px-16' : ' flex-1';
+    const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
+    let firstColSpan = 1;
+    if (this.minWidths.sm && colIndex === 0 && this.draggableRows)
+      firstColSpan++;
+    if (this.minWidths.sm && colIndex === 0 && this.checkable && !isCheckAllInHeader)
+      firstColSpan++;
+    str += ' col-span-' + firstColSpan;
+    if (!this.minWidths.sm && colIndex === this.exposedMobileColumnIndex && this.checkable && isCheckAllInHeader)
+      str += ' px-16';
+    if (!this.draggableRows && col.sortable && col.property)
+      str += ' group cursor-pointer';
+    if (col.headerClass)
+      str += col.headerClass;
+    return str;
+  }
+  getHeaderArrowClass(col) {
+    let str = 'ml-12 transform scale-75';
+    if (col.property !== this.sortBy)
+      str += ' opacity-30 sm:opacity-0 sm:group-hover:opacity-30 rotate-180';
+    else if (this.sortAscending)
+      str += ' rotate-180';
+    return str;
+  }
+  getAlignClass(col) {
+    if (!this.minWidths.sm)
+      return 'justify-start';
+    let alignment = col.align || (col.type === 'number' ? 'right' : 'left');
+    return alignment === 'right' ? 'justify-end' : alignment === 'center' ? 'justify-center' : 'justify-start';
+  }
+  onHeaderClick(col) {
+    if (this.draggableRows || !col || !col.sortable || !col.property)
+      return;
+    if (this.sortBy !== col.property) {
+      this.sortBy = col.property;
+      this.sortAscending = true;
+    }
+    else {
+      if (this.sortAscending)
+        this.sortAscending = false;
+      else {
+        this.sortBy = null;
+        this.sortAscending = true;
+      }
+    }
+    this.mxSortChange.emit({ sortBy: this.sortBy, sortAscending: this.sortAscending });
+  }
+  changeExposedColumnIndex(delta) {
+    const newColumnIndex = this.exposedMobileColumnIndex + delta;
+    if (newColumnIndex < 0 || newColumnIndex >= this.cols.length)
+      return;
+    this.exposedMobileColumnIndex = newColumnIndex;
+  }
+  onMxPageChange(e) {
+    if (this.serverPaginate)
+      return;
+    this.page = e.detail.page;
+    this.rowsPerPage = e.detail.rowsPerPage;
+  }
+  render() {
+    const checkAllCheckbox = this.checkable && this.showCheckAll && (h("mx-checkbox", { checked: this.allRowsChecked, class: this.showOperationsBar ? 'ml-24' : 'pr-4', indeterminate: this.someRowsChecked, onClick: this.onCheckAllClick.bind(this), "label-name": "Select all rows", "hide-label": true }));
+    let multiRowActionUI;
+    if (this.checkable) {
+      multiRowActionUI =
+        this.multiRowActions.length === 1 ? (
+        // Multi-Row Action Button
+        h("mx-button", Object.assign({ "data-testid": "multi-action-button", "btn-type": "outlined" }, this.multiRowActions[0], { class: 'whitespace-nowrap' + (!this.checkedRowIds.length ? ' hidden' : '') }), this.multiRowActions[0].value)) : (
+        // Multi-Row Action Menu
+        h("span", { class: !this.checkedRowIds.length ? 'hidden' : null }, h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true }, h("span", { class: "h-full flex items-center px-2" }, h("span", { innerHTML: gearSvg }))), h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
+    }
+    const operationsBar = (h("div", { class: "grid gap-x-16 gap-y-12 pb-12", style: this.operationsBarStyle }, this.checkable && this.showCheckAll && (h("div", { class: "col-start-1 flex items-center min-h-36 space-x-16" }, checkAllCheckbox, multiRowActionUI)), this.hasFilter && (h("div", { class: "flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1" }, h("slot", { name: "filter" }))), this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle }, h("slot", { name: "search" })))));
+    return (h(Host, { class: 'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '') }, this.showOperationsBar && operationsBar, h("div", { "data-testid": "grid", class: "table-grid relative", style: this.gridStyle }, h("div", { class: "header-row" }, this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, this.minWidths.sm ? (
+    // Non-Mobile Column Headers
+    this.cols.map((col, colIndex) => {
+      return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: col.heading }), !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg$1 })))));
+    })) : (
+    // Mobile Column Header Navigation
+    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg$1 })))), h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) })))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && (h("div", null, this.visibleRows.map((row, rowIndex) => (
+    // Generated Body Rows
+    h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", { class: [this.getAlignClass(col), col.cellClass].join(' ') }, h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))), this.visibleRows && this.visibleRows.length === 0 && (h("div", { class: "empty-state" }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found."))))), this.paginate && (
+    // Pagination Row
+    h("div", { class: "pagination-row" }, h("mx-pagination", { page: this.page, "rows-per-page": this.rowsPerPage, rowsPerPageOptions: this.rowsPerPageOptions, "total-rows": this.serverPaginate ? this.totalRows : this.rows.length, class: "col-span-full p-0 rounded-b-2xl", onMxPageChange: this.onMxPageChange.bind(this), disabled: this.disablePagination, disableNextPage: this.disableNextPage }))))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "sortBy": ["onVisibleRowsChange", "resetPage"],
+    "sortAscending": ["onVisibleRowsChange", "resetPage"],
+    "page": ["onVisibleRowsChange", "onPageChange"],
+    "rowsPerPage": ["onVisibleRowsChange", "resetPage"],
+    "rows": ["onVisibleRowsChange", "resetPage"]
+  }; }
+};
+
+const MxTableCell$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    /** This is automatically set by the parent `mx-table`. */
+    this.isExposedMobileColumn = true;
+    this.minWidths = new MinWidths();
+  }
+  connectedCallback() {
+    minWidthSync.subscribeComponent(this);
+  }
+  disconnectedCallback() {
+    minWidthSync.unsubscribeComponent(this);
+  }
+  get cellClass() {
+    let str = 'mx-table-cell flex items-center text-4';
+    if (!this.minWidths.sm && this.isExposedMobileColumn)
+      str += ' row-start-1 exposed-cell';
+    else if (!this.minWidths.sm)
+      str += ' py-0 pb-12 col-span-4';
+    return str;
+  }
+  render() {
+    return (h(Host, { role: "gridcell", "aria-describedby": `column-header-${this.columnIndex}`, class: this.cellClass }, h("div", { class: "min-h-20 max-w-full break-words" }, !this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (h("p", { class: "subtitle5 my-0 mb-4", innerHTML: this.heading })), h("slot", null))));
+  }
+  get element() { return this; }
+};
+
+const dragDotsSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14 13C14.5523 13 15 12.5523 15 12C15 11.4477 14.5523 11 14 11C13.4477 11 13 11.4477 13 12C13 12.5523 13.4477 13 14 13Z" fill="currentColor"/>
+  <path d="M14 5C14.5523 5 15 4.55228 15 4C15 3.44772 14.5523 3 14 3C13.4477 3 13 3.44772 13 4C13 4.55228 13.4477 5 14 5Z" fill="currentColor"/>
+  <path d="M14 21C14.5523 21 15 20.5523 15 20C15 19.4477 14.5523 19 14 19C13.4477 19 13 19.4477 13 20C13 20.5523 13.4477 21 14 21Z" fill="currentColor"/>
+  <path d="M10 13C10.5523 13 11 12.5523 11 12C11 11.4477 10.5523 11 10 11C9.44772 11 9 11.4477 9 12C9 12.5523 9.44772 13 10 13Z" fill="currentColor"/>
+  <path d="M10 5C10.5523 5 11 4.55228 11 4C11 3.44772 10.5523 3 10 3C9.44772 3 9 3.44772 9 4C9 4.55228 9.44772 5 10 5Z" fill="currentColor"/>
+  <path d="M14 9C14.5523 9 15 8.55228 15 8C15 7.44772 14.5523 7 14 7C13.4477 7 13 7.44772 13 8C13 8.55228 13.4477 9 14 9Z" fill="currentColor"/>
+  <path d="M14 17C14.5523 17 15 16.5523 15 16C15 15.4477 14.5523 15 14 15C13.4477 15 13 15.4477 13 16C13 16.5523 13.4477 17 14 17Z" fill="currentColor"/>
+  <path d="M10 9C10.5523 9 11 8.55228 11 8C11 7.44772 10.5523 7 10 7C9.44772 7 9 7.44772 9 8C9 8.55228 9.44772 9 10 9Z" fill="currentColor"/>
+  <path d="M10 17C10.5523 17 11 16.5523 11 16C11 15.4477 10.5523 15 10 15C9.44772 15 9 15.4477 9 16C9 16.5523 9.44772 17 10 17Z" fill="currentColor"/>
+  <path d="M10 21C10.5523 21 11 20.5523 11 20C11 19.4477 10.5523 19 10 19C9.44772 19 9 19.4477 9 20C9 20.5523 9.44772 21 10 21Z" fill="currentColor"/>
+</svg>
+`;
+
+const SCROLL_PX = 5; // Scroll by 5px ...
+const SCROLL_INTERVAL_MS = 5; // ... every 5ms
+class DragScroller {
+  constructor(dragEl) {
+    this.scrollingContainer = getScrollingParent(dragEl);
+  }
+  /** Start/stop auto-scrolling based on cursor coordinates */
+  update(e) {
+    clearInterval(this.interval);
+    const { clientX, clientY } = getCursorCoords(e);
+    const bounds = getBounds(this.scrollingContainer);
+    // If not dragging outside bounds, stop
+    if (clientY >= bounds.top && clientY <= bounds.bottom && clientX >= bounds.left && clientX <= bounds.right)
+      return;
+    const directionX = clientX < bounds.left ? -1 : 1;
+    const directionY = clientY < bounds.top ? -1 : 1;
+    this.interval = setInterval(window.scrollBy, SCROLL_INTERVAL_MS, SCROLL_PX * directionX, SCROLL_PX * directionY);
+  }
+  stop() {
+    clearInterval(this.interval);
+  }
+}
+
+const DEFAULT_MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
+const MxTableRow$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxCheck = createEvent(this, "mxCheck", 7);
+    this.mxRowDragStart = createEvent(this, "mxRowDragStart", 7);
+    this.mxRowDragEnd = createEvent(this, "mxRowDragEnd", 7);
+    this.mxDragKeyDown = createEvent(this, "mxDragKeyDown", 7);
+    this.dragOrigin = { x: 0, y: 0 };
+    /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
+    this.actions = [];
+    this.checked = false;
+    this.minWidths = new MinWidths();
+    this.checkable = false;
+    this.checkOnRowClick = false;
+    this.isDraggable = false;
+    this.isDragging = false;
+    this.isMobileExpanded = false;
+    this.isMobileCollapsing = false;
+  }
+  /** Apply a CSS transform to translate the row by `x` and `y` pixels */
+  async translateRow(x, y) {
+    const transform = `translate3d(${x}px, ${y}px, 0)`;
+    if (this.dragShadowEl)
+      this.dragShadowEl.style.transform = transform;
+    Array.from(this.element.children).forEach((child) => (child.style.transform = transform));
+  }
+  connectedCallback() {
+    minWidthSync.subscribeComponent(this);
+    if (this.actions.some(action => !action.value))
+      throw new Error('Table row actions must have a value property!');
+  }
+  componentWillRender() {
+    // Render collapsed mobile row
+    if (!this.minWidths.sm && !this.isMobileExpanded)
+      this.element.style.maxHeight = this.getCollapsedHeight();
+    // Determine `checkable` and `checked` by pulling props from parent table.
+    // This avoids having to manually pass these as props when using mx-table-row inside the table's
+    // default slot.
+    const table = this.element.closest('mx-table');
+    this.checkable = table && table.checkable;
+    this.isDraggable = table && table.draggableRows;
+    if (this.checkable && this.rowId == null)
+      throw new Error('Checkable rows require either a getRowId prop on the table, or a rowId on the row!');
+    if (this.checkable)
+      this.checkOnRowClick = table.checkOnRowClick;
+  }
+  componentDidRender() {
+    // Anchor the action menu to the action menu button.
+    // We cannot use `componentDidLoad` for this because these elements sometimes get destroyed
+    // during render when the viewport is resized across breakpoints.
+    if (this.actions.length > 1 && this.actionMenu && this.actionMenuButton)
+      this.actionMenu.anchorEl = this.actionMenuButton;
+  }
+  disconnectedCallback() {
+    minWidthSync.unsubscribeComponent(this);
+  }
+  onClick(e) {
+    if (!!e.target.closest('button, input, mx-menu'))
+      return; // Ignore clicks on buttons, etc.
+    if (!this.minWidths.sm) {
+      // Collapse/expand row when the exposed column cell is clicked
+      const exposedCell = this.getExposedCell();
+      if (!exposedCell)
+        return;
+      if (e.target.closest('mx-table-cell') === exposedCell)
+        this.accordion();
+    }
+    else if (this.checkable && this.checkOnRowClick) {
+      // (Un)check row
+      this.checked = !this.checked;
+      this.mxCheck.emit({ rowId: this.rowId, checked: this.checked });
+    }
+  }
+  onKeyboardHandleKeyDown(e) {
+    // Start keyboard dragging on Space/Enter if not already dragging
+    if (!this.isDragging && [' ', 'Enter'].includes(e.key))
+      this.startDragging(e);
+  }
+  startDragging(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.isDragging = true;
+    if (e.type !== 'keydown') {
+      // If using a mouse or touch, set drag origin to current cursor coordinates
+      const { pageX, pageY } = getCursorCoords(e);
+      this.dragOrigin.x = pageX;
+      this.dragOrigin.y = pageY;
+    }
+    else {
+      // If using a keyboard, set drag origin to the row's coordinates on the page
+      const { top, left } = getPageRect(this.element.children[0]);
+      this.dragOrigin.x = left;
+      this.dragOrigin.y = top;
+    }
+    this.element.classList.add('pointer-events-none');
+    this.createDragShadowEl();
+    for (let i = 0; i < this.element.children.length; i++) {
+      const child = this.element.children[i];
+      child.style.zIndex = '9999';
+    }
+    this.addDragListeners(e);
+    this.mxRowDragStart.emit({ isKeyboard: e.type === 'keydown' });
+  }
+  addDragListeners(startEvent) {
+    /** Move all the row children and dragShadowEl with the mouse cursor (via CSS transform) */
+    const onMouseMove = (e) => {
+      requestAnimationFrame(() => {
+        if (!this.isDragging)
+          return;
+        const { pageX, pageY } = getCursorCoords(e);
+        const x = pageX - this.dragOrigin.x;
+        const y = pageY - this.dragOrigin.y;
+        this.translateRow(x, y);
+        this.dragScroller && this.dragScroller.update(e);
+      });
+    };
+    /** Stop dragging when the mouse button is released or touch ends */
+    const onMouseUp = (e) => {
+      e.stopPropagation();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchmove', onMouseMove);
+      document.removeEventListener('touchend', onMouseUp);
+      document.removeEventListener('touchcancel', onMouseUp);
+      this.dragScroller.stop();
+      this.dragScroller = null;
+      this.stopDragging(e.type === 'touchcancel');
+    };
+    /** Move row or cancel dragging based on keypress */
+    const onKeyDown = (e) => {
+      if ([' ', 'Enter'].includes(e.key)) {
+        document.removeEventListener('keydown', onKeyDown);
+        this.stopDragging(true);
+      }
+      else if (['Escape', 'Tab'].includes(e.key)) {
+        document.removeEventListener('keydown', onKeyDown);
+        this.stopDragging(true, true);
+      }
+      else if (e.key.includes('Arrow')) {
+        this.mxDragKeyDown.emit(e.key);
+      }
+      else {
+        return;
+      }
+      e.stopPropagation();
+      e.preventDefault();
+    };
+    // Add the above listeners based on the type of input device being used
+    if (startEvent.type === 'keydown') {
+      document.addEventListener('keydown', onKeyDown);
+    }
+    else if (startEvent.type === 'touchstart') {
+      this.dragScroller = new DragScroller(this.element);
+      document.addEventListener('touchmove', onMouseMove);
+      document.addEventListener('touchend', onMouseUp);
+      document.addEventListener('touchcancel', onMouseUp);
+    }
+    else {
+      this.dragScroller = new DragScroller(this.element);
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
+  }
+  /** Clear transforms and remove dragShadowEl */
+  stopDragging(isKeyboard = false, isCancel = false) {
+    this.isDragging = false;
+    this.element.classList.remove('drag-row', 'pointer-events-none');
+    if (this.dragShadowEl)
+      this.dragShadowEl.remove();
+    this.dragShadowEl = undefined;
+    for (let i = 0; i < this.element.children.length; i++) {
+      const child = this.element.children[i];
+      child.style.transform = '';
+      child.style.zIndex = '';
+    }
+    this.mxRowDragEnd.emit({ isKeyboard, isCancel });
+  }
+  /** When dragging, add an element behind the row children that has a box shadow.
+   * This is simpler than trying to change the row to `display: flex` to add a box shadow to it. */
+  createDragShadowEl() {
+    this.dragShadowEl = document.createElement('div');
+    this.dragShadowEl.classList.add('absolute', 'w-full', 'shadow-24');
+    this.dragShadowEl.style.zIndex = '9998';
+    this.dragShadowEl.style.height = this.element.children[0].offsetHeight + 'px';
+    this.dragShadowEl.style.top = this.element.children[0].offsetTop + 'px';
+    this.dragShadowEl.style.left = this.element.children[0].offsetLeft + 'px';
+    this.element.parentNode.insertBefore(this.dragShadowEl, this.element);
+  }
+  accordion() {
+    if (this.minWidths.sm)
+      return;
+    this.element.classList.add('overflow-hidden');
+    this.isMobileExpanded ? this.collapse() : this.expand();
+  }
+  async collapse() {
+    if (!this.isMobileExpanded)
+      return;
+    this.isMobileCollapsing = true;
+    this.element.style.maxHeight = this.element.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      this.element.style.maxHeight = this.getCollapsedHeight();
+    });
+  }
+  async expand() {
+    if (this.isMobileExpanded)
+      return;
+    this.element.style.maxHeight = this.element.scrollHeight + 'px';
+    this.isMobileExpanded = true;
+    requestAnimationFrame(() => {
+      this.element.style.maxHeight = this.element.scrollHeight + 'px';
+    });
+  }
+  async focusDragHandle() {
+    if (this.keyboardDragHandle)
+      this.keyboardDragHandle.focus();
+  }
+  onTransitionEnd(e) {
+    if (e.target === this.element) {
+      this.element.classList.remove('overflow-hidden');
+      if (this.isMobileCollapsing) {
+        this.isMobileExpanded = false;
+        this.isMobileCollapsing = false;
+      }
+      // Remove explicit max-height after expanding to avoid issues with window resizing, etc.
+      this.element.style.maxHeight = '';
+    }
+    // When keyboard dragging, scroll the first element into view if moved out of bounds
+    if (e.target === this.element.children[0] && isScrolledOutOfView(this.element.children[0]))
+      this.element.children[0].scrollIntoView();
+  }
+  onCheckboxInput(e) {
+    this.mxCheck.emit({ rowId: this.rowId, checked: e.target.checked });
+  }
+  getExposedCell() {
+    const cells = Array.from(this.element.querySelectorAll('mx-table-cell')) || [];
+    return cells.find((cell) => cell.isExposedMobileColumn);
+  }
+  getCollapsedHeight() {
+    const exposedCell = this.getExposedCell();
+    if (!exposedCell)
+      return DEFAULT_MAX_HEIGHT;
+    return exposedCell.offsetHeight + 1 + 'px';
+  }
+  get rowClass() {
+    let str = 'mx-table-row';
+    str += this.minWidths.sm ? ' contents' : ' grid';
+    if (this.checkable)
+      str += ' checkable-row';
+    if (this.checkable && this.checkOnRowClick)
+      str += ' cursor-pointer';
+    if (!this.minWidths.sm && !this.isMobileExpanded)
+      str += ' mobile-collapsed';
+    return str;
+  }
+  get rowStyle() {
+    if (this.minWidths.sm)
+      return {};
+    return {
+      gridTemplateColumns: 'minmax(0, min-content) minmax(0, min-content) minmax(0, auto) minmax(0, min-content)',
+      maxHeight: '',
+    };
+  }
+  render() {
+    return (h(Host, { role: "row", class: this.rowClass, style: this.rowStyle, onClick: this.onClick.bind(this), onTransitionEnd: this.onTransitionEnd.bind(this) }, this.checkable && (h("div", { class: "flex items-center pr-4 col-start-1 row-start-1 sm:row-start-auto sm:col-start-auto", onClick: this.accordion.bind(this) }, h("mx-checkbox", { ref: el => (this.checkbox = el), checked: this.checked, onInput: this.onCheckboxInput.bind(this), onClick: e => e.stopPropagation(), "label-name": "Select row", "hide-label": true }))), this.isDraggable && (h("div", { class: "flex items-center col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move", "data-testid": "drag-handle", onMouseDown: this.startDragging.bind(this), onTouchStart: this.startDragging.bind(this) }, h("span", { "aria-label": "Press Space or Enter to move this row", ref: el => (this.keyboardDragHandle = el), tabindex: "0", class: 'pointer-events-none' + (this.checkable ? ' mx-8' : ''), innerHTML: dragDotsSvg, onKeyDown: this.onKeyboardHandleKeyDown.bind(this) }), this.isDragging && (h("p", { class: "sr-only", role: "alert" }, "Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to cancel.")))), h("slot", null), !this.checkable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-1 w-0" }), !this.isDraggable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-2 w-0" }), !this.minWidths.sm && (h("button", { class: "flex border-0 items-center justify-end px-16 row-start-1", "aria-hidden": "true", onClick: this.accordion.bind(this), onMouseDown: e => e.preventDefault() /* Do not focus on click */ }, h("span", { class: 'mobile-row-chevron text-1 transform' +
+        (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : ''), innerHTML: chevronSvg }))), this.actions.length === 1 && (h("div", { class: "action-cell flex items-center p-16 sm:p-0 justify-end col-span-4 sm:col-span-1" }, h("mx-button", Object.assign({ "data-testid": "action-button", "btn-type": "text" }, this.actions[0]), this.actions[0].value))), this.actions.length > 1 && (h("div", { class: "action-cell flex items-center p-0 justify-end col-span-4 sm:col-span-1" }, h("mx-icon-button", { ref: el => (this.actionMenuButton = el), innerHTML: dotsSvg }), h("mx-menu", { "data-testid": "action-menu", ref: el => (this.actionMenu = el) }, this.actions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))))));
+  }
+  get element() { return this; }
 };
 
 const MxTabs$1 = class extends HTMLElement {
@@ -3714,12 +5118,177 @@ const MxTabs$1 = class extends HTMLElement {
   }; }
 };
 
+const clockSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12Z" fill="currentColor" fill-opacity="0.87" />
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6C12.4142 6 12.75 6.33579 12.75 6.75V11.25H17.25C17.6642 11.25 18 11.5858 18 12C18 12.4142 17.6642 12.75 17.25 12.75H12C11.5858 12.75 11.25 12.4142 11.25 12V6.75C11.25 6.33579 11.5858 6 12 6Z" fill="currentColor" fill-opacity="0.87"/>
+</svg>
+`;
+
+const timeOptions = [];
+for (let i = 0; i < 24; i++) {
+  timeOptions.push({ hours: i, minutes: 0 });
+  timeOptions.push({ hours: i, minutes: 30 });
+}
+const MxTimePicker$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.dataAttributes = {};
+    this.isTimeInputSupported = false;
+    this.uuid = uuidv4();
+    this.dense = false;
+    this.disabled = false;
+    this.error = false;
+    this.floatLabel = false;
+    this.isFocused = false;
+    this.isInputDirty = false;
+    this.componentWillRender = propagateDataAttributes;
+  }
+  onClick(e) {
+    e.stopPropagation();
+    // Resize the menu width to match the input.  This is done every click in case the input is resized after initial load.
+    this.menu.style.width = this.pickerWrapper.getBoundingClientRect().width + 'px';
+  }
+  onValueChange() {
+    this.updateInputValue();
+  }
+  componentDidLoad() {
+    this.menu.anchorEl = this.pickerWrapper;
+    this.menu.triggerEl = this.menuButton;
+    // HTMLInputElement.type will return "text" if the "time" value is not supported (i.e. Safari <14.1)
+    this.isTimeInputSupported = this.inputElem.type === 'time';
+    this.updateInputValue();
+  }
+  onInput(e) {
+    if (!this.isTimeInputSupported) {
+      e.stopPropagation(); // For <input type="text">, the input event will be dispatched on blur
+      if (this.isFocused)
+        this.isInputDirty = true;
+    }
+  }
+  onBlur() {
+    if (!this.menu || !this.menu.isOpen) {
+      // Style as focused/active while menu is open
+      this.isFocused = false;
+    }
+    if (!this.isTimeInputSupported && this.isInputDirty) {
+      const time = parseTimeString(this.inputElem.value);
+      if (time === null)
+        return; // Invalid time
+      this.setValue(time);
+      this.updateInputValue();
+    }
+  }
+  onFocus() {
+    this.isFocused = true;
+    this.error = false;
+    this.isInputDirty = false;
+  }
+  /** Focus the input when clicking the floating label.
+   * Using `pointer-events: none` on the label could cause the user to unknowingly click on
+   * the minutes/AM/PM entry, which would be annoying. */
+  onClickLabel() {
+    this.inputElem.focus();
+  }
+  onMenuClose() {
+    if (!this.inputElem.contains(document.activeElement))
+      this.isFocused = false;
+  }
+  onMenuOpen() {
+    this.isFocused = true;
+  }
+  /** This is only called if <input type="time"> is not supported. */
+  setValue({ hours, minutes }) {
+    if (this.disabled)
+      return;
+    this.error = false;
+    this.value = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+    this.updateInputValue();
+    this.inputElem.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
+  }
+  updateInputValue() {
+    if (this.value == null) {
+      this.inputElem.value = '';
+      return;
+    }
+    this.inputElem.value = this.value;
+    if (!this.isTimeInputSupported) {
+      this.inputElem.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
+      // If time input is not supported, format text input value for locale
+      const [hours, minutes] = this.value.split(':').map(Number);
+      this.inputElem.value = this.getLocalizedTimeString({ hours, minutes });
+    }
+  }
+  getLocalizedTimeString({ hours, minutes }) {
+    const date = new Date();
+    date.setHours(hours, minutes);
+    return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  }
+  get labelClassNames() {
+    let str = 'block';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 left-12 px-4';
+      if (this.dense)
+        str += ' dense text-4';
+      if (this.isFocused || this.inputHasText)
+        str += ' floating';
+      if (this.isFocused)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+    }
+    else {
+      str += ' subtitle2 mb-4 pointer-events-none';
+    }
+    return str;
+  }
+  get inputHasText() {
+    // HTMLInputElement.validity.badInput is true if a partial time has been typed.
+    return this.value || (this.inputElem && this.inputElem.validity.badInput);
+  }
+  get pickerWrapperClass() {
+    let str = 'picker-wrapper flex items-center relative border rounded-lg';
+    str += this.dense ? ' h-36' : ' h-48';
+    if (this.error || this.isFocused)
+      str += ' border-2';
+    if (this.disabled)
+      str += ' disabled';
+    if (this.isFocused)
+      str += ' focused';
+    return str;
+  }
+  get inputClass() {
+    let str = 'absolute inset-0 w-full h-full pl-12 overflow-hidden outline-none appearance-none select-none bg-transparent';
+    if (this.isFocused || this.error)
+      str += ' -ml-1'; // prevent shifting due to border-width change
+    if (this.floatLabel && !this.isFocused && !this.inputHasText)
+      str += ' opacity-0'; // Hide input placeholder while floating label is inside input
+    return str;
+  }
+  get menuButtonClass() {
+    let str = 'menu-button cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
+    if (this.disabled)
+      str += ' pointer-events-none';
+    if (this.isFocused || this.error)
+      str += ' -mr-1'; // prevent shifting due to border-width change
+    return str;
+  }
+  render() {
+    const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
+    return (h(Host, { class: 'mx-time-picker block w-152' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", innerHTML: this.error ? warningCircleSvg : clockSvg, disabled: this.disabled })), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this), onMxOpen: this.onMenuOpen.bind(this) }, timeOptions.map(timeOption => (h("mx-menu-item", { onClick: this.setValue.bind(this, timeOption) }, this.getLocalizedTimeString(timeOption)))))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "value": ["onValueChange"]
+  }; }
+};
+
 const MxToggleButton$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.dataAttributes = {};
     this.selected = false;
     this.disabled = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     if (this.disabled) {
@@ -3730,9 +5299,10 @@ const MxToggleButton$1 = class extends HTMLElement {
     ripple(e, this.btnElem);
   }
   render() {
-    return (h(Host, { class: "mx-toggle-button inline-flex overflow-hidden border-l\n      first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl\n      last-of-type:rounded-tr last-of-type:rounded-br" }, h("button", { class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer' +
-        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), "aria-disabled": this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, h("i", { class: this.icon }))));
+    return (h(Host, { class: "mx-toggle-button inline-flex overflow-hidden border-l\n      first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl\n      last-of-type:rounded-tr last-of-type:rounded-br" }, h("button", Object.assign({ class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer' +
+        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), "aria-disabled": this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, this.dataAttributes), h("i", { class: this.icon }))));
   }
+  get element() { return this; }
 };
 
 const MxToggleButtonGroup$1 = class extends HTMLElement {
@@ -3773,27 +5343,34 @@ const MxToggleButtonGroup$1 = class extends HTMLElement {
   }; }
 };
 
-const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"dot":[4],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
-const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
-const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelLeft":[4,"label-left"],"labelName":[1,"label-name"],"labelClass":[1,"label-class"],"checked":[4]}]);
+const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"indicator":[8],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
+const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"formaction":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
+const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelLeft":[4,"label-left"],"labelName":[1,"label-name"],"labelClass":[1,"label-class"],"hideLabel":[4,"hide-label"],"checked":[4],"disabled":[4],"indeterminate":[4]}]);
 const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined":[4],"disabled":[4],"selected":[516],"clickable":[4],"removable":[4],"avatarUrl":[1,"avatar-url"],"icon":[1],"value":[8],"choice":[4],"filter":[4]}]);
 const MxChipGroup = /*@__PURE__*/proxyCustomElement(MxChipGroup$1, [4,"mx-chip-group",{"value":[1032]},[[0,"click","onChipClick"]]]);
 const MxCircularProgress = /*@__PURE__*/proxyCustomElement(MxCircularProgress$1, [0,"mx-circular-progress",{"value":[2],"size":[1],"appearDelay":[2,"appear-delay"]}]);
 const MxDropdownMenu = /*@__PURE__*/proxyCustomElement(MxDropdownMenu$1, [4,"mx-dropdown-menu",{"ariaLabel":[1,"aria-label"],"dense":[4],"elevated":[4],"flat":[4],"label":[1],"dropdownId":[1,"dropdown-id"],"name":[1],"suffix":[1],"value":[1032],"isFocused":[32]},[[0,"click","onClick"]]]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"ariaLabel":[1,"aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
-const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"value":[1],"disabled":[4],"ariaLabel":[1,"aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
-const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"value":[1],"type":[1],"dense":[4],"disabled":[4],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"isActive":[1028,"is-active"],"isFocused":[1028,"is-focused"],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"textarea":[4],"textareaHeight":[1025,"textarea-height"]}]);
+const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"formaction":[1],"value":[1],"disabled":[516],"ariaLabel":[1,"aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
+const MxImageUpload = /*@__PURE__*/proxyCustomElement(MxImageUpload$1, [4,"mx-image-upload",{"acceptImage":[4,"accept-image"],"acceptPdf":[4,"accept-pdf"],"assetName":[1,"asset-name"],"avatar":[4],"thumbnailSize":[1,"thumbnail-size"],"height":[1],"icon":[1],"inputId":[1,"input-id"],"isUploaded":[1540,"is-uploaded"],"isUploading":[1540,"is-uploading"],"name":[1],"showButton":[4,"show-button"],"showIcon":[4,"show-icon"],"showDropzoneText":[4,"show-dropzone-text"],"thumbnailUrl":[1,"thumbnail-url"],"width":[1],"isDraggingOver":[32],"isFileSelected":[32],"thumbnailDataUri":[32]}]);
+const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"placeholder":[1],"value":[1025],"type":[1],"dense":[4],"disabled":[4],"readonly":[4],"maxlength":[2],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"suffix":[1],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"floatLabel":[4,"float-label"],"textarea":[4],"textareaHeight":[1025,"textarea-height"],"isFocused":[32],"characterCount":[32]}]);
 const MxLinearProgress = /*@__PURE__*/proxyCustomElement(MxLinearProgress$1, [0,"mx-linear-progress",{"value":[2],"appearDelay":[2,"appear-delay"]}]);
-const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
+const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"triggerEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
 const MxMenuItem = /*@__PURE__*/proxyCustomElement(MxMenuItem$1, [4,"mx-menu-item",{"checked":[4],"disabled":[4],"icon":[1],"label":[1],"multiSelect":[4,"multi-select"],"minWidths":[32]},[[1,"mouseenter","onMouseEnter"],[1,"mouseleave","onMouseLeave"],[0,"focus","onFocus"],[0,"keydown","onKeyDown"]]]);
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);
+const MxPagination = /*@__PURE__*/proxyCustomElement(MxPagination$1, [4,"mx-pagination",{"page":[2],"rowsPerPageOptions":[16],"rowsPerPage":[2,"rows-per-page"],"simple":[4],"totalRows":[2,"total-rows"],"disabled":[4],"disableNextPage":[4,"disable-next-page"],"hideRowsPerPage":[32],"moveStatusToBottom":[32],"isXSmallMinWidth":[32],"isSmallMinWidth":[32]}]);
 const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxSearch = /*@__PURE__*/proxyCustomElement(MxSearch$1, [0,"mx-search",{"ariaLabel":[1,"aria-label"],"dense":[4],"flat":[4],"name":[1],"placeholder":[1],"value":[1]}]);
-const MxSelect = /*@__PURE__*/proxyCustomElement(MxSelect$1, [4,"mx-select",{"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elevated":[4],"flat":[4],"label":[1],"ariaLabel":[1,"aria-label"],"selectId":[1,"select-id"],"name":[1],"suffix":[1],"error":[1028],"labelClass":[1025,"label-class"],"value":[1032],"isFocused":[32]}]);
+const MxSelect = /*@__PURE__*/proxyCustomElement(MxSelect$1, [4,"mx-select",{"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elevated":[4],"flat":[4],"label":[1],"floatLabel":[4,"float-label"],"ariaLabel":[1,"aria-label"],"selectId":[1,"select-id"],"name":[1],"suffix":[1],"error":[1028],"labelClass":[1025,"label-class"],"value":[1032],"isFocused":[32]}]);
+const MxSnackbar = /*@__PURE__*/proxyCustomElement(MxSnackbar$1, [4,"mx-snackbar",{"duration":[2],"isOpen":[1540,"is-open"],"isVisible":[32]}]);
 const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
 const MxTab = /*@__PURE__*/proxyCustomElement(MxTab$1, [0,"mx-tab",{"label":[1],"ariaLabel":[1,"aria-label"],"icon":[1],"selected":[516],"badge":[4],"badgeClass":[1,"badge-class"]}]);
 const MxTabContent = /*@__PURE__*/proxyCustomElement(MxTabContent$1, [4,"mx-tab-content",{"index":[2],"value":[2]}]);
+const MxTable = /*@__PURE__*/proxyCustomElement(MxTable$1, [4,"mx-table",{"rows":[16],"columns":[16],"getRowId":[16],"checkable":[4],"checkOnRowClick":[4,"check-on-row-click"],"showCheckAll":[4,"show-check-all"],"draggableRows":[4,"draggable-rows"],"hoverable":[4],"autoWidth":[4,"auto-width"],"sortBy":[1025,"sort-by"],"sortAscending":[1028,"sort-ascending"],"paginate":[4],"page":[1026],"rowsPerPage":[1026,"rows-per-page"],"totalRows":[2,"total-rows"],"disableNextPage":[4,"disable-next-page"],"rowsPerPageOptions":[16],"serverPaginate":[4,"server-paginate"],"getRowActions":[16],"getMultiRowActions":[16],"showProgressBar":[4,"show-progress-bar"],"disablePagination":[4,"disable-pagination"],"progressValue":[2,"progress-value"],"progressAppearDelay":[2,"progress-appear-delay"],"minWidths":[32],"checkedRowIds":[32],"exposedMobileColumnIndex":[32],"hasActionsColumnFromSlot":[32]},[[0,"mxCheck","onMxCheck"],[0,"mxRowDragStart","onMxRowDragStart"],[0,"mxDragKeyDown","onDragKeyDown"],[0,"mxRowDragEnd","onMxRowDragEnd"]]]);
+const MxTableCell = /*@__PURE__*/proxyCustomElement(MxTableCell$1, [4,"mx-table-cell",{"isExposedMobileColumn":[516,"is-exposed-mobile-column"],"columnIndex":[514,"column-index"],"heading":[1],"minWidths":[32]}]);
+const MxTableRow = /*@__PURE__*/proxyCustomElement(MxTableRow$1, [4,"mx-table-row",{"rowId":[1,"row-id"],"actions":[16],"checked":[1028],"minWidths":[32],"checkable":[32],"checkOnRowClick":[32],"isDraggable":[32],"isDragging":[32],"isMobileExpanded":[32],"isMobileCollapsing":[32]}]);
 const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [0,"mx-tabs",{"fill":[4],"value":[2],"tabs":[16],"minWidths":[32]},[[0,"click","onClick"]]]);
+const MxTimePicker = /*@__PURE__*/proxyCustomElement(MxTimePicker$1, [0,"mx-time-picker",{"ariaLabel":[1,"aria-label"],"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[0,"click","onClick"]]]);
 const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"ariaLabel":[1,"aria-label"],"value":[8]}]);
 const MxToggleButtonGroup = /*@__PURE__*/proxyCustomElement(MxToggleButtonGroup$1, [4,"mx-toggle-button-group",{"value":[1032]},[[0,"click","onToggleButtonClick"]]]);
 const defineCustomElements = (opts) => {
@@ -3808,18 +5385,25 @@ const defineCustomElements = (opts) => {
   MxDropdownMenu,
   MxFab,
   MxIconButton,
+  MxImageUpload,
   MxInput,
   MxLinearProgress,
   MxMenu,
   MxMenuItem,
   MxPageHeader,
+  MxPagination,
   MxRadio,
   MxSearch,
   MxSelect,
+  MxSnackbar,
   MxSwitch,
   MxTab,
   MxTabContent,
+  MxTable,
+  MxTableCell,
+  MxTableRow,
   MxTabs,
+  MxTimePicker,
   MxToggleButton,
   MxToggleButtonGroup
     ].forEach(cmp => {
@@ -3830,4 +5414,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxRadio, MxSearch, MxSelect, MxSwitch, MxTab, MxTabContent, MxTabs, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, defineCustomElements };

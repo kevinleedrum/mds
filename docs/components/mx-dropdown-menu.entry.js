@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host } from './index-b9cec9f1.js';
+import { r as registerInstance, h, f as Host } from './index-935f3e8d.js';
 import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
 
 const MxDropdownMenu = class {
@@ -57,7 +57,7 @@ const MxDropdownMenu = class {
   get inputClass() {
     let str = 'absolute inset-0 w-full h-full pl-16 overflow-hidden outline-none appearance-none select-none bg-transparent cursor-pointer disabled:cursor-auto';
     if (this.isFocused)
-      str += ' -m-1'; // prevent shifting due to border-width change
+      str += ' -ml-1'; // prevent shifting due to border-width change
     return str;
   }
   get suffixClass() {

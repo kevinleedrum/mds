@@ -1,5 +1,6 @@
-import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-b9cec9f1.js';
-import { q as queryPrefersReducedMotion } from './utils-43415dd2.js';
+import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-935f3e8d.js';
+import { f as fadeScaleIn, a as fadeOut } from './transitions-ff02fce2.js';
+import './utils-18e3dfde.js';
 
 var top = 'top';
 var bottom = 'bottom';
@@ -1955,88 +1956,11 @@ function getOppositeVariationPlacement(placement) {
   return placement.replace(/start|end/g, matched => (matched === 'start' ? 'end' : 'start'));
 }
 
-const FADE_IN = {
-  property: 'opacity',
-  startValue: '0',
-  endValue: '1',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};
-const FADE_OUT = {
-  property: 'opacity',
-  startValue: '1',
-  endValue: '0',
-  timing: 'ease',
-};
-const SCALE_IN = {
-  property: 'transform',
-  startValue: 'scale(0.8)',
-  endValue: 'scale(1)',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};
-const fadeIn = (el, duration = 180) => {
-  return executeTransition(el, [FADE_IN], duration);
-};
-const fadeOut = (el, duration = 150) => {
-  return executeTransition(el, [FADE_OUT], duration);
-};
-/** Fade in and scale from 80% to 100% (Material Fade) */
-const fadeScaleIn = (el, duration = 150, transformOrigin) => {
-  return executeTransition(el, [FADE_IN, SCALE_IN], duration, transformOrigin);
-};
-/** Executes a CSS transition on an element using the provided options and
- * Returns a Promise that resolves once the transition has ended. */
-function executeTransition(el, transitionOptions, duration, transformOrigin) {
-  return new Promise(async (resolve) => {
-    if (queryPrefersReducedMotion() || typeof jest !== 'undefined')
-      return resolve();
-    // Set the start value for each property
-    transitionOptions.forEach(transition => {
-      setStyleProperty(el, transition.property, transition.startValue);
-    });
-    if (transformOrigin)
-      el.style.transformOrigin = transformOrigin;
-    requestAnimationFrame(() => {
-      // After a tick, change each property and start the transition
-      if (!el)
-        return;
-      el.style.transition = transitionOptions
-        .map(transition => {
-        return `${transition.property} ${duration}ms ${transition.timing}`;
-      })
-        .join(', ');
-      transitionOptions.forEach(transition => {
-        setStyleProperty(el, transition.property, transition.endValue);
-      });
-    });
-    // Resolve once the duration passes (setTimeout is safer than transition events)
-    setTimeout(resolve, duration);
-  });
-}
-function setStyleProperty(el, property, value) {
-  if (property !== 'transform') {
-    // Set typical style property (e.g. opacity)
-    el.style[property] = value;
-  }
-  else {
-    // For transforms, we do not want to overwrite the entire transform property.
-    // Instead, we need to remove any conflicting transform values and then add the new value.
-    // First, parse out an array of transforms (e.g. ['translate(532px, 311px)', 'scale(0.8)'])
-    const matchTransforms = /\w*\((-?((\d+)|(\d*\.\d+))\w*,\s*)*(-?(\d+)|(\d*\.\d+))\w*\)/gi;
-    let transforms = el.style.transform.match(matchTransforms) || [];
-    // Parse out the name of our new transform (e.g. 'scale')
-    let transformName = /^(\w*)\(/.exec(value)[1];
-    // Remove existing transforms with the same name
-    transforms = transforms.filter(t => !t.startsWith(transformName));
-    // Add our new transform
-    transforms.push(value);
-    el.style.transform = transforms.join(' ');
-  }
-}
-
 const MxMenu = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.mxClose = createEvent(this, "mxClose", 7);
+    this.mxOpen = createEvent(this, "mxOpen", 7);
     /** The placement of the menu, relative to the `anchorEl`. */
     this.placement = 'bottom-start';
     /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
@@ -2047,13 +1971,17 @@ const MxMenu = class {
     this.closeMenu();
   }
   onClick(e) {
-    const anchorWasClicked = this.anchorEl && this.anchorEl.contains(e.target);
-    if (!this.isOpen && anchorWasClicked) {
+    const triggerEl = this.triggerEl || this.anchorEl;
+    const triggerElWasClicked = triggerEl && triggerEl.contains(e.target);
+    if (triggerElWasClicked)
+      e.preventDefault();
+    if (!this.isOpen && triggerElWasClicked) {
       // Open closed menu when the anchorEl is clicked
       this.openMenu();
+      e.preventDefault();
     }
     else if (this.isOpen && this.element && !this.element.contains(e.target)) {
-      if (this.isSubMenu && anchorWasClicked)
+      if (this.isSubMenu && triggerElWasClicked)
         return; // Do not close submenu when its anchor is clicked
       // Otherwise, close menu when a click occurs outside the menu
       this.closeMenu();
@@ -2102,6 +2030,7 @@ const MxMenu = class {
     if (this.isOpen || !this.anchorEl)
       return false;
     this.isOpen = true;
+    this.mxOpen.emit();
     const offset = this.offset || (this.isSubMenu ? [-8, 0] : null); // Offset submenus by -8px to line up menu items
     this.popoverInstance = await createPopover(this.anchorEl, this.element, this.placement, offset);
     await fadeScaleIn(this.menuElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));

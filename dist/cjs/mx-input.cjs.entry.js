@@ -2,91 +2,133 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-3b63d393.js');
-const utils = require('./utils-d3da0bf4.js');
+const index = require('./index-c246f020.js');
+const warningCircle = require('./warning-circle-453368c1.js');
+const utils = require('./utils-1f7ef40d.js');
 
 const MxInput = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
+    this.dataAttributes = {};
     this.uuid = utils.uuidv4();
     /** The `type` attribute for the text input */
     this.type = 'text';
     this.dense = false;
     this.disabled = false;
-    this.isActive = false;
-    this.isFocused = false;
+    this.readonly = false;
     this.outerContainerClass = '';
     this.labelClass = '';
     this.error = false;
+    this.floatLabel = false;
     /** Display a multi-line `textarea` instead of an `input` */
     this.textarea = false;
     this.textareaHeight = '250px';
+    this.isFocused = false;
+    this.characterCount = 0;
+    this.componentWillRender = utils.propagateDataAttributes;
   }
   connectedCallback() {
-    if (this.error) {
-      this.isActive = true;
-      this.labelClass += ' active error';
-    }
-    else {
-      this.setLabelClass();
-    }
+    this.characterCount = this.hasValue ? this.value.length : 0;
   }
-  setLabelClass(target = undefined) {
-    this.labelClass = '';
-    if ((this.leftIcon && !this.isActive) || (this.leftIcon && target && target.value === '')) {
-      this.setIndentedLabel();
-    }
-    if (target && target.value !== '') {
-      this.labelClass += ' active';
-    }
+  componentDidLoad() {
+    this.updateValue();
   }
-  setIndentedLabel() {
-    this.labelClass += ' indented';
+  onValueChange() {
+    this.updateValue();
+    this.characterCount = this.hasValue ? this.value.length : 0;
+  }
+  updateValue() {
+    this.workingElem.value = this.hasValue ? this.value : '';
+  }
+  onFocus() {
+    this.isFocused = true;
+    this.error = false;
+  }
+  onBlur() {
+    this.isFocused = false;
+  }
+  onInput(e) {
+    this.characterCount = e.target.value.length;
+  }
+  get workingElem() {
+    return this.textarea ? this.textArea : this.textInput;
+  }
+  get hasValue() {
+    return this.value !== null && this.value !== '' && this.value !== undefined;
   }
   get containerClass() {
-    let str = 'mx-input-wrapper';
-    str += this.dense ? ' dense' : ' standard';
-    if (this.isFocused)
-      str += ' focused';
+    let str = 'mx-input-wrapper flex items-center relative border rounded-lg';
+    if (!this.textarea) {
+      str += this.dense ? ' h-36' : ' h-48';
+    }
+    if (this.error || this.isFocused)
+      str += ' border-2';
     if (this.error)
       str += ' error';
     if (this.disabled)
       str += ' disabled';
+    if (this.readonly)
+      str += ' readonly';
     return str;
   }
-  handleFocus() {
-    this.isActive = true;
-    this.isFocused = true;
-    this.labelClass = ' active focus';
-    this.removeError();
+  get inputClass() {
+    let str = 'flex-1 overflow-hidden outline-none appearance-none bg-transparent';
+    if (!this.textarea) {
+      str += ' px-16';
+    }
+    else {
+      str += ' p-16 resize-none';
+    }
+    if (this.isFocused || this.error)
+      str += this.leftIcon ? ' -mr-1' : ' -m-1'; // prevent shifting due to border-width change
+    return str;
   }
-  handleBlur() {
-    const workingElem = this.textarea ? this.textArea : this.textInput;
-    this.isFocused = false;
-    this.setLabelClass(workingElem);
+  get labelClassNames() {
+    let str = 'block pointer-events-none';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 px-4';
+      if (this.textarea)
+        str += ' top-12';
+      str += this.leftIcon && !this.textarea ? ' left-48 has-left-icon' : ' left-12';
+      if (this.dense && !this.textarea)
+        str += ' dense text-4';
+      if (this.isFocused || this.characterCount > 0)
+        str += ' floating';
+      if (this.isFocused || this.error)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+      if ((this.isFocused || this.error) && this.textarea)
+        str += ' -mt-1';
+    }
+    else {
+      str += ' subtitle2 mb-4';
+    }
+    if (this.labelClass)
+      str += this.labelClass;
+    return str;
   }
-  focusOnInput() {
-    const workingElem = this.textarea ? this.textArea : this.textInput;
-    workingElem.focus();
+  get leftIconWrapperClass() {
+    let str = 'flex items-center h-full pointer-events-none pl-16';
+    if (this.isFocused || this.error)
+      str += ' -ml-1'; // prevent shifting due to border-width change
+    return str;
   }
-  removeError() {
-    this.error = false;
-    this.containerElem.classList.remove('error');
+  get rightContentClass() {
+    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8 pointer-events-none';
+    if (this.isFocused || this.error)
+      str += ' -mr-1'; // prevent shifting due to border-width change
+    return str;
   }
-  returnTaHeight() {
-    return { height: this.textareaHeight };
-  }
-  overrideTextArea() {
-    if (!this.textarea)
-      return {};
-    return { alignItems: 'start' }; // For icon placement.
-  }
-  isTextarea() {
-    return this.textarea ? 'textarea' : '';
+  get textareaClass() {
+    return this.textarea ? ' textarea items-start' : '';
   }
   render() {
-    return (index.h(index.Host, { class: "mx-input" }, index.h("div", { class: this.containerClass, ref: el => (this.containerElem = el) }, index.h("div", { class: `mx-input-inner-wrapper ${this.isTextarea()}`, style: this.overrideTextArea() }, this.leftIcon && (index.h("div", { class: "mds-input-left-content" }, index.h("i", { class: this.leftIcon }))), this.label && (index.h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClass, onClick: () => this.focusOnInput() }, this.label)), !this.textarea ? (index.h("div", { class: "mds-input" }, index.h("input", { type: this.type, name: this.name, id: this.inputId || this.uuid, value: this.value, disabled: this.disabled, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textInput = el) }))) : (index.h("textarea", { style: this.returnTaHeight(), name: this.name, id: this.inputId || this.uuid, disabled: this.disabled, onFocus: () => this.handleFocus(), onBlur: () => this.handleBlur(), ref: el => (this.textArea = el) }, this.value)), (this.rightIcon || this.error) && (index.h("div", { class: "mds-input-right-content" }, this.error ? index.h("i", { class: "ph-warning-circle" }) : index.h("i", { class: this.rightIcon }))))), this.assistiveText && index.h("div", { class: "assistive-text" }, this.assistiveText)));
+    const labelJsx = (index.h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames }, this.label));
+    return (index.h(index.Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { class: this.containerClass }, this.leftIcon && (index.h("div", { class: this.leftIconWrapperClass }, index.h("i", { class: this.leftIcon }))), this.label && this.floatLabel && labelJsx, !this.textarea ? (index.h("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (index.h("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (index.h("span", { class: this.rightContentClass }, this.maxlength && (index.h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength)), this.suffix && (index.h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)), this.error && index.h("span", { innerHTML: warningCircle.warningCircleSvg }), this.rightIcon && !this.error && index.h("i", { class: this.rightIcon })))), (this.assistiveText || (this.textarea && this.maxlength)) && (index.h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, index.h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (index.h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
   }
+  get element() { return index.getElement(this); }
+  static get watchers() { return {
+    "value": ["onValueChange"]
+  }; }
 };
 
 exports.mx_input = MxInput;

@@ -148,11 +148,13 @@
 
   /* #region inputs */
   /* Text Inputs & Textareas */
+  --mds-bg-input-readonly: #f5f5f5;
   --mds-bg-input: #fff;
   --mds-border-input-error: #ff0c3e;
   --mds-border-input-focus: #0457af;
   --mds-border-input-hover: #2d2d2d;
   --mds-border-input: #a9a9a9;
+  --mds-caret-input: #0457af;
   --mds-text-input-assistive: #787878;
   --mds-text-input-disabled: #a9a9a9;
   --mds-text-input-error: #ff0c3e;
@@ -191,6 +193,21 @@
   --mds-text-select: #454545;
   /* #endregion dropdowns */
 
+  /* #region pickers */
+  /* Pickers */
+  --mds-bg-picker: #fff;
+  --mds-border-picker-error: #ff0c3e;
+  --mds-border-picker-focus: #0457af;
+  --mds-border-picker-hover: #2d2d2d;
+  --mds-border-picker: #a9a9a9;
+  --mds-text-picker-disabled: #a9a9a9;
+  --mds-text-picker-error: #ff0c3e;
+  --mds-text-picker-focus: #454545;
+  --mds-text-picker-icon: #454545;
+  --mds-text-picker-label: #7a7a7a;
+  --mds-text-picker: #454545;
+  /* #endregion pickers */
+
   /* #region search */
   /* Search */
   --mds-border-search: transparent;
@@ -227,14 +244,18 @@
 
   /* Checkboxes */
   --mds-bg-checkbox-checked: #0457af;
+  --mds-bg-checkbox-disabled: #a4a4a4;
   --mds-bg-checkbox-overlay-active: rgba(0, 0, 0, 0.12);
   --mds-bg-checkbox-overlay-checked-active: rgba(4, 87, 175, 0.32);
   --mds-bg-checkbox-overlay-checked-focus: rgba(4, 87, 175, 0.24);
   --mds-bg-checkbox-overlay-checked-hover: rgba(4, 87, 175, 0.08);
   --mds-bg-checkbox-overlay-focus: rgba(0, 0, 0, 0.12);
   --mds-bg-checkbox-overlay-hover: rgba(0, 0, 0, 0.04);
+  --mds-border-checkbox-disabled: #a4a4a4;
   --mds-border-checkbox-check: #fff;
   --mds-border-checkbox: #505050;
+  --mds-text-checkbox-disabled: #a4a4a4;
+  --mds-text-checkbox: #2d2d2d;
   /* #endregion selection-controls */
 
   /* #region progress */
@@ -284,4 +305,39 @@
   --mds-bg-page-header: #fff;
   --mds-text-page-header: #4e4e4e;
   /* #endregion page-headers */
+
+  /* #region tables */
+  /* Data Tables */
+  --mds-bg-table-focus: #e0e0e0;
+  --mds-bg-table-hover: #f5f5f5;
+  --mds-bg-table-header: #fefefe;
+  --mds-bg-table: #fff;
+  --mds-border-table-header: #eaeaea;
+  --mds-border-table-cell: #e8e8e8;
+  --mds-text-table: #333;
+  --mds-text-table-mobile-row-chevron: #0457af;
+  /* #endregion tables */
+
+  /* #region pagination */
+  /* Pagination */
+  --mds-bg-pagination-simple: #f5f5f5;
+  --mds-bg-pagination: #fff;
+  --mds-text-pagination: #333;
+  /* #endregion pagination */
+
+  /* #region snackbars */
+  /* Snackbars */
+  --mds-bg-snackbar: #202020;
+  --mds-text-snackbar: #fff;
+  /* #endregion snackbars */
+
+  /* #region uploads */
+  /* Image Uploads */
+  --mds-bg-image-upload-hover: #ebf2f9;
+  --mds-bg-image-upload: #fefefe;
+  --mds-border-image-upload: #333;
+  --mds-text-image-upload-error: #ff0c3e;
+  --mds-text-image-upload-success: #2ad062;
+  --mds-text-image-upload: #333;
+  /* #endregion uploads */
 }

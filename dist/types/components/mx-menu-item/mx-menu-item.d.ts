@@ -1,6 +1,13 @@
 import { EventEmitter } from '../../stencil-public-runtime';
 import { MinWidths } from '../../utils/minWidthSync';
-export declare class MxMenuItem {
+export interface IMxMenuItemProps {
+  checked?: boolean;
+  disabled?: boolean;
+  icon?: string;
+  label?: string;
+  multiSelect?: boolean;
+}
+export declare class MxMenuItem implements IMxMenuItemProps {
   menuItemElem: HTMLElement;
   submenu: HTMLMxMenuElement;
   slotWrapper: HTMLElement;

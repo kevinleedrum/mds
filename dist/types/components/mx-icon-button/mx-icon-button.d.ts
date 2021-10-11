@@ -1,7 +1,10 @@
+import { propagateDataAttributes } from '../../utils/utils';
 export declare class MxIconButton {
   btnElem: HTMLButtonElement;
   anchorElem: HTMLAnchorElement;
+  dataAttributes: {};
   type: 'button' | 'submit' | 'reset';
+  formaction: string;
   value: string;
   disabled: boolean;
   /** An aria-label is highly recommended */
@@ -14,6 +17,8 @@ export declare class MxIconButton {
   chevronRight: boolean;
   /** Class name of icon (for icon font) */
   icon: string;
+  element: HTMLMxInputElement;
+  componentWillRender: typeof propagateDataAttributes;
   onClick(e: MouseEvent): void;
   get isChevron(): boolean;
   render(): any;

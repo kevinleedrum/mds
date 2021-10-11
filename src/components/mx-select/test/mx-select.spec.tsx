@@ -18,6 +18,7 @@ describe('mx-select', () => {
           name="test-name"
           label-class="text-blue-500"
           error
+          data-test="test"
         >
         <option></option>
         <option>A</option>
@@ -26,7 +27,7 @@ describe('mx-select', () => {
     });
     root = page.root;
     select = root.querySelector('select');
-    selectWrapper = root.firstElementChild;
+    selectWrapper = root.querySelector('[data-testid="select-wrapper"]');
   });
 
   it('renders a select', async () => {
@@ -34,7 +35,7 @@ describe('mx-select', () => {
   });
 
   it('renders the label with any additional classes from the labelClass prop', async () => {
-    const label = selectWrapper.querySelector('label');
+    const label = root.querySelector('label');
     expect(label.innerText).toBe('Test Label');
     expect(label.getAttribute('class')).toContain('text-blue-500');
   });
@@ -109,12 +110,25 @@ describe('mx-select', () => {
   });
 
   it('displays an error icon when the error prop is set', async () => {
-    expect(selectWrapper.querySelector('i[data-testId=error-icon]')).not.toBeNull();
+    expect(selectWrapper.querySelector('[data-testid="error-icon"]')).not.toBeNull();
   });
 
   it('displays an arrow SVG when the error prop is NOT set', async () => {
     root.error = false;
     await page.waitForChanges();
     expect(selectWrapper.querySelector('[data-testid=arrow]')).not.toBeNull();
+  });
+
+  it('renders a floating label if the float-label prop is set', async () => {
+    let label = root.querySelector('label');
+    expect(label.classList.contains('floating')).toBe(false);
+    root.floatLabel = true;
+    await page.waitForChanges();
+    label = selectWrapper.querySelector('label');
+    expect(label.classList.contains('floating')).toBe(true);
+  });
+
+  it('applies any data attributes to the select element', async () => {
+    expect(select.getAttribute('data-test')).toBe('test');
   });
 });

@@ -2,23 +2,29 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-3b63d393.js');
+const index = require('./index-c246f020.js');
 const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
+const warningCircle = require('./warning-circle-453368c1.js');
+const utils = require('./utils-1f7ef40d.js');
 const ripple = require('./ripple-93b636e3.js');
 
 const MxSelect = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
+    this.uuid = utils.uuidv4();
+    this.dataAttributes = {};
     this.dense = false;
     this.disabled = false;
     /** Style with a 1dp elevation */
     this.elevated = false;
     /** Style with a "flat" border color */
     this.flat = false;
+    this.floatLabel = false;
     this.error = false;
     /** Additional classes for the label */
     this.labelClass = '';
     this.isFocused = false;
+    this.componentWillRender = utils.propagateDataAttributes;
   }
   componentDidLoad() {
     this.updateSelectValue();
@@ -61,13 +67,19 @@ const MxSelect = class {
     return str;
   }
   get labelClassNames() {
-    let str = 'absolute block pointer-events-none mt-0 left-12 px-4';
-    if (this.dense)
-      str += ' dense text-4';
-    if (this.isFocused || this.hasValue)
-      str += ' floating';
-    if (this.isFocused)
-      str += ' -ml-1'; // prevent shifting due to border-width change
+    let str = 'block pointer-events-none';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 left-12 px-4';
+      if (this.dense)
+        str += ' dense text-4';
+      if (this.isFocused || this.hasValue)
+        str += ' floating';
+      if (this.isFocused)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+    }
+    else {
+      str += ' subtitle2 mb-4';
+    }
     return (str += ' ' + this.labelClass);
   }
   get iconSuffixClass() {
@@ -79,11 +91,12 @@ const MxSelect = class {
   get iconEl() {
     let icon = index.h("span", { "data-testid": "arrow", innerHTML: arrowTriangleDown.arrowSvg });
     if (this.error)
-      icon = index.h("i", { "data-testid": "error-icon", class: "ph-warning-circle -mr-4" });
+      icon = index.h("span", { "data-testid": "error-icon", innerHTML: warningCircle.warningCircleSvg });
     return icon;
   }
   render() {
-    return (index.h(index.Host, { class: "mx-select" }, index.h("div", { class: this.selectWrapperClass }, index.h("select", { "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, index.h("slot", null)), this.label && index.h("label", { class: this.labelClassNames }, this.label), index.h("span", { class: this.iconSuffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && index.h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
+    const labelJsx = (index.h("label", { htmlFor: this.selectId || this.uuid, class: this.labelClassNames }, this.label));
+    return (index.h(index.Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass }, index.h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes), index.h("slot", null)), this.label && this.floatLabel && labelJsx, index.h("span", { class: this.iconSuffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && index.h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
   }
   get element() { return index.getElement(this); }
   static get watchers() { return {
@@ -102,7 +115,7 @@ const MxTab = class {
     this.icon = '';
     /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
     this.selected = false;
-    /** Display a dot badge */
+    /** Display a circular badge */
     this.badge = false;
     /** Additional classes for the badge */
     this.badgeClass = '';
@@ -123,7 +136,7 @@ const MxTab = class {
     return str;
   }
   get badgeEl() {
-    return index.h("mx-badge", { dot: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
+    return index.h("mx-badge", { indicator: true, badgeClass: ['w-8 h-8', this.badgeClass].join(' ') });
   }
   get isTextOnly() {
     return this.label && !this.icon;
