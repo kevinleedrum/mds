@@ -18,6 +18,7 @@ export class MxModal {
   focusElements: HTMLElement[];
   firstFocusElement: HTMLElement;
   lastFocusElement: HTMLElement;
+  hasCard: boolean = false;
   hasHeader: boolean = false;
   modal: HTMLElement;
   ancestorFocusedElement: HTMLElement;
@@ -30,6 +31,8 @@ export class MxModal {
   @Prop() closeOnEscape: boolean = true;
   /** If set to false, clicking the backdrop will not close the modal. */
   @Prop() closeOnOutsideClick: boolean = true;
+  /** Additional classes for the inner scrolling container. */
+  @Prop() contentClass: string = '';
   /** Toggle the modal */
   @Prop() isOpen: boolean = false;
   /** The text to display for the previous page link */
@@ -79,6 +82,7 @@ export class MxModal {
   componentWillRender() {
     this.hasHeader =
       !!this.element.querySelector('[slot="header-left"]') || !!this.element.querySelector('[slot="header-right"]');
+    this.hasCard = !!this.element.querySelector('[slot="card"]');
     const tabs = this.element.querySelector('mx-tabs');
     // Place mx-tabs in either the header-bottom slot OR the mobile mx-page-header tabs slot
     if (tabs && this.headerBottomSlotWrapper && this.mobilePageHeader) {
@@ -166,6 +170,12 @@ export class MxModal {
     );
   }
 
+  get modalContentClasses(): string {
+    let str = 'bg-modal-content order-2 flex-1 px-40 py-24 overflow-auto overscroll-none border-b';
+    if (this.contentClass) str += ' ' + this.contentClass;
+    return str;
+  }
+
   render() {
     const headerLeftSlotContent = this.element.querySelector('[slot="header-left"]');
 
@@ -178,24 +188,26 @@ export class MxModal {
       >
         <div
           ref={el => (this.backdrop = el)}
-          class={'modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : '')}
+          class={'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : '')}
           data-testid="backdrop"
           onClick={this.onBackdropClick.bind(this)}
         ></div>
         <div ref={el => (this.modal = el)} class="modal flex flex-col rounded-lg shadow-9 relative overflow-hidden">
           {/* Modal Content */}
-          <div
-            class="modal-content order-2 px-40 py-24 flex-1 overflow-auto overscroll-none border-b"
-            data-testid="modal-content"
-          >
-            <div class="content-card min-h-full px-40 py-24 rounded-2xl">
-              <slot></slot>
-            </div>
+          <div class={this.modalContentClasses} data-testid="modal-content">
+            <slot></slot>
+            {this.hasCard && (
+              <div>
+                <div class="bg-modal-card min-h-full px-40 py-24 rounded-2xl">
+                  <slot name="card"></slot>
+                </div>
+              </div>
+            )}
           </div>
           {/* Modal Footer */}
           <footer
             class={
-              'modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
+              'bg-modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
               (this.hasFooter ? '' : ' hidden')
             }
           >
@@ -228,7 +240,7 @@ export class MxModal {
             {/* Inject header-left slot content into mobile mx-page-header's default slot. */}
             {headerLeftSlotContent && headerLeftSlotContent.innerHTML}
           </mx-page-header>
-          <header class="hidden md:block modal-header order-1 px-40">
+          <header class="hidden md:block bg-modal-header order-1 px-40">
             <div class="flex items-center justify-between min-h-80">
               <div id="headerText" class="text-h5 emphasis !my-0" data-testid="header-text">
                 <slot name="header-left"></slot>

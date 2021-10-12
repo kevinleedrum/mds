@@ -1,27 +1,28 @@
 .mx-modal {
   color: var(--mds-text-modal);
 
-  .modal-backdrop {
-    background: var(--mds-bg-modal-backdrop);
-  }
   .modal {
     min-width: 300px;
+  }
 
-    .modal-header {
-      background: var(--mds-bg-modal-header);
-    }
+  .bg-modal-backdrop {
+    background: var(--mds-bg-modal-backdrop);
+  }
 
-    .modal-content {
-      background: var(--mds-bg-modal);
+  .bg-modal-header {
+    background: var(--mds-bg-modal-header);
+  }
 
-      .content-card {
-        background: var(--mds-bg-modal-card);
-      }
-    }
+  .bg-modal-content {
+    background: var(--mds-bg-modal);
+  }
 
-    .modal-footer {
-      background: var(--mds-bg-modal-footer);
-    }
+  .bg-modal-card {
+    background: var(--mds-bg-modal-card);
+  }
+
+  .bg-modal-footer {
+    background: var(--mds-bg-modal-footer);
   }
 
   &.modal-medium > .modal {
