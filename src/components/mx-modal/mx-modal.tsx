@@ -36,6 +36,9 @@ export class MxModal {
   @Prop() previousPageTitle: string = 'Back';
   /** The URL for the previous page link */
   @Prop() previousPageUrl: string = '';
+  /** Set to true to stretch the modal to nearly fill the width and height of the page
+   * (on desktop-sized screens).  Otherwise, the maximum dimensions are 800x600px. */
+  @Prop() large: boolean = false;
 
   @State() minWidths = new MinWidths();
   @State() isVisible: boolean = false;
@@ -125,6 +128,15 @@ export class MxModal {
     if (this.closeOnOutsideClick) this.mxClose.emit();
   }
 
+  get hostClass(): string {
+    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch sm:items-center justify-center';
+    if (!this.isVisible) str += ' hidden';
+    if (this.minWidths.sm) {
+      str += this.large ? ' modal-large' : ' modal-medium';
+    }
+    return str;
+  }
+
   get hasFooter() {
     return (
       (this.minWidths.md && (!!this.previousPageUrl || this.buttons.length > 0)) ||
@@ -158,7 +170,7 @@ export class MxModal {
 
     return (
       <Host
-        class={'mx-modal fixed inset-0 flex items-center justify-center' + (this.isVisible ? '' : ' hidden')}
+        class={this.hostClass}
         aria-labelledby={this.hasHeader ? 'headerText' : null}
         aria-modal="true"
         role="dialog"

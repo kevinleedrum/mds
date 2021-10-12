@@ -13,11 +13,16 @@ A few data props are provided for convenience, which include `previousPageUrl`, 
 - &bull; `footer-left` - This slot contains the previous page link (if the `previousPageUrl` prop is provided).
 - &bull; `footer-right` - If the `buttons` prop is provided, this slot contains those buttons by default.
 
+On small screens, the modal will fill the screen, except for a 24-px margin at the top. On larger screens, the max dimensions are based on whether the `large` prop is set. If `large` is `true`, the modal will stretch to nearly fill the entire page (with a 40px margin); otherwise, the max dimensions are 800x600px.
+
 ### Scrolling modal with buttons and a previous-page link
 
 <!-- #region modals-1 -->
 <section class="mds">
+  <div class="flex flex-col items-start space-y-20 mt-20">
+  <mx-checkbox :value="isALarge" @input="isALarge = !isALarge" label-name="Large modal"></mx-checkbox>
   <mx-button class="mt-20" @click="isOpenA = true">Open Modal</mx-button>
+  </div>
   <mx-modal
     :is-open="isOpenA"
     :buttons.prop="[
@@ -25,6 +30,7 @@ A few data props are provided for convenience, which include `previousPageUrl`, 
       { label: 'Secondary', onClick: () => isOpenA = false },
       { label: 'Tertiary', onClick: () => isOpenA = false },
     ]"
+    :large="isALarge"
     previous-page-url="#"
     previous-page-title="Home"
     @mxClose="isOpenA = false"
@@ -38,6 +44,18 @@ A few data props are provided for convenience, which include `previousPageUrl`, 
     </p>
     <p>
       Etiam porta metus sed gravida iaculis. Curabitur consectetur semper massa vel sodales. Integer nisi libero, molestie a tortor sed, dapibus faucibus tellus. Vivamus quis augue mollis, rutrum metus eget, lobortis orci. Praesent rhoncus nisl et ante dignissim dapibus. Donec ullamcorper non augue non vehicula. Praesent gravida hendrerit ultricies. Maecenas sit amet gravida orci, at molestie purus. Aliquam mauris nisl, pretium vehicula dui eget, laoreet tincidunt sem. In venenatis mauris a tincidunt eleifend. Nullam sollicitudin eros vitae elementum dapibus. Sed accumsan quis eros vitae molestie.
+    </p>
+    <p>
+      Donec et posuere mi, at rhoncus velit. Mauris vehicula bibendum magna quis luctus. Aenean ut enim ac sapien bibendum sodales id at nisl. Cras placerat orci quam, et lobortis eros aliquam nec. Suspendisse efficitur sollicitudin ex. Donec sed pellentesque nisl. Aenean volutpat nunc eu lacus euismod egestas.
+    </p>
+    <p>
+      Etiam ut elit nec tellus pharetra varius. Morbi volutpat quam vitae velit facilisis bibendum. Morbi libero risus, ultricies a nisi ullamcorper, mollis sollicitudin est. Maecenas odio erat, faucibus sit amet libero at, rhoncus congue est. Morbi sodales orci ut nisi convallis, vitae ultrices odio venenatis. Cras iaculis nunc nec tellus convallis mollis. Sed semper nibh eget lorem bibendum, sed tempus ipsum placerat. Etiam euismod libero non nunc consequat, eu egestas est consectetur. Praesent hendrerit magna sed blandit accumsan. Nullam laoreet quam nec ex eleifend, nec consectetur elit auctor. Suspendisse scelerisque metus in sagittis mattis. Mauris pretium pulvinar elit eu pharetra. Nam eu hendrerit enim. Duis ultricies egestas consequat.
+    </p>
+    <p>
+      Donec et posuere mi, at rhoncus velit. Mauris vehicula bibendum magna quis luctus. Aenean ut enim ac sapien bibendum sodales id at nisl. Cras placerat orci quam, et lobortis eros aliquam nec. Suspendisse efficitur sollicitudin ex. Donec sed pellentesque nisl. Aenean volutpat nunc eu lacus euismod egestas.
+    </p>
+    <p>
+      Etiam ut elit nec tellus pharetra varius. Morbi volutpat quam vitae velit facilisis bibendum. Morbi libero risus, ultricies a nisi ullamcorper, mollis sollicitudin est. Maecenas odio erat, faucibus sit amet libero at, rhoncus congue est. Morbi sodales orci ut nisi convallis, vitae ultrices odio venenatis. Cras iaculis nunc nec tellus convallis mollis. Sed semper nibh eget lorem bibendum, sed tempus ipsum placerat. Etiam euismod libero non nunc consequat, eu egestas est consectetur. Praesent hendrerit magna sed blandit accumsan. Nullam laoreet quam nec ex eleifend, nec consectetur elit auctor. Suspendisse scelerisque metus in sagittis mattis. Mauris pretium pulvinar elit eu pharetra. Nam eu hendrerit enim. Duis ultricies egestas consequat.
     </p>
     <p>
       Donec et posuere mi, at rhoncus velit. Mauris vehicula bibendum magna quis luctus. Aenean ut enim ac sapien bibendum sodales id at nisl. Cras placerat orci quam, et lobortis eros aliquam nec. Suspendisse efficitur sollicitudin ex. Donec sed pellentesque nisl. Aenean volutpat nunc eu lacus euismod egestas.
@@ -147,6 +165,7 @@ A few data props are provided for convenience, which include `previousPageUrl`, 
 export default {
   data() {
     return {
+      isALarge: false,
       isOpenA: false,
       isOpenB: false,
       isOpenC: false,

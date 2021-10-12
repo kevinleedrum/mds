@@ -1,11 +1,9 @@
 .mx-modal {
   .modal-backdrop {
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.5);
   }
   .modal {
     min-width: 300px;
-    max-width: 800px;
-    max-height: calc(100vh - 80px);
 
     .modal-header {
       background: #fefefe;
@@ -22,5 +20,16 @@
     .modal-footer {
       background: #fefefe;
     }
+  }
+
+  &.modal-medium > .modal {
+    max-width: 50rem; /* 800px */
+    max-height: 37.5rem; /* 600px */
+  }
+
+  &.modal-large > .modal {
+    /* 40px margin around modal */
+    max-width: calc(100vw - 5rem);
+    max-height: calc(100vh - 5rem);
   }
 }
