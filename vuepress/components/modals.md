@@ -4,7 +4,7 @@ Modals appear in front of app content and remain on screen until the user takes 
 
 To open or close a modal, set its `isOpen` prop to `true` or `false`. The modal will emit an `mxClose` event when the user clicks the Close button, presses <kbd>Esc</kbd>, or clicks outside the modal (unless that behavior is disabled via props).
 
-A few data props are provided for convenience, which include `previousPageUrl`, `previousPageTitle`, and `buttons`. Otherwise, the `mx-modal` component has six slots for content:
+The modal component uses a [Page Header](/page-headers.html) internally. The `previousPageUrl`, `previousPageTitle`, and `buttons` props are passed to that Page Header. Additionally, the `mx-modal` component has six slots for content:
 
 - &bull; The default, unnamed slot is for the main modal content.
 - &bull; `header-left` - Place heading text in this slot.
@@ -88,10 +88,10 @@ On small screens, the modal will fill the screen, except for a 24-px margin at t
       <mx-input label="Name"></mx-input>
     </p>
     <div slot="footer-left">
-      <mx-button btn-type="text" @click="isOpenB = false" icon="ph-check">Okay</mx-button>
+      This modal can only be closed by clicking the Okay button.
     </div>
     <div slot="footer-right" class="caption1">
-      This modal can only be closed by clicking the Okay button.
+      <mx-button xl @click="isOpenB = false">Okay</mx-button>
     </div>
   </mx-modal>
 </section>
