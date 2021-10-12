@@ -101,6 +101,7 @@ export class MxModal {
     requestAnimationFrame(async () => {
       this.getFocusElements();
       await Promise.all([fadeIn(this.backdrop, 250), fadeScaleIn(this.modal, 250)]);
+      this.mobilePageHeader.resetResizeObserver();
     });
   }
 
