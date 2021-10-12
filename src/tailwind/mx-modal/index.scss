@@ -1,24 +1,26 @@
 .mx-modal {
+  color: var(--mds-text-modal);
+
   .modal-backdrop {
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--mds-bg-modal-backdrop);
   }
   .modal {
     min-width: 300px;
 
     .modal-header {
-      background: #fefefe;
+      background: var(--mds-bg-modal-header);
     }
 
     .modal-content {
-      background: #f8f8f8;
+      background: var(--mds-bg-modal);
 
       .content-card {
-        background: #fff;
+        background: var(--mds-bg-modal-card);
       }
     }
 
     .modal-footer {
-      background: #fefefe;
+      background: var(--mds-bg-modal-footer);
     }
   }
 
