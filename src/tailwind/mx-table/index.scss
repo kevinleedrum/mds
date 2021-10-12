@@ -3,7 +3,7 @@
     @apply sm:w-240;
   }
 
-  .table-grid > * {
+  .table-grid > *:not(.hidden) {
     /* Only place table cell elements into the grid (not row elements). */
     @apply contents;
   }
