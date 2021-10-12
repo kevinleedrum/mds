@@ -148,6 +148,7 @@ export declare class MxTable {
   get operationsBarStyle(): any;
   get searchStyle(): any;
   get gridStyle(): any;
+  get emptyStateClass(): string;
   sortRows(rows: Object[]): void;
   getCellSortableValue(row: Object, col: ITableColumn): string | number;
   getCellValue(row: Object, col: ITableColumn, rowIndex: number): any;

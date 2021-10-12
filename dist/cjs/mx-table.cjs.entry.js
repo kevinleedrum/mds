@@ -329,6 +329,12 @@ const MxTable = class {
     gridTemplateColumns += `repeat(${autoColumnCount}, minmax(0, auto))`;
     return { display, gridTemplateColumns };
   }
+  get emptyStateClass() {
+    let str = 'empty-state';
+    if (this.rows.length > 0 || this.getTableRows().length > 0)
+      str += ' hidden';
+    return str;
+  }
   sortRows(rows) {
     const sortByColumn = this.cols.find(c => c.property === this.sortBy);
     if (!sortByColumn)
@@ -452,7 +458,7 @@ const MxTable = class {
     // Mobile Column Header Navigation
     index.h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, index.h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, index.h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, index.h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (index.h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowTriangleDown.arrowSvg })))), index.h("div", { class: "flex items-center" }, index.h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }), index.h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) })))), this.minWidths.sm && this.hasActionsColumn && index.h("div", null)), this.showProgressBar && (index.h("div", null, index.h("div", { class: "block h-0 col-span-full" }, index.h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), index.h("slot", null), !this.hasDefaultSlot && (index.h("div", null, this.visibleRows.map((row, rowIndex) => (
     // Generated Body Rows
-    index.h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (index.h("mx-table-cell", { class: [this.getAlignClass(col), col.cellClass].join(' ') }, index.h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))), this.visibleRows && this.visibleRows.length === 0 && (index.h("div", { class: "empty-state" }, index.h("div", { class: "col-span-full p-16 text-4" }, index.h("slot", { name: "empty-state" }, index.h("span", null, "No results found."))))), this.paginate && (
+    index.h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (index.h("mx-table-cell", { class: [this.getAlignClass(col), col.cellClass].join(' ') }, index.h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))), index.h("div", { "data-testid": "empty-state", class: this.emptyStateClass }, index.h("div", { class: "col-span-full p-16 text-4" }, index.h("slot", { name: "empty-state" }, index.h("span", null, "No results found.")))), this.paginate && (
     // Pagination Row
     index.h("div", { class: "pagination-row" }, index.h("mx-pagination", { page: this.page, "rows-per-page": this.rowsPerPage, rowsPerPageOptions: this.rowsPerPageOptions, "total-rows": this.serverPaginate ? this.totalRows : this.rows.length, class: "col-span-full p-0 rounded-b-2xl", onMxPageChange: this.onMxPageChange.bind(this), disabled: this.disablePagination, disableNextPage: this.disableNextPage }))))));
   }
