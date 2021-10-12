@@ -177,7 +177,7 @@ export class MxModal {
       >
         <div
           ref={el => (this.backdrop = el)}
-          class="modal-backdrop absolute inset-0 z-0 cursor-pointer"
+          class={'modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : '')}
           data-testid="backdrop"
           onClick={this.onBackdropClick.bind(this)}
         ></div>
@@ -212,7 +212,7 @@ export class MxModal {
                 )}
               </slot>
             </div>
-            <div class="ml-8">
+            <div class="ml-16">
               <slot name="footer-right">{this.buttons.length > 0 && this.buttonsJsx}</slot>
             </div>
           </footer>
