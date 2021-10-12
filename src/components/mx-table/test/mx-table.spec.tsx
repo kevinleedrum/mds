@@ -290,3 +290,47 @@ describe('mx-table (checkable, non-mobile)', () => {
     });
   });
 });
+
+describe('mx-table (slotted rows and cells)', () => {
+  let page: SpecPage;
+  let root: HTMLMxTableElement;
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [MxTable, MxTableRow, MxTableCell, MxCheckbox, MxPagination],
+      html: `
+      <mx-table>
+        <mx-table-row>
+          <mx-table-cell>Santa</mx-table-cell>
+          <mx-table-cell>Claus</mx-table-cell>
+        </mx-table-row>
+        <mx-table-row>
+          <mx-table-cell>Great</mx-table-cell>
+          <mx-table-cell>Pumpkin</mx-table-cell>
+        </mx-table-row>
+        <p slot="empty-state">
+          Your search returned 0 results.
+        </p>
+      </mx-table>
+      `,
+    });
+    root = page.root as HTMLMxTableElement;
+    root.columns = [
+      { property: 'first', heading: 'First Name', sortable: false },
+      { property: 'last', heading: 'Last Name', sortable: true },
+    ];
+    await page.waitForChanges();
+  });
+
+  it('renders slotted rows and cells', () => {
+    const rows = root.querySelectorAll('mx-table-row');
+    const cells = root.querySelectorAll('mx-table-cell');
+    expect(rows.length).toBe(2);
+    expect(cells.length).toBe(4);
+    expect(cells[3].innerText).toBe('Pumpkin');
+  });
+
+  it('does not render the empty state when mx-table-rows are passed without a rows prop', () => {
+    const emptyState = root.querySelector('[data-testid="empty-state"]');
+    expect(emptyState.classList.contains('hidden')).toBe(true);
+  });
+});

@@ -314,6 +314,12 @@ export class MxTable {
     gridTemplateColumns += `repeat(${autoColumnCount}, minmax(0, auto))`;
     return { display, gridTemplateColumns };
   }
+  get emptyStateClass() {
+    let str = 'empty-state';
+    if (this.rows.length > 0 || this.getTableRows().length > 0)
+      str += ' hidden';
+    return str;
+  }
   sortRows(rows) {
     const sortByColumn = this.cols.find(c => c.property === this.sortBy);
     if (!sortByColumn)
@@ -472,10 +478,10 @@ export class MxTable {
         // Generated Body Rows
         h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", { class: [this.getAlignClass(col), col.cellClass].join(' ') },
           h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))),
-        this.visibleRows && this.visibleRows.length === 0 && (h("div", { class: "empty-state" },
+        h("div", { "data-testid": "empty-state", class: this.emptyStateClass },
           h("div", { class: "col-span-full p-16 text-4" },
             h("slot", { name: "empty-state" },
-              h("span", null, "No results found."))))),
+              h("span", null, "No results found.")))),
         this.paginate && (
         // Pagination Row
         h("div", { class: "pagination-row" },

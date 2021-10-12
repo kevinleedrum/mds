@@ -11745,10 +11745,10 @@ video {
     width: 15rem;
   }
 }
-.mx-table .table-grid > * {
+.mx-table .table-grid > *:not(.hidden) {
     /* Only place table cell elements into the grid (not row elements). */
   }
-.mx-table .table-grid > *{
+.mx-table .table-grid > *:not(.hidden){
 
   display: contents;
 }
