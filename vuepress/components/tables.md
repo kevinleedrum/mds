@@ -498,7 +498,7 @@ The following example combines checkable, slotted table rows with pagination, ro
 | `getRowActions`       | --                      |                                                                                                                                                                                         | `(row: Object) => ITableRowAction[]`    | `undefined` |
 | `getRowId`            | --                      | A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). | `(row: Object) => string`               | `undefined` |
 | `hoverable`           | `hoverable`             |                                                                                                                                                                                         | `boolean`                               | `true`      |
-| `page`                | `page`                  | The zero-based index of the page to display                                                                                                                                             | `number`                                | `0`         |
+| `page`                | `page`                  | The page to display                                                                                                                                                                     | `number`                                | `1`         |
 | `paginate`            | `paginate`              | Show the pagination component. Setting this to `false` will show all rows.                                                                                                              | `boolean`                               | `true`      |
 | `progressAppearDelay` | `progress-appear-delay` | Delay the appearance of the progress bar for this many milliseconds                                                                                                                     | `number`                                | `0`         |
 | `progressValue`       | `progress-value`        | The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed.                                                         | `number`                                | `null`      |
@@ -888,7 +888,7 @@ export default {
       albumLabelFilters2: [],
       beatlesSearch: '',
       apiHouses: [],
-      apiPage: 0,
+      apiPage: 1,
       apiPageSize: 5,
       apiLoading: false,
       apiDisableNextPage: false,
@@ -1007,14 +1007,14 @@ export default {
     async getApiData() {
       this.apiLoading = true
       let url = 'https://www.anapioficeandfire.com/api/houses?'
-      url += 'page=' + (this.apiPage + 1)
+      url += 'page=' + this.apiPage
       url += '&pageSize=' + this.apiPageSize
       const response = await fetch(url)
       // Parse last page number from "link" header since API does not give us total row count
       const pages = response.headers.get('link').match(/page\=[0-9]+/g)
       const lastPage = +/[0-9]+/.exec(pages[pages.length - 1])[0]
       // Disable next-page button if this is the last page
-      this.apiDisableNextPage = lastPage === (this.apiPage + 1)
+      this.apiDisableNextPage = lastPage === this.apiPage
       setTimeout(async () => {
         this.apiHouses = await response.json()
         this.apiLoading = false
