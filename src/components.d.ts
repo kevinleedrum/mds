@@ -560,7 +560,7 @@ export namespace Components {
         "getRowId": (row: Object) => string;
         "hoverable": boolean;
         /**
-          * The zero-based index of the page to display
+          * The page to display
          */
         "page": number;
         /**
@@ -1464,7 +1464,7 @@ declare namespace LocalJSX {
          */
         "onMxVisibleRowsChange"?: (event: CustomEvent<Object[]>) => void;
         /**
-          * The zero-based index of the page to display
+          * The page to display
          */
         "page"?: number;
         /**

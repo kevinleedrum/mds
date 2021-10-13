@@ -75,7 +75,7 @@ const MxPagination = class {
     index.registerInstance(this, hostRef);
     this.mxPageChange = index.createEvent(this, "mxPageChange", 7);
     this.hasStatus = false;
-    this.page = 0;
+    this.page = 1;
     this.rowsPerPageOptions = [10, 25, 50, 100];
     this.rowsPerPage = 100;
     /** Reduce the UI to only a page */
@@ -117,7 +117,7 @@ const MxPagination = class {
     this.isSmallMinWidth = this.element.offsetWidth >= 640;
   }
   onClickFirstPage() {
-    this.mxPageChange.emit({ page: 0, rowsPerPage: this.rowsPerPage });
+    this.mxPageChange.emit({ page: 1, rowsPerPage: this.rowsPerPage });
   }
   onClickPreviousPage() {
     this.mxPageChange.emit({ page: this.page - 1, rowsPerPage: this.rowsPerPage });
@@ -130,17 +130,17 @@ const MxPagination = class {
   }
   onChangeRowsPerPage(rowsPerPage) {
     // Return to first page whenever the results-per-page changes
-    this.mxPageChange.emit({ page: 0, rowsPerPage });
+    this.mxPageChange.emit({ page: 1, rowsPerPage });
   }
   get lastPage() {
     if (this.totalRows === 0)
-      return 0;
+      return 1;
     if (this.totalRows == null)
       return null;
-    return Math.ceil(this.totalRows / this.rowsPerPage) - 1;
+    return Math.ceil(this.totalRows / this.rowsPerPage);
   }
   get currentRange() {
-    let start = this.rowsPerPage * this.page + 1;
+    let start = this.rowsPerPage * (this.page - 1) + 1;
     let end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
     return start + '–' + end;
   }
@@ -165,9 +165,9 @@ const MxPagination = class {
   render() {
     return (index.h(index.Host, { class: "mx-pagination relative block text-4 whitespace-nowrap select-none" }, !this.simple && index.h("div", { class: "pagination-bg absolute top-0 left-0 w-full h-56 rounded-b-2xl" }), this.simple ? (
     // Simple pagination
-    index.h("div", { class: "simple flex items-center justify-center h-48" }, index.h("mx-icon-button", { "aria-label": "Previous page", "chevron-left": true, disabled: this.page === 0 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), this.lastPage !== null ? this.page + 1 + ' of ' + (this.lastPage + 1) : '', index.h("mx-icon-button", { "aria-label": "Next page", "chevron-right": true, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }))) : (
+    index.h("div", { class: "simple flex items-center justify-center h-48" }, index.h("mx-icon-button", { "aria-label": "Previous page", "chevron-left": true, disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), this.lastPage !== null ? this.page + ' of ' + this.lastPage : '', index.h("mx-icon-button", { "aria-label": "Next page", "chevron-right": true, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }))) : (
     // Standard pagination
-    index.h("div", { ref: el => (this.paginationWrapper = el), class: this.paginationWrapperClass }, this.hasStatus && (index.h("div", { "data-testid": "status", class: "px-24 py-10 flex relative items-center justify-self-start" }, index.h("slot", { name: "status" }))), index.h("div", { class: 'flex flex-grow-0 items-center justify-end h-56 pr-4' + (this.hideRowsPerPage ? ' relative' : '') }, this.rowsPerPageOptions && this.rowsPerPageOptions.length > 1 && (index.h("div", { ref: el => (this.rowsPerPageWrapper = el), "aria-hidden": this.hideRowsPerPage, class: 'flex items-center px-24' + (this.hideRowsPerPage ? ' absolute opacity-0 pointer-events-none' : '') }, "Rows per page: \u00A0", index.h("div", { "data-testid": "rows-per-page", ref: el => (this.rowsMenuAnchor = el), class: "flex items-center cursor-pointer" }, this.rowsPerPage, index.h("span", { class: "ml-12", innerHTML: arrowTriangleDown.arrowSvg })), index.h("mx-menu", { ref: el => (this.rowsMenu = el) }, this.rowsPerPageOptions.map(option => (index.h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))), this.totalRows > 0 && (index.h("div", { "data-testid": "row-range", class: this.rowRangeClass }, this.currentRange, " of ", this.totalRows)), index.h("div", { class: "flex items-center sm:space-x-8" }, index.h("mx-icon-button", { "aria-label": "First page", innerHTML: pageFirstSvg, disabled: this.page === 0 || this.disabled, onClick: this.onClickFirstPage.bind(this) }), index.h("mx-icon-button", { "aria-label": "Previous page", innerHTML: chevronLeftSvg, disabled: this.page === 0 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), index.h("mx-icon-button", { "aria-label": "Next page", innerHTML: chevronRightSvg, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }), this.lastPage !== null && (index.h("mx-icon-button", { "aria-label": "Last page", innerHTML: pageLastSvg, disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
+    index.h("div", { ref: el => (this.paginationWrapper = el), class: this.paginationWrapperClass }, this.hasStatus && (index.h("div", { "data-testid": "status", class: "px-24 py-10 flex relative items-center justify-self-start" }, index.h("slot", { name: "status" }))), index.h("div", { class: 'flex flex-grow-0 items-center justify-end h-56 pr-4' + (this.hideRowsPerPage ? ' relative' : '') }, this.rowsPerPageOptions && this.rowsPerPageOptions.length > 1 && (index.h("div", { ref: el => (this.rowsPerPageWrapper = el), "aria-hidden": this.hideRowsPerPage, class: 'flex items-center px-24' + (this.hideRowsPerPage ? ' absolute opacity-0 pointer-events-none' : '') }, "Rows per page: \u00A0", index.h("div", { "data-testid": "rows-per-page", ref: el => (this.rowsMenuAnchor = el), class: "flex items-center cursor-pointer" }, this.rowsPerPage, index.h("span", { class: "ml-12", innerHTML: arrowTriangleDown.arrowSvg })), index.h("mx-menu", { ref: el => (this.rowsMenu = el) }, this.rowsPerPageOptions.map(option => (index.h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))), this.totalRows > 0 && (index.h("div", { "data-testid": "row-range", class: this.rowRangeClass }, this.currentRange, " of ", this.totalRows)), index.h("div", { class: "flex items-center sm:space-x-8" }, index.h("mx-icon-button", { "aria-label": "First page", innerHTML: pageFirstSvg, disabled: this.page === 1 || this.disabled, onClick: this.onClickFirstPage.bind(this) }), index.h("mx-icon-button", { "aria-label": "Previous page", innerHTML: chevronLeftSvg, disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), index.h("mx-icon-button", { "aria-label": "Next page", innerHTML: chevronRightSvg, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }), this.lastPage !== null && (index.h("mx-icon-button", { "aria-label": "Last page", innerHTML: pageLastSvg, disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
   }
   get element() { return index.getElement(this); }
 };

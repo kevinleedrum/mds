@@ -11,7 +11,7 @@
 | -------------------- | ------------------- | ----------------------------------------------------------------------------- | ---------- | ------------------- |
 | `disableNextPage`    | `disable-next-page` | Disable the next page button (i.e. when the last page was loaded from an API) | `boolean`  | `false`             |
 | `disabled`           | `disabled`          | Disable the page buttons (i.e. when loading results)                          | `boolean`  | `false`             |
-| `page`               | `page`              |                                                                               | `number`   | `0`                 |
+| `page`               | `page`              |                                                                               | `number`   | `1`                 |
 | `rowsPerPage`        | `rows-per-page`     |                                                                               | `number`   | `100`               |
 | `rowsPerPageOptions` | --                  |                                                                               | `number[]` | `[10, 25, 50, 100]` |
 | `simple`             | `simple`            | Reduce the UI to only a page                                                  | `boolean`  | `false`             |
