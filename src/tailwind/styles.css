@@ -47,11 +47,6 @@
 /***************************
 * Custom CSS
 ***************************/
-.mds-portal {
-  position: relative;
-  z-index: 9999;
-}
-
 .mds {
   *:not(code, code *) {
     font-family: 'Open Sans', sans-serif;

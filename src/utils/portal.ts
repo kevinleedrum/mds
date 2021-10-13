@@ -7,7 +7,9 @@ function getPortal() {
   let portal = document.querySelector('.mds-portal') as HTMLElement;
   if (!portal) {
     portal = document.createElement('div');
-    portal.classList.add('mds-portal', 'mds');
+    portal.classList.add('mds');
+    portal.style.position = 'relative';
+    portal.style.zIndex = '9999';
     document.body.appendChild(portal);
   }
   return portal;
