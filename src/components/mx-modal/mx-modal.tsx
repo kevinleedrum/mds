@@ -33,6 +33,8 @@ export class MxModal {
   @Prop() closeOnOutsideClick: boolean = true;
   /** Additional classes for the inner scrolling container. */
   @Prop() contentClass: string = '';
+  /** An optional description to display above the modal content */
+  @Prop() description: string;
   /** Toggle the modal */
   @Prop() isOpen: boolean = false;
   /** The text to display for the previous page link */
@@ -171,7 +173,7 @@ export class MxModal {
   }
 
   get modalContentClasses(): string {
-    let str = 'bg-modal-content order-2 flex-1 px-40 py-24 overflow-auto overscroll-none border-b';
+    let str = 'bg-modal-content order-2 flex-1 px-24 sm:px-40 py-16 sm:py-24 overflow-auto overscroll-none border-b';
     if (this.contentClass) str += ' ' + this.contentClass;
     return str;
   }
@@ -195,10 +197,11 @@ export class MxModal {
         <div ref={el => (this.modal = el)} class="modal flex flex-col rounded-lg shadow-9 relative overflow-hidden">
           {/* Modal Content */}
           <div class={this.modalContentClasses} data-testid="modal-content">
+            {this.description && <p class="text-4 my-0 mb-16 sm:mb-24">{this.description}</p>}
             <slot></slot>
             {this.hasCard && (
               <div>
-                <div class="bg-modal-card min-h-full px-40 py-24 rounded-2xl">
+                <div class="bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl">
                   <slot name="card"></slot>
                 </div>
               </div>
