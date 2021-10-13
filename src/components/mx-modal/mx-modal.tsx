@@ -197,11 +197,18 @@ export class MxModal {
         <div ref={el => (this.modal = el)} class="modal flex flex-col rounded-lg shadow-9 relative overflow-hidden">
           {/* Modal Content */}
           <div class={this.modalContentClasses} data-testid="modal-content">
-            {this.description && <p class="text-4 my-0 mb-16 sm:mb-24">{this.description}</p>}
+            {this.description && (
+              <p class="text-4 my-0 mb-16 sm:mb-24" data-testid="modal-description">
+                {this.description}
+              </p>
+            )}
             <slot></slot>
             {this.hasCard && (
               <div>
-                <div class="bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl">
+                <div
+                  class="bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl"
+                  data-testid="modal-card"
+                >
                   <slot name="card"></slot>
                 </div>
               </div>

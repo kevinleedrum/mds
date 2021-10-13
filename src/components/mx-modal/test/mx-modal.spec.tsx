@@ -1,3 +1,4 @@
+import '../../../utils/matchMedia.mock';
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { MxModal } from '../mx-modal';
 
@@ -9,12 +10,14 @@ describe('mx-modal', () => {
       components: [MxModal],
       html: `
       <mx-modal
+        description="Test Description"
         is-open
         previous-page-url="https://moxiworks.com/"
         previous-page-title="MoxiWorks"
       >
         <div slot="header-left">Test Heading</div>
         This is the content
+        <p slot="card">This is the card content</p>
       </mx-modal>
       `,
     });
@@ -38,8 +41,18 @@ describe('mx-modal', () => {
   });
 
   it('renders the default slot content', () => {
-    const headerText = root.querySelector('[data-testid="modal-content"]') as HTMLElement;
-    expect(headerText.innerText).toContain('This is the content');
+    const content = root.querySelector('[data-testid="modal-content"]') as HTMLElement;
+    expect(content.innerText).toContain('This is the content');
+  });
+
+  it('renders the card slot content', () => {
+    const card = root.querySelector('[data-testid="modal-card"]') as HTMLElement;
+    expect(card.innerText).toContain('This is the card content');
+  });
+
+  it('renders the description text', () => {
+    const description = root.querySelector('[data-testid="modal-description"]') as HTMLElement;
+    expect(description.innerText).toContain('Test Description');
   });
 
   it('has a Close button by default', () => {
