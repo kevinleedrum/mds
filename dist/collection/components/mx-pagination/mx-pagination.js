@@ -8,7 +8,7 @@ import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 export class MxPagination {
   constructor() {
     this.hasStatus = false;
-    this.page = 0;
+    this.page = 1;
     this.rowsPerPageOptions = [10, 25, 50, 100];
     this.rowsPerPage = 100;
     /** Reduce the UI to only a page */
@@ -50,7 +50,7 @@ export class MxPagination {
     this.isSmallMinWidth = this.element.offsetWidth >= 640;
   }
   onClickFirstPage() {
-    this.mxPageChange.emit({ page: 0, rowsPerPage: this.rowsPerPage });
+    this.mxPageChange.emit({ page: 1, rowsPerPage: this.rowsPerPage });
   }
   onClickPreviousPage() {
     this.mxPageChange.emit({ page: this.page - 1, rowsPerPage: this.rowsPerPage });
@@ -63,17 +63,17 @@ export class MxPagination {
   }
   onChangeRowsPerPage(rowsPerPage) {
     // Return to first page whenever the results-per-page changes
-    this.mxPageChange.emit({ page: 0, rowsPerPage });
+    this.mxPageChange.emit({ page: 1, rowsPerPage });
   }
   get lastPage() {
     if (this.totalRows === 0)
-      return 0;
+      return 1;
     if (this.totalRows == null)
       return null;
-    return Math.ceil(this.totalRows / this.rowsPerPage) - 1;
+    return Math.ceil(this.totalRows / this.rowsPerPage);
   }
   get currentRange() {
-    let start = this.rowsPerPage * this.page + 1;
+    let start = this.rowsPerPage * (this.page - 1) + 1;
     let end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
     return start + '–' + end;
   }
@@ -101,8 +101,8 @@ export class MxPagination {
       this.simple ? (
       // Simple pagination
       h("div", { class: "simple flex items-center justify-center h-48" },
-        h("mx-icon-button", { "aria-label": "Previous page", "chevron-left": true, disabled: this.page === 0 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
-        this.lastPage !== null ? this.page + 1 + ' of ' + (this.lastPage + 1) : '',
+        h("mx-icon-button", { "aria-label": "Previous page", "chevron-left": true, disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
+        this.lastPage !== null ? this.page + ' of ' + this.lastPage : '',
         h("mx-icon-button", { "aria-label": "Next page", "chevron-right": true, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }))) : (
       // Standard pagination
       h("div", { ref: el => (this.paginationWrapper = el), class: this.paginationWrapperClass },
@@ -120,8 +120,8 @@ export class MxPagination {
             " of ",
             this.totalRows)),
           h("div", { class: "flex items-center sm:space-x-8" },
-            h("mx-icon-button", { "aria-label": "First page", innerHTML: pageFirstSvg, disabled: this.page === 0 || this.disabled, onClick: this.onClickFirstPage.bind(this) }),
-            h("mx-icon-button", { "aria-label": "Previous page", innerHTML: chevronLeftSvg, disabled: this.page === 0 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
+            h("mx-icon-button", { "aria-label": "First page", innerHTML: pageFirstSvg, disabled: this.page === 1 || this.disabled, onClick: this.onClickFirstPage.bind(this) }),
+            h("mx-icon-button", { "aria-label": "Previous page", innerHTML: chevronLeftSvg, disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
             h("mx-icon-button", { "aria-label": "Next page", innerHTML: chevronRightSvg, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }),
             this.lastPage !== null && (h("mx-icon-button", { "aria-label": "Last page", innerHTML: pageLastSvg, disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
   }
@@ -143,7 +143,7 @@ export class MxPagination {
       },
       "attribute": "page",
       "reflect": false,
-      "defaultValue": "0"
+      "defaultValue": "1"
     },
     "rowsPerPageOptions": {
       "type": "unknown",

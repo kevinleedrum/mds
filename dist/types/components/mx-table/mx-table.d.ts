@@ -77,7 +77,7 @@ export declare class MxTable {
   sortAscending: boolean;
   /** Show the pagination component.  Setting this to `false` will show all rows. */
   paginate: boolean;
-  /** The zero-based index of the page to display */
+  /** The page to display */
   page: number;
   rowsPerPage: number;
   /** The total number of unpaginated rows.  This is ignored for client-side pagination.

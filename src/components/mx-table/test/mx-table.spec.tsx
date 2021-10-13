@@ -49,7 +49,7 @@ describe('mx-table (non-mobile)', () => {
 
   it('renders latter result pages', async () => {
     root.rowsPerPage = 2;
-    root.page = 1;
+    root.page = 2;
     await page.waitForChanges();
     const rows = root.querySelectorAll('mx-table-row');
     expect(rows.length).toBe(1);

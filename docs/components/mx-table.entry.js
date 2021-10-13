@@ -39,8 +39,8 @@ const MxTable = class {
     this.sortAscending = true;
     /** Show the pagination component.  Setting this to `false` will show all rows. */
     this.paginate = true;
-    /** The zero-based index of the page to display */
-    this.page = 0;
+    /** The page to display */
+    this.page = 1;
     this.rowsPerPage = 10;
     /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
     this.disableNextPage = false;
@@ -140,7 +140,7 @@ const MxTable = class {
   }
   resetPage() {
     if (!this.serverPaginate)
-      this.page = 0;
+      this.page = 1;
   }
   async getCheckedRowIds() {
     return this.checkedRowIds;
@@ -259,7 +259,7 @@ const MxTable = class {
   get visibleRows() {
     if (this.serverPaginate || (!this.paginate && !this.sortBy))
       return this.rows;
-    const offset = this.page * this.rowsPerPage;
+    const offset = (this.page - 1) * this.rowsPerPage;
     let rows = this.rows.slice();
     if (this.sortBy)
       this.sortRows(rows);
