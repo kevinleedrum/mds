@@ -17,7 +17,7 @@ describe('mx-pagination (standard)', () => {
     page = await newSpecPage({
       components: [MxPagination, MxIconButton, MxMenu, MxMenuItem],
       html: `<mx-pagination
-        page="2"
+        page="3"
         rows-per-page="25"
         total-rows="100"
       >
@@ -49,7 +49,7 @@ describe('mx-pagination (standard)', () => {
   it('disables the first-page and previous-page buttons for the first page', async () => {
     expect(firstPageButton.getAttribute('disabled')).toBeNull();
     expect(prevPageButton.getAttribute('disabled')).toBeNull();
-    root.page = 0;
+    root.page = 1;
     await page.waitForChanges();
     expect(firstPageButton.getAttribute('disabled')).not.toBeNull();
     expect(prevPageButton.getAttribute('disabled')).not.toBeNull();
@@ -58,7 +58,7 @@ describe('mx-pagination (standard)', () => {
   it('disables the last-page and next-page buttons for the last page', async () => {
     expect(lastPageButton.getAttribute('disabled')).toBeNull();
     expect(nextPageButton.getAttribute('disabled')).toBeNull();
-    root.page = 3;
+    root.page = 4;
     await page.waitForChanges();
     expect(lastPageButton.getAttribute('disabled')).not.toBeNull();
     expect(nextPageButton.getAttribute('disabled')).not.toBeNull();
@@ -95,7 +95,7 @@ describe('mx-pagination (standard)', () => {
     root.addEventListener('mxPageChange', (e: CustomEvent) => (emittedValue = e.detail));
     const firstMenuItem = root.querySelector('mx-menu-item');
     firstMenuItem.click();
-    expect(emittedValue.page).toBe(0);
+    expect(emittedValue.page).toBe(1);
     expect(emittedValue.rowsPerPage).toBe(10);
   });
 
@@ -103,7 +103,7 @@ describe('mx-pagination (standard)', () => {
     let emittedValue: PageChangeEventDetail;
     root.addEventListener('mxPageChange', (e: CustomEvent) => (emittedValue = e.detail));
     nextPageButton.click();
-    expect(emittedValue.page).toBe(3);
+    expect(emittedValue.page).toBe(4);
     expect(emittedValue.rowsPerPage).toBe(25);
   });
 });
@@ -117,7 +117,7 @@ describe('mx-pagination (simple)', () => {
     page = await newSpecPage({
       components: [MxPagination, MxIconButton, MxMenu, MxMenuItem],
       html: `<mx-pagination
-        page="2"
+        page="3"
         rows-per-page="25"
         total-rows="100"
         simple
@@ -141,14 +141,14 @@ describe('mx-pagination (simple)', () => {
 
   it('disables the previous-page buttons for the first page', async () => {
     expect(prevPageButton.getAttribute('disabled')).toBeNull();
-    root.page = 0;
+    root.page = 1;
     await page.waitForChanges();
     expect(prevPageButton.getAttribute('disabled')).not.toBeNull();
   });
 
   it('disables the next-page buttons for the last page', async () => {
     expect(nextPageButton.getAttribute('disabled')).toBeNull();
-    root.page = 3;
+    root.page = 4;
     await page.waitForChanges();
     expect(nextPageButton.getAttribute('disabled')).not.toBeNull();
   });
@@ -170,7 +170,7 @@ describe('mx-pagination (simple)', () => {
     let emittedValue: PageChangeEventDetail;
     root.addEventListener('mxPageChange', (e: CustomEvent) => (emittedValue = e.detail));
     nextPageButton.click();
-    expect(emittedValue.page).toBe(3);
+    expect(emittedValue.page).toBe(4);
     expect(emittedValue.rowsPerPage).toBe(25);
   });
 });
