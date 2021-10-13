@@ -37,10 +37,6 @@ export const fadeOut = (el: HTMLElement, duration = 150) => {
   return executeTransition(el, [FADE_OUT], duration);
 };
 
-export const scaleIn = (el: HTMLElement, duration = 150) => {
-  return executeTransition(el, [SCALE_IN], duration);
-};
-
 /** Fade in and scale from 80% to 100% (Material Fade) */
 export const fadeScaleIn = (el: HTMLElement, duration = 150, transformOrigin?: string) => {
   return executeTransition(el, [FADE_IN, SCALE_IN], duration, transformOrigin);
