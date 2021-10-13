@@ -38,7 +38,7 @@ export class MxPageHeader {
 
   /** Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu` */
   @Method()
-  resetResizeObserver() {
+  async resetResizeObserver() {
     if (this.resizeObserver) this.resizeObserver.disconnect();
     this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
     this.resizeObserver.observe(this.element);
