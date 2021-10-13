@@ -88,7 +88,7 @@ export class MxPagination {
 
   onChangeRowsPerPage(rowsPerPage: number) {
     // Return to first page whenever the results-per-page changes
-    this.mxPageChange.emit({ page: 0, rowsPerPage });
+    this.mxPageChange.emit({ page: 1, rowsPerPage });
   }
 
   get lastPage(): number {
