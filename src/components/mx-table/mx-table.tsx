@@ -89,8 +89,8 @@ export class MxTable {
   @Prop({ mutable: true }) sortAscending: boolean = true;
   /** Show the pagination component.  Setting this to `false` will show all rows. */
   @Prop() paginate: boolean = true;
-  /** The zero-based index of the page to display */
-  @Prop({ mutable: true }) page: number = 0;
+  /** The page to display */
+  @Prop({ mutable: true }) page: number = 1;
   @Prop({ mutable: true }) rowsPerPage: number = 10;
   /** The total number of unpaginated rows.  This is ignored for client-side pagination.
    * For server-side pagination, omitting this prop will remove the last-page button.
@@ -221,7 +221,7 @@ export class MxTable {
   @Watch('rowsPerPage')
   @Watch('rows')
   resetPage() {
-    if (!this.serverPaginate) this.page = 0;
+    if (!this.serverPaginate) this.page = 1;
   }
 
   @Method()
@@ -356,7 +356,7 @@ export class MxTable {
 
   get visibleRows(): Object[] {
     if (this.serverPaginate || (!this.paginate && !this.sortBy)) return this.rows;
-    const offset = this.page * this.rowsPerPage;
+    const offset = (this.page - 1) * this.rowsPerPage;
     let rows = this.rows.slice();
     if (this.sortBy) this.sortRows(rows);
     rows = rows.slice(offset, offset + this.rowsPerPage);

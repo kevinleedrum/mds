@@ -23,7 +23,7 @@ export class MxPagination {
   rowsPerPageWrapper: HTMLElement;
   resizeObserver: ResizeObserver;
 
-  @Prop() page: number = 0;
+  @Prop() page: number = 1;
   @Prop() rowsPerPageOptions: number[] = [10, 25, 50, 100];
   @Prop() rowsPerPage: number = 100;
   /** Reduce the UI to only a page */
@@ -71,7 +71,7 @@ export class MxPagination {
   }
 
   onClickFirstPage() {
-    this.mxPageChange.emit({ page: 0, rowsPerPage: this.rowsPerPage });
+    this.mxPageChange.emit({ page: 1, rowsPerPage: this.rowsPerPage });
   }
 
   onClickPreviousPage() {
@@ -92,13 +92,13 @@ export class MxPagination {
   }
 
   get lastPage(): number {
-    if (this.totalRows === 0) return 0;
+    if (this.totalRows === 0) return 1;
     if (this.totalRows == null) return null;
-    return Math.ceil(this.totalRows / this.rowsPerPage) - 1;
+    return Math.ceil(this.totalRows / this.rowsPerPage);
   }
 
   get currentRange(): string {
-    let start = this.rowsPerPage * this.page + 1;
+    let start = this.rowsPerPage * (this.page - 1) + 1;
     let end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
     return start + '–' + end;
   }
@@ -131,10 +131,10 @@ export class MxPagination {
             <mx-icon-button
               aria-label="Previous page"
               chevron-left
-              disabled={this.page === 0 || this.disabled}
+              disabled={this.page === 1 || this.disabled}
               onClick={this.onClickPreviousPage.bind(this)}
             />
-            {this.lastPage !== null ? this.page + 1 + ' of ' + (this.lastPage + 1) : ''}
+            {this.lastPage !== null ? this.page + ' of ' + this.lastPage : ''}
             <mx-icon-button
               aria-label="Next page"
               chevron-right
@@ -192,13 +192,13 @@ export class MxPagination {
                 <mx-icon-button
                   aria-label="First page"
                   innerHTML={pageFirstSvg}
-                  disabled={this.page === 0 || this.disabled}
+                  disabled={this.page === 1 || this.disabled}
                   onClick={this.onClickFirstPage.bind(this)}
                 />
                 <mx-icon-button
                   aria-label="Previous page"
                   innerHTML={chevronLeftSvg}
-                  disabled={this.page === 0 || this.disabled}
+                  disabled={this.page === 1 || this.disabled}
                   onClick={this.onClickPreviousPage.bind(this)}
                 />
                 <mx-icon-button
