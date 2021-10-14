@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, State } from '@stencil/core';
+import { Component, Host, h, Prop, Element, State, Method } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { IMxButtonProps } from '../mx-button/mx-button';
@@ -36,6 +36,16 @@ export class MxPageHeader {
 
   @Element() element: HTMLMxPageHeaderElement;
 
+  /** Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu` */
+  @Method()
+  async resetResizeObserver() {
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
+    this.resizeObserver.observe(this.element);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
+  }
+
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
   }
@@ -69,10 +79,7 @@ export class MxPageHeader {
   }
 
   componentDidLoad() {
-    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
-    this.resizeObserver.observe(this.element);
-    // Wait one tick for layout shifts in order to detect overflow correctly.
-    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
+    this.resetResizeObserver();
   }
 
   get hostClass() {
@@ -86,7 +93,7 @@ export class MxPageHeader {
   }
 
   get headingClass() {
-    let str = 'my-0 pr-20 emphasis ';
+    let str = '!my-0 pr-20 emphasis ';
     if (!this.minWidths.md) str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else str += this.previousPageUrl ? 'text-h5' : 'text-h3';
     return str;

@@ -37,6 +37,7 @@
 @import './mx-menu-item/index.scss';
 @import './mx-time-picker/index.scss';
 @import './mx-page-header/index.scss';
+@import './mx-modal/index.scss';
 @import './mx-table/index.scss';
 @import './mx-pagination/index.scss';
 @import './mx-snackbar/index.scss';
