@@ -15,7 +15,24 @@
 | `previousPageUrl`   | `previous-page-url`   | The URL for the previous page link                                                                      | `string`              | `''`     |
 
 
+## Methods
+
+### `resetResizeObserver() => Promise<void>`
+
+Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu`
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Dependencies
+
+### Used by
+
+ - [mx-modal](../mx-modal)
 
 ### Depends on
 
@@ -32,6 +49,7 @@ graph TD;
   mx-page-header --> mx-menu-item
   mx-page-header --> mx-button
   mx-menu-item --> mx-checkbox
+  mx-modal --> mx-page-header
   style mx-page-header fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

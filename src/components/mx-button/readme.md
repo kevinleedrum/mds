@@ -25,6 +25,7 @@
 ### Used by
 
  - [mx-image-upload](../mx-image-upload)
+ - [mx-modal](../mx-modal)
  - [mx-page-header](../mx-page-header)
  - [mx-table](../mx-table)
  - [mx-table-row](../mx-table-row)
@@ -33,6 +34,7 @@
 ```mermaid
 graph TD;
   mx-image-upload --> mx-button
+  mx-modal --> mx-button
   mx-page-header --> mx-button
   mx-table --> mx-button
   mx-table-row --> mx-button
