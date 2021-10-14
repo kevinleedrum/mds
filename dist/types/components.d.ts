@@ -245,6 +245,10 @@ export namespace Components {
           * The `name` attribute for the `input` element.
          */
         "name": string;
+        /**
+          * The text to display on the Remove button
+         */
+        "removeButtonLabel": string;
         "removeFile": () => Promise<void>;
         "selectFile": () => Promise<void>;
         /**
@@ -267,6 +271,10 @@ export namespace Components {
           * The URL for the thumbnail of the currently selected image.
          */
         "thumbnailUrl": string;
+        /**
+          * The text to display on the Upload button
+         */
+        "uploadButtonLabel": string;
         /**
           * The width of the dropzone / thumbnail container (e.g. "400px" or "50%").
          */
@@ -1190,6 +1198,10 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
+          * The text to display on the Remove button
+         */
+        "removeButtonLabel"?: string;
+        /**
           * Set to `false` to hide the default Upload/Remove button.
          */
         "showButton"?: boolean;
@@ -1209,6 +1221,10 @@ declare namespace LocalJSX {
           * The URL for the thumbnail of the currently selected image.
          */
         "thumbnailUrl"?: string;
+        /**
+          * The text to display on the Upload button
+         */
+        "uploadButtonLabel"?: string;
         /**
           * The width of the dropzone / thumbnail container (e.g. "400px" or "50%").
          */
