@@ -34,6 +34,8 @@ export class MxImageUpload {
   @Prop({ mutable: true, reflect: true }) isUploading = false;
   /** The `name` attribute for the `input` element. */
   @Prop() name: string;
+  /** The text to display on the Remove button */
+  @Prop() removeButtonLabel = 'Remove';
   /** Set to `false` to hide the default Upload/Remove button. */
   @Prop() showButton = true;
   /** Set to `false` to hide the dropzone icon. */
@@ -42,6 +44,8 @@ export class MxImageUpload {
   @Prop() showDropzoneText = true;
   /** The URL for the thumbnail of the currently selected image. */
   @Prop() thumbnailUrl: string;
+  /** The text to display on the Upload button */
+  @Prop() uploadButtonLabel = 'Upload';
   /** The width of the dropzone / thumbnail container (e.g. "400px" or "50%"). */
   @Prop() width: string;
 
@@ -240,7 +244,7 @@ export class MxImageUpload {
             onClick={this.onButtonClick.bind(this)}
             disabled={this.isUploading}
           >
-            {this.hasFile && !this.isUploading ? 'Remove' : 'Upload'}
+            {this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel}
           </mx-button>
         )}
         {this.hasInstructions && (
