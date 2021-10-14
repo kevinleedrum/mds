@@ -20,12 +20,16 @@ export class MxImageUpload {
     this.isUploaded = false;
     /** Set to `true` to disable the button and show the circular progress indicator. */
     this.isUploading = false;
+    /** The text to display on the Remove button */
+    this.removeButtonLabel = 'Remove';
     /** Set to `false` to hide the default Upload/Remove button. */
     this.showButton = true;
     /** Set to `false` to hide the dropzone icon. */
     this.showIcon = true;
     /** Set to `false` to hide the dropzone text. */
     this.showDropzoneText = true;
+    /** The text to display on the Upload button */
+    this.uploadButtonLabel = 'Upload';
     this.isDraggingOver = false;
     this.isFileSelected = false;
   }
@@ -172,7 +176,7 @@ export class MxImageUpload {
           h("slot", { name: "uploaded" })),
         this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" },
           h("mx-circular-progress", { size: "2rem" })))),
-      this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? 'Remove' : 'Upload')),
+      this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)),
       this.hasInstructions && (h("p", { class: "caption1 my-16" },
         h("slot", { name: "instructions" }))),
       this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" },
@@ -376,6 +380,24 @@ export class MxImageUpload {
       "attribute": "name",
       "reflect": false
     },
+    "removeButtonLabel": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "The text to display on the Remove button"
+      },
+      "attribute": "remove-button-label",
+      "reflect": false,
+      "defaultValue": "'Remove'"
+    },
     "showButton": {
       "type": "boolean",
       "mutable": false,
@@ -446,6 +468,24 @@ export class MxImageUpload {
       },
       "attribute": "thumbnail-url",
       "reflect": false
+    },
+    "uploadButtonLabel": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "The text to display on the Upload button"
+      },
+      "attribute": "upload-button-label",
+      "reflect": false,
+      "defaultValue": "'Upload'"
     },
     "width": {
       "type": "string",

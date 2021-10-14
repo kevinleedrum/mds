@@ -25,6 +25,8 @@ export declare class MxImageUpload {
   isUploading: boolean;
   /** The `name` attribute for the `input` element. */
   name: string;
+  /** The text to display on the Remove button */
+  removeButtonLabel: string;
   /** Set to `false` to hide the default Upload/Remove button. */
   showButton: boolean;
   /** Set to `false` to hide the dropzone icon. */
@@ -33,6 +35,8 @@ export declare class MxImageUpload {
   showDropzoneText: boolean;
   /** The URL for the thumbnail of the currently selected image. */
   thumbnailUrl: string;
+  /** The text to display on the Upload button */
+  uploadButtonLabel: string;
   /** The width of the dropzone / thumbnail container (e.g. "400px" or "50%"). */
   width: string;
   isDraggingOver: boolean;
