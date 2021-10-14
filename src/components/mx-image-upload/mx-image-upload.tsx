@@ -203,8 +203,7 @@ export class MxImageUpload {
               name={this.name}
               type="file"
               accept={this.accept}
-              class="absolute inset-0 opacity-0 cursor-pointer disabled:cursor-auto"
-              disabled={this.hasFile}
+              class="absolute inset-0 opacity-0 cursor-pointer"
               onInput={this.onInput.bind(this)}
               onDragOver={this.onDragOver.bind(this)}
               onDragLeave={this.onDragLeave.bind(this)}

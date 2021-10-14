@@ -86,6 +86,12 @@ export const MxMenuItem: {
   new (): MxMenuItem;
 };
 
+interface MxModal extends Components.MxModal, HTMLElement {}
+export const MxModal: {
+  prototype: MxModal;
+  new (): MxModal;
+};
+
 interface MxPageHeader extends Components.MxPageHeader, HTMLElement {}
 export const MxPageHeader: {
   prototype: MxPageHeader;

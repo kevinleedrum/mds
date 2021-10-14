@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
 import { PopoverOffset, PopoverPlacement } from "./utils/popover";
+import { IModalButton } from "./components/mx-modal/mx-modal";
 import { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
 import { PageChangeEventDetail } from "./components/mx-pagination/mx-pagination";
 import { ITableColumn, ITableRowAction, SortChangeEventDetail } from "./components/mx-table/mx-table";
@@ -387,6 +388,44 @@ export namespace Components {
          */
         "multiSelect": boolean;
     }
+    interface MxModal {
+        /**
+          * An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text.
+         */
+        "buttons": IModalButton[];
+        /**
+          * If set to false, pressing Escape will not close the modal.
+         */
+        "closeOnEscape": boolean;
+        /**
+          * If set to false, clicking the backdrop will not close the modal.
+         */
+        "closeOnOutsideClick": boolean;
+        /**
+          * Additional classes for the inner scrolling container.
+         */
+        "contentClass": string;
+        /**
+          * An optional description to display above the modal content
+         */
+        "description": string;
+        /**
+          * Toggle the modal
+         */
+        "isOpen": boolean;
+        /**
+          * Set to true to stretch the modal to nearly fill the width and height of the page (on desktop-sized screens).  Otherwise, the maximum dimensions are 800x600px.
+         */
+        "large": boolean;
+        /**
+          * The text to display for the previous page link
+         */
+        "previousPageTitle": string;
+        /**
+          * The URL for the previous page link
+         */
+        "previousPageUrl": string;
+    }
     interface MxPageHeader {
         /**
           * An array of prop objects for each button.  Use the `label` property to specify the button's inner text.
@@ -404,6 +443,10 @@ export namespace Components {
           * The URL for the previous page link
          */
         "previousPageUrl": string;
+        /**
+          * Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu`
+         */
+        "resetResizeObserver": () => Promise<void>;
     }
     interface MxPagination {
         /**
@@ -770,6 +813,12 @@ declare global {
         prototype: HTMLMxMenuItemElement;
         new (): HTMLMxMenuItemElement;
     };
+    interface HTMLMxModalElement extends Components.MxModal, HTMLStencilElement {
+    }
+    var HTMLMxModalElement: {
+        prototype: HTMLMxModalElement;
+        new (): HTMLMxModalElement;
+    };
     interface HTMLMxPageHeaderElement extends Components.MxPageHeader, HTMLStencilElement {
     }
     var HTMLMxPageHeaderElement: {
@@ -881,6 +930,7 @@ declare global {
         "mx-linear-progress": HTMLMxLinearProgressElement;
         "mx-menu": HTMLMxMenuElement;
         "mx-menu-item": HTMLMxMenuItemElement;
+        "mx-modal": HTMLMxModalElement;
         "mx-page-header": HTMLMxPageHeaderElement;
         "mx-pagination": HTMLMxPaginationElement;
         "mx-radio": HTMLMxRadioElement;
@@ -1276,6 +1326,45 @@ declare namespace LocalJSX {
          */
         "onMxClick"?: (event: CustomEvent<MouseEvent>) => void;
     }
+    interface MxModal {
+        /**
+          * An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text.
+         */
+        "buttons"?: IModalButton[];
+        /**
+          * If set to false, pressing Escape will not close the modal.
+         */
+        "closeOnEscape"?: boolean;
+        /**
+          * If set to false, clicking the backdrop will not close the modal.
+         */
+        "closeOnOutsideClick"?: boolean;
+        /**
+          * Additional classes for the inner scrolling container.
+         */
+        "contentClass"?: string;
+        /**
+          * An optional description to display above the modal content
+         */
+        "description"?: string;
+        /**
+          * Toggle the modal
+         */
+        "isOpen"?: boolean;
+        /**
+          * Set to true to stretch the modal to nearly fill the width and height of the page (on desktop-sized screens).  Otherwise, the maximum dimensions are 800x600px.
+         */
+        "large"?: boolean;
+        "onMxClose"?: (event: CustomEvent<any>) => void;
+        /**
+          * The text to display for the previous page link
+         */
+        "previousPageTitle"?: string;
+        /**
+          * The URL for the previous page link
+         */
+        "previousPageUrl"?: string;
+    }
     interface MxPageHeader {
         /**
           * An array of prop objects for each button.  Use the `label` property to specify the button's inner text.
@@ -1619,6 +1708,7 @@ declare namespace LocalJSX {
         "mx-linear-progress": MxLinearProgress;
         "mx-menu": MxMenu;
         "mx-menu-item": MxMenuItem;
+        "mx-modal": MxModal;
         "mx-page-header": MxPageHeader;
         "mx-pagination": MxPagination;
         "mx-radio": MxRadio;
@@ -1655,6 +1745,7 @@ declare module "@stencil/core" {
             "mx-linear-progress": LocalJSX.MxLinearProgress & JSXBase.HTMLAttributes<HTMLMxLinearProgressElement>;
             "mx-menu": LocalJSX.MxMenu & JSXBase.HTMLAttributes<HTMLMxMenuElement>;
             "mx-menu-item": LocalJSX.MxMenuItem & JSXBase.HTMLAttributes<HTMLMxMenuItemElement>;
+            "mx-modal": LocalJSX.MxModal & JSXBase.HTMLAttributes<HTMLMxModalElement>;
             "mx-page-header": LocalJSX.MxPageHeader & JSXBase.HTMLAttributes<HTMLMxPageHeaderElement>;
             "mx-pagination": LocalJSX.MxPagination & JSXBase.HTMLAttributes<HTMLMxPaginationElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;

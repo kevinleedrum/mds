@@ -3,7 +3,6 @@ import { EventEmitter } from '../../stencil-public-runtime';
 export declare class MxSnackbar {
   alertEl: HTMLElement;
   durationTimer: NodeJS.Timeout;
-  portal: HTMLElement;
   queueItem: {
     resolve: Function;
     reject: Function;
@@ -16,8 +15,6 @@ export declare class MxSnackbar {
   toggleSnackbar(): Promise<void>;
   waitForOtherSnackbars(): Promise<void>;
   removeFromQueue(): void;
-  componentWillLoad(): void;
-  createSnackbarPortal(): void;
   close(): Promise<void>;
   get alertClass(): string;
   render(): any;
