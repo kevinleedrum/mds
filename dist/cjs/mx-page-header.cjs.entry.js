@@ -5,14 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const index = require('./index-c246f020.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 const dotsVertical = require('./dots-vertical-8fe5a309.js');
-
-const arrowSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path
-    d="M11.3327 5.33317H3.21935L6.94602 1.6065L5.99935 0.666504L0.666016 5.99984L5.99935 11.3332L6.93935 10.3932L3.21935 6.6665H11.3327V5.33317Z"
-    fill="currentColor"
-  />
-</svg>
-`;
+const arrowLeft = require('./arrow-left-a3a34f65.js');
 
 var __rest = (undefined && undefined.__rest) || function (s, e) {
   var t = {};
@@ -40,6 +33,15 @@ const MxPageHeader = class {
     this.pattern = false;
     this.minWidths = new minWidthSync.MinWidths();
     this.renderTertiaryButtonAsMenu = false;
+  }
+  /** Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu` */
+  async resetResizeObserver() {
+    if (this.resizeObserver)
+      this.resizeObserver.disconnect();
+    this.resizeObserver = new dotsVertical.ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
+    this.resizeObserver.observe(this.element);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
@@ -72,10 +74,7 @@ const MxPageHeader = class {
     }
   }
   componentDidLoad() {
-    this.resizeObserver = new dotsVertical.ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
-    this.resizeObserver.observe(this.element);
-    // Wait one tick for layout shifts in order to detect overflow correctly.
-    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
+    this.resetResizeObserver();
   }
   get hostClass() {
     let str = 'mx-page-header flex flex-col px-24 lg:px-72';
@@ -92,7 +91,7 @@ const MxPageHeader = class {
     return str;
   }
   get headingClass() {
-    let str = 'my-0 pr-20 emphasis ';
+    let str = '!my-0 pr-20 emphasis ';
     if (!this.minWidths.md)
       str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else
@@ -111,7 +110,7 @@ const MxPageHeader = class {
     })));
   }
   render() {
-    return (index.h(index.Host, { class: this.hostClass }, index.h("slot", { name: "previous-page" }, this.previousPageUrl && (index.h("a", { href: this.previousPageUrl, class: "flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25" }, index.h("span", { class: "mr-10", innerHTML: arrowSvg }), this.previousPageTitle))), index.h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, index.h("h1", { class: this.headingClass }, index.h("slot", null)), this.buttons.length > 0 && this.buttonsJsx, index.h("slot", { name: "buttons" })), index.h("slot", { name: "tabs" })));
+    return (index.h(index.Host, { class: this.hostClass }, index.h("slot", { name: "previous-page" }, this.previousPageUrl && (index.h("a", { href: this.previousPageUrl, class: "flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25" }, index.h("span", { class: "mr-10", innerHTML: arrowLeft.arrowSvg }), this.previousPageTitle))), index.h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, index.h("h1", { class: this.headingClass }, index.h("slot", null)), this.buttons.length > 0 && this.buttonsJsx, index.h("slot", { name: "buttons" })), index.h("slot", { name: "tabs" })));
   }
   get element() { return index.getElement(this); }
 };

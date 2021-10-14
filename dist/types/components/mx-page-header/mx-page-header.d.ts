@@ -23,6 +23,8 @@ export declare class MxPageHeader {
   minWidths: MinWidths;
   renderTertiaryButtonAsMenu: boolean;
   element: HTMLMxPageHeaderElement;
+  /** Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu` */
+  resetResizeObserver(): Promise<void>;
   componentWillLoad(): void;
   connectedCallback(): void;
   disconnectedCallback(): void;

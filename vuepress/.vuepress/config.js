@@ -149,6 +149,7 @@ module.exports = {
         'pickers',
         'tables',
         'page-headers',
+        'modals',
         'pagination',
         'snackbars',
         'uploads',

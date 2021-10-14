@@ -1,5 +1,6 @@
 import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-935f3e8d.js';
-import { f as fadeScaleIn, a as fadeOut } from './transitions-ff02fce2.js';
+import { a as fadeScaleIn, b as fadeOut } from './transitions-96968b42.js';
+import { m as moveToPortal } from './portal-09c2681e.js';
 import './utils-18e3dfde.js';
 
 const snackbarQueue = []; // Deferred promises
@@ -17,6 +18,7 @@ const MxSnackbar = class {
       try {
         await this.waitForOtherSnackbars();
         this.durationTimer = setTimeout(this.close.bind(this), this.duration);
+        moveToPortal(this.element);
         this.isVisible = true;
         fadeScaleIn(this.alertEl, undefined, 'center');
       }
@@ -45,18 +47,6 @@ const MxSnackbar = class {
     snackbarQueue.splice(snackbarQueue.indexOf(this.queueItem), 1);
     if (queueIndex === 0 && snackbarQueue.length > 0)
       snackbarQueue[0].resolve(); // Show next snackbar in queue
-  }
-  componentWillLoad() {
-    this.createSnackbarPortal();
-    this.portal.append(this.element);
-  }
-  createSnackbarPortal() {
-    this.portal = document.querySelector('.snackbar-portal');
-    if (this.portal)
-      return;
-    this.portal = document.createElement('div');
-    this.portal.classList.add('snackbar-portal', 'mds');
-    document.body.append(this.portal);
   }
   async close() {
     if (!this.isOpen)

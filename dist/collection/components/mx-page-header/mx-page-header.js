@@ -9,7 +9,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     }
   return t;
 };
-import { Component, Host, h, Prop, Element, State } from '@stencil/core';
+import { Component, Host, h, Prop, Element, State, Method } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { ResizeObserver } from '@juggle/resize-observer';
 import dotsSvg from '../../assets/svg/dots-vertical.svg';
@@ -27,6 +27,15 @@ export class MxPageHeader {
     this.pattern = false;
     this.minWidths = new MinWidths();
     this.renderTertiaryButtonAsMenu = false;
+  }
+  /** Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu` */
+  async resetResizeObserver() {
+    if (this.resizeObserver)
+      this.resizeObserver.disconnect();
+    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
+    this.resizeObserver.observe(this.element);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
@@ -59,10 +68,7 @@ export class MxPageHeader {
     }
   }
   componentDidLoad() {
-    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
-    this.resizeObserver.observe(this.element);
-    // Wait one tick for layout shifts in order to detect overflow correctly.
-    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
+    this.resetResizeObserver();
   }
   get hostClass() {
     let str = 'mx-page-header flex flex-col px-24 lg:px-72';
@@ -79,7 +85,7 @@ export class MxPageHeader {
     return str;
   }
   get headingClass() {
-    let str = 'my-0 pr-20 emphasis ';
+    let str = '!my-0 pr-20 emphasis ';
     if (!this.minWidths.md)
       str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else
@@ -194,6 +200,24 @@ export class MxPageHeader {
   static get states() { return {
     "minWidths": {},
     "renderTertiaryButtonAsMenu": {}
+  }; }
+  static get methods() { return {
+    "resetResizeObserver": {
+      "complexType": {
+        "signature": "() => Promise<void>",
+        "parameters": [],
+        "references": {
+          "Promise": {
+            "location": "global"
+          }
+        },
+        "return": "Promise<void>"
+      },
+      "docs": {
+        "text": "Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu`",
+        "tags": []
+      }
+    }
   }; }
   static get elementRef() { return "element"; }
 }

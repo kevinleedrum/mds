@@ -1,5 +1,6 @@
 import { Component, Host, h, Element, Watch, Prop, Event, State } from '@stencil/core';
 import { fadeOut, fadeScaleIn } from '../../utils/transitions';
+import { moveToPortal } from '../../utils/portal';
 const snackbarQueue = []; // Deferred promises
 export class MxSnackbar {
   constructor() {
@@ -13,6 +14,7 @@ export class MxSnackbar {
       try {
         await this.waitForOtherSnackbars();
         this.durationTimer = setTimeout(this.close.bind(this), this.duration);
+        moveToPortal(this.element);
         this.isVisible = true;
         fadeScaleIn(this.alertEl, undefined, 'center');
       }
@@ -41,18 +43,6 @@ export class MxSnackbar {
     snackbarQueue.splice(snackbarQueue.indexOf(this.queueItem), 1);
     if (queueIndex === 0 && snackbarQueue.length > 0)
       snackbarQueue[0].resolve(); // Show next snackbar in queue
-  }
-  componentWillLoad() {
-    this.createSnackbarPortal();
-    this.portal.append(this.element);
-  }
-  createSnackbarPortal() {
-    this.portal = document.querySelector('.snackbar-portal');
-    if (this.portal)
-      return;
-    this.portal = document.createElement('div');
-    this.portal.classList.add('snackbar-portal', 'mds');
-    document.body.append(this.portal);
   }
   async close() {
     if (!this.isOpen)

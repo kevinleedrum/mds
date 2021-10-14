@@ -1,14 +1,7 @@
 import { r as registerInstance, h, H as Host, g as getElement } from './index-d7d68a6b.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { R as ResizeObserver, d as dotsSvg } from './dots-vertical-edbce8e8.js';
-
-const arrowSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path
-    d="M11.3327 5.33317H3.21935L6.94602 1.6065L5.99935 0.666504L0.666016 5.99984L5.99935 11.3332L6.93935 10.3932L3.21935 6.6665H11.3327V5.33317Z"
-    fill="currentColor"
-  />
-</svg>
-`;
+import { a as arrowSvg } from './arrow-left-2380c496.js';
 
 var __rest = (undefined && undefined.__rest) || function (s, e) {
   var t = {};
@@ -36,6 +29,15 @@ const MxPageHeader = class {
     this.pattern = false;
     this.minWidths = new MinWidths();
     this.renderTertiaryButtonAsMenu = false;
+  }
+  /** Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu` */
+  async resetResizeObserver() {
+    if (this.resizeObserver)
+      this.resizeObserver.disconnect();
+    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
+    this.resizeObserver.observe(this.element);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
@@ -68,10 +70,7 @@ const MxPageHeader = class {
     }
   }
   componentDidLoad() {
-    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
-    this.resizeObserver.observe(this.element);
-    // Wait one tick for layout shifts in order to detect overflow correctly.
-    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
+    this.resetResizeObserver();
   }
   get hostClass() {
     let str = 'mx-page-header flex flex-col px-24 lg:px-72';
@@ -88,7 +87,7 @@ const MxPageHeader = class {
     return str;
   }
   get headingClass() {
-    let str = 'my-0 pr-20 emphasis ';
+    let str = '!my-0 pr-20 emphasis ';
     if (!this.minWidths.md)
       str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else

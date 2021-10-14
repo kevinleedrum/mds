@@ -929,7 +929,7 @@ const MxImageUpload$1 = class extends HTMLElement {
     else {
       iconJsx = h("span", { "data-testid": "image-icon", class: this.showDropzoneText ? 'mb-8' : '', innerHTML: imageSvg });
     }
-    return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 opacity-0 cursor-pointer disabled:cursor-auto", disabled: this.hasFile, onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0' + (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? 'Remove' : 'Upload')), this.hasInstructions && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
+    return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 opacity-0 cursor-pointer", onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0' + (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? 'Remove' : 'Upload')), this.hasInstructions && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
   }
   get element() { return this; }
   static get watchers() { return {
@@ -2905,6 +2905,9 @@ const SCALE_IN = {
   endValue: 'scale(1)',
   timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
 };
+const fadeIn = (el, duration = 180) => {
+  return executeTransition(el, [FADE_IN], duration);
+};
 const fadeOut = (el, duration = 150) => {
   return executeTransition(el, [FADE_OUT], duration);
 };
@@ -3207,6 +3210,171 @@ const MxMenuItem$1 = class extends HTMLElement {
         (this.multiSelect ? ' hidden' : '') }, h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), h("span", { ref: el => (this.slotWrapper = el), class: "overflow-hidden overflow-ellipsis" }, h("slot", null))), this.checked && !this.multiSelect && (h("span", { class: "check ml-12", "data-testid": "check", innerHTML: checkSvg })), !!this.submenu && h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowSvg$1 })), this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), h("slot", { name: "submenu" })));
   }
   get element() { return this; }
+};
+
+function moveToPortal(overlayEl) {
+  const portal = getPortal();
+  portal.appendChild(overlayEl);
+}
+function getPortal() {
+  let portal = document.querySelector('.mds-portal');
+  if (!portal) {
+    portal = document.createElement('div');
+    portal.classList.add('mds');
+    portal.style.position = 'relative';
+    portal.style.zIndex = '9999';
+    document.body.appendChild(portal);
+  }
+  return portal;
+}
+
+const arrowSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M11.3327 5.33317H3.21935L6.94602 1.6065L5.99935 0.666504L0.666016 5.99984L5.99935 11.3332L6.93935 10.3932L3.21935 6.6665H11.3327V5.33317Z"
+    fill="currentColor"
+  />
+</svg>
+`;
+
+const MxModal$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.mxClose = createEvent(this, "mxClose", 7);
+    this.hasCard = false;
+    this.hasHeader = false;
+    /** An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text. */
+    this.buttons = [];
+    /** If set to false, pressing Escape will not close the modal. */
+    this.closeOnEscape = true;
+    /** If set to false, clicking the backdrop will not close the modal. */
+    this.closeOnOutsideClick = true;
+    /** Additional classes for the inner scrolling container. */
+    this.contentClass = '';
+    /** Toggle the modal */
+    this.isOpen = false;
+    /** The text to display for the previous page link */
+    this.previousPageTitle = 'Back';
+    /** The URL for the previous page link */
+    this.previousPageUrl = '';
+    /** Set to true to stretch the modal to nearly fill the width and height of the page
+     * (on desktop-sized screens).  Otherwise, the maximum dimensions are 800x600px. */
+    this.large = false;
+    this.minWidths = new MinWidths();
+    this.isVisible = false;
+  }
+  toggleModal() {
+    this.isOpen ? this.openModal() : this.closeModal();
+  }
+  onKeyDown(e) {
+    if (!this.isOpen)
+      return;
+    if (e.key === 'Tab') {
+      // // Trap focus inside modal
+      if (e.shiftKey && document.activeElement === this.firstFocusElement) {
+        this.lastFocusElement.focus();
+        e.preventDefault();
+      }
+      else if (document.activeElement === this.lastFocusElement) {
+        this.firstFocusElement.focus();
+        e.preventDefault();
+      }
+    }
+  }
+  onDocumentKeyDown(e) {
+    if (this.isOpen && this.closeOnEscape && e.key === 'Escape') {
+      const modals = document.querySelectorAll('mx-modal[is-open]');
+      const isTopModal = this.element === modals[modals.length - 1];
+      if (isTopModal)
+        this.mxClose.emit();
+    }
+  }
+  componentWillRender() {
+    this.hasHeader =
+      !!this.element.querySelector('[slot="header-left"]') || !!this.element.querySelector('[slot="header-right"]');
+    this.hasCard = !!this.element.querySelector('[slot="card"]');
+    const tabs = this.element.querySelector('mx-tabs');
+    // Place mx-tabs in either the header-bottom slot OR the mobile mx-page-header tabs slot
+    if (tabs && this.headerBottomSlotWrapper && this.mobilePageHeader) {
+      if (this.minWidths.md)
+        this.headerBottomSlotWrapper.appendChild(tabs);
+      else
+        this.mobilePageHeader.appendChild(tabs);
+    }
+  }
+  connectedCallback() {
+    minWidthSync.subscribeComponent(this);
+  }
+  disconnectedCallback() {
+    minWidthSync.unsubscribeComponent(this);
+  }
+  async openModal() {
+    moveToPortal(this.element);
+    this.isVisible = true;
+    requestAnimationFrame(async () => {
+      this.getFocusElements();
+      await Promise.all([fadeIn(this.backdrop, 250), fadeScaleIn(this.modal, 250)]);
+      this.mobilePageHeader.resetResizeObserver();
+    });
+  }
+  getFocusElements() {
+    this.ancestorFocusedElement = document.activeElement;
+    const isVisible = (el) => !!el.offsetParent;
+    this.focusElements = Array.from(this.element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(isVisible);
+    if (this.focusElements.length) {
+      this.firstFocusElement = this.focusElements[0];
+      this.lastFocusElement = this.focusElements[this.focusElements.length - 1];
+      this.focusElements[0].focus();
+    }
+  }
+  async closeModal() {
+    await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
+    this.isVisible = false;
+    // Restore focus to the element that was focused before the modal was opened
+    this.ancestorFocusedElement && this.ancestorFocusedElement.focus();
+  }
+  onBackdropClick() {
+    if (this.closeOnOutsideClick)
+      this.mxClose.emit();
+  }
+  get hostClass() {
+    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch sm:items-center justify-center';
+    if (!this.isVisible)
+      str += ' hidden';
+    if (this.minWidths.sm) {
+      str += this.large ? ' modal-large' : ' modal-medium';
+    }
+    return str;
+  }
+  get hasFooter() {
+    return ((this.minWidths.md && (!!this.previousPageUrl || this.buttons.length > 0)) ||
+      !!this.element.querySelector('[slot="footer-left"]') ||
+      !!this.element.querySelector('[slot="footer-right"]'));
+  }
+  get buttonsJsx() {
+    return (h("div", { class: "flex py-1 space-x-24 justify-end flex-row-reverse space-x-reverse items-center max-w-full", "data-testid": "buttons" }, this.buttons.map((button, index) => {
+      // If not specified, set btnType automatically for primary, secondary, and tertiary buttons
+      let { btnType } = button;
+      if (!btnType)
+        btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
+      return (h("mx-button", Object.assign({}, button, { xl: true, "btn-type": btnType }), button.label));
+    })));
+  }
+  get modalContentClasses() {
+    let str = 'bg-modal-content order-2 flex-1 px-24 sm:px-40 py-16 sm:py-24 overflow-auto overscroll-none border-b';
+    if (this.contentClass)
+      str += ' ' + this.contentClass;
+    return str;
+  }
+  render() {
+    const headerLeftSlotContent = this.element.querySelector('[slot="header-left"]');
+    return (h(Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" }, h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }), h("div", { ref: el => (this.modal = el), class: "modal flex flex-col rounded-lg shadow-9 relative overflow-hidden" }, h("div", { class: this.modalContentClasses, "data-testid": "modal-content" }, this.description && (h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)), h("slot", null), this.hasCard && (h("div", null, h("div", { class: "bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl", "data-testid": "modal-card" }, h("slot", { name: "card" }))))), h("footer", { class: 'bg-modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
+        (this.hasFooter ? '' : ' hidden') }, h("div", null, h("slot", { name: "footer-left" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "flex items-center uppercase text-4 font-semibold tracking-1-25", "data-testid": "previous-page" }, h("span", { class: "mr-10", innerHTML: arrowSvg }), this.previousPageTitle)))), h("div", { class: "ml-16" }, h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))), h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "md:hidden order-1", buttons: this.buttons, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl }, headerLeftSlotContent && headerLeftSlotContent.innerHTML), h("header", { class: "hidden md:block bg-modal-header order-1 px-40" }, h("div", { class: "flex items-center justify-between min-h-80" }, h("div", { id: "headerText", class: "text-h5 emphasis !my-0", "data-testid": "header-text" }, h("slot", { name: "header-left" })), h("div", null, h("slot", { name: "header-right" }, h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))), h("div", { ref: el => (this.headerBottomSlotWrapper = el) }, h("slot", { name: "header-bottom" }))))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "isOpen": ["toggleModal"]
+  }; }
 };
 
 var resizeObservers = [];
@@ -3724,14 +3892,6 @@ const dotsSvg = `<svg width="4" height="20" viewBox="0 0 4 20" fill="none" xmlns
 </svg>
 `;
 
-const arrowSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path
-    d="M11.3327 5.33317H3.21935L6.94602 1.6065L5.99935 0.666504L0.666016 5.99984L5.99935 11.3332L6.93935 10.3932L3.21935 6.6665H11.3327V5.33317Z"
-    fill="currentColor"
-  />
-</svg>
-`;
-
 var __rest = (undefined && undefined.__rest) || function (s, e) {
   var t = {};
   for (var p in s)
@@ -3759,6 +3919,15 @@ const MxPageHeader$1 = class extends HTMLElement {
     this.pattern = false;
     this.minWidths = new MinWidths();
     this.renderTertiaryButtonAsMenu = false;
+  }
+  /** Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu` */
+  async resetResizeObserver() {
+    if (this.resizeObserver)
+      this.resizeObserver.disconnect();
+    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
+    this.resizeObserver.observe(this.element);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
@@ -3791,10 +3960,7 @@ const MxPageHeader$1 = class extends HTMLElement {
     }
   }
   componentDidLoad() {
-    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
-    this.resizeObserver.observe(this.element);
-    // Wait one tick for layout shifts in order to detect overflow correctly.
-    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
+    this.resetResizeObserver();
   }
   get hostClass() {
     let str = 'mx-page-header flex flex-col px-24 lg:px-72';
@@ -3811,7 +3977,7 @@ const MxPageHeader$1 = class extends HTMLElement {
     return str;
   }
   get headingClass() {
-    let str = 'my-0 pr-20 emphasis ';
+    let str = '!my-0 pr-20 emphasis ';
     if (!this.minWidths.md)
       str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else
@@ -4115,6 +4281,7 @@ const MxSnackbar$1 = class extends HTMLElement {
       try {
         await this.waitForOtherSnackbars();
         this.durationTimer = setTimeout(this.close.bind(this), this.duration);
+        moveToPortal(this.element);
         this.isVisible = true;
         fadeScaleIn(this.alertEl, undefined, 'center');
       }
@@ -4143,18 +4310,6 @@ const MxSnackbar$1 = class extends HTMLElement {
     snackbarQueue.splice(snackbarQueue.indexOf(this.queueItem), 1);
     if (queueIndex === 0 && snackbarQueue.length > 0)
       snackbarQueue[0].resolve(); // Show next snackbar in queue
-  }
-  componentWillLoad() {
-    this.createSnackbarPortal();
-    this.portal.append(this.element);
-  }
-  createSnackbarPortal() {
-    this.portal = document.querySelector('.snackbar-portal');
-    if (this.portal)
-      return;
-    this.portal = document.createElement('div');
-    this.portal.classList.add('snackbar-portal', 'mds');
-    document.body.append(this.portal);
   }
   async close() {
     if (!this.isOpen)
@@ -5363,6 +5518,7 @@ const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name"
 const MxLinearProgress = /*@__PURE__*/proxyCustomElement(MxLinearProgress$1, [0,"mx-linear-progress",{"value":[2],"appearDelay":[2,"appear-delay"]}]);
 const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"triggerEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
 const MxMenuItem = /*@__PURE__*/proxyCustomElement(MxMenuItem$1, [4,"mx-menu-item",{"checked":[4],"disabled":[4],"icon":[1],"label":[1],"multiSelect":[4,"multi-select"],"minWidths":[32]},[[1,"mouseenter","onMouseEnter"],[1,"mouseleave","onMouseLeave"],[0,"focus","onFocus"],[0,"keydown","onKeyDown"]]]);
+const MxModal = /*@__PURE__*/proxyCustomElement(MxModal$1, [4,"mx-modal",{"buttons":[16],"closeOnEscape":[4,"close-on-escape"],"closeOnOutsideClick":[4,"close-on-outside-click"],"contentClass":[1,"content-class"],"description":[1],"isOpen":[4,"is-open"],"previousPageTitle":[1,"previous-page-title"],"previousPageUrl":[1,"previous-page-url"],"large":[4],"minWidths":[32],"isVisible":[32]},[[0,"keydown","onKeyDown"],[4,"keydown","onDocumentKeyDown"]]]);
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);
 const MxPagination = /*@__PURE__*/proxyCustomElement(MxPagination$1, [4,"mx-pagination",{"page":[2],"rowsPerPageOptions":[16],"rowsPerPage":[2,"rows-per-page"],"simple":[4],"totalRows":[2,"total-rows"],"disabled":[4],"disableNextPage":[4,"disable-next-page"],"hideRowsPerPage":[32],"moveStatusToBottom":[32],"isXSmallMinWidth":[32],"isSmallMinWidth":[32]}]);
 const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[4]}]);
@@ -5396,6 +5552,7 @@ const defineCustomElements = (opts) => {
   MxLinearProgress,
   MxMenu,
   MxMenuItem,
+  MxModal,
   MxPageHeader,
   MxPagination,
   MxRadio,
@@ -5420,4 +5577,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxModal, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, defineCustomElements };

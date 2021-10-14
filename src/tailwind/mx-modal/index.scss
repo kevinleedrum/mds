@@ -1,0 +1,38 @@
+.mx-modal {
+  color: var(--mds-text-modal);
+
+  .modal {
+    min-width: 300px;
+  }
+
+  .bg-modal-backdrop {
+    background: var(--mds-bg-modal-backdrop);
+  }
+
+  .bg-modal-header {
+    background: var(--mds-bg-modal-header);
+  }
+
+  .bg-modal-content {
+    background: var(--mds-bg-modal);
+  }
+
+  .bg-modal-card {
+    background: var(--mds-bg-modal-card);
+  }
+
+  .bg-modal-footer {
+    background: var(--mds-bg-modal-footer);
+  }
+
+  &.modal-medium > .modal {
+    max-width: 50rem; /* 800px */
+    max-height: 37.5rem; /* 600px */
+  }
+
+  &.modal-large > .modal {
+    /* 40px margin around modal */
+    max-width: calc(100vw - 5rem);
+    max-height: calc(100vh - 5rem);
+  }
+}

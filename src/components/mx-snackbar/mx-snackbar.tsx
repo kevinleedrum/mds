@@ -1,5 +1,6 @@
 import { Component, Host, h, Element, Watch, Prop, Event, EventEmitter, State } from '@stencil/core';
 import { fadeOut, fadeScaleIn } from '../../utils/transitions';
+import { moveToPortal } from '../../utils/portal';
 
 const snackbarQueue: { resolve: any; reject: any }[] = []; // Deferred promises
 
@@ -10,7 +11,6 @@ const snackbarQueue: { resolve: any; reject: any }[] = []; // Deferred promises
 export class MxSnackbar {
   alertEl: HTMLElement;
   durationTimer: NodeJS.Timeout;
-  portal: HTMLElement; // Snackbars are moved to a portal to break out of stacking contexts
   queueItem: { resolve: Function; reject: Function };
 
   @Prop() duration = 6000;
@@ -29,6 +29,7 @@ export class MxSnackbar {
       try {
         await this.waitForOtherSnackbars();
         this.durationTimer = setTimeout(this.close.bind(this), this.duration);
+        moveToPortal(this.element);
         this.isVisible = true;
         fadeScaleIn(this.alertEl, undefined, 'center');
       } catch (err) {
@@ -54,19 +55,6 @@ export class MxSnackbar {
     const queueIndex = snackbarQueue.indexOf(this.queueItem);
     snackbarQueue.splice(snackbarQueue.indexOf(this.queueItem), 1);
     if (queueIndex === 0 && snackbarQueue.length > 0) snackbarQueue[0].resolve(); // Show next snackbar in queue
-  }
-
-  componentWillLoad() {
-    this.createSnackbarPortal();
-    this.portal.append(this.element);
-  }
-
-  createSnackbarPortal() {
-    this.portal = document.querySelector('.snackbar-portal');
-    if (this.portal) return;
-    this.portal = document.createElement('div');
-    this.portal.classList.add('snackbar-portal', 'mds');
-    document.body.append(this.portal);
   }
 
   async close() {
