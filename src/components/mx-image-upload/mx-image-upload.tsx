@@ -217,7 +217,7 @@ export class MxImageUpload {
           {this.hasFile && this.thumbnailBackgroundImage && (
             <div
               data-testid="thumbnail"
-              class={'thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none'}
+              class="thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none"
               style={{ backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize }}
             ></div>
           )}
