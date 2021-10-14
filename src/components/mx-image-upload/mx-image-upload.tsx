@@ -217,13 +217,16 @@ export class MxImageUpload {
           {this.hasFile && this.thumbnailBackgroundImage && (
             <div
               data-testid="thumbnail"
-              class="thumbnail absolute inset-0 bg-center bg-no-repeat"
+              class={'thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none'}
               style={{ backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize }}
             ></div>
           )}
           <div
             data-testid="uploaded"
-            class={'flex items-center justify-center absolute inset-0' + (this.isUploaded ? '' : ' hidden')}
+            class={
+              'flex items-center justify-center absolute inset-0 pointer-events-none ' +
+              (this.isUploaded ? '' : ' hidden')
+            }
           >
             <slot name="uploaded"></slot>
           </div>
