@@ -34,7 +34,7 @@ export class MxImageUpload {
   @Prop({ mutable: true, reflect: true }) isUploading = false;
   /** The `name` attribute for the `input` element. */
   @Prop() name: string;
-  /** The text to display on the Upload button */
+  /** The text to display on the Remove button */
   @Prop() removeButtonLabel = 'Remove';
   /** Set to `false` to hide the default Upload/Remove button. */
   @Prop() showButton = true;
