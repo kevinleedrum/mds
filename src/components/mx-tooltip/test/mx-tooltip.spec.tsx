@@ -88,6 +88,10 @@ describe('mx-tooltip', () => {
     await page.waitForChanges();
     expect(tooltip.style.maxWidth).toBe('33rem');
   });
+
+  it('sets the anchor aria-describedby attribute to the tooltip id', () => {
+    expect(anchorEl.getAttribute('aria-describedby')).toBe(tooltip.id);
+  });
 });
 
 describe('mx-tooltip (tooltip slot)', () => {

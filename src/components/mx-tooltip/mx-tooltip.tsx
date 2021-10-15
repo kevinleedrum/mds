@@ -1,6 +1,7 @@
 import { Component, Host, h, Element, Prop, Watch } from '@stencil/core';
 import { createPopover, PopoverInstance, PopoverPlacement, convertPlacementToOrigin } from '../../utils/popover';
 import { fadeScaleIn, fadeOut } from '../../utils/transitions';
+import { uuidv4 } from '../../utils/utils';
 
 @Component({
   tag: 'mx-tooltip',
@@ -10,6 +11,7 @@ export class MxTooltip {
   openTimeout;
   popoverInstance: PopoverInstance;
   tooltipElem: HTMLElement;
+  uuid: string = uuidv4();
 
   /** Delay showing the tooltip for this many milliseconds */
   @Prop() appearDelay = 0;
@@ -39,6 +41,7 @@ export class MxTooltip {
     let anchorEl = this.element.firstElementChild as HTMLElement;
     // For custom elements that wrap buttons, inputs, attach event listeners to the native element
     anchorEl = this.element.firstElementChild.querySelector('button, input, [role="button"]') || anchorEl;
+    anchorEl.setAttribute('aria-describedby', this.uuid);
     anchorEl.addEventListener('mouseenter', this.show.bind(this));
     anchorEl.addEventListener('mouseleave', this.hide.bind(this));
     if (anchorEl.tabIndex === -1) anchorEl.tabIndex = 0;
@@ -90,6 +93,8 @@ export class MxTooltip {
         <slot></slot>
         <div
           ref={el => (this.tooltipElem = el)}
+          id={this.uuid}
+          role="tooltip"
           class={this.tooltipClasses}
           style={{ maxWidth: this.maxWidth }}
           data-testid="tooltip"
