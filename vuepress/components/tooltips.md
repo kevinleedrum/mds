@@ -61,10 +61,10 @@ Set the `inverted` prop to change the text and background colors of the tooltip 
   <div class="flex items-center px-40 py-20 space-x-40 bg-purple-500 rounded-xl">
 <!-- #region inverted -->
     <mx-tooltip inverted value="Save">
-      <i class="ph-floppy-disk text-white opacity-50 text-h5"></i>
+      <i class="ph-floppy-disk text-white text-h5"></i>
     </mx-tooltip>
     <mx-tooltip inverted extended value="Are you telling me you built a time machine out of a Delorean?">
-      <i class="ph-question text-white opacity-50 text-h5"></i>
+      <i class="ph-question text-white text-h5"></i>
     </mx-tooltip>
 <!-- #endregion inverted -->
   </div>
