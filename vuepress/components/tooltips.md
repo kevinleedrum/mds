@@ -31,7 +31,7 @@ use the `appearDelay` prop.
 The `extended` prop applies some additional styling that is best suited for multiple lines of text.
 The max width of the tooltip can also be adjusted using the `maxWidth` prop.
 
-To use markdown inside the tooltip, use the `tooltip` slot instead of the `value` prop.
+To use markup inside the tooltip, use the `tooltip` slot instead of the `value` prop.
 
 <section class="mds">
   <div class="flex items-center space-x-40">
