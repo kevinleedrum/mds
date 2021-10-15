@@ -88,7 +88,12 @@ export class MxTooltip {
     return (
       <Host class="inline-block">
         <slot></slot>
-        <div ref={el => (this.tooltipElem = el)} class={this.tooltipClasses} style={{ maxWidth: this.maxWidth }}>
+        <div
+          ref={el => (this.tooltipElem = el)}
+          class={this.tooltipClasses}
+          style={{ maxWidth: this.maxWidth }}
+          data-testid="tooltip"
+        >
           <slot name="tooltip">{this.value}</slot>
         </div>
       </Host>
