@@ -30,7 +30,8 @@
     "./components/mx-tabs/mx-tabs.js",
     "./components/mx-time-picker/mx-time-picker.js",
     "./components/mx-toggle-button/mx-toggle-button.js",
-    "./components/mx-toggle-button-group/mx-toggle-button-group.js"
+    "./components/mx-toggle-button-group/mx-toggle-button-group.js",
+    "./components/mx-tooltip/mx-tooltip.js"
   ],
   "compiler": {
     "name": "@stencil/core",

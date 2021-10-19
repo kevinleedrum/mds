@@ -735,6 +735,40 @@ export namespace Components {
     interface MxToggleButtonGroup {
         "value": any;
     }
+    interface MxTooltip {
+        /**
+          * Delay showing the tooltip for this many milliseconds
+         */
+        "appearDelay": number;
+        /**
+          * Increase the padding, add a shadow, and make the corners less rounded (typically for multi-line text)
+         */
+        "extended": boolean;
+        /**
+          * Invert the default colors (i.e. dark text on a light background)
+         */
+        "inverted": boolean;
+        /**
+          * This is typically updated automatically based on events, but may be changed programmatically if necessary.
+         */
+        "isOpen": boolean;
+        /**
+          * The maximum width of the tooltip (e.g. '20rem')
+         */
+        "maxWidth": string;
+        /**
+          * The preferred placement of the tooltip, relative to the anchor element.
+         */
+        "placement": PopoverPlacement;
+        /**
+          * Additional classes to add to the tooltip.
+         */
+        "tooltipClass": string;
+        /**
+          * The text to show inside the tooltip.  Alternatively, use the `tooltip` slot.
+         */
+        "value": string;
+    }
 }
 declare global {
     interface HTMLMxBadgeElement extends Components.MxBadge, HTMLStencilElement {
@@ -923,6 +957,12 @@ declare global {
         prototype: HTMLMxToggleButtonGroupElement;
         new (): HTMLMxToggleButtonGroupElement;
     };
+    interface HTMLMxTooltipElement extends Components.MxTooltip, HTMLStencilElement {
+    }
+    var HTMLMxTooltipElement: {
+        prototype: HTMLMxTooltipElement;
+        new (): HTMLMxTooltipElement;
+    };
     interface HTMLElementTagNameMap {
         "mx-badge": HTMLMxBadgeElement;
         "mx-button": HTMLMxButtonElement;
@@ -955,6 +995,7 @@ declare global {
         "mx-time-picker": HTMLMxTimePickerElement;
         "mx-toggle-button": HTMLMxToggleButtonElement;
         "mx-toggle-button-group": HTMLMxToggleButtonGroupElement;
+        "mx-tooltip": HTMLMxTooltipElement;
     }
 }
 declare namespace LocalJSX {
@@ -1709,6 +1750,40 @@ declare namespace LocalJSX {
         "onMxInput"?: (event: CustomEvent<any>) => void;
         "value"?: any;
     }
+    interface MxTooltip {
+        /**
+          * Delay showing the tooltip for this many milliseconds
+         */
+        "appearDelay"?: number;
+        /**
+          * Increase the padding, add a shadow, and make the corners less rounded (typically for multi-line text)
+         */
+        "extended"?: boolean;
+        /**
+          * Invert the default colors (i.e. dark text on a light background)
+         */
+        "inverted"?: boolean;
+        /**
+          * This is typically updated automatically based on events, but may be changed programmatically if necessary.
+         */
+        "isOpen"?: boolean;
+        /**
+          * The maximum width of the tooltip (e.g. '20rem')
+         */
+        "maxWidth"?: string;
+        /**
+          * The preferred placement of the tooltip, relative to the anchor element.
+         */
+        "placement"?: PopoverPlacement;
+        /**
+          * Additional classes to add to the tooltip.
+         */
+        "tooltipClass"?: string;
+        /**
+          * The text to show inside the tooltip.  Alternatively, use the `tooltip` slot.
+         */
+        "value"?: string;
+    }
     interface IntrinsicElements {
         "mx-badge": MxBadge;
         "mx-button": MxButton;
@@ -1741,6 +1816,7 @@ declare namespace LocalJSX {
         "mx-time-picker": MxTimePicker;
         "mx-toggle-button": MxToggleButton;
         "mx-toggle-button-group": MxToggleButtonGroup;
+        "mx-tooltip": MxTooltip;
     }
 }
 export { LocalJSX as JSX };
@@ -1778,6 +1854,7 @@ declare module "@stencil/core" {
             "mx-time-picker": LocalJSX.MxTimePicker & JSXBase.HTMLAttributes<HTMLMxTimePickerElement>;
             "mx-toggle-button": LocalJSX.MxToggleButton & JSXBase.HTMLAttributes<HTMLMxToggleButtonElement>;
             "mx-toggle-button-group": LocalJSX.MxToggleButtonGroup & JSXBase.HTMLAttributes<HTMLMxToggleButtonGroupElement>;
+            "mx-tooltip": LocalJSX.MxTooltip & JSXBase.HTMLAttributes<HTMLMxTooltipElement>;
         }
     }
 }

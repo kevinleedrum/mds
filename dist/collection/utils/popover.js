@@ -2,7 +2,7 @@ import { createPopper } from '@popperjs/core';
 /** Create a popover that is anchored to another element or, if not specified, the body.
  * Returns a Promise that resolves once the popover is rendered and positioned. */
 export async function createPopover(anchorEl, popoverEl, placement, offset) {
-  if (popoverEl.componentOnReady)
+  if ('componentOnReady' in popoverEl)
     await popoverEl.componentOnReady();
   const instance = createPopper(anchorEl, popoverEl, {
     placement,

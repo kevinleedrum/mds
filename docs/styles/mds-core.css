@@ -263,6 +263,14 @@
   --mds-text-checkbox: #2d2d2d;
   /* #endregion selection-controls */
 
+  /* #region tooltips */
+  /* Tooltips */
+  --mds-bg-tooltip-inverted: #fafafa;
+  --mds-bg-tooltip: #5a5a5a;
+  --mds-text-tooltip-inverted: #333;
+  --mds-text-tooltip: #fff;
+  /* #endregion tooltips */
+
   /* #region progress */
   /* Progress Indicators */
   --mds-bg-linear-progress-track: #c3d3e6;
@@ -4737,6 +4745,10 @@ video {
 
   width: 10rem;
 }
+.mds .w-208{
+
+  width: 13rem;
+}
 .mds .w-32{
 
   width: 2rem;
@@ -4820,10 +4832,6 @@ video {
 .mds .w-192{
 
   width: 12rem;
-}
-.mds .w-208{
-
-  width: 13rem;
 }
 .mds .w-224{
 
@@ -5951,6 +5959,14 @@ video {
 
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
+.mds .space-x-40 > :not([hidden]) ~ :not([hidden]){
+
+  --tw-space-x-reverse: 0;
+
+  margin-right: calc(2.5rem * var(--tw-space-x-reverse));
+
+  margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
 .mds .space-y-40 > :not([hidden]) ~ :not([hidden]){
 
   --tw-space-y-reverse: 0;
@@ -6174,14 +6190,6 @@ video {
   margin-right: calc(2.25rem * var(--tw-space-x-reverse));
 
   margin-left: calc(2.25rem * calc(1 - var(--tw-space-x-reverse)));
-}
-.mds .space-x-40 > :not([hidden]) ~ :not([hidden]){
-
-  --tw-space-x-reverse: 0;
-
-  margin-right: calc(2.5rem * var(--tw-space-x-reverse));
-
-  margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .mds .space-x-44 > :not([hidden]) ~ :not([hidden]){
 
@@ -8651,6 +8659,12 @@ video {
 
   padding-right: 0.125rem;
 }
+.mds .py-4{
+
+  padding-top: 0.25rem;
+
+  padding-bottom: 0.25rem;
+}
 .mds .px-20{
 
   padding-left: 1.25rem;
@@ -8662,12 +8676,6 @@ video {
   padding-top: 0.125rem;
 
   padding-bottom: 0.125rem;
-}
-.mds .py-4{
-
-  padding-top: 0.25rem;
-
-  padding-bottom: 0.25rem;
 }
 .mds .py-56{
 
@@ -11106,6 +11114,18 @@ video {
   }
 .mx-switch .slider.round:before {
     border-radius: 50%;
+  }
+.mx-tooltip {
+  color: #fff;
+  color: var(--mds-text-tooltip);
+  background: #5a5a5a;
+  background: var(--mds-bg-tooltip);
+}
+.mx-tooltip.inverted {
+    color: #333;
+    color: var(--mds-text-tooltip-inverted);
+    background: #fafafa;
+    background: var(--mds-bg-tooltip-inverted);
   }
 .mx-circular-progress svg {
     color: #0457af;

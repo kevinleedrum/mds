@@ -933,7 +933,8 @@ const MxImageUpload$1 = class extends HTMLElement {
     else {
       iconJsx = h("span", { "data-testid": "image-icon", class: this.showDropzoneText ? 'mb-8' : '', innerHTML: imageSvg });
     }
-    return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 opacity-0 cursor-pointer", onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0' + (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)), this.hasInstructions && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
+    return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 opacity-0 cursor-pointer", onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0 pointer-events-none ' +
+        (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)), this.hasInstructions && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
   }
   get element() { return this; }
   static get watchers() { return {
@@ -2825,7 +2826,7 @@ var createPopper = /*#__PURE__*/popperGenerator({
 /** Create a popover that is anchored to another element or, if not specified, the body.
  * Returns a Promise that resolves once the popover is rendered and positioned. */
 async function createPopover(anchorEl, popoverEl, placement, offset) {
-  if (popoverEl.componentOnReady)
+  if ('componentOnReady' in popoverEl)
     await popoverEl.componentOnReady();
   const instance = createPopper(anchorEl, popoverEl, {
     placement,
@@ -5508,6 +5509,85 @@ const MxToggleButtonGroup$1 = class extends HTMLElement {
   }; }
 };
 
+const MxTooltip$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.uuid = uuidv4();
+    /** Delay showing the tooltip for this many milliseconds */
+    this.appearDelay = 0;
+    /** Increase the padding, add a shadow, and make the corners less rounded (typically for multi-line text) */
+    this.extended = false;
+    /** Invert the default colors (i.e. dark text on a light background) */
+    this.inverted = false;
+    /** The maximum width of the tooltip (e.g. '20rem') */
+    this.maxWidth = '10rem';
+    /** This is typically updated automatically based on events, but may be changed programmatically if necessary. */
+    this.isOpen = false;
+    /** The preferred placement of the tooltip, relative to the anchor element. */
+    this.placement = 'bottom';
+  }
+  onIsOpenChange() {
+    this.isOpen ? this.show() : this.hide();
+  }
+  componentDidLoad() {
+    let anchorEl = this.element.firstElementChild;
+    // For custom elements that wrap buttons, inputs, attach event listeners to the native element
+    anchorEl = this.element.firstElementChild.querySelector('button, input, [role="button"]') || anchorEl;
+    anchorEl.setAttribute('aria-describedby', this.uuid);
+    anchorEl.addEventListener('mouseenter', this.show.bind(this));
+    anchorEl.addEventListener('mouseleave', this.hide.bind(this));
+    if (anchorEl.tabIndex === -1)
+      anchorEl.tabIndex = 0;
+    anchorEl.addEventListener('focus', this.show.bind(this));
+    anchorEl.addEventListener('blur', this.hide.bind(this));
+  }
+  async show() {
+    clearTimeout(this.openTimeout);
+    if (this.isOpen)
+      return;
+    this.openTimeout = setTimeout(async () => {
+      this.isOpen = true;
+      this.popoverInstance = await createPopover(this.element.firstElementChild, this.tooltipElem, this.placement, [0, 4]);
+      fadeScaleIn(this.tooltipElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
+    }, this.appearDelay);
+  }
+  async hide() {
+    clearTimeout(this.openTimeout);
+    if (!this.isOpen)
+      return;
+    await fadeOut(this.tooltipElem);
+    this.isOpen = false;
+    if (!this.popoverInstance)
+      return;
+    this.popoverInstance.destroy();
+    this.popoverInstance = null;
+  }
+  get tooltipClasses() {
+    let str = 'mx-tooltip caption1 absolute pointer-events-none z-50';
+    if (!this.isOpen)
+      str += ' hidden';
+    if (this.inverted)
+      str += ' inverted';
+    if (this.extended) {
+      str += ' p-16 rounded-lg shadow-4';
+    }
+    else {
+      str += ' px-12 py-4 rounded-2xl';
+    }
+    if (this.tooltipClass)
+      str += ' ' + this.tooltipClass;
+    return str;
+  }
+  render() {
+    return (h(Host, { class: "inline-block" }, h("slot", null), h("div", { ref: el => (this.tooltipElem = el), id: this.uuid, role: "tooltip", class: this.tooltipClasses, style: { maxWidth: this.maxWidth }, "data-testid": "tooltip" }, h("slot", { name: "tooltip" }, this.value))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "isOpen": ["onIsOpenChange"]
+  }; }
+};
+
 const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"indicator":[8],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
 const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"formaction":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelLeft":[4,"label-left"],"labelName":[1,"label-name"],"labelClass":[1,"label-class"],"hideLabel":[4,"hide-label"],"checked":[4],"disabled":[4],"indeterminate":[4]}]);
@@ -5539,6 +5619,7 @@ const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [0,"mx-tabs",{"fill":[4
 const MxTimePicker = /*@__PURE__*/proxyCustomElement(MxTimePicker$1, [0,"mx-time-picker",{"ariaLabel":[1,"aria-label"],"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[0,"click","onClick"]]]);
 const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"ariaLabel":[1,"aria-label"],"value":[8]}]);
 const MxToggleButtonGroup = /*@__PURE__*/proxyCustomElement(MxToggleButtonGroup$1, [4,"mx-toggle-button-group",{"value":[1032]},[[0,"click","onToggleButtonClick"]]]);
+const MxTooltip = /*@__PURE__*/proxyCustomElement(MxTooltip$1, [4,"mx-tooltip",{"appearDelay":[2,"appear-delay"],"extended":[4],"inverted":[4],"maxWidth":[1,"max-width"],"isOpen":[1540,"is-open"],"placement":[1],"tooltipClass":[1,"tooltip-class"],"value":[1]}]);
 const defineCustomElements = (opts) => {
   if (typeof customElements !== 'undefined') {
     [
@@ -5572,7 +5653,8 @@ const defineCustomElements = (opts) => {
   MxTabs,
   MxTimePicker,
   MxToggleButton,
-  MxToggleButtonGroup
+  MxToggleButtonGroup,
+  MxTooltip
     ].forEach(cmp => {
       if (!customElements.get(cmp.is)) {
         customElements.define(cmp.is, cmp, opts);
@@ -5581,4 +5663,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxModal, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxModal, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, MxTooltip, defineCustomElements };
