@@ -188,6 +188,12 @@ export const MxToggleButtonGroup: {
   new (): MxToggleButtonGroup;
 };
 
+interface MxTooltip extends Components.MxTooltip, HTMLElement {}
+export const MxTooltip: {
+  prototype: MxTooltip;
+  new (): MxTooltip;
+};
+
 /**
  * Utility to define all custom elements within this package using the tag name provided in the component's source. 
  * When defining each custom element, it will also check it's safe to define by:

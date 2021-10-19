@@ -142,6 +142,7 @@ module.exports = {
         'chips',
         'selection-controls',
         'badges',
+        'tooltips',
         'progress',
         'tabs',
         'dropdowns',

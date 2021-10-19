@@ -28,6 +28,7 @@
 @import './mx-checkbox/index.scss';
 @import './mx-radio/index.scss';
 @import './mx-switch/index.scss';
+@import './mx-tooltip/index.scss';
 @import './mx-circular-progress/index.scss';
 @import './mx-linear-progress/index.scss';
 @import './mx-tab/index.scss';

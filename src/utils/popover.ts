@@ -12,11 +12,11 @@ export type PopoverOffset = [number, number];
  * Returns a Promise that resolves once the popover is rendered and positioned. */
 export async function createPopover(
   anchorEl: HTMLElement,
-  popoverEl: HTMLStencilElement,
+  popoverEl: HTMLStencilElement | HTMLElement,
   placement: PopoverPlacement,
   offset?: PopoverOffset,
 ): Promise<PopoverInstance> {
-  if (popoverEl.componentOnReady) await popoverEl.componentOnReady();
+  if ('componentOnReady' in popoverEl) await popoverEl.componentOnReady();
   const instance = createPopper(anchorEl, popoverEl, {
     placement,
     modifiers: getModifiers(placement, offset),
