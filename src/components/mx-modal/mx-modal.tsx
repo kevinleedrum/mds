@@ -254,6 +254,9 @@ export class MxModal {
                 <slot name="header-bottom"></slot>
               </div>
             )}
+            <div slot="modal-header-center" class="flex items-center justify-center">
+              <slot name="header-center"></slot>
+            </div>
             <div slot="modal-header-right">
               <slot name="header-right">
                 <mx-button btn-type="text" data-testid="close-button" onClick={this.mxClose.emit}>

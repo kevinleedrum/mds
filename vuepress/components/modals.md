@@ -4,11 +4,12 @@ Modals appear in front of app content and remain on screen until the user takes 
 
 To open or close a modal, set its `isOpen` prop to `true` or `false`. The modal will emit an `mxClose` event when the user clicks the Close button, presses <kbd>Esc</kbd>, or clicks outside the modal (unless that behavior is disabled via props).
 
-The modal component uses a [Page Header](/page-headers.html) internally. The `previousPageUrl`, `previousPageTitle`, and `buttons` props are passed to that Page Header. Additionally, the `mx-modal` component has seven slots for content:
+The modal component uses a [Page Header](/page-headers.html) internally. The `previousPageUrl`, `previousPageTitle`, and `buttons` props are passed to that Page Header. Additionally, the `mx-modal` component has eight slots for content:
 
 - &bull; The default, unnamed slot is for the main modal content.
 - &bull; `card` - This content will appear in a card-like container with rounded corners.
 - &bull; `header-left` - Place heading text in this slot.
+- &bull; `header-center` - This content appears to the right of the heading text.
 - &bull; `header-right` - This contains a Close button unless overridden.
 - &bull; `header-bottom` - This slot is for content that should appear below the header text, such as tabs.
 - &bull; `footer-left` - This slot contains the previous page link (if the `previousPageUrl` prop is provided).
@@ -103,7 +104,7 @@ On small screens, the modal will fill the screen, except for a 24-px margin at t
 
 <<< @/vuepress/components/modals.md#modals-2
 
-### Modal that opens another modal
+### Modal with `header-center` content that opens another modal
 
 <!-- #region modals-3 -->
 <section class="mds">
@@ -113,17 +114,24 @@ On small screens, the modal will fill the screen, except for a 24-px margin at t
     @mxClose="isOpenC = false"
   >
     <div slot="header-left">Header</div>
+    <div slot="header-center">
+      <mx-toggle-button-group :value="device" @input="device = $event.detail">
+        <mx-toggle-button icon="ph-desktop" value="desktop" />
+        <mx-toggle-button icon="ph-device-tablet" value="tablet" />
+        <mx-toggle-button icon="ph-device-mobile" value="mobile" />
+      </mx-toggle-button-group>
+    </div>
     <p class="mt-0">
       Modals can stack.  Click the button to open another modal on top of this one.
     </p>
     <mx-button @click="isOpenD = true">Open Modal</mx-button>
-    <mx-modal
-      :is-open="isOpenD"
-      @mxClose="isOpenD = false"
-    >
-      <div slot="header-left">Header</div>
-      <p>Pressing <kbd>Esc</kbd> only closes the top modal.</p>
-    </mx-modal>
+  </mx-modal>
+  <mx-modal
+    :is-open="isOpenD"
+    @mxClose="isOpenD = false"
+  >
+    <div slot="header-left">Header</div>
+    <p>Pressing <kbd>Esc</kbd> only closes the top modal.</p>
   </mx-modal>
 </section>
 <!-- #endregion modals-3 -->
@@ -195,6 +203,7 @@ export default {
       isOpenD: false,
       isOpenE: false,
       activeTab: 0,
+      device: 'desktop',
     }
   },
   methods: {

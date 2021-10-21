@@ -24,7 +24,7 @@ export class MxPageHeader {
 
   /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
   @Prop() buttons: IPageHeaderButton[] = [];
-  /** This flag is set by the Modal component to adjust styling when used internally. */
+  /** This flag is set by the Modal component to adjust the page header styling when used internally. */
   @Prop() modal: boolean = false;
   /** The URL for the previous page link */
   @Prop() previousPageUrl: string = '';
@@ -173,9 +173,12 @@ export class MxPageHeader {
           )}
         </slot>
         <div class="flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap">
-          <h1 class={this.headingClass}>
-            <slot></slot>
-          </h1>
+          <div class="grid grid-cols-1 sm:grid-cols-3 w-full items-center">
+            <h1 class={this.headingClass}>
+              <slot></slot>
+            </h1>
+            <slot name="modal-header-center"></slot>
+          </div>
           {!(this.modal && this.minWidths.md) && this.buttons.length > 0 && this.buttonsJsx}
           <slot name="buttons"></slot>
         </div>
