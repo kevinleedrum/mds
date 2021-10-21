@@ -248,7 +248,9 @@ export class MxModal {
             previous-page-title={this.previousPageTitle}
             previous-page-url={this.previousPageUrl}
           >
-            <slot name="header-left"></slot>
+            <span id="headerText" data-testid="header-text">
+              <slot name="header-left"></slot>
+            </span>
             {this.hasHeaderBottom && (
               <div slot="tabs">
                 <slot name="header-bottom"></slot>
