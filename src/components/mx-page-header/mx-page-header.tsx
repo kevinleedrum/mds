@@ -16,6 +16,7 @@ export interface IPageHeaderButton extends IMxButtonProps {
 export class MxPageHeader {
   buttonRow: HTMLElement;
   hasTabs: boolean = false;
+  hasModalHeaderCenter: boolean = false;
   menuButton: HTMLMxIconButtonElement;
   resizeObserver: ResizeObserver;
   tabSlot: HTMLElement;
@@ -50,6 +51,7 @@ export class MxPageHeader {
 
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
+    this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
   }
 
   connectedCallback() {
@@ -173,7 +175,7 @@ export class MxPageHeader {
           )}
         </slot>
         <div class="flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap">
-          <div class="grid grid-cols-1 sm:grid-cols-3 w-full items-center">
+          <div class={'grid grid-cols-1 flex-1 items-center' + (this.hasModalHeaderCenter ? ' sm:grid-cols-3' : '')}>
             <h1 class={this.headingClass}>
               <slot></slot>
             </h1>
