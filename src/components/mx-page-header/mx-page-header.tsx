@@ -24,6 +24,8 @@ export class MxPageHeader {
 
   /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
   @Prop() buttons: IPageHeaderButton[] = [];
+  /** This flag is set by the Modal component to adjust styling when used internally. */
+  @Prop() modal: boolean = false;
   /** The URL for the previous page link */
   @Prop() previousPageUrl: string = '';
   /** The text to display for the previous page link */
@@ -83,8 +85,15 @@ export class MxPageHeader {
   }
 
   get hostClass() {
-    let str = 'mx-page-header flex flex-col px-24 lg:px-72';
+    let str = 'mx-page-header flex flex-col';
     if (this.pattern) str += ' bg-pattern';
+    if (this.minWidths.md && this.modal) {
+      str += ' px-40';
+      str += this.hasTabs ? ' min-h-128' : ' min-h-80';
+      return str;
+    } else {
+      str += ' px-24 lg:px-72';
+    }
     if (this.hasTabs) str += ' pb-12 md:pb-0';
     if (this.buttons.length && this.hasTabs) str += ' min-h-176 md:min-h-164';
     else if (this.buttons.length) str += ' min-h-128';
@@ -95,7 +104,13 @@ export class MxPageHeader {
   get headingClass() {
     let str = '!my-0 pr-20 emphasis ';
     if (!this.minWidths.md) str += this.previousPageUrl ? 'text-h6' : 'text-h5';
-    else str += this.previousPageUrl ? 'text-h5' : 'text-h3';
+    else str += this.previousPageUrl || this.modal ? 'text-h5' : 'text-h3';
+    return str;
+  }
+
+  get previousPageClass(): string {
+    let str = 'flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25';
+    if (this.modal) str += ' md:hidden';
     return str;
   }
 
@@ -145,12 +160,13 @@ export class MxPageHeader {
   render() {
     return (
       <Host class={this.hostClass}>
+        {/* This slot is typically used for the modal Close button */}
+        <div class="absolute top-16 md:top-20 md:mt-2 right-24 md:right-40">
+          <slot name="modal-header-right"></slot>
+        </div>
         <slot name="previous-page">
           {this.previousPageUrl && (
-            <a
-              href={this.previousPageUrl}
-              class="flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25"
-            >
+            <a href={this.previousPageUrl} class={this.previousPageClass}>
               <span class="mr-10" innerHTML={arrowSvg}></span>
               {this.previousPageTitle}
             </a>
@@ -160,7 +176,7 @@ export class MxPageHeader {
           <h1 class={this.headingClass}>
             <slot></slot>
           </h1>
-          {this.buttons.length > 0 && this.buttonsJsx}
+          {!(this.modal && this.minWidths.md) && this.buttons.length > 0 && this.buttonsJsx}
           <slot name="buttons"></slot>
         </div>
         <slot name="tabs"></slot>
