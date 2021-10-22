@@ -81,6 +81,13 @@ describe('mx-select', () => {
     expect(select.value).toBe('B');
   });
 
+  it('updates the value prop when select.value changes', async () => {
+    select.value = 'B';
+    select.dispatchEvent(new Event('input'));
+    await page.waitForChanges();
+    expect(root.value).toBe('B');
+  });
+
   it('is 48px tall by default', async () => {
     expect(selectWrapper.getAttribute('class')).toContain('h-48');
   });

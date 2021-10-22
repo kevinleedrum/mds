@@ -8,7 +8,7 @@ describe('mx-checkbox', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxSwitch],
-      html: `<mx-switch name="foo" label-name="Premier" checked="true" data-test="test" />`,
+      html: `<mx-switch name="foo" label-name="Premier" value="dog" checked="true" data-test="test" />`,
     });
     root = page.root;
     input = root.querySelector('input');
@@ -18,9 +18,10 @@ describe('mx-checkbox', () => {
     expect(input.type).toBe('checkbox');
   });
 
-  it('has the proper name and label', async () => {
+  it('has the proper name, value, and label', async () => {
     const labelName = root.querySelector('[data-testid="labelName"]');
     expect(input.getAttribute('name')).toBe('foo');
+    expect(input.getAttribute('value')).toBe('dog');
     expect(labelName.innerText).toBe('Premier');
   });
 
@@ -30,5 +31,12 @@ describe('mx-checkbox', () => {
 
   it('applies any data attributes to the input element', async () => {
     expect(input.getAttribute('data-test')).toBe('test');
+  });
+
+  it('updates the checked prop when the checkbox is (un)checked', async () => {
+    input.checked = false;
+    input.dispatchEvent(new Event('input'));
+    await page.waitForChanges();
+    expect(root.checked).toBe(false);
   });
 });

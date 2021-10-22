@@ -78,6 +78,7 @@ export class MxInput {
 
   onInput(e: InputEvent) {
     this.characterCount = (e.target as HTMLInputElement).value.length;
+    this.value = (e.target as HTMLInputElement).value;
   }
 
   get workingElem() {
