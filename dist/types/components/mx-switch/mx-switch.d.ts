@@ -7,5 +7,7 @@ export declare class MxSwitch {
   checked: boolean;
   element: HTMLMxInputElement;
   componentWillRender: typeof propagateDataAttributes;
+  /** Keep checked prop in sync with input element attribute */
+  onInput(e: InputEvent): void;
   render(): any;
 }

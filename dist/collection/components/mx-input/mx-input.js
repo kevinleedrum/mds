@@ -43,6 +43,7 @@ export class MxInput {
   }
   onInput(e) {
     this.characterCount = e.target.value.length;
+    this.value = e.target.value;
   }
   get workingElem() {
     return this.textarea ? this.textArea : this.textInput;

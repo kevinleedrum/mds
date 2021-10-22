@@ -32,6 +32,7 @@ export declare class MxSelect {
   updateSelectValue(): void;
   onFocus(): void;
   onBlur(): void;
+  onInput(e: InputEvent): void;
   get hasValue(): boolean;
   get selectWrapperClass(): string;
   get selectClass(): string;

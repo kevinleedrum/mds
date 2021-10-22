@@ -15,5 +15,7 @@ export declare class MxCheckbox {
   componentWillRender: typeof propagateDataAttributes;
   get checkClass(): string;
   get checkLabelClass(): string;
+  /** Keep checked prop in sync with input element attribute */
+  onInput(e: InputEvent): void;
   render(): any;
 }

@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-c246f020.js');
 const transitions = require('./transitions-0aeffc5e.js');
-const portal = require('./portal-0dd8e89e.js');
+const portal = require('./portal-0b4649d0.js');
 require('./utils-1f7ef40d.js');
 
 const snackbarQueue = []; // Deferred promises
