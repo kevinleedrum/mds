@@ -15,7 +15,7 @@ export class MxCheckbox {
   @Prop() labelClass: string = '';
   /** Hide the label text visually, but still make it accessible for screen readers */
   @Prop() hideLabel: boolean = false;
-  @Prop() checked: boolean = false;
+  @Prop({ mutable: true }) checked: boolean = false;
   @Prop() disabled: boolean = false;
   @Prop() indeterminate: boolean = false;
 
@@ -38,6 +38,11 @@ export class MxCheckbox {
     return str;
   }
 
+  /** Keep checked prop in sync with input element attribute */
+  onInput(e: InputEvent) {
+    this.checked = (e.target as HTMLInputElement).checked;
+  }
+
   render() {
     return (
       <Host class="mx-checkbox inline-flex items-center">
@@ -56,6 +61,7 @@ export class MxCheckbox {
             checked={this.checked}
             disabled={this.disabled}
             {...this.dataAttributes}
+            onInput={this.onInput.bind(this)}
           />
           <span class={this.checkClass}></span>
           <div class={this.checkLabelClass} data-testid="labelName">

@@ -11,11 +11,16 @@ export class MxRadio {
   @Prop() name: string = '';
   @Prop() value: string = '';
   @Prop() labelName: string = '';
-  @Prop() checked: boolean = false;
+  @Prop({ mutable: true }) checked: boolean = false;
 
   @Element() element: HTMLMxInputElement;
 
   componentWillRender = propagateDataAttributes;
+
+  /** Keep checked prop in sync with input element attribute */
+  onInput(e: InputEvent) {
+    this.checked = (e.target as HTMLInputElement).checked;
+  }
 
   render() {
     return (
@@ -28,6 +33,7 @@ export class MxRadio {
             value={this.value}
             checked={this.checked}
             {...this.dataAttributes}
+            onInput={this.onInput.bind(this)}
           />
           <span class="flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full"></span>
           <div class="ml-16 inline-block" data-testid="labelName">
