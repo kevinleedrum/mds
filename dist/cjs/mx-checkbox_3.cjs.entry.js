@@ -42,12 +42,16 @@ const MxCheckbox = class {
       str += ' ml-16';
     return str;
   }
+  /** Keep checked prop in sync with input element attribute */
+  onInput(e) {
+    this.checked = e.target.checked;
+  }
   render() {
     return (index.h(index.Host, { class: "mx-checkbox inline-flex items-center" }, index.h("label", { class: [
         'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
           (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,
-      ].join(' ') }, index.h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes)), index.h("span", { class: this.checkClass }), index.h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
+      ].join(' ') }, index.h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes, { onInput: this.onInput.bind(this) })), index.h("span", { class: this.checkClass }), index.h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
   get element() { return index.getElement(this); }
 };

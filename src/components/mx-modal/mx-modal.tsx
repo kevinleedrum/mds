@@ -20,6 +20,7 @@ export class MxModal {
   lastFocusElement: HTMLElement;
   hasCard: boolean = false;
   hasHeader: boolean = false;
+  hasHeaderBottom: boolean = false;
   modal: HTMLElement;
   ancestorFocusedElement: HTMLElement;
   headerBottomSlotWrapper: HTMLElement;
@@ -85,6 +86,7 @@ export class MxModal {
     this.hasHeader =
       !!this.element.querySelector('[slot="header-left"]') || !!this.element.querySelector('[slot="header-right"]');
     this.hasCard = !!this.element.querySelector('[slot="card"]');
+    this.hasHeaderBottom = !!this.element.querySelector('[slot="header-bottom"]');
     const tabs = this.element.querySelector('mx-tabs');
     // Place mx-tabs in either the header-bottom slot OR the mobile mx-page-header tabs slot
     if (tabs && this.headerBottomSlotWrapper && this.mobilePageHeader) {
@@ -179,8 +181,6 @@ export class MxModal {
   }
 
   render() {
-    const headerLeftSlotContent = this.element.querySelector('[slot="header-left"]');
-
     return (
       <Host
         class={this.hostClass}
@@ -242,31 +242,31 @@ export class MxModal {
           {/* Modal Header - Placed last in the DOM so it is also the last in the tab focus order */}
           <mx-page-header
             ref={el => (this.mobilePageHeader = el)}
-            class="md:hidden order-1"
+            class="order-1"
             buttons={this.buttons}
+            modal
             previous-page-title={this.previousPageTitle}
             previous-page-url={this.previousPageUrl}
           >
-            {/* Inject header-left slot content into mobile mx-page-header's default slot. */}
-            {headerLeftSlotContent && headerLeftSlotContent.innerHTML}
+            <span id="headerText" data-testid="header-text">
+              <slot name="header-left"></slot>
+            </span>
+            {this.hasHeaderBottom && (
+              <div slot="tabs">
+                <slot name="header-bottom"></slot>
+              </div>
+            )}
+            <div slot="modal-header-center" class="flex items-center justify-center">
+              <slot name="header-center"></slot>
+            </div>
+            <div slot="modal-header-right">
+              <slot name="header-right">
+                <mx-button btn-type="text" data-testid="close-button" onClick={this.mxClose.emit}>
+                  Close
+                </mx-button>
+              </slot>
+            </div>
           </mx-page-header>
-          <header class="hidden md:block bg-modal-header order-1 px-40">
-            <div class="flex items-center justify-between min-h-80">
-              <div id="headerText" class="text-h5 emphasis !my-0" data-testid="header-text">
-                <slot name="header-left"></slot>
-              </div>
-              <div>
-                <slot name="header-right">
-                  <mx-button btn-type="text" data-testid="close-button" onClick={this.mxClose.emit}>
-                    Close
-                  </mx-button>
-                </slot>
-              </div>
-            </div>
-            <div ref={el => (this.headerBottomSlotWrapper = el)}>
-              <slot name="header-bottom"></slot>
-            </div>
-          </header>
         </div>
       </Host>
     );

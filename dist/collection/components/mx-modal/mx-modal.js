@@ -7,6 +7,7 @@ export class MxModal {
   constructor() {
     this.hasCard = false;
     this.hasHeader = false;
+    this.hasHeaderBottom = false;
     /** An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text. */
     this.buttons = [];
     /** If set to false, pressing Escape will not close the modal. */
@@ -57,6 +58,7 @@ export class MxModal {
     this.hasHeader =
       !!this.element.querySelector('[slot="header-left"]') || !!this.element.querySelector('[slot="header-right"]');
     this.hasCard = !!this.element.querySelector('[slot="card"]');
+    this.hasHeaderBottom = !!this.element.querySelector('[slot="header-bottom"]');
     const tabs = this.element.querySelector('mx-tabs');
     // Place mx-tabs in either the header-bottom slot OR the mobile mx-page-header tabs slot
     if (tabs && this.headerBottomSlotWrapper && this.mobilePageHeader) {
@@ -131,7 +133,6 @@ export class MxModal {
     return str;
   }
   render() {
-    const headerLeftSlotContent = this.element.querySelector('[slot="header-left"]');
     return (h(Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" },
       h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }),
       h("div", { ref: el => (this.modal = el), class: "modal flex flex-col rounded-lg shadow-9 relative overflow-hidden" },
@@ -149,16 +150,16 @@ export class MxModal {
               this.previousPageTitle)))),
           h("div", { class: "ml-16" },
             h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))),
-        h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "md:hidden order-1", buttons: this.buttons, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl }, headerLeftSlotContent && headerLeftSlotContent.innerHTML),
-        h("header", { class: "hidden md:block bg-modal-header order-1 px-40" },
-          h("div", { class: "flex items-center justify-between min-h-80" },
-            h("div", { id: "headerText", class: "text-h5 emphasis !my-0", "data-testid": "header-text" },
-              h("slot", { name: "header-left" })),
-            h("div", null,
-              h("slot", { name: "header-right" },
-                h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))),
-          h("div", { ref: el => (this.headerBottomSlotWrapper = el) },
-            h("slot", { name: "header-bottom" }))))));
+        h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "order-1", buttons: this.buttons, modal: true, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl },
+          h("span", { id: "headerText", "data-testid": "header-text" },
+            h("slot", { name: "header-left" })),
+          this.hasHeaderBottom && (h("div", { slot: "tabs" },
+            h("slot", { name: "header-bottom" }))),
+          h("div", { slot: "modal-header-center", class: "flex items-center justify-center" },
+            h("slot", { name: "header-center" })),
+          h("div", { slot: "modal-header-right" },
+            h("slot", { name: "header-right" },
+              h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))))));
   }
   static get is() { return "mx-modal"; }
   static get properties() { return {

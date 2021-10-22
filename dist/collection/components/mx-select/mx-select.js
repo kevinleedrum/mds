@@ -35,6 +35,9 @@ export class MxSelect {
   onBlur() {
     this.isFocused = false;
   }
+  onInput(e) {
+    this.value = e.target.value;
+  }
   get hasValue() {
     return this.value !== null && this.value !== '' && this.value !== undefined;
   }
@@ -92,7 +95,7 @@ export class MxSelect {
     return (h(Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') },
       this.label && !this.floatLabel && labelJsx,
       h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass },
-        h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes),
+        h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes),
           h("slot", null)),
         this.label && this.floatLabel && labelJsx,
         h("span", { class: this.iconSuffixClass },

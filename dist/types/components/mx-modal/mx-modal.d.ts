@@ -11,6 +11,7 @@ export declare class MxModal {
   lastFocusElement: HTMLElement;
   hasCard: boolean;
   hasHeader: boolean;
+  hasHeaderBottom: boolean;
   modal: HTMLElement;
   ancestorFocusedElement: HTMLElement;
   headerBottomSlotWrapper: HTMLElement;

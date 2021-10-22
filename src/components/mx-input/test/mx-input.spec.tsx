@@ -40,6 +40,13 @@ describe('mx-input', () => {
     expect(input.getAttribute('type')).toBe('email');
   });
 
+  it('updates the value prop when the input value is changed', async () => {
+    input.value = 'bar';
+    input.dispatchEvent(new Event('input'));
+    await page.waitForChanges();
+    expect(root.value).toBe('bar');
+  });
+
   it('has a visible left icon', async () => {
     const icon = root.querySelector('.ph-apple-logo');
     expect(icon).not.toBeNull();

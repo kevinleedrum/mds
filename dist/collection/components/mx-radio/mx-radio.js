@@ -9,10 +9,14 @@ export class MxRadio {
     this.checked = false;
     this.componentWillRender = propagateDataAttributes;
   }
+  /** Keep checked prop in sync with input element attribute */
+  onInput(e) {
+    this.checked = e.target.checked;
+  }
   render() {
     return (h(Host, { class: "mx-radio" },
       h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" },
-        h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }, this.dataAttributes)),
+        h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }, this.dataAttributes, { onInput: this.onInput.bind(this) })),
         h("span", { class: "flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full" }),
         h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
@@ -74,7 +78,7 @@ export class MxRadio {
     },
     "checked": {
       "type": "boolean",
-      "mutable": false,
+      "mutable": true,
       "complexType": {
         "original": "boolean",
         "resolved": "boolean",

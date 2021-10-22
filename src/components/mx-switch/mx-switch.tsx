@@ -11,11 +11,16 @@ export class MxSwitch {
   @Prop() name: string = '';
   @Prop() value: string = '';
   @Prop() labelName: string = '';
-  @Prop() checked: boolean = false;
+  @Prop({ mutable: true }) checked: boolean = false;
 
   @Element() element: HTMLMxInputElement;
 
   componentWillRender = propagateDataAttributes;
+
+  /** Keep checked prop in sync with input element attribute */
+  onInput(e: InputEvent) {
+    this.checked = (e.target as HTMLInputElement).checked;
+  }
 
   render() {
     return (
@@ -26,8 +31,10 @@ export class MxSwitch {
             role="switch"
             type="checkbox"
             name={this.name}
+            value={this.value}
             checked={this.checked}
             {...this.dataAttributes}
+            onInput={this.onInput.bind(this)}
           />
           <div class="slider relative cursor-pointer round w-36 h-14 flex-shrink-0"></div>
           <div class="ml-16 inline-block" data-testid="labelName">

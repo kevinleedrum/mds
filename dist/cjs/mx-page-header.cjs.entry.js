@@ -23,8 +23,11 @@ const MxPageHeader = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
     this.hasTabs = false;
+    this.hasModalHeaderCenter = false;
     /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
     this.buttons = [];
+    /** This flag is set by the Modal component to adjust the page header styling when used internally. */
+    this.modal = false;
     /** The URL for the previous page link */
     this.previousPageUrl = '';
     /** The text to display for the previous page link */
@@ -45,6 +48,7 @@ const MxPageHeader = class {
   }
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
+    this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
   }
   connectedCallback() {
     minWidthSync.minWidthSync.subscribeComponent(this);
@@ -77,9 +81,17 @@ const MxPageHeader = class {
     this.resetResizeObserver();
   }
   get hostClass() {
-    let str = 'mx-page-header flex flex-col px-24 lg:px-72';
+    let str = 'mx-page-header flex flex-col';
     if (this.pattern)
       str += ' bg-pattern';
+    if (this.minWidths.md && this.modal) {
+      str += ' px-40';
+      str += this.hasTabs ? ' min-h-128' : ' min-h-80';
+      return str;
+    }
+    else {
+      str += ' px-24 lg:px-72';
+    }
     if (this.hasTabs)
       str += ' pb-12 md:pb-0';
     if (this.buttons.length && this.hasTabs)
@@ -95,7 +107,13 @@ const MxPageHeader = class {
     if (!this.minWidths.md)
       str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else
-      str += this.previousPageUrl ? 'text-h5' : 'text-h3';
+      str += this.previousPageUrl || this.modal ? 'text-h5' : 'text-h3';
+    return str;
+  }
+  get previousPageClass() {
+    let str = 'flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25';
+    if (this.modal)
+      str += ' md:hidden';
     return str;
   }
   get buttonsJsx() {
@@ -110,7 +128,7 @@ const MxPageHeader = class {
     })));
   }
   render() {
-    return (index.h(index.Host, { class: this.hostClass }, index.h("slot", { name: "previous-page" }, this.previousPageUrl && (index.h("a", { href: this.previousPageUrl, class: "flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25" }, index.h("span", { class: "mr-10", innerHTML: arrowLeft.arrowSvg }), this.previousPageTitle))), index.h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, index.h("h1", { class: this.headingClass }, index.h("slot", null)), this.buttons.length > 0 && this.buttonsJsx, index.h("slot", { name: "buttons" })), index.h("slot", { name: "tabs" })));
+    return (index.h(index.Host, { class: this.hostClass }, index.h("div", { class: "absolute top-16 md:top-20 md:mt-2 right-24 md:right-40" }, index.h("slot", { name: "modal-header-right" })), index.h("slot", { name: "previous-page" }, this.previousPageUrl && (index.h("a", { href: this.previousPageUrl, class: this.previousPageClass }, index.h("span", { class: "mr-10", innerHTML: arrowLeft.arrowSvg }), this.previousPageTitle))), index.h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, index.h("div", { class: 'grid grid-cols-1 flex-1 items-center' + (this.hasModalHeaderCenter ? ' sm:grid-cols-3' : '') }, index.h("h1", { class: this.headingClass }, index.h("slot", null)), index.h("slot", { name: "modal-header-center" })), !(this.modal && this.minWidths.md) && this.buttons.length > 0 && this.buttonsJsx, index.h("slot", { name: "buttons" })), index.h("slot", { name: "tabs" })));
   }
   get element() { return index.getElement(this); }
 };

@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-c246f020.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
-const portal = require('./portal-0dd8e89e.js');
+const portal = require('./portal-0b4649d0.js');
 const transitions = require('./transitions-0aeffc5e.js');
 const arrowLeft = require('./arrow-left-a3a34f65.js');
 require('./utils-1f7ef40d.js');
@@ -15,6 +15,7 @@ const MxModal = class {
     this.mxClose = index.createEvent(this, "mxClose", 7);
     this.hasCard = false;
     this.hasHeader = false;
+    this.hasHeaderBottom = false;
     /** An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text. */
     this.buttons = [];
     /** If set to false, pressing Escape will not close the modal. */
@@ -65,6 +66,7 @@ const MxModal = class {
     this.hasHeader =
       !!this.element.querySelector('[slot="header-left"]') || !!this.element.querySelector('[slot="header-right"]');
     this.hasCard = !!this.element.querySelector('[slot="card"]');
+    this.hasHeaderBottom = !!this.element.querySelector('[slot="header-bottom"]');
     const tabs = this.element.querySelector('mx-tabs');
     // Place mx-tabs in either the header-bottom slot OR the mobile mx-page-header tabs slot
     if (tabs && this.headerBottomSlotWrapper && this.mobilePageHeader) {
@@ -139,9 +141,8 @@ const MxModal = class {
     return str;
   }
   render() {
-    const headerLeftSlotContent = this.element.querySelector('[slot="header-left"]');
     return (index.h(index.Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" }, index.h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }), index.h("div", { ref: el => (this.modal = el), class: "modal flex flex-col rounded-lg shadow-9 relative overflow-hidden" }, index.h("div", { class: this.modalContentClasses, "data-testid": "modal-content" }, this.description && (index.h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)), index.h("slot", null), this.hasCard && (index.h("div", null, index.h("div", { class: "bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl", "data-testid": "modal-card" }, index.h("slot", { name: "card" }))))), index.h("footer", { class: 'bg-modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
-        (this.hasFooter ? '' : ' hidden') }, index.h("div", null, index.h("slot", { name: "footer-left" }, this.previousPageUrl && (index.h("a", { href: this.previousPageUrl, class: "flex items-center uppercase text-4 font-semibold tracking-1-25", "data-testid": "previous-page" }, index.h("span", { class: "mr-10", innerHTML: arrowLeft.arrowSvg }), this.previousPageTitle)))), index.h("div", { class: "ml-16" }, index.h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))), index.h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "md:hidden order-1", buttons: this.buttons, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl }, headerLeftSlotContent && headerLeftSlotContent.innerHTML), index.h("header", { class: "hidden md:block bg-modal-header order-1 px-40" }, index.h("div", { class: "flex items-center justify-between min-h-80" }, index.h("div", { id: "headerText", class: "text-h5 emphasis !my-0", "data-testid": "header-text" }, index.h("slot", { name: "header-left" })), index.h("div", null, index.h("slot", { name: "header-right" }, index.h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))), index.h("div", { ref: el => (this.headerBottomSlotWrapper = el) }, index.h("slot", { name: "header-bottom" }))))));
+        (this.hasFooter ? '' : ' hidden') }, index.h("div", null, index.h("slot", { name: "footer-left" }, this.previousPageUrl && (index.h("a", { href: this.previousPageUrl, class: "flex items-center uppercase text-4 font-semibold tracking-1-25", "data-testid": "previous-page" }, index.h("span", { class: "mr-10", innerHTML: arrowLeft.arrowSvg }), this.previousPageTitle)))), index.h("div", { class: "ml-16" }, index.h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))), index.h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "order-1", buttons: this.buttons, modal: true, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl }, index.h("span", { id: "headerText", "data-testid": "header-text" }, index.h("slot", { name: "header-left" })), this.hasHeaderBottom && (index.h("div", { slot: "tabs" }, index.h("slot", { name: "header-bottom" }))), index.h("div", { slot: "modal-header-center", class: "flex items-center justify-center" }, index.h("slot", { name: "header-center" })), index.h("div", { slot: "modal-header-right" }, index.h("slot", { name: "header-right" }, index.h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))))));
   }
   get element() { return index.getElement(this); }
   static get watchers() { return {

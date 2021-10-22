@@ -31,4 +31,11 @@ describe('mx-checkbox', () => {
   it('applies any data attributes to the input element', async () => {
     expect(input.getAttribute('data-test')).toBe('test');
   });
+
+  it('updates the checked prop when the radio is (un)checked', async () => {
+    input.checked = false;
+    input.dispatchEvent(new Event('input'));
+    await page.waitForChanges();
+    expect(root.checked).toBe(false);
+  });
 });

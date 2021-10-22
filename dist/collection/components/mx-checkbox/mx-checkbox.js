@@ -31,6 +31,10 @@ export class MxCheckbox {
       str += ' ml-16';
     return str;
   }
+  /** Keep checked prop in sync with input element attribute */
+  onInput(e) {
+    this.checked = e.target.checked;
+  }
   render() {
     return (h(Host, { class: "mx-checkbox inline-flex items-center" },
       h("label", { class: [
@@ -38,7 +42,7 @@ export class MxCheckbox {
             (this.disabled ? '' : ' cursor-pointer'),
           this.labelClass,
         ].join(' ') },
-        h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes)),
+        h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes, { onInput: this.onInput.bind(this) })),
         h("span", { class: this.checkClass }),
         h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
@@ -154,7 +158,7 @@ export class MxCheckbox {
     },
     "checked": {
       "type": "boolean",
-      "mutable": false,
+      "mutable": true,
       "complexType": {
         "original": "boolean",
         "resolved": "boolean",

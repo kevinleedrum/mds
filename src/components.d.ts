@@ -440,6 +440,10 @@ export namespace Components {
          */
         "buttons": IPageHeaderButton[];
         /**
+          * This flag is set by the Modal component to adjust the page header styling when used internally.
+         */
+        "modal": boolean;
+        /**
           * When set to true, the Page Header will use the themed background pattern.
          */
         "pattern": boolean;
@@ -1427,6 +1431,10 @@ declare namespace LocalJSX {
           * An array of prop objects for each button.  Use the `label` property to specify the button's inner text.
          */
         "buttons"?: IPageHeaderButton[];
+        /**
+          * This flag is set by the Modal component to adjust the page header styling when used internally.
+         */
+        "modal"?: boolean;
         /**
           * When set to true, the Page Header will use the themed background pattern.
          */
