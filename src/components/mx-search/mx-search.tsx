@@ -15,11 +15,15 @@ export class MxSearch {
   @Prop() flat: boolean = false;
   @Prop() name: string;
   @Prop() placeholder: string;
-  @Prop() value: string;
+  @Prop({ mutable: true }) value: string;
 
   @Element() element: HTMLMxSearchElement;
 
   componentWillRender = propagateDataAttributes;
+
+  onInput(e: InputEvent) {
+    this.value = (e.target as HTMLInputElement).value;
+  }
 
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
@@ -39,6 +43,7 @@ export class MxSearch {
           value={this.value}
           class={this.inputClass}
           {...this.dataAttributes}
+          onInput={this.onInput.bind(this)}
         ></input>
         <span innerHTML={searchSvg} class="absolute left-16 pointer-events-none"></span>
       </Host>
