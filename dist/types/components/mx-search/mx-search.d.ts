@@ -10,6 +10,7 @@ export declare class MxSearch {
   value: string;
   element: HTMLMxSearchElement;
   componentWillRender: typeof propagateDataAttributes;
+  onInput(e: InputEvent): void;
   get inputClass(): string;
   render(): any;
 }
