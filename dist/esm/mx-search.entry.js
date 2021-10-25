@@ -15,6 +15,9 @@ const MxSearch = class {
     this.flat = false;
     this.componentWillRender = propagateDataAttributes;
   }
+  onInput(e) {
+    this.value = e.target.value;
+  }
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
     str += this.flat ? ' flat' : ' shadow-1';
@@ -22,7 +25,7 @@ const MxSearch = class {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", Object.assign({ type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes)), h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
+    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", Object.assign({ type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
   }
   get element() { return getElement(this); }
 };
