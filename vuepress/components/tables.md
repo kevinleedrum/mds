@@ -406,6 +406,75 @@ The `rows` array is not mutated by the component, so you must update the array u
 <<< @/vuepress/components/tables.md#draggable
 <<< @/vuepress/components/tables.md#row-move
 
+## Nested rows
+
+When using `mx-table-row` elements within the table's default slot, it is possible to nest table rows.
+
+For the sake of simplicity, row dragging does not actually update the model in the example below.
+
+<section class="mds">
+  <div class="mt-20"></div>
+    <!-- #region indent -->
+    <mx-table
+      draggable-rows
+      :columns.prop="[
+        { heading: 'Item', sortable: false },
+        { heading: 'Cost', sortable: false, align: 'right' },
+        { heading: 'Qty', sortable: false, align: 'right'  },
+        { heading: 'Total Cost', sortable: false, align: 'right' }
+      ]"
+    >
+      <div>
+        <mx-table-row>
+          <mx-table-cell>Chair</mx-table-cell>
+          <mx-table-cell>$65.00</mx-table-cell>
+          <mx-table-cell>1</mx-table-cell>
+          <mx-table-cell>$65.00</mx-table-cell>
+        </mx-table-row>
+        <mx-table-row>
+          <mx-table-cell>Produce</mx-table-cell>
+          <mx-table-cell>-</mx-table-cell>
+          <mx-table-cell>-</mx-table-cell>
+          <mx-table-cell>$24.94</mx-table-cell>
+          <mx-table-row>
+            <mx-table-cell>Roma Tomato (lb)</mx-table-cell>
+            <mx-table-cell>$0.99</mx-table-cell>
+            <mx-table-cell>12</mx-table-cell>
+            <mx-table-cell>$11.88</mx-table-cell>
+          </mx-table-row>
+          <mx-table-row>
+            <mx-table-cell>Avocado, Large</mx-table-cell>
+            <mx-table-cell>$1.79</mx-table-cell>
+            <mx-table-cell>4</mx-table-cell>
+            <mx-table-cell>$7.16</mx-table-cell>
+          </mx-table-row>
+          <mx-table-row>
+            <mx-table-cell>Cucumber</mx-table-cell>
+            <mx-table-cell>-</mx-table-cell>
+            <mx-table-cell>-</mx-table-cell>
+            <mx-table-cell>$5.90</mx-table-cell>
+            <mx-table-row>
+              <mx-table-cell>English Cucumber</mx-table-cell>
+              <mx-table-cell>$2.59</mx-table-cell>
+              <mx-table-cell>10</mx-table-cell>
+              <mx-table-cell>$25.90</mx-table-cell>
+            </mx-table-row>
+          </mx-table-row>
+        </mx-table-row>
+        <mx-table-row>
+          <mx-table-cell>Apron</mx-table-cell>
+          <mx-table-cell>$16.00</mx-table-cell>
+          <mx-table-cell>4</mx-table-cell>
+          <mx-table-cell>$64.00</mx-table-cell>
+        </mx-table-row>
+      </div>
+    </mx-table>
+<!-- #endregion indent -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#indent
+
 ## Advanced usage
 
 The following example combines checkable, slotted table rows with pagination, row actions, multi-row actions, searching, and filtering.
