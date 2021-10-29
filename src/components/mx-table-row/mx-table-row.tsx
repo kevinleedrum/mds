@@ -19,8 +19,11 @@ export class MxTableRow {
   checkbox: HTMLMxCheckboxElement;
   dragOrigin = { x: 0, y: 0 };
   dragShadowEl: HTMLElement;
+  firstColumnWrapper: HTMLElement;
+  childRowWrapper: HTMLElement;
   keyboardDragHandle: HTMLElement;
   dragScroller: DragScroller;
+  indentLevel = 0;
 
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   @Prop() rowId: string;
@@ -52,18 +55,17 @@ export class MxTableRow {
   async translateRow(x: number, y: number) {
     const transform = `translate3d(${x}px, ${y}px, 0)`;
     if (this.dragShadowEl) this.dragShadowEl.style.transform = transform;
-    Array.from(this.element.children).forEach((child: HTMLElement) => (child.style.transform = transform));
+    (await this.getChildren()).forEach((child: HTMLElement) => (child.style.transform = transform));
   }
 
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
     if (this.actions.some(action => !action.value)) throw new Error('Table row actions must have a value property!');
+    this.setIndentLevel();
   }
 
   componentWillRender() {
-    // Render collapsed mobile row
-    if (!this.minWidths.sm && !this.isMobileExpanded) this.element.style.maxHeight = this.getCollapsedHeight();
-    // Determine `checkable` and `checked` by pulling props from parent table.
+    // Determine `checkable` and `isDraggable` by pulling props from parent table.
     // This avoids having to manually pass these as props when using mx-table-row inside the table's
     // default slot.
     const table = this.element.closest('mx-table') as HTMLMxTableElement;
@@ -80,10 +82,35 @@ export class MxTableRow {
     // during render when the viewport is resized across breakpoints.
     if (this.actions.length > 1 && this.actionMenu && this.actionMenuButton)
       this.actionMenu.anchorEl = this.actionMenuButton;
+    this.wrapFirstColumn();
+    this.moveNestedRows();
+    // Render collapsed mobile row
+    if (!this.minWidths.sm && !this.isMobileExpanded) this.rowEl.style.maxHeight = this.getCollapsedHeight();
   }
 
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+  }
+
+  setIndentLevel() {
+    let parentRow = this.element.parentElement.closest('mx-table-row');
+    this.indentLevel = 0;
+    while (parentRow) {
+      this.indentLevel++;
+      parentRow = parentRow.parentElement.closest('mx-table-row');
+    }
+  }
+
+  /** Move first cell into same container as checkbox and drag handle. */
+  wrapFirstColumn() {
+    const firstCell = this.element.querySelector('mx-table-cell');
+    if (this.firstColumnWrapper && firstCell) this.firstColumnWrapper.appendChild(firstCell);
+  }
+
+  /** Move nested rows from the default slot to a container outside the collapsible row. */
+  moveNestedRows() {
+    const nestedRows = Array.from(this.rowEl.children).filter(c => c.tagName === 'MX-TABLE-ROW');
+    nestedRows.forEach(childRow => this.childRowWrapper.appendChild(childRow));
   }
 
   onClick(e: MouseEvent) {
@@ -100,12 +127,24 @@ export class MxTableRow {
     }
   }
 
+  /** Add hover styling to this row, but not the parent row(s) */
+  onMouseOver(e: MouseEvent) {
+    e.stopPropagation();
+    const isDraggingChildRow = e.buttons > 0;
+    if (!isDraggingChildRow) this.rowEl.classList.add('hovered-row');
+  }
+
+  onMouseOut(e: MouseEvent) {
+    e.stopPropagation();
+    this.rowEl.classList.remove('hovered-row');
+  }
+
   onKeyboardHandleKeyDown(e: KeyboardEvent) {
     // Start keyboard dragging on Space/Enter if not already dragging
     if (!this.isDragging && [' ', 'Enter'].includes(e.key)) this.startDragging(e);
   }
 
-  startDragging(e: MouseEvent | TouchEvent | KeyboardEvent) {
+  async startDragging(e: MouseEvent | TouchEvent | KeyboardEvent) {
     e.stopPropagation();
     e.preventDefault();
     this.isDragging = true;
@@ -116,14 +155,15 @@ export class MxTableRow {
       this.dragOrigin.y = pageY;
     } else {
       // If using a keyboard, set drag origin to the row's coordinates on the page
-      const { top, left } = getPageRect(this.element.children[0] as HTMLElement);
+      const { top, left } = getPageRect(this.rowEl.children[0] as HTMLElement);
       this.dragOrigin.x = left;
       this.dragOrigin.y = top;
     }
-    this.element.classList.add('pointer-events-none');
+    this.rowEl.classList.add('pointer-events-none');
     this.createDragShadowEl();
-    for (let i = 0; i < this.element.children.length; i++) {
-      const child = this.element.children[i] as HTMLElement;
+    const children = await this.getChildren();
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i] as HTMLElement;
       child.style.zIndex = '9999';
     }
     this.addDragListeners(e);
@@ -174,25 +214,26 @@ export class MxTableRow {
     if (startEvent.type === 'keydown') {
       document.addEventListener('keydown', onKeyDown);
     } else if (startEvent.type === 'touchstart') {
-      this.dragScroller = new DragScroller(this.element);
+      this.dragScroller = new DragScroller(this.rowEl);
       document.addEventListener('touchmove', onMouseMove);
       document.addEventListener('touchend', onMouseUp);
       document.addEventListener('touchcancel', onMouseUp);
     } else {
-      this.dragScroller = new DragScroller(this.element);
+      this.dragScroller = new DragScroller(this.rowEl);
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     }
   }
 
   /** Clear transforms and remove dragShadowEl */
-  stopDragging(isKeyboard = false, isCancel = false) {
+  async stopDragging(isKeyboard = false, isCancel = false) {
     this.isDragging = false;
-    this.element.classList.remove('drag-row', 'pointer-events-none');
+    this.rowEl.classList.remove('drag-row', 'pointer-events-none');
     if (this.dragShadowEl) this.dragShadowEl.remove();
     this.dragShadowEl = undefined;
-    for (let i = 0; i < this.element.children.length; i++) {
-      const child = this.element.children[i] as HTMLElement;
+    const children = await this.getChildren();
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i] as HTMLElement;
       child.style.transform = '';
       child.style.zIndex = '';
     }
@@ -201,19 +242,20 @@ export class MxTableRow {
 
   /** When dragging, add an element behind the row children that has a box shadow.
    * This is simpler than trying to change the row to `display: flex` to add a box shadow to it. */
-  createDragShadowEl() {
+  async createDragShadowEl() {
     this.dragShadowEl = document.createElement('div');
     this.dragShadowEl.classList.add('absolute', 'w-full', 'shadow-24');
     this.dragShadowEl.style.zIndex = '9998';
-    this.dragShadowEl.style.height = (this.element.children[0] as HTMLElement).offsetHeight + 'px';
-    this.dragShadowEl.style.top = (this.element.children[0] as HTMLElement).offsetTop + 'px';
-    this.dragShadowEl.style.left = (this.element.children[0] as HTMLElement).offsetLeft + 'px';
+    this.dragShadowEl.style.height = (await this.getHeight()) + 'px';
+    const firstChild = (await this.getChildren())[0];
+    this.dragShadowEl.style.top = firstChild.offsetTop + 'px';
+    this.dragShadowEl.style.left = firstChild.offsetLeft + 'px';
     this.element.parentNode.insertBefore(this.dragShadowEl, this.element);
   }
 
   accordion() {
     if (this.minWidths.sm) return;
-    this.element.classList.add('overflow-hidden');
+    this.rowEl.style.transition = 'max-height 150ms ease';
     this.isMobileExpanded ? this.collapse() : this.expand();
   }
 
@@ -221,19 +263,23 @@ export class MxTableRow {
   async collapse() {
     if (!this.isMobileExpanded) return;
     this.isMobileCollapsing = true;
-    this.element.style.maxHeight = this.element.scrollHeight + 'px';
+    this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
     requestAnimationFrame(() => {
-      this.element.style.maxHeight = this.getCollapsedHeight();
+      this.rowEl.style.maxHeight = this.getCollapsedHeight();
     });
+    if (!this.rowEl.style.transition) {
+      this.isMobileExpanded = false;
+      this.isMobileCollapsing = false;
+    }
   }
 
   @Method()
   async expand() {
     if (this.isMobileExpanded) return;
-    this.element.style.maxHeight = this.element.scrollHeight + 'px';
+    this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
     this.isMobileExpanded = true;
     requestAnimationFrame(() => {
-      this.element.style.maxHeight = this.element.scrollHeight + 'px';
+      this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
     });
   }
 
@@ -242,19 +288,47 @@ export class MxTableRow {
     if (this.keyboardDragHandle) this.keyboardDragHandle.focus();
   }
 
+  /** Returns the immediate children of the row, as well as the immediate children of all nested
+   * rows.  If a child is `display: contents` (i.e. the first column wrapper), then its children
+   * are added. */
+  @Method()
+  async getChildren(): Promise<HTMLElement[]> {
+    let children: HTMLElement[] = [];
+    if (!this.minWidths.sm) children.push(this.rowEl);
+    else
+      (Array.from(this.rowEl.children) as HTMLElement[]).forEach(child => {
+        if (!child.offsetParent) children.push(...(Array.from(child.children) as HTMLElement[]));
+        else children.push(child);
+      });
+    const nestedRows = Array.from(this.childRowWrapper.children) as HTMLMxTableRowElement[];
+    await Promise.all(
+      nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))),
+    );
+    return children as HTMLElement[];
+  }
+
+  /** Calculate the height of the row, including the height of nested rows */
+  @Method()
+  async getHeight(): Promise<number> {
+    let height = (await this.getChildren())[0].offsetHeight;
+    const nestedRows = Array.from(this.childRowWrapper.children) as HTMLMxTableRowElement[];
+    await Promise.all(nestedRows.map(childRow => childRow.getHeight().then(childHeight => (height += childHeight))));
+    return height;
+  }
+
   onTransitionEnd(e) {
-    if (e.target === this.element) {
-      this.element.classList.remove('overflow-hidden');
+    if (e.target === this.rowEl) {
+      this.rowEl.style.transition = '';
       if (this.isMobileCollapsing) {
         this.isMobileExpanded = false;
         this.isMobileCollapsing = false;
       }
       // Remove explicit max-height after expanding to avoid issues with window resizing, etc.
-      this.element.style.maxHeight = '';
+      this.rowEl.style.maxHeight = '';
     }
     // When keyboard dragging, scroll the first element into view if moved out of bounds
-    if (e.target === this.element.children[0] && isScrolledOutOfView(this.element.children[0] as HTMLElement))
-      this.element.children[0].scrollIntoView();
+    if (e.target === this.rowEl.children[0] && isScrolledOutOfView(this.rowEl.children[0] as HTMLElement))
+      this.rowEl.children[0].scrollIntoView();
   }
 
   onCheckboxInput(e: InputEvent) {
@@ -268,12 +342,16 @@ export class MxTableRow {
 
   getCollapsedHeight(): string {
     const exposedCell = this.getExposedCell();
-    if (!exposedCell) return DEFAULT_MAX_HEIGHT;
+    if (!exposedCell || !exposedCell.offsetHeight) return DEFAULT_MAX_HEIGHT;
     return exposedCell.offsetHeight + 1 + 'px';
   }
 
+  get rowEl(): HTMLElement {
+    return this.element.firstElementChild as HTMLElement;
+  }
+
   get rowClass(): string {
-    let str = 'mx-table-row';
+    let str = 'table-row overflow-hidden';
     str += this.minWidths.sm ? ' contents' : ' grid';
     if (this.checkable) str += ' checkable-row';
     if (this.checkable && this.checkOnRowClick) str += ' cursor-pointer';
@@ -283,101 +361,136 @@ export class MxTableRow {
 
   get rowStyle(): any {
     if (this.minWidths.sm) return {};
+    let gridTemplateColumns = this.indentLevel > 0 ? 'minmax(0, min-content)' : '0';
+    gridTemplateColumns += this.checkable ? ' minmax(0, min-content)' : ' 0';
+    gridTemplateColumns += this.isDraggable ? ' minmax(0, min-content)' : ' 0';
+    gridTemplateColumns += ' minmax(0, auto) minmax(0, min-content)';
     return {
-      gridTemplateColumns: 'minmax(0, min-content) minmax(0, min-content) minmax(0, auto) minmax(0, min-content)',
+      gridTemplateColumns,
       maxHeight: '',
     };
   }
 
+  get indentClass(): string {
+    let str = 'table-row-indent h-full';
+    if (this.minWidths.sm) return str;
+    str += ' col-start-1 row-start-1';
+    const cells = Array.from(this.rowEl.children).filter(c => c.tagName === 'MX-TABLE-CELL');
+    let gridRowCount = cells.length + 1;
+    if (this.actions.length > 0) gridRowCount++;
+    return (str += ' row-span-' + gridRowCount);
+  }
+
+  get indentStyle() {
+    return { width: 2 * this.indentLevel + 'rem', minWidth: this.indentLevel + 'rem' };
+  }
+
   render() {
     return (
-      <Host
-        role="row"
-        class={this.rowClass}
-        style={this.rowStyle}
-        onClick={this.onClick.bind(this)}
-        onTransitionEnd={this.onTransitionEnd.bind(this)}
-      >
-        {/* Checkbox */}
-        {this.checkable && (
+      <Host class="mx-table-row contents">
+        <div
+          role="row"
+          class={this.rowClass}
+          style={this.rowStyle}
+          onClick={this.onClick.bind(this)}
+          onTransitionEnd={this.onTransitionEnd.bind(this)}
+          onMouseOver={this.onMouseOver.bind(this)}
+          onMouseOut={this.onMouseOut.bind(this)}
+        >
+          {/* First Column Wrapper */}
+          {/* On desktop, the checkbox, drag handle, and first cell need to indent as one column. */}
+          {/* On mobile, display:contents allows those same elements to fall into the row grid. */}
           <div
-            class="flex items-center pr-4 col-start-1 row-start-1 sm:row-start-auto sm:col-start-auto"
-            onClick={this.accordion.bind(this)}
+            ref={el => (this.firstColumnWrapper = el)}
+            class="first-column-wrapper contents sm:flex sm:items-center min-w-0 overflow-hidden"
           >
-            <mx-checkbox
-              ref={el => (this.checkbox = el)}
-              checked={this.checked}
-              onInput={this.onCheckboxInput.bind(this)}
-              onClick={e => e.stopPropagation()}
-              label-name="Select row"
-              hide-label
-            ></mx-checkbox>
-          </div>
-        )}
-        {/* Drag Handle */}
-        {this.isDraggable && (
-          <div
-            class="flex items-center col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move"
-            data-testid="drag-handle"
-            onMouseDown={this.startDragging.bind(this)}
-            onTouchStart={this.startDragging.bind(this)}
-          >
-            <span
-              aria-label="Press Space or Enter to move this row"
-              ref={el => (this.keyboardDragHandle = el)}
-              tabindex="0"
-              class={'pointer-events-none' + (this.checkable ? ' mx-8' : '')}
-              innerHTML={dragDotsSvg}
-              onKeyDown={this.onKeyboardHandleKeyDown.bind(this)}
-            ></span>
-            {this.isDragging && (
-              <p class="sr-only" role="alert">
-                Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to cancel.
-              </p>
+            {/* Indent */}
+            <div class={this.indentClass} style={this.indentStyle} data-testid={'indent-' + this.indentLevel}></div>
+
+            {/* Checkbox */}
+            {this.checkable && (
+              <div
+                class="flex items-center pr-4 col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto"
+                onClick={this.accordion.bind(this)}
+              >
+                <mx-checkbox
+                  ref={el => (this.checkbox = el)}
+                  checked={this.checked}
+                  onInput={this.onCheckboxInput.bind(this)}
+                  onClick={e => e.stopPropagation()}
+                  label-name="Select row"
+                  hide-label
+                ></mx-checkbox>
+              </div>
+            )}
+            {/* Drag Handle */}
+            {this.isDraggable && (
+              <div
+                class="flex items-center col-start-3 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move"
+                data-testid="drag-handle"
+                onMouseDown={this.startDragging.bind(this)}
+                onTouchStart={this.startDragging.bind(this)}
+              >
+                <span
+                  aria-label="Press Space or Enter to move this row"
+                  ref={el => (this.keyboardDragHandle = el)}
+                  tabindex="0"
+                  class={'pointer-events-none' + (this.checkable ? ' mx-8' : '')}
+                  innerHTML={dragDotsSvg}
+                  onKeyDown={this.onKeyboardHandleKeyDown.bind(this)}
+                ></span>
+                {this.isDragging && (
+                  <p class="sr-only" role="alert">
+                    Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to
+                    cancel.
+                  </p>
+                )}
+              </div>
             )}
           </div>
-        )}
-        <slot></slot>
-        {/* Mobile checkbox column filler (prevents having to hack a column span into slotted content) */}
-        {!this.checkable && !this.minWidths.sm && <div class="row-start-1 col-start-1 w-0"></div>}
-        {/* Mobile drag-handle column filler */}
-        {!this.isDraggable && !this.minWidths.sm && <div class="row-start-1 col-start-2 w-0"></div>}
-        {/* Mobile accordion chevron */}
-        {!this.minWidths.sm && (
-          <button
-            class="flex border-0 items-center justify-end px-16 row-start-1"
-            aria-hidden="true"
-            onClick={this.accordion.bind(this)}
-            onMouseDown={e => e.preventDefault() /* Do not focus on click */}
-          >
-            <span
-              class={
-                'mobile-row-chevron text-1 transform' +
-                (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : '')
-              }
-              innerHTML={chevronSvg}
-            ></span>
-          </button>
-        )}
-        {/* Single Action Button */}
-        {this.actions.length === 1 && (
-          <div class="action-cell flex items-center p-16 sm:p-0 justify-end col-span-4 sm:col-span-1">
-            <mx-button data-testid="action-button" btn-type="text" {...this.actions[0]}>
-              {this.actions[0].value}
-            </mx-button>
-          </div>
-        )}
-        {/* Action Menu */}
-        {this.actions.length > 1 && (
-          <div class="action-cell flex items-center p-0 justify-end col-span-4 sm:col-span-1">
-            <mx-icon-button ref={el => (this.actionMenuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
-            <mx-menu data-testid="action-menu" ref={el => (this.actionMenu = el)}>
-              {this.actions.map(action => (
-                <mx-menu-item {...action}>{action.value}</mx-menu-item>
-              ))}
-            </mx-menu>
-          </div>
-        )}
+          <slot></slot>
+          {/* Mobile checkbox column filler (prevents having to hack a column span into slotted content) */}
+          {!this.checkable && !this.minWidths.sm && <div class="row-start-1 col-start-2 w-0"></div>}
+          {/* Mobile drag-handle column filler */}
+          {!this.isDraggable && !this.minWidths.sm && <div class="row-start-1 col-start-3 w-0"></div>}
+          {/* Mobile accordion chevron */}
+          {!this.minWidths.sm && (
+            <button
+              class="flex border-0 items-center justify-end px-16 row-start-1"
+              aria-hidden="true"
+              onClick={this.accordion.bind(this)}
+              onMouseDown={e => e.preventDefault() /* Do not focus on click */}
+            >
+              <span
+                class={
+                  'mobile-row-chevron text-1 transform' +
+                  (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : '')
+                }
+                innerHTML={chevronSvg}
+              ></span>
+            </button>
+          )}
+          {/* Single Action Button */}
+          {this.actions.length === 1 && (
+            <div class="action-cell flex items-center p-16 sm:p-0 justify-end col-start-2 col-span-4 sm:col-span-1">
+              <mx-button data-testid="action-button" btn-type="text" {...this.actions[0]}>
+                {this.actions[0].value}
+              </mx-button>
+            </div>
+          )}
+          {/* Action Menu */}
+          {this.actions.length > 1 && (
+            <div class="action-cell flex items-center p-0 justify-end col-start-2 col-span-4 sm:col-span-1">
+              <mx-icon-button ref={el => (this.actionMenuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
+              <mx-menu data-testid="action-menu" ref={el => (this.actionMenu = el)}>
+                {this.actions.map(action => (
+                  <mx-menu-item {...action}>{action.value}</mx-menu-item>
+                ))}
+              </mx-menu>
+            </div>
+          )}
+        </div>
+        <div ref={el => (this.childRowWrapper = el)} class="contents"></div>
       </Host>
     );
   }

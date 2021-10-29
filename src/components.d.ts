@@ -683,6 +683,14 @@ export namespace Components {
         "expand": () => Promise<void>;
         "focusDragHandle": () => Promise<void>;
         /**
+          * Returns the immediate children of the row, as well as the immediate children of all nested rows.  If a child is `display: contents` (i.e. the first column wrapper), then its children are added.
+         */
+        "getChildren": () => Promise<HTMLElement[]>;
+        /**
+          * Calculate the height of the row, including the height of nested rows
+         */
+        "getHeight": () => Promise<number>;
+        /**
           * This is required for checkable rows in order to persist the checked state through sorting and pagination.
          */
         "rowId": string;

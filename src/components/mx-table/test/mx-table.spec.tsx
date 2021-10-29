@@ -208,7 +208,7 @@ describe('mx-table (checkable, non-mobile)', () => {
 
   it('checks the row on click by default', async () => {
     const row = root.querySelector('mx-table-row');
-    row.click();
+    (row.children[0] as HTMLElement).click();
     await page.waitForChanges();
     expect(checkboxes[1].checked).toBe(true);
   });
@@ -244,9 +244,9 @@ describe('mx-table (checkable, non-mobile)', () => {
     const listener = (e: CustomEvent) => (emitted = e.detail);
     root.addEventListener('mxRowCheck', listener);
     const row = root.querySelector('mx-table-row');
-    row.click();
+    (row.children[0] as HTMLElement).click();
     expect(JSON.stringify(emitted)).toBe('["0"]');
-    row.click();
+    (row.children[0] as HTMLElement).click();
     expect(JSON.stringify(emitted)).toBe('[]');
   });
 
@@ -255,7 +255,7 @@ describe('mx-table (checkable, non-mobile)', () => {
       let checkedRowIds = await root.getCheckedRowIds();
       expect(checkedRowIds.length).toBe(0);
       const row = root.querySelector('mx-table-row');
-      row.click();
+      (row.children[0] as HTMLElement).click();
       checkedRowIds = await root.getCheckedRowIds();
       expect(checkedRowIds.length).toBe(1);
       expect(checkedRowIds[0]).toBe('0');
@@ -332,5 +332,44 @@ describe('mx-table (slotted rows and cells)', () => {
   it('does not render the empty state when mx-table-rows are passed without a rows prop', () => {
     const emptyState = root.querySelector('[data-testid="empty-state"]');
     expect(emptyState.classList.contains('hidden')).toBe(true);
+  });
+});
+
+describe('mx-table (nested rows, non-mobile)', () => {
+  let page: SpecPage;
+  let root: HTMLMxTableElement;
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [MxTable, MxTableRow, MxTableCell, MxCheckbox],
+      html: `
+      <mx-table>
+        <mx-table-row>
+          <mx-table-cell>A</mx-table-cell>
+          <mx-table-row>
+            <mx-table-cell>A1</mx-table-cell>
+            <mx-table-row>
+              <mx-table-cell>A1i</mx-table-cell>
+            </mx-table-row>
+          </mx-table-row>
+          <mx-table-row>
+            <mx-table-cell>A2</mx-table-cell>
+          </mx-table-row>
+        </mx-table-row>
+        <mx-table-row>
+          <mx-table-cell>B</mx-table-cell>
+        </mx-table-row>
+      </mx-table>
+      `,
+    });
+    root = page.root as HTMLMxTableElement;
+    root.columns = [{ heading: 'Name', sortable: false }];
+    await page.waitForChanges();
+  });
+
+  it('adds an indent to nested rows', () => {
+    const rows = root.querySelectorAll('mx-table-row');
+    expect(rows[1].querySelector('[data-testid="indent-1"]')).not.toBeNull();
+    expect(rows[2].querySelector('[data-testid="indent-2"]')).not.toBeNull();
+    expect(rows[3].querySelector('[data-testid="indent-1"]')).not.toBeNull();
   });
 });

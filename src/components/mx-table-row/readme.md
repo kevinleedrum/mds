@@ -56,6 +56,28 @@ Type: `Promise<void>`
 
 
 
+### `getChildren() => Promise<HTMLElement[]>`
+
+Returns the immediate children of the row, as well as the immediate children of all nested
+rows.  If a child is `display: contents` (i.e. the first column wrapper), then its children
+are added.
+
+#### Returns
+
+Type: `Promise<HTMLElement[]>`
+
+
+
+### `getHeight() => Promise<number>`
+
+Calculate the height of the row, including the height of nested rows
+
+#### Returns
+
+Type: `Promise<number>`
+
+
+
 ### `translateRow(x: number, y: number) => Promise<void>`
 
 Apply a CSS transform to translate the row by `x` and `y` pixels

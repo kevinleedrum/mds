@@ -61,6 +61,9 @@ export class MxTable {
   hasSearch: boolean = false;
   hasFilter: boolean = false;
   showOperationsBar: boolean = false;
+  dragRow: HTMLMxTableRowElement;
+  dragRowSiblings: HTMLMxTableRowElement[];
+  dragRowHeight: number;
   dragRowIndex: number;
   dragOverRowIndex: number;
   dragMoveHandler: (e: MouseEvent) => any;
@@ -142,16 +145,21 @@ export class MxTable {
   }
 
   @Listen('mxRowDragStart')
-  onMxRowDragStart(e: CustomEvent) {
-    const dragRow = (e.target as HTMLElement).closest('mx-table-row');
-    const rows = this.getTableRows();
-    this.dragRowIndex = rows.indexOf(dragRow);
+  async onMxRowDragStart(e: CustomEvent) {
+    this.dragRow = (e.target as HTMLElement).closest('mx-table-row');
+    // Cache height of row (including any nested rows)
+    this.dragRowHeight = await this.dragRow.getHeight();
+    // Get all rows that are affected by dragging this one (i.e. the same parent node)
+    this.dragRowSiblings = Array.from(this.dragRow.parentNode.children).filter(
+      c => c.tagName === 'MX-TABLE-ROW',
+    ) as HTMLMxTableRowElement[];
+    this.dragRowIndex = this.dragRowSiblings.indexOf(this.dragRow);
     this.dragOverRowIndex = this.dragRowIndex;
     this.dragMoveHandler = this.onDragMove.bind(this);
     // Add transitions to the rows
-    rows.forEach(row => {
-      if (!e.detail.isKeyboard && row === dragRow) return; // Do not transition a row dragged with a mouse
-      Array.from(row.children).forEach((rowChild: HTMLElement) => {
+    this.dragRowSiblings.forEach(async row => {
+      if (!e.detail.isKeyboard && row === this.dragRow) return; // Do not transition a row dragged with a mouse
+      (await row.getChildren()).forEach((rowChild: HTMLElement) => {
         rowChild.classList.add('transition-transform', 'pointer-events-none');
       });
     });
@@ -162,20 +170,24 @@ export class MxTable {
   }
 
   @Listen('mxDragKeyDown')
-  onDragKeyDown(e: CustomEvent) {
+  async onDragKeyDown(e: CustomEvent) {
     let direction: -1 | 1;
     const key = e.detail;
     if (['ArrowUp', 'ArrowLeft'].includes(key)) direction = -1;
     if (['ArrowDown', 'ArrowRight'].includes(key)) direction = 1;
     if (!direction) return;
     if (direction === -1 && this.dragOverRowIndex === 0) return; // Row is at the top
-    const rows = this.getTableRows();
-    if (direction === 1 && this.dragOverRowIndex === rows.length - 1) return; // Row is at the bottom
+    if (direction === 1 && this.dragOverRowIndex === this.dragRowSiblings.length - 1) return; // Row is at the bottom
     this.dragOverRowIndex += direction;
-    const dragRow = rows[this.dragRowIndex];
-    const indexDelta = this.dragOverRowIndex - this.dragRowIndex;
-    const translateY = (dragRow.children[0] as HTMLElement).offsetHeight * indexDelta;
-    dragRow.translateRow(0, translateY);
+    // Determine the translate distance based on sibling row heights
+    let translateY = 0;
+    let rowIndex = this.dragOverRowIndex;
+    while (rowIndex !== this.dragRowIndex) {
+      const translateDir = this.dragOverRowIndex > this.dragRowIndex ? 1 : -1;
+      translateY += (await this.dragRowSiblings[rowIndex].getHeight()) * translateDir;
+      rowIndex -= translateDir;
+    }
+    this.dragRow.translateRow(0, translateY);
     this.onDragMove();
   }
 
@@ -183,18 +195,23 @@ export class MxTable {
   onMxRowDragEnd(e: CustomEvent) {
     document.removeEventListener('mousemove', this.dragMoveHandler);
     document.removeEventListener('touchmove', this.dragMoveHandler);
-    const rows = this.getTableRows();
     if (!e.detail.isCancel && this.dragOverRowIndex !== this.dragRowIndex) {
       // If row was dragged to a new position AND dragging wasn't cancelled, emit the mxRowMove event
-      this.mxRowMove.emit({ rowId: e.detail, oldIndex: this.dragRowIndex, newIndex: this.dragOverRowIndex });
-      if (e.detail.isKeyboard) rows[this.dragOverRowIndex].focusDragHandle(); // Focus the handle at the new index
+      this.mxRowMove.emit({
+        rowId: (e.target as HTMLMxTableRowElement).rowId,
+        oldIndex: this.dragRowIndex,
+        newIndex: this.dragOverRowIndex,
+      });
+      if (e.detail.isKeyboard) this.dragRowSiblings[this.dragOverRowIndex].focusDragHandle(); // Focus the handle at the new index
     }
     this.dragRowIndex = null;
     // Remove transitions and transforms from rows
-    rows.forEach(row => {
-      Array.from(row.children).forEach((rowChild: HTMLElement) => {
-        rowChild.classList.remove('transition-transform', 'pointer-events-none');
-        rowChild.style.transform = '';
+    requestAnimationFrame(() => {
+      this.dragRowSiblings.forEach(async row => {
+        (await row.getChildren()).forEach((rowChild: HTMLElement) => {
+          rowChild.classList.remove('transition-transform', 'pointer-events-none');
+          rowChild.style.transform = '';
+        });
       });
     });
     document.body.style.cursor = '';
@@ -256,6 +273,7 @@ export class MxTable {
 
   onCheckAllClick(e: InputEvent) {
     e.preventDefault();
+    e.stopPropagation(); // Prevent triggering a sort when checkbox is in first column header
     if (this.checkedRowIds.length === 0) {
       this.checkAll();
     } else {
@@ -266,23 +284,22 @@ export class MxTable {
   /** Animate table rows while dragging a row */
   onDragMove(e?: MouseEvent) {
     requestAnimationFrame(() => {
-      if (this.dragRowIndex == null) return;
-      const rows = this.getTableRows();
-      const dragRowHeight = (rows[this.dragRowIndex].children[0] as HTMLElement).offsetHeight;
-      rows.forEach((row, rowIndex) => {
-        let { top, bottom } = getPageRect(row.children[0] as HTMLElement);
-        const rowChildren = Array.from(row.children) as HTMLElement[];
+      if (this.dragRow == null) return;
+      this.dragRowSiblings.forEach(async (row, rowIndex) => {
+        const rowChildren = await row.getChildren();
+        const { top } = getPageRect(rowChildren[0]);
+        const { bottom } = getPageRect(rowChildren[rowChildren.length - 1]);
         if (e) {
           const { pageY } = getCursorCoords(e);
           if (pageY >= top && pageY <= bottom) this.dragOverRowIndex = rowIndex;
         }
-        if (rowIndex === this.dragRowIndex) return; // Do not shift row that is being dragged
+        if (row === this.dragRow) return; // Do not shift row that is being dragged
         if (rowIndex <= this.dragOverRowIndex && rowIndex > this.dragRowIndex) {
           // Shift rows that are below the dragged row UP
-          rowChildren.forEach(child => (child.style.transform = `translateY(-${dragRowHeight}px)`));
+          rowChildren.forEach(child => (child.style.transform = `translateY(-${this.dragRowHeight}px)`));
         } else if (rowIndex >= this.dragOverRowIndex && rowIndex < this.dragRowIndex) {
           // Shift rows that are above the dragged row DOWN
-          rowChildren.forEach(child => (child.style.transform = `translateY(${dragRowHeight}px)`));
+          rowChildren.forEach(child => (child.style.transform = `translateY(${this.dragRowHeight}px)`));
         } else {
           rowChildren.forEach(child => (child.style.transform = ''));
         }
@@ -297,6 +314,7 @@ export class MxTable {
       cell.columnIndex = colIndex;
       cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
       cell.heading = this.cols[colIndex].heading;
+      cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
       if (colIndex === this.cols.length - 1) colIndex = 0;
       else colIndex++;
     });
@@ -415,10 +433,8 @@ export class MxTable {
   get gridStyle(): any {
     if (!this.minWidths.sm) return { display: 'flex', flexDirection: 'column' };
     const display = this.autoWidth ? 'inline-grid' : 'grid';
-    let gridTemplateColumns = this.checkable ? 'minmax(0, 48px) ' : '';
-    if (this.draggableRows) gridTemplateColumns += 'minmax(0, 48px) ';
     const autoColumnCount = this.cols.length + (this.hasActionsColumn ? 1 : 0);
-    gridTemplateColumns += `repeat(${autoColumnCount}, minmax(0, auto))`;
+    const gridTemplateColumns = `repeat(${autoColumnCount}, minmax(0, auto))`;
     return { display, gridTemplateColumns };
   }
 
@@ -466,10 +482,7 @@ export class MxTable {
     let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClass(col);
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
-    let firstColSpan = 1;
-    if (this.minWidths.sm && colIndex === 0 && this.draggableRows) firstColSpan++;
-    if (this.minWidths.sm && colIndex === 0 && this.checkable && !isCheckAllInHeader) firstColSpan++;
-    str += ' col-span-' + firstColSpan;
+    if (this.minWidths.sm && colIndex === 0) str += ' space-x-16';
     if (!this.minWidths.sm && colIndex === this.exposedMobileColumnIndex && this.checkable && isCheckAllInHeader)
       str += ' px-16';
     if (!this.draggableRows && col.sortable && col.property) str += ' group cursor-pointer';
@@ -485,9 +498,10 @@ export class MxTable {
   }
 
   getAlignClass(col: ITableColumn) {
-    if (!this.minWidths.sm) return 'justify-start';
+    let str = 'justify-start';
     let alignment = col.align || (col.type === 'number' ? 'right' : 'left');
-    return alignment === 'right' ? 'justify-end' : alignment === 'center' ? 'justify-center' : 'justify-start';
+    str += alignment === 'right' ? ' sm:justify-end' : alignment === 'center' ? ' sm:justify-center' : '';
+    return str;
   }
 
   onHeaderClick(col: ITableColumn) {
@@ -588,7 +602,6 @@ export class MxTable {
         <div data-testid="grid" class="table-grid relative" style={this.gridStyle}>
           {/* Header Row */}
           <div class="header-row">
-            {this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox}
             {this.minWidths.sm ? (
               // Non-Mobile Column Headers
               this.cols.map((col: ITableColumn, colIndex: number) => {
@@ -599,6 +612,7 @@ export class MxTable {
                     class={this.getHeaderClass(col, colIndex)}
                     onClick={this.onHeaderClick.bind(this, col)}
                   >
+                    {colIndex === 0 && this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox}
                     <div class="inline-flex items-center overflow-hidden whitespace-nowrap select-none">
                       <span class="truncate flex-shrink" innerHTML={col.heading}></span>
                       {!this.draggableRows && col.sortable && col.property && (
@@ -672,7 +686,7 @@ export class MxTable {
                   actions={this.getRowActions ? this.getRowActions(row) : undefined}
                 >
                   {this.cols.map((col: ITableColumn) => (
-                    <mx-table-cell class={[this.getAlignClass(col), col.cellClass].join(' ')}>
+                    <mx-table-cell class={col.cellClass}>
                       <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
                     </mx-table-cell>
                   ))}
