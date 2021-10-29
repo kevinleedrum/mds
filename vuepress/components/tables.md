@@ -406,6 +406,77 @@ The `rows` array is not mutated by the component, so you must update the array u
 <<< @/vuepress/components/tables.md#draggable
 <<< @/vuepress/components/tables.md#row-move
 
+## Nested rows
+
+When using `mx-table-row` elements within the table's default slot, it is possible to nest table rows.
+
+The example below combines nested rows with the `draggableRows` prop. For the sake of simplicity, the model in this example is not actually updated when a row is dropped. It is a good idea to provide a `rowId` when nesting draggable rows; the `rowId` will be emitted via the `mxRowMove` event, as well as the `oldIndex` and `newIndex` (relative to its siblings).
+
+<section class="mds">
+  <div class="mt-20"></div>
+    <!-- #region indent -->
+    <mx-table
+      draggable-rows
+      :columns.prop="[
+        { heading: 'Item', sortable: false },
+        { heading: 'Cost', sortable: false, align: 'right' },
+        { heading: 'Qty', sortable: false, align: 'right'  },
+        { heading: 'Total Cost', sortable: false, align: 'right' }
+      ]"
+      @mxRowMove="onNestedRowMove"
+    >
+      <div>
+        <mx-table-row row-id="0">
+          <mx-table-cell>Chair</mx-table-cell>
+          <mx-table-cell>$65.00</mx-table-cell>
+          <mx-table-cell>1</mx-table-cell>
+          <mx-table-cell>$65.00</mx-table-cell>
+        </mx-table-row>
+        <mx-table-row row-id="1">
+          <mx-table-cell>Produce</mx-table-cell>
+          <mx-table-cell>-</mx-table-cell>
+          <mx-table-cell>-</mx-table-cell>
+          <mx-table-cell>$24.94</mx-table-cell>
+          <mx-table-row row-id="2">
+            <mx-table-cell>Roma Tomato (lb)</mx-table-cell>
+            <mx-table-cell>$0.99</mx-table-cell>
+            <mx-table-cell>12</mx-table-cell>
+            <mx-table-cell>$11.88</mx-table-cell>
+          </mx-table-row>
+          <mx-table-row row-id="3">
+            <mx-table-cell>Avocado, Large</mx-table-cell>
+            <mx-table-cell>$1.79</mx-table-cell>
+            <mx-table-cell>4</mx-table-cell>
+            <mx-table-cell>$7.16</mx-table-cell>
+          </mx-table-row>
+          <mx-table-row row-id="4">
+            <mx-table-cell>Cucumber</mx-table-cell>
+            <mx-table-cell>-</mx-table-cell>
+            <mx-table-cell>-</mx-table-cell>
+            <mx-table-cell>$5.90</mx-table-cell>
+            <mx-table-row row-id="5">
+              <mx-table-cell>English Cucumber</mx-table-cell>
+              <mx-table-cell>$2.59</mx-table-cell>
+              <mx-table-cell>10</mx-table-cell>
+              <mx-table-cell>$25.90</mx-table-cell>
+            </mx-table-row>
+          </mx-table-row>
+        </mx-table-row>
+        <mx-table-row row-id="6">
+          <mx-table-cell>Apron</mx-table-cell>
+          <mx-table-cell>$16.00</mx-table-cell>
+          <mx-table-cell>4</mx-table-cell>
+          <mx-table-cell>$64.00</mx-table-cell>
+        </mx-table-row>
+      </div>
+    </mx-table>
+<!-- #endregion indent -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#indent
+<<< @/vuepress/components/tables.md#nested-row-move
+
 ## Advanced usage
 
 The following example combines checkable, slotted table rows with pagination, row actions, multi-row actions, searching, and filtering.
@@ -1003,6 +1074,14 @@ export default {
       this.draggableBeatles = beatles
     },
     // #endregion row-move
+    // #region nested-row-move
+    onNestedRowMove(e) {
+      const { rowId, oldIndex, newIndex } = e.detail
+      const upOrDown = oldIndex < newIndex ? 'down' : 'up'
+      const distance = Math.abs(newIndex - oldIndex)
+      console.log(`Row with id ${rowId} was moved ${upOrDown} ${distance} position(s).`)
+    },
+    // #endregion nested-row-move
     // #region api-request
     async getApiData() {
       this.apiLoading = true
