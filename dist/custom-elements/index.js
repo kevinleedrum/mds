@@ -4514,17 +4514,20 @@ const MxTable$1 = class extends HTMLElement {
     }
     this.mxRowCheck.emit(this.checkedRowIds);
   }
-  onMxRowDragStart(e) {
-    const dragRow = e.target.closest('mx-table-row');
-    const rows = this.getTableRows();
-    this.dragRowIndex = rows.indexOf(dragRow);
+  async onMxRowDragStart(e) {
+    this.dragRow = e.target.closest('mx-table-row');
+    // Cache height of row (including any nested rows)
+    this.dragRowHeight = await this.dragRow.getHeight();
+    // Get all rows that are affected by dragging this one (i.e. the same parent node)
+    this.dragRowSiblings = Array.from(this.dragRow.parentNode.children).filter(c => c.tagName === 'MX-TABLE-ROW');
+    this.dragRowIndex = this.dragRowSiblings.indexOf(this.dragRow);
     this.dragOverRowIndex = this.dragRowIndex;
     this.dragMoveHandler = this.onDragMove.bind(this);
     // Add transitions to the rows
-    rows.forEach(row => {
-      if (!e.detail.isKeyboard && row === dragRow)
+    this.dragRowSiblings.forEach(async (row) => {
+      if (!e.detail.isKeyboard && row === this.dragRow)
         return; // Do not transition a row dragged with a mouse
-      Array.from(row.children).forEach((rowChild) => {
+      (await row.getChildren()).forEach((rowChild) => {
         rowChild.classList.add('transition-transform', 'pointer-events-none');
       });
     });
@@ -4533,7 +4536,7 @@ const MxTable$1 = class extends HTMLElement {
       document.addEventListener('mousemove', this.dragMoveHandler);
     }
   }
-  onDragKeyDown(e) {
+  async onDragKeyDown(e) {
     let direction;
     const key = e.detail;
     if (['ArrowUp', 'ArrowLeft'].includes(key))
@@ -4544,32 +4547,41 @@ const MxTable$1 = class extends HTMLElement {
       return;
     if (direction === -1 && this.dragOverRowIndex === 0)
       return; // Row is at the top
-    const rows = this.getTableRows();
-    if (direction === 1 && this.dragOverRowIndex === rows.length - 1)
+    if (direction === 1 && this.dragOverRowIndex === this.dragRowSiblings.length - 1)
       return; // Row is at the bottom
     this.dragOverRowIndex += direction;
-    const dragRow = rows[this.dragRowIndex];
-    const indexDelta = this.dragOverRowIndex - this.dragRowIndex;
-    const translateY = dragRow.children[0].offsetHeight * indexDelta;
-    dragRow.translateRow(0, translateY);
+    // Determine the translate distance based on sibling row heights
+    let translateY = 0;
+    let rowIndex = this.dragOverRowIndex;
+    while (rowIndex !== this.dragRowIndex) {
+      const translateDir = this.dragOverRowIndex > this.dragRowIndex ? 1 : -1;
+      translateY += (await this.dragRowSiblings[rowIndex].getHeight()) * translateDir;
+      rowIndex -= translateDir;
+    }
+    this.dragRow.translateRow(0, translateY);
     this.onDragMove();
   }
   onMxRowDragEnd(e) {
     document.removeEventListener('mousemove', this.dragMoveHandler);
     document.removeEventListener('touchmove', this.dragMoveHandler);
-    const rows = this.getTableRows();
     if (!e.detail.isCancel && this.dragOverRowIndex !== this.dragRowIndex) {
       // If row was dragged to a new position AND dragging wasn't cancelled, emit the mxRowMove event
-      this.mxRowMove.emit({ rowId: e.detail, oldIndex: this.dragRowIndex, newIndex: this.dragOverRowIndex });
+      this.mxRowMove.emit({
+        rowId: e.target.rowId,
+        oldIndex: this.dragRowIndex,
+        newIndex: this.dragOverRowIndex,
+      });
       if (e.detail.isKeyboard)
-        rows[this.dragOverRowIndex].focusDragHandle(); // Focus the handle at the new index
+        this.dragRowSiblings[this.dragOverRowIndex].focusDragHandle(); // Focus the handle at the new index
     }
     this.dragRowIndex = null;
     // Remove transitions and transforms from rows
-    rows.forEach(row => {
-      Array.from(row.children).forEach((rowChild) => {
-        rowChild.classList.remove('transition-transform', 'pointer-events-none');
-        rowChild.style.transform = '';
+    requestAnimationFrame(() => {
+      this.dragRowSiblings.forEach(async (row) => {
+        (await row.getChildren()).forEach((rowChild) => {
+          rowChild.classList.remove('transition-transform', 'pointer-events-none');
+          rowChild.style.transform = '';
+        });
       });
     });
     document.body.style.cursor = '';
@@ -4609,6 +4621,7 @@ const MxTable$1 = class extends HTMLElement {
   }
   onCheckAllClick(e) {
     e.preventDefault();
+    e.stopPropagation(); // Prevent triggering a sort when checkbox is in first column header
     if (this.checkedRowIds.length === 0) {
       this.checkAll();
     }
@@ -4619,27 +4632,26 @@ const MxTable$1 = class extends HTMLElement {
   /** Animate table rows while dragging a row */
   onDragMove(e) {
     requestAnimationFrame(() => {
-      if (this.dragRowIndex == null)
+      if (this.dragRow == null)
         return;
-      const rows = this.getTableRows();
-      const dragRowHeight = rows[this.dragRowIndex].children[0].offsetHeight;
-      rows.forEach((row, rowIndex) => {
-        let { top, bottom } = getPageRect(row.children[0]);
-        const rowChildren = Array.from(row.children);
+      this.dragRowSiblings.forEach(async (row, rowIndex) => {
+        const rowChildren = await row.getChildren();
+        const { top } = getPageRect(rowChildren[0]);
+        const { bottom } = getPageRect(rowChildren[rowChildren.length - 1]);
         if (e) {
           const { pageY } = getCursorCoords(e);
           if (pageY >= top && pageY <= bottom)
             this.dragOverRowIndex = rowIndex;
         }
-        if (rowIndex === this.dragRowIndex)
+        if (row === this.dragRow)
           return; // Do not shift row that is being dragged
         if (rowIndex <= this.dragOverRowIndex && rowIndex > this.dragRowIndex) {
           // Shift rows that are below the dragged row UP
-          rowChildren.forEach(child => (child.style.transform = `translateY(-${dragRowHeight}px)`));
+          rowChildren.forEach(child => (child.style.transform = `translateY(-${this.dragRowHeight}px)`));
         }
         else if (rowIndex >= this.dragOverRowIndex && rowIndex < this.dragRowIndex) {
           // Shift rows that are above the dragged row DOWN
-          rowChildren.forEach(child => (child.style.transform = `translateY(${dragRowHeight}px)`));
+          rowChildren.forEach(child => (child.style.transform = `translateY(${this.dragRowHeight}px)`));
         }
         else {
           rowChildren.forEach(child => (child.style.transform = ''));
@@ -4654,6 +4666,7 @@ const MxTable$1 = class extends HTMLElement {
       cell.columnIndex = colIndex;
       cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
       cell.heading = this.cols[colIndex].heading;
+      cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
       if (colIndex === this.cols.length - 1)
         colIndex = 0;
       else
@@ -4763,11 +4776,8 @@ const MxTable$1 = class extends HTMLElement {
     if (!this.minWidths.sm)
       return { display: 'flex', flexDirection: 'column' };
     const display = this.autoWidth ? 'inline-grid' : 'grid';
-    let gridTemplateColumns = this.checkable ? 'minmax(0, 48px) ' : '';
-    if (this.draggableRows)
-      gridTemplateColumns += 'minmax(0, 48px) ';
     const autoColumnCount = this.cols.length + (this.hasActionsColumn ? 1 : 0);
-    gridTemplateColumns += `repeat(${autoColumnCount}, minmax(0, auto))`;
+    const gridTemplateColumns = `repeat(${autoColumnCount}, minmax(0, auto))`;
     return { display, gridTemplateColumns };
   }
   get emptyStateClass() {
@@ -4822,12 +4832,8 @@ const MxTable$1 = class extends HTMLElement {
     let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClass(col);
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
-    let firstColSpan = 1;
-    if (this.minWidths.sm && colIndex === 0 && this.draggableRows)
-      firstColSpan++;
-    if (this.minWidths.sm && colIndex === 0 && this.checkable && !isCheckAllInHeader)
-      firstColSpan++;
-    str += ' col-span-' + firstColSpan;
+    if (this.minWidths.sm && colIndex === 0)
+      str += ' space-x-16';
     if (!this.minWidths.sm && colIndex === this.exposedMobileColumnIndex && this.checkable && isCheckAllInHeader)
       str += ' px-16';
     if (!this.draggableRows && col.sortable && col.property)
@@ -4845,10 +4851,10 @@ const MxTable$1 = class extends HTMLElement {
     return str;
   }
   getAlignClass(col) {
-    if (!this.minWidths.sm)
-      return 'justify-start';
+    let str = 'justify-start';
     let alignment = col.align || (col.type === 'number' ? 'right' : 'left');
-    return alignment === 'right' ? 'justify-end' : alignment === 'center' ? 'justify-center' : 'justify-start';
+    str += alignment === 'right' ? ' sm:justify-end' : alignment === 'center' ? ' sm:justify-center' : '';
+    return str;
   }
   onHeaderClick(col) {
     if (this.draggableRows || !col || !col.sortable || !col.property)
@@ -4891,15 +4897,15 @@ const MxTable$1 = class extends HTMLElement {
         h("span", { class: !this.checkedRowIds.length ? 'hidden' : null }, h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true }, h("span", { class: "h-full flex items-center px-2" }, h("span", { innerHTML: gearSvg }))), h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
     const operationsBar = (h("div", { class: "grid gap-x-16 gap-y-12 pb-12", style: this.operationsBarStyle }, this.checkable && this.showCheckAll && (h("div", { class: "col-start-1 flex items-center min-h-36 space-x-16" }, checkAllCheckbox, multiRowActionUI)), this.hasFilter && (h("div", { class: "flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1" }, h("slot", { name: "filter" }))), this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle }, h("slot", { name: "search" })))));
-    return (h(Host, { class: 'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '') }, this.showOperationsBar && operationsBar, h("div", { "data-testid": "grid", class: "table-grid relative", style: this.gridStyle }, h("div", { class: "header-row" }, this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, this.minWidths.sm ? (
+    return (h(Host, { class: 'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '') }, this.showOperationsBar && operationsBar, h("div", { "data-testid": "grid", class: "table-grid relative", style: this.gridStyle }, h("div", { class: "header-row" }, this.minWidths.sm ? (
     // Non-Mobile Column Headers
     this.cols.map((col, colIndex) => {
-      return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: col.heading }), !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg$1 })))));
+      return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) }, colIndex === 0 && this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: col.heading }), !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg$1 })))));
     })) : (
     // Mobile Column Header Navigation
     h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg$1 })))), h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) })))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && (h("div", null, this.visibleRows.map((row, rowIndex) => (
     // Generated Body Rows
-    h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", { class: [this.getAlignClass(col), col.cellClass].join(' ') }, h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))), h("div", { "data-testid": "empty-state", class: this.emptyStateClass }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found.")))), this.paginate && (
+    h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", { class: col.cellClass }, h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))), h("div", { "data-testid": "empty-state", class: this.emptyStateClass }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found.")))), this.paginate && (
     // Pagination Row
     h("div", { class: "pagination-row" }, h("mx-pagination", { page: this.page, "rows-per-page": this.rowsPerPage, rowsPerPageOptions: this.rowsPerPageOptions, "total-rows": this.serverPaginate ? this.totalRows : this.rows.length, class: "col-span-full p-0 rounded-b-2xl", onMxPageChange: this.onMxPageChange.bind(this), disabled: this.disablePagination, disableNextPage: this.disableNextPage }))))));
   }
@@ -4928,11 +4934,11 @@ const MxTableCell$1 = class extends HTMLElement {
     minWidthSync.unsubscribeComponent(this);
   }
   get cellClass() {
-    let str = 'mx-table-cell flex items-center text-4';
+    let str = 'mx-table-cell flex flex-1 items-center text-4 overflow-hidden';
     if (!this.minWidths.sm && this.isExposedMobileColumn)
       str += ' row-start-1 exposed-cell';
     else if (!this.minWidths.sm)
-      str += ' py-0 pb-12 col-span-4';
+      str += ' py-0 pb-12 col-start-2 col-span-4';
     return str;
   }
   render() {
@@ -4988,6 +4994,7 @@ const MxTableRow$1 = class extends HTMLElement {
     this.mxRowDragEnd = createEvent(this, "mxRowDragEnd", 7);
     this.mxDragKeyDown = createEvent(this, "mxDragKeyDown", 7);
     this.dragOrigin = { x: 0, y: 0 };
+    this.indentLevel = 0;
     /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
     this.actions = [];
     this.checked = false;
@@ -5004,18 +5011,16 @@ const MxTableRow$1 = class extends HTMLElement {
     const transform = `translate3d(${x}px, ${y}px, 0)`;
     if (this.dragShadowEl)
       this.dragShadowEl.style.transform = transform;
-    Array.from(this.element.children).forEach((child) => (child.style.transform = transform));
+    (await this.getChildren()).forEach((child) => (child.style.transform = transform));
   }
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
     if (this.actions.some(action => !action.value))
       throw new Error('Table row actions must have a value property!');
+    this.setIndentLevel();
   }
   componentWillRender() {
-    // Render collapsed mobile row
-    if (!this.minWidths.sm && !this.isMobileExpanded)
-      this.element.style.maxHeight = this.getCollapsedHeight();
-    // Determine `checkable` and `checked` by pulling props from parent table.
+    // Determine `checkable` and `isDraggable` by pulling props from parent table.
     // This avoids having to manually pass these as props when using mx-table-row inside the table's
     // default slot.
     const table = this.element.closest('mx-table');
@@ -5032,9 +5037,33 @@ const MxTableRow$1 = class extends HTMLElement {
     // during render when the viewport is resized across breakpoints.
     if (this.actions.length > 1 && this.actionMenu && this.actionMenuButton)
       this.actionMenu.anchorEl = this.actionMenuButton;
+    this.wrapFirstColumn();
+    this.moveNestedRows();
+    // Render collapsed mobile row
+    if (!this.minWidths.sm && !this.isMobileExpanded)
+      this.rowEl.style.maxHeight = this.getCollapsedHeight();
   }
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+  }
+  setIndentLevel() {
+    let parentRow = this.element.parentElement.closest('mx-table-row');
+    this.indentLevel = 0;
+    while (parentRow) {
+      this.indentLevel++;
+      parentRow = parentRow.parentElement.closest('mx-table-row');
+    }
+  }
+  /** Move first cell into same container as checkbox and drag handle. */
+  wrapFirstColumn() {
+    const firstCell = this.element.querySelector('mx-table-cell');
+    if (this.firstColumnWrapper && firstCell)
+      this.firstColumnWrapper.appendChild(firstCell);
+  }
+  /** Move nested rows from the default slot to a container outside the collapsible row. */
+  moveNestedRows() {
+    const nestedRows = Array.from(this.rowEl.children).filter(c => c.tagName === 'MX-TABLE-ROW');
+    nestedRows.forEach(childRow => this.childRowWrapper.appendChild(childRow));
   }
   onClick(e) {
     if (!!e.target.closest('button, input, mx-menu'))
@@ -5053,12 +5082,23 @@ const MxTableRow$1 = class extends HTMLElement {
       this.mxCheck.emit({ rowId: this.rowId, checked: this.checked });
     }
   }
+  /** Add hover styling to this row, but not the parent row(s) */
+  onMouseOver(e) {
+    e.stopPropagation();
+    const isDraggingChildRow = e.buttons > 0;
+    if (!isDraggingChildRow)
+      this.rowEl.classList.add('hovered-row');
+  }
+  onMouseOut(e) {
+    e.stopPropagation();
+    this.rowEl.classList.remove('hovered-row');
+  }
   onKeyboardHandleKeyDown(e) {
     // Start keyboard dragging on Space/Enter if not already dragging
     if (!this.isDragging && [' ', 'Enter'].includes(e.key))
       this.startDragging(e);
   }
-  startDragging(e) {
+  async startDragging(e) {
     e.stopPropagation();
     e.preventDefault();
     this.isDragging = true;
@@ -5070,14 +5110,15 @@ const MxTableRow$1 = class extends HTMLElement {
     }
     else {
       // If using a keyboard, set drag origin to the row's coordinates on the page
-      const { top, left } = getPageRect(this.element.children[0]);
+      const { top, left } = getPageRect(this.rowEl.children[0]);
       this.dragOrigin.x = left;
       this.dragOrigin.y = top;
     }
-    this.element.classList.add('pointer-events-none');
+    this.rowEl.classList.add('pointer-events-none');
     this.createDragShadowEl();
-    for (let i = 0; i < this.element.children.length; i++) {
-      const child = this.element.children[i];
+    const children = await this.getChildren();
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i];
       child.style.zIndex = '9999';
     }
     this.addDragListeners(e);
@@ -5132,26 +5173,27 @@ const MxTableRow$1 = class extends HTMLElement {
       document.addEventListener('keydown', onKeyDown);
     }
     else if (startEvent.type === 'touchstart') {
-      this.dragScroller = new DragScroller(this.element);
+      this.dragScroller = new DragScroller(this.rowEl);
       document.addEventListener('touchmove', onMouseMove);
       document.addEventListener('touchend', onMouseUp);
       document.addEventListener('touchcancel', onMouseUp);
     }
     else {
-      this.dragScroller = new DragScroller(this.element);
+      this.dragScroller = new DragScroller(this.rowEl);
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     }
   }
   /** Clear transforms and remove dragShadowEl */
-  stopDragging(isKeyboard = false, isCancel = false) {
+  async stopDragging(isKeyboard = false, isCancel = false) {
     this.isDragging = false;
-    this.element.classList.remove('drag-row', 'pointer-events-none');
+    this.rowEl.classList.remove('drag-row', 'pointer-events-none');
     if (this.dragShadowEl)
       this.dragShadowEl.remove();
     this.dragShadowEl = undefined;
-    for (let i = 0; i < this.element.children.length; i++) {
-      const child = this.element.children[i];
+    const children = await this.getChildren();
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i];
       child.style.transform = '';
       child.style.zIndex = '';
     }
@@ -5159,56 +5201,86 @@ const MxTableRow$1 = class extends HTMLElement {
   }
   /** When dragging, add an element behind the row children that has a box shadow.
    * This is simpler than trying to change the row to `display: flex` to add a box shadow to it. */
-  createDragShadowEl() {
+  async createDragShadowEl() {
     this.dragShadowEl = document.createElement('div');
     this.dragShadowEl.classList.add('absolute', 'w-full', 'shadow-24');
     this.dragShadowEl.style.zIndex = '9998';
-    this.dragShadowEl.style.height = this.element.children[0].offsetHeight + 'px';
-    this.dragShadowEl.style.top = this.element.children[0].offsetTop + 'px';
-    this.dragShadowEl.style.left = this.element.children[0].offsetLeft + 'px';
+    this.dragShadowEl.style.height = (await this.getHeight()) + 'px';
+    const firstChild = (await this.getChildren())[0];
+    this.dragShadowEl.style.top = firstChild.offsetTop + 'px';
+    this.dragShadowEl.style.left = firstChild.offsetLeft + 'px';
     this.element.parentNode.insertBefore(this.dragShadowEl, this.element);
   }
   accordion() {
     if (this.minWidths.sm)
       return;
-    this.element.classList.add('overflow-hidden');
+    this.rowEl.style.transition = 'max-height 150ms ease';
     this.isMobileExpanded ? this.collapse() : this.expand();
   }
   async collapse() {
     if (!this.isMobileExpanded)
       return;
     this.isMobileCollapsing = true;
-    this.element.style.maxHeight = this.element.scrollHeight + 'px';
+    this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
     requestAnimationFrame(() => {
-      this.element.style.maxHeight = this.getCollapsedHeight();
+      this.rowEl.style.maxHeight = this.getCollapsedHeight();
     });
+    if (!this.rowEl.style.transition) {
+      this.isMobileExpanded = false;
+      this.isMobileCollapsing = false;
+    }
   }
   async expand() {
     if (this.isMobileExpanded)
       return;
-    this.element.style.maxHeight = this.element.scrollHeight + 'px';
+    this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
     this.isMobileExpanded = true;
     requestAnimationFrame(() => {
-      this.element.style.maxHeight = this.element.scrollHeight + 'px';
+      this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
     });
   }
   async focusDragHandle() {
     if (this.keyboardDragHandle)
       this.keyboardDragHandle.focus();
   }
+  /** Returns the immediate children of the row, as well as the immediate children of all nested
+   * rows.  If a child is `display: contents` (i.e. the first column wrapper), then its children
+   * are added. */
+  async getChildren() {
+    let children = [];
+    if (!this.minWidths.sm)
+      children.push(this.rowEl);
+    else
+      Array.from(this.rowEl.children).forEach(child => {
+        if (!child.offsetParent)
+          children.push(...Array.from(child.children));
+        else
+          children.push(child);
+      });
+    const nestedRows = Array.from(this.childRowWrapper.children);
+    await Promise.all(nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))));
+    return children;
+  }
+  /** Calculate the height of the row, including the height of nested rows */
+  async getHeight() {
+    let height = (await this.getChildren())[0].offsetHeight;
+    const nestedRows = Array.from(this.childRowWrapper.children);
+    await Promise.all(nestedRows.map(childRow => childRow.getHeight().then(childHeight => (height += childHeight))));
+    return height;
+  }
   onTransitionEnd(e) {
-    if (e.target === this.element) {
-      this.element.classList.remove('overflow-hidden');
+    if (e.target === this.rowEl) {
+      this.rowEl.style.transition = '';
       if (this.isMobileCollapsing) {
         this.isMobileExpanded = false;
         this.isMobileCollapsing = false;
       }
       // Remove explicit max-height after expanding to avoid issues with window resizing, etc.
-      this.element.style.maxHeight = '';
+      this.rowEl.style.maxHeight = '';
     }
     // When keyboard dragging, scroll the first element into view if moved out of bounds
-    if (e.target === this.element.children[0] && isScrolledOutOfView(this.element.children[0]))
-      this.element.children[0].scrollIntoView();
+    if (e.target === this.rowEl.children[0] && isScrolledOutOfView(this.rowEl.children[0]))
+      this.rowEl.children[0].scrollIntoView();
   }
   onCheckboxInput(e) {
     this.mxCheck.emit({ rowId: this.rowId, checked: e.target.checked });
@@ -5219,12 +5291,15 @@ const MxTableRow$1 = class extends HTMLElement {
   }
   getCollapsedHeight() {
     const exposedCell = this.getExposedCell();
-    if (!exposedCell)
+    if (!exposedCell || !exposedCell.offsetHeight)
       return DEFAULT_MAX_HEIGHT;
     return exposedCell.offsetHeight + 1 + 'px';
   }
+  get rowEl() {
+    return this.element.firstElementChild;
+  }
   get rowClass() {
-    let str = 'mx-table-row';
+    let str = 'table-row overflow-hidden';
     str += this.minWidths.sm ? ' contents' : ' grid';
     if (this.checkable)
       str += ' checkable-row';
@@ -5237,14 +5312,32 @@ const MxTableRow$1 = class extends HTMLElement {
   get rowStyle() {
     if (this.minWidths.sm)
       return {};
+    let gridTemplateColumns = this.indentLevel > 0 ? 'minmax(0, min-content)' : '0';
+    gridTemplateColumns += this.checkable ? ' minmax(0, min-content)' : ' 0';
+    gridTemplateColumns += this.isDraggable ? ' minmax(0, min-content)' : ' 0';
+    gridTemplateColumns += ' minmax(0, auto) minmax(0, min-content)';
     return {
-      gridTemplateColumns: 'minmax(0, min-content) minmax(0, min-content) minmax(0, auto) minmax(0, min-content)',
+      gridTemplateColumns,
       maxHeight: '',
     };
   }
+  get indentClass() {
+    let str = 'table-row-indent h-full';
+    if (this.minWidths.sm)
+      return str;
+    str += ' col-start-1 row-start-1';
+    const cells = Array.from(this.rowEl.children).filter(c => c.tagName === 'MX-TABLE-CELL');
+    let gridRowCount = cells.length + 1;
+    if (this.actions.length > 0)
+      gridRowCount++;
+    return (str += ' row-span-' + gridRowCount);
+  }
+  get indentStyle() {
+    return { width: 2 * this.indentLevel + 'rem', minWidth: this.indentLevel + 'rem' };
+  }
   render() {
-    return (h(Host, { role: "row", class: this.rowClass, style: this.rowStyle, onClick: this.onClick.bind(this), onTransitionEnd: this.onTransitionEnd.bind(this) }, this.checkable && (h("div", { class: "flex items-center pr-4 col-start-1 row-start-1 sm:row-start-auto sm:col-start-auto", onClick: this.accordion.bind(this) }, h("mx-checkbox", { ref: el => (this.checkbox = el), checked: this.checked, onInput: this.onCheckboxInput.bind(this), onClick: e => e.stopPropagation(), "label-name": "Select row", "hide-label": true }))), this.isDraggable && (h("div", { class: "flex items-center col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move", "data-testid": "drag-handle", onMouseDown: this.startDragging.bind(this), onTouchStart: this.startDragging.bind(this) }, h("span", { "aria-label": "Press Space or Enter to move this row", ref: el => (this.keyboardDragHandle = el), tabindex: "0", class: 'pointer-events-none' + (this.checkable ? ' mx-8' : ''), innerHTML: dragDotsSvg, onKeyDown: this.onKeyboardHandleKeyDown.bind(this) }), this.isDragging && (h("p", { class: "sr-only", role: "alert" }, "Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to cancel.")))), h("slot", null), !this.checkable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-1 w-0" }), !this.isDraggable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-2 w-0" }), !this.minWidths.sm && (h("button", { class: "flex border-0 items-center justify-end px-16 row-start-1", "aria-hidden": "true", onClick: this.accordion.bind(this), onMouseDown: e => e.preventDefault() /* Do not focus on click */ }, h("span", { class: 'mobile-row-chevron text-1 transform' +
-        (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : ''), innerHTML: chevronSvg }))), this.actions.length === 1 && (h("div", { class: "action-cell flex items-center p-16 sm:p-0 justify-end col-span-4 sm:col-span-1" }, h("mx-button", Object.assign({ "data-testid": "action-button", "btn-type": "text" }, this.actions[0]), this.actions[0].value))), this.actions.length > 1 && (h("div", { class: "action-cell flex items-center p-0 justify-end col-span-4 sm:col-span-1" }, h("mx-icon-button", { ref: el => (this.actionMenuButton = el), innerHTML: dotsSvg }), h("mx-menu", { "data-testid": "action-menu", ref: el => (this.actionMenu = el) }, this.actions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))))));
+    return (h(Host, { class: "mx-table-row contents" }, h("div", { role: "row", class: this.rowClass, style: this.rowStyle, onClick: this.onClick.bind(this), onTransitionEnd: this.onTransitionEnd.bind(this), onMouseOver: this.onMouseOver.bind(this), onMouseOut: this.onMouseOut.bind(this) }, h("div", { ref: el => (this.firstColumnWrapper = el), class: "first-column-wrapper contents sm:flex sm:items-center min-w-0 overflow-hidden" }, h("div", { class: this.indentClass, style: this.indentStyle, "data-testid": 'indent-' + this.indentLevel }), this.checkable && (h("div", { class: "flex items-center pr-4 col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto", onClick: this.accordion.bind(this) }, h("mx-checkbox", { ref: el => (this.checkbox = el), checked: this.checked, onInput: this.onCheckboxInput.bind(this), onClick: e => e.stopPropagation(), "label-name": "Select row", "hide-label": true }))), this.isDraggable && (h("div", { class: "flex items-center col-start-3 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move", "data-testid": "drag-handle", onMouseDown: this.startDragging.bind(this), onTouchStart: this.startDragging.bind(this) }, h("span", { "aria-label": "Press Space or Enter to move this row", ref: el => (this.keyboardDragHandle = el), tabindex: "0", class: 'pointer-events-none' + (this.checkable ? ' mx-8' : ''), innerHTML: dragDotsSvg, onKeyDown: this.onKeyboardHandleKeyDown.bind(this) }), this.isDragging && (h("p", { class: "sr-only", role: "alert" }, "Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to cancel."))))), h("slot", null), !this.checkable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-2 w-0" }), !this.isDraggable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-3 w-0" }), !this.minWidths.sm && (h("button", { class: "flex border-0 items-center justify-end px-16 row-start-1", "aria-hidden": "true", onClick: this.accordion.bind(this), onMouseDown: e => e.preventDefault() /* Do not focus on click */ }, h("span", { class: 'mobile-row-chevron text-1 transform' +
+        (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : ''), innerHTML: chevronSvg }))), this.actions.length === 1 && (h("div", { class: "action-cell flex items-center p-16 sm:p-0 justify-end col-start-2 col-span-4 sm:col-span-1" }, h("mx-button", Object.assign({ "data-testid": "action-button", "btn-type": "text" }, this.actions[0]), this.actions[0].value))), this.actions.length > 1 && (h("div", { class: "action-cell flex items-center p-0 justify-end col-start-2 col-span-4 sm:col-span-1" }, h("mx-icon-button", { ref: el => (this.actionMenuButton = el), innerHTML: dotsSvg }), h("mx-menu", { "data-testid": "action-menu", ref: el => (this.actionMenu = el) }, this.actions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))))), h("div", { ref: el => (this.childRowWrapper = el), class: "contents" })));
   }
   get element() { return this; }
 };

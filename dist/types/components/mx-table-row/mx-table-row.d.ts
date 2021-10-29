@@ -11,8 +11,11 @@ export declare class MxTableRow {
     y: number;
   };
   dragShadowEl: HTMLElement;
+  firstColumnWrapper: HTMLElement;
+  childRowWrapper: HTMLElement;
   keyboardDragHandle: HTMLElement;
   dragScroller: DragScroller;
+  indentLevel: number;
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
@@ -48,24 +51,44 @@ export declare class MxTableRow {
   componentWillRender(): void;
   componentDidRender(): void;
   disconnectedCallback(): void;
+  setIndentLevel(): void;
+  /** Move first cell into same container as checkbox and drag handle. */
+  wrapFirstColumn(): void;
+  /** Move nested rows from the default slot to a container outside the collapsible row. */
+  moveNestedRows(): void;
   onClick(e: MouseEvent): void;
+  /** Add hover styling to this row, but not the parent row(s) */
+  onMouseOver(e: MouseEvent): void;
+  onMouseOut(e: MouseEvent): void;
   onKeyboardHandleKeyDown(e: KeyboardEvent): void;
-  startDragging(e: MouseEvent | TouchEvent | KeyboardEvent): void;
+  startDragging(e: MouseEvent | TouchEvent | KeyboardEvent): Promise<void>;
   addDragListeners(startEvent: MouseEvent | TouchEvent | KeyboardEvent): void;
   /** Clear transforms and remove dragShadowEl */
-  stopDragging(isKeyboard?: boolean, isCancel?: boolean): void;
+  stopDragging(isKeyboard?: boolean, isCancel?: boolean): Promise<void>;
   /** When dragging, add an element behind the row children that has a box shadow.
    * This is simpler than trying to change the row to `display: flex` to add a box shadow to it. */
-  createDragShadowEl(): void;
+  createDragShadowEl(): Promise<void>;
   accordion(): void;
   collapse(): Promise<void>;
   expand(): Promise<void>;
   focusDragHandle(): Promise<void>;
+  /** Returns the immediate children of the row, as well as the immediate children of all nested
+   * rows.  If a child is `display: contents` (i.e. the first column wrapper), then its children
+   * are added. */
+  getChildren(): Promise<HTMLElement[]>;
+  /** Calculate the height of the row, including the height of nested rows */
+  getHeight(): Promise<number>;
   onTransitionEnd(e: any): void;
   onCheckboxInput(e: InputEvent): void;
   getExposedCell(): HTMLMxTableCellElement;
   getCollapsedHeight(): string;
+  get rowEl(): HTMLElement;
   get rowClass(): string;
   get rowStyle(): any;
+  get indentClass(): string;
+  get indentStyle(): {
+    width: string;
+    minWidth: string;
+  };
   render(): any;
 }

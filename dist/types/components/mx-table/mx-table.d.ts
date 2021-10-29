@@ -50,6 +50,9 @@ export declare class MxTable {
   hasSearch: boolean;
   hasFilter: boolean;
   showOperationsBar: boolean;
+  dragRow: HTMLMxTableRowElement;
+  dragRowSiblings: HTMLMxTableRowElement[];
+  dragRowHeight: number;
   dragRowIndex: number;
   dragOverRowIndex: number;
   dragMoveHandler: (e: MouseEvent) => any;
@@ -115,8 +118,8 @@ export declare class MxTable {
    * The `Event.detail` object will contain the `rowId` (if set), `oldIndex`, and `newIndex`. */
   mxRowMove: EventEmitter<any>;
   onMxCheck(e: CustomEvent): void;
-  onMxRowDragStart(e: CustomEvent): void;
-  onDragKeyDown(e: CustomEvent): void;
+  onMxRowDragStart(e: CustomEvent): Promise<void>;
+  onDragKeyDown(e: CustomEvent): Promise<void>;
   onMxRowDragEnd(e: CustomEvent): void;
   onVisibleRowsChange(): void;
   onPageChange(): void;
@@ -154,7 +157,7 @@ export declare class MxTable {
   getCellValue(row: Object, col: ITableColumn, rowIndex: number): any;
   getHeaderClass(col: ITableColumn, colIndex: number): string;
   getHeaderArrowClass(col: ITableColumn): string;
-  getAlignClass(col: ITableColumn): "justify-start" | "justify-end" | "justify-center";
+  getAlignClass(col: ITableColumn): string;
   onHeaderClick(col: ITableColumn): void;
   changeExposedColumnIndex(delta: number): void;
   onMxPageChange(e: {
