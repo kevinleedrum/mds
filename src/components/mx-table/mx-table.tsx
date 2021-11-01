@@ -308,15 +308,19 @@ export class MxTable {
   }
 
   setCellProps() {
-    const cells = this.element.querySelectorAll('mx-table-cell');
-    let colIndex = 0;
-    cells.forEach((cell: HTMLMxTableCellElement) => {
-      cell.columnIndex = colIndex;
-      cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
-      cell.heading = this.cols[colIndex].heading;
-      cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
-      if (colIndex === this.cols.length - 1) colIndex = 0;
-      else colIndex++;
+    const rows = this.getTableRows();
+    rows.forEach((row: HTMLMxTableRowElement) => {
+      if (row.subheader) return;
+      const cells = row.querySelectorAll('mx-table-cell');
+      let colIndex = 0;
+      cells.forEach((cell: HTMLMxTableCellElement) => {
+        cell.columnIndex = colIndex;
+        cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
+        cell.heading = this.cols[colIndex].heading;
+        cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
+        if (colIndex === this.cols.length - 1) colIndex = 0;
+        else colIndex++;
+      });
     });
   }
 
@@ -338,6 +342,13 @@ export class MxTable {
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
+    const rows = this.getTableRows();
+    if (!this.paginate) {
+      rows.forEach((row, i) => {
+        const addOrRemove = i === rows.length - 1 ? 'add' : 'remove';
+        row.classList[addOrRemove]('last-row');
+      });
+    }
     requestAnimationFrame(this.setCellProps.bind(this));
   }
 
@@ -595,7 +606,7 @@ export class MxTable {
     );
 
     return (
-      <Host class={'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '')}>
+      <Host class={'mx-table block text-4' + (this.hoverable ? ' hoverable' : '')}>
         {/* Operations Bar */}
         {this.showOperationsBar && operationsBar}
 
@@ -643,20 +654,22 @@ export class MxTable {
                     )}
                   </div>
                 </div>
-                <div class="flex items-center">
-                  <mx-icon-button
-                    data-testid="previous-column-button"
-                    chevronLeft
-                    disabled={this.exposedMobileColumnIndex === 0}
-                    onClick={this.changeExposedColumnIndex.bind(this, -1)}
-                  />
-                  <mx-icon-button
-                    data-testid="next-column-button"
-                    chevronRight
-                    disabled={this.exposedMobileColumnIndex === this.cols.length - 1}
-                    onClick={this.changeExposedColumnIndex.bind(this, 1)}
-                  />
-                </div>
+                {this.columns.length >= 2 && (
+                  <div class="flex items-center">
+                    <mx-icon-button
+                      data-testid="previous-column-button"
+                      chevronLeft
+                      disabled={this.exposedMobileColumnIndex === 0}
+                      onClick={this.changeExposedColumnIndex.bind(this, -1)}
+                    />
+                    <mx-icon-button
+                      data-testid="next-column-button"
+                      chevronRight
+                      disabled={this.exposedMobileColumnIndex === this.cols.length - 1}
+                      onClick={this.changeExposedColumnIndex.bind(this, 1)}
+                    />
+                  </div>
+                )}
               </div>
             )}
             {this.minWidths.sm && this.hasActionsColumn && <div></div>}

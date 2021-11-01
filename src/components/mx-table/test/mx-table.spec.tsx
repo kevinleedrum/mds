@@ -355,8 +355,11 @@ describe('mx-table (nested rows, non-mobile)', () => {
             <mx-table-cell>A2</mx-table-cell>
           </mx-table-row>
         </mx-table-row>
-        <mx-table-row>
+        <mx-table-row subheader>
           <mx-table-cell>B</mx-table-cell>
+          <mx-table-row>
+            <mx-table-cell>C</mx-table-cell>
+          </mx-table-row>
         </mx-table-row>
       </mx-table>
       `,
@@ -371,5 +374,10 @@ describe('mx-table (nested rows, non-mobile)', () => {
     expect(rows[1].querySelector('[data-testid="indent-1"]')).not.toBeNull();
     expect(rows[2].querySelector('[data-testid="indent-2"]')).not.toBeNull();
     expect(rows[3].querySelector('[data-testid="indent-1"]')).not.toBeNull();
+  });
+
+  it('does not add an indent to rows nested under a subheader row', () => {
+    const rows = root.querySelectorAll('mx-table-row');
+    expect(rows[4].querySelector('[data-testid="indent-0"]')).not.toBeNull();
   });
 });

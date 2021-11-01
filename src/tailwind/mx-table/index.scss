@@ -25,6 +25,11 @@
   .empty-state > * {
     background: var(--mds-bg-table);
   }
+  .mx-table-row > .table-row.subheader > *,
+  .table-row.subheader > .first-column-wrapper > * {
+    background: var(--mds-bg-table-subheader);
+    color: var(--mds-text-table-subheader);
+  }
 
   .empty-state {
     &:last-child {
@@ -79,9 +84,12 @@
       .table-row-indent {
         background: var(--mds-bg-table-indent);
       }
+      .drag-handle {
+        color: var(--mds-text-table-drag-handle);
+      }
     }
 
-    &:last-child > .table-row {
+    &.last-row > .table-row {
       @apply rounded-b-2xl;
 
       & > :first-child {
@@ -91,37 +99,25 @@
         @apply sm:rounded-br-2xl;
       }
     }
-    &:not(:last-child) > .table-row {
+    &:not(.last-row) > .table-row {
       @apply border-b sm:border-b-0;
     }
-    &:not(:last-child) > .table-row > * {
+    &:not(.last-row) > .table-row > * {
       @apply sm:border-b;
     }
   }
 
   @media (hover: hover) {
-    &.hoverable .hovered-row > *,
-    &.hoverable .hovered-row > .first-column-wrapper > *:not(.table-row-indent) {
+    &.hoverable .hovered-row:not(.subheader) > *,
+    &.hoverable .hovered-row:not(.subheader) > .first-column-wrapper > *:not(.table-row-indent) {
       background: var(--mds-bg-table-hover);
-    }
-  }
-
-  &.paginated {
-    .mx-table-row:last-child > .table-row {
-      @apply border-b rounded-b-none;
-      & > * {
-        @apply sm:border-b;
-      }
-      & > :first-child {
-        @apply rounded-bl-none;
-      }
-      & > :last-child {
-        @apply rounded-br-none;
-      }
     }
   }
 }
 
 .mx-table-cell {
   @apply pl-24 sm:pl-16 p-16;
+}
+.subheader > .first-column-wrapper > .mx-table-cell {
+  @apply pl-24 sm:pl-12 p-12;
 }
