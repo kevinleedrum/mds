@@ -24,12 +24,15 @@ export class MxTableRow {
   keyboardDragHandle: HTMLElement;
   dragScroller: DragScroller;
   indentLevel = 0;
+  columnCount = 1;
 
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   @Prop() rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   @Prop() actions: ITableRowAction[] = [];
   @Prop({ mutable: true }) checked: boolean = false;
+  /** Style the row as a subheader. */
+  @Prop() subheader: boolean = false;
 
   @Element() element: HTMLMxTableRowElement;
 
@@ -71,6 +74,7 @@ export class MxTableRow {
     const table = this.element.closest('mx-table') as HTMLMxTableElement;
     this.checkable = table && table.checkable;
     this.isDraggable = table && table.draggableRows;
+    this.columnCount = table && table.columns.length;
     if (this.checkable && this.rowId == null)
       throw new Error('Checkable rows require either a getRowId prop on the table, or a rowId on the row!');
     if (this.checkable) this.checkOnRowClick = table.checkOnRowClick;
@@ -96,7 +100,7 @@ export class MxTableRow {
     let parentRow = this.element.parentElement.closest('mx-table-row');
     this.indentLevel = 0;
     while (parentRow) {
-      this.indentLevel++;
+      if (!parentRow.subheader) this.indentLevel++;
       parentRow = parentRow.parentElement.closest('mx-table-row');
     }
   }
@@ -118,7 +122,7 @@ export class MxTableRow {
     if (!this.minWidths.sm) {
       // Collapse/expand row when the exposed column cell is clicked
       const exposedCell = this.getExposedCell();
-      if (!exposedCell) return;
+      if (!exposedCell || this.subheader || (this.columnCount < 2 && !this.actions.length)) return;
       if ((e.target as HTMLElement).closest('mx-table-cell') === exposedCell) this.accordion();
     } else if (this.checkable && this.checkOnRowClick) {
       // (Un)check row
@@ -356,6 +360,7 @@ export class MxTableRow {
     if (this.checkable) str += ' checkable-row';
     if (this.checkable && this.checkOnRowClick) str += ' cursor-pointer';
     if (!this.minWidths.sm && !this.isMobileExpanded) str += ' mobile-collapsed';
+    if (this.subheader) str += ' subheader overline2';
     return str;
   }
 
@@ -375,8 +380,7 @@ export class MxTableRow {
     let str = 'table-row-indent h-full';
     if (this.minWidths.sm) return str;
     str += ' col-start-1 row-start-1';
-    const cells = Array.from(this.rowEl.children).filter(c => c.tagName === 'MX-TABLE-CELL');
-    let gridRowCount = cells.length + 1;
+    let gridRowCount = this.columnCount;
     if (this.actions.length > 0) gridRowCount++;
     return (str += ' row-span-' + gridRowCount);
   }
@@ -426,7 +430,7 @@ export class MxTableRow {
             {/* Drag Handle */}
             {this.isDraggable && (
               <div
-                class="flex items-center col-start-3 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move"
+                class="drag-handle flex items-center col-start-3 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move"
                 data-testid="drag-handle"
                 onMouseDown={this.startDragging.bind(this)}
                 onTouchStart={this.startDragging.bind(this)}
@@ -454,7 +458,7 @@ export class MxTableRow {
           {/* Mobile drag-handle column filler */}
           {!this.isDraggable && !this.minWidths.sm && <div class="row-start-1 col-start-3 w-0"></div>}
           {/* Mobile accordion chevron */}
-          {!this.minWidths.sm && (
+          {!this.minWidths.sm && !this.subheader && (this.columnCount > 1 || this.actions.length) && (
             <button
               class="flex border-0 items-center justify-end px-16 row-start-1"
               aria-hidden="true"
