@@ -34,8 +34,12 @@ export class MxTableCell {
 
   render() {
     return (
-      <Host role="gridcell" aria-describedby={`column-header-${this.columnIndex}`} class={this.cellClass}>
-        <div class="min-h-16 max-w-full break-words">
+      <Host
+        role="gridcell"
+        aria-describedby={this.columnIndex != null ? `column-header-${this.columnIndex}` : null}
+        class={this.cellClass}
+      >
+        <div class="min-h-16 max-w-full break-words" role={this.columnIndex == null ? 'heading' : null}>
           {!this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (
             <p class="subtitle5 my-0 mb-4" innerHTML={this.heading}></p>
           )}

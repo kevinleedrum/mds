@@ -74,7 +74,7 @@ export class MxTableRow {
     const table = this.element.closest('mx-table') as HTMLMxTableElement;
     this.checkable = table && table.checkable;
     this.isDraggable = table && table.draggableRows;
-    this.columnCount = table && table.columns.length;
+    this.columnCount = (table && table.columns.length) + (this.actions.length ? 1 : 0);
     if (this.checkable && this.rowId == null)
       throw new Error('Checkable rows require either a getRowId prop on the table, or a rowId on the row!');
     if (this.checkable) this.checkOnRowClick = table.checkOnRowClick;
@@ -122,7 +122,7 @@ export class MxTableRow {
     if (!this.minWidths.sm) {
       // Collapse/expand row when the exposed column cell is clicked
       const exposedCell = this.getExposedCell();
-      if (!exposedCell || this.subheader || (this.columnCount < 2 && !this.actions.length)) return;
+      if (!exposedCell || this.subheader || this.columnCount < 2) return;
       if ((e.target as HTMLElement).closest('mx-table-cell') === exposedCell) this.accordion();
     } else if (this.checkable && this.checkOnRowClick) {
       // (Un)check row
@@ -380,9 +380,7 @@ export class MxTableRow {
     let str = 'table-row-indent h-full';
     if (this.minWidths.sm) return str;
     str += ' col-start-1 row-start-1';
-    let gridRowCount = this.columnCount;
-    if (this.actions.length > 0) gridRowCount++;
-    return (str += ' row-span-' + gridRowCount);
+    return (str += ' row-span-' + this.columnCount);
   }
 
   get indentStyle() {
@@ -406,7 +404,10 @@ export class MxTableRow {
           {/* On mobile, display:contents allows those same elements to fall into the row grid. */}
           <div
             ref={el => (this.firstColumnWrapper = el)}
-            class="first-column-wrapper contents sm:flex sm:items-center min-w-0 overflow-hidden"
+            class={
+              'first-column-wrapper contents sm:flex sm:items-center min-w-0 overflow-hidden' +
+              (this.subheader ? ' sm:col-span-full' : '')
+            }
           >
             {/* Indent */}
             <div class={this.indentClass} style={this.indentStyle} data-testid={'indent-' + this.indentLevel}></div>
@@ -458,7 +459,7 @@ export class MxTableRow {
           {/* Mobile drag-handle column filler */}
           {!this.isDraggable && !this.minWidths.sm && <div class="row-start-1 col-start-3 w-0"></div>}
           {/* Mobile accordion chevron */}
-          {!this.minWidths.sm && !this.subheader && (this.columnCount > 1 || this.actions.length) && (
+          {!this.minWidths.sm && !this.subheader && this.columnCount > 1 && (
             <button
               class="flex border-0 items-center justify-end px-16 row-start-1"
               aria-hidden="true"

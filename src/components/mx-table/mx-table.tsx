@@ -308,15 +308,19 @@ export class MxTable {
   }
 
   setCellProps() {
-    const cells = this.element.querySelectorAll('mx-table-cell');
-    let colIndex = 0;
-    cells.forEach((cell: HTMLMxTableCellElement) => {
-      cell.columnIndex = colIndex;
-      cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
-      cell.heading = this.cols[colIndex].heading;
-      cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
-      if (colIndex === this.cols.length - 1) colIndex = 0;
-      else colIndex++;
+    const rows = this.getTableRows();
+    rows.forEach((row: HTMLMxTableRowElement) => {
+      if (row.subheader) return;
+      const cells = row.querySelectorAll('mx-table-cell');
+      let colIndex = 0;
+      cells.forEach((cell: HTMLMxTableCellElement) => {
+        cell.columnIndex = colIndex;
+        cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
+        cell.heading = this.cols[colIndex].heading;
+        cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
+        if (colIndex === this.cols.length - 1) colIndex = 0;
+        else colIndex++;
+      });
     });
   }
 
