@@ -413,7 +413,7 @@ When using `mx-table-row` elements within the table's default slot, it is possib
 The example below combines nested rows with the `draggableRows` prop. For the sake of simplicity, the model in this example is not actually updated when a row is dropped. It is a good idea to provide a `rowId` when nesting draggable rows; the `rowId` will be emitted via the `mxRowMove` event, as well as the `oldIndex` and `newIndex` (relative to its siblings).
 
 <section class="mds">
-  <div class="mt-20"></div>
+  <div class="mt-20">
     <!-- #region indent -->
     <mx-table
       draggable-rows
@@ -476,6 +476,54 @@ The example below combines nested rows with the `draggableRows` prop. For the sa
 
 <<< @/vuepress/components/tables.md#indent
 <<< @/vuepress/components/tables.md#nested-row-move
+
+## Subheader rows
+
+Adding the `subheader` prop to a row styles it as a subheader. Only one `mx-table-cell` is necessary for the subheader content. When used inside a table with draggable rows, it can be used to drag a group of nested rows.
+
+<section class="mds">
+  <div class="mt-20">
+    <!-- #region subheaders -->
+    <mx-table
+      auto-width
+      paginate="false"
+      draggable-rows
+      :columns.prop="[
+        { heading: 'Name' },
+      ]"
+    >
+      <div>
+        <mx-table-row subheader>
+          <mx-table-cell>Core Tools</mx-table-cell>
+          <mx-table-row>
+            <mx-table-cell>Matrix</mx-table-cell>
+          </mx-table-row>
+          <mx-table-row>
+            <mx-table-cell>Remine</mx-table-cell>
+          </mx-table-row>
+          <mx-table-row>
+            <mx-table-cell>Realist</mx-table-cell>
+          </mx-table-row>
+        </mx-table-row subheader>
+        <mx-table-row subheader>
+          <mx-table-cell>Additional Benefits</mx-table-cell>
+          <mx-table-row>
+            <mx-table-cell>Builders Update</mx-table-cell>
+          </mx-table-row>
+          <mx-table-row>
+            <mx-table-cell>ePropertyWatch</mx-table-cell>
+          </mx-table-row>
+          <mx-table-row>
+            <mx-table-cell>Homes.com</mx-table-cell>
+          </mx-table-row>
+        </mx-table-row subheader>
+      </div>
+    </mx-table>
+    <!-- #endregion subheaders -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#subheaders
 
 ## Advanced usage
 
@@ -601,11 +649,12 @@ The `ITableColumn` interface describes the objects passed to the `columns` prop.
 
 ### Table Row Properties
 
-| Property  | Attribute | Description                                                                                                           | Type                | Default     |
-| --------- | --------- | --------------------------------------------------------------------------------------------------------------------- | ------------------- | ----------- |
-| `actions` | --        | An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. | `ITableRowAction[]` | `[]`        |
-| `checked` | `checked` |                                                                                                                       | `boolean`           | `false`     |
-| `rowId`   | `row-id`  | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
+| Property    | Attribute   | Description                                                                                                           | Type                | Default     |
+| ----------- | ----------- | --------------------------------------------------------------------------------------------------------------------- | ------------------- | ----------- |
+| `actions`   | --          | An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. | `ITableRowAction[]` | `[]`        |
+| `checked`   | `checked`   |                                                                                                                       | `boolean`           | `false`     |
+| `rowId`     | `row-id`    | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
+| `subheader` | `subheader` | Style the row as a subheader.                                                                                         | `boolean`           | `false`     |
 
 ### Table Events
 

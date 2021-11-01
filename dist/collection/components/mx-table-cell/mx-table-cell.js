@@ -13,7 +13,7 @@ export class MxTableCell {
     minWidthSync.unsubscribeComponent(this);
   }
   get cellClass() {
-    let str = 'mx-table-cell flex flex-1 items-center text-4 overflow-hidden';
+    let str = 'mx-table-cell flex flex-1 items-center overflow-hidden';
     if (!this.minWidths.sm && this.isExposedMobileColumn)
       str += ' row-start-1 exposed-cell';
     else if (!this.minWidths.sm)
@@ -21,8 +21,8 @@ export class MxTableCell {
     return str;
   }
   render() {
-    return (h(Host, { role: "gridcell", "aria-describedby": `column-header-${this.columnIndex}`, class: this.cellClass },
-      h("div", { class: "min-h-20 max-w-full break-words" },
+    return (h(Host, { role: "gridcell", "aria-describedby": this.columnIndex != null ? `column-header-${this.columnIndex}` : null, class: this.cellClass },
+      h("div", { class: "min-h-16 max-w-full break-words", role: this.columnIndex == null ? 'heading' : null },
         !this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (h("p", { class: "subtitle5 my-0 mb-4", innerHTML: this.heading })),
         h("slot", null))));
   }
@@ -58,7 +58,7 @@ export class MxTableCell {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": "This is automatically set by the parent `mx-table`."
+        "text": "This is automatically set by the parent `mx-table`.  For subheaders, this will be null."
       },
       "attribute": "column-index",
       "reflect": true

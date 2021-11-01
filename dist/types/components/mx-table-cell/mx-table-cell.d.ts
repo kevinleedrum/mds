@@ -2,7 +2,7 @@ import { MinWidths } from '../../utils/minWidthSync';
 export declare class MxTableCell {
   /** This is automatically set by the parent `mx-table`. */
   isExposedMobileColumn: boolean;
-  /** This is automatically set by the parent `mx-table`. */
+  /** This is automatically set by the parent `mx-table`.  For subheaders, this will be null. */
   columnIndex: number;
   /** This is automatically set by the parent `mx-table`. */
   heading: string;

@@ -661,7 +661,7 @@ export namespace Components {
     }
     interface MxTableCell {
         /**
-          * This is automatically set by the parent `mx-table`.
+          * This is automatically set by the parent `mx-table`.  For subheaders, this will be null.
          */
         "columnIndex": number;
         /**
@@ -694,6 +694,10 @@ export namespace Components {
           * This is required for checkable rows in order to persist the checked state through sorting and pagination.
          */
         "rowId": string;
+        /**
+          * Style the row as a subheader.
+         */
+        "subheader": boolean;
         /**
           * Apply a CSS transform to translate the row by `x` and `y` pixels
          */
@@ -1671,7 +1675,7 @@ declare namespace LocalJSX {
     }
     interface MxTableCell {
         /**
-          * This is automatically set by the parent `mx-table`.
+          * This is automatically set by the parent `mx-table`.  For subheaders, this will be null.
          */
         "columnIndex"?: number;
         /**
@@ -1709,6 +1713,10 @@ declare namespace LocalJSX {
           * This is required for checkable rows in order to persist the checked state through sorting and pagination.
          */
         "rowId"?: string;
+        /**
+          * Style the row as a subheader.
+         */
+        "subheader"?: boolean;
     }
     interface MxTabs {
         /**

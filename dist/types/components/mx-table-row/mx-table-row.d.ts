@@ -16,11 +16,14 @@ export declare class MxTableRow {
   keyboardDragHandle: HTMLElement;
   dragScroller: DragScroller;
   indentLevel: number;
+  columnCount: number;
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   actions: ITableRowAction[];
   checked: boolean;
+  /** Style the row as a subheader. */
+  subheader: boolean;
   element: HTMLMxTableRowElement;
   minWidths: MinWidths;
   checkable: boolean;
