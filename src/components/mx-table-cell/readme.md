@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property                | Attribute                  | Description                                         | Type      | Default     |
-| ----------------------- | -------------------------- | --------------------------------------------------- | --------- | ----------- |
-| `columnIndex`           | `column-index`             | This is automatically set by the parent `mx-table`. | `number`  | `undefined` |
-| `heading`               | `heading`                  | This is automatically set by the parent `mx-table`. | `string`  | `undefined` |
-| `isExposedMobileColumn` | `is-exposed-mobile-column` | This is automatically set by the parent `mx-table`. | `boolean` | `true`      |
+| Property                | Attribute                  | Description                                                                             | Type      | Default     |
+| ----------------------- | -------------------------- | --------------------------------------------------------------------------------------- | --------- | ----------- |
+| `columnIndex`           | `column-index`             | This is automatically set by the parent `mx-table`.  For subheaders, this will be null. | `number`  | `undefined` |
+| `heading`               | `heading`                  | This is automatically set by the parent `mx-table`.                                     | `string`  | `undefined` |
+| `isExposedMobileColumn` | `is-exposed-mobile-column` | This is automatically set by the parent `mx-table`.                                     | `boolean` | `true`      |
 
 
 ## Dependencies

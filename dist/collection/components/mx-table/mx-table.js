@@ -204,17 +204,22 @@ export class MxTable {
     });
   }
   setCellProps() {
-    const cells = this.element.querySelectorAll('mx-table-cell');
-    let colIndex = 0;
-    cells.forEach((cell) => {
-      cell.columnIndex = colIndex;
-      cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
-      cell.heading = this.cols[colIndex].heading;
-      cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
-      if (colIndex === this.cols.length - 1)
-        colIndex = 0;
-      else
-        colIndex++;
+    const rows = this.getTableRows();
+    rows.forEach((row) => {
+      if (row.subheader)
+        return;
+      const cells = row.querySelectorAll('mx-table-cell');
+      let colIndex = 0;
+      cells.forEach((cell) => {
+        cell.columnIndex = colIndex;
+        cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
+        cell.heading = this.cols[colIndex].heading;
+        cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
+        if (colIndex === this.cols.length - 1)
+          colIndex = 0;
+        else
+          colIndex++;
+      });
     });
   }
   setRowsChecked() {
@@ -232,6 +237,13 @@ export class MxTable {
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
+    const rows = this.getTableRows();
+    if (!this.paginate) {
+      rows.forEach((row, i) => {
+        const addOrRemove = i === rows.length - 1 ? 'add' : 'remove';
+        row.classList[addOrRemove]('last-row');
+      });
+    }
     requestAnimationFrame(this.setCellProps.bind(this));
   }
   componentDidRender() {
@@ -452,7 +464,7 @@ export class MxTable {
         h("slot", { name: "filter" }))),
       this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle },
         h("slot", { name: "search" })))));
-    return (h(Host, { class: 'mx-table block' + (this.hoverable ? ' hoverable' : '') + (this.paginate ? ' paginated' : '') },
+    return (h(Host, { class: 'mx-table block text-4' + (this.hoverable ? ' hoverable' : '') },
       this.showOperationsBar && operationsBar,
       h("div", { "data-testid": "grid", class: "table-grid relative", style: this.gridStyle },
         h("div", { class: "header-row" },
@@ -472,9 +484,9 @@ export class MxTable {
               h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" },
                 h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }),
                 !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg })))),
-            h("div", { class: "flex items-center" },
+            this.columns.length >= 2 && (h("div", { class: "flex items-center" },
               h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }),
-              h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) })))),
+              h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) }))))),
           this.minWidths.sm && this.hasActionsColumn && h("div", null)),
         this.showProgressBar && (h("div", null,
           h("div", { class: "block h-0 col-span-full" },

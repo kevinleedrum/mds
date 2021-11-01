@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property  | Attribute | Description                                                                                                           | Type                | Default     |
-| --------- | --------- | --------------------------------------------------------------------------------------------------------------------- | ------------------- | ----------- |
-| `actions` | --        | An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. | `ITableRowAction[]` | `[]`        |
-| `checked` | `checked` |                                                                                                                       | `boolean`           | `false`     |
-| `rowId`   | `row-id`  | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
+| Property    | Attribute   | Description                                                                                                           | Type                | Default     |
+| ----------- | ----------- | --------------------------------------------------------------------------------------------------------------------- | ------------------- | ----------- |
+| `actions`   | --          | An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. | `ITableRowAction[]` | `[]`        |
+| `checked`   | `checked`   |                                                                                                                       | `boolean`           | `false`     |
+| `rowId`     | `row-id`    | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
+| `subheader` | `subheader` | Style the row as a subheader.                                                                                         | `boolean`           | `false`     |
 
 
 ## Events

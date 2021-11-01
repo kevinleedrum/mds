@@ -15,7 +15,7 @@ const MxTableCell = class {
     minWidthSync.unsubscribeComponent(this);
   }
   get cellClass() {
-    let str = 'mx-table-cell flex flex-1 items-center text-4 overflow-hidden';
+    let str = 'mx-table-cell flex flex-1 items-center overflow-hidden';
     if (!this.minWidths.sm && this.isExposedMobileColumn)
       str += ' row-start-1 exposed-cell';
     else if (!this.minWidths.sm)
@@ -23,7 +23,7 @@ const MxTableCell = class {
     return str;
   }
   render() {
-    return (h(Host, { role: "gridcell", "aria-describedby": `column-header-${this.columnIndex}`, class: this.cellClass }, h("div", { class: "min-h-20 max-w-full break-words" }, !this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (h("p", { class: "subtitle5 my-0 mb-4", innerHTML: this.heading })), h("slot", null))));
+    return (h(Host, { role: "gridcell", "aria-describedby": this.columnIndex != null ? `column-header-${this.columnIndex}` : null, class: this.cellClass }, h("div", { class: "min-h-16 max-w-full break-words", role: this.columnIndex == null ? 'heading' : null }, !this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (h("p", { class: "subtitle5 my-0 mb-4", innerHTML: this.heading })), h("slot", null))));
   }
   get element() { return getElement(this); }
 };
