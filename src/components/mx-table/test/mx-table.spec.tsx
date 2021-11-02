@@ -347,6 +347,10 @@ describe('mx-table (slotted rows and cells)', () => {
     await page.waitForChanges();
     expect(checkbox.indeterminate).toBe(false);
     expect(checkbox.checked).toBe(true);
+    checkbox.click();
+    await page.waitForChanges();
+    expect(checkbox.indeterminate).toBe(false);
+    expect(checkbox.checked).toBe(false);
   });
 });
 
