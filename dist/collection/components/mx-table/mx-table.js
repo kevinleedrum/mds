@@ -281,10 +281,26 @@ export class MxTable {
     return rows;
   }
   get allRowsChecked() {
-    return this.rows.length && this.rows.length === this.checkedRowIds.length;
+    if (this.checkedRowIds.length === 0)
+      return false;
+    if (this.rows && this.rows.length) {
+      return this.rows.length === this.checkedRowIds.length;
+    }
+    else if (this.hasDefaultSlot) {
+      return this.getTableRows().length === this.checkedRowIds.length;
+    }
+    return false;
   }
   get someRowsChecked() {
-    return this.checkedRowIds.length > 0 && this.checkedRowIds.length < this.rows.length;
+    if (this.checkedRowIds.length === 0)
+      return false;
+    if (this.rows && this.rows.length) {
+      return this.checkedRowIds.length < this.rows.length;
+    }
+    else if (this.hasDefaultSlot) {
+      return this.checkedRowIds.length < this.getTableRows().length;
+    }
+    return false;
   }
   get multiRowActions() {
     if (!this.getMultiRowActions)
