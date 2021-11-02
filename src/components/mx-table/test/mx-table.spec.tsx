@@ -298,12 +298,12 @@ describe('mx-table (slotted rows and cells)', () => {
     page = await newSpecPage({
       components: [MxTable, MxTableRow, MxTableCell, MxCheckbox, MxPagination],
       html: `
-      <mx-table>
-        <mx-table-row>
+      <mx-table checkable>
+        <mx-table-row row-id="0">
           <mx-table-cell>Santa</mx-table-cell>
           <mx-table-cell>Claus</mx-table-cell>
         </mx-table-row>
-        <mx-table-row>
+        <mx-table-row row-id="1">
           <mx-table-cell>Great</mx-table-cell>
           <mx-table-cell>Pumpkin</mx-table-cell>
         </mx-table-row>
@@ -332,6 +332,21 @@ describe('mx-table (slotted rows and cells)', () => {
   it('does not render the empty state when mx-table-rows are passed without a rows prop', () => {
     const emptyState = root.querySelector('[data-testid="empty-state"]');
     expect(emptyState.classList.contains('hidden')).toBe(true);
+  });
+
+  it('updates the (un)check-all checkbox state when rows are (un)checked', async () => {
+    const checkbox = root.querySelector('mx-checkbox');
+    expect(checkbox.indeterminate).toBe(false);
+    expect(checkbox.checked).toBe(false);
+    const rows = root.querySelectorAll('mx-table-row');
+    (rows[0].children[0] as HTMLElement).click();
+    await page.waitForChanges();
+    expect(checkbox.indeterminate).toBe(true);
+    expect(checkbox.checked).toBe(false);
+    (rows[1].children[0] as HTMLElement).click();
+    await page.waitForChanges();
+    expect(checkbox.indeterminate).toBe(false);
+    expect(checkbox.checked).toBe(true);
   });
 });
 
