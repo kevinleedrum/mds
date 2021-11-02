@@ -48,6 +48,9 @@ export interface ITableColumn {
   headerClass?: string;
   /** Additional classes to add to the body cells in this column */
   cellClass?: string;
+  /** If set to `true`, this column will be excluded from the mobile column navigation just like the
+   * actions column that is generated from `getRowActions`. */
+  isActionColumn?: boolean;
 }
 
 @Component({
@@ -317,7 +320,8 @@ export class MxTable {
         cell.columnIndex = colIndex;
         cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
         cell.heading = this.cols[colIndex].heading;
-        cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
+        cell.classList.add(...this.getAlignClasses(this.cols[colIndex]));
+        if (this.cols[colIndex].cellClass) cell.classList.add(this.cols[colIndex].cellClass);
         if (colIndex === this.cols.length - 1) colIndex = 0;
         else colIndex++;
       });
@@ -455,6 +459,19 @@ export class MxTable {
     return str;
   }
 
+  get navigableColumnIndexes(): number[] {
+    // Exclude indexes for columns marked as action columns
+    return this.cols.map((col, i) => (!col.isActionColumn ? i : null)).filter(i => i !== null);
+  }
+
+  get isPreviousColumnDisabled(): boolean {
+    return this.navigableColumnIndexes[0] === this.exposedMobileColumnIndex;
+  }
+
+  get isNextColumnDisabled(): boolean {
+    return this.navigableColumnIndexes[this.navigableColumnIndexes.length - 1] === this.exposedMobileColumnIndex;
+  }
+
   sortRows(rows: Object[]) {
     const sortByColumn = this.cols.find(c => c.property === this.sortBy);
     if (!sortByColumn) return;
@@ -490,7 +507,7 @@ export class MxTable {
 
   getHeaderClass(col: ITableColumn, colIndex: number) {
     if (!col) return '';
-    let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClass(col);
+    let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClasses(col).join(' ');
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
     if (this.minWidths.sm && colIndex === 0) str += ' space-x-16';
@@ -508,11 +525,18 @@ export class MxTable {
     return str;
   }
 
-  getAlignClass(col: ITableColumn) {
-    let str = 'justify-start';
+  getAlignClasses(col: ITableColumn): string[] {
+    let classes = [];
+    // Non-action columns should always be left-aligned on mobile
+    if (!col.isActionColumn) classes.push('justify-start');
     let alignment = col.align || (col.type === 'number' ? 'right' : 'left');
-    str += alignment === 'right' ? ' sm:justify-end' : alignment === 'center' ? ' sm:justify-center' : '';
-    return str;
+    let desktopClass;
+    if (alignment === 'right') desktopClass = 'justify-end';
+    else if (alignment === 'center') desktopClass = 'justify-center';
+    // For non-action columns, only apply alignment class on larger screens
+    if (desktopClass && !col.isActionColumn) desktopClass = 'sm:' + desktopClass;
+    if (desktopClass) classes.push(desktopClass);
+    return classes;
   }
 
   onHeaderClick(col: ITableColumn) {
@@ -531,9 +555,10 @@ export class MxTable {
   }
 
   changeExposedColumnIndex(delta: number) {
-    const newColumnIndex = this.exposedMobileColumnIndex + delta;
-    if (newColumnIndex < 0 || newColumnIndex >= this.cols.length) return;
-    this.exposedMobileColumnIndex = newColumnIndex;
+    if (this.isPreviousColumnDisabled && delta === -1) return;
+    if (this.isNextColumnDisabled && delta === 1) return;
+    const navigableColumnIndex = this.navigableColumnIndexes.indexOf(this.exposedMobileColumnIndex);
+    this.exposedMobileColumnIndex = this.navigableColumnIndexes[navigableColumnIndex + delta];
   }
 
   onMxPageChange(e: { detail: PageChangeEventDetail }) {
@@ -659,13 +684,13 @@ export class MxTable {
                     <mx-icon-button
                       data-testid="previous-column-button"
                       chevronLeft
-                      disabled={this.exposedMobileColumnIndex === 0}
+                      disabled={this.isPreviousColumnDisabled}
                       onClick={this.changeExposedColumnIndex.bind(this, -1)}
                     />
                     <mx-icon-button
                       data-testid="next-column-button"
                       chevronRight
-                      disabled={this.exposedMobileColumnIndex === this.cols.length - 1}
+                      disabled={this.isNextColumnDisabled}
                       onClick={this.changeExposedColumnIndex.bind(this, 1)}
                     />
                   </div>
@@ -699,7 +724,7 @@ export class MxTable {
                   actions={this.getRowActions ? this.getRowActions(row) : undefined}
                 >
                   {this.cols.map((col: ITableColumn) => (
-                    <mx-table-cell class={col.cellClass}>
+                    <mx-table-cell>
                       <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
                     </mx-table-cell>
                   ))}
