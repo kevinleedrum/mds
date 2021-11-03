@@ -240,6 +240,68 @@ For checkable tables, you do not need to add the checkboxes to your custom layou
 
 <<< @/vuepress/components/tables.md#slot
 
+## Custom action column
+
+It is possible to use `mx-table-cell` elements to lay out a custom action column that is not limited to a single button or menu.
+In order to then exclude that column from the mobile column navigation, set the `isActionColumn` property of that column
+to `true`.
+
+<section class="mds">
+  <div class="mt-20">
+    <!-- #region custom-action -->
+    <mx-table
+      :columns.prop="[
+        { heading: 'First Name' },
+        { heading: 'Last Name' },
+        { heading: 'Birthdate', align: 'right' },
+        { isActionColumn: true, align: 'right', cellClass: 'sm:p-0' },
+      ]"
+    >
+      <div>
+        <mx-table-row>
+          <mx-table-cell>John</mx-table-cell>
+          <mx-table-cell>Lennon</mx-table-cell>
+          <mx-table-cell>10/9/1940</mx-table-cell>
+          <mx-table-cell>
+            <mx-icon-button aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'John' })"></mx-icon-button>
+            <mx-icon-button aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'John' })"></mx-icon-button>
+          </mx-table-cell>
+        </mx-table-row>
+        <mx-table-row>
+          <mx-table-cell>Paul</mx-table-cell>
+          <mx-table-cell>McCartney</mx-table-cell>
+          <mx-table-cell>6/18/1942</mx-table-cell>
+          <mx-table-cell>
+            <mx-icon-button aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'Paul' })"></mx-icon-button>
+            <mx-icon-button aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'Paul' })"></mx-icon-button>
+          </mx-table-cell>
+        </mx-table-row>
+        <mx-table-row>
+          <mx-table-cell>George</mx-table-cell>
+          <mx-table-cell>Harrison</mx-table-cell>
+          <mx-table-cell>2/25/1943</mx-table-cell>
+          <mx-table-cell>
+            <mx-icon-button aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'George' })"></mx-icon-button>
+            <mx-icon-button aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'George' })"></mx-icon-button>
+          </mx-table-cell>
+        </mx-table-row>
+        <mx-table-row>
+          <mx-table-cell>Ringo</mx-table-cell>
+          <mx-table-cell>Starr</mx-table-cell>
+          <mx-table-cell>7/7/1940</mx-table-cell>
+          <mx-table-cell>
+            <mx-icon-button aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'Ringo' })"></mx-icon-button>
+            <mx-icon-button aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'Ringo' })"></mx-icon-button>
+          </mx-table-cell>
+        </mx-table-row>
+      </div>
+    </mx-table>
+    <!-- #endregion custom-action -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#custom-action
+
 ## Search & filter slots
 
 The `mx-table` component has both a `search` slot to accomodate a Search field, and a `filter` slot for any additional filter components.
@@ -635,17 +697,18 @@ The following example combines checkable, slotted table rows with pagination, ro
 
 The `ITableColumn` interface describes the objects passed to the `columns` prop.
 
-| Property      | Description                                                                                                                                                                                                                                                                                       | Type                                                    | Default                                 |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | --------------------------------------- |
-| `property`    | The property on each row object that will supply the column's cell values (as HTML). You may also supply a `getValue` function for the value. If both are provided, the `property` will only be used for sorting.                                                                                 | `string`                                                | `undefined`                             |
-| `heading`     | The displayed column heading                                                                                                                                                                                                                                                                      | `string`                                                | `undefined`                             |
-| `type`        | The value type, which may affect sorting and how the value is displayed                                                                                                                                                                                                                           | `'string' | 'number' | 'date' | 'dateTime' | 'boolean'` | `string`                                |
-| `align`       |                                                                                                                                                                                                                                                                                                   | `'left' | 'center' | 'right'`                           | `left` for strings, `right` for numbers |
-| `sortable`    | Whether the column may be sorted by clicking the header. The column must specify a `property` to be sortable.                                                                                                                                                                                     | `boolean`                                               | `true`                                  |
-| `getValue`    | A getter function for the column cells' inner HTML. Note that a `property` is required to make a column with a value getter sortable. If sorting client-side, the property does not necessarily have to exist on the row objects; it is simply a unique identifier for the table's `sortBy` prop. | `(row: Object, rowIndex?: number) => any`               | `undefined`                             |
-| `sortCompare` | A custom compare function for sorting by this column (if sorting client-side)                                                                                                                                                                                                                     | `(rowA: Object, rowB: Object) => number`                | `undefined`                             |
-| `headerClass` | Additional classes to add to the header cell for this column                                                                                                                                                                                                                                      | `string`                                                | `undefined`                             |
-| `cellClass`   | Additional classes to add to the body cells in this column                                                                                                                                                                                                                                        | `string`                                                | `undefined`                             |
+| Property         | Description                                                                                                                                                                                                                                                                                       | Type                                                    | Default                                 |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | --------------------------------------- |
+| `align`          |                                                                                                                                                                                                                                                                                                   | `'left' | 'center' | 'right'`                           | `left` for strings, `right` for numbers |
+| `cellClass`      | Additional classes to add to the body cells in this column                                                                                                                                                                                                                                        | `string`                                                | `undefined`                             |
+| `getValue`       | A getter function for the column cells' inner HTML. Note that a `property` is required to make a column with a value getter sortable. If sorting client-side, the property does not necessarily have to exist on the row objects; it is simply a unique identifier for the table's `sortBy` prop. | `(row: Object, rowIndex?: number) => any`               | `undefined`                             |
+| `headerClass`    | Additional classes to add to the header cell for this column                                                                                                                                                                                                                                      | `string`                                                | `undefined`                             |
+| `heading`        | The displayed column heading                                                                                                                                                                                                                                                                      | `string`                                                | `undefined`                             |
+| `isActionColumn` | If set to `true`, this column will be excluded from the mobile column navigation just like the actions column that is generated from `getRowActions`                                                                                                                                              | `boolean`                                               | `false`                                 |
+| `property`       | The property on each row object that will supply the column's cell values (as HTML). You may also supply a `getValue` function for the value. If both are provided, the `property` will only be used for sorting.                                                                                 | `string`                                                | `undefined`                             |
+| `sortable`       | Whether the column may be sorted by clicking the header. The column must specify a `property` to be sortable.                                                                                                                                                                                     | `boolean`                                               | `true`                                  |
+| `sortCompare`    | A custom compare function for sorting by this column (if sorting client-side)                                                                                                                                                                                                                     | `(rowA: Object, rowB: Object) => number`                | `undefined`                             |
+| `type`           | The value type, which may affect sorting and how the value is displayed                                                                                                                                                                                                                           | `'string' | 'number' | 'date' | 'dateTime' | 'boolean'` | `string`                                |
 
 ### Table Row Properties
 
