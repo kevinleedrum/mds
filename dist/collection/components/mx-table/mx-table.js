@@ -214,7 +214,9 @@ export class MxTable {
         cell.columnIndex = colIndex;
         cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
         cell.heading = this.cols[colIndex].heading;
-        cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
+        cell.classList.add(...this.getAlignClasses(this.cols[colIndex]));
+        if (this.cols[colIndex].cellClass)
+          cell.classList.add(this.cols[colIndex].cellClass);
         if (colIndex === this.cols.length - 1)
           colIndex = 0;
         else
@@ -358,6 +360,16 @@ export class MxTable {
       str += ' hidden';
     return str;
   }
+  get navigableColumnIndexes() {
+    // Exclude indexes for columns marked as action columns
+    return this.cols.map((col, i) => (!col.isActionColumn ? i : null)).filter(i => i !== null);
+  }
+  get isPreviousColumnDisabled() {
+    return this.navigableColumnIndexes[0] === this.exposedMobileColumnIndex;
+  }
+  get isNextColumnDisabled() {
+    return this.navigableColumnIndexes[this.navigableColumnIndexes.length - 1] === this.exposedMobileColumnIndex;
+  }
   sortRows(rows) {
     const sortByColumn = this.cols.find(c => c.property === this.sortBy);
     if (!sortByColumn)
@@ -401,7 +413,7 @@ export class MxTable {
   getHeaderClass(col, colIndex) {
     if (!col)
       return '';
-    let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClass(col);
+    let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClasses(col).join(' ');
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
     if (this.minWidths.sm && colIndex === 0)
@@ -422,11 +434,23 @@ export class MxTable {
       str += ' rotate-180';
     return str;
   }
-  getAlignClass(col) {
-    let str = 'justify-start';
+  getAlignClasses(col) {
+    let classes = [];
+    // Non-action columns should always be left-aligned on mobile
+    if (!col.isActionColumn)
+      classes.push('justify-start');
     let alignment = col.align || (col.type === 'number' ? 'right' : 'left');
-    str += alignment === 'right' ? ' sm:justify-end' : alignment === 'center' ? ' sm:justify-center' : '';
-    return str;
+    let desktopClass;
+    if (alignment === 'right')
+      desktopClass = 'justify-end';
+    else if (alignment === 'center')
+      desktopClass = 'justify-center';
+    // For non-action columns, only apply alignment class on larger screens
+    if (desktopClass && !col.isActionColumn)
+      desktopClass = 'sm:' + desktopClass;
+    if (desktopClass)
+      classes.push(desktopClass);
+    return classes;
   }
   onHeaderClick(col) {
     if (this.draggableRows || !col || !col.sortable || !col.property)
@@ -446,10 +470,12 @@ export class MxTable {
     this.mxSortChange.emit({ sortBy: this.sortBy, sortAscending: this.sortAscending });
   }
   changeExposedColumnIndex(delta) {
-    const newColumnIndex = this.exposedMobileColumnIndex + delta;
-    if (newColumnIndex < 0 || newColumnIndex >= this.cols.length)
+    if (this.isPreviousColumnDisabled && delta === -1)
       return;
-    this.exposedMobileColumnIndex = newColumnIndex;
+    if (this.isNextColumnDisabled && delta === 1)
+      return;
+    const navigableColumnIndex = this.navigableColumnIndexes.indexOf(this.exposedMobileColumnIndex);
+    this.exposedMobileColumnIndex = this.navigableColumnIndexes[navigableColumnIndex + delta];
   }
   onMxPageChange(e) {
     if (this.serverPaginate)
@@ -501,8 +527,8 @@ export class MxTable {
                 h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }),
                 !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg })))),
             this.columns.length >= 2 && (h("div", { class: "flex items-center" },
-              h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }),
-              h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) }))))),
+              h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.isPreviousColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, -1) }),
+              h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.isNextColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, 1) }))))),
           this.minWidths.sm && this.hasActionsColumn && h("div", null)),
         this.showProgressBar && (h("div", null,
           h("div", { class: "block h-0 col-span-full" },
@@ -510,7 +536,7 @@ export class MxTable {
         h("slot", null),
         !this.hasDefaultSlot && (h("div", null, this.visibleRows.map((row, rowIndex) => (
         // Generated Body Rows
-        h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", { class: col.cellClass },
+        h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", null,
           h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))),
         h("div", { "data-testid": "empty-state", class: this.emptyStateClass },
           h("div", { class: "col-span-full p-16 text-4" },

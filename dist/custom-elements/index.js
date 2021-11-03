@@ -4670,7 +4670,9 @@ const MxTable$1 = class extends HTMLElement {
         cell.columnIndex = colIndex;
         cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
         cell.heading = this.cols[colIndex].heading;
-        cell.classList.add(...this.getAlignClass(this.cols[colIndex]).split(' '));
+        cell.classList.add(...this.getAlignClasses(this.cols[colIndex]));
+        if (this.cols[colIndex].cellClass)
+          cell.classList.add(this.cols[colIndex].cellClass);
         if (colIndex === this.cols.length - 1)
           colIndex = 0;
         else
@@ -4814,6 +4816,16 @@ const MxTable$1 = class extends HTMLElement {
       str += ' hidden';
     return str;
   }
+  get navigableColumnIndexes() {
+    // Exclude indexes for columns marked as action columns
+    return this.cols.map((col, i) => (!col.isActionColumn ? i : null)).filter(i => i !== null);
+  }
+  get isPreviousColumnDisabled() {
+    return this.navigableColumnIndexes[0] === this.exposedMobileColumnIndex;
+  }
+  get isNextColumnDisabled() {
+    return this.navigableColumnIndexes[this.navigableColumnIndexes.length - 1] === this.exposedMobileColumnIndex;
+  }
   sortRows(rows) {
     const sortByColumn = this.cols.find(c => c.property === this.sortBy);
     if (!sortByColumn)
@@ -4857,7 +4869,7 @@ const MxTable$1 = class extends HTMLElement {
   getHeaderClass(col, colIndex) {
     if (!col)
       return '';
-    let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClass(col);
+    let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClasses(col).join(' ');
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
     if (this.minWidths.sm && colIndex === 0)
@@ -4878,11 +4890,23 @@ const MxTable$1 = class extends HTMLElement {
       str += ' rotate-180';
     return str;
   }
-  getAlignClass(col) {
-    let str = 'justify-start';
+  getAlignClasses(col) {
+    let classes = [];
+    // Non-action columns should always be left-aligned on mobile
+    if (!col.isActionColumn)
+      classes.push('justify-start');
     let alignment = col.align || (col.type === 'number' ? 'right' : 'left');
-    str += alignment === 'right' ? ' sm:justify-end' : alignment === 'center' ? ' sm:justify-center' : '';
-    return str;
+    let desktopClass;
+    if (alignment === 'right')
+      desktopClass = 'justify-end';
+    else if (alignment === 'center')
+      desktopClass = 'justify-center';
+    // For non-action columns, only apply alignment class on larger screens
+    if (desktopClass && !col.isActionColumn)
+      desktopClass = 'sm:' + desktopClass;
+    if (desktopClass)
+      classes.push(desktopClass);
+    return classes;
   }
   onHeaderClick(col) {
     if (this.draggableRows || !col || !col.sortable || !col.property)
@@ -4902,10 +4926,12 @@ const MxTable$1 = class extends HTMLElement {
     this.mxSortChange.emit({ sortBy: this.sortBy, sortAscending: this.sortAscending });
   }
   changeExposedColumnIndex(delta) {
-    const newColumnIndex = this.exposedMobileColumnIndex + delta;
-    if (newColumnIndex < 0 || newColumnIndex >= this.cols.length)
+    if (this.isPreviousColumnDisabled && delta === -1)
       return;
-    this.exposedMobileColumnIndex = newColumnIndex;
+    if (this.isNextColumnDisabled && delta === 1)
+      return;
+    const navigableColumnIndex = this.navigableColumnIndexes.indexOf(this.exposedMobileColumnIndex);
+    this.exposedMobileColumnIndex = this.navigableColumnIndexes[navigableColumnIndex + delta];
   }
   onMxPageChange(e) {
     if (this.serverPaginate)
@@ -4931,9 +4957,9 @@ const MxTable$1 = class extends HTMLElement {
       return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) }, colIndex === 0 && this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: col.heading }), !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg$1 })))));
     })) : (
     // Mobile Column Header Navigation
-    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg$1 })))), this.columns.length >= 2 && (h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.exposedMobileColumnIndex === 0, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.exposedMobileColumnIndex === this.cols.length - 1, onClick: this.changeExposedColumnIndex.bind(this, 1) }))))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && (h("div", null, this.visibleRows.map((row, rowIndex) => (
+    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg$1 })))), this.columns.length >= 2 && (h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.isPreviousColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.isNextColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, 1) }))))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && (h("div", null, this.visibleRows.map((row, rowIndex) => (
     // Generated Body Rows
-    h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", { class: col.cellClass }, h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))), h("div", { "data-testid": "empty-state", class: this.emptyStateClass }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found.")))), this.paginate && (
+    h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", null, h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))))))), h("div", { "data-testid": "empty-state", class: this.emptyStateClass }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found.")))), this.paginate && (
     // Pagination Row
     h("div", { class: "pagination-row" }, h("mx-pagination", { page: this.page, "rows-per-page": this.rowsPerPage, rowsPerPageOptions: this.rowsPerPageOptions, "total-rows": this.serverPaginate ? this.totalRows : this.rows.length, class: "col-span-full p-0 rounded-b-2xl", onMxPageChange: this.onMxPageChange.bind(this), disabled: this.disablePagination, disableNextPage: this.disableNextPage }))))));
   }

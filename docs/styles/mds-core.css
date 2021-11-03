@@ -12562,14 +12562,6 @@ span.ripple {
 
     align-items: center;
   }
-  .mds .sm\:justify-end{
-
-    justify-content: flex-end;
-  }
-  .mds .sm\:justify-center{
-
-    justify-content: center;
-  }
   .mds .sm\:gap-56{
 
     gap: 3.5rem;

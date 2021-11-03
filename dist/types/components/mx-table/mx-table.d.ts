@@ -42,6 +42,9 @@ export interface ITableColumn {
   headerClass?: string;
   /** Additional classes to add to the body cells in this column */
   cellClass?: string;
+  /** If set to `true`, this column will be excluded from the mobile column navigation just like the
+   * actions column that is generated from `getRowActions`. */
+  isActionColumn?: boolean;
 }
 export declare class MxTable {
   actionMenu: HTMLMxMenuElement;
@@ -152,12 +155,15 @@ export declare class MxTable {
   get searchStyle(): any;
   get gridStyle(): any;
   get emptyStateClass(): string;
+  get navigableColumnIndexes(): number[];
+  get isPreviousColumnDisabled(): boolean;
+  get isNextColumnDisabled(): boolean;
   sortRows(rows: Object[]): void;
   getCellSortableValue(row: Object, col: ITableColumn): string | number;
   getCellValue(row: Object, col: ITableColumn, rowIndex: number): any;
   getHeaderClass(col: ITableColumn, colIndex: number): string;
   getHeaderArrowClass(col: ITableColumn): string;
-  getAlignClass(col: ITableColumn): string;
+  getAlignClasses(col: ITableColumn): string[];
   onHeaderClick(col: ITableColumn): void;
   changeExposedColumnIndex(delta: number): void;
   onMxPageChange(e: {
