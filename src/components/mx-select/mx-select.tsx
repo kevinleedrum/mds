@@ -50,6 +50,14 @@ export class MxSelect {
 
   updateSelectValue() {
     this.selectElem.value = this.value;
+    this.setSelectedAttributes();
+  }
+
+  setSelectedAttributes() {
+    Array.from(this.selectElem.options).forEach((option: HTMLOptionElement) => {
+      if (option.value === this.value) option.setAttribute('selected', '');
+      else option.removeAttribute('selected');
+    });
   }
 
   onFocus() {
@@ -63,6 +71,7 @@ export class MxSelect {
 
   onInput(e: InputEvent) {
     this.value = (e.target as HTMLInputElement).value;
+    this.setSelectedAttributes();
   }
 
   get hasValue() {
