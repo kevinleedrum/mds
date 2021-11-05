@@ -246,7 +246,7 @@ export class MxDatePicker {
           <button
             ref={el => (this.calendarButton = el)}
             class={this.calendarButtonClass}
-            data-testid="menu-button"
+            data-testid="calendar-button"
             innerHTML={this.error ? warningCircleSvg : calendarSvg}
             disabled={this.disabled}
           ></button>
