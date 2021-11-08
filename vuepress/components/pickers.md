@@ -31,11 +31,11 @@ The component emits `input` events (via the internal `input` element), so the up
     </div>
     <div class="space-y-20">
       <strong>No Label</strong>
-      <mx-date-picker :value="selectedDate" @input="selectedDate = $event.target.value" :assistive-text="'The input value is ' + selectedDate" />
+      <mx-date-picker :value="selectedDate" @input="selectedDate = $event.target.value" :assistive-text="'The input value is ' + (selectedDate || 'empty')" />
     </div>
     <div class="space-y-20">
       <strong>No Label - Dense</strong>
-      <mx-date-picker dense :value="selectedDate" @input="selectedDate = $event.target.value" :assistive-text="'The input value is ' + selectedDate" />
+      <mx-date-picker dense :value="selectedDate" @input="selectedDate = $event.target.value" :assistive-text="'The input value is ' + (selectedDate || 'empty')" />
     </div>
     <div class="space-y-20">
       <strong>Disabled</strong>
@@ -90,11 +90,11 @@ The component emits `input` events (via the internal `input` element), so the up
     </div>
     <div class="space-y-20">
       <strong>No Label</strong>
-      <mx-time-picker :value="selectedTime" @input="selectedTime = $event.target.value" :assistive-text="'The value is ' + selectedTime" />
+      <mx-time-picker :value="selectedTime" @input="selectedTime = $event.target.value" :assistive-text="'The value is ' + (selectedTime || 'empty')" />
     </div>
     <div class="space-y-20">
       <strong>No Label - Dense</strong>
-      <mx-time-picker dense :value="selectedTime" @input="selectedTime = $event.target.value" :assistive-text="'The value is ' + selectedTime" />
+      <mx-time-picker dense :value="selectedTime" @input="selectedTime = $event.target.value" :assistive-text="'The value is ' + (selectedTime || 'empty')" />
     </div>
     <div class="space-y-20">
       <strong>Disabled</strong>
