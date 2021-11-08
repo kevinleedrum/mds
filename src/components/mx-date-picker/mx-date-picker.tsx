@@ -8,6 +8,7 @@ import { fadeIn, fadeOut } from '../../utils/transitions';
 
 const yyyymmdd = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
 
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 @Component({
   tag: 'mx-date-picker',
   shadow: false,
@@ -207,7 +208,12 @@ export class MxDatePicker {
     let str =
       'absolute inset-0 w-full h-full pl-12 overflow-hidden outline-none appearance-none select-none bg-transparent';
     if (this.isFocused || this.error) str += ' -ml-1'; // prevent shifting due to border-width change
-    if (this.floatLabel && !this.isFocused && !this.inputHasText) str += ' opacity-0'; // Hide input placeholder while floating label is inside input
+    // Hide input placeholder while floating label is inside input
+    if (this.floatLabel && !this.isFocused && !this.inputHasText) str += ' opacity-0';
+    // HACK: Safari confusingly uses today's date as the placeholder, even when you've entered a parital date,
+    // and it also does not like changing the placeholder text color, so we lower the opacity instead so the user
+    // has a visual indication that the input does not actually have a value.
+    else if (isSafari && !this.inputHasText) str += ' opacity-50';
     return str;
   }
 
