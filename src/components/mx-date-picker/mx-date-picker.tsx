@@ -80,6 +80,7 @@ export class MxDatePicker {
       formatter: (input: HTMLInputElement, date: Date) => {
         if (this.inputEl.contains(document.activeElement)) return; // Do not reformat while typing in date
         input.value = date.toISOString().split('T')[0];
+        this.value = input.value;
         input.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
         if (!this.isDateInputSupported) input.value = date.toLocaleDateString();
       },
@@ -130,6 +131,10 @@ export class MxDatePicker {
   onInput(e: InputEvent) {
     const value = (e.target as HTMLInputElement).value;
     if (value && !yyyymmdd.test(value)) e.stopPropagation();
+    else if (this.datepicker && this.value !== value) {
+      this.value = value;
+      this.datepicker.setDate(value ? new Date(value + 'T00:00:00') : undefined);
+    }
     if (!this.isDateInputSupported && this.isFocused) this.isInputDirty = true;
   }
 
