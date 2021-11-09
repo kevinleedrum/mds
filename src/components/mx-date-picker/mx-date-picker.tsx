@@ -9,6 +9,7 @@ import { fadeIn, fadeOut } from '../../utils/transitions';
 const yyyymmdd = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
 @Component({
   tag: 'mx-date-picker',
   shadow: false,
@@ -77,6 +78,8 @@ export class MxDatePicker {
     this.datepicker = datepicker(this.inputEl, {
       alwaysShow: true,
       customDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+      overlayButton: 'Confirm',
+      overlayPlaceholder: 'Year (YYYY)',
       dateSelected: this.value ? new Date(this.value + 'T00:00:00') : undefined,
       formatter: (input: HTMLInputElement, date: Date) => {
         if (this.inputEl.contains(document.activeElement)) return; // Do not reformat while typing in date

@@ -82,89 +82,103 @@
     color: var(--mds-text-picker-icon);
   }
 
+  /***************************
+  * js-datepicker
+  ***************************/
+
   .qs-datepicker-container {
-    @apply relative w-256 p-16 pb-8 rounded-xl border overflow-hidden z-50 select-none shadow-12;
+    @apply relative w-256 min-h-240 p-16 pb-8 rounded-xl overflow-hidden z-50 select-none shadow-12;
     background: var(--mds-bg-picker);
   }
 
   .qs-datepicker {
-    @apply flex flex-col items-center relative;
+    @apply flex flex-col items-center;
   }
 
   .qs-hidden {
-    display: none;
+    @apply hidden;
   }
 
   .qs-overlay {
-    @apply flex flex-col absolute inset-0;
+    /* Apply a grid, so we can move Cancel button to bottom row with Confirm button */
+    @apply grid absolute inset-0 transition-all;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto;
     background: var(--mds-bg-picker);
     opacity: 1;
-    transition: opacity 0.15s;
+    transform: translateY(0);
 
-    &.qs-hidden {
-      display: none;
-      opacity: 0;
+    /* Remove wrapper (around year input and Cancel button) from grid flow */
+    & > :first-child {
+      @apply contents;
     }
 
-    .qs-overlay-year {
-      /* Overlay year input element. */
-      border: none;
-      background: transparent;
-      border-bottom: 1px solid white;
-      border-radius: 0;
-      color: white;
-      padding: 0.25em 0;
-      width: 80%;
-      text-align: center;
-      margin: 0 auto;
-      display: block;
+    &.qs-hidden {
+      @apply opacity-0 pointer-events-none;
+      transform: translateY(-10%);
+    }
 
-      /* https:/*goo.gl/oUuGkG */
+    input.qs-overlay-year {
+      @apply col-span-2 h-36 border m-24 mb-8 px-16 text-3 rounded-lg outline-none appearance-none;
+      color: var(--mds-text-input);
+      background: var(--mds-bg-input);
+      border-color: var(--mds-border-input);
+      caret-color: var(--mds-caret-input);
+      &:focus-within {
+        @apply border-2;
+        padding: 0 15px;
+        border-color: var(--mds-border-input-focus);
+      }
+
       &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
+        @apply appearance-none;
+      }
+      &::placeholder {
+        color: var(--mds-text-input-label);
       }
     }
 
     .qs-close {
-      padding: 0.5em;
-      cursor: pointer;
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-
-    .qs-submit {
-      border: 1px solid white;
-      padding: 0.5em;
-      margin: 0 auto auto;
-      cursor: pointer;
-      background: rgba(128, 128, 128, 0.4);
-
-      &.qs-disabled {
-        color: gray;
-        border-color: gray;
-        cursor: not-allowed;
+      /* Move the Cancel button to the bottom row, and hide the default "×" */
+      @apply invisible inline-flex items-center justify-end row-start-3;
+      &::after {
+        @apply visible;
+        content: 'Cancel';
       }
     }
 
+    .qs-submit:hover:not(.qs-disabled),
+    .qs-close:hover::after {
+      @apply cursor-pointer;
+      background: var(--mds-bg-btn-text-hover);
+    }
+
+    .qs-close::after,
+    .qs-submit {
+      @apply flex items-center justify-center h-36 px-8 py-10 my-8 mr-8 uppercase rounded-lg font-semibold text-4 tracking-1-25 cursor-pointer;
+      color: var(--mds-text-btn-text);
+      background: var(--mds-bg-btn-text);
+
+      &.qs-disabled {
+        @apply cursor-default;
+        color: var(--mds-text-btn-text-disabled);
+        background: var(--mds-bg-btn-text-disabled);
+      }
+    }
+
+    .qs-submit.qs-disabled {
+      @apply cursor-default;
+    }
+
     .qs-overlay-month-container {
-      display: flex;
-      flex-wrap: wrap;
-      flex-grow: 1;
+      @apply grid grid-cols-3 grid-rows-4 col-span-2;
     }
 
     .qs-overlay-month {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: calc(100% / 3);
-      cursor: pointer;
-      opacity: 0.5;
-      transition: opacity 0.15s;
-
-      &.active,
+      @apply flex items-center justify-center subtitle2 cursor-pointer;
+      color: var(--mds-text-picker-calendar-label);
       &:hover {
-        opacity: 1;
+        color: var(--mds-text-picker-calendar-month-hover);
       }
     }
   }
@@ -231,43 +245,31 @@
     color: var(--mds-text-picker-calendar-active);
   }
 
-  .qs-range-start {
-    &:not(.qs-range-6) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
+  .qs-range-start:not(.qs-range-6) {
+    @apply rounded-r-none;
   }
 
   .qs-range-middle {
     &:not(.qs-range-0):not(.qs-range-6) {
-      border-radius: 0;
+      @apply rounded-none;
     }
 
     &.qs-range-0 {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
+      @apply rounded-r-none;
     }
 
     &.qs-range-6 {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      @apply rounded-l-none;
     }
   }
 
-  .qs-range-end {
-    &:not(.qs-range-0) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
+  .qs-range-end:not(.qs-range-0) {
+    @apply rounded-l-none;
   }
 
   .qs-disabled,
   .qs-outside-current-month {
     @apply opacity-20;
-  }
-
-  .qs-disabled {
-    @apply cursor-not-allowed;
   }
 
   .qs-empty {
@@ -276,7 +278,7 @@
 
   .qs-day {
     @apply cursor-default subtitle2 my-6;
-    color: var(--mds-text-picker-calendar-day);
+    color: var(--mds-text-picker-calendar-label);
   }
 
   .qs-num {
