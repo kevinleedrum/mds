@@ -38,6 +38,12 @@ export const MxCircularProgress: {
   new (): MxCircularProgress;
 };
 
+interface MxDatePicker extends Components.MxDatePicker, HTMLElement {}
+export const MxDatePicker: {
+  prototype: MxDatePicker;
+  new (): MxDatePicker;
+};
+
 interface MxDropdownMenu extends Components.MxDropdownMenu, HTMLElement {}
 export const MxDropdownMenu: {
   prototype: MxDropdownMenu;

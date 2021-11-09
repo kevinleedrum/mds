@@ -60,8 +60,11 @@ const MxTimePicker = class {
     }
     if (!this.isTimeInputSupported && this.isInputDirty) {
       const time = utils.parseTimeString(this.inputElem.value);
-      if (time === null)
-        return; // Invalid time
+      if (time === null) {
+        // Invalid time entered into <input type=text>
+        this.error = true;
+        return;
+      }
       this.setValue(time);
       this.updateInputValue();
     }

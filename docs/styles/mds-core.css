@@ -201,10 +201,15 @@
   /* #region pickers */
   /* Pickers */
   --mds-bg-picker: #fff;
+  --mds-bg-picker-calendar-active: #0457af;
+  --mds-bg-picker-calendar-hover: #eeeeee;
   --mds-border-picker-error: #ff0c3e;
   --mds-border-picker-focus: #0457af;
   --mds-border-picker-hover: #2d2d2d;
   --mds-border-picker: #a9a9a9;
+  --mds-text-picker-calendar-active: #fff;
+  --mds-text-picker-calendar-label: #a9a9a9;
+  --mds-text-picker-calendar-month-hover: #0457af;
   --mds-text-picker-disabled: #a9a9a9;
   --mds-text-picker-error: #ff0c3e;
   --mds-text-picker-focus: #454545;
@@ -2339,6 +2344,14 @@ video {
 
   right: -100%;
 }
+.mds .left-12{
+
+  left: 0.75rem;
+}
+.mds .right-12{
+
+  right: 0.75rem;
+}
 .mds .right-16{
 
   right: 1rem;
@@ -2350,10 +2363,6 @@ video {
 .mds .left-48{
 
   left: 3rem;
-}
-.mds .left-12{
-
-  left: 0.75rem;
 }
 .mds .-top-6{
 
@@ -2386,10 +2395,6 @@ video {
 .mds .bottom-0{
 
   bottom: 0px;
-}
-.mds .right-12{
-
-  right: 0.75rem;
 }
 .mds .right-0{
 
@@ -3989,13 +3994,25 @@ video {
 
   margin-left: 1rem;
 }
+.mds .mt-0{
+
+  margin-top: 0px;
+}
 .mds .-ml-1{
 
   margin-left: -1px;
 }
+.mds .mb-4{
+
+  margin-bottom: 0.25rem;
+}
 .mds .-mr-1{
 
   margin-right: -1px;
+}
+.mds .mt-4{
+
+  margin-top: 0.25rem;
 }
 .mds .ml-12{
 
@@ -4005,25 +4022,13 @@ video {
 
   margin-bottom: 0.5rem;
 }
-.mds .mt-4{
-
-  margin-top: 0.25rem;
-}
 .mds .mt-16{
 
   margin-top: 1rem;
 }
-.mds .mt-0{
-
-  margin-top: 0px;
-}
 .mds .-mt-1{
 
   margin-top: -1px;
-}
-.mds .mb-4{
-
-  margin-bottom: 0.25rem;
 }
 .mds .-mb-4{
 
@@ -4713,6 +4718,10 @@ video {
 
   width: 0px;
 }
+.mds .w-320{
+
+  width: 20rem;
+}
 .mds .w-56{
 
   width: 3.5rem;
@@ -4740,10 +4749,6 @@ video {
 .mds .w-152{
 
   width: 9.5rem;
-}
-.mds .w-320{
-
-  width: 20rem;
 }
 .mds .w-160{
 
@@ -11688,6 +11693,763 @@ video {
     background: #e0e0e0;
     background: var(--mds-bg-menu-item-focus);
   }
+.mx-date-picker {
+  color: #454545;
+  color: var(--mds-text-picker);
+}
+.mx-date-picker label {
+    color: #7a7a7a;
+    color: var(--mds-text-picker-label);
+  }
+.mx-date-picker input[type='date']::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+.mx-date-picker > .picker-wrapper {
+    color: #454545;
+    color: var(--mds-text-picker);
+    background: #fff;
+    background: var(--mds-bg-picker);
+    border-color: #a9a9a9;
+    border-color: var(--mds-border-picker);
+  }
+.mx-date-picker > .picker-wrapper .icon-wrapper {
+      background: #fff;
+      background: var(--mds-bg-picker);
+    }
+.mx-date-picker > .picker-wrapper:hover:not(.focused, .disabled) {
+      border-color: #2d2d2d;
+      border-color: var(--mds-border-picker-hover);
+    }
+.mx-date-picker > .picker-wrapper.focused {
+      border-color: #0457af;
+      border-color: var(--mds-border-picker-focus);
+    }
+.mx-date-picker > .picker-wrapper.focused input,
+      .mx-date-picker > .picker-wrapper.focused input:invalid:not(:disabled) {
+        color: #454545;
+        color: var(--mds-text-picker-focus);
+      }
+.mx-date-picker > .picker-wrapper.disabled input,
+      .mx-date-picker > .picker-wrapper.disabled .menu-button {
+        color: #a9a9a9;
+        color: var(--mds-text-picker-disabled);
+      }
+.mx-date-picker > .picker-wrapper label {
+      background: #fff;
+      background: var(--mds-bg-picker);
+      transform-origin: 0 0;
+      transition: transform 0.1s ease-out;
+      --translate-y: -22px;
+    }
+.mx-date-picker > .picker-wrapper label.dense {
+        --translate-y: -16px;
+      }
+.mx-date-picker > .picker-wrapper label.floating {
+        transform: translate3d(0, var(--translate-y), 0) scale(0.8);
+      }
+@media (prefers-reduced-motion: reduce) {
+.mx-date-picker > .picker-wrapper label {
+        transition: none
+    }
+      }
+.mx-date-picker > .picker-wrapper input::-webkit-calendar-picker-indicator,
+      .mx-date-picker > .picker-wrapper input::-webkit-clear-button {
+        display: none;
+        visibility: hidden;
+      }
+.mx-date-picker.error > .picker-wrapper,
+    .mx-date-picker.error > .picker-wrapper:hover:not(.focused) {
+      border-color: #ff0c3e;
+      border-color: var(--mds-border-picker-error);
+    }
+.mx-date-picker.error > .picker-wrapper > label,
+      .mx-date-picker.error > .picker-wrapper .calendar-button,
+      .mx-date-picker.error > .picker-wrapper:hover:not(.focused) > label,
+      .mx-date-picker.error > .picker-wrapper:hover:not(.focused) .calendar-button {
+        color: #ff0c3e;
+        color: var(--mds-text-picker-error);
+      }
+.mx-date-picker.error .assistive-text {
+      color: #ff0c3e;
+      color: var(--mds-text-picker-error);
+    }
+.mx-date-picker .icon-button {
+    color: #454545;
+    color: var(--mds-text-picker-icon);
+  }
+/***************************
+  * js-datepicker
+  ***************************/
+.mx-date-picker .qs-datepicker-container{
+
+  position: relative;
+}
+.mx-date-picker .qs-datepicker-container{
+
+  z-index: 50;
+}
+.mx-date-picker .qs-datepicker-container{
+
+  min-height: 15rem;
+}
+.mx-date-picker .qs-datepicker-container{
+
+  width: 16rem;
+}
+.mx-date-picker .qs-datepicker-container{
+
+  -webkit-user-select: none;
+
+     -moz-user-select: none;
+
+      -ms-user-select: none;
+
+          user-select: none;
+}
+.mx-date-picker .qs-datepicker-container{
+
+  overflow: hidden;
+}
+.mx-date-picker .qs-datepicker-container{
+
+  border-radius: 0.75rem;
+}
+.mx-date-picker .qs-datepicker-container{
+
+  padding: 1rem;
+}
+.mx-date-picker .qs-datepicker-container{
+
+  padding-bottom: 0.5rem;
+}
+.mx-date-picker .qs-datepicker-container{
+
+  --tw-shadow: 0px 12px 17px rgba(0, 0, 0, 0.04), 0px 5px 22px rgba(0, 0, 0, 0.02), 0px 7px 8px rgba(0, 0, 0, 0.06);
+
+  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.mx-date-picker .qs-datepicker-container {
+    background: #fff;
+    background: var(--mds-bg-picker);
+  }
+.mx-date-picker .qs-datepicker{
+
+  display: flex;
+}
+.mx-date-picker .qs-datepicker{
+
+  flex-direction: column;
+}
+.mx-date-picker .qs-datepicker{
+
+  align-items: center;
+}
+.mx-date-picker .qs-hidden{
+
+  display: none;
+}
+.mx-date-picker .qs-overlay {
+    /* Apply a grid, so we can move Cancel button to bottom row with Confirm button */
+  }
+.mx-date-picker .qs-overlay{
+
+  position: absolute;
+}
+.mx-date-picker .qs-overlay{
+
+  top: 0px;
+
+  right: 0px;
+
+  bottom: 0px;
+
+  left: 0px;
+}
+.mx-date-picker .qs-overlay{
+
+  display: grid;
+}
+.mx-date-picker .qs-overlay{
+
+  transition-property: all;
+
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  transition-duration: 150ms;
+}
+.mx-date-picker .qs-overlay {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto;
+    background: #fff;
+    background: var(--mds-bg-picker);
+    opacity: 1;
+    transform: translateY(0);
+  }
+@media (prefers-reduced-motion: reduce) {
+.mx-date-picker .qs-overlay {
+      transition: none
+  }
+    }
+/* Remove wrapper (around year input and Cancel button) from grid flow */
+.mx-date-picker .qs-overlay > :first-child{
+
+  display: contents;
+}
+.mx-date-picker .qs-overlay.qs-hidden{
+
+  pointer-events: none;
+}
+.mx-date-picker .qs-overlay.qs-hidden{
+
+  opacity: 0;
+}
+.mx-date-picker .qs-overlay.qs-hidden {
+      transform: translateY(-10%);
+    }
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  grid-column: span 2 / span 2;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  margin-left: 1.5rem;
+
+  margin-right: 1.5rem;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  margin-top: 1.5rem;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  margin-bottom: 0.5rem;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  height: 2.25rem;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  min-width: 0px;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  -webkit-appearance: none;
+
+     -moz-appearance: none;
+
+          appearance: none;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  border-radius: 0.5rem;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  border-width: 1px;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  padding-left: 1rem;
+
+  padding-right: 1rem;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  font-size: 1rem;
+
+  line-height: 1.5rem;
+
+  letter-spacing: 0.009rem;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year{
+
+  outline: 2px solid transparent;
+
+  outline-offset: 2px;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year {
+      color: #454545;
+      color: var(--mds-text-input);
+      background: #fff;
+      background: var(--mds-bg-input);
+      border-color: #a9a9a9;
+      border-color: var(--mds-border-input);
+      caret-color: #0457af;
+      caret-color: var(--mds-caret-input);
+    }
+.mx-date-picker .qs-overlay input.qs-overlay-year:focus-within{
+
+  border-width: 2px;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year:focus-within {
+        padding: 0 15px;
+        border-color: #0457af;
+        border-color: var(--mds-border-input-focus);
+      }
+.mx-date-picker .qs-overlay input.qs-overlay-year::-webkit-inner-spin-button{
+
+  -webkit-appearance: none;
+
+          appearance: none;
+}
+.mx-date-picker .qs-overlay input.qs-overlay-year::-moz-placeholder {
+        color: #7a7a7a;
+        color: var(--mds-text-input-label);
+      }
+.mx-date-picker .qs-overlay input.qs-overlay-year:-ms-input-placeholder {
+        color: #7a7a7a;
+        color: var(--mds-text-input-label);
+      }
+.mx-date-picker .qs-overlay input.qs-overlay-year::placeholder {
+        color: #7a7a7a;
+        color: var(--mds-text-input-label);
+      }
+.mx-date-picker .qs-overlay .qs-close {
+      /* Move the Cancel button to the bottom row, and hide the default "×" */
+    }
+.mx-date-picker .qs-overlay .qs-close{
+
+  visibility: hidden;
+}
+.mx-date-picker .qs-overlay .qs-close{
+
+  grid-row-start: 3;
+}
+.mx-date-picker .qs-overlay .qs-close{
+
+  display: inline-flex;
+}
+.mx-date-picker .qs-overlay .qs-close{
+
+  align-items: center;
+}
+.mx-date-picker .qs-overlay .qs-close{
+
+  justify-content: flex-end;
+}
+.mx-date-picker .qs-overlay .qs-close::after{
+
+  visibility: visible;
+}
+.mx-date-picker .qs-overlay .qs-close::after {
+        content: 'Cancel';
+      }
+.mx-date-picker .qs-overlay .qs-submit:hover:not(.qs-disabled), .mx-date-picker .qs-overlay .qs-close:hover::after{
+
+  cursor: pointer;
+}
+.mx-date-picker .qs-overlay .qs-submit:hover:not(.qs-disabled),
+    .mx-date-picker .qs-overlay .qs-close:hover::after {
+      background: #e8f0f8;
+      background: var(--mds-bg-btn-text-hover);
+    }
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  margin-top: 0.5rem;
+
+  margin-bottom: 0.5rem;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  margin-right: 0.5rem;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  display: flex;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  height: 2.25rem;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  cursor: pointer;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  align-items: center;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  justify-content: center;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  border-radius: 0.5rem;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  padding-left: 0.5rem;
+
+  padding-right: 0.5rem;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  padding-top: 0.625rem;
+
+  padding-bottom: 0.625rem;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  font-size: 0.875rem;
+
+  line-height: 1.25rem;
+
+  letter-spacing: 0.016rem;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  font-weight: 600;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  text-transform: uppercase;
+}
+.mx-date-picker .qs-overlay .qs-close::after, .mx-date-picker .qs-overlay .qs-submit{
+
+  letter-spacing: 0.078rem;
+}
+.mx-date-picker .qs-overlay .qs-close::after,
+    .mx-date-picker .qs-overlay .qs-submit {
+      color: #0457af;
+      color: var(--mds-text-btn-text);
+      background: transparent;
+      background: var(--mds-bg-btn-text);
+    }
+.mx-date-picker .qs-overlay .qs-close::after.qs-disabled,.mx-date-picker .qs-overlay .qs-submit.qs-disabled{
+
+  cursor: default;
+}
+.mx-date-picker .qs-overlay .qs-close::after.qs-disabled, .mx-date-picker .qs-overlay .qs-submit.qs-disabled {
+        color: #a4a4a4;
+        color: var(--mds-text-btn-text-disabled);
+        background: transparent;
+        background: var(--mds-bg-btn-text-disabled);
+      }
+.mx-date-picker .qs-overlay .qs-submit.qs-disabled{
+
+  cursor: default;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month-container{
+
+  grid-column: span 2 / span 2;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month-container{
+
+  display: grid;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month-container{
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.mx-date-picker .qs-overlay .qs-overlay-month-container{
+
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+}
+.mx-date-picker .qs-overlay .qs-overlay-month{
+
+  display: flex;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month{
+
+  cursor: pointer;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month{
+
+  align-items: center;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month{
+
+  justify-content: center;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month{
+
+  font-size: 0.875rem;
+
+  line-height: 1.25rem;
+
+  letter-spacing: 0.016rem;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month{
+
+  font-weight: 600;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month{
+
+  line-height: 1.25rem;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month{
+
+  letter-spacing: 0.025rem;
+}
+.mx-date-picker .qs-overlay .qs-overlay-month {
+      color: #a9a9a9;
+      color: var(--mds-text-picker-calendar-label);
+    }
+.mx-date-picker .qs-overlay .qs-overlay-month:hover {
+        color: #0457af;
+        color: var(--mds-text-picker-calendar-month-hover);
+      }
+.mx-date-picker .qs-controls{
+
+  display: flex;
+}
+.mx-date-picker .qs-controls{
+
+  width: 100%;
+}
+.mx-date-picker .qs-controls{
+
+  align-items: center;
+}
+.mx-date-picker .qs-controls{
+
+  justify-content: space-between;
+}
+.mx-date-picker .qs-controls{
+
+  padding-left: 0.5rem;
+}
+.mx-date-picker .qs-controls{
+
+  font-size: 0.875rem;
+
+  line-height: 1.25rem;
+
+  letter-spacing: 0.016rem;
+}
+.mx-date-picker .qs-controls{
+
+  font-weight: 600;
+}
+.mx-date-picker .qs-controls{
+
+  line-height: 1.25rem;
+}
+.mx-date-picker .qs-controls{
+
+  letter-spacing: 0.025rem;
+}
+.mx-date-picker .qs-arrow{
+
+  height: 1.5rem;
+}
+.mx-date-picker .qs-arrow{
+
+  width: 1.5rem;
+}
+.mx-date-picker .qs-arrow{
+
+  cursor: pointer;
+}
+.mx-date-picker .qs-arrow:after {
+      content: '';
+    }
+.mx-date-picker .qs-arrow.qs-left{
+
+  order: 2;
+}
+.mx-date-picker .qs-arrow.qs-left{
+
+  margin-left: 1rem;
+}
+.mx-date-picker .qs-arrow.qs-left {
+      background: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 7.41L10.42 12L15 16.59L13.59 18L7.59 12L13.59 6L15 7.41Z" fill="currentColor"/></svg>');
+    }
+.mx-date-picker .qs-arrow.qs-right{
+
+  order: 3;
+}
+.mx-date-picker .qs-arrow.qs-right{
+
+  margin-left: 1.5rem;
+}
+.mx-date-picker .qs-arrow.qs-right{
+
+  margin-right: -0.5rem;
+}
+.mx-date-picker .qs-arrow.qs-right {
+      background: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.58997 16.59L13.17 12L8.58997 7.41L9.99997 6L16 12L9.99997 18L8.58997 16.59Z" fill="currentColor"/></svg>');
+    }
+.mx-date-picker .qs-month-year{
+
+  flex: 1 1 0%;
+}
+.mx-date-picker .qs-month-year {
+    cursor: pointer;
+  }
+.mx-date-picker .qs-month-year:after{
+
+  float: right;
+}
+.mx-date-picker .qs-month-year:after{
+
+  margin-left: auto;
+}
+.mx-date-picker .qs-month-year:after{
+
+  height: 1.25rem;
+}
+.mx-date-picker .qs-month-year:after{
+
+  width: 0.625rem;
+}
+.mx-date-picker .qs-month-year:after{
+
+  background-position: center;
+}
+.mx-date-picker .qs-month-year:after{
+
+  background-repeat: no-repeat;
+}
+.mx-date-picker .qs-month-year:after {
+      content: ' ';
+      background-image: url('data:image/svg+xml;utf8,<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.9654 0.757212C9.93099 0.681077 9.87273 0.616004 9.79798 0.57022C9.72323 0.524437 9.63535 0.5 9.54545 0.5H0.454547C0.364646 0.5 0.276763 0.524437 0.202012 0.570222C0.127262 0.616007 0.0690015 0.681082 0.0345985 0.757219C0.000195557 0.833357 -0.00880479 0.917136 0.00873577 0.997962C0.0262763 1.07879 0.0695701 1.15303 0.133142 1.2113L4.67859 5.37795C4.7208 5.41665 4.77091 5.44734 4.82605 5.46828C4.8812 5.48922 4.94031 5.5 5 5.5C5.05969 5.5 5.1188 5.48922 5.17394 5.46828C5.22909 5.44734 5.2792 5.41665 5.3214 5.37795L9.86686 1.2113C9.93043 1.15303 9.97372 1.07879 9.99126 0.997958C10.0088 0.917131 9.9998 0.833351 9.9654 0.757212Z" fill="currentColor"/></svg>');
+    }
+.mx-date-picker .qs-month:after {
+      content: ' ';
+    }
+.mx-date-picker .qs-squares{
+
+  display: flex;
+}
+.mx-date-picker .qs-squares{
+
+  width: 14rem;
+}
+.mx-date-picker .qs-squares{
+
+  flex-wrap: wrap;
+}
+.mx-date-picker .qs-square{
+
+  margin: 0.125rem;
+}
+.mx-date-picker .qs-square{
+
+  display: flex;
+}
+.mx-date-picker .qs-square{
+
+  height: 1.75rem;
+}
+.mx-date-picker .qs-square{
+
+  width: 1.75rem;
+}
+.mx-date-picker .qs-square{
+
+  cursor: pointer;
+}
+.mx-date-picker .qs-square{
+
+  align-items: center;
+}
+.mx-date-picker .qs-square{
+
+  justify-content: center;
+}
+.mx-date-picker .qs-square{
+
+  border-radius: 9999px;
+}
+.mx-date-picker .qs-square:not(.qs-empty):not(.qs-disabled):not(.qs-day):not(.qs-active):hover {
+        background: #eeeeee;
+        background: var(--mds-bg-picker-calendar-hover);
+      }
+.mx-date-picker .qs-current{
+
+  font-weight: 700;
+}
+.mx-date-picker .qs-active,
+  .mx-date-picker .qs-range-start,
+  .mx-date-picker .qs-range-end {
+    background: #0457af;
+    background: var(--mds-bg-picker-calendar-active);
+    color: #fff;
+    color: var(--mds-text-picker-calendar-active);
+  }
+.mx-date-picker .qs-range-start:not(.qs-range-6){
+
+  border-top-right-radius: 0px;
+
+  border-bottom-right-radius: 0px;
+}
+.mx-date-picker .qs-range-middle:not(.qs-range-0):not(.qs-range-6){
+
+  border-radius: 0px;
+}
+.mx-date-picker .qs-range-middle.qs-range-0{
+
+  border-top-right-radius: 0px;
+
+  border-bottom-right-radius: 0px;
+}
+.mx-date-picker .qs-range-middle.qs-range-6{
+
+  border-top-left-radius: 0px;
+
+  border-bottom-left-radius: 0px;
+}
+.mx-date-picker .qs-range-end:not(.qs-range-0){
+
+  border-top-left-radius: 0px;
+
+  border-bottom-left-radius: 0px;
+}
+.mx-date-picker .qs-disabled, .mx-date-picker .qs-outside-current-month{
+
+  opacity: 0.2;
+}
+.mx-date-picker .qs-empty{
+
+  cursor: default;
+}
+.mx-date-picker .qs-day{
+
+  margin-top: 0.375rem;
+
+  margin-bottom: 0.375rem;
+}
+.mx-date-picker .qs-day{
+
+  cursor: default;
+}
+.mx-date-picker .qs-day{
+
+  font-size: 0.875rem;
+
+  line-height: 1.25rem;
+
+  letter-spacing: 0.016rem;
+}
+.mx-date-picker .qs-day{
+
+  font-weight: 600;
+}
+.mx-date-picker .qs-day{
+
+  line-height: 1.25rem;
+}
+.mx-date-picker .qs-day{
+
+  letter-spacing: 0.025rem;
+}
+.mx-date-picker .qs-day {
+    color: #a9a9a9;
+    color: var(--mds-text-picker-calendar-label);
+  }
+.mx-date-picker .qs-num{
+
+  font-size: 0.875rem;
+
+  line-height: 1.25rem;
+
+  letter-spacing: 0.016rem;
+}
 .mx-time-picker {
   color: #454545;
   color: var(--mds-text-picker);
@@ -11759,9 +12521,9 @@ video {
       border-color: var(--mds-border-picker-error);
     }
 .mx-time-picker.error > .picker-wrapper > label,
-      .mx-time-picker.error > .picker-wrapper .icon-button,
+      .mx-time-picker.error > .picker-wrapper .menu-button,
       .mx-time-picker.error > .picker-wrapper:hover:not(.focused) > label,
-      .mx-time-picker.error > .picker-wrapper:hover:not(.focused) .icon-button {
+      .mx-time-picker.error > .picker-wrapper:hover:not(.focused) .menu-button {
         color: #ff0c3e;
         color: var(--mds-text-picker-error);
       }
