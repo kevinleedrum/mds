@@ -123,7 +123,7 @@
     }
 
     input.qs-overlay-year {
-      @apply col-span-2 h-36 border m-24 mb-8 px-16 text-3 rounded-lg outline-none appearance-none;
+      @apply col-span-2 h-36 border min-w-0 mx-24 mt-24 mb-8 px-16 text-3 rounded-lg outline-none appearance-none;
       color: var(--mds-text-input);
       background: var(--mds-bg-input);
       border-color: var(--mds-border-input);
