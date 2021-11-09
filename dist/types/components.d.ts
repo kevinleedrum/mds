@@ -143,6 +143,27 @@ export namespace Components {
          */
         "value": number;
     }
+    interface MxDatePicker {
+        "ariaLabel": string;
+        /**
+          * Helpful text to show below the picker
+         */
+        "assistiveText": string;
+        "dense": boolean;
+        "disabled": boolean;
+        "error": boolean;
+        "floatLabel": boolean;
+        /**
+          * The `id` attribute for the internal input element
+         */
+        "inputId": string;
+        "label": string;
+        "name": string;
+        /**
+          * The selected date in YYYY-MM-DD format
+         */
+        "value": string;
+    }
     interface MxDropdownMenu {
         "ariaLabel": string;
         "dense": boolean;
@@ -823,6 +844,12 @@ declare global {
         prototype: HTMLMxCircularProgressElement;
         new (): HTMLMxCircularProgressElement;
     };
+    interface HTMLMxDatePickerElement extends Components.MxDatePicker, HTMLStencilElement {
+    }
+    var HTMLMxDatePickerElement: {
+        prototype: HTMLMxDatePickerElement;
+        new (): HTMLMxDatePickerElement;
+    };
     interface HTMLMxDropdownMenuElement extends Components.MxDropdownMenu, HTMLStencilElement {
     }
     var HTMLMxDropdownMenuElement: {
@@ -986,6 +1013,7 @@ declare global {
         "mx-chip": HTMLMxChipElement;
         "mx-chip-group": HTMLMxChipGroupElement;
         "mx-circular-progress": HTMLMxCircularProgressElement;
+        "mx-date-picker": HTMLMxDatePickerElement;
         "mx-dropdown-menu": HTMLMxDropdownMenuElement;
         "mx-fab": HTMLMxFabElement;
         "mx-icon-button": HTMLMxIconButtonElement;
@@ -1151,6 +1179,27 @@ declare namespace LocalJSX {
           * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
          */
         "value"?: number;
+    }
+    interface MxDatePicker {
+        "ariaLabel"?: string;
+        /**
+          * Helpful text to show below the picker
+         */
+        "assistiveText"?: string;
+        "dense"?: boolean;
+        "disabled"?: boolean;
+        "error"?: boolean;
+        "floatLabel"?: boolean;
+        /**
+          * The `id` attribute for the internal input element
+         */
+        "inputId"?: string;
+        "label"?: string;
+        "name"?: string;
+        /**
+          * The selected date in YYYY-MM-DD format
+         */
+        "value"?: string;
     }
     interface MxDropdownMenu {
         "ariaLabel"?: string;
@@ -1815,6 +1864,7 @@ declare namespace LocalJSX {
         "mx-chip": MxChip;
         "mx-chip-group": MxChipGroup;
         "mx-circular-progress": MxCircularProgress;
+        "mx-date-picker": MxDatePicker;
         "mx-dropdown-menu": MxDropdownMenu;
         "mx-fab": MxFab;
         "mx-icon-button": MxIconButton;
@@ -1853,6 +1903,7 @@ declare module "@stencil/core" {
             "mx-chip": LocalJSX.MxChip & JSXBase.HTMLAttributes<HTMLMxChipElement>;
             "mx-chip-group": LocalJSX.MxChipGroup & JSXBase.HTMLAttributes<HTMLMxChipGroupElement>;
             "mx-circular-progress": LocalJSX.MxCircularProgress & JSXBase.HTMLAttributes<HTMLMxCircularProgressElement>;
+            "mx-date-picker": LocalJSX.MxDatePicker & JSXBase.HTMLAttributes<HTMLMxDatePickerElement>;
             "mx-dropdown-menu": LocalJSX.MxDropdownMenu & JSXBase.HTMLAttributes<HTMLMxDropdownMenuElement>;
             "mx-fab": LocalJSX.MxFab & JSXBase.HTMLAttributes<HTMLMxFabElement>;
             "mx-icon-button": LocalJSX.MxIconButton & JSXBase.HTMLAttributes<HTMLMxIconButtonElement>;

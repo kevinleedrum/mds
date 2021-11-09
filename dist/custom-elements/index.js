@@ -549,402 +549,39 @@ const MxCircularProgress$1 = class extends HTMLElement {
   get element() { return this; }
 };
 
-const arrowSvg$1 = `<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path
-    d="M9.9654 0.757212C9.93099 0.681077 9.87273 0.616004 9.79798 0.57022C9.72323 0.524437 9.63535 0.5 9.54545 0.5H0.454547C0.364646 0.5 0.276763 0.524437 0.202012 0.570222C0.127262 0.616007 0.0690015 0.681082 0.0345985 0.757219C0.000195557 0.833357 -0.00880479 0.917136 0.00873577 0.997962C0.0262763 1.07879 0.0695701 1.15303 0.133142 1.2113L4.67859 5.37795C4.7208 5.41665 4.77091 5.44734 4.82605 5.46828C4.8812 5.48922 4.94031 5.5 5 5.5C5.05969 5.5 5.1188 5.48922 5.17394 5.46828C5.22909 5.44734 5.2792 5.41665 5.3214 5.37795L9.86686 1.2113C9.93043 1.15303 9.97372 1.07879 9.99126 0.997958C10.0088 0.917131 9.9998 0.833351 9.9654 0.757212Z"
-    fill="currentColor"
-  />
-</svg>
-`;
-
-const MxDropdownMenu$1 = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    this.dense = false;
-    /** Style as a filter dropdown with a 1dp elevation */
-    this.elevated = false;
-    /** Style as a filter dropdown with a "flat" border color */
-    this.flat = false;
-    this.isFocused = false;
-  }
-  onClick(e) {
-    // Resize the menu width to match the input.  This is done every click in case the input is resized after initial load.
-    this.menu.style.width = this.dropdownWrapper.getBoundingClientRect().width + 'px';
-    const clickedMenuItem = e.target.closest('mx-menu-item');
-    if (!clickedMenuItem)
-      return;
-    this.value = clickedMenuItem.innerText;
-    // Fire native input event for consistency with mx-select
-    this.inputElem.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-  }
-  componentDidLoad() {
-    this.updateInputValue();
-    this.menu.anchorEl = this.dropdownWrapper;
-  }
-  onValueChange() {
-    this.updateInputValue();
-  }
-  onBlur() {
-    if (this.menu && this.menu.isOpen)
-      return; // Style as focused/active while menu is open
-    this.isFocused = false;
-  }
-  onFocus() {
-    this.isFocused = true;
-  }
-  onMenuClose() {
-    if (!this.inputElem.contains(document.activeElement))
-      this.isFocused = false;
-  }
-  updateInputValue() {
-    this.inputElem.value = this.value;
-  }
-  get dropdownWrapperClass() {
-    let str = 'dropdown-wrapper flex items-center relative border rounded-lg';
-    str += this.dense ? ' h-36' : ' h-48';
-    if (this.elevated)
-      str += ' elevated shadow-1';
-    if (this.flat)
-      str += ' flat';
-    if (this.isFocused)
-      str += ' focused border-2';
-    return str;
-  }
-  get inputClass() {
-    let str = 'absolute inset-0 w-full h-full pl-16 overflow-hidden outline-none appearance-none select-none bg-transparent cursor-pointer disabled:cursor-auto';
-    if (this.isFocused)
-      str += ' -ml-1'; // prevent shifting due to border-width change
-    return str;
-  }
-  get suffixClass() {
-    let str = 'icon-suffix absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
-    if (this.isFocused)
-      str += ' -mr-1'; // prevent shifting due to border-width change
-    return str;
-  }
-  render() {
-    return (h(Host, { class: "mx-dropdown-menu" }, h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass }, h("input", { "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }), h("span", { class: this.suffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), h("span", { "data-testid": "arrow", innerHTML: arrowSvg$1 }))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) }, h("slot", null))));
-  }
-  static get watchers() { return {
-    "value": ["onValueChange"]
-  }; }
-};
-
-const SCREENS = {
-  'sm': '640px',
-  'md': '768px',
-  'lg': '1024px',
-  'xl': '1280px',
-  '2xl': '1536px',
-};
-/** A key-value pair of breakpoint abbreviations and a boolean for whether the `min-width` meets or exceeds it.
-For example, `MinWidths.md` will be true for windows that are tablet-sized or larger */
-class MinWidths {
-  constructor() {
-    this['sm'] = false;
-    this['md'] = false;
-    this['lg'] = false;
-    this['xl'] = false;
-    this['2xl'] = false;
-  }
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
-class MinWidthSync {
-  constructor() {
-    this.componentRefs = [];
-    this.minWidths = new MinWidths();
-    this.listeners = new Map();
-  }
-  subscribeComponent(componentRef) {
-    // If this is the first subscribed component, set up listeners.
-    if (this.componentRefs.length === 0)
-      this.addListeners();
-    this.componentRefs.push(componentRef);
-    // Immediately sync minWidths to component.
-    componentRef.minWidths = Object.assign({}, this.minWidths);
-  }
-  addListeners() {
-    Object.keys(SCREENS).forEach(screen => {
-      const mql = window.matchMedia(`(min-width: ${SCREENS[screen]})`);
-      const listener = (e) => {
-        this.minWidths[screen] = e.matches;
-        // Sync minWidths to all subscribed components
-        this.componentRefs.forEach(componentRef => {
-          componentRef.minWidths = Object.assign({}, this.minWidths);
-        });
-      };
-      listener(mql);
-      mql.addListener(listener);
-      this.listeners.set(mql, listener); // Store listener so it can be removed later
-    });
-  }
-  unsubscribeComponent(componentRef) {
-    this.componentRefs = this.componentRefs.filter(c => c !== componentRef);
-    // If no more subscribed components, remove listeners to prevent memory leaks.
-    if (this.componentRefs.length === 0)
-      this.removeListeners();
-  }
-  removeListeners() {
-    this.listeners.forEach((listener, mql) => {
-      mql.removeListener(listener);
-    });
-  }
+
+function createCommonjsModule(fn, basedir, module) {
+	return module = {
+		path: basedir,
+		exports: {},
+		require: function (path, base) {
+			return commonjsRequire();
+		}
+	}, fn(module, module.exports), module.exports;
 }
-/** Update subscribed components' `minWidths` state object based on `min-width` media query listeners. */
-const minWidthSync = new MinWidthSync();
 
-const MxFab$1 = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    /** Style as a secondary action */
-    this.secondary = false;
-    this.minWidths = new MinWidths();
-    this.isExtended = false;
-  }
-  connectedCallback() {
-    minWidthSync.subscribeComponent(this);
-  }
-  componentWillLoad() {
-    this.isExtended = !!this.element.textContent;
-  }
-  disconnectedCallback() {
-    minWidthSync.unsubscribeComponent(this);
-  }
-  onClick(e) {
-    ripple(e, this.buttonElem);
-  }
-  get buttonClass() {
-    let str = 'flex min-w-full items-center justify-center rounded-full shadow-4 relative overflow-hidden';
-    if (this.secondary)
-      str += ' secondary';
-    if (this.isExtended)
-      str += ' h-48 py-16 px-24';
-    else
-      str += this.minWidths.md ? ' h-56' : ' h-40';
-    return str;
-  }
-  get slotWrapperClass() {
-    let str = 'flex items-center text-4 tracking-1-25 leading-4 uppercase font-semibold';
-    if (this.isExtended && this.icon)
-      str += ' ml-12';
-    return str;
-  }
-  render() {
-    return (h(Host, { class: 'mx-fab inline-block min-w-max' + (this.minWidths.md ? ' w-56' : ' w-40') }, h("button", { ref: el => (this.buttonElem = el), type: "button", value: this.value, class: this.buttonClass, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, this.icon && h("i", { class: this.icon + ' text-1' }), h("div", { class: this.slotWrapperClass }, h("slot", null)))));
-  }
-  get element() { return this; }
-};
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+}
 
-const MxIconButton$1 = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    this.dataAttributes = {};
-    this.type = 'button';
-    this.disabled = false;
-    /** Show downward chevron icon */
-    this.chevronDown = false;
-    /** Show left-pointing chevron icon */
-    this.chevronLeft = false;
-    /** Show right-pointing chevron icon */
-    this.chevronRight = false;
-    this.componentWillRender = propagateDataAttributes;
-  }
-  onClick(e) {
-    if (this.disabled) {
-      e.stopPropagation();
-      e.preventDefault();
-      return;
-    }
-  }
-  get isChevron() {
-    return this.chevronDown || this.chevronLeft || this.chevronRight;
-  }
-  render() {
-    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-1', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" }, h("span", { "data-testid": "chevron", class: this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : '', innerHTML: chevronSvg })))));
-    return (h(Host, { class: "mx-icon-button inline-block" }, h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
-  }
-  get element() { return this; }
-};
+var datepicker_min = createCommonjsModule(function (module, exports) {
+!function(e,t){module.exports=t();}(window,(function(){return function(e){var t={};function n(a){if(t[a])return t[a].exports;var r=t[a]={i:a,l:!1,exports:{}};return e[a].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=e,n.c=t,n.d=function(e,t,a){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:a});},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0});},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var a=Object.create(null);if(n.r(a),Object.defineProperty(a,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)n.d(a,r,function(t){return e[t]}.bind(null,r));return a},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=0)}([function(e,t,n){n.r(t);var a=[],r=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],i=["January","February","March","April","May","June","July","August","September","October","November","December"],o={t:"top",r:"right",b:"bottom",l:"left",c:"centered"};function s(){}var l=["click","focusin","keydown","input"];function d(e){l.forEach((function(t){e.addEventListener(t,e===document?L:Y);}));}function c(e){return Array.isArray(e)?e.map(c):"[object Object]"===x(e)?Object.keys(e).reduce((function(t,n){return t[n]=c(e[n]),t}),{}):e}function u(e,t){var n=e.calendar.querySelector(".qs-overlay"),a=n&&!n.classList.contains("qs-hidden");t=t||new Date(e.currentYear,e.currentMonth),e.calendar.innerHTML=[h(t,e,a),f(t,e,a),v(e,a)].join(""),a&&window.requestAnimationFrame((function(){M(!0,e);}));}function h(e,t,n){return ['<div class="qs-controls'+(n?" qs-blur":"")+'">','<div class="qs-arrow qs-left"></div>','<div class="qs-month-year">','<span class="qs-month">'+t.months[e.getMonth()]+"</span>",'<span class="qs-year">'+e.getFullYear()+"</span>","</div>",'<div class="qs-arrow qs-right"></div>',"</div>"].join("")}function f(e,t,n){var a=t.currentMonth,r=t.currentYear,i=t.dateSelected,o=t.maxDate,s=t.minDate,l=t.showAllDates,d=t.days,c=t.disabledDates,u=t.startDay,h=t.weekendIndices,f=t.events,v=t.getRange?t.getRange():{},m=+v.start,y=+v.end,p=g(new Date(e).setDate(1)),w=p.getDay()-u,D=w<0?7:0;p.setMonth(p.getMonth()+1),p.setDate(0);var b=p.getDate(),q=[],S=D+7*((w+b)/7|0);S+=(w+b)%7?7:0;for(var M=1;M<=S;M++){var E=(M-1)%7,x=d[E],C=M-(w>=0?w:7+w),L=new Date(r,a,C),Y=f[+L],j=C<1||C>b,P=j?C<1?-1:1:0,k=j&&!l,O=k?"":L.getDate(),N=+L==+i,_=E===h[0]||E===h[1],I=m!==y,A="qs-square "+x;Y&&!k&&(A+=" qs-event"),j&&(A+=" qs-outside-current-month"),!l&&j||(A+=" qs-num"),N&&(A+=" qs-active"),(c[+L]||t.disabler(L)||_&&t.noWeekends||s&&+L<+s||o&&+L>+o)&&!k&&(A+=" qs-disabled"),+g(new Date)==+L&&(A+=" qs-current"),+L===m&&y&&I&&(A+=" qs-range-start"),+L>m&&+L<y&&(A+=" qs-range-middle"),+L===y&&m&&I&&(A+=" qs-range-end"),k&&(A+=" qs-empty",O=""),q.push('<div class="'+A+'" data-direction="'+P+'">'+O+"</div>");}var R=d.map((function(e){return '<div class="qs-square qs-day">'+e+"</div>"})).concat(q);return R.unshift('<div class="qs-squares'+(n?" qs-blur":"")+'">'),R.push("</div>"),R.join("")}function v(e,t){var n=e.overlayPlaceholder,a=e.overlayButton;return ['<div class="qs-overlay'+(t?"":" qs-hidden")+'">',"<div>",'<input class="qs-overlay-year" placeholder="'+n+'" inputmode="numeric" />','<div class="qs-close">&#10005;</div>',"</div>",'<div class="qs-overlay-month-container">'+e.overlayMonths.map((function(e,t){return '<div class="qs-overlay-month" data-month-num="'+t+'">'+e+"</div>"})).join("")+"</div>",'<div class="qs-submit qs-disabled">'+a+"</div>","</div>"].join("")}function m(e,t,n){var a=t.el,r=t.calendar.querySelector(".qs-active"),i=e.textContent,o=t.sibling;(a.disabled||a.readOnly)&&t.respectDisabledReadOnly||(t.dateSelected=n?void 0:new Date(t.currentYear,t.currentMonth,i),r&&r.classList.remove("qs-active"),n||e.classList.add("qs-active"),p(a,t,n),n||q(t),o&&(y({instance:t,deselect:n}),t.first&&!o.dateSelected&&(o.currentYear=t.currentYear,o.currentMonth=t.currentMonth,o.currentMonthName=t.currentMonthName),u(t),u(o)),t.onSelect(t,n?void 0:new Date(t.dateSelected)));}function y(e){var t=e.instance.first?e.instance:e.instance.sibling,n=t.sibling;t===e.instance?e.deselect?(t.minDate=t.originalMinDate,n.minDate=n.originalMinDate):n.minDate=t.dateSelected:e.deselect?(n.maxDate=n.originalMaxDate,t.maxDate=t.originalMaxDate):t.maxDate=n.dateSelected;}function p(e,t,n){if(!t.nonInput)return n?e.value="":t.formatter!==s?t.formatter(e,t.dateSelected,t):void(e.value=t.dateSelected.toDateString())}function w(e,t,n,a){n||a?(n&&(t.currentYear=+n),a&&(t.currentMonth=+a)):(t.currentMonth+=e.contains("qs-right")?1:-1,12===t.currentMonth?(t.currentMonth=0,t.currentYear++):-1===t.currentMonth&&(t.currentMonth=11,t.currentYear--)),t.currentMonthName=t.months[t.currentMonth],u(t),t.onMonthChange(t);}function D(e){if(!e.noPosition){var t=e.position.top,n=e.position.right;if(e.position.centered)return e.calendarContainer.classList.add("qs-centered");var a=e.positionedEl.getBoundingClientRect(),r=e.el.getBoundingClientRect(),i=e.calendarContainer.getBoundingClientRect(),o=r.top-a.top+(t?-1*i.height:r.height)+"px",s=r.left-a.left+(n?r.width-i.width:0)+"px";e.calendarContainer.style.setProperty("top",o),e.calendarContainer.style.setProperty("left",s);}}function b(e){return "[object Date]"===x(e)&&"Invalid Date"!==e.toString()}function g(e){if(b(e)||"number"==typeof e&&!isNaN(e)){var t=new Date(+e);return new Date(t.getFullYear(),t.getMonth(),t.getDate())}}function q(e){e.disabled||!e.calendarContainer.classList.contains("qs-hidden")&&!e.alwaysShow&&("overlay"!==e.defaultView&&M(!0,e),e.calendarContainer.classList.add("qs-hidden"),e.onHide(e));}function S(e){e.disabled||(e.calendarContainer.classList.remove("qs-hidden"),"overlay"===e.defaultView&&M(!1,e),D(e),e.onShow(e));}function M(e,t){var n=t.calendar,a=n.querySelector(".qs-overlay"),r=a.querySelector(".qs-overlay-year"),i=n.querySelector(".qs-controls"),o=n.querySelector(".qs-squares");e?(a.classList.add("qs-hidden"),i.classList.remove("qs-blur"),o.classList.remove("qs-blur"),r.value=""):(a.classList.remove("qs-hidden"),i.classList.add("qs-blur"),o.classList.add("qs-blur"),r.focus());}function E(e,t,n,a){var r=isNaN(+(new Date).setFullYear(t.value||void 0)),i=r?null:t.value;if(13===e.which||13===e.keyCode||"click"===e.type)a?w(null,n,i,a):r||t.classList.contains("qs-disabled")||w(null,n,i);else if(n.calendar.contains(t)){n.calendar.querySelector(".qs-submit").classList[r?"add":"remove"]("qs-disabled");}}function x(e){return {}.toString.call(e)}function C(e){a.forEach((function(t){t!==e&&q(t);}));}function L(e){if(!e.__qs_shadow_dom){var t=e.which||e.keyCode,n=e.type,r=e.target,o=r.classList,s=a.filter((function(e){return e.calendar.contains(r)||e.el===r}))[0],l=s&&s.calendar.contains(r);if(!(s&&s.isMobile&&s.disableMobile))if("click"===n){if(!s)return a.forEach(q);if(s.disabled)return;var d=s.calendar,c=s.calendarContainer,h=s.disableYearOverlay,f=s.nonInput,v=d.querySelector(".qs-overlay-year"),y=!!d.querySelector(".qs-hidden"),p=d.querySelector(".qs-month-year").contains(r),D=r.dataset.monthNum;if(s.noPosition&&!l)(c.classList.contains("qs-hidden")?S:q)(s);else if(o.contains("qs-arrow"))w(o,s);else if(p||o.contains("qs-close"))h||M(!y,s);else if(D)E(e,v,s,D);else {if(o.contains("qs-disabled"))return;if(o.contains("qs-num")){var b=r.textContent,g=+r.dataset.direction,x=new Date(s.currentYear,s.currentMonth+g,b);if(g){s.currentYear=x.getFullYear(),s.currentMonth=x.getMonth(),s.currentMonthName=i[s.currentMonth],u(s);for(var L,Y=s.calendar.querySelectorAll('[data-direction="0"]'),j=0;!L;){var P=Y[j];P.textContent===b&&(L=P),j++;}r=L;}return void(+x==+s.dateSelected?m(r,s,!0):r.classList.contains("qs-disabled")||m(r,s))}o.contains("qs-submit")?E(e,v,s):f&&r===s.el&&(S(s),C(s));}}else if("focusin"===n&&s)S(s),C(s);else if("keydown"===n&&9===t&&s)q(s);else if("keydown"===n&&s&&!s.disabled){var k=!s.calendar.querySelector(".qs-overlay").classList.contains("qs-hidden");13===t&&k&&l?E(e,r,s):27===t&&k&&l&&M(!0,s);}else if("input"===n){if(!s||!s.calendar.contains(r))return;var O=s.calendar.querySelector(".qs-submit"),N=r.value.split("").reduce((function(e,t){return e||"0"!==t?e+(t.match(/[0-9]/)?t:""):""}),"").slice(0,4);r.value=N,O.classList[4===N.length?"remove":"add"]("qs-disabled");}}}function Y(e){L(e),e.__qs_shadow_dom=!0;}function j(e,t){l.forEach((function(n){e.removeEventListener(n,t);}));}function P(){S(this);}function k(){q(this);}function O(e,t){var n=g(e),a=this.currentYear,r=this.currentMonth,i=this.sibling;if(null==e)return this.dateSelected=void 0,p(this.el,this,!0),i&&(y({instance:this,deselect:!0}),u(i)),u(this),this;if(!b(e))throw new Error("`setDate` needs a JavaScript Date object.");if(this.disabledDates[+n]||n<this.minDate||n>this.maxDate)throw new Error("You can't manually set a date that's disabled.");this.dateSelected=n,t&&(this.currentYear=n.getFullYear(),this.currentMonth=n.getMonth(),this.currentMonthName=this.months[n.getMonth()]),p(this.el,this),i&&(y({instance:this}),u(i));var o=a===n.getFullYear()&&r===n.getMonth();return o||t?u(this,n):o||u(this,new Date(a,r,1)),this}function N(e){return I(this,e,!0)}function _(e){return I(this,e)}function I(e,t,n){var a=e.dateSelected,r=e.first,i=e.sibling,o=e.minDate,s=e.maxDate,l=g(t),d=n?"Min":"Max";function c(){return "original"+d+"Date"}function h(){return d.toLowerCase()+"Date"}function f(){return "set"+d}function v(){throw new Error("Out-of-range date passed to "+f())}if(null==t)e[c()]=void 0,i?(i[c()]=void 0,n?(r&&!a||!r&&!i.dateSelected)&&(e.minDate=void 0,i.minDate=void 0):(r&&!i.dateSelected||!r&&!a)&&(e.maxDate=void 0,i.maxDate=void 0)):e[h()]=void 0;else {if(!b(t))throw new Error("Invalid date passed to "+f());i?((r&&n&&l>(a||s)||r&&!n&&l<(i.dateSelected||o)||!r&&n&&l>(i.dateSelected||s)||!r&&!n&&l<(a||o))&&v(),e[c()]=l,i[c()]=l,(n&&(r&&!a||!r&&!i.dateSelected)||!n&&(r&&!i.dateSelected||!r&&!a))&&(e[h()]=l,i[h()]=l)):((n&&l>(a||s)||!n&&l<(a||o))&&v(),e[h()]=l);}return i&&u(i),u(e),e}function A(){var e=this.first?this:this.sibling,t=e.sibling;return {start:e.dateSelected,end:t.dateSelected}}function R(){var e=this.shadowDom,t=this.positionedEl,n=this.calendarContainer,r=this.sibling,i=this;this.inlinePosition&&(a.some((function(e){return e!==i&&e.positionedEl===t}))||t.style.setProperty("position",null));n.remove(),a=a.filter((function(e){return e!==i})),r&&delete r.sibling,a.length||j(document,L);var o=a.some((function(t){return t.shadowDom===e}));for(var s in e&&!o&&j(e,Y),this)delete this[s];a.length||l.forEach((function(e){document.removeEventListener(e,L);}));}function F(e,t){var n=new Date(e);if(!b(n))throw new Error("Invalid date passed to `navigate`");this.currentYear=n.getFullYear(),this.currentMonth=n.getMonth(),u(this),t&&this.onMonthChange(this);}function B(){var e=!this.calendarContainer.classList.contains("qs-hidden"),t=!this.calendarContainer.querySelector(".qs-overlay").classList.contains("qs-hidden");e&&M(t,this);}t.default=function(e,t){var n=function(e,t){var n,l,d=function(e){var t=c(e);t.events&&(t.events=t.events.reduce((function(e,t){if(!b(t))throw new Error('"options.events" must only contain valid JavaScript Date objects.');return e[+g(t)]=!0,e}),{}));["startDate","dateSelected","minDate","maxDate"].forEach((function(e){var n=t[e];if(n&&!b(n))throw new Error('"options.'+e+'" needs to be a valid JavaScript Date object.');t[e]=g(n);}));var n=t.position,i=t.maxDate,l=t.minDate,d=t.dateSelected,u=t.overlayPlaceholder,h=t.overlayButton,f=t.startDay,v=t.id;if(t.startDate=g(t.startDate||d||new Date),t.disabledDates=(t.disabledDates||[]).reduce((function(e,t){var n=+g(t);if(!b(t))throw new Error('You supplied an invalid date to "options.disabledDates".');if(n===+g(d))throw new Error('"disabledDates" cannot contain the same date as "dateSelected".');return e[n]=1,e}),{}),t.hasOwnProperty("id")&&null==v)throw new Error("`id` cannot be `null` or `undefined`");if(null!=v){var m=a.filter((function(e){return e.id===v}));if(m.length>1)throw new Error("Only two datepickers can share an id.");m.length?(t.second=!0,t.sibling=m[0]):t.first=!0;}var y=["tr","tl","br","bl","c"].some((function(e){return n===e}));if(n&&!y)throw new Error('"options.position" must be one of the following: tl, tr, bl, br, or c.');function p(e){throw new Error('"dateSelected" in options is '+(e?"less":"greater")+' than "'+(e||"max")+'Date".')}if(t.position=function(e){var t=e[0],n=e[1],a={};a[o[t]]=1,n&&(a[o[n]]=1);return a}(n||"bl"),i<l)throw new Error('"maxDate" in options is less than "minDate".');d&&(l>d&&p("min"),i<d&&p());if(["onSelect","onShow","onHide","onMonthChange","formatter","disabler"].forEach((function(e){"function"!=typeof t[e]&&(t[e]=s);})),["customDays","customMonths","customOverlayMonths"].forEach((function(e,n){var a=t[e],r=n?12:7;if(a){if(!Array.isArray(a)||a.length!==r||a.some((function(e){return "string"!=typeof e})))throw new Error('"'+e+'" must be an array with '+r+" strings.");t[n?n<2?"months":"overlayMonths":"days"]=a;}})),f&&f>0&&f<7){var w=(t.customDays||r).slice(),D=w.splice(0,f);t.customDays=w.concat(D),t.startDay=+f,t.weekendIndices=[w.length-1,w.length];}else t.startDay=0,t.weekendIndices=[6,0];"string"!=typeof u&&delete t.overlayPlaceholder;"string"!=typeof h&&delete t.overlayButton;var q=t.defaultView;if(q&&"calendar"!==q&&"overlay"!==q)throw new Error('options.defaultView must either be "calendar" or "overlay".');return t.defaultView=q||"calendar",t}(t||{startDate:g(new Date),position:"bl",defaultView:"calendar"}),u=e;if("string"==typeof u)u="#"===u[0]?document.getElementById(u.slice(1)):document.querySelector(u);else {if("[object ShadowRoot]"===x(u))throw new Error("Using a shadow DOM as your selector is not supported.");for(var h,f=u.parentNode;!h;){var v=x(f);"[object HTMLDocument]"===v?h=!0:"[object ShadowRoot]"===v?(h=!0,n=f,l=f.host):f=f.parentNode;}}if(!u)throw new Error("No selector / element found.");if(a.some((function(e){return e.el===u})))throw new Error("A datepicker already exists on that element.");var m=u===document.body,y=n?u.parentElement||n:m?document.body:u.parentElement,w=n?u.parentElement||l:y,D=document.createElement("div"),q=document.createElement("div");D.className="qs-datepicker-container qs-hidden",q.className="qs-datepicker";var M={shadowDom:n,customElement:l,positionedEl:w,el:u,parent:y,nonInput:"INPUT"!==u.nodeName,noPosition:m,position:!m&&d.position,startDate:d.startDate,dateSelected:d.dateSelected,disabledDates:d.disabledDates,minDate:d.minDate,maxDate:d.maxDate,noWeekends:!!d.noWeekends,weekendIndices:d.weekendIndices,calendarContainer:D,calendar:q,currentMonth:(d.startDate||d.dateSelected).getMonth(),currentMonthName:(d.months||i)[(d.startDate||d.dateSelected).getMonth()],currentYear:(d.startDate||d.dateSelected).getFullYear(),events:d.events||{},defaultView:d.defaultView,setDate:O,remove:R,setMin:N,setMax:_,show:P,hide:k,navigate:F,toggleOverlay:B,onSelect:d.onSelect,onShow:d.onShow,onHide:d.onHide,onMonthChange:d.onMonthChange,formatter:d.formatter,disabler:d.disabler,months:d.months||i,days:d.customDays||r,startDay:d.startDay,overlayMonths:d.overlayMonths||(d.months||i).map((function(e){return e.slice(0,3)})),overlayPlaceholder:d.overlayPlaceholder||"4-digit year",overlayButton:d.overlayButton||"Submit",disableYearOverlay:!!d.disableYearOverlay,disableMobile:!!d.disableMobile,isMobile:"ontouchstart"in window,alwaysShow:!!d.alwaysShow,id:d.id,showAllDates:!!d.showAllDates,respectDisabledReadOnly:!!d.respectDisabledReadOnly,first:d.first,second:d.second};if(d.sibling){var E=d.sibling,C=M,L=E.minDate||C.minDate,Y=E.maxDate||C.maxDate;C.sibling=E,E.sibling=C,E.minDate=L,E.maxDate=Y,C.minDate=L,C.maxDate=Y,E.originalMinDate=L,E.originalMaxDate=Y,C.originalMinDate=L,C.originalMaxDate=Y,E.getRange=A,C.getRange=A;}d.dateSelected&&p(u,M);var j=getComputedStyle(w).position;m||j&&"static"!==j||(M.inlinePosition=!0,w.style.setProperty("position","relative"));var I=a.filter((function(e){return e.positionedEl===M.positionedEl}));I.some((function(e){return e.inlinePosition}))&&(M.inlinePosition=!0,I.forEach((function(e){e.inlinePosition=!0;})));D.appendChild(q),y.appendChild(D),M.alwaysShow&&S(M);return M}(e,t);if(a.length||d(document),n.shadowDom&&(a.some((function(e){return e.shadowDom===n.shadowDom}))||d(n.shadowDom)),a.push(n),n.second){var l=n.sibling;y({instance:n,deselect:!n.dateSelected}),y({instance:l,deselect:!l.dateSelected}),u(l);}return u(n,n.startDate||n.dateSelected),n.alwaysShow&&D(n),n};}]).default}));
+});
 
-const imageSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M19.5 21H4.5C3.67 21 3 20.33 3 19.5V4.5C3 3.67 3.67 3 4.5 3H19.5C20.33 3 21 3.67 21 4.5V19.5C21 20.33 20.33 21 19.5 21ZM4.5 4.5V19.5H19.5V4.5H4.5Z" fill="currentColor"/>
-  <path d="M3.74994 17.2498C3.55994 17.2498 3.36994 17.1798 3.21994 17.0298C2.92994 16.7398 2.92994 16.2598 3.21994 15.9698L6.43994 12.7498C6.99994 12.1898 7.99994 12.1898 8.55994 12.7498L10.4999 14.6898L14.6899 10.4998C15.2599 9.92977 16.2399 9.92977 16.8099 10.4998L20.7799 14.4698C21.0699 14.7598 21.0699 15.2398 20.7799 15.5298C20.4899 15.8198 20.0099 15.8198 19.7199 15.5298L15.7499 11.5598L11.5599 15.7498C10.9999 16.3098 9.99994 16.3098 9.43994 15.7498L7.49994 13.8098L4.27994 17.0298C4.12994 17.1798 3.93994 17.2498 3.74994 17.2498Z" fill="currentColor"/>
-  <path d="M9.37994 9.55994C9.89994 9.55994 10.3199 9.13994 10.3199 8.61994C10.3199 8.09994 9.88994 7.68994 9.37994 7.68994C8.86994 7.68994 8.43994 8.10994 8.43994 8.61994C8.43994 9.12994 8.85994 9.55994 9.37994 9.55994Z" fill="currentColor"/>
+const datepicker = /*@__PURE__*/getDefaultExportFromCjs(datepicker_min);
+
+const calendarSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M3 4.5C3 3.67157 3.67157 3 4.5 3H19.5C20.3284 3 21 3.67157 21 4.5V19.5C21 20.3284 20.3284 21 19.5 21H4.5C3.67157 21 3 20.3284 3 19.5V4.5ZM19.5 4.5H4.5V19.5H19.5V4.5Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5 1.5C16.9142 1.5 17.25 1.83579 17.25 2.25V5.25C17.25 5.66421 16.9142 6 16.5 6C16.0858 6 15.75 5.66421 15.75 5.25V2.25C15.75 1.83579 16.0858 1.5 16.5 1.5Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 1.5C7.91421 1.5 8.25 1.83579 8.25 2.25V5.25C8.25 5.66421 7.91421 6 7.5 6C7.08579 6 6.75 5.66421 6.75 5.25V2.25C6.75 1.83579 7.08579 1.5 7.5 1.5Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M3 8.25C3 7.83579 3.33579 7.5 3.75 7.5H20.25C20.6642 7.5 21 7.83579 21 8.25C21 8.66421 20.6642 9 20.25 9H3.75C3.33579 9 3 8.66421 3 8.25Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.875 11.9998C7.875 11.5855 8.21079 11.2498 8.625 11.2498H11.25C11.5383 11.2498 11.8011 11.415 11.926 11.6749C12.0509 11.9347 12.0158 12.2431 11.8357 12.4683L11.0046 13.507C11.2477 13.6703 11.4571 13.8798 11.6206 14.1244C11.8262 14.432 11.9528 14.7855 11.9891 15.1537C12.0255 15.5219 11.9705 15.8933 11.829 16.2352C11.6875 16.577 11.4639 16.8787 11.178 17.1135C10.8922 17.3483 10.5528 17.509 10.19 17.5813C9.82715 17.6537 9.45209 17.6354 9.09801 17.5282C8.74392 17.421 8.42174 17.2282 8.15998 16.9667C7.86691 16.674 7.86662 16.1991 8.15933 15.9061C8.45205 15.613 8.92692 15.6127 9.21999 15.9054C9.30725 15.9926 9.41464 16.0568 9.53267 16.0926C9.6507 16.1283 9.77571 16.1344 9.89665 16.1103C10.0176 16.0862 10.1307 16.0326 10.226 15.9543C10.3213 15.8761 10.3958 15.7755 10.443 15.6616C10.4902 15.5476 10.5085 15.4238 10.4964 15.3011C10.4843 15.1784 10.4421 15.0605 10.3735 14.958C10.305 14.8555 10.2123 14.7714 10.1035 14.7133C9.99474 14.6552 9.87332 14.6248 9.75 14.6248C9.4617 14.6248 9.19891 14.4595 9.07402 14.1996C8.94913 13.9398 8.98425 13.6314 9.16435 13.4062L9.68953 12.7498H8.625C8.21079 12.7498 7.875 12.414 7.875 11.9998Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M15.3355 11.3289C15.5895 11.456 15.75 11.7157 15.75 11.9998V16.8748C15.75 17.289 15.4143 17.6248 15 17.6248C14.5858 17.6248 14.25 17.289 14.25 16.8748V13.4998L13.95 13.7248C13.6187 13.9733 13.1486 13.9061 12.9 13.5748C12.6515 13.2434 12.7187 12.7733 13.05 12.5248L14.55 11.3998C14.7773 11.2293 15.0814 11.2019 15.3355 11.3289Z" fill="currentColor"/>
 </svg>
 `;
-
-const userCircleSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12Z" fill="currentColor"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.25C10.3431 8.25 9 9.59315 9 11.25C9 12.9069 10.3431 14.25 12 14.25C13.6569 14.25 15 12.9069 15 11.25C15 9.59315 13.6569 8.25 12 8.25ZM7.5 11.25C7.5 8.76472 9.51472 6.75 12 6.75C14.4853 6.75 16.5 8.76472 16.5 11.25C16.5 13.7353 14.4853 15.75 12 15.75C9.51472 15.75 7.5 13.7353 7.5 11.25Z" fill="currentColor"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9999 15.75C10.8922 15.75 9.80605 16.0565 8.86175 16.6357C7.91744 17.2148 7.15182 18.044 6.64962 19.0313C6.46183 19.4005 6.01031 19.5476 5.6411 19.3598C5.2719 19.172 5.12483 18.7205 5.31262 18.3513C5.94031 17.1172 6.89726 16.0809 8.07754 15.357C9.25782 14.6331 10.6154 14.25 11.9999 14.25C13.3845 14.25 14.7421 14.6331 15.9223 15.357C17.1026 16.0808 18.0596 17.1172 18.6873 18.3513C18.8751 18.7205 18.728 19.172 18.3588 19.3598C17.9896 19.5476 17.5381 19.4005 17.3503 19.0313C16.8481 18.0439 16.0824 17.2148 15.1381 16.6357C14.1938 16.0565 13.1077 15.75 11.9999 15.75Z" fill="currentColor"/>
-</svg>
-`;
-
-const MxImageUpload$1 = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    this.hasInstructions = false;
-    this.hasSuccess = false;
-    this.hasError = false;
-    /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
-    this.acceptImage = true;
-    /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
-    this.acceptPdf = false;
-    /** Replaces the word "image" in the default dropzone text (i.e. "No image to show"). */
-    this.assetName = 'image';
-    /** Sets the width and height to 80px and changes the icon. */
-    this.avatar = false;
-    /** Sets the thumbnail sizing strategy relative to the container. */
-    this.thumbnailSize = 'cover';
-    /** Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content. */
-    this.isUploaded = false;
-    /** Set to `true` to disable the button and show the circular progress indicator. */
-    this.isUploading = false;
-    /** The text to display on the Remove button */
-    this.removeButtonLabel = 'Remove';
-    /** Set to `false` to hide the default Upload/Remove button. */
-    this.showButton = true;
-    /** Set to `false` to hide the dropzone icon. */
-    this.showIcon = true;
-    /** Set to `false` to hide the dropzone text. */
-    this.showDropzoneText = true;
-    /** The text to display on the Upload button */
-    this.uploadButtonLabel = 'Upload';
-    this.isDraggingOver = false;
-    this.isFileSelected = false;
-  }
-  onThumbnailUrlChange() {
-    if (this.thumbnailUrl)
-      this.isUploaded = true;
-  }
-  connectedCallback() {
-    this.onThumbnailUrlChange();
-  }
-  componentWillRender() {
-    this.hasInstructions = !!this.element.querySelector('[slot="instructions"]');
-    this.hasSuccess = !!this.element.querySelector('[slot="success"]');
-    this.hasError = !!this.element.querySelector('[slot="error"]');
-  }
-  async removeFile() {
-    if (!this.hasFile || this.isUploading)
-      return;
-    this.isFileSelected = false;
-    this.isUploaded = false;
-    this.isUploading = false;
-    this.fileInput.value = '';
-    this.fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-    this.fileInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-  }
-  async selectFile() {
-    if (this.hasFile)
-      return;
-    this.isFileSelected = false;
-    this.fileInput.value = '';
-    this.fileInput.click();
-  }
-  onButtonClick(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    if (this.isUploading)
-      return;
-    if (!this.hasFile) {
-      this.selectFile();
-    }
-    else {
-      this.removeFile();
-    }
-  }
-  onInput(e) {
-    this.isFileSelected = e.target.files && e.target.files.length > 0;
-    if (this.isFileSelected)
-      this.setThumnailDataUri(e.target.files[0]);
-    else
-      this.thumbnailDataUri = null;
-  }
-  setThumnailDataUri(file) {
-    this.thumbnailDataUri = null;
-    if (!/\.(jpe?g|png|gif)$/i.test(file.name))
-      return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.thumbnailDataUri = reader.result;
-    };
-    reader.readAsDataURL(file);
-  }
-  onDragOver() {
-    this.isDraggingOver = true;
-  }
-  onDragLeave() {
-    this.isDraggingOver = false;
-  }
-  get accept() {
-    let accept = [];
-    if (this.acceptImage)
-      accept.push('image/*');
-    if (this.acceptPdf)
-      accept.push('.pdf');
-    return accept.join(',') || null;
-  }
-  /** The width is applied to the host element in order to support percent-based widths */
-  get dropzoneWidth() {
-    if (this.width)
-      return this.width;
-    return this.avatar ? '80px' : '308px';
-  }
-  get dropzoneHeight() {
-    if (this.height)
-      return this.height;
-    return this.avatar ? '80px' : 'auto';
-  }
-  get dropzoneClass() {
-    let str = 'dropzone relative w-full h-full px-16 rounded-2xl overflow-hidden';
-    if (this.hasFile)
-      str += ' opacity-0';
-    if (this.isDraggingOver)
-      str += ' drag-over';
-    str += this.showIcon && this.showDropzoneText ? ' py-24' : ' py-16';
-    return str;
-  }
-  get hasFile() {
-    return this.isFileSelected || this.isUploaded;
-  }
-  get thumbnailBackgroundImage() {
-    let url = this.thumbnailUrl;
-    if (this.isFileSelected)
-      url = this.thumbnailDataUri;
-    if (!url)
-      return null;
-    return `url(${url})`;
-  }
-  get thumbnailBackgroundSize() {
-    if (!['contain', 'cover', 'auto', 'stretch'].includes(this.thumbnailSize))
-      return 'cover';
-    if (this.thumbnailSize === 'stretch')
-      return '100% 100%';
-    return this.thumbnailSize;
-  }
-  render() {
-    let iconJsx;
-    if (this.icon) {
-      iconJsx = h("i", { "data-testid": "upload-icon", class: 'dropzone-icon ' + this.icon });
-    }
-    else if (this.avatar) {
-      iconJsx = h("span", { "data-testid": "avatar-icon", innerHTML: userCircleSvg });
-    }
-    else {
-      iconJsx = h("span", { "data-testid": "image-icon", class: this.showDropzoneText ? 'mb-8' : '', innerHTML: imageSvg });
-    }
-    return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 opacity-0 cursor-pointer", onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0 pointer-events-none ' +
-        (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)), this.hasInstructions && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
-  }
-  get element() { return this; }
-  static get watchers() { return {
-    "thumbnailUrl": ["onThumbnailUrlChange"]
-  }; }
-};
 
 const warningCircleSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12Z" fill="currentColor"/>
@@ -952,175 +589,6 @@ const warningCircleSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="
   <path d="M12 17.0625C12.5178 17.0625 12.9375 16.6428 12.9375 16.125C12.9375 15.6072 12.5178 15.1875 12 15.1875C11.4822 15.1875 11.0625 15.6072 11.0625 16.125C11.0625 16.6428 11.4822 17.0625 12 17.0625Z" fill="currentColor"/>
 </svg>
 `;
-
-const MxInput$1 = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    this.dataAttributes = {};
-    this.uuid = uuidv4();
-    /** The `type` attribute for the text input */
-    this.type = 'text';
-    this.dense = false;
-    this.disabled = false;
-    this.readonly = false;
-    this.outerContainerClass = '';
-    this.labelClass = '';
-    this.error = false;
-    this.floatLabel = false;
-    /** Display a multi-line `textarea` instead of an `input` */
-    this.textarea = false;
-    this.textareaHeight = '250px';
-    this.isFocused = false;
-    this.characterCount = 0;
-    this.componentWillRender = propagateDataAttributes;
-  }
-  connectedCallback() {
-    this.characterCount = this.hasValue ? this.value.length : 0;
-  }
-  componentDidLoad() {
-    this.updateValue();
-  }
-  onValueChange() {
-    this.updateValue();
-    this.characterCount = this.hasValue ? this.value.length : 0;
-  }
-  updateValue() {
-    this.workingElem.value = this.hasValue ? this.value : '';
-  }
-  onFocus() {
-    this.isFocused = true;
-    this.error = false;
-  }
-  onBlur() {
-    this.isFocused = false;
-  }
-  onInput(e) {
-    this.characterCount = e.target.value.length;
-    this.value = e.target.value;
-  }
-  get workingElem() {
-    return this.textarea ? this.textArea : this.textInput;
-  }
-  get hasValue() {
-    return this.value !== null && this.value !== '' && this.value !== undefined;
-  }
-  get containerClass() {
-    let str = 'mx-input-wrapper flex items-center relative border rounded-lg';
-    if (!this.textarea) {
-      str += this.dense ? ' h-36' : ' h-48';
-    }
-    if (this.error || this.isFocused)
-      str += ' border-2';
-    if (this.error)
-      str += ' error';
-    if (this.disabled)
-      str += ' disabled';
-    if (this.readonly)
-      str += ' readonly';
-    return str;
-  }
-  get inputClass() {
-    let str = 'flex-1 overflow-hidden outline-none appearance-none bg-transparent';
-    if (!this.textarea) {
-      str += ' px-16';
-    }
-    else {
-      str += ' p-16 resize-none';
-    }
-    if (this.isFocused || this.error)
-      str += this.leftIcon ? ' -mr-1' : ' -m-1'; // prevent shifting due to border-width change
-    return str;
-  }
-  get labelClassNames() {
-    let str = 'block pointer-events-none';
-    if (this.floatLabel) {
-      str += ' absolute mt-0 px-4';
-      if (this.textarea)
-        str += ' top-12';
-      str += this.leftIcon && !this.textarea ? ' left-48 has-left-icon' : ' left-12';
-      if (this.dense && !this.textarea)
-        str += ' dense text-4';
-      if (this.isFocused || this.characterCount > 0)
-        str += ' floating';
-      if (this.isFocused || this.error)
-        str += ' -ml-1'; // prevent shifting due to border-width change
-      if ((this.isFocused || this.error) && this.textarea)
-        str += ' -mt-1';
-    }
-    else {
-      str += ' subtitle2 mb-4';
-    }
-    if (this.labelClass)
-      str += this.labelClass;
-    return str;
-  }
-  get leftIconWrapperClass() {
-    let str = 'flex items-center h-full pointer-events-none pl-16';
-    if (this.isFocused || this.error)
-      str += ' -ml-1'; // prevent shifting due to border-width change
-    return str;
-  }
-  get rightContentClass() {
-    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8 pointer-events-none';
-    if (this.isFocused || this.error)
-      str += ' -mr-1'; // prevent shifting due to border-width change
-    return str;
-  }
-  get textareaClass() {
-    return this.textarea ? ' textarea items-start' : '';
-  }
-  render() {
-    const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames }, this.label));
-    return (h(Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { class: this.containerClass }, this.leftIcon && (h("div", { class: this.leftIconWrapperClass }, h("i", { class: this.leftIcon }))), this.label && this.floatLabel && labelJsx, !this.textarea ? (h("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (h("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass }, this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength)), this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)), this.error && h("span", { innerHTML: warningCircleSvg }), this.rightIcon && !this.error && h("i", { class: this.rightIcon })))), (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
-  }
-  get element() { return this; }
-  static get watchers() { return {
-    "value": ["onValueChange"]
-  }; }
-};
-
-const MxLinearProgress$1 = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    /** The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. */
-    this.value = null;
-    /** Delay the appearance of the indicator for this many milliseconds */
-    this.appearDelay = 0;
-  }
-  connectedCallback() {
-    if (!this.appearDelay)
-      return;
-    // Hide indicator until appearDelay duration has passed
-    this.element.classList.remove('block');
-    this.element.classList.add('hidden');
-    this.delayTimeout = setTimeout(() => {
-      this.element.classList.remove('hidden');
-      this.element.classList.add('block');
-    }, this.appearDelay);
-  }
-  disconnectedCallback() {
-    clearTimeout(this.delayTimeout);
-  }
-  get determinateBarStyle() {
-    return {
-      transform: `translateX(${this.value - 100}%)`,
-      transition: 'transform 0.4s linear',
-    };
-  }
-  render() {
-    return (h(Host, { class: "mx-linear-progress block h-4 w-full rounded-sm overflow-hidden pointer-events-none", role: "progressbar", "aria-valuenow": this.value != null ? Math.round(this.value) : null, "aria-valuemin": this.value != null ? 0 : null, "aria-valuemax": this.value != null ? 100 : null }, h("div", { class: "relative h-full" }, this.value != null ? (
-    // Determinate
-    h("div", { "data-testid": "determinate", class: "fill h-4 absolute inset-0 rounded-sm", style: this.determinateBarStyle })) : (
-    // Indeterminate has two animated bars with nested animations
-    [
-      h("div", { "data-testid": "indeterminate1", class: "indeterminate1 absolute h-full w-full" }, h("div", { class: "fill absolute w-full h-full rounded-sm" })),
-      h("div", { "data-testid": "indeterminate2", class: "indeterminate2 absolute h-full w-full" }, h("div", { class: "fill absolute w-full h-full rounded-sm" })),
-    ]))));
-  }
-  get element() { return this; }
-};
 
 var top = 'top';
 var bottom = 'bottom';
@@ -2976,6 +2444,785 @@ function setStyleProperty(el, property, value) {
     el.style.transform = transforms.join(' ');
   }
 }
+
+const yyyymmdd = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+const MxDatePicker$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.uuid = uuidv4();
+    this.dataAttributes = {};
+    this.isDateInputSupported = false;
+    this.dense = false;
+    this.disabled = false;
+    this.error = false;
+    this.floatLabel = false;
+    this.isFocused = false;
+    this.isInputDirty = false;
+    this.componentWillRender = propagateDataAttributes;
+  }
+  onValueChange() {
+    if (this.value && !yyyymmdd.test(this.value))
+      return;
+    this.datepicker.setDate(this.value ? new Date(this.value + 'T00:00:00') : undefined, true);
+  }
+  /** Open/close the calendar.  We're not using the js-datepicker's popover behavior because its
+   * placement is buggy. */
+  onClick(e) {
+    const calendarButtonWasClicked = this.calendarButton && this.calendarButton.contains(e.target);
+    if (!this.isCalendarOpen && calendarButtonWasClicked) {
+      // Open closed calendar when the button is clicked
+      this.openCalendar();
+      e.preventDefault();
+    }
+    else if (this.isCalendarOpen && !this.datepicker.calendarContainer.contains(e.target)) {
+      // Close calendar when a click occurs outside the calendar
+      this.closeCalendar();
+    }
+  }
+  connectedCallback() {
+    const validDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
+    if (this.value && !validDate.test(this.value)) {
+      throw new Error('The date picker value must be in YYYY-MM-DD format.');
+    }
+  }
+  componentDidLoad() {
+    this.isDateInputSupported = this.inputEl.type === 'date';
+    this.datepicker = datepicker(this.inputEl, {
+      alwaysShow: true,
+      customDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+      overlayButton: 'Confirm',
+      overlayPlaceholder: 'Year (YYYY)',
+      dateSelected: this.value ? new Date(this.value + 'T00:00:00') : undefined,
+      formatter: (input, date) => {
+        if (this.inputEl.contains(document.activeElement))
+          return; // Do not reformat while typing in date
+        input.value = date.toISOString().split('T')[0];
+        this.value = input.value;
+        input.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
+        if (!this.isDateInputSupported)
+          input.value = date.toLocaleDateString();
+      },
+      onSelect: () => {
+        this.error = false;
+        this.closeCalendar();
+      },
+    });
+    this.datepicker.calendarContainer.classList.add('hidden');
+    // HACK: Fix js-datepicker moving the calendar when interacting with the year/month selection.
+    this.datepicker.calendarContainer.addEventListener('click', this.repositionCalendar.bind(this));
+    this.datepicker.calendarContainer.addEventListener('focusin', this.repositionCalendar.bind(this));
+    this.datepicker.calendarContainer.addEventListener('mousedown', this.repositionCalendar.bind(this));
+  }
+  onBlur() {
+    if (!this.isCalendarOpen) {
+      // Style as focused/active while calendar is open
+      this.isFocused = false;
+    }
+    if (!this.isDateInputSupported && this.isInputDirty) {
+      if (this.disabled)
+        return;
+      this.error = false;
+      let date;
+      if (!this.inputEl.value)
+        this.value = null;
+      else {
+        date = new Date(Date.parse(this.inputEl.value));
+        if (!isDateObject(date)) {
+          // Invalid date entered into <input type=text>
+          this.error = true;
+          return;
+        }
+        this.value = date.toISOString().split('T')[0];
+      }
+      this.inputEl.value = this.value;
+      this.inputEl.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
+      if (date)
+        this.inputEl.value = date.toLocaleDateString();
+    }
+  }
+  onFocus(e) {
+    this.isFocused = true;
+    this.error = false;
+    this.isInputDirty = false;
+    e.stopPropagation();
+  }
+  onInput(e) {
+    const value = e.target.value;
+    if (value && !yyyymmdd.test(value))
+      e.stopPropagation();
+    else if (this.datepicker && this.value !== value) {
+      this.value = value;
+      this.datepicker.setDate(value ? new Date(value + 'T00:00:00') : undefined);
+    }
+    if (!this.isDateInputSupported && this.isFocused)
+      this.isInputDirty = true;
+  }
+  onKeyDown(e) {
+    // Prevent the browser from opening its calendar when pressing Space or Enter
+    if (e.key === ' ' || e.key === 'Enter')
+      e.preventDefault();
+  }
+  onClickLabel() {
+    this.inputEl.focus();
+  }
+  async openCalendar() {
+    this.isFocused = true;
+    this.datepicker.navigate(this.datepicker.dateSelected || new Date());
+    this.datepicker.calendarContainer.classList.remove('hidden');
+    this.popoverInstance = await createPopover(this.calendarButton, this.datepicker.calendarContainer, 'bottom', [
+      -4,
+      0,
+    ]);
+    await fadeIn(this.datepicker.calendarContainer);
+  }
+  repositionCalendar() {
+    requestAnimationFrame(this.popoverInstance.forceUpdate);
+  }
+  async closeCalendar() {
+    await fadeOut(this.datepicker.calendarContainer);
+    this.datepicker.calendarContainer.classList.add('hidden');
+    if (!this.inputEl.contains(document.activeElement))
+      this.isFocused = false;
+    if (!this.popoverInstance)
+      return;
+    this.popoverInstance.destroy();
+    this.popoverInstance = null;
+  }
+  get isCalendarOpen() {
+    return !this.datepicker.calendarContainer.classList.contains('hidden');
+  }
+  get labelClassNames() {
+    let str = 'block';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 left-12 px-4 min-w-1/2';
+      if (this.dense)
+        str += ' dense text-4';
+      if (this.isFocused || this.inputHasText)
+        str += ' floating';
+      if (this.isFocused)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+    }
+    else {
+      str += ' subtitle2 mb-4 pointer-events-none';
+    }
+    return str;
+  }
+  get inputHasText() {
+    if (!this.inputEl)
+      return false;
+    // HTMLInputElement.validity.badInput is true if a partial date has been typed.
+    return this.inputEl.value || this.inputEl.validity.badInput;
+  }
+  get pickerWrapperClass() {
+    let str = 'picker-wrapper flex items-center relative border rounded-lg';
+    str += this.dense ? ' h-36' : ' h-48';
+    if (this.error || this.isFocused)
+      str += ' border-2';
+    if (this.disabled)
+      str += ' disabled';
+    if (this.isFocused)
+      str += ' focused';
+    return str;
+  }
+  get inputClass() {
+    let str = 'absolute inset-0 w-full h-full pl-12 overflow-hidden outline-none appearance-none select-none bg-transparent';
+    if (this.isFocused || this.error)
+      str += ' -ml-1'; // prevent shifting due to border-width change
+    // Hide input placeholder while floating label is inside input
+    if (this.floatLabel && !this.isFocused && !this.inputHasText)
+      str += ' opacity-0';
+    // HACK: Safari confusingly uses today's date as the placeholder, even when you've entered a partial date,
+    // and it also does not like changing the placeholder text color, so we lower the opacity instead so the user
+    // has a visual indication that the input does not actually have a value.
+    else if (isSafari && !this.inputHasText)
+      str += ' opacity-50';
+    return str;
+  }
+  get calendarButtonClass() {
+    let str = 'calendar-button cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
+    if (this.disabled)
+      str += ' pointer-events-none';
+    if (this.isFocused || this.error)
+      str += ' -mr-1'; // prevent shifting due to border-width change
+    return str;
+  }
+  render() {
+    const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
+    return (h(Host, { class: 'mx-date-picker block w-320' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.ariaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", required: true, onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", innerHTML: this.error ? warningCircleSvg : calendarSvg, disabled: this.disabled })), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "value": ["onValueChange"]
+  }; }
+};
+
+const arrowSvg$1 = `<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M9.9654 0.757212C9.93099 0.681077 9.87273 0.616004 9.79798 0.57022C9.72323 0.524437 9.63535 0.5 9.54545 0.5H0.454547C0.364646 0.5 0.276763 0.524437 0.202012 0.570222C0.127262 0.616007 0.0690015 0.681082 0.0345985 0.757219C0.000195557 0.833357 -0.00880479 0.917136 0.00873577 0.997962C0.0262763 1.07879 0.0695701 1.15303 0.133142 1.2113L4.67859 5.37795C4.7208 5.41665 4.77091 5.44734 4.82605 5.46828C4.8812 5.48922 4.94031 5.5 5 5.5C5.05969 5.5 5.1188 5.48922 5.17394 5.46828C5.22909 5.44734 5.2792 5.41665 5.3214 5.37795L9.86686 1.2113C9.93043 1.15303 9.97372 1.07879 9.99126 0.997958C10.0088 0.917131 9.9998 0.833351 9.9654 0.757212Z"
+    fill="currentColor"
+  />
+</svg>
+`;
+
+const MxDropdownMenu$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.dense = false;
+    /** Style as a filter dropdown with a 1dp elevation */
+    this.elevated = false;
+    /** Style as a filter dropdown with a "flat" border color */
+    this.flat = false;
+    this.isFocused = false;
+  }
+  onClick(e) {
+    // Resize the menu width to match the input.  This is done every click in case the input is resized after initial load.
+    this.menu.style.width = this.dropdownWrapper.getBoundingClientRect().width + 'px';
+    const clickedMenuItem = e.target.closest('mx-menu-item');
+    if (!clickedMenuItem)
+      return;
+    this.value = clickedMenuItem.innerText;
+    // Fire native input event for consistency with mx-select
+    this.inputElem.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+  }
+  componentDidLoad() {
+    this.updateInputValue();
+    this.menu.anchorEl = this.dropdownWrapper;
+  }
+  onValueChange() {
+    this.updateInputValue();
+  }
+  onBlur() {
+    if (this.menu && this.menu.isOpen)
+      return; // Style as focused/active while menu is open
+    this.isFocused = false;
+  }
+  onFocus() {
+    this.isFocused = true;
+  }
+  onMenuClose() {
+    if (!this.inputElem.contains(document.activeElement))
+      this.isFocused = false;
+  }
+  updateInputValue() {
+    this.inputElem.value = this.value;
+  }
+  get dropdownWrapperClass() {
+    let str = 'dropdown-wrapper flex items-center relative border rounded-lg';
+    str += this.dense ? ' h-36' : ' h-48';
+    if (this.elevated)
+      str += ' elevated shadow-1';
+    if (this.flat)
+      str += ' flat';
+    if (this.isFocused)
+      str += ' focused border-2';
+    return str;
+  }
+  get inputClass() {
+    let str = 'absolute inset-0 w-full h-full pl-16 overflow-hidden outline-none appearance-none select-none bg-transparent cursor-pointer disabled:cursor-auto';
+    if (this.isFocused)
+      str += ' -ml-1'; // prevent shifting due to border-width change
+    return str;
+  }
+  get suffixClass() {
+    let str = 'icon-suffix absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
+    if (this.isFocused)
+      str += ' -mr-1'; // prevent shifting due to border-width change
+    return str;
+  }
+  render() {
+    return (h(Host, { class: "mx-dropdown-menu" }, h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass }, h("input", { "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }), h("span", { class: this.suffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), h("span", { "data-testid": "arrow", innerHTML: arrowSvg$1 }))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) }, h("slot", null))));
+  }
+  static get watchers() { return {
+    "value": ["onValueChange"]
+  }; }
+};
+
+const SCREENS = {
+  'sm': '640px',
+  'md': '768px',
+  'lg': '1024px',
+  'xl': '1280px',
+  '2xl': '1536px',
+};
+/** A key-value pair of breakpoint abbreviations and a boolean for whether the `min-width` meets or exceeds it.
+For example, `MinWidths.md` will be true for windows that are tablet-sized or larger */
+class MinWidths {
+  constructor() {
+    this['sm'] = false;
+    this['md'] = false;
+    this['lg'] = false;
+    this['xl'] = false;
+    this['2xl'] = false;
+  }
+}
+class MinWidthSync {
+  constructor() {
+    this.componentRefs = [];
+    this.minWidths = new MinWidths();
+    this.listeners = new Map();
+  }
+  subscribeComponent(componentRef) {
+    // If this is the first subscribed component, set up listeners.
+    if (this.componentRefs.length === 0)
+      this.addListeners();
+    this.componentRefs.push(componentRef);
+    // Immediately sync minWidths to component.
+    componentRef.minWidths = Object.assign({}, this.minWidths);
+  }
+  addListeners() {
+    Object.keys(SCREENS).forEach(screen => {
+      const mql = window.matchMedia(`(min-width: ${SCREENS[screen]})`);
+      const listener = (e) => {
+        this.minWidths[screen] = e.matches;
+        // Sync minWidths to all subscribed components
+        this.componentRefs.forEach(componentRef => {
+          componentRef.minWidths = Object.assign({}, this.minWidths);
+        });
+      };
+      listener(mql);
+      mql.addListener(listener);
+      this.listeners.set(mql, listener); // Store listener so it can be removed later
+    });
+  }
+  unsubscribeComponent(componentRef) {
+    this.componentRefs = this.componentRefs.filter(c => c !== componentRef);
+    // If no more subscribed components, remove listeners to prevent memory leaks.
+    if (this.componentRefs.length === 0)
+      this.removeListeners();
+  }
+  removeListeners() {
+    this.listeners.forEach((listener, mql) => {
+      mql.removeListener(listener);
+    });
+  }
+}
+/** Update subscribed components' `minWidths` state object based on `min-width` media query listeners. */
+const minWidthSync = new MinWidthSync();
+
+const MxFab$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    /** Style as a secondary action */
+    this.secondary = false;
+    this.minWidths = new MinWidths();
+    this.isExtended = false;
+  }
+  connectedCallback() {
+    minWidthSync.subscribeComponent(this);
+  }
+  componentWillLoad() {
+    this.isExtended = !!this.element.textContent;
+  }
+  disconnectedCallback() {
+    minWidthSync.unsubscribeComponent(this);
+  }
+  onClick(e) {
+    ripple(e, this.buttonElem);
+  }
+  get buttonClass() {
+    let str = 'flex min-w-full items-center justify-center rounded-full shadow-4 relative overflow-hidden';
+    if (this.secondary)
+      str += ' secondary';
+    if (this.isExtended)
+      str += ' h-48 py-16 px-24';
+    else
+      str += this.minWidths.md ? ' h-56' : ' h-40';
+    return str;
+  }
+  get slotWrapperClass() {
+    let str = 'flex items-center text-4 tracking-1-25 leading-4 uppercase font-semibold';
+    if (this.isExtended && this.icon)
+      str += ' ml-12';
+    return str;
+  }
+  render() {
+    return (h(Host, { class: 'mx-fab inline-block min-w-max' + (this.minWidths.md ? ' w-56' : ' w-40') }, h("button", { ref: el => (this.buttonElem = el), type: "button", value: this.value, class: this.buttonClass, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, this.icon && h("i", { class: this.icon + ' text-1' }), h("div", { class: this.slotWrapperClass }, h("slot", null)))));
+  }
+  get element() { return this; }
+};
+
+const MxIconButton$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.dataAttributes = {};
+    this.type = 'button';
+    this.disabled = false;
+    /** Show downward chevron icon */
+    this.chevronDown = false;
+    /** Show left-pointing chevron icon */
+    this.chevronLeft = false;
+    /** Show right-pointing chevron icon */
+    this.chevronRight = false;
+    this.componentWillRender = propagateDataAttributes;
+  }
+  onClick(e) {
+    if (this.disabled) {
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
+  }
+  get isChevron() {
+    return this.chevronDown || this.chevronLeft || this.chevronRight;
+  }
+  render() {
+    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-1', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" }, h("span", { "data-testid": "chevron", class: this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : '', innerHTML: chevronSvg })))));
+    return (h(Host, { class: "mx-icon-button inline-block" }, h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
+  }
+  get element() { return this; }
+};
+
+const imageSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M19.5 21H4.5C3.67 21 3 20.33 3 19.5V4.5C3 3.67 3.67 3 4.5 3H19.5C20.33 3 21 3.67 21 4.5V19.5C21 20.33 20.33 21 19.5 21ZM4.5 4.5V19.5H19.5V4.5H4.5Z" fill="currentColor"/>
+  <path d="M3.74994 17.2498C3.55994 17.2498 3.36994 17.1798 3.21994 17.0298C2.92994 16.7398 2.92994 16.2598 3.21994 15.9698L6.43994 12.7498C6.99994 12.1898 7.99994 12.1898 8.55994 12.7498L10.4999 14.6898L14.6899 10.4998C15.2599 9.92977 16.2399 9.92977 16.8099 10.4998L20.7799 14.4698C21.0699 14.7598 21.0699 15.2398 20.7799 15.5298C20.4899 15.8198 20.0099 15.8198 19.7199 15.5298L15.7499 11.5598L11.5599 15.7498C10.9999 16.3098 9.99994 16.3098 9.43994 15.7498L7.49994 13.8098L4.27994 17.0298C4.12994 17.1798 3.93994 17.2498 3.74994 17.2498Z" fill="currentColor"/>
+  <path d="M9.37994 9.55994C9.89994 9.55994 10.3199 9.13994 10.3199 8.61994C10.3199 8.09994 9.88994 7.68994 9.37994 7.68994C8.86994 7.68994 8.43994 8.10994 8.43994 8.61994C8.43994 9.12994 8.85994 9.55994 9.37994 9.55994Z" fill="currentColor"/>
+</svg>
+`;
+
+const userCircleSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.25C10.3431 8.25 9 9.59315 9 11.25C9 12.9069 10.3431 14.25 12 14.25C13.6569 14.25 15 12.9069 15 11.25C15 9.59315 13.6569 8.25 12 8.25ZM7.5 11.25C7.5 8.76472 9.51472 6.75 12 6.75C14.4853 6.75 16.5 8.76472 16.5 11.25C16.5 13.7353 14.4853 15.75 12 15.75C9.51472 15.75 7.5 13.7353 7.5 11.25Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9999 15.75C10.8922 15.75 9.80605 16.0565 8.86175 16.6357C7.91744 17.2148 7.15182 18.044 6.64962 19.0313C6.46183 19.4005 6.01031 19.5476 5.6411 19.3598C5.2719 19.172 5.12483 18.7205 5.31262 18.3513C5.94031 17.1172 6.89726 16.0809 8.07754 15.357C9.25782 14.6331 10.6154 14.25 11.9999 14.25C13.3845 14.25 14.7421 14.6331 15.9223 15.357C17.1026 16.0808 18.0596 17.1172 18.6873 18.3513C18.8751 18.7205 18.728 19.172 18.3588 19.3598C17.9896 19.5476 17.5381 19.4005 17.3503 19.0313C16.8481 18.0439 16.0824 17.2148 15.1381 16.6357C14.1938 16.0565 13.1077 15.75 11.9999 15.75Z" fill="currentColor"/>
+</svg>
+`;
+
+const MxImageUpload$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.hasInstructions = false;
+    this.hasSuccess = false;
+    this.hasError = false;
+    /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
+    this.acceptImage = true;
+    /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
+    this.acceptPdf = false;
+    /** Replaces the word "image" in the default dropzone text (i.e. "No image to show"). */
+    this.assetName = 'image';
+    /** Sets the width and height to 80px and changes the icon. */
+    this.avatar = false;
+    /** Sets the thumbnail sizing strategy relative to the container. */
+    this.thumbnailSize = 'cover';
+    /** Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content. */
+    this.isUploaded = false;
+    /** Set to `true` to disable the button and show the circular progress indicator. */
+    this.isUploading = false;
+    /** The text to display on the Remove button */
+    this.removeButtonLabel = 'Remove';
+    /** Set to `false` to hide the default Upload/Remove button. */
+    this.showButton = true;
+    /** Set to `false` to hide the dropzone icon. */
+    this.showIcon = true;
+    /** Set to `false` to hide the dropzone text. */
+    this.showDropzoneText = true;
+    /** The text to display on the Upload button */
+    this.uploadButtonLabel = 'Upload';
+    this.isDraggingOver = false;
+    this.isFileSelected = false;
+  }
+  onThumbnailUrlChange() {
+    if (this.thumbnailUrl)
+      this.isUploaded = true;
+  }
+  connectedCallback() {
+    this.onThumbnailUrlChange();
+  }
+  componentWillRender() {
+    this.hasInstructions = !!this.element.querySelector('[slot="instructions"]');
+    this.hasSuccess = !!this.element.querySelector('[slot="success"]');
+    this.hasError = !!this.element.querySelector('[slot="error"]');
+  }
+  async removeFile() {
+    if (!this.hasFile || this.isUploading)
+      return;
+    this.isFileSelected = false;
+    this.isUploaded = false;
+    this.isUploading = false;
+    this.fileInput.value = '';
+    this.fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+    this.fileInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+  }
+  async selectFile() {
+    if (this.hasFile)
+      return;
+    this.isFileSelected = false;
+    this.fileInput.value = '';
+    this.fileInput.click();
+  }
+  onButtonClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    if (this.isUploading)
+      return;
+    if (!this.hasFile) {
+      this.selectFile();
+    }
+    else {
+      this.removeFile();
+    }
+  }
+  onInput(e) {
+    this.isFileSelected = e.target.files && e.target.files.length > 0;
+    if (this.isFileSelected)
+      this.setThumnailDataUri(e.target.files[0]);
+    else
+      this.thumbnailDataUri = null;
+  }
+  setThumnailDataUri(file) {
+    this.thumbnailDataUri = null;
+    if (!/\.(jpe?g|png|gif)$/i.test(file.name))
+      return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.thumbnailDataUri = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+  onDragOver() {
+    this.isDraggingOver = true;
+  }
+  onDragLeave() {
+    this.isDraggingOver = false;
+  }
+  get accept() {
+    let accept = [];
+    if (this.acceptImage)
+      accept.push('image/*');
+    if (this.acceptPdf)
+      accept.push('.pdf');
+    return accept.join(',') || null;
+  }
+  /** The width is applied to the host element in order to support percent-based widths */
+  get dropzoneWidth() {
+    if (this.width)
+      return this.width;
+    return this.avatar ? '80px' : '308px';
+  }
+  get dropzoneHeight() {
+    if (this.height)
+      return this.height;
+    return this.avatar ? '80px' : 'auto';
+  }
+  get dropzoneClass() {
+    let str = 'dropzone relative w-full h-full px-16 rounded-2xl overflow-hidden';
+    if (this.hasFile)
+      str += ' opacity-0';
+    if (this.isDraggingOver)
+      str += ' drag-over';
+    str += this.showIcon && this.showDropzoneText ? ' py-24' : ' py-16';
+    return str;
+  }
+  get hasFile() {
+    return this.isFileSelected || this.isUploaded;
+  }
+  get thumbnailBackgroundImage() {
+    let url = this.thumbnailUrl;
+    if (this.isFileSelected)
+      url = this.thumbnailDataUri;
+    if (!url)
+      return null;
+    return `url(${url})`;
+  }
+  get thumbnailBackgroundSize() {
+    if (!['contain', 'cover', 'auto', 'stretch'].includes(this.thumbnailSize))
+      return 'cover';
+    if (this.thumbnailSize === 'stretch')
+      return '100% 100%';
+    return this.thumbnailSize;
+  }
+  render() {
+    let iconJsx;
+    if (this.icon) {
+      iconJsx = h("i", { "data-testid": "upload-icon", class: 'dropzone-icon ' + this.icon });
+    }
+    else if (this.avatar) {
+      iconJsx = h("span", { "data-testid": "avatar-icon", innerHTML: userCircleSvg });
+    }
+    else {
+      iconJsx = h("span", { "data-testid": "image-icon", class: this.showDropzoneText ? 'mb-8' : '', innerHTML: imageSvg });
+    }
+    return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 opacity-0 cursor-pointer", onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0 pointer-events-none ' +
+        (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)), this.hasInstructions && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "thumbnailUrl": ["onThumbnailUrlChange"]
+  }; }
+};
+
+const MxInput$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.dataAttributes = {};
+    this.uuid = uuidv4();
+    /** The `type` attribute for the text input */
+    this.type = 'text';
+    this.dense = false;
+    this.disabled = false;
+    this.readonly = false;
+    this.outerContainerClass = '';
+    this.labelClass = '';
+    this.error = false;
+    this.floatLabel = false;
+    /** Display a multi-line `textarea` instead of an `input` */
+    this.textarea = false;
+    this.textareaHeight = '250px';
+    this.isFocused = false;
+    this.characterCount = 0;
+    this.componentWillRender = propagateDataAttributes;
+  }
+  connectedCallback() {
+    this.characterCount = this.hasValue ? this.value.length : 0;
+  }
+  componentDidLoad() {
+    this.updateValue();
+  }
+  onValueChange() {
+    this.updateValue();
+    this.characterCount = this.hasValue ? this.value.length : 0;
+  }
+  updateValue() {
+    this.workingElem.value = this.hasValue ? this.value : '';
+  }
+  onFocus() {
+    this.isFocused = true;
+    this.error = false;
+  }
+  onBlur() {
+    this.isFocused = false;
+  }
+  onInput(e) {
+    this.characterCount = e.target.value.length;
+    this.value = e.target.value;
+  }
+  get workingElem() {
+    return this.textarea ? this.textArea : this.textInput;
+  }
+  get hasValue() {
+    return this.value !== null && this.value !== '' && this.value !== undefined;
+  }
+  get containerClass() {
+    let str = 'mx-input-wrapper flex items-center relative border rounded-lg';
+    if (!this.textarea) {
+      str += this.dense ? ' h-36' : ' h-48';
+    }
+    if (this.error || this.isFocused)
+      str += ' border-2';
+    if (this.error)
+      str += ' error';
+    if (this.disabled)
+      str += ' disabled';
+    if (this.readonly)
+      str += ' readonly';
+    return str;
+  }
+  get inputClass() {
+    let str = 'flex-1 overflow-hidden outline-none appearance-none bg-transparent';
+    if (!this.textarea) {
+      str += ' px-16';
+    }
+    else {
+      str += ' p-16 resize-none';
+    }
+    if (this.isFocused || this.error)
+      str += this.leftIcon ? ' -mr-1' : ' -m-1'; // prevent shifting due to border-width change
+    return str;
+  }
+  get labelClassNames() {
+    let str = 'block pointer-events-none';
+    if (this.floatLabel) {
+      str += ' absolute mt-0 px-4';
+      if (this.textarea)
+        str += ' top-12';
+      str += this.leftIcon && !this.textarea ? ' left-48 has-left-icon' : ' left-12';
+      if (this.dense && !this.textarea)
+        str += ' dense text-4';
+      if (this.isFocused || this.characterCount > 0)
+        str += ' floating';
+      if (this.isFocused || this.error)
+        str += ' -ml-1'; // prevent shifting due to border-width change
+      if ((this.isFocused || this.error) && this.textarea)
+        str += ' -mt-1';
+    }
+    else {
+      str += ' subtitle2 mb-4';
+    }
+    if (this.labelClass)
+      str += this.labelClass;
+    return str;
+  }
+  get leftIconWrapperClass() {
+    let str = 'flex items-center h-full pointer-events-none pl-16';
+    if (this.isFocused || this.error)
+      str += ' -ml-1'; // prevent shifting due to border-width change
+    return str;
+  }
+  get rightContentClass() {
+    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8 pointer-events-none';
+    if (this.isFocused || this.error)
+      str += ' -mr-1'; // prevent shifting due to border-width change
+    return str;
+  }
+  get textareaClass() {
+    return this.textarea ? ' textarea items-start' : '';
+  }
+  render() {
+    const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames }, this.label));
+    return (h(Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { class: this.containerClass }, this.leftIcon && (h("div", { class: this.leftIconWrapperClass }, h("i", { class: this.leftIcon }))), this.label && this.floatLabel && labelJsx, !this.textarea ? (h("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (h("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass }, this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength)), this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)), this.error && h("span", { innerHTML: warningCircleSvg }), this.rightIcon && !this.error && h("i", { class: this.rightIcon })))), (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "value": ["onValueChange"]
+  }; }
+};
+
+const MxLinearProgress$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    /** The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. */
+    this.value = null;
+    /** Delay the appearance of the indicator for this many milliseconds */
+    this.appearDelay = 0;
+  }
+  connectedCallback() {
+    if (!this.appearDelay)
+      return;
+    // Hide indicator until appearDelay duration has passed
+    this.element.classList.remove('block');
+    this.element.classList.add('hidden');
+    this.delayTimeout = setTimeout(() => {
+      this.element.classList.remove('hidden');
+      this.element.classList.add('block');
+    }, this.appearDelay);
+  }
+  disconnectedCallback() {
+    clearTimeout(this.delayTimeout);
+  }
+  get determinateBarStyle() {
+    return {
+      transform: `translateX(${this.value - 100}%)`,
+      transition: 'transform 0.4s linear',
+    };
+  }
+  render() {
+    return (h(Host, { class: "mx-linear-progress block h-4 w-full rounded-sm overflow-hidden pointer-events-none", role: "progressbar", "aria-valuenow": this.value != null ? Math.round(this.value) : null, "aria-valuemin": this.value != null ? 0 : null, "aria-valuemax": this.value != null ? 100 : null }, h("div", { class: "relative h-full" }, this.value != null ? (
+    // Determinate
+    h("div", { "data-testid": "determinate", class: "fill h-4 absolute inset-0 rounded-sm", style: this.determinateBarStyle })) : (
+    // Indeterminate has two animated bars with nested animations
+    [
+      h("div", { "data-testid": "indeterminate1", class: "indeterminate1 absolute h-full w-full" }, h("div", { class: "fill absolute w-full h-full rounded-sm" })),
+      h("div", { "data-testid": "indeterminate2", class: "indeterminate2 absolute h-full w-full" }, h("div", { class: "fill absolute w-full h-full rounded-sm" })),
+    ]))));
+  }
+  get element() { return this; }
+};
 
 const MxMenu$1 = class extends HTMLElement {
   constructor() {
@@ -5528,8 +5775,11 @@ const MxTimePicker$1 = class extends HTMLElement {
     }
     if (!this.isTimeInputSupported && this.isInputDirty) {
       const time = parseTimeString(this.inputElem.value);
-      if (time === null)
-        return; // Invalid time
+      if (time === null) {
+        // Invalid time entered into <input type=text>
+        this.error = true;
+        return;
+      }
       this.setValue(time);
       this.updateInputValue();
     }
@@ -5783,6 +6033,7 @@ const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox
 const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined":[4],"disabled":[4],"selected":[516],"clickable":[4],"removable":[4],"avatarUrl":[1,"avatar-url"],"icon":[1],"value":[8],"choice":[4],"filter":[4]}]);
 const MxChipGroup = /*@__PURE__*/proxyCustomElement(MxChipGroup$1, [4,"mx-chip-group",{"value":[1032]},[[0,"click","onChipClick"]]]);
 const MxCircularProgress = /*@__PURE__*/proxyCustomElement(MxCircularProgress$1, [0,"mx-circular-progress",{"value":[2],"size":[1],"appearDelay":[2,"appear-delay"]}]);
+const MxDatePicker = /*@__PURE__*/proxyCustomElement(MxDatePicker$1, [0,"mx-date-picker",{"ariaLabel":[1,"aria-label"],"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[6,"click","onClick"]]]);
 const MxDropdownMenu = /*@__PURE__*/proxyCustomElement(MxDropdownMenu$1, [4,"mx-dropdown-menu",{"ariaLabel":[1,"aria-label"],"dense":[4],"elevated":[4],"flat":[4],"label":[1],"dropdownId":[1,"dropdown-id"],"name":[1],"suffix":[1],"value":[1032],"isFocused":[32]},[[0,"click","onClick"]]]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"ariaLabel":[1,"aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
 const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"formaction":[1],"value":[1],"disabled":[516],"ariaLabel":[1,"aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
@@ -5818,6 +6069,7 @@ const defineCustomElements = (opts) => {
   MxChip,
   MxChipGroup,
   MxCircularProgress,
+  MxDatePicker,
   MxDropdownMenu,
   MxFab,
   MxIconButton,
@@ -5852,4 +6104,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxModal, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, MxTooltip, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDatePicker, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxModal, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, MxTooltip, defineCustomElements };
