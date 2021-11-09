@@ -39,7 +39,7 @@ describe('mx-date-picker', () => {
     expect(input.type).toBe('date');
   });
 
-  it('assigns name, id, and value to the input element', async () => {
+  it('assigns name and id attributes to the input element', async () => {
     expect(input.getAttribute('name')).toBe('test-name');
     expect(input.getAttribute('id')).toBe('test-id');
   });
