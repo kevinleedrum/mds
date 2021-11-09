@@ -108,6 +108,10 @@
     opacity: 1;
     transform: translateY(0);
 
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
     /* Remove wrapper (around year input and Cancel button) from grid flow */
     & > :first-child {
       @apply contents;
