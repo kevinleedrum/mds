@@ -213,7 +213,7 @@ export class MxDatePicker {
     if (this.isFocused || this.error) str += ' -ml-1'; // prevent shifting due to border-width change
     // Hide input placeholder while floating label is inside input
     if (this.floatLabel && !this.isFocused && !this.inputHasText) str += ' opacity-0';
-    // HACK: Safari confusingly uses today's date as the placeholder, even when you've entered a parital date,
+    // HACK: Safari confusingly uses today's date as the placeholder, even when you've entered a partial date,
     // and it also does not like changing the placeholder text color, so we lower the opacity instead so the user
     // has a visual indication that the input does not actually have a value.
     else if (isSafari && !this.inputHasText) str += ' opacity-50';
