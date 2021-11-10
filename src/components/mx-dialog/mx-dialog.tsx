@@ -79,6 +79,10 @@ export class MxDialog {
     return this.open(message, { heading, confirmLabel, cancelLabel });
   }
 
+  disconnectedCallback() {
+    unlockBodyScroll(this.element);
+  }
+
   /** Opens a dialog using the provided parameters.
    * If/when we implement confirmation dialogs with inputs, radio groups, etc. this method can be
    * exposed with additional parameters needed to create those dialogs. */

@@ -102,6 +102,7 @@ export class MxModal {
 
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+    unlockBodyScroll(this.element);
   }
 
   async openModal() {
