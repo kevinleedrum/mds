@@ -1,0 +1,11 @@
+.mx-dialog {
+  color: var(--mds-text-dialog);
+
+  .modal {
+    background: var(--mds-bg-dialog);
+  }
+
+  .bg-dialog-backdrop {
+    background: var(--mds-bg-dialog-backdrop);
+  }
+}

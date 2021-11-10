@@ -1,6 +1,6 @@
 # Modals
 
-Modals appear in front of app content and remain on screen until the user takes action to close the modal.
+Modals appear in front of app content and remain on screen until the user takes action to close the modal. A Modal may be used when a [Dialog](/components/dialogs.html) will not suffice.
 
 To open or close a modal, set its `isOpen` prop to `true` or `false`. The modal will emit an `mxClose` event when the user clicks the Close button, presses <kbd>Esc</kbd>, or clicks outside the modal (unless that behavior is disabled via props).
 
