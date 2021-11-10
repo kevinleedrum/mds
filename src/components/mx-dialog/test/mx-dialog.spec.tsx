@@ -5,18 +5,17 @@ import { MxDialog } from '../mx-dialog';
 describe('mx-dialog', () => {
   let page: SpecPage;
   let root: HTMLMxDialogElement;
-  let getModal;
+  let modal;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxDialog, MxButton],
       html: `<mx-dialog />`,
     });
     root = page.root as HTMLMxDialogElement;
-    getModal = () => root.querySelector('[data-testid="modal"]');
+    modal = root.querySelector('[data-testid="modal"]');
   });
 
   it('has aria-modal set to true and a role of alertdialog', async () => {
-    const modal = getModal();
     expect(modal.getAttribute('role')).toBe('alertdialog');
     expect(modal.getAttribute('aria-modal')).toBe('true');
   });
@@ -25,14 +24,14 @@ describe('mx-dialog', () => {
     root.alert('test');
     await page.waitForChanges();
     await page.waitForChanges();
-    expect(getModal().getAttribute('aria-describedby')).toBe('dialog-message');
+    expect(modal.getAttribute('aria-describedby')).toBe('dialog-message');
   });
 
   it('has aria-labelledby set to the heading element if a heading is present', async () => {
     root.alert('test', { heading: 'test' });
     await page.waitForChanges();
     await page.waitForChanges();
-    expect(getModal().getAttribute('aria-labelledby')).toBe('dialog-heading');
+    expect(modal.getAttribute('aria-labelledby')).toBe('dialog-heading');
   });
 
   it('displays the specified message', async () => {
