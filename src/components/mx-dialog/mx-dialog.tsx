@@ -52,6 +52,7 @@ export class MxDialog {
       // Confirm on Enter (if not already focused on a dialog focusable element)
       this.getFocusElements();
       if (isFocusOutside()) {
+        e.preventDefault();
         this.firstFocusElement && this.firstFocusElement.focus();
         this.closeDialog(true);
       }
