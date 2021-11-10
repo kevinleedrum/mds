@@ -106,7 +106,7 @@ export class MxModal {
 
   async openModal() {
     moveToPortal(this.element);
-    lockBodyScroll();
+    lockBodyScroll(this.element);
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
@@ -131,7 +131,7 @@ export class MxModal {
   async closeModal() {
     await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
     this.isVisible = false;
-    unlockBodyScroll();
+    unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
     this.ancestorFocusedElement && this.ancestorFocusedElement.focus();
   }
