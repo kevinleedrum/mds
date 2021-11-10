@@ -1,6 +1,6 @@
 # Dialogs
 
-The `mx-dialog` component is used to inform users about a task and can contain critical information, require decisions, or involve multiple tasks. For more complex UI, a [Modal](/components/modals.html) may be preferrable. If user interaction is not strictly required, consider using a [Snackbar](/components/snackbars.html) instead.
+The `mx-dialog` component is used to inform users about a task and can contain critical information, require decisions, or involve multiple tasks. For more complex UI, a [Modal](/components/modals.html) may be preferrable. If user interruption is not strictly required, consider using a [Snackbar](/components/snackbars.html) instead.
 
 Currently, `mx-dialog` exposes two methods: `alert()` and `confirm()`, which are intended to be replacements for [`Window.alert()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert) and [`Window.confirm()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm) respectively. The signatures for these two methods are identical, but with different default values for `confirmLabel` and `cancelLabel` (to match the behavior of the aforementioned `Window` methods).
 
