@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, Watch, Element, Event, EventEmitter, State, L
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { moveToPortal } from '../../utils/portal';
 import { fadeIn, fadeOut, fadeScaleIn } from '../../utils/transitions';
+import { lockBodyScroll, unlockBodyScroll } from '../../utils/bodyScroll';
 import { IMxButtonProps } from '../mx-button/mx-button';
 import arrowSvg from '../../assets/svg/arrow-left.svg';
 
@@ -105,6 +106,7 @@ export class MxModal {
 
   async openModal() {
     moveToPortal(this.element);
+    lockBodyScroll();
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
@@ -129,6 +131,7 @@ export class MxModal {
   async closeModal() {
     await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
     this.isVisible = false;
+    unlockBodyScroll();
     // Restore focus to the element that was focused before the modal was opened
     this.ancestorFocusedElement && this.ancestorFocusedElement.focus();
   }

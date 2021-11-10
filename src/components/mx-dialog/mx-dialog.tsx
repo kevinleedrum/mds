@@ -1,4 +1,5 @@
 import { Component, Host, h, Element, State, Listen, Method } from '@stencil/core';
+import { lockBodyScroll, unlockBodyScroll } from '../../utils/bodyScroll';
 import { moveToPortal } from '../../utils/portal';
 import { fadeIn, fadeOut, fadeScaleIn } from '../../utils/transitions';
 
@@ -95,6 +96,7 @@ export class MxDialog {
   async showDialog() {
     this.ancestorFocusedElement = document.activeElement as HTMLElement;
     moveToPortal(this.element);
+    lockBodyScroll();
     this.isVisible = true;
     await new Promise(resolve => requestAnimationFrame(resolve));
     await Promise.all([fadeIn(this.backdrop), fadeScaleIn(this.modal)]);
@@ -103,6 +105,7 @@ export class MxDialog {
   async closeDialog(isConfirmed = false) {
     await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
     this.isVisible = false;
+    unlockBodyScroll();
     // Restore focus to the element that was focused before the modal was opened
     this.ancestorFocusedElement && this.ancestorFocusedElement.focus();
     this.deferredResolve(isConfirmed);
