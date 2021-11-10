@@ -172,7 +172,30 @@ On small screens, the modal will fill the screen, except for a 24-px margin at t
 </section>
 <!-- #endregion modals-4 -->
 
-<<< @/vuepress/components/modals.md#modals-4
+<<< @/vuepress/components/modals.md#modals-5
+
+### Modal that opens from the right on larger screens
+
+<!-- #region modals-5 -->
+<section class="mds">
+  <mx-button class="mt-20" @click="isOpenF = true">Open Modal</mx-button>
+  <mx-modal
+    from-right
+    :is-open="isOpenF"
+    :buttons.prop="[
+      { label: 'Primary', onClick: () => isOpenF = false },
+      { label: 'Secondary', onClick: () => isOpenF = false },
+    ]"
+    @mxClose="isOpenF = false"
+  >
+    <div slot="header-left">Header</div>
+    <div slot="header-right"><!-- Hide Close button --></div>
+    This is content.
+  </mx-modal>
+</section>
+<!-- #endregion modals-5 -->
+
+<<< @/vuepress/components/modals.md#modals-5
 
 ### Properties
 
@@ -202,6 +225,7 @@ export default {
       isOpenC: false,
       isOpenD: false,
       isOpenE: false,
+      isOpenF: false,
       activeTab: 0,
       device: 'desktop',
     }

@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Watch, Element, Event, EventEmitter, State, Listen } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { moveToPortal } from '../../utils/portal';
-import { fadeIn, fadeOut, fadeScaleIn } from '../../utils/transitions';
+import { fadeIn, fadeOut, fadeScaleIn, fadeSlideIn, fadeSlideOut } from '../../utils/transitions';
 import { lockBodyScroll, unlockBodyScroll } from '../../utils/bodyScroll';
 import { IMxButtonProps } from '../mx-button/mx-button';
 import arrowSvg from '../../assets/svg/arrow-left.svg';
@@ -37,6 +37,10 @@ export class MxModal {
   @Prop() contentClass: string = '';
   /** An optional description to display above the modal content */
   @Prop() description: string;
+  /** Instead of centering, attach the modal to the left side of the window */
+  @Prop() fromLeft = false;
+  /** Instead of centering, attach the modal to the right side of the window */
+  @Prop() fromRight = false;
   /** Toggle the modal */
   @Prop() isOpen: boolean = false;
   /** The text to display for the previous page link */
@@ -110,7 +114,11 @@ export class MxModal {
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
-      await Promise.all([fadeIn(this.backdrop, 250), fadeScaleIn(this.modal, 250)]);
+      let modalTransition: Function = fadeScaleIn;
+      if (this.minWidths.sm && this.fromRight) modalTransition = fadeSlideIn;
+      else if (this.minWidths.sm && this.fromLeft)
+        modalTransition = (el: HTMLElement) => fadeSlideIn(el, undefined, false);
+      await Promise.all([fadeIn(this.backdrop, 250), modalTransition(this.modal)]);
       this.mobilePageHeader.resetResizeObserver();
     });
   }
@@ -129,7 +137,11 @@ export class MxModal {
   }
 
   async closeModal() {
-    await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
+    let modalTransition: Function = fadeOut;
+    if (this.minWidths.sm && this.fromRight) modalTransition = fadeSlideOut;
+    else if (this.minWidths.sm && this.fromLeft)
+      modalTransition = (el: HTMLElement) => fadeSlideOut(el, undefined, false);
+    await Promise.all([fadeOut(this.backdrop), modalTransition(this.modal)]);
     this.isVisible = false;
     unlockBodyScroll();
     // Restore focus to the element that was focused before the modal was opened
@@ -141,11 +153,22 @@ export class MxModal {
   }
 
   get hostClass(): string {
-    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch sm:items-center justify-center';
+    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch justify-center';
+    if (this.minWidths.sm && this.fromLeft) str += ' sm:justify-start';
+    else if (this.minWidths.sm && this.fromRight) str += ' sm:justify-end';
+    else str += ' sm:items-center';
     if (!this.isVisible) str += ' hidden';
-    if (this.minWidths.sm) {
+    if (this.minWidths.sm && !this.fromLeft && !this.fromRight) {
       str += this.large ? ' modal-large' : ' modal-medium';
     }
+    return str;
+  }
+
+  get modalClass(): string {
+    let str = 'modal flex flex-col shadow-9 relative overflow-hidden';
+    if (this.minWidths.sm && this.fromLeft) str += ' rounded-r-xl';
+    else if (this.minWidths.sm && this.fromRight) str += ' rounded-l-xl';
+    else str += ' rounded-xl';
     return str;
   }
 
@@ -197,7 +220,7 @@ export class MxModal {
           data-testid="backdrop"
           onClick={this.onBackdropClick.bind(this)}
         ></div>
-        <div ref={el => (this.modal = el)} class="modal flex flex-col rounded-lg shadow-9 relative overflow-hidden">
+        <div ref={el => (this.modal = el)} class={this.modalClass}>
           {/* Modal Content */}
           <div class={this.modalContentClasses} data-testid="modal-content">
             {this.description && (
