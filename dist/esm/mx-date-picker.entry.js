@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host, g as getElement } from './index-d7d68a6b.js';
+import { r as registerInstance, h, H as Host, g as getElement } from './index-540e1634.js';
 import { w as warningCircleSvg } from './warning-circle-7e1a7781.js';
 import { c as createPopover } from './popover-56a66892.js';
 import { u as uuidv4, p as propagateDataAttributes, i as isDateObject } from './utils-18e3dfde.js';

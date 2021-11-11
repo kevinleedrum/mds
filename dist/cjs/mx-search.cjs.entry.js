@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-c246f020.js');
+const index = require('./index-5f1d14aa.js');
 const utils = require('./utils-1f7ef40d.js');
 
 const searchSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,4 +1,4 @@
-import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-935f3e8d.js';
+import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-e21e00f4.js';
 import { c as createPopover, a as convertPlacementToOrigin } from './popover-1f909484.js';
 import { b as fadeScaleIn, a as fadeOut } from './transitions-71c871da.js';
 import './utils-18e3dfde.js';
