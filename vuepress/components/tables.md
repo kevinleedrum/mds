@@ -427,9 +427,7 @@ Other props that may be helpful when using server-side pagination include `showP
 
 ## Draggable rows
 
-Set the `draggableRows` prop to allow reordering rows via drag and drop. The component emits an `mxRowMove` event containing the `rowId` (if set), `oldIndex`, and `newIndex` for the dragged row.
-
-The `rows` array is not mutated by the component, so you must update the array using the event data.
+Set the `draggableRows` prop to allow reordering rows via drag and drop.
 
 <section class="mds">
   <div class="mt-20">
@@ -444,12 +442,21 @@ The `rows` array is not mutated by the component, so you must update the array u
         { property: 'credits', heading: 'Song Credits', type: 'number' },
         { property: 'birthdate', heading: 'Birthdate', type: 'date' },
       ]"
-      @mxRowMove="onRowMove"
     />
+    <!-- #endregion draggable -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#draggable
+
+By default, the `rows` array is mutated when reordering. To disable this behavior, set `mutateOnDrag` to `false`. The component emits an `mxRowMove` event containing the `rowId` (if set), `oldIndex`, and `newIndex` for the dragged row. This information can then be used to update state in the host application.
+
+<section class="mds">
+  <div class="mt-20">
+    <!-- #region draggable-2 -->
     <mx-table
       draggable-rows
       checkable
-      class="mt-20"
       paginate="false"
       :get-row-id.prop="row => row.firstName"
       :rows.prop="draggableBeatles"
@@ -459,13 +466,14 @@ The `rows` array is not mutated by the component, so you must update the array u
         { property: 'credits', heading: 'Song Credits', type: 'number' },
         { property: 'birthdate', heading: 'Birthdate', type: 'date' },
       ]"
+      mutate-on-drag="false"
       @mxRowMove="onRowMove"
     />
-    <!-- #endregion draggable -->
+    <!-- #endregion draggable-2 -->
   </div>
 </section>
 
-<<< @/vuepress/components/tables.md#draggable
+<<< @/vuepress/components/tables.md#draggable-2
 <<< @/vuepress/components/tables.md#row-move
 
 ## Nested rows
@@ -702,6 +710,7 @@ The following example combines checkable, slotted table rows with pagination, ro
 | `getRowId`            | --                      | A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). | `(row: Object) => string`               | `undefined` |
 | `groupBy`             | `group-by`              | The row property to use for grouping rows. The `rows` prop must be provided as well.                                                                                                    | `string`                                | `null`      |
 | `hoverable`           | `hoverable`             |                                                                                                                                                                                         | `boolean`                               | `true`      |
+| `mutateOnDrag`        | `mutate-on-drag`        | Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.                                                                                                 | `boolean`                               | `true`      |
 | `page`                | `page`                  | The page to display                                                                                                                                                                     | `number`                                | `1`         |
 | `paginate`            | `paginate`              | Show the pagination component. Setting this to `false` will show all rows.                                                                                                              | `boolean`                               | `true`      |
 | `progressAppearDelay` | `progress-appear-delay` | Delay the appearance of the progress bar for this many milliseconds                                                                                                                     | `number`                                | `0`         |

@@ -87,6 +87,8 @@ export class MxTable {
   @Prop() showCheckAll: boolean = true;
   /** Enables reordering of rows via drag and drop. */
   @Prop() draggableRows: boolean = false;
+  /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
+  @Prop() mutateOnDrag: boolean = true;
   /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
   @Prop() groupBy: string = null;
   /** A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows. */
@@ -203,7 +205,14 @@ export class MxTable {
     document.removeEventListener('mousemove', this.dragMoveHandler);
     document.removeEventListener('touchmove', this.dragMoveHandler);
     if (!e.detail.isCancel && this.dragOverRowIndex !== this.dragRowIndex) {
-      // If row was dragged to a new position AND dragging wasn't cancelled, emit the mxRowMove event
+      // If row was dragged to a new position AND dragging wasn't cancelled,
+      // mutate the rows array (if applicable) and emit the mxRowMove event
+      if (this.rows && this.mutateOnDrag) {
+        const reorderedRows = this.rows.slice();
+        const row = reorderedRows.splice(this.dragRowIndex, 1)[0];
+        reorderedRows.splice(this.dragOverRowIndex, 0, row);
+        this.rows = reorderedRows;
+      }
       this.mxRowMove.emit({
         rowId: (e.target as HTMLMxTableRowElement).rowId,
         oldIndex: this.dragRowIndex,
