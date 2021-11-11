@@ -539,7 +539,28 @@ The example below combines nested rows with the `draggableRows` prop. For the sa
 <<< @/vuepress/components/tables.md#indent
 <<< @/vuepress/components/tables.md#nested-row-move
 
-## Subheader rows
+## Grouping and subheader rows
+
+The `groupBy` prop specifies a property on the `rows` objects to use for grouping rows under subheaders.
+
+If the `groupBy` values are not suitable for use as headings, pass a `getGroupByHeading` function to translate them into display-friendly headings for the subheader rows.
+
+<section class="mds">
+  <div class="mt-20">
+  <!-- #region grouping -->
+  <mx-table
+    auto-width
+    paginate="false" 
+    :rows.prop="apps"
+    :columns.prop="[{ property: 'name', heading: 'Name', sortable: false }]"
+    group-by="section"
+  />
+  <!-- #endregion grouping -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#grouping
+<<< @/vuepress/components/tables.md#apps
 
 Adding the `subheader` prop to a row styles it as a subheader. Only one `mx-table-cell` is necessary for the subheader content. When used inside a table with draggable rows, it can be used to drag a group of nested rows.
 
@@ -675,9 +696,11 @@ The following example combines checkable, slotted table rows with pagination, ro
 | `disableNextPage`     | `disable-next-page`     | Disable the next-page button. Useful when using server-side pagination and the total number of rows is unknown.                                                                         | `boolean`                               | `false`     |
 | `disablePagination`   | `disable-pagination`    | Disable the pagination buttons (i.e. while loading results)                                                                                                                             | `boolean`                               | `false`     |
 | `draggableRows`       | `draggable-rows`        | Enables reordering of rows via drag and drop.                                                                                                                                           | `boolean`                               | `false`     |
+| `getGroupByHeading`   | --                      | A function that returns the subheader text for a `groupBy` value. If not provided, the `row[groupBy]` value will be shown in the subheader rows.                                        | `(row: Object) => string`               | `undefined` |
 | `getMultiRowActions`  | --                      |                                                                                                                                                                                         | `(rows: string[]) => ITableRowAction[]` | `undefined` |
 | `getRowActions`       | --                      |                                                                                                                                                                                         | `(row: Object) => ITableRowAction[]`    | `undefined` |
 | `getRowId`            | --                      | A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). | `(row: Object) => string`               | `undefined` |
+| `groupBy`             | `group-by`              | The row property to use for grouping rows. The `rows` prop must be provided as well.                                                                                                    | `string`                                | `null`      |
 | `hoverable`           | `hoverable`             |                                                                                                                                                                                         | `boolean`                               | `true`      |
 | `page`                | `page`                  | The page to display                                                                                                                                                                     | `number`                                | `1`         |
 | `paginate`            | `paginate`              | Show the pagination component. Setting this to `false` will show all rows.                                                                                                              | `boolean`                               | `true`      |
@@ -1056,12 +1079,23 @@ const albums = [
     "label": "Parlophone"
   }
 ]
+// #region apps
+const apps = [
+  { name: 'Matrix', section: 'Core Tools' },
+  { name: 'Remine', section: 'Core Tools' },
+  { name: 'Realist', section: 'Core Tools' },
+  { name: 'Builders Update', section: 'Additional Benefits' },
+  { name: 'ePropertyWatch', section: 'Additional Benefits' },
+  { name: 'Homes.com', section: 'Additional Benefits' },
+]
+// #endregion apps
 
 export default {
   data() {
     return {
       albums,
       beatles,
+      apps: apps.slice(),
       visibleRows: beatles,
       draggableBeatles: beatles.slice(),
       albumRows: albums,

@@ -72,7 +72,7 @@ export class MxTable {
   dragMoveHandler: (e: MouseEvent) => any;
 
   /** An array of objects that defines the table's dataset. */
-  @Prop() rows: Object[] = [];
+  @Prop({ mutable: true }) rows: Object[] = [];
   /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
   @Prop() columns: ITableColumn[] = [];
   /** A function that returns the `rowId` prop for each generated `mx-table-row`.
@@ -87,6 +87,10 @@ export class MxTable {
   @Prop() showCheckAll: boolean = true;
   /** Enables reordering of rows via drag and drop. */
   @Prop() draggableRows: boolean = false;
+  /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
+  @Prop() groupBy: string = null;
+  /** A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows. */
+  @Prop() getGroupByHeading: (row: Object) => string;
   @Prop() hoverable: boolean = true;
   /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
   @Prop() autoWidth: boolean = false;
@@ -387,10 +391,33 @@ export class MxTable {
     return this.cols[this.exposedMobileColumnIndex] || {};
   }
 
+  get uniqueGroups(): string[] {
+    if (!this.groupBy || !this.rows.length) return [];
+    const groups = this.rows.map(row => {
+      if (row[this.groupBy] == null) return null; // one group for both `undefined` and `null`
+      return row[this.groupBy] as string;
+    });
+    return [...new Set(groups)]; // remove duplicates
+  }
+
+  get groupedRows(): Object[] {
+    if (!this.groupBy) return this.rows;
+    const groupedRows = [];
+    // Group rows based on the order of `uniqueGroups` (the order in which the groups first appear)
+    this.uniqueGroups.forEach(group => {
+      const rowsInGroup = this.rows.filter(row => {
+        if (row[this.groupBy] == null && group === null) return true;
+        return row[this.groupBy] === group;
+      });
+      groupedRows.push(...rowsInGroup);
+    });
+    return groupedRows;
+  }
+
   get visibleRows(): Object[] {
-    if (this.serverPaginate || (!this.paginate && !this.sortBy)) return this.rows;
+    if (this.serverPaginate || (!this.paginate && !this.sortBy)) return this.groupedRows;
     const offset = (this.page - 1) * this.rowsPerPage;
-    let rows = this.rows.slice();
+    let rows = this.groupedRows.slice();
     if (this.sortBy) this.sortRows(rows);
     rows = rows.slice(offset, offset + this.rowsPerPage);
     return rows;
@@ -642,6 +669,34 @@ export class MxTable {
       </div>
     );
 
+    let previousGroup;
+    const generatedRows = [];
+    this.visibleRows.forEach((row, rowIndex) => {
+      if (this.groupBy && previousGroup !== row[this.groupBy]) {
+        // Add subheader row
+        const heading = this.getGroupByHeading ? this.getGroupByHeading(row[this.groupBy]) : row[this.groupBy];
+        generatedRows.push(
+          <mx-table-row subheader>
+            <mx-table-cell>{heading}</mx-table-cell>
+          </mx-table-row>,
+        );
+        previousGroup = row[this.groupBy];
+      }
+      // Add row
+      generatedRows.push(
+        <mx-table-row
+          row-id={this.getRowId ? this.getRowId(row) : null}
+          actions={this.getRowActions ? this.getRowActions(row) : undefined}
+        >
+          {this.cols.map((col: ITableColumn) => (
+            <mx-table-cell>
+              <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
+            </mx-table-cell>
+          ))}
+        </mx-table-row>,
+      );
+    });
+
     return (
       <Host class={'mx-table block text-4' + (this.hoverable ? ' hoverable' : '')}>
         {/* Operations Bar */}
@@ -727,23 +782,7 @@ export class MxTable {
 
           <slot></slot>
           {/* HACK: Stencil refuses to render this as default slot content. :( */}
-          {!this.hasDefaultSlot && (
-            <div>
-              {this.visibleRows.map((row, rowIndex) => (
-                // Generated Body Rows
-                <mx-table-row
-                  row-id={this.getRowId ? this.getRowId(row) : null}
-                  actions={this.getRowActions ? this.getRowActions(row) : undefined}
-                >
-                  {this.cols.map((col: ITableColumn) => (
-                    <mx-table-cell>
-                      <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
-                    </mx-table-cell>
-                  ))}
-                </mx-table-row>
-              ))}
-            </div>
-          )}
+          {!this.hasDefaultSlot && <div>{generatedRows}</div>}
           {/* Empty State */}
           <div data-testid="empty-state" class={this.emptyStateClass}>
             <div class="col-span-full p-16 text-4">
