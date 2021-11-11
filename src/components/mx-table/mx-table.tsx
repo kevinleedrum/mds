@@ -680,31 +680,32 @@ export class MxTable {
 
     let previousGroup;
     const generatedRows = [];
-    this.visibleRows.forEach((row, rowIndex) => {
-      if (this.groupBy && previousGroup !== row[this.groupBy]) {
-        // Add subheader row
-        const heading = this.getGroupByHeading ? this.getGroupByHeading(row[this.groupBy]) : row[this.groupBy];
+    !this.hasDefaultSlot &&
+      this.visibleRows.forEach((row, rowIndex) => {
+        if (this.groupBy && previousGroup !== row[this.groupBy]) {
+          // Add subheader row
+          const heading = this.getGroupByHeading ? this.getGroupByHeading(row[this.groupBy]) : row[this.groupBy];
+          generatedRows.push(
+            <mx-table-row subheader>
+              <mx-table-cell>{heading}</mx-table-cell>
+            </mx-table-row>,
+          );
+          previousGroup = row[this.groupBy];
+        }
+        // Add row
         generatedRows.push(
-          <mx-table-row subheader>
-            <mx-table-cell>{heading}</mx-table-cell>
+          <mx-table-row
+            row-id={this.getRowId ? this.getRowId(row) : null}
+            actions={this.getRowActions ? this.getRowActions(row) : undefined}
+          >
+            {this.cols.map((col: ITableColumn) => (
+              <mx-table-cell>
+                <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
+              </mx-table-cell>
+            ))}
           </mx-table-row>,
         );
-        previousGroup = row[this.groupBy];
-      }
-      // Add row
-      generatedRows.push(
-        <mx-table-row
-          row-id={this.getRowId ? this.getRowId(row) : null}
-          actions={this.getRowActions ? this.getRowActions(row) : undefined}
-        >
-          {this.cols.map((col: ITableColumn) => (
-            <mx-table-cell>
-              <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
-            </mx-table-cell>
-          ))}
-        </mx-table-row>,
-      );
-    });
+      });
 
     return (
       <Host class={'mx-table block text-4' + (this.hoverable ? ' hoverable' : '')}>
