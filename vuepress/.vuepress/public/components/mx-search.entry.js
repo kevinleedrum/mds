@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host, g as getElement } from './index-935f3e8d.js';
+import { r as registerInstance, h, f as Host, g as getElement } from './index-e21e00f4.js';
 import { p as propagateDataAttributes } from './utils-18e3dfde.js';
 
 const searchSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

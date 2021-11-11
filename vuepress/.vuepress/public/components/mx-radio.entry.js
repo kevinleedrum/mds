@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host, g as getElement } from './index-935f3e8d.js';
+import { r as registerInstance, h, f as Host, g as getElement } from './index-e21e00f4.js';
 import { p as propagateDataAttributes } from './utils-18e3dfde.js';
 
 const MxRadio = class {

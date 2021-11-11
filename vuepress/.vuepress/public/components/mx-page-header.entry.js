@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host, g as getElement } from './index-935f3e8d.js';
+import { r as registerInstance, h, f as Host, g as getElement } from './index-e21e00f4.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { R as ResizeObserver } from './resize-observer-9111af2a.js';
 import { d as dotsSvg } from './dots-vertical-717ab421.js';

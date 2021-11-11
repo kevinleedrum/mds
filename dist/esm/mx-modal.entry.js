@@ -1,7 +1,8 @@
-import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-d7d68a6b.js';
+import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-540e1634.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { m as moveToPortal } from './portal-3ca3a2a3.js';
 import { f as fadeIn, b as fadeScaleIn, a as fadeOut } from './transitions-71c871da.js';
+import { l as lockBodyScroll, u as unlockBodyScroll } from './bodyScroll-166c2095.js';
 import { a as arrowSvg } from './arrow-left-2380c496.js';
 import './utils-18e3dfde.js';
 
@@ -77,9 +78,11 @@ const MxModal = class {
   }
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+    unlockBodyScroll(this.element);
   }
   async openModal() {
     moveToPortal(this.element);
+    lockBodyScroll(this.element);
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
@@ -100,6 +103,7 @@ const MxModal = class {
   async closeModal() {
     await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
     this.isVisible = false;
+    unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
     this.ancestorFocusedElement && this.ancestorFocusedElement.focus();
   }
