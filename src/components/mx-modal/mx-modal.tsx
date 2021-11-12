@@ -166,7 +166,7 @@ export class MxModal {
   }
 
   get transition(): Function {
-    let transition: Function = this.isVisible ? fadeOut : fadeIn;
+    let transition: Function = this.isVisible ? fadeOut : (el: HTMLElement) => fadeScaleIn(el, 250);
     if (this.minWidths.sm && this.fromRight) transition = this.isVisible ? fadeSlideOut : fadeSlideIn;
     else if (this.minWidths.sm && this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
