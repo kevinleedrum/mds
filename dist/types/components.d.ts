@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "./stencil-public-runtime";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
+import { DialogOptions } from "./components/mx-dialog/mx-dialog";
 import { PopoverOffset, PopoverPlacement } from "./utils/popover";
 import { IModalButton } from "./components/mx-modal/mx-modal";
 import { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
@@ -163,6 +164,16 @@ export namespace Components {
           * The selected date in YYYY-MM-DD format
          */
         "value": string;
+    }
+    interface MxDialog {
+        /**
+          * A Promise-based replacement for `Window.alert()` with some additional options
+         */
+        "alert": (message: string, { confirmLabel, cancelLabel, heading }?: DialogOptions) => Promise<void>;
+        /**
+          * A Promise-based replacement for `Window.confirm()` that resolves to a boolean
+         */
+        "confirm": (message: string, { confirmLabel, cancelLabel, heading }?: DialogOptions) => Promise<boolean>;
     }
     interface MxDropdownMenu {
         "ariaLabel": string;
@@ -850,6 +861,12 @@ declare global {
         prototype: HTMLMxDatePickerElement;
         new (): HTMLMxDatePickerElement;
     };
+    interface HTMLMxDialogElement extends Components.MxDialog, HTMLStencilElement {
+    }
+    var HTMLMxDialogElement: {
+        prototype: HTMLMxDialogElement;
+        new (): HTMLMxDialogElement;
+    };
     interface HTMLMxDropdownMenuElement extends Components.MxDropdownMenu, HTMLStencilElement {
     }
     var HTMLMxDropdownMenuElement: {
@@ -1014,6 +1031,7 @@ declare global {
         "mx-chip-group": HTMLMxChipGroupElement;
         "mx-circular-progress": HTMLMxCircularProgressElement;
         "mx-date-picker": HTMLMxDatePickerElement;
+        "mx-dialog": HTMLMxDialogElement;
         "mx-dropdown-menu": HTMLMxDropdownMenuElement;
         "mx-fab": HTMLMxFabElement;
         "mx-icon-button": HTMLMxIconButtonElement;
@@ -1200,6 +1218,8 @@ declare namespace LocalJSX {
           * The selected date in YYYY-MM-DD format
          */
         "value"?: string;
+    }
+    interface MxDialog {
     }
     interface MxDropdownMenu {
         "ariaLabel"?: string;
@@ -1865,6 +1885,7 @@ declare namespace LocalJSX {
         "mx-chip-group": MxChipGroup;
         "mx-circular-progress": MxCircularProgress;
         "mx-date-picker": MxDatePicker;
+        "mx-dialog": MxDialog;
         "mx-dropdown-menu": MxDropdownMenu;
         "mx-fab": MxFab;
         "mx-icon-button": MxIconButton;
@@ -1904,6 +1925,7 @@ declare module "@stencil/core" {
             "mx-chip-group": LocalJSX.MxChipGroup & JSXBase.HTMLAttributes<HTMLMxChipGroupElement>;
             "mx-circular-progress": LocalJSX.MxCircularProgress & JSXBase.HTMLAttributes<HTMLMxCircularProgressElement>;
             "mx-date-picker": LocalJSX.MxDatePicker & JSXBase.HTMLAttributes<HTMLMxDatePickerElement>;
+            "mx-dialog": LocalJSX.MxDialog & JSXBase.HTMLAttributes<HTMLMxDialogElement>;
             "mx-dropdown-menu": LocalJSX.MxDropdownMenu & JSXBase.HTMLAttributes<HTMLMxDropdownMenuElement>;
             "mx-fab": LocalJSX.MxFab & JSXBase.HTMLAttributes<HTMLMxFabElement>;
             "mx-icon-button": LocalJSX.MxIconButton & JSXBase.HTMLAttributes<HTMLMxIconButtonElement>;

@@ -44,6 +44,12 @@ export const MxDatePicker: {
   new (): MxDatePicker;
 };
 
+interface MxDialog extends Components.MxDialog, HTMLElement {}
+export const MxDialog: {
+  prototype: MxDialog;
+  new (): MxDialog;
+};
+
 interface MxDropdownMenu extends Components.MxDropdownMenu, HTMLElement {}
 export const MxDropdownMenu: {
   prototype: MxDropdownMenu;

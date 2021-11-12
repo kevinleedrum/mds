@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-c246f020.js');
+const index = require('./index-5f1d14aa.js');
 const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
 
 const MxDropdownMenu = class {

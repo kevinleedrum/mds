@@ -1,8 +1,11 @@
 let previousBodyOverflow = '';
 let previousBodyPaddingRight = '';
 let isLocked = false;
+const DATA_ATTRIBUTE = 'data-lock-body-scroll';
 
-export function lockBodyScroll() {
+export function lockBodyScroll(modalEl: HTMLElement) {
+  // Add data attribute in order to track open modal elements
+  if (modalEl) modalEl.setAttribute(DATA_ATTRIBUTE, '');
   if (isLocked) return;
   previousBodyOverflow = document.body.style.overflow || '';
   previousBodyPaddingRight = document.body.style.paddingRight || '';
@@ -16,8 +19,11 @@ export function lockBodyScroll() {
   isLocked = true;
 }
 
-export function unlockBodyScroll() {
+export function unlockBodyScroll(modalEl: HTMLElement) {
   if (!isLocked) return;
+  if (modalEl) modalEl.removeAttribute(DATA_ATTRIBUTE);
+  // If another modal is still open, do not unlock
+  if (document.querySelector(`[${DATA_ATTRIBUTE}]`)) return;
   document.body.style.paddingRight = previousBodyPaddingRight;
   document.body.style.overflow = previousBodyOverflow;
   isLocked = false;

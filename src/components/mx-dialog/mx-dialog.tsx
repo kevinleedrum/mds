@@ -79,6 +79,10 @@ export class MxDialog {
     return this.open(message, { heading, confirmLabel, cancelLabel });
   }
 
+  disconnectedCallback() {
+    unlockBodyScroll(this.element);
+  }
+
   /** Opens a dialog using the provided parameters.
    * If/when we implement confirmation dialogs with inputs, radio groups, etc. this method can be
    * exposed with additional parameters needed to create those dialogs. */
@@ -96,7 +100,7 @@ export class MxDialog {
   async showDialog() {
     this.ancestorFocusedElement = document.activeElement as HTMLElement;
     moveToPortal(this.element);
-    lockBodyScroll();
+    lockBodyScroll(this.element);
     this.isVisible = true;
     await new Promise(resolve => requestAnimationFrame(resolve));
     await Promise.all([fadeIn(this.backdrop), fadeScaleIn(this.modal)]);
@@ -105,7 +109,7 @@ export class MxDialog {
   async closeDialog(isConfirmed = false) {
     await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
     this.isVisible = false;
-    unlockBodyScroll();
+    unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
     this.ancestorFocusedElement && this.ancestorFocusedElement.focus();
     this.deferredResolve(isConfirmed);

@@ -106,11 +106,12 @@ export class MxModal {
 
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+    unlockBodyScroll(this.element);
   }
 
   async openModal() {
     moveToPortal(this.element);
-    lockBodyScroll();
+    lockBodyScroll(this.element);
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
@@ -143,7 +144,7 @@ export class MxModal {
       modalTransition = (el: HTMLElement) => fadeSlideOut(el, undefined, false);
     await Promise.all([fadeOut(this.backdrop), modalTransition(this.modal)]);
     this.isVisible = false;
-    unlockBodyScroll();
+    unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
     this.ancestorFocusedElement && this.ancestorFocusedElement.focus();
   }

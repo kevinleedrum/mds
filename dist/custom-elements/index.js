@@ -2658,6 +2658,150 @@ const MxDatePicker$1 = class extends HTMLElement {
   }; }
 };
 
+let previousBodyOverflow = '';
+let previousBodyPaddingRight = '';
+let isLocked = false;
+const DATA_ATTRIBUTE = 'data-lock-body-scroll';
+function lockBodyScroll(modalEl) {
+  // Add data attribute in order to track open modal elements
+  if (modalEl)
+    modalEl.setAttribute(DATA_ATTRIBUTE, '');
+  if (isLocked)
+    return;
+  previousBodyOverflow = document.body.style.overflow || '';
+  previousBodyPaddingRight = document.body.style.paddingRight || '';
+  const scrollBarGap = window.innerWidth - document.documentElement.clientWidth;
+  const computedBodyPaddingRight = parseInt(window.getComputedStyle(document.body).getPropertyValue('padding-right'), 10);
+  document.body.style.paddingRight = `${computedBodyPaddingRight + scrollBarGap}px`;
+  document.body.style.overflow = 'hidden';
+  isLocked = true;
+}
+function unlockBodyScroll(modalEl) {
+  if (!isLocked)
+    return;
+  if (modalEl)
+    modalEl.removeAttribute(DATA_ATTRIBUTE);
+  // If another modal is still open, do not unlock
+  if (document.querySelector(`[${DATA_ATTRIBUTE}]`))
+    return;
+  document.body.style.paddingRight = previousBodyPaddingRight;
+  document.body.style.overflow = previousBodyOverflow;
+  isLocked = false;
+}
+
+function moveToPortal(overlayEl) {
+  const portal = getPortal();
+  portal.appendChild(overlayEl);
+}
+function getPortal() {
+  let portal = document.querySelector('.mds-portal');
+  if (!portal) {
+    portal = document.createElement('div');
+    portal.classList.add('mds', 'mds-portal');
+    portal.style.position = 'relative';
+    portal.style.zIndex = '9999';
+    document.body.appendChild(portal);
+  }
+  return portal;
+}
+
+const MxDialog$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.isVisible = false;
+  }
+  onKeyDown(e) {
+    if (!this.isVisible)
+      return;
+    const isFocusOutside = () => !document.activeElement || !this.focusElements.includes(document.activeElement);
+    if (e.key === 'Tab') {
+      this.getFocusElements();
+      // Trap focus inside dialog
+      if (e.shiftKey && document.activeElement === this.firstFocusElement) {
+        this.lastFocusElement.focus();
+        e.preventDefault();
+      }
+      else if (isFocusOutside() || document.activeElement === this.lastFocusElement) {
+        this.firstFocusElement && this.firstFocusElement.focus();
+        e.preventDefault();
+      }
+    }
+    else if (e.key === 'Enter') {
+      // Confirm on Enter (if not already focused on a dialog focusable element)
+      this.getFocusElements();
+      if (isFocusOutside()) {
+        e.preventDefault();
+        this.firstFocusElement && this.firstFocusElement.focus();
+        this.closeDialog(true);
+      }
+    }
+    else if (e.key === 'Escape') {
+      // Cancel on Escape
+      this.closeDialog();
+      e.preventDefault();
+    }
+  }
+  /** A Promise-based replacement for `Window.alert()` with some additional options */
+  async alert(message, { confirmLabel = 'Okay', cancelLabel, heading } = {}) {
+    return this.open(message, { heading, confirmLabel, cancelLabel });
+  }
+  /** A Promise-based replacement for `Window.confirm()` that resolves to a boolean */
+  async confirm(message, { confirmLabel = 'Okay', cancelLabel = 'Cancel', heading } = {}) {
+    return this.open(message, { heading, confirmLabel, cancelLabel });
+  }
+  disconnectedCallback() {
+    unlockBodyScroll(this.element);
+  }
+  /** Opens a dialog using the provided parameters.
+   * If/when we implement confirmation dialogs with inputs, radio groups, etc. this method can be
+   * exposed with additional parameters needed to create those dialogs. */
+  async open(message, { cancelLabel, confirmLabel, heading } = {}) {
+    this.heading = heading;
+    this.message = message;
+    this.cancelLabel = cancelLabel;
+    this.confirmLabel = confirmLabel;
+    this.showDialog();
+    return new Promise(resolve => {
+      this.deferredResolve = resolve;
+    });
+  }
+  async showDialog() {
+    this.ancestorFocusedElement = document.activeElement;
+    moveToPortal(this.element);
+    lockBodyScroll(this.element);
+    this.isVisible = true;
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    await Promise.all([fadeIn(this.backdrop), fadeScaleIn(this.modal)]);
+  }
+  async closeDialog(isConfirmed = false) {
+    await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
+    this.isVisible = false;
+    unlockBodyScroll(this.element);
+    // Restore focus to the element that was focused before the modal was opened
+    this.ancestorFocusedElement && this.ancestorFocusedElement.focus();
+    this.deferredResolve(isConfirmed);
+  }
+  getFocusElements() {
+    const isVisible = (el) => !!el.offsetParent;
+    this.focusElements = Array.from(this.element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(isVisible);
+    if (this.focusElements.length) {
+      this.firstFocusElement = this.focusElements[0];
+      this.lastFocusElement = this.focusElements[this.focusElements.length - 1];
+    }
+  }
+  get hostClass() {
+    let str = 'mx-dialog fixed inset-0 flex items-center justify-center';
+    if (!this.isVisible)
+      str += ' hidden';
+    return str;
+  }
+  render() {
+    return (h(Host, { class: this.hostClass }, h("div", { ref: el => (this.backdrop = el), class: "bg-dialog-backdrop absolute inset-0 z-0" }), h("div", { ref: el => (this.modal = el), role: "alertdialog", "aria-labelledby": this.heading ? 'dialog-heading' : null, "aria-describedby": this.message ? 'dialog-message' : null, "aria-modal": "true", "data-testid": "modal", class: "modal w-320 flex flex-col rounded-lg shadow-4 relative overflow-hidden" }, h("div", { class: "p-24 flex-grow" }, this.heading && (h("h1", { id: "dialog-heading", class: "text-h6 emphasis !my-0 pb-16" }, this.heading)), this.message && (h("p", { id: "dialog-message", class: "text-4 my-0" }, this.message))), (this.confirmLabel || this.cancelLabel) && (h("div", { class: "flex flex-wrap items-center justify-end p-4" }, this.confirmLabel && (h("mx-button", { class: "m-4 order-2", btnType: "text", onClick: () => this.closeDialog(true) }, this.confirmLabel)), this.cancelLabel && (h("mx-button", { class: "m-4 order-1", btnType: "text", onClick: () => this.closeDialog() }, this.cancelLabel)))))));
+  }
+  get element() { return this; }
+};
+
 const arrowSvg$1 = `<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path
     d="M9.9654 0.757212C9.93099 0.681077 9.87273 0.616004 9.79798 0.57022C9.72323 0.524437 9.63535 0.5 9.54545 0.5H0.454547C0.364646 0.5 0.276763 0.524437 0.202012 0.570222C0.127262 0.616007 0.0690015 0.681082 0.0345985 0.757219C0.000195557 0.833357 -0.00880479 0.917136 0.00873577 0.997962C0.0262763 1.07879 0.0695701 1.15303 0.133142 1.2113L4.67859 5.37795C4.7208 5.41665 4.77091 5.44734 4.82605 5.46828C4.8812 5.48922 4.94031 5.5 5 5.5C5.05969 5.5 5.1188 5.48922 5.17394 5.46828C5.22909 5.44734 5.2792 5.41665 5.3214 5.37795L9.86686 1.2113C9.93043 1.15303 9.97372 1.07879 9.99126 0.997958C10.0088 0.917131 9.9998 0.833351 9.9654 0.757212Z"
@@ -3469,22 +3613,6 @@ const MxMenuItem$1 = class extends HTMLElement {
   get element() { return this; }
 };
 
-function moveToPortal(overlayEl) {
-  const portal = getPortal();
-  portal.appendChild(overlayEl);
-}
-function getPortal() {
-  let portal = document.querySelector('.mds-portal');
-  if (!portal) {
-    portal = document.createElement('div');
-    portal.classList.add('mds', 'mds-portal');
-    portal.style.position = 'relative';
-    portal.style.zIndex = '9999';
-    document.body.appendChild(portal);
-  }
-  return portal;
-}
-
 const arrowSvg = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path
     d="M11.3327 5.33317H3.21935L6.94602 1.6065L5.99935 0.666504L0.666016 5.99984L5.99935 11.3332L6.93935 10.3932L3.21935 6.6665H11.3327V5.33317Z"
@@ -3566,9 +3694,11 @@ const MxModal$1 = class extends HTMLElement {
   }
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+    unlockBodyScroll(this.element);
   }
   async openModal() {
     moveToPortal(this.element);
+    lockBodyScroll(this.element);
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
@@ -3589,6 +3719,7 @@ const MxModal$1 = class extends HTMLElement {
   async closeModal() {
     await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
     this.isVisible = false;
+    unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
     this.ancestorFocusedElement && this.ancestorFocusedElement.focus();
   }
@@ -6034,6 +6165,7 @@ const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined
 const MxChipGroup = /*@__PURE__*/proxyCustomElement(MxChipGroup$1, [4,"mx-chip-group",{"value":[1032]},[[0,"click","onChipClick"]]]);
 const MxCircularProgress = /*@__PURE__*/proxyCustomElement(MxCircularProgress$1, [0,"mx-circular-progress",{"value":[2],"size":[1],"appearDelay":[2,"appear-delay"]}]);
 const MxDatePicker = /*@__PURE__*/proxyCustomElement(MxDatePicker$1, [0,"mx-date-picker",{"ariaLabel":[1,"aria-label"],"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[6,"click","onClick"]]]);
+const MxDialog = /*@__PURE__*/proxyCustomElement(MxDialog$1, [0,"mx-dialog",{"isVisible":[32]},[[16,"keydown","onKeyDown"]]]);
 const MxDropdownMenu = /*@__PURE__*/proxyCustomElement(MxDropdownMenu$1, [4,"mx-dropdown-menu",{"ariaLabel":[1,"aria-label"],"dense":[4],"elevated":[4],"flat":[4],"label":[1],"dropdownId":[1,"dropdown-id"],"name":[1],"suffix":[1],"value":[1032],"isFocused":[32]},[[0,"click","onClick"]]]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"ariaLabel":[1,"aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
 const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"formaction":[1],"value":[1],"disabled":[516],"ariaLabel":[1,"aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
@@ -6070,6 +6202,7 @@ const defineCustomElements = (opts) => {
   MxChipGroup,
   MxCircularProgress,
   MxDatePicker,
+  MxDialog,
   MxDropdownMenu,
   MxFab,
   MxIconButton,
@@ -6104,4 +6237,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDatePicker, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxModal, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, MxTooltip, defineCustomElements };
+export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDatePicker, MxDialog, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxModal, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, MxTooltip, defineCustomElements };
