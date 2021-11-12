@@ -67,12 +67,12 @@ export const fadeScaleIn = (el: HTMLElement, duration = 150, transformOrigin?: s
   return executeTransition(el, [FADE_IN, SCALE_IN], duration, transformOrigin);
 };
 
-/** Slide in */
+/** Fade and slide in */
 export const fadeSlideIn = (el: HTMLElement, duration = 250, fromRight = true) => {
   return executeTransition(el, [fromRight ? SLIDE_IN_FROM_RIGHT : SLIDE_IN_FROM_LEFT, FADE_IN], duration);
 };
 
-/** Slide in */
+/** Fade and slide out */
 export const fadeSlideOut = (el: HTMLElement, duration = 200, toRight = true) => {
   return executeTransition(el, [toRight ? SLIDE_OUT_TO_RIGHT : SLIDE_OUT_TO_LEFT, FADE_OUT], duration);
 };
