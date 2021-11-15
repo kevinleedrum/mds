@@ -1,7 +1,7 @@
 import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-e21e00f4.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { m as moveToPortal } from './portal-3ca3a2a3.js';
-import { f as fadeIn, b as fadeScaleIn, a as fadeOut } from './transitions-71c871da.js';
+import { f as fadeIn, a as fadeOut, b as fadeScaleIn, c as fadeSlideOut, d as fadeSlideIn } from './transitions-547eeac5.js';
 import { u as unlockBodyScroll, l as lockBodyScroll } from './bodyScroll-166c2095.js';
 import { a as arrowSvg } from './arrow-left-2380c496.js';
 import './utils-18e3dfde.js';
@@ -21,6 +21,10 @@ const MxModal = class {
     this.closeOnOutsideClick = true;
     /** Additional classes for the inner scrolling container. */
     this.contentClass = '';
+    /** Instead of centering, attach the modal to the left side of the window */
+    this.fromLeft = false;
+    /** Instead of centering, attach the modal to the right side of the window */
+    this.fromRight = false;
     /** Toggle the modal */
     this.isOpen = false;
     /** The text to display for the previous page link */
@@ -86,7 +90,7 @@ const MxModal = class {
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
-      await Promise.all([fadeIn(this.backdrop, 250), fadeScaleIn(this.modal, 250)]);
+      await Promise.all([fadeIn(this.backdrop, 250), this.transition(this.modal)]);
       this.mobilePageHeader.resetResizeObserver();
     });
   }
@@ -101,7 +105,7 @@ const MxModal = class {
     }
   }
   async closeModal() {
-    await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
+    await Promise.all([fadeOut(this.backdrop), this.transition(this.modal)]);
     this.isVisible = false;
     unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
@@ -112,13 +116,37 @@ const MxModal = class {
       this.mxClose.emit();
   }
   get hostClass() {
-    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch sm:items-center justify-center';
+    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch justify-center';
+    if (this.minWidths.sm && this.fromLeft)
+      str += ' sm:justify-start';
+    else if (this.minWidths.sm && this.fromRight)
+      str += ' sm:justify-end';
+    else
+      str += ' sm:items-center';
     if (!this.isVisible)
       str += ' hidden';
-    if (this.minWidths.sm) {
+    if (this.minWidths.sm && !this.fromLeft && !this.fromRight) {
       str += this.large ? ' modal-large' : ' modal-medium';
     }
     return str;
+  }
+  get modalClass() {
+    let str = 'modal flex flex-col shadow-9 relative overflow-hidden';
+    if (this.minWidths.sm && this.fromLeft)
+      str += ' rounded-r-xl';
+    else if (this.minWidths.sm && this.fromRight)
+      str += ' rounded-l-xl';
+    else
+      str += ' rounded-xl';
+    return str;
+  }
+  get transition() {
+    let transition = this.isVisible ? fadeOut : (el) => fadeScaleIn(el, 250);
+    if (this.minWidths.sm && this.fromRight)
+      transition = this.isVisible ? fadeSlideOut : fadeSlideIn;
+    else if (this.minWidths.sm && this.fromLeft)
+      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    return transition;
   }
   get hasFooter() {
     return ((this.minWidths.md && (!!this.previousPageUrl || this.buttons.length > 0)) ||
@@ -141,7 +169,7 @@ const MxModal = class {
     return str;
   }
   render() {
-    return (h(Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" }, h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }), h("div", { ref: el => (this.modal = el), class: "modal flex flex-col rounded-lg shadow-9 relative overflow-hidden" }, h("div", { class: this.modalContentClasses, "data-testid": "modal-content" }, this.description && (h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)), h("slot", null), this.hasCard && (h("div", null, h("div", { class: "bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl", "data-testid": "modal-card" }, h("slot", { name: "card" }))))), h("footer", { class: 'bg-modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
+    return (h(Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" }, h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }), h("div", { ref: el => (this.modal = el), class: this.modalClass }, h("div", { class: this.modalContentClasses, "data-testid": "modal-content" }, this.description && (h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)), h("slot", null), this.hasCard && (h("div", null, h("div", { class: "bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl", "data-testid": "modal-card" }, h("slot", { name: "card" }))))), h("footer", { class: 'bg-modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
         (this.hasFooter ? '' : ' hidden') }, h("div", null, h("slot", { name: "footer-left" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "flex items-center uppercase text-4 font-semibold tracking-1-25", "data-testid": "previous-page" }, h("span", { class: "mr-10", innerHTML: arrowSvg }), this.previousPageTitle)))), h("div", { class: "ml-16" }, h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))), h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "order-1", buttons: this.buttons, modal: true, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl }, h("span", { id: "headerText", "data-testid": "header-text" }, h("slot", { name: "header-left" })), this.hasHeaderBottom && (h("div", { slot: "tabs" }, h("slot", { name: "header-bottom" }))), h("div", { slot: "modal-header-center", class: "flex items-center justify-center" }, h("slot", { name: "header-center" })), h("div", { slot: "modal-header-right" }, h("slot", { name: "header-right" }, h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))))));
   }
   get element() { return getElement(this); }

@@ -21,6 +21,8 @@ export declare class MxTableRow {
   rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   actions: ITableRowAction[];
+  /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
+  rowIndex: number;
   checked: boolean;
   /** Style the row as a subheader. */
   subheader: boolean;
@@ -79,6 +81,8 @@ export declare class MxTableRow {
    * rows.  If a child is `display: contents` (i.e. the first column wrapper), then its children
    * are added. */
   getChildren(): Promise<HTMLElement[]>;
+  /** Get an array of row IDs for rows nested directly inside this row */
+  getNestedRowIndexes(): Promise<number[]>;
   /** Calculate the height of the row, including the height of nested rows */
   getHeight(): Promise<number>;
   onTransitionEnd(e: any): void;

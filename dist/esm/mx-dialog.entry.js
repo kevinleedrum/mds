@@ -1,7 +1,7 @@
 import { r as registerInstance, h, H as Host, g as getElement } from './index-540e1634.js';
 import { l as lockBodyScroll, u as unlockBodyScroll } from './bodyScroll-166c2095.js';
 import { m as moveToPortal } from './portal-3ca3a2a3.js';
-import { f as fadeIn, b as fadeScaleIn, a as fadeOut } from './transitions-71c871da.js';
+import { f as fadeIn, b as fadeScaleIn, a as fadeOut } from './transitions-547eeac5.js';
 import './utils-18e3dfde.js';
 
 const MxDialog = class {

@@ -12,6 +12,7 @@
 | `actions`   | --          | An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. | `ITableRowAction[]` | `[]`        |
 | `checked`   | `checked`   |                                                                                                                       | `boolean`           | `false`     |
 | `rowId`     | `row-id`    | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
+| `rowIndex`  | `row-index` | This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component.              | `number`            | `undefined` |
 | `subheader` | `subheader` | Style the row as a subheader.                                                                                         | `boolean`           | `false`     |
 
 
@@ -76,6 +77,16 @@ Calculate the height of the row, including the height of nested rows
 #### Returns
 
 Type: `Promise<number>`
+
+
+
+### `getNestedRowIndexes() => Promise<number[]>`
+
+Get an array of row IDs for rows nested directly inside this row
+
+#### Returns
+
+Type: `Promise<number[]>`
 
 
 

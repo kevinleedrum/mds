@@ -6,7 +6,7 @@ const index = require('./index-5f1d14aa.js');
 const warningCircle = require('./warning-circle-453368c1.js');
 const popover = require('./popover-8846ea88.js');
 const utils = require('./utils-1f7ef40d.js');
-const transitions = require('./transitions-0aeffc5e.js');
+const transitions = require('./transitions-812912af.js');
 
 function getDefaultExportFromCjs (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;

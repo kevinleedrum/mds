@@ -517,6 +517,11 @@ const MxTableRow = class {
     await Promise.all(nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))));
     return children;
   }
+  /** Get an array of row IDs for rows nested directly inside this row */
+  async getNestedRowIndexes() {
+    const nestedRows = Array.from(this.childRowWrapper.children);
+    return nestedRows.map((row) => row.rowIndex).filter(x => x != null);
+  }
   /** Calculate the height of the row, including the height of nested rows */
   async getHeight() {
     let height = (await this.getChildren())[0].offsetHeight;
