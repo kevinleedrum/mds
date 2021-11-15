@@ -48,14 +48,13 @@ const MxDropdownMenu = class {
     this.inputElem.value = this.value;
   }
   get dropdownWrapperClass() {
-    let str = 'dropdown-wrapper flex items-center relative border rounded-lg';
+    let str = 'dropdown-wrapper flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     if (this.elevated)
       str += ' elevated shadow-1';
     if (this.flat)
       str += ' flat';
-    if (this.isFocused)
-      str += ' focused border-2';
+    str += this.isFocused ? ' focused border-2' : ' border';
     return str;
   }
   get inputClass() {

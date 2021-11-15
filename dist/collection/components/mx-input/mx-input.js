@@ -52,12 +52,11 @@ export class MxInput {
     return this.value !== null && this.value !== '' && this.value !== undefined;
   }
   get containerClass() {
-    let str = 'mx-input-wrapper flex items-center relative border rounded-lg';
+    let str = 'mx-input-wrapper flex items-center relative rounded-lg';
     if (!this.textarea) {
       str += this.dense ? ' h-36' : ' h-48';
     }
-    if (this.error || this.isFocused)
-      str += ' border-2';
+    str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.error)
       str += ' error';
     if (this.disabled)

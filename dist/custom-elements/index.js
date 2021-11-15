@@ -2648,10 +2648,9 @@ const MxDatePicker$1 = class extends HTMLElement {
     return this.inputEl.value || this.inputEl.validity.badInput;
   }
   get pickerWrapperClass() {
-    let str = 'picker-wrapper flex items-center relative border rounded-lg';
+    let str = 'picker-wrapper flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
-    if (this.error || this.isFocused)
-      str += ' border-2';
+    str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.disabled)
       str += ' disabled';
     if (this.isFocused)
@@ -2886,14 +2885,13 @@ const MxDropdownMenu$1 = class extends HTMLElement {
     this.inputElem.value = this.value;
   }
   get dropdownWrapperClass() {
-    let str = 'dropdown-wrapper flex items-center relative border rounded-lg';
+    let str = 'dropdown-wrapper flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     if (this.elevated)
       str += ' elevated shadow-1';
     if (this.flat)
       str += ' flat';
-    if (this.isFocused)
-      str += ' focused border-2';
+    str += this.isFocused ? ' focused border-2' : ' border';
     return str;
   }
   get inputClass() {
@@ -3284,12 +3282,11 @@ const MxInput$1 = class extends HTMLElement {
     return this.value !== null && this.value !== '' && this.value !== undefined;
   }
   get containerClass() {
-    let str = 'mx-input-wrapper flex items-center relative border rounded-lg';
+    let str = 'mx-input-wrapper flex items-center relative rounded-lg';
     if (!this.textarea) {
       str += this.dense ? ' h-36' : ' h-48';
     }
-    if (this.error || this.isFocused)
-      str += ' border-2';
+    str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.error)
       str += ' error';
     if (this.disabled)
@@ -3738,7 +3735,7 @@ const MxModal$1 = class extends HTMLElement {
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
-      await Promise.all([fadeIn(this.backdrop, 250), this.transition(this.modal)]);
+      await Promise.all([fadeIn(this.backdrop, 250), this.openTransition(this.modal)]);
       this.mobilePageHeader.resetResizeObserver();
     });
   }
@@ -3753,7 +3750,7 @@ const MxModal$1 = class extends HTMLElement {
     }
   }
   async closeModal() {
-    await Promise.all([fadeOut(this.backdrop), this.transition(this.modal)]);
+    await Promise.all([fadeOut(this.backdrop), this.closeTransition(this.modal)]);
     this.isVisible = false;
     unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
@@ -3788,10 +3785,18 @@ const MxModal$1 = class extends HTMLElement {
       str += ' rounded-xl';
     return str;
   }
-  get transition() {
-    let transition = this.isVisible ? fadeOut : (el) => fadeScaleIn(el, 250);
+  get openTransition() {
+    let transition = (el) => fadeScaleIn(el, 250);
     if (this.minWidths.sm && this.fromRight)
-      transition = this.isVisible ? fadeSlideOut : fadeSlideIn;
+      transition = fadeSlideIn;
+    else if (this.minWidths.sm && this.fromLeft)
+      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    return transition;
+  }
+  get closeTransition() {
+    let transition = fadeOut;
+    if (this.minWidths.sm && this.fromRight)
+      transition = fadeSlideOut;
     else if (this.minWidths.sm && this.fromLeft)
       transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
@@ -4684,14 +4689,13 @@ const MxSelect$1 = class extends HTMLElement {
     return this.value !== null && this.value !== '' && this.value !== undefined;
   }
   get selectWrapperClass() {
-    let str = 'mx-select-wrapper flex items-center relative border rounded-lg';
+    let str = 'mx-select-wrapper flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     if (this.elevated)
       str += ' elevated shadow-1';
     if (this.flat)
       str += ' flat';
-    if (this.error || this.isFocused)
-      str += ' border-2';
+    str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.error)
       str += ' error';
     if (this.disabled)
@@ -6130,10 +6134,9 @@ const MxTimePicker$1 = class extends HTMLElement {
     return this.value || (this.inputElem && this.inputElem.validity.badInput);
   }
   get pickerWrapperClass() {
-    let str = 'picker-wrapper flex items-center relative border rounded-lg';
+    let str = 'picker-wrapper flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
-    if (this.error || this.isFocused)
-      str += ' border-2';
+    str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.disabled)
       str += ' disabled';
     if (this.isFocused)

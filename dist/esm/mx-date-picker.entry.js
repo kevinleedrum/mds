@@ -2,7 +2,7 @@ import { r as registerInstance, h, H as Host, g as getElement } from './index-54
 import { w as warningCircleSvg } from './warning-circle-7e1a7781.js';
 import { c as createPopover } from './popover-56a66892.js';
 import { u as uuidv4, p as propagateDataAttributes, i as isDateObject } from './utils-18e3dfde.js';
-import { f as fadeIn, a as fadeOut } from './transitions-547eeac5.js';
+import { f as fadeIn, a as fadeOut } from './transitions-6d3cfbdc.js';
 
 function getDefaultExportFromCjs (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
@@ -208,10 +208,9 @@ const MxDatePicker = class {
     return this.inputEl.value || this.inputEl.validity.badInput;
   }
   get pickerWrapperClass() {
-    let str = 'picker-wrapper flex items-center relative border rounded-lg';
+    let str = 'picker-wrapper flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
-    if (this.error || this.isFocused)
-      str += ' border-2';
+    str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.disabled)
       str += ' disabled';
     if (this.isFocused)
