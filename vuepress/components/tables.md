@@ -449,7 +449,9 @@ Set the `draggableRows` prop to allow reordering rows via drag and drop.
 
 <<< @/vuepress/components/tables.md#draggable
 
-By default, the `rows` array is mutated when reordering. To disable this behavior, set `mutateOnDrag` to `false`. The component emits an `mxRowMove` event containing the `rowId` (if set), `oldIndex`, and `newIndex` for the dragged row. This information can then be used to update state in the host application. If a `rows` array was not provided, the `oldIndex` and `newIndex` are based on the row element's position relative to its siblings. See [nested rows](#nested-rows) and [grouped rows](#grouping-and-subheader-rows) for other examples.
+By default, the `rows` array is mutated when reordering, so the reordered array may be read from `HTMLMxTableElement.rows`.
+
+To disable this behavior, set `mutateOnDrag` to `false`. The component emits an `mxRowMove` event containing the `rowId` (if set), `oldIndex`, and `newIndex` for the dragged row. This information can then be used to update state in the host application. If a `rows` array was not provided, the `oldIndex` and `newIndex` are based on the row element's position relative to its siblings. See [nested rows](#nested-rows) and [grouped rows](#grouping-and-subheader-rows) for other examples.
 
 <section class="mds">
   <div class="mt-20">
