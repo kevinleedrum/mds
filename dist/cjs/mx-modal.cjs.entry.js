@@ -94,7 +94,7 @@ const MxModal = class {
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
-      await Promise.all([transitions.fadeIn(this.backdrop, 250), this.transition(this.modal)]);
+      await Promise.all([transitions.fadeIn(this.backdrop, 250), this.openTransition(this.modal)]);
       this.mobilePageHeader.resetResizeObserver();
     });
   }
@@ -109,7 +109,7 @@ const MxModal = class {
     }
   }
   async closeModal() {
-    await Promise.all([transitions.fadeOut(this.backdrop), this.transition(this.modal)]);
+    await Promise.all([transitions.fadeOut(this.backdrop), this.closeTransition(this.modal)]);
     this.isVisible = false;
     bodyScroll.unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
@@ -144,10 +144,18 @@ const MxModal = class {
       str += ' rounded-xl';
     return str;
   }
-  get transition() {
-    let transition = this.isVisible ? transitions.fadeOut : (el) => transitions.fadeScaleIn(el, 250);
+  get openTransition() {
+    let transition = (el) => transitions.fadeScaleIn(el, 250);
     if (this.minWidths.sm && this.fromRight)
-      transition = this.isVisible ? transitions.fadeSlideOut : transitions.fadeSlideIn;
+      transition = transitions.fadeSlideIn;
+    else if (this.minWidths.sm && this.fromLeft)
+      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    return transition;
+  }
+  get closeTransition() {
+    let transition = transitions.fadeOut;
+    if (this.minWidths.sm && this.fromRight)
+      transition = transitions.fadeSlideOut;
     else if (this.minWidths.sm && this.fromLeft)
       transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;

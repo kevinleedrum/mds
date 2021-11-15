@@ -131,10 +131,9 @@ const MxTimePicker = class {
     return this.value || (this.inputElem && this.inputElem.validity.badInput);
   }
   get pickerWrapperClass() {
-    let str = 'picker-wrapper flex items-center relative border rounded-lg';
+    let str = 'picker-wrapper flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
-    if (this.error || this.isFocused)
-      str += ' border-2';
+    str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.disabled)
       str += ' disabled';
     if (this.isFocused)

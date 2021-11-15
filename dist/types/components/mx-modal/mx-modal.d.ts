@@ -55,7 +55,8 @@ export declare class MxModal {
   onBackdropClick(): void;
   get hostClass(): string;
   get modalClass(): string;
-  get transition(): Function;
+  get openTransition(): Function;
+  get closeTransition(): Function;
   get hasFooter(): boolean;
   get buttonsJsx(): any;
   get modalContentClasses(): string;

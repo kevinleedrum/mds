@@ -1,7 +1,7 @@
 import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-e21e00f4.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { m as moveToPortal } from './portal-3ca3a2a3.js';
-import { f as fadeIn, a as fadeOut, b as fadeScaleIn, c as fadeSlideOut, d as fadeSlideIn } from './transitions-547eeac5.js';
+import { f as fadeIn, a as fadeOut, b as fadeScaleIn, c as fadeSlideIn, d as fadeSlideOut } from './transitions-6d3cfbdc.js';
 import { u as unlockBodyScroll, l as lockBodyScroll } from './bodyScroll-166c2095.js';
 import { a as arrowSvg } from './arrow-left-2380c496.js';
 import './utils-18e3dfde.js';
@@ -90,7 +90,7 @@ const MxModal = class {
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
-      await Promise.all([fadeIn(this.backdrop, 250), this.transition(this.modal)]);
+      await Promise.all([fadeIn(this.backdrop, 250), this.openTransition(this.modal)]);
       this.mobilePageHeader.resetResizeObserver();
     });
   }
@@ -105,7 +105,7 @@ const MxModal = class {
     }
   }
   async closeModal() {
-    await Promise.all([fadeOut(this.backdrop), this.transition(this.modal)]);
+    await Promise.all([fadeOut(this.backdrop), this.closeTransition(this.modal)]);
     this.isVisible = false;
     unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
@@ -140,10 +140,18 @@ const MxModal = class {
       str += ' rounded-xl';
     return str;
   }
-  get transition() {
-    let transition = this.isVisible ? fadeOut : (el) => fadeScaleIn(el, 250);
+  get openTransition() {
+    let transition = (el) => fadeScaleIn(el, 250);
     if (this.minWidths.sm && this.fromRight)
-      transition = this.isVisible ? fadeSlideOut : fadeSlideIn;
+      transition = fadeSlideIn;
+    else if (this.minWidths.sm && this.fromLeft)
+      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    return transition;
+  }
+  get closeTransition() {
+    let transition = fadeOut;
+    if (this.minWidths.sm && this.fromRight)
+      transition = fadeSlideOut;
     else if (this.minWidths.sm && this.fromLeft)
       transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
