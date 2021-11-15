@@ -449,7 +449,7 @@ Set the `draggableRows` prop to allow reordering rows via drag and drop.
 
 <<< @/vuepress/components/tables.md#draggable
 
-By default, the `rows` array is mutated when reordering. To disable this behavior, set `mutateOnDrag` to `false`. The component emits an `mxRowMove` event containing the `rowId` (if set), `oldIndex`, and `newIndex` for the dragged row. This information can then be used to update state in the host application.
+By default, the `rows` array is mutated when reordering. To disable this behavior, set `mutateOnDrag` to `false`. The component emits an `mxRowMove` event containing the `rowId` (if set), `oldIndex`, and `newIndex` for the dragged row. This information can then be used to update state in the host application. If a `rows` array was not provided, the `oldIndex` and `newIndex` are based on the row element's position relative to its siblings. See [nested rows](#nested-rows) and [grouped rows](#grouping-and-subheader-rows) for other examples.
 
 <section class="mds">
   <div class="mt-20">
@@ -558,6 +558,7 @@ If the `groupBy` values are not suitable for use as headings, pass a `getGroupBy
   <!-- #region grouping -->
   <mx-table
     auto-width
+    draggable-rows
     paginate="false" 
     :rows.prop="apps"
     :columns.prop="[{ property: 'name', heading: 'Name', sortable: false }]"
@@ -578,7 +579,6 @@ Adding the `subheader` prop to a row styles it as a subheader. Only one `mx-tabl
     <mx-table
       auto-width
       paginate="false"
-      draggable-rows
       :columns.prop="[
         { heading: 'Name' },
       ]"
