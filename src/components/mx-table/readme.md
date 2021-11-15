@@ -16,10 +16,13 @@
 | `disableNextPage`     | `disable-next-page`     | Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown.                                                                         | `boolean`                               | `false`     |
 | `disablePagination`   | `disable-pagination`    | Disable the pagination buttons (i.e. while loading results)                                                                                                                              | `boolean`                               | `false`     |
 | `draggableRows`       | `draggable-rows`        | Enables reordering of rows via drag and drop.                                                                                                                                            | `boolean`                               | `false`     |
+| `getGroupByHeading`   | --                      | A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows.                                        | `(row: Object) => string`               | `undefined` |
 | `getMultiRowActions`  | --                      |                                                                                                                                                                                          | `(rows: string[]) => ITableRowAction[]` | `undefined` |
 | `getRowActions`       | --                      |                                                                                                                                                                                          | `(row: Object) => ITableRowAction[]`    | `undefined` |
 | `getRowId`            | --                      | A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).  | `(row: Object) => string`               | `undefined` |
+| `groupBy`             | `group-by`              | The row property to use for grouping rows.  The `rows` prop must be provided as well.                                                                                                    | `string`                                | `null`      |
 | `hoverable`           | `hoverable`             |                                                                                                                                                                                          | `boolean`                               | `true`      |
+| `mutateOnDrag`        | `mutate-on-drag`        | Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.                                                                                                  | `boolean`                               | `true`      |
 | `page`                | `page`                  | The page to display                                                                                                                                                                      | `number`                                | `1`         |
 | `paginate`            | `paginate`              | Show the pagination component.  Setting this to `false` will show all rows.                                                                                                              | `boolean`                               | `true`      |
 | `progressAppearDelay` | `progress-appear-delay` | Delay the appearance of the progress bar for this many milliseconds                                                                                                                      | `number`                                | `0`         |
@@ -92,34 +95,34 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [mx-table-row](../mx-table-row)
+- [mx-table-cell](../mx-table-cell)
 - [mx-checkbox](../mx-checkbox)
 - [mx-button](../mx-button)
 - [mx-menu](../mx-menu)
 - [mx-menu-item](../mx-menu-item)
 - [mx-icon-button](../mx-icon-button)
 - [mx-linear-progress](../mx-linear-progress)
-- [mx-table-row](../mx-table-row)
-- [mx-table-cell](../mx-table-cell)
 - [mx-pagination](../mx-pagination)
 
 ### Graph
 ```mermaid
 graph TD;
+  mx-table --> mx-table-row
+  mx-table --> mx-table-cell
   mx-table --> mx-checkbox
   mx-table --> mx-button
   mx-table --> mx-menu
   mx-table --> mx-menu-item
   mx-table --> mx-icon-button
   mx-table --> mx-linear-progress
-  mx-table --> mx-table-row
-  mx-table --> mx-table-cell
   mx-table --> mx-pagination
-  mx-menu-item --> mx-checkbox
   mx-table-row --> mx-checkbox
   mx-table-row --> mx-button
   mx-table-row --> mx-icon-button
   mx-table-row --> mx-menu
   mx-table-row --> mx-menu-item
+  mx-menu-item --> mx-checkbox
   mx-pagination --> mx-icon-button
   mx-pagination --> mx-menu
   mx-pagination --> mx-menu-item

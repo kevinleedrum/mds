@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Watch, Element, Event, State, Listen } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { moveToPortal } from '../../utils/portal';
-import { fadeIn, fadeOut, fadeScaleIn } from '../../utils/transitions';
+import { fadeIn, fadeOut, fadeScaleIn, fadeSlideIn, fadeSlideOut } from '../../utils/transitions';
 import { lockBodyScroll, unlockBodyScroll } from '../../utils/bodyScroll';
 import arrowSvg from '../../assets/svg/arrow-left.svg';
 export class MxModal {
@@ -17,6 +17,10 @@ export class MxModal {
     this.closeOnOutsideClick = true;
     /** Additional classes for the inner scrolling container. */
     this.contentClass = '';
+    /** Instead of centering, attach the modal to the left side of the window */
+    this.fromLeft = false;
+    /** Instead of centering, attach the modal to the right side of the window */
+    this.fromRight = false;
     /** Toggle the modal */
     this.isOpen = false;
     /** The text to display for the previous page link */
@@ -82,7 +86,7 @@ export class MxModal {
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
-      await Promise.all([fadeIn(this.backdrop, 250), fadeScaleIn(this.modal, 250)]);
+      await Promise.all([fadeIn(this.backdrop, 250), this.transition(this.modal)]);
       this.mobilePageHeader.resetResizeObserver();
     });
   }
@@ -97,7 +101,7 @@ export class MxModal {
     }
   }
   async closeModal() {
-    await Promise.all([fadeOut(this.backdrop), fadeOut(this.modal)]);
+    await Promise.all([fadeOut(this.backdrop), this.transition(this.modal)]);
     this.isVisible = false;
     unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
@@ -108,13 +112,37 @@ export class MxModal {
       this.mxClose.emit();
   }
   get hostClass() {
-    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch sm:items-center justify-center';
+    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch justify-center';
+    if (this.minWidths.sm && this.fromLeft)
+      str += ' sm:justify-start';
+    else if (this.minWidths.sm && this.fromRight)
+      str += ' sm:justify-end';
+    else
+      str += ' sm:items-center';
     if (!this.isVisible)
       str += ' hidden';
-    if (this.minWidths.sm) {
+    if (this.minWidths.sm && !this.fromLeft && !this.fromRight) {
       str += this.large ? ' modal-large' : ' modal-medium';
     }
     return str;
+  }
+  get modalClass() {
+    let str = 'modal flex flex-col shadow-9 relative overflow-hidden';
+    if (this.minWidths.sm && this.fromLeft)
+      str += ' rounded-r-xl';
+    else if (this.minWidths.sm && this.fromRight)
+      str += ' rounded-l-xl';
+    else
+      str += ' rounded-xl';
+    return str;
+  }
+  get transition() {
+    let transition = this.isVisible ? fadeOut : (el) => fadeScaleIn(el, 250);
+    if (this.minWidths.sm && this.fromRight)
+      transition = this.isVisible ? fadeSlideOut : fadeSlideIn;
+    else if (this.minWidths.sm && this.fromLeft)
+      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    return transition;
   }
   get hasFooter() {
     return ((this.minWidths.md && (!!this.previousPageUrl || this.buttons.length > 0)) ||
@@ -139,7 +167,7 @@ export class MxModal {
   render() {
     return (h(Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" },
       h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }),
-      h("div", { ref: el => (this.modal = el), class: "modal flex flex-col rounded-lg shadow-9 relative overflow-hidden" },
+      h("div", { ref: el => (this.modal = el), class: this.modalClass },
         h("div", { class: this.modalContentClasses, "data-testid": "modal-content" },
           this.description && (h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)),
           h("slot", null),
@@ -257,6 +285,42 @@ export class MxModal {
       },
       "attribute": "description",
       "reflect": false
+    },
+    "fromLeft": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Instead of centering, attach the modal to the left side of the window"
+      },
+      "attribute": "from-left",
+      "reflect": false,
+      "defaultValue": "false"
+    },
+    "fromRight": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Instead of centering, attach the modal to the right side of the window"
+      },
+      "attribute": "from-right",
+      "reflect": false,
+      "defaultValue": "false"
     },
     "isOpen": {
       "type": "boolean",

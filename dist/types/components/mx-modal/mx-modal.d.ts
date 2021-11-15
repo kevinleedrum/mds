@@ -26,6 +26,10 @@ export declare class MxModal {
   contentClass: string;
   /** An optional description to display above the modal content */
   description: string;
+  /** Instead of centering, attach the modal to the left side of the window */
+  fromLeft: boolean;
+  /** Instead of centering, attach the modal to the right side of the window */
+  fromRight: boolean;
   /** Toggle the modal */
   isOpen: boolean;
   /** The text to display for the previous page link */
@@ -50,6 +54,8 @@ export declare class MxModal {
   closeModal(): Promise<void>;
   onBackdropClick(): void;
   get hostClass(): string;
+  get modalClass(): string;
+  get transition(): Function;
   get hasFooter(): boolean;
   get buttonsJsx(): any;
   get modalContentClasses(): string;

@@ -291,6 +291,44 @@ describe('mx-table (checkable, non-mobile)', () => {
   });
 });
 
+describe('mx-table (grouped rows)', () => {
+  let page: SpecPage;
+  let root: HTMLMxTableElement;
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [MxTable, MxTableRow, MxTableCell, MxCheckbox, MxPagination],
+      html: `
+      <mx-table group-by="category" />
+      `,
+    });
+    root = page.root as HTMLMxTableElement;
+    root.rows = [
+      { id: 0, name: 'Dominos', category: 'pizza' },
+      { id: 1, name: 'Papa Johns', category: 'pizza' },
+      { id: 2, name: 'Little Caesars', category: 'pizza' },
+      { id: 3, name: 'Subway', category: 'sandwich' },
+      { id: 4, name: 'Jimmy Johns', category: 'sandwich' },
+    ];
+    root.columns = [{ property: 'name', heading: 'Name', sortable: false }];
+    root.getGroupByHeading = (category: string) => category.toUpperCase();
+    await page.waitForChanges();
+  });
+
+  it('groups rows under subheader rows based on the groupBy prop', () => {
+    const rows = root.querySelectorAll('mx-table-row');
+    expect(rows[0].innerText.startsWith('PIZZA'));
+    expect(rows[1].innerText).toBe('Dominos');
+    expect(rows[4].innerText.startsWith('SANDWICH'));
+    expect(rows[6].innerText).toBe('Jimmy Johns');
+  });
+
+  it('sets the rowIndex prop on all generated data rows', () => {
+    const rows = root.querySelectorAll('mx-table-row');
+    expect(rows[1].rowIndex).toBe(0); // Dominos
+    expect(rows[6].rowIndex).toBe(4); // Jimmy Johns
+  });
+});
+
 describe('mx-table (slotted rows and cells)', () => {
   let page: SpecPage;
   let root: HTMLMxTableElement;

@@ -450,6 +450,14 @@ export namespace Components {
          */
         "description": string;
         /**
+          * Instead of centering, attach the modal to the left side of the window
+         */
+        "fromLeft": boolean;
+        /**
+          * Instead of centering, attach the modal to the right side of the window
+         */
+        "fromRight": boolean;
+        /**
           * Toggle the modal
          */
         "isOpen": boolean;
@@ -639,13 +647,25 @@ export namespace Components {
          */
         "draggableRows": boolean;
         "getCheckedRowIds": () => Promise<string[]>;
+        /**
+          * A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows.
+         */
+        "getGroupByHeading": (row: Object) => string;
         "getMultiRowActions": (rows: string[]) => ITableRowAction[];
         "getRowActions": (row: Object) => ITableRowAction[];
         /**
           * A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).
          */
         "getRowId": (row: Object) => string;
+        /**
+          * The row property to use for grouping rows.  The `rows` prop must be provided as well.
+         */
+        "groupBy": string;
         "hoverable": boolean;
+        /**
+          * Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.
+         */
+        "mutateOnDrag": boolean;
         /**
           * The page to display
          */
@@ -723,9 +743,17 @@ export namespace Components {
          */
         "getHeight": () => Promise<number>;
         /**
+          * Get an array of row IDs for rows nested directly inside this row
+         */
+        "getNestedRowIndexes": () => Promise<number[]>;
+        /**
           * This is required for checkable rows in order to persist the checked state through sorting and pagination.
          */
         "rowId": string;
+        /**
+          * This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component.
+         */
+        "rowIndex": number;
         /**
           * Style the row as a subheader.
          */
@@ -1490,6 +1518,14 @@ declare namespace LocalJSX {
          */
         "description"?: string;
         /**
+          * Instead of centering, attach the modal to the left side of the window
+         */
+        "fromLeft"?: boolean;
+        /**
+          * Instead of centering, attach the modal to the right side of the window
+         */
+        "fromRight"?: boolean;
+        /**
           * Toggle the modal
          */
         "isOpen"?: boolean;
@@ -1675,13 +1711,25 @@ declare namespace LocalJSX {
           * Enables reordering of rows via drag and drop.
          */
         "draggableRows"?: boolean;
+        /**
+          * A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows.
+         */
+        "getGroupByHeading"?: (row: Object) => string;
         "getMultiRowActions"?: (rows: string[]) => ITableRowAction[];
         "getRowActions"?: (row: Object) => ITableRowAction[];
         /**
           * A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).
          */
         "getRowId"?: (row: Object) => string;
+        /**
+          * The row property to use for grouping rows.  The `rows` prop must be provided as well.
+         */
+        "groupBy"?: string;
         "hoverable"?: boolean;
+        /**
+          * Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.
+         */
+        "mutateOnDrag"?: boolean;
         /**
           * Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s.
          */
@@ -1782,6 +1830,10 @@ declare namespace LocalJSX {
           * This is required for checkable rows in order to persist the checked state through sorting and pagination.
          */
         "rowId"?: string;
+        /**
+          * This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component.
+         */
+        "rowIndex"?: number;
         /**
           * Style the row as a subheader.
          */

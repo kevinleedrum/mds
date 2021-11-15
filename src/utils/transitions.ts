@@ -29,6 +29,31 @@ const SCALE_IN: TransitionOptions = {
   timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
 };
 
+const SLIDE_IN_FROM_RIGHT: TransitionOptions = {
+  property: 'transform',
+  startValue: 'translate3d(100%, 0, 0)',
+  endValue: 'translate3d(0, 0, 0)',
+  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+};
+const SLIDE_IN_FROM_LEFT: TransitionOptions = {
+  property: 'transform',
+  startValue: 'translate3d(-100%, 0, 0)',
+  endValue: 'translate3d(0, 0, 0)',
+  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+};
+const SLIDE_OUT_TO_LEFT: TransitionOptions = {
+  property: 'transform',
+  startValue: 'translate3d(0, 0, 0)',
+  endValue: 'translate3d(-100%, 0, 0)',
+  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+};
+const SLIDE_OUT_TO_RIGHT: TransitionOptions = {
+  property: 'transform',
+  startValue: 'translate3d(0, 0, 0)',
+  endValue: 'translate3d(100%, 0, 0)',
+  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+};
+
 export const fadeIn = (el: HTMLElement, duration = 180) => {
   return executeTransition(el, [FADE_IN], duration);
 };
@@ -40,6 +65,16 @@ export const fadeOut = (el: HTMLElement, duration = 150) => {
 /** Fade in and scale from 80% to 100% (Material Fade) */
 export const fadeScaleIn = (el: HTMLElement, duration = 150, transformOrigin?: string) => {
   return executeTransition(el, [FADE_IN, SCALE_IN], duration, transformOrigin);
+};
+
+/** Fade and slide in */
+export const fadeSlideIn = (el: HTMLElement, duration = 250, fromRight = true) => {
+  return executeTransition(el, [fromRight ? SLIDE_IN_FROM_RIGHT : SLIDE_IN_FROM_LEFT, FADE_IN], duration);
+};
+
+/** Fade and slide out */
+export const fadeSlideOut = (el: HTMLElement, duration = 200, toRight = true) => {
+  return executeTransition(el, [toRight ? SLIDE_OUT_TO_RIGHT : SLIDE_OUT_TO_LEFT, FADE_OUT], duration);
 };
 
 /** Executes a CSS transition on an element using the provided options and

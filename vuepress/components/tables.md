@@ -427,9 +427,7 @@ Other props that may be helpful when using server-side pagination include `showP
 
 ## Draggable rows
 
-Set the `draggableRows` prop to allow reordering rows via drag and drop. The component emits an `mxRowMove` event containing the `rowId` (if set), `oldIndex`, and `newIndex` for the dragged row.
-
-The `rows` array is not mutated by the component, so you must update the array using the event data.
+Set the `draggableRows` prop to allow reordering rows via drag and drop.
 
 <section class="mds">
   <div class="mt-20">
@@ -444,12 +442,23 @@ The `rows` array is not mutated by the component, so you must update the array u
         { property: 'credits', heading: 'Song Credits', type: 'number' },
         { property: 'birthdate', heading: 'Birthdate', type: 'date' },
       ]"
-      @mxRowMove="onRowMove"
     />
+    <!-- #endregion draggable -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#draggable
+
+By default, the `rows` array is mutated when reordering, so the reordered array may be read from `HTMLMxTableElement.rows`.
+
+To disable this behavior, set `mutateOnDrag` to `false`. The component emits an `mxRowMove` event containing the `rowId` (if set), `oldIndex`, and `newIndex` for the dragged row. This information can then be used to update state in the host application. If a `rows` array was not provided, the `oldIndex` and `newIndex` are based on the row element's position relative to its siblings. See [nested rows](#nested-rows) and [grouped rows](#grouping-and-subheader-rows) for other examples.
+
+<section class="mds">
+  <div class="mt-20">
+    <!-- #region draggable-2 -->
     <mx-table
       draggable-rows
       checkable
-      class="mt-20"
       paginate="false"
       :get-row-id.prop="row => row.firstName"
       :rows.prop="draggableBeatles"
@@ -459,13 +468,14 @@ The `rows` array is not mutated by the component, so you must update the array u
         { property: 'credits', heading: 'Song Credits', type: 'number' },
         { property: 'birthdate', heading: 'Birthdate', type: 'date' },
       ]"
+      mutate-on-drag="false"
       @mxRowMove="onRowMove"
     />
-    <!-- #endregion draggable -->
+    <!-- #endregion draggable-2 -->
   </div>
 </section>
 
-<<< @/vuepress/components/tables.md#draggable
+<<< @/vuepress/components/tables.md#draggable-2
 <<< @/vuepress/components/tables.md#row-move
 
 ## Nested rows
@@ -539,7 +549,29 @@ The example below combines nested rows with the `draggableRows` prop. For the sa
 <<< @/vuepress/components/tables.md#indent
 <<< @/vuepress/components/tables.md#nested-row-move
 
-## Subheader rows
+## Grouping and subheader rows
+
+The `groupBy` prop specifies a property on the `rows` objects to use for grouping rows under subheaders.
+
+If the `groupBy` values are not suitable for use as headings, pass a `getGroupByHeading` function to translate them into display-friendly headings for the subheader rows.
+
+<section class="mds">
+  <div class="mt-20">
+  <!-- #region grouping -->
+  <mx-table
+    auto-width
+    draggable-rows
+    paginate="false" 
+    :rows.prop="apps"
+    :columns.prop="[{ property: 'name', heading: 'Name', sortable: false }]"
+    group-by="section"
+  />
+  <!-- #endregion grouping -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#grouping
+<<< @/vuepress/components/tables.md#apps
 
 Adding the `subheader` prop to a row styles it as a subheader. Only one `mx-table-cell` is necessary for the subheader content. When used inside a table with draggable rows, it can be used to drag a group of nested rows.
 
@@ -549,7 +581,6 @@ Adding the `subheader` prop to a row styles it as a subheader. Only one `mx-tabl
     <mx-table
       auto-width
       paginate="false"
-      draggable-rows
       :columns.prop="[
         { heading: 'Name' },
       ]"
@@ -675,10 +706,13 @@ The following example combines checkable, slotted table rows with pagination, ro
 | `disableNextPage`     | `disable-next-page`     | Disable the next-page button. Useful when using server-side pagination and the total number of rows is unknown.                                                                         | `boolean`                               | `false`     |
 | `disablePagination`   | `disable-pagination`    | Disable the pagination buttons (i.e. while loading results)                                                                                                                             | `boolean`                               | `false`     |
 | `draggableRows`       | `draggable-rows`        | Enables reordering of rows via drag and drop.                                                                                                                                           | `boolean`                               | `false`     |
+| `getGroupByHeading`   | --                      | A function that returns the subheader text for a `groupBy` value. If not provided, the `row[groupBy]` value will be shown in the subheader rows.                                        | `(row: Object) => string`               | `undefined` |
 | `getMultiRowActions`  | --                      |                                                                                                                                                                                         | `(rows: string[]) => ITableRowAction[]` | `undefined` |
 | `getRowActions`       | --                      |                                                                                                                                                                                         | `(row: Object) => ITableRowAction[]`    | `undefined` |
 | `getRowId`            | --                      | A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). | `(row: Object) => string`               | `undefined` |
+| `groupBy`             | `group-by`              | The row property to use for grouping rows. The `rows` prop must be provided as well.                                                                                                    | `string`                                | `null`      |
 | `hoverable`           | `hoverable`             |                                                                                                                                                                                         | `boolean`                               | `true`      |
+| `mutateOnDrag`        | `mutate-on-drag`        | Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.                                                                                                 | `boolean`                               | `true`      |
 | `page`                | `page`                  | The page to display                                                                                                                                                                     | `number`                                | `1`         |
 | `paginate`            | `paginate`              | Show the pagination component. Setting this to `false` will show all rows.                                                                                                              | `boolean`                               | `true`      |
 | `progressAppearDelay` | `progress-appear-delay` | Delay the appearance of the progress bar for this many milliseconds                                                                                                                     | `number`                                | `0`         |
@@ -717,6 +751,7 @@ The `ITableColumn` interface describes the objects passed to the `columns` prop.
 | `actions`   | --          | An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. | `ITableRowAction[]` | `[]`        |
 | `checked`   | `checked`   |                                                                                                                       | `boolean`           | `false`     |
 | `rowId`     | `row-id`    | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
+| `rowIndex`  | `row-index` | This row's index in the `HTMLMxTableElement.rows` array. This is set internally by the table component.               | `number`            | `undefined` |
 | `subheader` | `subheader` | Style the row as a subheader.                                                                                         | `boolean`           | `false`     |
 
 ### Table Events
@@ -763,6 +798,10 @@ Collapses the row (on mobile)
 #### `expand() => Promise<void>`
 
 Expands the row (on mobile)
+
+#### `getNestedRowIndexes() => Promise<number[]>`
+
+Get an array of row IDs for rows nested directly inside this row
 
 <script>
 // #region beatles
@@ -1056,12 +1095,23 @@ const albums = [
     "label": "Parlophone"
   }
 ]
+// #region apps
+const apps = [
+  { name: 'Matrix', section: 'Core Tools' },
+  { name: 'Remine', section: 'Core Tools' },
+  { name: 'Realist', section: 'Core Tools' },
+  { name: 'Builders Update', section: 'Additional Benefits' },
+  { name: 'ePropertyWatch', section: 'Additional Benefits' },
+  { name: 'Homes.com', section: 'Additional Benefits' },
+]
+// #endregion apps
 
 export default {
   data() {
     return {
       albums,
       beatles,
+      apps: apps.slice(),
       visibleRows: beatles,
       draggableBeatles: beatles.slice(),
       albumRows: albums,

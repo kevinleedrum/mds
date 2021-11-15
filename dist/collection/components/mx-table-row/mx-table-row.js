@@ -281,6 +281,11 @@ export class MxTableRow {
     await Promise.all(nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))));
     return children;
   }
+  /** Get an array of row IDs for rows nested directly inside this row */
+  async getNestedRowIndexes() {
+    const nestedRows = Array.from(this.childRowWrapper.children);
+    return nestedRows.map((row) => row.rowIndex).filter(x => x != null);
+  }
   /** Calculate the height of the row, including the height of nested rows */
   async getHeight() {
     let height = (await this.getChildren())[0].offsetHeight;
@@ -416,6 +421,23 @@ export class MxTableRow {
         "text": "An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text."
       },
       "defaultValue": "[]"
+    },
+    "rowIndex": {
+      "type": "number",
+      "mutable": false,
+      "complexType": {
+        "original": "number",
+        "resolved": "number",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component."
+      },
+      "attribute": "row-index",
+      "reflect": false
     },
     "checked": {
       "type": "boolean",
@@ -617,6 +639,25 @@ export class MxTableRow {
       },
       "docs": {
         "text": "Returns the immediate children of the row, as well as the immediate children of all nested\nrows.  If a child is `display: contents` (i.e. the first column wrapper), then its children\nare added.",
+        "tags": []
+      }
+    },
+    "getNestedRowIndexes": {
+      "complexType": {
+        "signature": "() => Promise<number[]>",
+        "parameters": [],
+        "references": {
+          "Promise": {
+            "location": "global"
+          },
+          "HTMLMxTableRowElement": {
+            "location": "global"
+          }
+        },
+        "return": "Promise<number[]>"
+      },
+      "docs": {
+        "text": "Get an array of row IDs for rows nested directly inside this row",
         "tags": []
       }
     },

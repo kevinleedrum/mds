@@ -53,11 +53,12 @@ export declare class MxTable {
   hasSearch: boolean;
   hasFilter: boolean;
   showOperationsBar: boolean;
-  dragRow: HTMLMxTableRowElement;
-  dragRowSiblings: HTMLMxTableRowElement[];
-  dragRowHeight: number;
-  dragRowIndex: number;
-  dragOverRowIndex: number;
+  dragRowEl: HTMLMxTableRowElement;
+  dragRowElSiblings: HTMLMxTableRowElement[];
+  dragOverRowEl: HTMLMxTableRowElement;
+  dragRowElIndex: number;
+  dragOverRowElIndex: number;
+  dragRowElHeight: number;
   dragMoveHandler: (e: MouseEvent) => any;
   /** An array of objects that defines the table's dataset. */
   rows: Object[];
@@ -75,6 +76,12 @@ export declare class MxTable {
   showCheckAll: boolean;
   /** Enables reordering of rows via drag and drop. */
   draggableRows: boolean;
+  /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
+  mutateOnDrag: boolean;
+  /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
+  groupBy: string;
+  /** A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows. */
+  getGroupByHeading: (row: Object) => string;
   hoverable: boolean;
   /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
   autoWidth: boolean;
@@ -123,7 +130,7 @@ export declare class MxTable {
   onMxCheck(e: CustomEvent): void;
   onMxRowDragStart(e: CustomEvent): Promise<void>;
   onDragKeyDown(e: CustomEvent): Promise<void>;
-  onMxRowDragEnd(e: CustomEvent): void;
+  onMxRowDragEnd(e: CustomEvent): Promise<void>;
   onVisibleRowsChange(): void;
   onPageChange(): void;
   resetPage(): void;
@@ -136,7 +143,9 @@ export declare class MxTable {
   onCheckAllClick(e: InputEvent): void;
   /** Animate table rows while dragging a row */
   onDragMove(e?: MouseEvent): void;
+  reorderRowsArray(): Promise<void>;
   setCellProps(): void;
+  getRowGroup(row: any): string;
   setRowsChecked(): void;
   connectedCallback(): void;
   componentWillLoad(): void;
@@ -146,7 +155,10 @@ export declare class MxTable {
   disconnectedCallback(): void;
   get cols(): ITableColumn[];
   get exposedMobileColumn(): ITableColumn;
+  get uniqueGroups(): string[];
+  get groupedRows(): Object[];
   get visibleRows(): Object[];
+  get visibleGroups(): string[];
   get allRowsChecked(): boolean;
   get someRowsChecked(): boolean;
   get multiRowActions(): ITableRowAction[];
@@ -164,6 +176,7 @@ export declare class MxTable {
   getHeaderClass(col: ITableColumn, colIndex: number): string;
   getHeaderArrowClass(col: ITableColumn): string;
   getAlignClasses(col: ITableColumn): string[];
+  getRowJsx(row: any, rowIndex: number): any;
   onHeaderClick(col: ITableColumn): void;
   changeExposedColumnIndex(delta: number): void;
   onMxPageChange(e: {
