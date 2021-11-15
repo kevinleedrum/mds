@@ -30,6 +30,8 @@ export class MxTableRow {
   @Prop() rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   @Prop() actions: ITableRowAction[] = [];
+  /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
+  @Prop() rowIndex: number;
   @Prop({ mutable: true }) checked: boolean = false;
   /** Style the row as a subheader. */
   @Prop() subheader: boolean = false;
@@ -309,6 +311,13 @@ export class MxTableRow {
       nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))),
     );
     return children as HTMLElement[];
+  }
+
+  /** Get an array of row IDs for rows nested directly inside this row */
+  @Method()
+  async getNestedRowIndexes(): Promise<number[]> {
+    const nestedRows = Array.from(this.childRowWrapper.children) as HTMLMxTableRowElement[];
+    return nestedRows.map((row: HTMLMxTableRowElement) => row.rowIndex).filter(x => x != null);
   }
 
   /** Calculate the height of the row, including the height of nested rows */

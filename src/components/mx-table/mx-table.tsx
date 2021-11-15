@@ -64,15 +64,16 @@ export class MxTable {
   hasSearch: boolean = false;
   hasFilter: boolean = false;
   showOperationsBar: boolean = false;
-  dragRow: HTMLMxTableRowElement;
-  dragRowSiblings: HTMLMxTableRowElement[];
-  dragRowHeight: number;
-  dragRowIndex: number;
-  dragOverRowIndex: number;
+  dragRowEl: HTMLMxTableRowElement;
+  dragRowElSiblings: HTMLMxTableRowElement[];
+  dragOverRowEl: HTMLMxTableRowElement;
+  dragRowElIndex: number;
+  dragOverRowElIndex: number;
+  dragRowElHeight: number;
   dragMoveHandler: (e: MouseEvent) => any;
 
   /** An array of objects that defines the table's dataset. */
-  @Prop() rows: Object[] = [];
+  @Prop({ mutable: true }) rows: Object[] = [];
   /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
   @Prop() columns: ITableColumn[] = [];
   /** A function that returns the `rowId` prop for each generated `mx-table-row`.
@@ -87,6 +88,12 @@ export class MxTable {
   @Prop() showCheckAll: boolean = true;
   /** Enables reordering of rows via drag and drop. */
   @Prop() draggableRows: boolean = false;
+  /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
+  @Prop() mutateOnDrag: boolean = true;
+  /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
+  @Prop() groupBy: string = null;
+  /** A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows. */
+  @Prop() getGroupByHeading: (row: Object) => string;
   @Prop() hoverable: boolean = true;
   /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
   @Prop() autoWidth: boolean = false;
@@ -149,19 +156,19 @@ export class MxTable {
 
   @Listen('mxRowDragStart')
   async onMxRowDragStart(e: CustomEvent) {
-    this.dragRow = (e.target as HTMLElement).closest('mx-table-row');
+    this.dragRowEl = (e.target as HTMLElement).closest('mx-table-row');
     // Cache height of row (including any nested rows)
-    this.dragRowHeight = await this.dragRow.getHeight();
+    this.dragRowElHeight = await this.dragRowEl.getHeight();
     // Get all rows that are affected by dragging this one (i.e. the same parent node)
-    this.dragRowSiblings = Array.from(this.dragRow.parentNode.children).filter(
+    this.dragRowElSiblings = Array.from(this.dragRowEl.parentNode.children).filter(
       c => c.tagName === 'MX-TABLE-ROW',
     ) as HTMLMxTableRowElement[];
-    this.dragRowIndex = this.dragRowSiblings.indexOf(this.dragRow);
-    this.dragOverRowIndex = this.dragRowIndex;
+    this.dragRowElIndex = this.dragRowElSiblings.indexOf(this.dragRowEl);
+    this.dragOverRowElIndex = this.dragRowElIndex;
     this.dragMoveHandler = this.onDragMove.bind(this);
     // Add transitions to the rows
-    this.dragRowSiblings.forEach(async row => {
-      if (!e.detail.isKeyboard && row === this.dragRow) return; // Do not transition a row dragged with a mouse
+    this.dragRowElSiblings.forEach(async row => {
+      if (!e.detail.isKeyboard && row === this.dragRowEl) return; // Do not transition a row dragged with a mouse
       (await row.getChildren()).forEach((rowChild: HTMLElement) => {
         rowChild.classList.add('transition-transform', 'pointer-events-none');
       });
@@ -179,38 +186,49 @@ export class MxTable {
     if (['ArrowUp', 'ArrowLeft'].includes(key)) direction = -1;
     if (['ArrowDown', 'ArrowRight'].includes(key)) direction = 1;
     if (!direction) return;
-    if (direction === -1 && this.dragOverRowIndex === 0) return; // Row is at the top
-    if (direction === 1 && this.dragOverRowIndex === this.dragRowSiblings.length - 1) return; // Row is at the bottom
-    this.dragOverRowIndex += direction;
+    if (direction === -1 && this.dragOverRowElIndex === 0) return; // Row is at the top
+    if (direction === 1 && this.dragOverRowElIndex === this.dragRowElSiblings.length - 1) return; // Row is at the bottom
+    this.dragOverRowElIndex += direction;
     // Determine the translate distance based on sibling row heights
     let translateY = 0;
-    let rowIndex = this.dragOverRowIndex;
-    while (rowIndex !== this.dragRowIndex) {
-      const translateDir = this.dragOverRowIndex > this.dragRowIndex ? 1 : -1;
-      translateY += (await this.dragRowSiblings[rowIndex].getHeight()) * translateDir;
+    let rowIndex = this.dragOverRowElIndex;
+    while (rowIndex !== this.dragRowElIndex) {
+      const translateDir = this.dragOverRowElIndex > this.dragRowElIndex ? 1 : -1;
+      translateY += (await this.dragRowElSiblings[rowIndex].getHeight()) * translateDir;
       rowIndex -= translateDir;
     }
-    this.dragRow.translateRow(0, translateY);
+    this.dragRowEl.translateRow(0, translateY);
+    this.dragOverRowEl = this.dragRowElSiblings[this.dragOverRowElIndex];
     this.onDragMove();
   }
 
   @Listen('mxRowDragEnd')
-  onMxRowDragEnd(e: CustomEvent) {
+  async onMxRowDragEnd(e: CustomEvent) {
     document.removeEventListener('mousemove', this.dragMoveHandler);
     document.removeEventListener('touchmove', this.dragMoveHandler);
-    if (!e.detail.isCancel && this.dragOverRowIndex !== this.dragRowIndex) {
-      // If row was dragged to a new position AND dragging wasn't cancelled, emit the mxRowMove event
+    if (!e.detail.isCancel && this.dragOverRowElIndex !== this.dragRowElIndex) {
+      // If row was dragged to a new position AND dragging wasn't cancelled,
+      // mutate the rows array (if applicable) and emit the mxRowMove event
+      if (this.rows && this.mutateOnDrag) this.reorderRowsArray();
       this.mxRowMove.emit({
-        rowId: (e.target as HTMLMxTableRowElement).rowId,
-        oldIndex: this.dragRowIndex,
-        newIndex: this.dragOverRowIndex,
+        rowId: this.dragRowEl.rowId,
+        oldIndex: this.dragRowEl.rowIndex == null ? this.dragRowElIndex : this.dragRowEl.rowIndex,
+        newIndex: this.dragOverRowEl.rowIndex == null ? this.dragOverRowElIndex : this.dragOverRowEl.rowIndex,
       });
-      if (e.detail.isKeyboard) this.dragRowSiblings[this.dragOverRowIndex].focusDragHandle(); // Focus the handle at the new index
+      if (e.detail.isKeyboard) {
+        // Focus the handle at the element's new index
+        requestAnimationFrame(() => {
+          const reorderedDragRowSiblings = Array.from(this.dragRowEl.parentNode.children).filter(
+            c => c.tagName === 'MX-TABLE-ROW',
+          ) as HTMLMxTableRowElement[];
+          reorderedDragRowSiblings[this.dragOverRowElIndex].focusDragHandle();
+        });
+      }
     }
-    this.dragRowIndex = null;
+    this.dragRowElIndex = null;
     // Remove transitions and transforms from rows
     requestAnimationFrame(() => {
-      this.dragRowSiblings.forEach(async row => {
+      this.dragRowElSiblings.forEach(async row => {
         (await row.getChildren()).forEach((rowChild: HTMLElement) => {
           rowChild.classList.remove('transition-transform', 'pointer-events-none');
           rowChild.style.transform = '';
@@ -287,27 +305,49 @@ export class MxTable {
   /** Animate table rows while dragging a row */
   onDragMove(e?: MouseEvent) {
     requestAnimationFrame(() => {
-      if (this.dragRow == null) return;
-      this.dragRowSiblings.forEach(async (row, rowIndex) => {
+      if (this.dragRowEl == null) return;
+      this.dragRowElSiblings.forEach(async (row, rowIndex) => {
         const rowChildren = await row.getChildren();
         const { top } = getPageRect(rowChildren[0]);
         const { bottom } = getPageRect(rowChildren[rowChildren.length - 1]);
         if (e) {
           const { pageY } = getCursorCoords(e);
-          if (pageY >= top && pageY <= bottom) this.dragOverRowIndex = rowIndex;
+          if (pageY >= top && pageY <= bottom) {
+            this.dragOverRowEl = row;
+            this.dragOverRowElIndex = rowIndex;
+          }
         }
-        if (row === this.dragRow) return; // Do not shift row that is being dragged
-        if (rowIndex <= this.dragOverRowIndex && rowIndex > this.dragRowIndex) {
+        if (row === this.dragRowEl) return; // Do not shift row that is being dragged
+        if (rowIndex <= this.dragOverRowElIndex && rowIndex > this.dragRowElIndex) {
           // Shift rows that are below the dragged row UP
-          rowChildren.forEach(child => (child.style.transform = `translateY(-${this.dragRowHeight}px)`));
-        } else if (rowIndex >= this.dragOverRowIndex && rowIndex < this.dragRowIndex) {
+          rowChildren.forEach(child => (child.style.transform = `translateY(-${this.dragRowElHeight}px)`));
+        } else if (rowIndex >= this.dragOverRowElIndex && rowIndex < this.dragRowElIndex) {
           // Shift rows that are above the dragged row DOWN
-          rowChildren.forEach(child => (child.style.transform = `translateY(${this.dragRowHeight}px)`));
+          rowChildren.forEach(child => (child.style.transform = `translateY(${this.dragRowElHeight}px)`));
         } else {
           rowChildren.forEach(child => (child.style.transform = ''));
         }
       });
     });
+  }
+
+  async reorderRowsArray() {
+    const draggedRowIndexes = [];
+    if (this.dragRowEl.rowIndex != null) draggedRowIndexes.push(this.dragRowEl.rowIndex);
+    draggedRowIndexes.push(...(await this.dragRowEl.getNestedRowIndexes()));
+    if (draggedRowIndexes.length) {
+      const reorderedRows = this.groupedRows.slice();
+      draggedRowIndexes.reverse();
+      let targetRowIndex = this.dragOverRowEl.rowIndex;
+      if (targetRowIndex == null) targetRowIndex = (await this.dragOverRowEl.getNestedRowIndexes())[0];
+      const draggedRows = draggedRowIndexes.map(index => this.groupedRows[index]);
+      if (targetRowIndex > reorderedRows.indexOf(draggedRows[0])) draggedRows.reverse();
+      draggedRows.forEach(draggedRow => {
+        reorderedRows.splice(reorderedRows.indexOf(draggedRow), 1)[0];
+        reorderedRows.splice(targetRowIndex, 0, draggedRow);
+      });
+      this.rows = reorderedRows;
+    }
   }
 
   setCellProps() {
@@ -326,6 +366,11 @@ export class MxTable {
         else colIndex++;
       });
     });
+  }
+
+  getRowGroup(row: any): string {
+    if (row[this.groupBy] == null) return null; // one group for both `undefined` and `null`
+    return row[this.groupBy] as string;
   }
 
   setRowsChecked() {
@@ -387,13 +432,37 @@ export class MxTable {
     return this.cols[this.exposedMobileColumnIndex] || {};
   }
 
+  get uniqueGroups(): string[] {
+    if (!this.groupBy || !this.rows.length) return [];
+    const groups = this.rows.map(row => this.getRowGroup(row)) as string[];
+    return [...new Set(groups)]; // remove duplicates
+  }
+
+  get groupedRows(): Object[] {
+    if (!this.groupBy) return this.rows;
+    const groupedRows = [];
+    // Group rows based on the order of `uniqueGroups` (the order in which the groups first appear)
+    this.uniqueGroups.forEach(group => {
+      const rowsInGroup = this.rows.filter(row => {
+        if (row[this.groupBy] == null && group === null) return true;
+        return row[this.groupBy] === group;
+      });
+      groupedRows.push(...rowsInGroup);
+    });
+    return groupedRows;
+  }
+
   get visibleRows(): Object[] {
-    if (this.serverPaginate || (!this.paginate && !this.sortBy)) return this.rows;
+    if (this.serverPaginate || (!this.paginate && !this.sortBy)) return this.groupedRows;
     const offset = (this.page - 1) * this.rowsPerPage;
-    let rows = this.rows.slice();
+    let rows = this.groupedRows.slice();
     if (this.sortBy) this.sortRows(rows);
     rows = rows.slice(offset, offset + this.rowsPerPage);
     return rows;
+  }
+
+  get visibleGroups(): string[] {
+    return [...new Set(this.visibleRows.map(row => this.getRowGroup(row)))] as string[];
   }
 
   get allRowsChecked(): boolean {
@@ -551,6 +620,22 @@ export class MxTable {
     return classes;
   }
 
+  getRowJsx(row: any, rowIndex: number) {
+    return (
+      <mx-table-row
+        row-id={this.getRowId ? this.getRowId(row) : null}
+        row-index={rowIndex}
+        actions={this.getRowActions ? this.getRowActions(row) : undefined}
+      >
+        {this.cols.map((col: ITableColumn) => (
+          <mx-table-cell>
+            <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
+          </mx-table-cell>
+        ))}
+      </mx-table-row>
+    );
+  }
+
   onHeaderClick(col: ITableColumn) {
     if (this.draggableRows || !col || !col.sortable || !col.property) return;
     if (this.sortBy !== col.property) {
@@ -600,13 +685,14 @@ export class MxTable {
             data-testid="multi-action-button"
             btn-type="outlined"
             {...this.multiRowActions[0]}
-            class={'whitespace-nowrap' + (!this.checkedRowIds.length ? ' hidden' : '')}
+            class={'whitespace-nowrap' + (!this.checkedRowIds.length ? ' invisible' : '')}
+            aria-hidden={this.checkedRowIds.length === 0}
           >
             {this.multiRowActions[0].value}
           </mx-button>
         ) : (
           // Multi-Row Action Menu
-          <span class={!this.checkedRowIds.length ? 'hidden' : null}>
+          <span class={!this.checkedRowIds.length ? 'invisible' : null} aria-hidden={this.checkedRowIds.length === 0}>
             <mx-button ref={el => (this.actionMenuButton = el)} btn-type="text" dropdown>
               <span class="h-full flex items-center px-2">
                 <span innerHTML={gearSvg}></span>
@@ -641,6 +727,29 @@ export class MxTable {
         )}
       </div>
     );
+
+    let generatedRows = [];
+    if (!this.hasDefaultSlot && !this.groupBy && this.groupedRows.length) {
+      generatedRows = this.visibleRows.map(row => {
+        const index = this.rows.indexOf(row);
+        return this.getRowJsx(row, index);
+      });
+    } else if (!this.hasDefaultSlot && this.groupBy) {
+      generatedRows = this.visibleGroups.map(group => {
+        const heading = this.getGroupByHeading ? this.getGroupByHeading(group) : group;
+        return (
+          <mx-table-row subheader key={group}>
+            <mx-table-cell>{heading}</mx-table-cell>
+            {this.visibleRows
+              .filter(row => this.getRowGroup(row) === group)
+              .map(row => {
+                const index = this.groupedRows.indexOf(row);
+                return this.getRowJsx(row, index);
+              })}
+          </mx-table-row>
+        );
+      });
+    }
 
     return (
       <Host class={'mx-table block text-4' + (this.hoverable ? ' hoverable' : '')}>
@@ -727,23 +836,7 @@ export class MxTable {
 
           <slot></slot>
           {/* HACK: Stencil refuses to render this as default slot content. :( */}
-          {!this.hasDefaultSlot && (
-            <div>
-              {this.visibleRows.map((row, rowIndex) => (
-                // Generated Body Rows
-                <mx-table-row
-                  row-id={this.getRowId ? this.getRowId(row) : null}
-                  actions={this.getRowActions ? this.getRowActions(row) : undefined}
-                >
-                  {this.cols.map((col: ITableColumn) => (
-                    <mx-table-cell>
-                      <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
-                    </mx-table-cell>
-                  ))}
-                </mx-table-row>
-              ))}
-            </div>
-          )}
+          {!this.hasDefaultSlot && <div>{generatedRows}</div>}
           {/* Empty State */}
           <div data-testid="empty-state" class={this.emptyStateClass}>
             <div class="col-span-full p-16 text-4">
