@@ -749,6 +749,7 @@ The `ITableColumn` interface describes the objects passed to the `columns` prop.
 | `actions`   | --          | An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. | `ITableRowAction[]` | `[]`        |
 | `checked`   | `checked`   |                                                                                                                       | `boolean`           | `false`     |
 | `rowId`     | `row-id`    | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
+| `rowIndex`  | `row-index` | This row's index in the `HTMLMxTableElement.rows` array. This is set internally by the table component.               | `number`            | `undefined` |
 | `subheader` | `subheader` | Style the row as a subheader.                                                                                         | `boolean`           | `false`     |
 
 ### Table Events
@@ -795,6 +796,10 @@ Collapses the row (on mobile)
 #### `expand() => Promise<void>`
 
 Expands the row (on mobile)
+
+#### `getNestedRowIndexes() => Promise<number[]>`
+
+Get an array of row IDs for rows nested directly inside this row
 
 <script>
 // #region beatles

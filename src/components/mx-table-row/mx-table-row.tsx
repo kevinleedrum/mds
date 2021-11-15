@@ -30,7 +30,7 @@ export class MxTableRow {
   @Prop() rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   @Prop() actions: ITableRowAction[] = [];
-  /** This row's index in the MxTableElement.rows array.  This is set internally by the table component. */
+  /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
   @Prop() rowIndex: number;
   @Prop({ mutable: true }) checked: boolean = false;
   /** Style the row as a subheader. */
