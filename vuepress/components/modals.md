@@ -172,7 +172,30 @@ On small screens, the modal will fill the screen, except for a 24-px margin at t
 </section>
 <!-- #endregion modals-4 -->
 
-<<< @/vuepress/components/modals.md#modals-4
+<<< @/vuepress/components/modals.md#modals-5
+
+### Modal that opens from the right on larger screens
+
+<!-- #region modals-5 -->
+<section class="mds">
+  <mx-button class="mt-20" @click="isOpenF = true">Open Modal</mx-button>
+  <mx-modal
+    from-right
+    :is-open="isOpenF"
+    :buttons.prop="[
+      { label: 'Primary', onClick: () => isOpenF = false },
+      { label: 'Secondary', onClick: () => isOpenF = false },
+    ]"
+    @mxClose="isOpenF = false"
+  >
+    <div slot="header-left">Header</div>
+    <div slot="header-right"><!-- Hide Close button --></div>
+    This is content.
+  </mx-modal>
+</section>
+<!-- #endregion modals-5 -->
+
+<<< @/vuepress/components/modals.md#modals-5
 
 ### Properties
 
@@ -183,6 +206,8 @@ On small screens, the modal will fill the screen, except for a 24-px margin at t
 | `closeOnOutsideClick` | `close-on-outside-click` | If set to false, clicking the backdrop will not close the modal.                                                                                              | `boolean`        | `true`      |
 | `contentClass`        | `content-class`          | Additional classes for the inner scrolling container.                                                                                                         | `string`         | `''`        |
 | `description`         | `description`            | An optional description to display above the modal content                                                                                                    | `string`         | `undefined` |
+| `fromLeft`            | `from-left`              | Instead of centering, attach the modal to the left side of the window                                                                                         | `boolean`        | `false`     |
+| `fromRight`           | `from-right`             | Instead of centering, attach the modal to the right side of the window                                                                                        | `boolean`        | `false`     |
 | `isOpen`              | `is-open`                | Toggle the modal                                                                                                                                              | `boolean`        | `false`     |
 | `large`               | `large`                  | Set to true to stretch the modal to nearly fill the width and height of the page (on desktop-sized screens). Otherwise, the maximum dimensions are 800x600px. | `boolean`        | `false`     |
 | `previousPageTitle`   | `previous-page-title`    | The text to display for the previous page link                                                                                                                | `string`         | `'Back'`    |
@@ -202,6 +227,7 @@ export default {
       isOpenC: false,
       isOpenD: false,
       isOpenE: false,
+      isOpenF: false,
       activeTab: 0,
       device: 'desktop',
     }
