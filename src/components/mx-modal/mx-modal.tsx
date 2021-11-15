@@ -115,7 +115,7 @@ export class MxModal {
     this.isVisible = true;
     requestAnimationFrame(async () => {
       this.getFocusElements();
-      await Promise.all([fadeIn(this.backdrop, 250), this.transition(this.modal)]);
+      await Promise.all([fadeIn(this.backdrop, 250), this.openTransition(this.modal)]);
       this.mobilePageHeader.resetResizeObserver();
     });
   }
@@ -134,7 +134,7 @@ export class MxModal {
   }
 
   async closeModal() {
-    await Promise.all([fadeOut(this.backdrop), this.transition(this.modal)]);
+    await Promise.all([fadeOut(this.backdrop), this.closeTransition(this.modal)]);
     this.isVisible = false;
     unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
@@ -165,9 +165,16 @@ export class MxModal {
     return str;
   }
 
-  get transition(): Function {
-    let transition: Function = this.isVisible ? fadeOut : (el: HTMLElement) => fadeScaleIn(el, 250);
-    if (this.minWidths.sm && this.fromRight) transition = this.isVisible ? fadeSlideOut : fadeSlideIn;
+  get openTransition(): Function {
+    let transition: Function = (el: HTMLElement) => fadeScaleIn(el, 250);
+    if (this.minWidths.sm && this.fromRight) transition = fadeSlideIn;
+    else if (this.minWidths.sm && this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    return transition;
+  }
+
+  get closeTransition(): Function {
+    let transition: Function = fadeOut;
+    if (this.minWidths.sm && this.fromRight) transition = fadeSlideOut;
     else if (this.minWidths.sm && this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }

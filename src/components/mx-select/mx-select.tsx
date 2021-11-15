@@ -70,11 +70,11 @@ export class MxSelect {
   }
 
   get selectWrapperClass() {
-    let str = 'mx-select-wrapper flex items-center relative border rounded-lg';
+    let str = 'mx-select-wrapper flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     if (this.elevated) str += ' elevated shadow-1';
     if (this.flat) str += ' flat';
-    if (this.error || this.isFocused) str += ' border-2';
+    str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.error) str += ' error';
     if (this.disabled) str += ' disabled';
     return str;
