@@ -159,16 +159,16 @@ export class MxModal {
 
   get modalClass(): string {
     let str = 'modal flex flex-col shadow-9 relative overflow-hidden';
-    if (this.minWidths.sm && this.fromLeft) str += ' rounded-r-xl';
-    else if (this.minWidths.sm && this.fromRight) str += ' rounded-l-xl';
+    if (this.fromLeft) str += ' rounded-r-xl';
+    else if (this.fromRight) str += ' rounded-l-xl';
     else str += ' rounded-xl';
     return str;
   }
 
   get openTransition(): Function {
     let transition: Function = (el: HTMLElement) => fadeScaleIn(el, 250);
-    if (this.minWidths.sm && this.fromRight) transition = fadeSlideIn;
-    else if (this.minWidths.sm && this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    if (this.fromRight) transition = fadeSlideIn;
+    else if (this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
 
