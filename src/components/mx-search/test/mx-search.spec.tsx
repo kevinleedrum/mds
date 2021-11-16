@@ -85,7 +85,7 @@ describe('mx-search', () => {
     const button = root.querySelector('[data-testid="clear-button"]') as HTMLButtonElement;
     button.click();
     await page.waitForChanges();
-    expect(root.value).toBe(null);
+    expect(root.value).toBe('');
   });
 
   it('does not show a clear button when showClear is false', async () => {

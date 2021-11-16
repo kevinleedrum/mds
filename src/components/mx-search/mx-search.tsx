@@ -9,6 +9,7 @@ import { propagateDataAttributes } from '../../utils/utils';
 })
 export class MxSearch {
   dataAttributes = {};
+  inputEl: HTMLInputElement;
 
   /** If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search". */
   @Prop() ariaLabel: string;
@@ -29,8 +30,9 @@ export class MxSearch {
   }
 
   onClear() {
-    this.value = null;
-    if (typeof jest === 'undefined') (this.element.firstElementChild as HTMLElement).focus();
+    this.inputEl.value = '';
+    this.inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+    if (typeof jest === 'undefined') this.inputEl.focus();
   }
 
   get inputClass() {
@@ -50,6 +52,7 @@ export class MxSearch {
     return (
       <Host class="mx-search flex items-center relative">
         <input
+          ref={el => (this.inputEl = el)}
           type="search"
           aria-label={this.ariaLabel || this.placeholder || 'Search'}
           name={this.name}
