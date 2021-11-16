@@ -210,11 +210,6 @@ export class MxTable {
       // If row was dragged to a new position AND dragging wasn't cancelled,
       // mutate the rows array (if applicable) and emit the mxRowMove event
       if (this.rows && this.mutateOnDrag) this.reorderRowsArray();
-      this.mxRowMove.emit({
-        rowId: this.dragRowEl.rowId,
-        oldIndex: this.dragRowEl.rowIndex == null ? this.dragRowElIndex : this.dragRowEl.rowIndex,
-        newIndex: this.dragOverRowEl.rowIndex == null ? this.dragOverRowElIndex : this.dragOverRowEl.rowIndex,
-      });
       if (e.detail.isKeyboard) {
         // Focus the handle at the element's new index
         requestAnimationFrame(() => {
@@ -225,7 +220,6 @@ export class MxTable {
         });
       }
     }
-    this.dragRowElIndex = null;
     // Remove transitions and transforms from rows
     requestAnimationFrame(() => {
       this.dragRowElSiblings.forEach(async row => {
@@ -236,6 +230,14 @@ export class MxTable {
       });
     });
     document.body.style.cursor = '';
+    // If mutating the rows prop, wait a frame for Stencil to update the property on the element
+    if (this.rows && this.mutateOnDrag) await new Promise(requestAnimationFrame);
+    this.mxRowMove.emit({
+      rowId: this.dragRowEl.rowId,
+      oldIndex: this.dragRowEl.rowIndex == null ? this.dragRowElIndex : this.dragRowEl.rowIndex,
+      newIndex: this.dragOverRowEl.rowIndex == null ? this.dragOverRowElIndex : this.dragOverRowEl.rowIndex,
+    });
+    this.dragRowElIndex = null;
   }
 
   @Watch('sortBy')
