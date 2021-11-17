@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
+import xSvg from '../../assets/svg/x.svg';
 import searchSvg from '../../assets/svg/search.svg';
 import { propagateDataAttributes } from '../../utils/utils';
 
@@ -8,6 +9,7 @@ import { propagateDataAttributes } from '../../utils/utils';
 })
 export class MxSearch {
   dataAttributes = {};
+  inputEl: HTMLInputElement;
 
   /** If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search". */
   @Prop() ariaLabel: string;
@@ -15,6 +17,8 @@ export class MxSearch {
   @Prop() flat: boolean = false;
   @Prop() name: string;
   @Prop() placeholder: string;
+  /** Set to `false` to hide the clear button. */
+  @Prop() showClear: boolean = true;
   @Prop({ mutable: true }) value: string;
 
   @Element() element: HTMLMxSearchElement;
@@ -25,6 +29,12 @@ export class MxSearch {
     this.value = (e.target as HTMLInputElement).value;
   }
 
+  onClear() {
+    this.inputEl.value = '';
+    this.inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+    if (typeof jest === 'undefined') this.inputEl.focus();
+  }
+
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
     str += this.flat ? ' flat' : ' shadow-1';
@@ -32,10 +42,17 @@ export class MxSearch {
     return str;
   }
 
+  get clearButtonClass() {
+    let str = 'clear-button absolute right-8 inline-flex items-center justify-center w-24 h-24 cursor-pointer';
+    if (!this.value) str += ' hidden';
+    return str;
+  }
+
   render() {
     return (
       <Host class="mx-search flex items-center relative">
         <input
+          ref={el => (this.inputEl = el)}
           type="search"
           aria-label={this.ariaLabel || this.placeholder || 'Search'}
           name={this.name}
@@ -46,6 +63,11 @@ export class MxSearch {
           onInput={this.onInput.bind(this)}
         ></input>
         <span innerHTML={searchSvg} class="absolute left-16 pointer-events-none"></span>
+        {this.showClear && (
+          <button class={this.clearButtonClass} data-testid="clear-button" onClick={this.onClear.bind(this)}>
+            <span innerHTML={xSvg}></span>
+          </button>
+        )}
       </Host>
     );
   }
