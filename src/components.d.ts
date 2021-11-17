@@ -533,6 +533,10 @@ export namespace Components {
         "flat": boolean;
         "name": string;
         "placeholder": string;
+        /**
+          * Set to `false` to hide the clear button.
+         */
+        "showClear": boolean;
         "value": string;
     }
     interface MxSelect {
@@ -1599,6 +1603,10 @@ declare namespace LocalJSX {
         "flat"?: boolean;
         "name"?: string;
         "placeholder"?: string;
+        /**
+          * Set to `false` to hide the clear button.
+         */
+        "showClear"?: boolean;
         "value"?: string;
     }
     interface MxSelect {

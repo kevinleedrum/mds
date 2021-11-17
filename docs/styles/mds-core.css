@@ -224,6 +224,7 @@
   --mds-border-search-flat: #eaeaea;
   --mds-bg-search: #fff;
   --mds-text-search: #333;
+  --mds-text-search-clear: #0457af;
   --mds-text-search-placeholder: rgba(51, 51, 51, 0.6);
   --mds-border-search-hover: #333;
   --mds-border-search-focus: #0457af;
@@ -2391,6 +2392,10 @@ video {
 
   left: 0px;
 }
+.mds .right-8{
+
+  right: 0.5rem;
+}
 .mds .left-16{
 
   left: 1rem;
@@ -2562,10 +2567,6 @@ video {
 .mds .top-8{
 
   top: 0.5rem;
-}
-.mds .right-8{
-
-  right: 0.5rem;
 }
 .mds .bottom-8{
 
@@ -10518,6 +10519,12 @@ video {
     -webkit-appearance: none;
             appearance: none;
   }
+.mx-search > .clear-button {
+  background: #fff;
+  background: var(--mds-bg-search);
+  color: #0457af;
+  color: var(--mds-text-search-clear);
+}
 .mx-button button.contained, .mx-button a.contained {
       background-color: #0457af;
       background-color: var(--mds-bg-btn-contained);
@@ -13491,6 +13498,10 @@ span.ripple {
 
     min-height: 8rem;
   }
+  .mds .md\:grid-cols-2{
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .mds .md\:grid-cols-3{
 
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -13498,10 +13509,6 @@ span.ripple {
   .mds .md\:grid-cols-1{
 
     grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .mds .md\:grid-cols-2{
-
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .mds .md\:grid-cols-4{
 
