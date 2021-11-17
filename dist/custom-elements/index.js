@@ -4617,6 +4617,12 @@ const MxRadio$1 = class extends HTMLElement {
   get element() { return this; }
 };
 
+const xSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M19.2803 4.71967C19.5732 5.01256 19.5732 5.48744 19.2803 5.78033L5.78033 19.2803C5.48744 19.5732 5.01256 19.5732 4.71967 19.2803C4.42678 18.9874 4.42678 18.5126 4.71967 18.2197L18.2197 4.71967C18.5126 4.42678 18.9874 4.42678 19.2803 4.71967Z" fill="currentColor"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M4.71967 4.71967C5.01256 4.42678 5.48744 4.42678 5.78033 4.71967L19.2803 18.2197C19.5732 18.5126 19.5732 18.9874 19.2803 19.2803C18.9874 19.5732 18.5126 19.5732 18.2197 19.2803L4.71967 5.78033C4.42678 5.48744 4.42678 5.01256 4.71967 4.71967Z" fill="currentColor"/>
+</svg>
+`;
+
 const searchSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8748 3.75C6.93979 3.75 3.74982 6.93997 3.74982 10.875C3.74982 14.81 6.93979 18 10.8748 18C14.8098 18 17.9998 14.81 17.9998 10.875C17.9998 6.93997 14.8098 3.75 10.8748 3.75ZM2.24982 10.875C2.24982 6.11154 6.11136 2.25 10.8748 2.25C15.6383 2.25 19.4998 6.11154 19.4998 10.875C19.4998 15.6385 15.6383 19.5 10.8748 19.5C6.11136 19.5 2.24982 15.6385 2.24982 10.875Z" fill="currentColor"/>
   <path fill-rule="evenodd" clip-rule="evenodd" d="M15.9126 15.913C16.2055 15.6201 16.6804 15.6201 16.9733 15.913L21.5296 20.4693C21.8225 20.7622 21.8225 21.2371 21.5296 21.53C21.2367 21.8229 20.7618 21.8229 20.4689 21.53L15.9126 16.9737C15.6197 16.6808 15.6197 16.2059 15.9126 15.913Z" fill="currentColor"/>
@@ -4630,10 +4636,18 @@ const MxSearch$1 = class extends HTMLElement {
     this.dataAttributes = {};
     this.dense = false;
     this.flat = false;
+    /** Set to `false` to hide the clear button. */
+    this.showClear = true;
     this.componentWillRender = propagateDataAttributes;
   }
   onInput(e) {
     this.value = e.target.value;
+  }
+  onClear() {
+    this.inputEl.value = '';
+    this.inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+    if (typeof jest === 'undefined')
+      this.inputEl.focus();
   }
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
@@ -4641,8 +4655,14 @@ const MxSearch$1 = class extends HTMLElement {
     str += this.dense ? ' h-36 py-8 text-4' : ' h-48 py-12';
     return str;
   }
+  get clearButtonClass() {
+    let str = 'clear-button absolute right-8 inline-flex items-center justify-center w-24 h-24 cursor-pointer';
+    if (!this.value)
+      str += ' hidden';
+    return str;
+  }
   render() {
-    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", Object.assign({ type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" })));
+    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", Object.assign({ ref: el => (this.inputEl = el), type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" }), this.showClear && (h("button", { class: this.clearButtonClass, "data-testid": "clear-button", onClick: this.onClear.bind(this) }, h("span", { innerHTML: xSvg })))));
   }
   get element() { return this; }
 };
@@ -5016,11 +5036,6 @@ const MxTable$1 = class extends HTMLElement {
       // mutate the rows array (if applicable) and emit the mxRowMove event
       if (this.rows && this.mutateOnDrag)
         this.reorderRowsArray();
-      this.mxRowMove.emit({
-        rowId: this.dragRowEl.rowId,
-        oldIndex: this.dragRowEl.rowIndex == null ? this.dragRowElIndex : this.dragRowEl.rowIndex,
-        newIndex: this.dragOverRowEl.rowIndex == null ? this.dragOverRowElIndex : this.dragOverRowEl.rowIndex,
-      });
       if (e.detail.isKeyboard) {
         // Focus the handle at the element's new index
         requestAnimationFrame(() => {
@@ -5029,7 +5044,6 @@ const MxTable$1 = class extends HTMLElement {
         });
       }
     }
-    this.dragRowElIndex = null;
     // Remove transitions and transforms from rows
     requestAnimationFrame(() => {
       this.dragRowElSiblings.forEach(async (row) => {
@@ -5040,6 +5054,15 @@ const MxTable$1 = class extends HTMLElement {
       });
     });
     document.body.style.cursor = '';
+    // If mutating the rows prop, wait a frame for Stencil to update the property on the element
+    if (this.rows && this.mutateOnDrag)
+      await new Promise(requestAnimationFrame);
+    this.mxRowMove.emit({
+      rowId: this.dragRowEl.rowId,
+      oldIndex: this.dragRowEl.rowIndex == null ? this.dragRowElIndex : this.dragRowEl.rowIndex,
+      newIndex: this.dragOverRowEl.rowIndex == null ? this.dragOverRowElIndex : this.dragOverRowEl.rowIndex,
+    });
+    this.dragRowElIndex = null;
   }
   onVisibleRowsChange() {
     this.getTableRows().forEach(row => row.collapse());
@@ -5124,15 +5147,21 @@ const MxTable$1 = class extends HTMLElement {
     if (draggedRowIndexes.length) {
       const reorderedRows = this.groupedRows.slice();
       draggedRowIndexes.reverse();
-      let targetRowIndex = this.dragOverRowEl.rowIndex;
-      if (targetRowIndex == null)
-        targetRowIndex = (await this.dragOverRowEl.getNestedRowIndexes())[0];
+      let spliceIndex = this.dragOverRowEl.rowIndex;
+      if (spliceIndex == null) {
+        const targetNestedRowIndexes = await this.dragOverRowEl.getNestedRowIndexes();
+        // Splice above top row in group OR below last row depending on drag direction
+        const draggedDownward = draggedRowIndexes[0] < targetNestedRowIndexes[0];
+        spliceIndex = draggedDownward
+          ? targetNestedRowIndexes[targetNestedRowIndexes.length - 1]
+          : targetNestedRowIndexes[0];
+        if (draggedDownward)
+          draggedRowIndexes.reverse();
+      }
       const draggedRows = draggedRowIndexes.map(index => this.groupedRows[index]);
-      if (targetRowIndex > reorderedRows.indexOf(draggedRows[0]))
-        draggedRows.reverse();
       draggedRows.forEach(draggedRow => {
         reorderedRows.splice(reorderedRows.indexOf(draggedRow), 1)[0];
-        reorderedRows.splice(targetRowIndex, 0, draggedRow);
+        reorderedRows.splice(spliceIndex, 0, draggedRow);
       });
       this.rows = reorderedRows;
     }
@@ -6330,7 +6359,7 @@ const MxModal = /*@__PURE__*/proxyCustomElement(MxModal$1, [4,"mx-modal",{"butto
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"modal":[4],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);
 const MxPagination = /*@__PURE__*/proxyCustomElement(MxPagination$1, [4,"mx-pagination",{"page":[2],"rowsPerPageOptions":[16],"rowsPerPage":[2,"rows-per-page"],"simple":[4],"totalRows":[2,"total-rows"],"disabled":[4],"disableNextPage":[4,"disable-next-page"],"hideRowsPerPage":[32],"moveStatusToBottom":[32],"isXSmallMinWidth":[32],"isSmallMinWidth":[32]}]);
 const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[1028]}]);
-const MxSearch = /*@__PURE__*/proxyCustomElement(MxSearch$1, [0,"mx-search",{"ariaLabel":[1,"aria-label"],"dense":[4],"flat":[4],"name":[1],"placeholder":[1],"value":[1025]}]);
+const MxSearch = /*@__PURE__*/proxyCustomElement(MxSearch$1, [0,"mx-search",{"ariaLabel":[1,"aria-label"],"dense":[4],"flat":[4],"name":[1],"placeholder":[1],"showClear":[4,"show-clear"],"value":[1025]}]);
 const MxSelect = /*@__PURE__*/proxyCustomElement(MxSelect$1, [4,"mx-select",{"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elevated":[4],"flat":[4],"label":[1],"floatLabel":[4,"float-label"],"ariaLabel":[1,"aria-label"],"selectId":[1,"select-id"],"name":[1],"suffix":[1],"error":[1028],"labelClass":[1025,"label-class"],"value":[1032],"isFocused":[32]}]);
 const MxSnackbar = /*@__PURE__*/proxyCustomElement(MxSnackbar$1, [4,"mx-snackbar",{"duration":[2],"isOpen":[1540,"is-open"],"isVisible":[32]}]);
 const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[1028]}]);

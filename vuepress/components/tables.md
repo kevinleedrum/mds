@@ -556,22 +556,24 @@ The `groupBy` prop specifies a property on the `rows` objects to use for groupin
 If the `groupBy` values are not suitable for use as headings, pass a `getGroupByHeading` function to translate them into display-friendly headings for the subheader rows.
 
 <section class="mds">
-  <div class="mt-20">
+  <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
   <!-- #region grouping -->
   <mx-table
+    ref="appsTable"
     auto-width
     draggable-rows
     paginate="false" 
     :rows.prop="apps"
     :columns.prop="[{ property: 'name', heading: 'Name', sortable: false }]"
     group-by="section"
+    @mxRowMove="() => apps = $refs.appsTable.rows"
   />
+  <code class="whitespace-pre-wrap">{{ apps }}</code>
   <!-- #endregion grouping -->
   </div>
 </section>
 
 <<< @/vuepress/components/tables.md#grouping
-<<< @/vuepress/components/tables.md#apps
 
 Adding the `subheader` prop to a row styles it as a subheader. Only one `mx-table-cell` is necessary for the subheader content. When used inside a table with draggable rows, it can be used to drag a group of nested rows.
 
@@ -1095,7 +1097,6 @@ const albums = [
     "label": "Parlophone"
   }
 ]
-// #region apps
 const apps = [
   { name: 'Matrix', section: 'Core Tools' },
   { name: 'Remine', section: 'Core Tools' },
@@ -1103,8 +1104,8 @@ const apps = [
   { name: 'Builders Update', section: 'Additional Benefits' },
   { name: 'ePropertyWatch', section: 'Additional Benefits' },
   { name: 'Homes.com', section: 'Additional Benefits' },
+  { name: 'FarmersOnly.com', section: 'Dating' }
 ]
-// #endregion apps
 
 export default {
   data() {
