@@ -27,7 +27,7 @@ describe('mx-menu', () => {
     button = page.doc.querySelector('button');
     menuItems = root.querySelectorAll('mx-menu-item');
     root.anchorEl = button;
-    // HACK: Jest's Node.contains implementation is incorrect; it does not match the node itself
+    // HACK: Stencil's Node.contains mock is incorrect; it does not match the node itself
     button.contains = node => node === button;
     await page.waitForChanges();
   });
@@ -149,7 +149,7 @@ describe('mx-menu (autocomplete)', () => {
     input = mxInput.querySelector('input');
     menuItems = root.querySelectorAll('mx-menu-item');
     root.anchorEl = mxInput;
-    // HACK: Jest's Node.contains implementation is incorrect; it does not match the node itself
+    // HACK: Stencil's Node.contains mock is incorrect; it does not match the node itself
     mxInput.contains = node => node === mxInput;
     input.contains = node => node === input;
     await page.waitForChanges();
