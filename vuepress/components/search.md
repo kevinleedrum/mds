@@ -25,7 +25,7 @@
 
 <<< @/vuepress/components/search.md#search
 
-### Properites
+### Properties
 
 | Property      | Attribute     | Description                                                                                           | Type      | Default     |
 | ------------- | ------------- | ----------------------------------------------------------------------------------------------------- | --------- | ----------- |
