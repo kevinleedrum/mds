@@ -75,7 +75,7 @@ export class MxMenu {
 
   @Listen('keydown', { target: 'document' })
   onDocumentKeyDown(e: KeyboardEvent) {
-    const isFocused = (el: HTMLElement) => el.contains(e.target as Node);
+    const isFocused = (el: HTMLElement) => el && el.contains(e.target as Node);
     const enabledMenuItems = this.menuItems.filter(m => !m.disabled);
     // For autocomplete menus, select first item by default when pressing Enter
     if (this.autocompleteOnly && this.inputEl && this.isOpen && e.key === 'Enter' && !isFocused(this.element)) {
@@ -88,13 +88,15 @@ export class MxMenu {
     const openKeys = ['Enter'];
     if (!this.inputEl) openKeys.push(' ');
     if (openKeys.includes(e.key) && this.anchorEl && isFocused(this.anchorEl)) {
-      (document.activeElement as HTMLElement).click();
+      (this.triggerEl || this.anchorEl).click();
       e.preventDefault();
       e.stopPropagation();
       return;
     }
     // Open the menu when typing into the input
-    if (!this.isOpen && this.inputEl && isFocused(this.inputEl)) (document.activeElement as HTMLElement).click();
+    if (!this.isOpen && this.inputEl && isFocused(this.inputEl)) {
+      (this.triggerEl || this.anchorEl).click();
+    }
     if (!this.isOpen) return;
     const shouldEditInput = e.key.length === 1 || ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(e.key);
     if (this.inputEl && shouldEditInput && !isFocused(this.inputEl)) {
