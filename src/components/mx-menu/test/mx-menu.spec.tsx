@@ -4,9 +4,7 @@ import { MxMenu } from '../mx-menu';
 import { MxMenuItem } from '../../mx-menu-item/mx-menu-item';
 import { MxInput } from '../../mx-input/mx-input';
 
-// Behavior not tested due to spec page testing limitations:
-// - opening the menu when the anchorEl is clicked (because `anchorEl.contains(e.target)` is always false)
-// - full menu keyboard navigation (because `page.doc.activeElement` is always undefined)
+// Full menu keyboard navigation not tested because `page.doc.activeElement` is always undefined
 
 describe('mx-menu', () => {
   let page: SpecPage;
