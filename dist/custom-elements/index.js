@@ -3403,6 +3403,9 @@ const MxMenu$1 = class extends HTMLElement {
     this.__registerHost();
     this.mxClose = createEvent(this, "mxClose", 7);
     this.mxOpen = createEvent(this, "mxOpen", 7);
+    this.isClosing = false;
+    /** If the anchor element contains an `input`, setting this to `true` will always select the first menu item when Enter is pressed inside the input.  */
+    this.autocompleteOnly = false;
     /** The placement of the menu, relative to the `anchorEl`. */
     this.placement = 'bottom-start';
     /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
@@ -3425,29 +3428,80 @@ const MxMenu$1 = class extends HTMLElement {
     else if (this.isOpen && this.element && !this.element.contains(e.target)) {
       if (this.isSubMenu && triggerElWasClicked)
         return; // Do not close submenu when its anchor is clicked
+      if (this.inputEl && this.inputEl.contains(e.target))
+        return; // Do not close suggestion menu on input click
       // Otherwise, close menu when a click occurs outside the menu
       this.closeMenu();
     }
   }
+  onFocus(e) {
+    if (!this.anchorEl)
+      return;
+    // Close menu when focus leaves both the menu and the anchorEl
+    if (this.isOpen && !this.anchorEl.contains(e.target) && !this.element.contains(e.target))
+      this.closeMenu();
+    // If the input is focused, open the menu
+    else if (this.inputEl && this.inputEl.contains(e.target) && !this.isOpen)
+      this.openMenu();
+  }
   onDocumentKeyDown(e) {
-    // Open menu if Enter or Space is pressed while anchor is focused
-    if (['Enter', ' '].includes(e.key) && this.anchorEl && this.anchorEl.contains(e.target)) {
+    const isFocused = (el) => el && el.contains(e.target);
+    const enabledMenuItems = this.menuItems.filter(m => !m.disabled);
+    // For autocomplete menus, select first item by default when pressing Enter
+    if (this.autocompleteOnly && this.inputEl && this.isOpen && e.key === 'Enter' && !isFocused(this.element)) {
+      e.preventDefault();
+      enabledMenuItems.length && enabledMenuItems[0].click();
+      this.onMenuItemClick();
+      return;
+    }
+    // Toggle menu if Enter (or Space if no input) is pressed while anchor is focused
+    const openKeys = ['Enter'];
+    if (!this.inputEl)
+      openKeys.push(' ');
+    if (openKeys.includes(e.key) && this.anchorEl && isFocused(this.anchorEl)) {
+      (this.triggerEl || this.anchorEl).click();
       e.preventDefault();
       e.stopPropagation();
-      document.activeElement.click();
       return;
+    }
+    // Open the menu when typing into the input
+    if (!this.isOpen && this.inputEl && isFocused(this.inputEl)) {
+      (this.triggerEl || this.anchorEl).click();
     }
     if (!this.isOpen)
       return;
-    // Close menus on Escape key
-    if (e.key === 'Escape')
+    const shouldEditInput = e.key.length === 1 || ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(e.key);
+    if (this.inputEl && shouldEditInput && !isFocused(this.inputEl)) {
+      // Typing visible characters, etc. while the menu is open should refocus the input
+      this.inputEl.focus();
+    }
+    else if (e.key === 'Escape') {
+      // Close menus on Escape key
       this.closeMenu();
-    else if (e.key === 'ArrowDown' && this.anchorEl.contains(e.target)) {
-      // If focus is still on anchor, switch focus to first menu item on arrow down
+      e.preventDefault();
+    }
+    else if (['Tab', 'ArrowDown'].includes(e.key) && isFocused(this.anchorEl) && enabledMenuItems.length > 0) {
+      // Pressing Tab or down focuses the first menu item (or second if first is already "focused" due to autocomplete)
+      if (e.shiftKey && e.key === 'Tab')
+        return; // ... unless Shift+Tab
+      if (!this.inputEl || !this.autocompleteOnly) {
+        enabledMenuItems[0].focusMenuItem();
+      }
+      else if (this.autocompleteOnly && enabledMenuItems.length >= 2) {
+        enabledMenuItems[1].focusMenuItem();
+      }
       e.preventDefault();
       e.stopPropagation();
-      const enabledMenuItems = this.menuItems.filter(m => !m.disabled);
-      enabledMenuItems.length && enabledMenuItems[0].focusMenuItem();
+    }
+    else if (e.key === 'ArrowUp' && isFocused(this.inputEl)) {
+      // Prevent up arrow from moving cursor to start of input (Firefox, possibly others)
+      e.preventDefault();
+    }
+    else if (this.inputEl && isFocused(this.inputEl)) {
+      // HACK: When typing in the input while the menu is open, force the menu to re-render in case
+      // menu items are added/removed in the slot.
+      this.isOpen = !this.isOpen;
+      this.isOpen = !this.isOpen;
     }
   }
   onKeydown(e) {
@@ -3473,17 +3527,19 @@ const MxMenu$1 = class extends HTMLElement {
       return false;
     this.isOpen = true;
     this.mxOpen.emit();
-    const offset = this.offset || (this.isSubMenu ? [-8, 0] : null); // Offset submenus by -8px to line up menu items
+    const offset = this.offset || (this.isSubMenu ? [-8, 0] : [0, 1]); // Offset submenus by -8px to line up menu items
     this.popoverInstance = await createPopover(this.anchorEl, this.element, this.placement, offset);
     await fadeScaleIn(this.menuElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
     return true;
   }
   /** Close the menu.  Returns a promise that resolves to false if the menu was already closed. */
   async closeMenu() {
-    if (!this.isOpen)
+    if (!this.isOpen || this.isClosing)
       return false;
+    this.isClosing = true; // Prevents invoking closeMenu again while it is transitioning out
     this.menuItems.forEach(m => m.closeSubMenu());
     await fadeOut(this.menuElem);
+    this.isClosing = false;
     this.mxClose.emit();
     this.isOpen = false;
     if (!this.popoverInstance)
@@ -3495,7 +3551,13 @@ const MxMenu$1 = class extends HTMLElement {
   connectedCallback() {
     this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
   }
+  componentDidLoad() {
+    this.setInputEl();
+  }
   componentWillUpdate() {
+    this.setInputEl();
+    if (this.inputEl)
+      this.element.style.width = this.anchorEl.getBoundingClientRect().width + 'px';
     // If any menu item has an icon, ensure that all menu items at least have a null icon.
     // This will ensure the inner text of all the menu items is aligned.
     const anyMenuItemHasIcon = this.menuItems.some(m => !!m.icon);
@@ -3506,6 +3568,12 @@ const MxMenu$1 = class extends HTMLElement {
       });
     }
   }
+  setInputEl() {
+    if (this.anchorEl && !this.inputEl) {
+      this.inputEl = this.anchorEl.querySelector('input[type="text"], input[type="search"]');
+      this.inputEl && this.inputEl.setAttribute('autocomplete', 'off');
+    }
+  }
   get menuItems() {
     return (Array.from(this.scrollElem.children).filter(e => e.tagName === 'MX-MENU-ITEM') ||
       []);
@@ -3513,8 +3581,16 @@ const MxMenu$1 = class extends HTMLElement {
   get isSubMenu() {
     return this.element.hasAttribute('slot') && this.element.getAttribute('slot') === 'submenu';
   }
+  get hostClass() {
+    let str = 'mx-menu block z-50 w-screen sm:w-auto';
+    if (!this.isOpen)
+      str += ' hidden';
+    if (this.autocompleteOnly)
+      str += ' autocomplete-only';
+    return str;
+  }
   render() {
-    return (h(Host, { class: 'mx-menu block z-50 w-screen sm:w-auto' + (this.isOpen ? '' : ' hidden'), role: "menu" }, h("div", { ref: el => (this.menuElem = el), class: "flex flex-col py-8 shadow-9 rounded-lg" }, h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain" }, h("slot", null)))));
+    return (h(Host, { class: this.hostClass, role: "menu" }, h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain" }, h("slot", null)))));
   }
   get element() { return this; }
 };
@@ -3551,8 +3627,11 @@ const MxMenuItem$1 = class extends HTMLElement {
   onKeyDown(e) {
     if (this.submenu)
       return this.onKeyDownSubMenu(e);
-    // Treat Enter or Space as a click
-    if (['Enter', ' '].includes(e.key)) {
+    // Treat Enter (or Space if multi-select) as a click
+    const clickKeys = ['Enter'];
+    if (this.multiSelect)
+      clickKeys.push(' ');
+    if (clickKeys.includes(e.key)) {
       e.preventDefault();
       e.stopPropagation();
       document.activeElement.click();
@@ -3761,44 +3840,45 @@ const MxModal$1 = class extends HTMLElement {
       this.mxClose.emit();
   }
   get hostClass() {
-    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch justify-center';
-    if (this.minWidths.sm && this.fromLeft)
-      str += ' sm:justify-start';
-    else if (this.minWidths.sm && this.fromRight)
-      str += ' sm:justify-end';
-    else
-      str += ' sm:items-center';
+    let str = 'mx-modal fixed inset-0 flex items-stretch';
     if (!this.isVisible)
       str += ' hidden';
-    if (this.minWidths.sm && !this.fromLeft && !this.fromRight) {
-      str += this.large ? ' modal-large' : ' modal-medium';
+    if (this.fromLeft)
+      str += ' justify-start pr-24 sm:pr-40';
+    else if (this.fromRight)
+      str += ' justify-end pl-24 sm:pl-40';
+    else {
+      str += ' pt-24 md:pt-0 md:items-center justify-center';
+      if (this.minWidths.md) {
+        str += this.large ? ' modal-large' : ' modal-medium';
+      }
     }
     return str;
   }
   get modalClass() {
     let str = 'modal flex flex-col shadow-9 relative overflow-hidden';
-    if (this.minWidths.sm && this.fromLeft)
+    if (this.fromLeft)
       str += ' rounded-r-xl';
-    else if (this.minWidths.sm && this.fromRight)
+    else if (this.fromRight)
       str += ' rounded-l-xl';
     else
-      str += ' rounded-xl';
+      str += ' sm:rounded-t-xl md:rounded-xl w-full md:w-auto';
     return str;
   }
   get openTransition() {
     let transition = (el) => fadeScaleIn(el, 250);
-    if (this.minWidths.sm && this.fromRight)
+    if (this.fromRight)
       transition = fadeSlideIn;
-    else if (this.minWidths.sm && this.fromLeft)
-      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    else if (this.fromLeft)
+      transition = (el) => fadeSlideIn(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
   get closeTransition() {
     let transition = fadeOut;
-    if (this.minWidths.sm && this.fromRight)
+    if (this.fromRight)
       transition = fadeSlideOut;
-    else if (this.minWidths.sm && this.fromLeft)
-      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    else if (this.fromLeft)
+      transition = (el) => fadeSlideOut(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
   get hasFooter() {
@@ -3822,7 +3902,7 @@ const MxModal$1 = class extends HTMLElement {
     return str;
   }
   render() {
-    return (h(Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" }, h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }), h("div", { ref: el => (this.modal = el), class: this.modalClass }, h("div", { class: this.modalContentClasses, "data-testid": "modal-content" }, this.description && (h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)), h("slot", null), this.hasCard && (h("div", null, h("div", { class: "bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl", "data-testid": "modal-card" }, h("slot", { name: "card" }))))), h("footer", { class: 'bg-modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
+    return (h(Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" }, h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }), h("div", { ref: el => (this.modal = el), class: this.modalClass, style: { maxWidth: this.minWidths.md && (this.fromRight || this.fromLeft) ? '37.5rem' : '' } }, h("div", { class: this.modalContentClasses, "data-testid": "modal-content" }, this.description && (h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)), h("slot", null), this.hasCard && (h("div", null, h("div", { class: "bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl", "data-testid": "modal-card" }, h("slot", { name: "card" }))))), h("footer", { class: 'bg-modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
         (this.hasFooter ? '' : ' hidden') }, h("div", null, h("slot", { name: "footer-left" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "flex items-center uppercase text-4 font-semibold tracking-1-25", "data-testid": "previous-page" }, h("span", { class: "mr-10", innerHTML: arrowSvg }), this.previousPageTitle)))), h("div", { class: "ml-16" }, h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))), h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "order-1", buttons: this.buttons, modal: true, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl }, h("span", { id: "headerText", "data-testid": "header-text" }, h("slot", { name: "header-left" })), this.hasHeaderBottom && (h("div", { slot: "tabs" }, h("slot", { name: "header-bottom" }))), h("div", { slot: "modal-header-center", class: "flex items-center justify-center" }, h("slot", { name: "header-center" })), h("div", { slot: "modal-header-right" }, h("slot", { name: "header-right" }, h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))))));
   }
   get element() { return this; }
@@ -6353,7 +6433,7 @@ const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon
 const MxImageUpload = /*@__PURE__*/proxyCustomElement(MxImageUpload$1, [4,"mx-image-upload",{"acceptImage":[4,"accept-image"],"acceptPdf":[4,"accept-pdf"],"assetName":[1,"asset-name"],"avatar":[4],"thumbnailSize":[1,"thumbnail-size"],"height":[1],"icon":[1],"inputId":[1,"input-id"],"isUploaded":[1540,"is-uploaded"],"isUploading":[1540,"is-uploading"],"name":[1],"removeButtonLabel":[1,"remove-button-label"],"showButton":[4,"show-button"],"showIcon":[4,"show-icon"],"showDropzoneText":[4,"show-dropzone-text"],"thumbnailUrl":[1,"thumbnail-url"],"uploadButtonLabel":[1,"upload-button-label"],"width":[1],"isDraggingOver":[32],"isFileSelected":[32],"thumbnailDataUri":[32]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"placeholder":[1],"value":[1025],"type":[1],"dense":[4],"disabled":[4],"readonly":[4],"maxlength":[2],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"suffix":[1],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"floatLabel":[4,"float-label"],"textarea":[4],"textareaHeight":[1025,"textarea-height"],"isFocused":[32],"characterCount":[32]}]);
 const MxLinearProgress = /*@__PURE__*/proxyCustomElement(MxLinearProgress$1, [0,"mx-linear-progress",{"value":[2],"appearDelay":[2,"appear-delay"]}]);
-const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"triggerEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
+const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"autocompleteOnly":[4,"autocomplete-only"],"triggerEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[6,"focus","onFocus"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
 const MxMenuItem = /*@__PURE__*/proxyCustomElement(MxMenuItem$1, [4,"mx-menu-item",{"checked":[4],"disabled":[4],"icon":[1],"label":[1],"multiSelect":[4,"multi-select"],"minWidths":[32]},[[1,"mouseenter","onMouseEnter"],[1,"mouseleave","onMouseLeave"],[0,"focus","onFocus"],[0,"keydown","onKeyDown"]]]);
 const MxModal = /*@__PURE__*/proxyCustomElement(MxModal$1, [4,"mx-modal",{"buttons":[16],"closeOnEscape":[4,"close-on-escape"],"closeOnOutsideClick":[4,"close-on-outside-click"],"contentClass":[1,"content-class"],"description":[1],"fromLeft":[4,"from-left"],"fromRight":[4,"from-right"],"isOpen":[4,"is-open"],"previousPageTitle":[1,"previous-page-title"],"previousPageUrl":[1,"previous-page-url"],"large":[4],"minWidths":[32],"isVisible":[32]},[[0,"keydown","onKeyDown"],[4,"keydown","onDocumentKeyDown"]]]);
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"modal":[4],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);

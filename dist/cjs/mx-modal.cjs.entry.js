@@ -120,44 +120,45 @@ const MxModal = class {
       this.mxClose.emit();
   }
   get hostClass() {
-    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch justify-center';
-    if (this.minWidths.sm && this.fromLeft)
-      str += ' sm:justify-start';
-    else if (this.minWidths.sm && this.fromRight)
-      str += ' sm:justify-end';
-    else
-      str += ' sm:items-center';
+    let str = 'mx-modal fixed inset-0 flex items-stretch';
     if (!this.isVisible)
       str += ' hidden';
-    if (this.minWidths.sm && !this.fromLeft && !this.fromRight) {
-      str += this.large ? ' modal-large' : ' modal-medium';
+    if (this.fromLeft)
+      str += ' justify-start pr-24 sm:pr-40';
+    else if (this.fromRight)
+      str += ' justify-end pl-24 sm:pl-40';
+    else {
+      str += ' pt-24 md:pt-0 md:items-center justify-center';
+      if (this.minWidths.md) {
+        str += this.large ? ' modal-large' : ' modal-medium';
+      }
     }
     return str;
   }
   get modalClass() {
     let str = 'modal flex flex-col shadow-9 relative overflow-hidden';
-    if (this.minWidths.sm && this.fromLeft)
+    if (this.fromLeft)
       str += ' rounded-r-xl';
-    else if (this.minWidths.sm && this.fromRight)
+    else if (this.fromRight)
       str += ' rounded-l-xl';
     else
-      str += ' rounded-xl';
+      str += ' sm:rounded-t-xl md:rounded-xl w-full md:w-auto';
     return str;
   }
   get openTransition() {
     let transition = (el) => transitions.fadeScaleIn(el, 250);
-    if (this.minWidths.sm && this.fromRight)
+    if (this.fromRight)
       transition = transitions.fadeSlideIn;
-    else if (this.minWidths.sm && this.fromLeft)
-      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    else if (this.fromLeft)
+      transition = (el) => transitions.fadeSlideIn(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
   get closeTransition() {
     let transition = transitions.fadeOut;
-    if (this.minWidths.sm && this.fromRight)
+    if (this.fromRight)
       transition = transitions.fadeSlideOut;
-    else if (this.minWidths.sm && this.fromLeft)
-      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    else if (this.fromLeft)
+      transition = (el) => transitions.fadeSlideOut(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
   get hasFooter() {
@@ -181,7 +182,7 @@ const MxModal = class {
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" }, index.h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }), index.h("div", { ref: el => (this.modal = el), class: this.modalClass }, index.h("div", { class: this.modalContentClasses, "data-testid": "modal-content" }, this.description && (index.h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)), index.h("slot", null), this.hasCard && (index.h("div", null, index.h("div", { class: "bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl", "data-testid": "modal-card" }, index.h("slot", { name: "card" }))))), index.h("footer", { class: 'bg-modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
+    return (index.h(index.Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" }, index.h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }), index.h("div", { ref: el => (this.modal = el), class: this.modalClass, style: { maxWidth: this.minWidths.md && (this.fromRight || this.fromLeft) ? '37.5rem' : '' } }, index.h("div", { class: this.modalContentClasses, "data-testid": "modal-content" }, this.description && (index.h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)), index.h("slot", null), this.hasCard && (index.h("div", null, index.h("div", { class: "bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl", "data-testid": "modal-card" }, index.h("slot", { name: "card" }))))), index.h("footer", { class: 'bg-modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
         (this.hasFooter ? '' : ' hidden') }, index.h("div", null, index.h("slot", { name: "footer-left" }, this.previousPageUrl && (index.h("a", { href: this.previousPageUrl, class: "flex items-center uppercase text-4 font-semibold tracking-1-25", "data-testid": "previous-page" }, index.h("span", { class: "mr-10", innerHTML: arrowLeft.arrowSvg }), this.previousPageTitle)))), index.h("div", { class: "ml-16" }, index.h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))), index.h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "order-1", buttons: this.buttons, modal: true, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl }, index.h("span", { id: "headerText", "data-testid": "header-text" }, index.h("slot", { name: "header-left" })), this.hasHeaderBottom && (index.h("div", { slot: "tabs" }, index.h("slot", { name: "header-bottom" }))), index.h("div", { slot: "modal-header-center", class: "flex items-center justify-center" }, index.h("slot", { name: "header-center" })), index.h("div", { slot: "modal-header-right" }, index.h("slot", { name: "header-right" }, index.h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))))));
   }
   get element() { return index.getElement(this); }

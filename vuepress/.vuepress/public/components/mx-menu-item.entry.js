@@ -34,8 +34,11 @@ const MxMenuItem = class {
   onKeyDown(e) {
     if (this.submenu)
       return this.onKeyDownSubMenu(e);
-    // Treat Enter or Space as a click
-    if (['Enter', ' '].includes(e.key)) {
+    // Treat Enter (or Space if multi-select) as a click
+    const clickKeys = ['Enter'];
+    if (this.multiSelect)
+      clickKeys.push(' ');
+    if (clickKeys.includes(e.key)) {
       e.preventDefault();
       e.stopPropagation();
       document.activeElement.click();

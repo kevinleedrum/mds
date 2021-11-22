@@ -4758,6 +4758,10 @@ video {
 
   width: 9.5rem;
 }
+.mds .w-288{
+
+  width: 18rem;
+}
 .mds .w-160{
 
   width: 10rem;
@@ -4857,10 +4861,6 @@ video {
 .mds .w-256{
 
   width: 16rem;
-}
-.mds .w-288{
-
-  width: 18rem;
 }
 .mds .w-384{
 
@@ -8616,12 +8616,6 @@ video {
 
   padding-bottom: 1.5rem;
 }
-.mds .py-8{
-
-  padding-top: 0.5rem;
-
-  padding-bottom: 0.5rem;
-}
 .mds .py-0{
 
   padding-top: 0px;
@@ -8651,6 +8645,12 @@ video {
   padding-left: 2.5rem;
 
   padding-right: 2.5rem;
+}
+.mds .py-8{
+
+  padding-top: 0.5rem;
+
+  padding-bottom: 0.5rem;
 }
 .mds .py-12{
 
@@ -8798,6 +8798,14 @@ video {
 
   padding-right: 1rem;
 }
+.mds .pr-24{
+
+  padding-right: 1.5rem;
+}
+.mds .pl-24{
+
+  padding-left: 1.5rem;
+}
 .mds .pt-24{
 
   padding-top: 1.5rem;
@@ -8877,10 +8885,6 @@ video {
 .mds .pt-80{
 
   padding-top: 5rem;
-}
-.mds .pr-24{
-
-  padding-right: 1.5rem;
 }
 .mds .pr-32{
 
@@ -8965,10 +8969,6 @@ video {
 .mds .pl-20{
 
   padding-left: 1.25rem;
-}
-.mds .pl-24{
-
-  padding-left: 1.5rem;
 }
 .mds .pl-32{
 
@@ -11707,6 +11707,19 @@ video {
     background: #e0e0e0;
     background: var(--mds-bg-menu-item-focus);
   }
+.mx-menu .mx-menu-item:first-child > div{
+
+  margin-top: 0.5rem;
+}
+.mx-menu .mx-menu-item:last-child > div{
+
+  margin-bottom: 0.5rem;
+}
+.mx-menu.autocomplete-only:not(:focus-within) .mx-menu-item:not([aria-disabled]):first-child > div {
+  /* Add focused background to first enabled menu item for autocomplete-only menus */
+  background: #e0e0e0;
+  background: var(--mds-bg-menu-item-focus);
+}
 .mx-date-picker {
   color: #454545;
   color: var(--mds-text-picker);
@@ -13350,14 +13363,6 @@ span.ripple {
 
     align-items: center;
   }
-  .mds .sm\:justify-start{
-
-    justify-content: flex-start;
-  }
-  .mds .sm\:justify-end{
-
-    justify-content: flex-end;
-  }
   .mds .sm\:gap-56{
 
     gap: 3.5rem;
@@ -13373,6 +13378,12 @@ span.ripple {
   .mds .sm\:rounded{
 
     border-radius: 0.25rem;
+  }
+  .mds .sm\:rounded-t-xl{
+
+    border-top-left-radius: 0.75rem;
+
+    border-top-right-radius: 0.75rem;
   }
   .mds .sm\:border-2{
 
@@ -13398,9 +13409,13 @@ span.ripple {
 
     padding-bottom: 1.5rem;
   }
-  .mds .sm\:pt-0{
+  .mds .sm\:pr-40{
 
-    padding-top: 0px;
+    padding-right: 2.5rem;
+  }
+  .mds .sm\:pl-40{
+
+    padding-left: 2.5rem;
   }
   .mds .sm\:pr-2{
 
@@ -13497,6 +13512,10 @@ span.ripple {
   .mds .md\:min-h-128{
 
     min-height: 8rem;
+  }
+  .mds .md\:w-auto{
+
+    width: auto;
   }
   .mds .md\:grid-cols-2{
 
@@ -13610,11 +13629,19 @@ span.ripple {
 
     --tw-space-x-reverse: 1;
   }
+  .mds .md\:rounded-xl{
+
+    border-radius: 0.75rem;
+  }
   .mds .md\:bg-red-500{
 
     --tw-bg-opacity: 1;
 
     background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+  }
+  .mds .md\:pt-0{
+
+    padding-top: 0px;
   }
   .mds .md\:pb-0{
 

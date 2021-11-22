@@ -112,44 +112,45 @@ export class MxModal {
       this.mxClose.emit();
   }
   get hostClass() {
-    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch justify-center';
-    if (this.minWidths.sm && this.fromLeft)
-      str += ' sm:justify-start';
-    else if (this.minWidths.sm && this.fromRight)
-      str += ' sm:justify-end';
-    else
-      str += ' sm:items-center';
+    let str = 'mx-modal fixed inset-0 flex items-stretch';
     if (!this.isVisible)
       str += ' hidden';
-    if (this.minWidths.sm && !this.fromLeft && !this.fromRight) {
-      str += this.large ? ' modal-large' : ' modal-medium';
+    if (this.fromLeft)
+      str += ' justify-start pr-24 sm:pr-40';
+    else if (this.fromRight)
+      str += ' justify-end pl-24 sm:pl-40';
+    else {
+      str += ' pt-24 md:pt-0 md:items-center justify-center';
+      if (this.minWidths.md) {
+        str += this.large ? ' modal-large' : ' modal-medium';
+      }
     }
     return str;
   }
   get modalClass() {
     let str = 'modal flex flex-col shadow-9 relative overflow-hidden';
-    if (this.minWidths.sm && this.fromLeft)
+    if (this.fromLeft)
       str += ' rounded-r-xl';
-    else if (this.minWidths.sm && this.fromRight)
+    else if (this.fromRight)
       str += ' rounded-l-xl';
     else
-      str += ' rounded-xl';
+      str += ' sm:rounded-t-xl md:rounded-xl w-full md:w-auto';
     return str;
   }
   get openTransition() {
     let transition = (el) => fadeScaleIn(el, 250);
-    if (this.minWidths.sm && this.fromRight)
+    if (this.fromRight)
       transition = fadeSlideIn;
-    else if (this.minWidths.sm && this.fromLeft)
-      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    else if (this.fromLeft)
+      transition = (el) => fadeSlideIn(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
   get closeTransition() {
     let transition = fadeOut;
-    if (this.minWidths.sm && this.fromRight)
+    if (this.fromRight)
       transition = fadeSlideOut;
-    else if (this.minWidths.sm && this.fromLeft)
-      transition = (el) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    else if (this.fromLeft)
+      transition = (el) => fadeSlideOut(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
   get hasFooter() {
@@ -175,7 +176,7 @@ export class MxModal {
   render() {
     return (h(Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" },
       h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }),
-      h("div", { ref: el => (this.modal = el), class: this.modalClass },
+      h("div", { ref: el => (this.modal = el), class: this.modalClass, style: { maxWidth: this.minWidths.md && (this.fromRight || this.fromLeft) ? '37.5rem' : '' } },
         h("div", { class: this.modalContentClasses, "data-testid": "modal-content" },
           this.description && (h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)),
           h("slot", null),
