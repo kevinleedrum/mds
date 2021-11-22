@@ -17,6 +17,8 @@ The modal component uses a [Page Header](/page-headers.html) internally. The `pr
 
 On small screens, the modal will fill the screen, except for a 24-px margin at the top. On larger screens, the max dimensions are based on whether the `large` prop is set. If `large` is `true`, the modal will stretch to nearly fill the entire page (with a 40px margin); otherwise, the max dimensions are 800x600px.
 
+If `fromLeft` or `fromRight` are set, then the modal will appear fixed to one side of the window, and it will stretch the entire height.
+
 ### Scrolling modal with buttons and a previous-page link
 
 <!-- #region modals-1 -->
@@ -190,7 +192,9 @@ On small screens, the modal will fill the screen, except for a 24-px margin at t
   >
     <div slot="header-left">Header</div>
     <div slot="header-right"><!-- Hide Close button --></div>
-    This is content.
+    <p>
+      Curabitur sollicitudin purus in urna varius blandit. Etiam bibendum lorem eu risus volutpat blandit. Pellentesque in ullamcorper felis. Nullam congue pellentesque mi id molestie. Vestibulum sit amet dignissim magna. Curabitur diam risus, finibus sit amet neque in, congue feugiat est. Nam tristique vel neque et scelerisque. Etiam malesuada, metus nec dapibus faucibus, purus lorem varius massa, et gravida libero erat sed metus. Fusce arcu neque, imperdiet id posuere id, mollis id justo.
+    </p>
   </mx-modal>
 </section>
 <!-- #endregion modals-5 -->
