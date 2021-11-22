@@ -210,11 +210,6 @@ export class MxTable {
       // If row was dragged to a new position AND dragging wasn't cancelled,
       // mutate the rows array (if applicable) and emit the mxRowMove event
       if (this.rows && this.mutateOnDrag) this.reorderRowsArray();
-      this.mxRowMove.emit({
-        rowId: this.dragRowEl.rowId,
-        oldIndex: this.dragRowEl.rowIndex == null ? this.dragRowElIndex : this.dragRowEl.rowIndex,
-        newIndex: this.dragOverRowEl.rowIndex == null ? this.dragOverRowElIndex : this.dragOverRowEl.rowIndex,
-      });
       if (e.detail.isKeyboard) {
         // Focus the handle at the element's new index
         requestAnimationFrame(() => {
@@ -225,7 +220,6 @@ export class MxTable {
         });
       }
     }
-    this.dragRowElIndex = null;
     // Remove transitions and transforms from rows
     requestAnimationFrame(() => {
       this.dragRowElSiblings.forEach(async row => {
@@ -236,6 +230,14 @@ export class MxTable {
       });
     });
     document.body.style.cursor = '';
+    // If mutating the rows prop, wait a frame for Stencil to update the property on the element
+    if (this.rows && this.mutateOnDrag) await new Promise(requestAnimationFrame);
+    this.mxRowMove.emit({
+      rowId: this.dragRowEl.rowId,
+      oldIndex: this.dragRowEl.rowIndex == null ? this.dragRowElIndex : this.dragRowEl.rowIndex,
+      newIndex: this.dragOverRowEl.rowIndex == null ? this.dragOverRowElIndex : this.dragOverRowEl.rowIndex,
+    });
+    this.dragRowElIndex = null;
   }
 
   @Watch('sortBy')
@@ -338,13 +340,20 @@ export class MxTable {
     if (draggedRowIndexes.length) {
       const reorderedRows = this.groupedRows.slice();
       draggedRowIndexes.reverse();
-      let targetRowIndex = this.dragOverRowEl.rowIndex;
-      if (targetRowIndex == null) targetRowIndex = (await this.dragOverRowEl.getNestedRowIndexes())[0];
+      let spliceIndex = this.dragOverRowEl.rowIndex;
+      if (spliceIndex == null) {
+        const targetNestedRowIndexes = await this.dragOverRowEl.getNestedRowIndexes();
+        // Splice above top row in group OR below last row depending on drag direction
+        const draggedDownward = draggedRowIndexes[0] < targetNestedRowIndexes[0];
+        spliceIndex = draggedDownward
+          ? targetNestedRowIndexes[targetNestedRowIndexes.length - 1]
+          : targetNestedRowIndexes[0];
+        if (draggedDownward) draggedRowIndexes.reverse();
+      }
       const draggedRows = draggedRowIndexes.map(index => this.groupedRows[index]);
-      if (targetRowIndex > reorderedRows.indexOf(draggedRows[0])) draggedRows.reverse();
       draggedRows.forEach(draggedRow => {
         reorderedRows.splice(reorderedRows.indexOf(draggedRow), 1)[0];
-        reorderedRows.splice(targetRowIndex, 0, draggedRow);
+        reorderedRows.splice(spliceIndex, 0, draggedRow);
       });
       this.rows = reorderedRows;
     }

@@ -24,3 +24,8 @@
     appearance: none;
   }
 }
+
+.mx-search > .clear-button {
+  background: var(--mds-bg-search);
+  color: var(--mds-text-search-clear);
+}

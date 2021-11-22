@@ -25,7 +25,7 @@
 
 <<< @/vuepress/components/search.md#search
 
-### Properites
+### Properties
 
 | Property      | Attribute     | Description                                                                                           | Type      | Default     |
 | ------------- | ------------- | ----------------------------------------------------------------------------------------------------- | --------- | ----------- |
@@ -34,6 +34,7 @@
 | `flat`        | `flat`        |                                                                                                       | `boolean` | `false`     |
 | `name`        | `name`        |                                                                                                       | `string`  | `undefined` |
 | `placeholder` | `placeholder` |                                                                                                       | `string`  | `undefined` |
+| `showClear`   | `show-clear`  | Set to `false` to hide the clear button.                                                              | `boolean` | `true`      |
 | `value`       | `value`       |                                                                                                       | `string`  | `undefined` |
 
 ### CSS Variables
