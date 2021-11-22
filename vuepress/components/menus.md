@@ -89,15 +89,82 @@ To add checkboxes to Menu Items, add the `multi-select` property, and set the `c
 <<< @/vuepress/components/menus.md#menus-2
 <<< @/vuepress/components/menus.md#menus-anchorEl-2
 
+## Suggestion and autocomplete menus
+
+When the `anchorEl` contains an `<input type=text>` or `<input type=search>`, the menu takes on some
+additional behaviors to allow the menu to function as an autocomplete or suggestion menu.
+
+These additional behaviors include:
+
+- &bull; The menu stretches the entire width of the `anchorEl`.
+- &bull; Typing into the input opens the menu.
+- &bull; Typing while a menu item is focused restores focus to the input.
+- &bull; The input's `autocomplete` attribute is set to `off` to disable the browser's native autocomplete menu.
+
+Setting the `autocompleteOnly` prop to `true` causes the top menu item to always be selected by default,
+and pressing <kbd>Enter</kbd> inside the input will effectively click that item. Leave this set to `false` to
+allow submitting the input value without selecting a menu item.
+
+In the first example below, typing "app" and pressing <kbd>Enter</kbd> will log "app" to the console. In the second
+example, "Apple" will be logged because the `autoCompleteOnly` prop causes the first menu item to be
+selected on <kbd>Enter</kbd>.
+
+<section class="mds">
+  <div class="mt-40">
+    <!-- #region suggestions-1 -->
+    <mx-search
+      ref="search1"
+      :value="term1"
+      class="w-288"
+      placeholder="Fruit"
+      @input="term1 = $event.target.value"
+      @keydown.enter="onClickSuggestion($event.target.value, 1)"
+    />
+    <mx-menu ref="menu1">
+      <mx-menu-item v-for="(suggestion, i) in suggestions1" :key="i" @click="onClickSuggestion(suggestion, 1)">
+        {{ suggestion }}
+      </mx-menu-item>
+    </mx-menu>
+    <!-- #endregion suggestions-1 -->
+  </div>
+</section>
+
+<<< @/vuepress/components/menus.md#suggestions-1
+
+<section class="mds">
+  <div class="mt-40">
+    <!-- #region suggestions-2 -->
+    <mx-search
+      ref="search2"
+      :value="term2"
+      class="w-288"
+      placeholder="Fruit (autocompleteOnly)"
+      @input="term2 = $event.target.value"
+    />
+    <mx-menu ref="menu2" autocomplete-only>
+      <mx-menu-item v-for="(suggestion, i) in suggestions2" :key="i" @click="onClickSuggestion(suggestion, 2)">
+        {{ suggestion }}
+      </mx-menu-item>
+    </mx-menu>
+    <!-- #endregion suggestions-2 -->
+  </div>
+</section>
+
+<<< @/vuepress/components/menus.md#suggestions-2
+<<< @/vuepress/components/menus.md#suggestions-computed
+<<< @/vuepress/components/menus.md#menus-anchorEl-3
+<<< @/vuepress/components/menus.md#suggestions-onclick
+
 ### Menu Properties
 
-| Property    | Attribute   | Description                                                                                                                                  | Type                                                                                                                                                                                                         | Default          |
-| ----------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
-| `anchorEl`  | --          | The element to which the menu's position will be anchored                                                                                    | `HTMLElement`                                                                                                                                                                                                | `undefined`      |
-| `isOpen`    | `is-open`   | This is set to true automatically when the `anchorEl` is clicked. Dropdown menus read this prop internally for styling purposes.             | `boolean`                                                                                                                                                                                                    | `false`          |
-| `offset`    | --          | An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`. The second is the distance from the `anchorEl`. | `[number, number]`                                                                                                                                                                                           | `undefined`      |
-| `placement` | `placement` | The placement of the menu, relative to the `anchorEl`.                                                                                       | `"auto" \| "auto-end" \| "auto-start" \| "bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `'bottom-start'` |
-| `triggerEl` | --          | The element that will open the menu when clicked. If not provided, the `anchorEl' will be used. |`HTMLElement`|`undefined`                   |
+| Property           | Attribute           | Description                                                                                                                                      | Type                                                                                                                                                                                                         | Default          |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
+| `anchorEl`         | --                  | The element to which the menu's position will be anchored                                                                                        | `HTMLElement`                                                                                                                                                                                                | `undefined`      |
+| `autocompleteOnly` | `autocomplete-only` | If the anchor element contains an `input`, setting this to `true` will always select the first menu item when Enter is pressed inside the input. | `boolean`                                                                                                                                                                                                    | `false`          |
+| `isOpen`           | `is-open`           | This is set to true automatically when the `anchorEl` is clicked. Dropdown menus read this prop internally for styling purposes.                 | `boolean`                                                                                                                                                                                                    | `false`          |
+| `offset`           | --                  | An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`. The second is the distance from the `anchorEl`.     | `[number, number]`                                                                                                                                                                                           | `undefined`      |
+| `placement`        | `placement`         | The placement of the menu, relative to the `anchorEl`.                                                                                           | `"auto" \| "auto-end" \| "auto-start" \| "bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `'bottom-start'` |
+| `triggerEl`        | --                  | The element that will open the menu when clicked. If not provided, the `anchorEl` will be used.                                                  | `HTMLElement`                                                                                                                                                                                                | `undefined`      |
 
 ### Menu Item Properties
 
@@ -146,7 +213,39 @@ Focuses the menu item.
 <<< @/src/tailwind/variables/index.scss#menus
 
 <script>
+const fruits = [
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Dragonfruit',
+  'Kiwi',
+  'Strawberry',
+  'Tomato'
+]
+
 export default {
+  data() {
+    return {
+      term1: '',
+      term2: ''
+    }
+  },
+  computed: {
+    // #region suggestions-computed
+    suggestions1() {
+      if (!this.term1) return []
+      return fruits.filter(fruit => 
+        fruit.toLowerCase().includes(this.term1.toLowerCase())
+      )
+    },
+    suggestions2() {
+      if (!this.term2) return []
+      return fruits.filter(fruit => 
+        fruit.toLowerCase().includes(this.term2.toLowerCase())
+      )
+    }
+    // #endregion suggestions-computed
+  },
   mounted() {
     // #region menus-anchorEl
     // For JSX-based frameworks, you may be able to set the anchorEl within the template.
@@ -154,16 +253,28 @@ export default {
 
     this.$refs.editMenu.anchorEl = this.$refs.editButton
     this.$refs.actionMenu.anchorEl = this.$refs.actionButton
-  // #endregion menus-anchorEl
-  // #region menus-anchorEl-2
+    // #endregion menus-anchorEl
+    // #region menus-anchorEl-2
     this.$refs.dotsMenu.anchorEl = this.$refs.dotsButton
     this.$refs.scrollingMenu.anchorEl = this.$refs.menuButton
-  // #endregion menus-anchorEl-2
+    // #endregion menus-anchorEl-2
+    // #region menus-anchorEl-3
+    this.$refs.menu1.anchorEl = this.$refs.search1
+    this.$refs.menu2.anchorEl = this.$refs.search2
+    // #endregion menus-anchorEl-3
   },
   methods: {
     clickHandler() {
       console.log('Menu item clicked!')
+    },
+    // #region suggestions-onclick
+    onClickSuggestion(suggestion, oneOrTwo) {
+      console.log(suggestion + ' entered!')
+      // Clear the input and refocus it
+      this['term' + oneOrTwo] = ''
+      this.$nextTick(() => this.$refs['search' + oneOrTwo].querySelector('input').focus())
     }
+    // #endregion suggestions-onclick
   }
 }
 </script>
