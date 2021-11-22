@@ -377,6 +377,10 @@ export namespace Components {
          */
         "anchorEl": HTMLElement;
         /**
+          * If the anchor element contains an `input`, setting this to `true` will always select the first menu item when Enter is pressed inside the input.
+         */
+        "autocompleteOnly": boolean;
+        /**
           * Close the menu.  Returns a promise that resolves to false if the menu was already closed.
          */
         "closeMenu": () => Promise<boolean>;
@@ -1452,6 +1456,10 @@ declare namespace LocalJSX {
           * The element to which the menu's position will be anchored
          */
         "anchorEl"?: HTMLElement;
+        /**
+          * If the anchor element contains an `input`, setting this to `true` will always select the first menu item when Enter is pressed inside the input.
+         */
+        "autocompleteOnly"?: boolean;
         /**
           * This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes.
          */
