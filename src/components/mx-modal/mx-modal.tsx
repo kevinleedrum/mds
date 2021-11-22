@@ -147,11 +147,11 @@ export class MxModal {
 
   get hostClass(): string {
     let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch justify-center';
-    if (this.minWidths.sm && this.fromLeft) str += ' sm:justify-start';
-    else if (this.minWidths.sm && this.fromRight) str += ' sm:justify-end';
+    if (this.fromLeft) str += ' sm:justify-start';
+    else if (this.fromRight) str += ' sm:justify-end';
     else str += ' sm:items-center';
     if (!this.isVisible) str += ' hidden';
-    if (this.minWidths.sm && !this.fromLeft && !this.fromRight) {
+    if (!this.fromLeft && !this.fromRight) {
       str += this.large ? ' modal-large' : ' modal-medium';
     }
     return str;
@@ -174,8 +174,8 @@ export class MxModal {
 
   get closeTransition(): Function {
     let transition: Function = fadeOut;
-    if (this.minWidths.sm && this.fromRight) transition = fadeSlideOut;
-    else if (this.minWidths.sm && this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    if (this.fromRight) transition = fadeSlideOut;
+    else if (this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
 
