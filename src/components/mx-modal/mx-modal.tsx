@@ -146,36 +146,38 @@ export class MxModal {
   }
 
   get hostClass(): string {
-    let str = 'mx-modal fixed inset-0 flex pt-24 sm:pt-0 items-stretch justify-center';
-    if (this.minWidths.sm && this.fromLeft) str += ' sm:justify-start';
-    else if (this.minWidths.sm && this.fromRight) str += ' sm:justify-end';
-    else str += ' sm:items-center';
+    let str = 'mx-modal fixed inset-0 flex items-stretch';
     if (!this.isVisible) str += ' hidden';
-    if (this.minWidths.sm && !this.fromLeft && !this.fromRight) {
-      str += this.large ? ' modal-large' : ' modal-medium';
+    if (this.fromLeft) str += ' justify-start pr-24 sm:pr-40';
+    else if (this.fromRight) str += ' justify-end pl-24 sm:pl-40';
+    else {
+      str += ' pt-24 md:pt-0 md:items-center justify-center';
+      if (this.minWidths.md) {
+        str += this.large ? ' modal-large' : ' modal-medium';
+      }
     }
     return str;
   }
 
   get modalClass(): string {
     let str = 'modal flex flex-col shadow-9 relative overflow-hidden';
-    if (this.minWidths.sm && this.fromLeft) str += ' rounded-r-xl';
-    else if (this.minWidths.sm && this.fromRight) str += ' rounded-l-xl';
-    else str += ' rounded-xl';
+    if (this.fromLeft) str += ' rounded-r-xl';
+    else if (this.fromRight) str += ' rounded-l-xl';
+    else str += ' sm:rounded-t-xl md:rounded-xl w-full md:w-auto';
     return str;
   }
 
   get openTransition(): Function {
     let transition: Function = (el: HTMLElement) => fadeScaleIn(el, 250);
-    if (this.minWidths.sm && this.fromRight) transition = fadeSlideIn;
-    else if (this.minWidths.sm && this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    if (this.fromRight) transition = fadeSlideIn;
+    else if (this.fromLeft) transition = (el: HTMLElement) => fadeSlideIn(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
 
   get closeTransition(): Function {
     let transition: Function = fadeOut;
-    if (this.minWidths.sm && this.fromRight) transition = fadeSlideOut;
-    else if (this.minWidths.sm && this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    if (this.fromRight) transition = fadeSlideOut;
+    else if (this.fromLeft) transition = (el: HTMLElement) => fadeSlideOut(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
 
@@ -227,7 +229,11 @@ export class MxModal {
           data-testid="backdrop"
           onClick={this.onBackdropClick.bind(this)}
         ></div>
-        <div ref={el => (this.modal = el)} class={this.modalClass}>
+        <div
+          ref={el => (this.modal = el)}
+          class={this.modalClass}
+          style={{ maxWidth: this.minWidths.md && (this.fromRight || this.fromLeft) ? '37.5rem' : '' }}
+        >
           {/* Modal Content */}
           <div class={this.modalContentClasses} data-testid="modal-content">
             {this.description && (
