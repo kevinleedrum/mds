@@ -170,14 +170,14 @@ export class MxModal {
   get openTransition(): Function {
     let transition: Function = (el: HTMLElement) => fadeScaleIn(el, 250);
     if (this.fromRight) transition = fadeSlideIn;
-    else if (this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    else if (this.fromLeft) transition = (el: HTMLElement) => fadeSlideIn(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
 
   get closeTransition(): Function {
     let transition: Function = fadeOut;
     if (this.fromRight) transition = fadeSlideOut;
-    else if (this.fromLeft) transition = (el: HTMLElement) => transition(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    else if (this.fromLeft) transition = (el: HTMLElement) => fadeSlideOut(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
     return transition;
   }
 
