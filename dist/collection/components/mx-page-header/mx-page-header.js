@@ -134,7 +134,8 @@ export class MxPageHeader {
         h("span", { class: "mr-10", innerHTML: arrowSvg }),
         this.previousPageTitle))),
       h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" },
-        h("div", { class: 'grid grid-cols-1 flex-1 items-center' + (this.hasModalHeaderCenter ? ' sm:grid-cols-3' : '') },
+        h("div", { class: 'flex-1 items-center' + (this.hasModalHeaderCenter ? ' grid grid-cols-1 sm:grid-cols-3 h-full' : ' flex') // HACK: Safari needs the `h-full` to constrain the grid to its parent
+         },
           h("h1", { class: this.headingClass },
             h("slot", null)),
           h("slot", { name: "modal-header-center" })),
