@@ -68,7 +68,7 @@ export class MxBanner {
       <Host class={this.hostClass} role="alert">
         <div
           ref={el => (this.bannerEl = el)}
-          class="flex flex-col md:flex-row md:items-center md:justify-between px-24 md:px-72 py-8 md:py-10"
+          class="flex flex-col md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10"
         >
           <div class={this.messageClass}>
             {this.hasImage && (
