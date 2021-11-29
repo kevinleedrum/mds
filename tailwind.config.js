@@ -111,6 +111,9 @@ const config = {
   variants: {
     borderWidth: ({ after }) => after(['first-of-type', 'last-of-type']),
     borderRadius: ({ after }) => after(['first-of-type', 'last-of-type']),
+    extend: {
+      borderWidth: ['focus'],
+    },
   },
   plugins: [
     plugin(function({ addVariant, e }) {

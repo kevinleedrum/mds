@@ -8,6 +8,13 @@ export type TransitionOptions = {
   timing: string;
 };
 
+export enum Direction {
+  top = 'top',
+  right = 'right',
+  bottom = 'bottom',
+  left = 'left',
+}
+
 const FADE_IN: TransitionOptions = {
   property: 'opacity',
   startValue: '0',
@@ -29,29 +36,20 @@ const SCALE_IN: TransitionOptions = {
   timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
 };
 
-const SLIDE_IN_FROM_RIGHT: TransitionOptions = {
-  property: 'transform',
-  startValue: 'translate3d(100%, 0, 0)',
-  endValue: 'translate3d(0, 0, 0)',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};
-const SLIDE_IN_FROM_LEFT: TransitionOptions = {
-  property: 'transform',
-  startValue: 'translate3d(-100%, 0, 0)',
-  endValue: 'translate3d(0, 0, 0)',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};
-const SLIDE_OUT_TO_LEFT: TransitionOptions = {
-  property: 'transform',
-  startValue: 'translate3d(0, 0, 0)',
-  endValue: 'translate3d(-100%, 0, 0)',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};
-const SLIDE_OUT_TO_RIGHT: TransitionOptions = {
-  property: 'transform',
-  startValue: 'translate3d(0, 0, 0)',
-  endValue: 'translate3d(100%, 0, 0)',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+const getSlideOptions = (direction: Direction, isSlidingIn = true): TransitionOptions => {
+  const translate = [0, 0, 0];
+  let translatePercent = 100;
+  if ([Direction.top, Direction.left].includes(direction)) translatePercent *= -1;
+  let translateCoordsIndex = 0; // translate X
+  if ([Direction.top, Direction.bottom].includes(direction)) translateCoordsIndex = 1; // translate Y
+  translate[translateCoordsIndex] = translatePercent;
+  const translateString = translate.map(p => (p === 0 ? p : p + '%')).join(', ');
+  return {
+    property: 'transform',
+    startValue: `translate3d(${isSlidingIn ? translateString : '0, 0, 0'})`,
+    endValue: `translate3d(${!isSlidingIn ? translateString : '0, 0, 0'})`,
+    timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  };
 };
 
 export const fadeIn = (el: HTMLElement, duration = 180) => {
@@ -68,13 +66,23 @@ export const fadeScaleIn = (el: HTMLElement, duration = 150, transformOrigin?: s
 };
 
 /** Fade and slide in */
-export const fadeSlideIn = (el: HTMLElement, duration = 250, fromRight = true) => {
-  return executeTransition(el, [fromRight ? SLIDE_IN_FROM_RIGHT : SLIDE_IN_FROM_LEFT, FADE_IN], duration);
+export const fadeSlideIn = (el: HTMLElement, duration = 250, fromDirection = Direction.right) => {
+  return executeTransition(el, [getSlideOptions(fromDirection), FADE_IN], duration);
 };
 
 /** Fade and slide out */
-export const fadeSlideOut = (el: HTMLElement, duration = 200, toRight = true) => {
-  return executeTransition(el, [toRight ? SLIDE_OUT_TO_RIGHT : SLIDE_OUT_TO_LEFT, FADE_OUT], duration);
+export const fadeSlideOut = (el: HTMLElement, duration = 200, toDirection = Direction.right) => {
+  return executeTransition(el, [getSlideOptions(toDirection, false), FADE_OUT], duration);
+};
+
+/** Slide in */
+export const slideIn = (el: HTMLElement, duration = 250, fromDirection: Direction = Direction.top) => {
+  return executeTransition(el, [getSlideOptions(fromDirection)], duration);
+};
+
+/** Slide out */
+export const slideOut = (el: HTMLElement, duration = 200, toDirection: Direction = Direction.top) => {
+  return executeTransition(el, [getSlideOptions(toDirection, false)], duration);
 };
 
 /** Executes a CSS transition on an element using the provided options and

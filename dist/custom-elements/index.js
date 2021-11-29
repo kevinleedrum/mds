@@ -2365,6 +2365,13 @@ function getOppositeVariationPlacement(placement) {
   return placement.replace(/start|end/g, matched => (matched === 'start' ? 'end' : 'start'));
 }
 
+var Direction;
+(function (Direction) {
+  Direction["top"] = "top";
+  Direction["right"] = "right";
+  Direction["bottom"] = "bottom";
+  Direction["left"] = "left";
+})(Direction || (Direction = {}));
 const FADE_IN = {
   property: 'opacity',
   startValue: '0',
@@ -2383,29 +2390,22 @@ const SCALE_IN = {
   endValue: 'scale(1)',
   timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
 };
-const SLIDE_IN_FROM_RIGHT = {
-  property: 'transform',
-  startValue: 'translate3d(100%, 0, 0)',
-  endValue: 'translate3d(0, 0, 0)',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};
-const SLIDE_IN_FROM_LEFT = {
-  property: 'transform',
-  startValue: 'translate3d(-100%, 0, 0)',
-  endValue: 'translate3d(0, 0, 0)',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};
-const SLIDE_OUT_TO_LEFT = {
-  property: 'transform',
-  startValue: 'translate3d(0, 0, 0)',
-  endValue: 'translate3d(-100%, 0, 0)',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};
-const SLIDE_OUT_TO_RIGHT = {
-  property: 'transform',
-  startValue: 'translate3d(0, 0, 0)',
-  endValue: 'translate3d(100%, 0, 0)',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+const getSlideOptions = (direction, isSlidingIn = true) => {
+  const translate = [0, 0, 0];
+  let translatePercent = 100;
+  if ([Direction.top, Direction.left].includes(direction))
+    translatePercent *= -1;
+  let translateCoordsIndex = 0; // translate X
+  if ([Direction.top, Direction.bottom].includes(direction))
+    translateCoordsIndex = 1; // translate Y
+  translate[translateCoordsIndex] = translatePercent;
+  const translateString = translate.map(p => (p === 0 ? p : p + '%')).join(', ');
+  return {
+    property: 'transform',
+    startValue: `translate3d(${isSlidingIn ? translateString : '0, 0, 0'})`,
+    endValue: `translate3d(${!isSlidingIn ? translateString : '0, 0, 0'})`,
+    timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  };
 };
 const fadeIn = (el, duration = 180) => {
   return executeTransition(el, [FADE_IN], duration);
@@ -2418,12 +2418,12 @@ const fadeScaleIn = (el, duration = 150, transformOrigin) => {
   return executeTransition(el, [FADE_IN, SCALE_IN], duration, transformOrigin);
 };
 /** Fade and slide in */
-const fadeSlideIn = (el, duration = 250, fromRight = true) => {
-  return executeTransition(el, [fromRight ? SLIDE_IN_FROM_RIGHT : SLIDE_IN_FROM_LEFT, FADE_IN], duration);
+const fadeSlideIn = (el, duration = 250, fromDirection = Direction.right) => {
+  return executeTransition(el, [getSlideOptions(fromDirection), FADE_IN], duration);
 };
 /** Fade and slide out */
-const fadeSlideOut = (el, duration = 200, toRight = true) => {
-  return executeTransition(el, [toRight ? SLIDE_OUT_TO_RIGHT : SLIDE_OUT_TO_LEFT, FADE_OUT], duration);
+const fadeSlideOut = (el, duration = 200, toDirection = Direction.right) => {
+  return executeTransition(el, [getSlideOptions(toDirection, false), FADE_OUT], duration);
 };
 /** Executes a CSS transition on an element using the provided options and
  * Returns a Promise that resolves once the transition has ended. */
@@ -3870,7 +3870,7 @@ const MxModal$1 = class extends HTMLElement {
     if (this.fromRight)
       transition = fadeSlideIn;
     else if (this.fromLeft)
-      transition = (el) => fadeSlideIn(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+      transition = (el) => fadeSlideIn(el, undefined, Direction.left);
     return transition;
   }
   get closeTransition() {
@@ -3878,7 +3878,7 @@ const MxModal$1 = class extends HTMLElement {
     if (this.fromRight)
       transition = fadeSlideOut;
     else if (this.fromLeft)
-      transition = (el) => fadeSlideOut(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+      transition = (el) => fadeSlideOut(el, undefined, Direction.left);
     return transition;
   }
   get hasFooter() {
