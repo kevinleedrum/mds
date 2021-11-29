@@ -2,7 +2,7 @@ import { r as registerInstance, h, f as Host, g as getElement } from './index-e2
 import { w as warningCircleSvg } from './warning-circle-7e1a7781.js';
 import { c as createPopover } from './popover-1f909484.js';
 import { u as uuidv4, p as propagateDataAttributes, i as isDateObject } from './utils-18e3dfde.js';
-import { f as fadeIn, a as fadeOut } from './transitions-6d3cfbdc.js';
+import { f as fadeIn, a as fadeOut } from './transitions-ba6f2751.js';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 

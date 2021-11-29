@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Watch, Element, Event, State, Listen } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { moveToPortal } from '../../utils/portal';
-import { fadeIn, fadeOut, fadeScaleIn, fadeSlideIn, fadeSlideOut } from '../../utils/transitions';
+import { Direction, fadeIn, fadeOut, fadeScaleIn, fadeSlideIn, fadeSlideOut } from '../../utils/transitions';
 import { lockBodyScroll, unlockBodyScroll } from '../../utils/bodyScroll';
 import arrowSvg from '../../assets/svg/arrow-left.svg';
 export class MxModal {
@@ -142,7 +142,7 @@ export class MxModal {
     if (this.fromRight)
       transition = fadeSlideIn;
     else if (this.fromLeft)
-      transition = (el) => fadeSlideIn(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+      transition = (el) => fadeSlideIn(el, undefined, Direction.left);
     return transition;
   }
   get closeTransition() {
@@ -150,7 +150,7 @@ export class MxModal {
     if (this.fromRight)
       transition = fadeSlideOut;
     else if (this.fromLeft)
-      transition = (el) => fadeSlideOut(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+      transition = (el) => fadeSlideOut(el, undefined, Direction.left);
     return transition;
   }
   get hasFooter() {

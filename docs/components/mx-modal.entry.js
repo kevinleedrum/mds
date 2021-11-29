@@ -1,7 +1,7 @@
 import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-e21e00f4.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { m as moveToPortal } from './portal-3ca3a2a3.js';
-import { f as fadeIn, a as fadeOut, b as fadeScaleIn, c as fadeSlideIn, d as fadeSlideOut } from './transitions-6d3cfbdc.js';
+import { f as fadeIn, a as fadeOut, b as fadeScaleIn, c as fadeSlideIn, D as Direction, d as fadeSlideOut } from './transitions-ba6f2751.js';
 import { u as unlockBodyScroll, l as lockBodyScroll } from './bodyScroll-166c2095.js';
 import { a as arrowSvg } from './arrow-left-2380c496.js';
 import './utils-18e3dfde.js';
@@ -146,7 +146,7 @@ const MxModal = class {
     if (this.fromRight)
       transition = fadeSlideIn;
     else if (this.fromLeft)
-      transition = (el) => fadeSlideIn(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+      transition = (el) => fadeSlideIn(el, undefined, Direction.left);
     return transition;
   }
   get closeTransition() {
@@ -154,7 +154,7 @@ const MxModal = class {
     if (this.fromRight)
       transition = fadeSlideOut;
     else if (this.fromLeft)
-      transition = (el) => fadeSlideOut(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+      transition = (el) => fadeSlideOut(el, undefined, Direction.left);
     return transition;
   }
   get hasFooter() {

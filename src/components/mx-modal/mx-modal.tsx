@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Watch, Element, Event, EventEmitter, State, Listen } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { moveToPortal } from '../../utils/portal';
-import { fadeIn, fadeOut, fadeScaleIn, fadeSlideIn, fadeSlideOut } from '../../utils/transitions';
+import { Direction, fadeIn, fadeOut, fadeScaleIn, fadeSlideIn, fadeSlideOut } from '../../utils/transitions';
 import { lockBodyScroll, unlockBodyScroll } from '../../utils/bodyScroll';
 import { IMxButtonProps } from '../mx-button/mx-button';
 import arrowSvg from '../../assets/svg/arrow-left.svg';
@@ -170,14 +170,14 @@ export class MxModal {
   get openTransition(): Function {
     let transition: Function = (el: HTMLElement) => fadeScaleIn(el, 250);
     if (this.fromRight) transition = fadeSlideIn;
-    else if (this.fromLeft) transition = (el: HTMLElement) => fadeSlideIn(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    else if (this.fromLeft) transition = (el: HTMLElement) => fadeSlideIn(el, undefined, Direction.left);
     return transition;
   }
 
   get closeTransition(): Function {
     let transition: Function = fadeOut;
     if (this.fromRight) transition = fadeSlideOut;
-    else if (this.fromLeft) transition = (el: HTMLElement) => fadeSlideOut(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+    else if (this.fromLeft) transition = (el: HTMLElement) => fadeSlideOut(el, undefined, Direction.left);
     return transition;
   }
 
