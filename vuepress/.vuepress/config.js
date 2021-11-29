@@ -150,6 +150,7 @@ module.exports = {
         'pickers',
         'tables',
         'page-headers',
+        'banners',
         'dialogs',
         'modals',
         'pagination',
