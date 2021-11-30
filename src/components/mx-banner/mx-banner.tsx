@@ -1,5 +1,5 @@
 import { Component, Host, h, Element, Prop, Watch, State } from '@stencil/core';
-import { slideIn, slideOut } from '../../utils/transitions';
+import { collapse, expand, slideIn, slideOut } from '../../utils/transitions';
 
 @Component({
   tag: 'mx-banner',
@@ -31,20 +31,13 @@ export class MxBanner {
   async transitionBanner() {
     // Collapse/expand host element's max-height while sliding the inner element up/down
     if (!this.isOpen) {
-      this.element.style.transition = 'max-height 150ms cubic-bezier(0.4, 0, 0.2, 1)';
-      this.element.style.maxHeight = this.element.scrollHeight + 'px';
-      requestAnimationFrame(() => {
-        this.element.style.maxHeight = '0';
-      });
+      collapse(this.element);
       await slideOut(this.bannerEl, 150);
       this.isVisible = false;
     } else {
       this.isVisible = true;
-      this.element.style.transition = 'max-height 180ms cubic-bezier(0.4, 0, 0.2, 1)';
-      requestAnimationFrame(() => {
-        this.element.style.maxHeight = this.element.scrollHeight + 'px';
-      });
-      await slideIn(this.bannerEl, 180);
+      expand(this.element);
+      await slideIn(this.bannerEl, 150);
       this.element.style.maxHeight = '';
     }
   }
@@ -52,7 +45,7 @@ export class MxBanner {
   get hostClass(): string {
     let str = 'mx-banner overflow-hidden';
     str += this.isVisible ? ' block' : ' hidden';
-    if (this.sticky) str += ' sticky z-10'; // TODO
+    if (this.sticky) str += ' sticky z-10';
     if (this.error) str += ' is-error';
     return str;
   }
