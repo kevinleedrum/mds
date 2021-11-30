@@ -86,26 +86,26 @@ export const slideOut = (el: HTMLElement, duration = 200, toDirection: Direction
 };
 
 /** Collapse accordion-style */
-export const collapse = async (el: HTMLElement, duration = 150, collapsedHeight = '0'): Promise<void> => {
-  el.style.transition = `max-height ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-  await new Promise(requestAnimationFrame);
-  el.style.maxHeight = el.scrollHeight + 'px';
-  await new Promise(requestAnimationFrame);
-  el.style.maxHeight = collapsedHeight;
-  return new Promise(resolve => setTimeout(resolve, duration));
+export const collapse = async (el: HTMLElement, duration = 150, collapsedHeight = '0') => {
+  const options: TransitionOptions = {
+    property: 'max-height',
+    startValue: el.scrollHeight + 'px',
+    endValue: collapsedHeight,
+    timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  };
+  return executeTransition(el, [options], duration);
 };
 
 /** Expand accordion-style */
 export const expand = async (el: HTMLElement, duration = 150): Promise<void> => {
-  el.style.transition = `max-height ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-  await new Promise(requestAnimationFrame);
-  el.style.maxHeight = el.scrollHeight + 'px';
-  return new Promise(resolve =>
-    setTimeout(() => {
-      el.style.maxHeight = '';
-      resolve();
-    }, duration),
-  );
+  const options: TransitionOptions = {
+    property: 'max-height',
+    startValue: el.style.maxHeight || '0',
+    endValue: el.scrollHeight + 'px',
+    timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  };
+  await executeTransition(el, [options], duration);
+  el.style.maxHeight = '';
 };
 
 /** Executes a CSS transition on an element using the provided options and

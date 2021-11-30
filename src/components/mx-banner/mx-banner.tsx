@@ -36,9 +36,9 @@ export class MxBanner {
       this.isVisible = false;
     } else {
       this.isVisible = true;
+      await new Promise(requestAnimationFrame);
       expand(this.element);
       await slideIn(this.bannerEl, 150);
-      this.element.style.maxHeight = '';
     }
   }
 
