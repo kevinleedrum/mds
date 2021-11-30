@@ -278,6 +278,7 @@ export class MxTableRow {
   async expand() {
     if (this.isMobileExpanded) return;
     this.isMobileExpanded = true;
+    await new Promise(requestAnimationFrame);
     expand(this.rowEl);
   }
 
