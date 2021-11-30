@@ -42,6 +42,18 @@ A banner displays a prominent message and related optional actions. Banners can 
 
 <<< @/vuepress/components/banners.md#banners
 
+### Properties
+
+| Property | Attribute | Description                                                 | Type      | Default |
+| -------- | --------- | ----------------------------------------------------------- | --------- | ------- |
+| `error`  | `error`   |                                                             | `boolean` | `false` |
+| `isOpen` | `is-open` | Toggles the banner with a transition.                       | `boolean` | `false` |
+| `sticky` | `sticky`  | When set, `position: sticky` will be applied to the banner. | `boolean` | `false` |
+
+### CSS Variables
+
+<<< @/src/tailwind/variables/index.scss#banners
+
 <script>
 export default {
   data() {

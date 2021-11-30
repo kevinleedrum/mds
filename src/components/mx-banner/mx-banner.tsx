@@ -11,7 +11,9 @@ export class MxBanner {
   bannerEl: HTMLElement;
 
   @Prop() error: boolean = false;
+  /** Toggles the banner with a transition. */
   @Prop() isOpen: boolean = false;
+  /** When set, `position: sticky` will be applied to the banner. */
   @Prop() sticky: boolean = false;
 
   @State() isVisible: boolean = false;
