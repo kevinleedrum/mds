@@ -63,7 +63,7 @@ export class MxBanner {
           ref={el => (this.bannerEl = el)}
           class="flex flex-col md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10"
         >
-          <div class={this.messageClass}>
+          <div data-testid="message" class={this.messageClass}>
             {this.hasImage && (
               <div class="flex-shrink-0">
                 <slot name="image"></slot>
@@ -73,7 +73,7 @@ export class MxBanner {
               <slot></slot>
             </p>
           </div>
-          <div class="text-right flex-shrink-0">
+          <div data-testid="actions" class="text-right flex-shrink-0">
             <slot name="actions"></slot>
           </div>
         </div>
