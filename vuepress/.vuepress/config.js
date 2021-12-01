@@ -155,6 +155,7 @@ module.exports = {
         'pagination',
         'snackbars',
         'uploads',
+        'code',
       ],
     },
   },
