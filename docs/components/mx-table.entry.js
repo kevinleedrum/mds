@@ -1,4 +1,4 @@
-import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-e21e00f4.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-b3442404.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { g as getPageRect, a as getCursorCoords, c as capitalize, i as isDateObject } from './utils-18e3dfde.js';
 import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
@@ -158,7 +158,7 @@ const MxTable = class {
     this.dragRowElIndex = null;
   }
   onVisibleRowsChange() {
-    this.getTableRows().forEach(row => row.collapse());
+    this.getTableRows().forEach(row => row.collapse(true));
     this.mxVisibleRowsChange.emit(this.visibleRows);
   }
   onPageChange() {

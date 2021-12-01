@@ -28,13 +28,6 @@
   }
 }
 
-.mx-menu .mx-menu-item:first-child > div {
-  @apply mt-8;
-}
-.mx-menu .mx-menu-item:last-child > div {
-  @apply mb-8;
-}
-
 .mx-menu.autocomplete-only:not(:focus-within) .mx-menu-item:not([aria-disabled]):first-child > div {
   /* Add focused background to first enabled menu item for autocomplete-only menus */
   background: var(--mds-bg-menu-item-focus);

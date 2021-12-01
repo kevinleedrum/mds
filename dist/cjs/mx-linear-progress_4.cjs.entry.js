@@ -8,6 +8,7 @@ const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 const chevronDown = require('./chevron-down-696a796a.js');
 const utils = require('./utils-1f7ef40d.js');
+const transitions = require('./transitions-4e1f18be.js');
 
 const MxLinearProgress = class {
   constructor(hostRef) {
@@ -322,8 +323,8 @@ const MxTableRow = class {
     nestedRows.forEach(childRow => this.childRowWrapper.appendChild(childRow));
   }
   onClick(e) {
-    if (!!e.target.closest('button, input, mx-menu'))
-      return; // Ignore clicks on buttons, etc.
+    if (!!e.target.closest('a, button, input, mx-menu'))
+      return; // Ignore clicks on links, buttons, etc.
     if (!this.minWidths.sm) {
       // Collapse/expand row when the exposed column cell is clicked
       const exposedCell = this.getExposedCell();
@@ -470,30 +471,23 @@ const MxTableRow = class {
   accordion() {
     if (this.minWidths.sm)
       return;
-    this.rowEl.style.transition = 'max-height 150ms ease';
     this.isMobileExpanded ? this.collapse() : this.expand();
   }
-  async collapse() {
+  async collapse(skipTransition = false) {
     if (!this.isMobileExpanded)
       return;
     this.isMobileCollapsing = true;
-    this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
-    requestAnimationFrame(() => {
-      this.rowEl.style.maxHeight = this.getCollapsedHeight();
-    });
-    if (!this.rowEl.style.transition) {
-      this.isMobileExpanded = false;
-      this.isMobileCollapsing = false;
-    }
+    if (!skipTransition)
+      await transitions.collapse(this.rowEl, 150, this.getCollapsedHeight());
+    this.isMobileExpanded = false;
+    this.isMobileCollapsing = false;
   }
   async expand() {
     if (this.isMobileExpanded)
       return;
-    this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
     this.isMobileExpanded = true;
-    requestAnimationFrame(() => {
-      this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
-    });
+    await new Promise(requestAnimationFrame);
+    transitions.expand(this.rowEl);
   }
   async focusDragHandle() {
     if (this.keyboardDragHandle)
@@ -530,15 +524,6 @@ const MxTableRow = class {
     return height;
   }
   onTransitionEnd(e) {
-    if (e.target === this.rowEl) {
-      this.rowEl.style.transition = '';
-      if (this.isMobileCollapsing) {
-        this.isMobileExpanded = false;
-        this.isMobileCollapsing = false;
-      }
-      // Remove explicit max-height after expanding to avoid issues with window resizing, etc.
-      this.rowEl.style.maxHeight = '';
-    }
     // When keyboard dragging, scroll the first element into view if moved out of bounds
     if (e.target === this.rowEl.children[0] && utils.isScrolledOutOfView(this.rowEl.children[0]))
       this.rowEl.children[0].scrollIntoView();

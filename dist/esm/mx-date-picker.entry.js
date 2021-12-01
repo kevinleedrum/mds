@@ -2,7 +2,7 @@ import { r as registerInstance, h, H as Host, g as getElement } from './index-54
 import { w as warningCircleSvg } from './warning-circle-7e1a7781.js';
 import { c as createPopover } from './popover-56a66892.js';
 import { u as uuidv4, p as propagateDataAttributes, i as isDateObject } from './utils-18e3dfde.js';
-import { f as fadeIn, a as fadeOut } from './transitions-3624d9c4.js';
+import { f as fadeIn, b as fadeOut } from './transitions-db5fff66.js';
 
 function getDefaultExportFromCjs (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;

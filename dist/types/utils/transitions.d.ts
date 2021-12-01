@@ -23,3 +23,7 @@ export declare const fadeSlideOut: (el: HTMLElement, duration?: number, toDirect
 export declare const slideIn: (el: HTMLElement, duration?: number, fromDirection?: Direction) => Promise<void>;
 /** Slide out */
 export declare const slideOut: (el: HTMLElement, duration?: number, toDirection?: Direction) => Promise<void>;
+/** Collapse accordion-style */
+export declare const collapse: (el: HTMLElement, duration?: number, collapsedHeight?: string) => Promise<void>;
+/** Expand accordion-style */
+export declare const expand: (el: HTMLElement, duration?: number) => Promise<void>;

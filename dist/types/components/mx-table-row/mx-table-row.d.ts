@@ -74,7 +74,7 @@ export declare class MxTableRow {
    * This is simpler than trying to change the row to `display: flex` to add a box shadow to it. */
   createDragShadowEl(): Promise<void>;
   accordion(): void;
-  collapse(): Promise<void>;
+  collapse(skipTransition?: boolean): Promise<void>;
   expand(): Promise<void>;
   focusDragHandle(): Promise<void>;
   /** Returns the immediate children of the row, as well as the immediate children of all nested

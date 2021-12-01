@@ -6,7 +6,7 @@ const index = require('./index-5f1d14aa.js');
 const utils = require('./utils-1f7ef40d.js');
 const chevronDown = require('./chevron-down-696a796a.js');
 const popover = require('./popover-8846ea88.js');
-const transitions = require('./transitions-c509b1c9.js');
+const transitions = require('./transitions-4e1f18be.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 const check = require('./check-830696a9.js');
 const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
@@ -52,7 +52,7 @@ const MxCheckbox = class {
         'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
           (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,
-      ].join(' ') }, index.h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes, { onInput: this.onInput.bind(this) })), index.h("span", { class: this.checkClass }), index.h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
+      ].join(' ') }, index.h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled, indeterminate: this.indeterminate }, this.dataAttributes, { onInput: this.onInput.bind(this) })), index.h("span", { class: this.checkClass }), index.h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
   get element() { return index.getElement(this); }
 };
