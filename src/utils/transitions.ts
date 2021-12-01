@@ -85,6 +85,29 @@ export const slideOut = (el: HTMLElement, duration = 200, toDirection: Direction
   return executeTransition(el, [getSlideOptions(toDirection, false)], duration);
 };
 
+/** Collapse accordion-style */
+export const collapse = async (el: HTMLElement, duration = 150, collapsedHeight = '0') => {
+  const options: TransitionOptions = {
+    property: 'max-height',
+    startValue: el.scrollHeight + 'px',
+    endValue: collapsedHeight,
+    timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  };
+  return executeTransition(el, [options], duration);
+};
+
+/** Expand accordion-style */
+export const expand = async (el: HTMLElement, duration = 150): Promise<void> => {
+  const options: TransitionOptions = {
+    property: 'max-height',
+    startValue: el.style.maxHeight || '0',
+    endValue: el.scrollHeight + 'px',
+    timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  };
+  await executeTransition(el, [options], duration);
+  el.style.maxHeight = '';
+};
+
 /** Executes a CSS transition on an element using the provided options and
  * Returns a Promise that resolves once the transition has ended. */
 function executeTransition(

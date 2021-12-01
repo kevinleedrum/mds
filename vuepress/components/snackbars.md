@@ -1,6 +1,7 @@
 # Snackbars
 
 Snackbars are used to alert the user of changes, usually in direct result of an action the user has taken. For example, a confirmation of a deleted item. These are utilitarian and should not be used for marketing alerts.
+For higher priority alerts, consider [Banners](/components/banners.html).
 
 The main content of the snackbar is placed in the default slot. If an action is needed, add a [Text Button](/components/buttons.html#text-buttons) to the `action` slot.
 

@@ -246,7 +246,7 @@ export class MxTable {
   @Watch('rowsPerPage')
   @Watch('rows')
   onVisibleRowsChange() {
-    this.getTableRows().forEach(row => row.collapse());
+    this.getTableRows().forEach(row => row.collapse(true));
     this.mxVisibleRowsChange.emit(this.visibleRows);
   }
 
