@@ -8,6 +8,12 @@ export const MxBadge: {
   new (): MxBadge;
 };
 
+interface MxBanner extends Components.MxBanner, HTMLElement {}
+export const MxBanner: {
+  prototype: MxBanner;
+  new (): MxBanner;
+};
+
 interface MxButton extends Components.MxButton, HTMLElement {}
 export const MxButton: {
   prototype: MxButton;

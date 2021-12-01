@@ -102,41 +102,6 @@ const MxBadge$1 = class extends HTMLElement {
   get element() { return this; }
 };
 
-function ripple(e, elem) {
-  let existingRipple = elem.querySelector('.ripple');
-  if (existingRipple)
-    existingRipple.remove();
-  // Create span element
-  let ripple = document.createElement('span');
-  // Add ripple class to span
-  ripple.classList.add('ripple');
-  // Add span to the button
-  elem.prepend(ripple);
-  // Set the size of the span element
-  const diameter = Math.max(elem.clientWidth, elem.clientHeight);
-  ripple.style.width = ripple.style.height = diameter + 'px';
-  // Position the span element
-  const elemOffset = elem.getBoundingClientRect();
-  // Center over click coords OR over top left corner if activated by keypress
-  const left = Math.max(e.clientX - elemOffset.left, 0);
-  const top = Math.max(e.clientY - elemOffset.top, 0);
-  ripple.style.left = left - diameter / 2 + 'px';
-  ripple.style.top = top - diameter / 2 + 'px';
-  // Remove span after 0.3s
-  setTimeout(() => {
-    ripple.remove();
-  }, 300);
-}
-
-const chevronSvg = `<svg width="13" height="7" viewBox="0 0 13 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path
-    d="M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z"
-    fill="currentColor"
-    fill-opacity="0.88"
-  />
-</svg>
-`;
-
 // https://github.com/ionic-team/capacitor/blob/b893a57aaaf3a16e13db9c33037a12f1a5ac92e0/cli/src/util/uuid.ts
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
@@ -244,6 +209,242 @@ function propagateDataAttributes() {
   });
 }
 
+var Direction;
+(function (Direction) {
+  Direction["top"] = "top";
+  Direction["right"] = "right";
+  Direction["bottom"] = "bottom";
+  Direction["left"] = "left";
+})(Direction || (Direction = {}));
+const FADE_IN = {
+  property: 'opacity',
+  startValue: '0',
+  endValue: '1',
+  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+};
+const FADE_OUT = {
+  property: 'opacity',
+  startValue: '1',
+  endValue: '0',
+  timing: 'ease',
+};
+const SCALE_IN = {
+  property: 'transform',
+  startValue: 'scale(0.8)',
+  endValue: 'scale(1)',
+  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+};
+const getSlideOptions = (direction, isSlidingIn = true) => {
+  const translate = [0, 0, 0];
+  let translatePercent = 100;
+  if ([Direction.top, Direction.left].includes(direction))
+    translatePercent *= -1;
+  let translateCoordsIndex = 0; // translate X
+  if ([Direction.top, Direction.bottom].includes(direction))
+    translateCoordsIndex = 1; // translate Y
+  translate[translateCoordsIndex] = translatePercent;
+  const translateString = translate.map(p => (p === 0 ? p : p + '%')).join(', ');
+  return {
+    property: 'transform',
+    startValue: `translate3d(${isSlidingIn ? translateString : '0, 0, 0'})`,
+    endValue: `translate3d(${!isSlidingIn ? translateString : '0, 0, 0'})`,
+    timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  };
+};
+const fadeIn = (el, duration = 180) => {
+  return executeTransition(el, [FADE_IN], duration);
+};
+const fadeOut = (el, duration = 150) => {
+  return executeTransition(el, [FADE_OUT], duration);
+};
+/** Fade in and scale from 80% to 100% (Material Fade) */
+const fadeScaleIn = (el, duration = 150, transformOrigin) => {
+  return executeTransition(el, [FADE_IN, SCALE_IN], duration, transformOrigin);
+};
+/** Fade and slide in */
+const fadeSlideIn = (el, duration = 250, fromDirection = Direction.right) => {
+  return executeTransition(el, [getSlideOptions(fromDirection), FADE_IN], duration);
+};
+/** Fade and slide out */
+const fadeSlideOut = (el, duration = 200, toDirection = Direction.right) => {
+  return executeTransition(el, [getSlideOptions(toDirection, false), FADE_OUT], duration);
+};
+/** Slide in */
+const slideIn = (el, duration = 250, fromDirection = Direction.top) => {
+  return executeTransition(el, [getSlideOptions(fromDirection)], duration);
+};
+/** Slide out */
+const slideOut = (el, duration = 200, toDirection = Direction.top) => {
+  return executeTransition(el, [getSlideOptions(toDirection, false)], duration);
+};
+/** Collapse accordion-style */
+const collapse = async (el, duration = 150, collapsedHeight = '0') => {
+  const options = {
+    property: 'max-height',
+    startValue: el.scrollHeight + 'px',
+    endValue: collapsedHeight,
+    timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  };
+  return executeTransition(el, [options], duration);
+};
+/** Expand accordion-style */
+const expand = async (el, duration = 150) => {
+  const options = {
+    property: 'max-height',
+    startValue: el.style.maxHeight || '0',
+    endValue: el.scrollHeight + 'px',
+    timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  };
+  await executeTransition(el, [options], duration);
+  el.style.maxHeight = '';
+};
+/** Executes a CSS transition on an element using the provided options and
+ * Returns a Promise that resolves once the transition has ended. */
+function executeTransition(el, transitionOptions, duration, transformOrigin) {
+  return new Promise(async (resolve) => {
+    if (queryPrefersReducedMotion() || typeof jest !== 'undefined')
+      return resolve();
+    // Set the start value for each property
+    transitionOptions.forEach(transition => {
+      setStyleProperty(el, transition.property, transition.startValue);
+    });
+    if (transformOrigin)
+      el.style.transformOrigin = transformOrigin;
+    requestAnimationFrame(() => {
+      // After a tick, change each property and start the transition
+      if (!el)
+        return;
+      el.style.transition = transitionOptions
+        .map(transition => {
+        return `${transition.property} ${duration}ms ${transition.timing}`;
+      })
+        .join(', ');
+      requestAnimationFrame(() => {
+        transitionOptions.forEach(transition => {
+          setStyleProperty(el, transition.property, transition.endValue);
+        });
+      });
+    });
+    // Resolve once the duration passes (setTimeout is safer than transition events)
+    setTimeout(resolve, duration);
+  });
+}
+function setStyleProperty(el, property, value) {
+  if (!el)
+    return;
+  if (property !== 'transform') {
+    // Set typical style property (e.g. opacity)
+    el.style[property] = value;
+  }
+  else {
+    // For transforms, we do not want to overwrite the entire transform property.
+    // Instead, we need to remove any conflicting transform values and then add the new value.
+    // First, parse out an array of transforms (e.g. ['translate(532px, 311px)', 'scale(0.8)'])
+    const matchTransforms = /\w*\((-?((\d+)|(\d*\.\d+))\w*,\s*)*(-?(\d+)|(\d*\.\d+))\w*\)/gi;
+    let transforms = el.style.transform.match(matchTransforms) || [];
+    // Parse out the name of our new transform (e.g. 'scale')
+    let transformName = /^(\w*)\(/.exec(value)[1];
+    // Remove existing transforms with the same name
+    transforms = transforms.filter(t => !t.startsWith(transformName));
+    // Add our new transform
+    transforms.push(value);
+    el.style.transform = transforms.join(' ');
+  }
+}
+
+const MxBanner$1 = class extends HTMLElement {
+  constructor() {
+    super();
+    this.__registerHost();
+    this.hasActions = false;
+    this.hasImage = false;
+    this.error = false;
+    /** Toggles the banner with a transition. */
+    this.isOpen = false;
+    /** When set, `position: sticky` will be applied to the banner. */
+    this.sticky = false;
+    this.isVisible = false;
+  }
+  connectedCallback() {
+    this.isVisible = this.isOpen;
+  }
+  componentWillRender() {
+    this.hasActions = !!this.element.querySelector('[slot="actions"]');
+    this.hasImage = !!this.element.querySelector('[slot="image"]');
+  }
+  async transitionBanner() {
+    // Collapse/expand host element's max-height while sliding the inner element up/down
+    if (!this.isOpen) {
+      collapse(this.element);
+      await slideOut(this.bannerEl, 150);
+      this.isVisible = false;
+    }
+    else {
+      this.isVisible = true;
+      await new Promise(requestAnimationFrame);
+      expand(this.element);
+      await slideIn(this.bannerEl, 150);
+    }
+  }
+  get hostClass() {
+    let str = 'mx-banner overflow-hidden';
+    str += this.isVisible ? ' block' : ' hidden';
+    if (this.sticky)
+      str += ' sticky z-10';
+    if (this.error)
+      str += ' is-error';
+    return str;
+  }
+  get messageClass() {
+    let str = 'flex items-center space-x-12 mt-16 md:mt-0';
+    str += this.hasActions ? ' mb-8' : ' mb-16';
+    str += ' md:mb-0';
+    return str;
+  }
+  render() {
+    return (h(Host, { class: this.hostClass, role: "alert" }, h("div", { ref: el => (this.bannerEl = el), class: "flex flex-col md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10" }, h("div", { "data-testid": "message", class: this.messageClass }, this.hasImage && (h("div", { class: "flex-shrink-0" }, h("slot", { name: "image" }))), h("p", { class: "my-0 text-4 flex-grow" }, h("slot", null))), h("div", { "data-testid": "actions", class: "text-right flex-shrink-0" }, h("slot", { name: "actions" })))));
+  }
+  get element() { return this; }
+  static get watchers() { return {
+    "isOpen": ["transitionBanner"]
+  }; }
+};
+
+function ripple(e, elem) {
+  let existingRipple = elem.querySelector('.ripple');
+  if (existingRipple)
+    existingRipple.remove();
+  // Create span element
+  let ripple = document.createElement('span');
+  // Add ripple class to span
+  ripple.classList.add('ripple');
+  // Add span to the button
+  elem.prepend(ripple);
+  // Set the size of the span element
+  const diameter = Math.max(elem.clientWidth, elem.clientHeight);
+  ripple.style.width = ripple.style.height = diameter + 'px';
+  // Position the span element
+  const elemOffset = elem.getBoundingClientRect();
+  // Center over click coords OR over top left corner if activated by keypress
+  const left = Math.max(e.clientX - elemOffset.left, 0);
+  const top = Math.max(e.clientY - elemOffset.top, 0);
+  ripple.style.left = left - diameter / 2 + 'px';
+  ripple.style.top = top - diameter / 2 + 'px';
+  // Remove span after 0.3s
+  setTimeout(() => {
+    ripple.remove();
+  }, 300);
+}
+
+const chevronSvg = `<svg width="13" height="7" viewBox="0 0 13 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M10.8849 0L6.29492 4.58L1.70492 0L0.294922 1.41L6.29492 7.41L12.2949 1.41L10.8849 0Z"
+    fill="currentColor"
+    fill-opacity="0.88"
+  />
+</svg>
+`;
+
 const MxButton$1 = class extends HTMLElement {
   constructor() {
     super();
@@ -345,7 +546,7 @@ const MxCheckbox$1 = class extends HTMLElement {
         'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
           (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,
-      ].join(' ') }, h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("span", { class: this.checkClass }), h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
+      ].join(' ') }, h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled, indeterminate: this.indeterminate }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("span", { class: this.checkClass }), h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
   get element() { return this; }
 };
@@ -2365,118 +2566,6 @@ function getOppositeVariationPlacement(placement) {
   return placement.replace(/start|end/g, matched => (matched === 'start' ? 'end' : 'start'));
 }
 
-var Direction;
-(function (Direction) {
-  Direction["top"] = "top";
-  Direction["right"] = "right";
-  Direction["bottom"] = "bottom";
-  Direction["left"] = "left";
-})(Direction || (Direction = {}));
-const FADE_IN = {
-  property: 'opacity',
-  startValue: '0',
-  endValue: '1',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};
-const FADE_OUT = {
-  property: 'opacity',
-  startValue: '1',
-  endValue: '0',
-  timing: 'ease',
-};
-const SCALE_IN = {
-  property: 'transform',
-  startValue: 'scale(0.8)',
-  endValue: 'scale(1)',
-  timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-};
-const getSlideOptions = (direction, isSlidingIn = true) => {
-  const translate = [0, 0, 0];
-  let translatePercent = 100;
-  if ([Direction.top, Direction.left].includes(direction))
-    translatePercent *= -1;
-  let translateCoordsIndex = 0; // translate X
-  if ([Direction.top, Direction.bottom].includes(direction))
-    translateCoordsIndex = 1; // translate Y
-  translate[translateCoordsIndex] = translatePercent;
-  const translateString = translate.map(p => (p === 0 ? p : p + '%')).join(', ');
-  return {
-    property: 'transform',
-    startValue: `translate3d(${isSlidingIn ? translateString : '0, 0, 0'})`,
-    endValue: `translate3d(${!isSlidingIn ? translateString : '0, 0, 0'})`,
-    timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-  };
-};
-const fadeIn = (el, duration = 180) => {
-  return executeTransition(el, [FADE_IN], duration);
-};
-const fadeOut = (el, duration = 150) => {
-  return executeTransition(el, [FADE_OUT], duration);
-};
-/** Fade in and scale from 80% to 100% (Material Fade) */
-const fadeScaleIn = (el, duration = 150, transformOrigin) => {
-  return executeTransition(el, [FADE_IN, SCALE_IN], duration, transformOrigin);
-};
-/** Fade and slide in */
-const fadeSlideIn = (el, duration = 250, fromDirection = Direction.right) => {
-  return executeTransition(el, [getSlideOptions(fromDirection), FADE_IN], duration);
-};
-/** Fade and slide out */
-const fadeSlideOut = (el, duration = 200, toDirection = Direction.right) => {
-  return executeTransition(el, [getSlideOptions(toDirection, false), FADE_OUT], duration);
-};
-/** Executes a CSS transition on an element using the provided options and
- * Returns a Promise that resolves once the transition has ended. */
-function executeTransition(el, transitionOptions, duration, transformOrigin) {
-  return new Promise(async (resolve) => {
-    if (queryPrefersReducedMotion() || typeof jest !== 'undefined')
-      return resolve();
-    // Set the start value for each property
-    transitionOptions.forEach(transition => {
-      setStyleProperty(el, transition.property, transition.startValue);
-    });
-    if (transformOrigin)
-      el.style.transformOrigin = transformOrigin;
-    requestAnimationFrame(() => {
-      // After a tick, change each property and start the transition
-      if (!el)
-        return;
-      el.style.transition = transitionOptions
-        .map(transition => {
-        return `${transition.property} ${duration}ms ${transition.timing}`;
-      })
-        .join(', ');
-      requestAnimationFrame(() => {
-        transitionOptions.forEach(transition => {
-          setStyleProperty(el, transition.property, transition.endValue);
-        });
-      });
-    });
-    // Resolve once the duration passes (setTimeout is safer than transition events)
-    setTimeout(resolve, duration);
-  });
-}
-function setStyleProperty(el, property, value) {
-  if (property !== 'transform') {
-    // Set typical style property (e.g. opacity)
-    el.style[property] = value;
-  }
-  else {
-    // For transforms, we do not want to overwrite the entire transform property.
-    // Instead, we need to remove any conflicting transform values and then add the new value.
-    // First, parse out an array of transforms (e.g. ['translate(532px, 311px)', 'scale(0.8)'])
-    const matchTransforms = /\w*\((-?((\d+)|(\d*\.\d+))\w*,\s*)*(-?(\d+)|(\d*\.\d+))\w*\)/gi;
-    let transforms = el.style.transform.match(matchTransforms) || [];
-    // Parse out the name of our new transform (e.g. 'scale')
-    let transformName = /^(\w*)\(/.exec(value)[1];
-    // Remove existing transforms with the same name
-    transforms = transforms.filter(t => !t.startsWith(transformName));
-    // Add our new transform
-    transforms.push(value);
-    el.style.transform = transforms.join(' ');
-  }
-}
-
 const yyyymmdd = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const MxDatePicker$1 = class extends HTMLElement {
@@ -3220,7 +3309,7 @@ const MxImageUpload$1 = class extends HTMLElement {
     else {
       iconJsx = h("span", { "data-testid": "image-icon", class: this.showDropzoneText ? 'mb-8' : '', innerHTML: imageSvg });
     }
-    return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 opacity-0 cursor-pointer", onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0 pointer-events-none ' +
+    return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer", onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0 pointer-events-none ' +
         (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)), this.hasInstructions && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
   }
   get element() { return this; }
@@ -5146,7 +5235,7 @@ const MxTable$1 = class extends HTMLElement {
     this.dragRowElIndex = null;
   }
   onVisibleRowsChange() {
-    this.getTableRows().forEach(row => row.collapse());
+    this.getTableRows().forEach(row => row.collapse(true));
     this.mxVisibleRowsChange.emit(this.visibleRows);
   }
   onPageChange() {
@@ -5761,8 +5850,8 @@ const MxTableRow$1 = class extends HTMLElement {
     nestedRows.forEach(childRow => this.childRowWrapper.appendChild(childRow));
   }
   onClick(e) {
-    if (!!e.target.closest('button, input, mx-menu'))
-      return; // Ignore clicks on buttons, etc.
+    if (!!e.target.closest('a, button, input, mx-menu'))
+      return; // Ignore clicks on links, buttons, etc.
     if (!this.minWidths.sm) {
       // Collapse/expand row when the exposed column cell is clicked
       const exposedCell = this.getExposedCell();
@@ -5909,30 +5998,23 @@ const MxTableRow$1 = class extends HTMLElement {
   accordion() {
     if (this.minWidths.sm)
       return;
-    this.rowEl.style.transition = 'max-height 150ms ease';
     this.isMobileExpanded ? this.collapse() : this.expand();
   }
-  async collapse() {
+  async collapse(skipTransition = false) {
     if (!this.isMobileExpanded)
       return;
     this.isMobileCollapsing = true;
-    this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
-    requestAnimationFrame(() => {
-      this.rowEl.style.maxHeight = this.getCollapsedHeight();
-    });
-    if (!this.rowEl.style.transition) {
-      this.isMobileExpanded = false;
-      this.isMobileCollapsing = false;
-    }
+    if (!skipTransition)
+      await collapse(this.rowEl, 150, this.getCollapsedHeight());
+    this.isMobileExpanded = false;
+    this.isMobileCollapsing = false;
   }
   async expand() {
     if (this.isMobileExpanded)
       return;
-    this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
     this.isMobileExpanded = true;
-    requestAnimationFrame(() => {
-      this.rowEl.style.maxHeight = this.rowEl.scrollHeight + 'px';
-    });
+    await new Promise(requestAnimationFrame);
+    expand(this.rowEl);
   }
   async focusDragHandle() {
     if (this.keyboardDragHandle)
@@ -5969,15 +6051,6 @@ const MxTableRow$1 = class extends HTMLElement {
     return height;
   }
   onTransitionEnd(e) {
-    if (e.target === this.rowEl) {
-      this.rowEl.style.transition = '';
-      if (this.isMobileCollapsing) {
-        this.isMobileExpanded = false;
-        this.isMobileCollapsing = false;
-      }
-      // Remove explicit max-height after expanding to avoid issues with window resizing, etc.
-      this.rowEl.style.maxHeight = '';
-    }
     // When keyboard dragging, scroll the first element into view if moved out of bounds
     if (e.target === this.rowEl.children[0] && isScrolledOutOfView(this.rowEl.children[0]))
       this.rowEl.children[0].scrollIntoView();
@@ -6421,6 +6494,7 @@ const MxTooltip$1 = class extends HTMLElement {
 };
 
 const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"indicator":[8],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
+const MxBanner = /*@__PURE__*/proxyCustomElement(MxBanner$1, [4,"mx-banner",{"error":[4],"isOpen":[4,"is-open"],"sticky":[4],"isVisible":[32]}]);
 const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"formaction":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelLeft":[4,"label-left"],"labelName":[1,"label-name"],"labelClass":[1,"label-class"],"hideLabel":[4,"hide-label"],"checked":[1028],"disabled":[4],"indeterminate":[4]}]);
 const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined":[4],"disabled":[4],"selected":[516],"clickable":[4],"removable":[4],"avatarUrl":[1,"avatar-url"],"icon":[1],"value":[8],"choice":[4],"filter":[4]}]);
@@ -6458,6 +6532,7 @@ const defineCustomElements = (opts) => {
   if (typeof customElements !== 'undefined') {
     [
       MxBadge,
+  MxBanner,
   MxButton,
   MxCheckbox,
   MxChip,
@@ -6499,4 +6574,4 @@ const defineCustomElements = (opts) => {
   }
 };
 
-export { MxBadge, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDatePicker, MxDialog, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxModal, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, MxTooltip, defineCustomElements };
+export { MxBadge, MxBanner, MxButton, MxCheckbox, MxChip, MxChipGroup, MxCircularProgress, MxDatePicker, MxDialog, MxDropdownMenu, MxFab, MxIconButton, MxImageUpload, MxInput, MxLinearProgress, MxMenu, MxMenuItem, MxModal, MxPageHeader, MxPagination, MxRadio, MxSearch, MxSelect, MxSnackbar, MxSwitch, MxTab, MxTabContent, MxTable, MxTableCell, MxTableRow, MxTabs, MxTimePicker, MxToggleButton, MxToggleButtonGroup, MxTooltip, defineCustomElements };

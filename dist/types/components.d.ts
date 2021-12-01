@@ -49,6 +49,17 @@ export namespace Components {
          */
         "value": any;
     }
+    interface MxBanner {
+        "error": boolean;
+        /**
+          * Toggles the banner with a transition.
+         */
+        "isOpen": boolean;
+        /**
+          * When set, `position: sticky` will be applied to the banner.
+         */
+        "sticky": boolean;
+    }
     interface MxButton {
         "btnType": BtnType;
         "disabled": boolean;
@@ -739,7 +750,7 @@ export namespace Components {
          */
         "actions": ITableRowAction[];
         "checked": boolean;
-        "collapse": () => Promise<void>;
+        "collapse": (skipTransition?: boolean) => Promise<void>;
         "expand": () => Promise<void>;
         "focusDragHandle": () => Promise<void>;
         /**
@@ -860,6 +871,12 @@ declare global {
     var HTMLMxBadgeElement: {
         prototype: HTMLMxBadgeElement;
         new (): HTMLMxBadgeElement;
+    };
+    interface HTMLMxBannerElement extends Components.MxBanner, HTMLStencilElement {
+    }
+    var HTMLMxBannerElement: {
+        prototype: HTMLMxBannerElement;
+        new (): HTMLMxBannerElement;
     };
     interface HTMLMxButtonElement extends Components.MxButton, HTMLStencilElement {
     }
@@ -1061,6 +1078,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "mx-badge": HTMLMxBadgeElement;
+        "mx-banner": HTMLMxBannerElement;
         "mx-button": HTMLMxButtonElement;
         "mx-checkbox": HTMLMxCheckboxElement;
         "mx-chip": HTMLMxChipElement;
@@ -1130,6 +1148,17 @@ declare namespace LocalJSX {
           * The value to display inside the badge
          */
         "value"?: any;
+    }
+    interface MxBanner {
+        "error"?: boolean;
+        /**
+          * Toggles the banner with a transition.
+         */
+        "isOpen"?: boolean;
+        /**
+          * When set, `position: sticky` will be applied to the banner.
+         */
+        "sticky"?: boolean;
     }
     interface MxButton {
         "btnType"?: BtnType;
@@ -1947,6 +1976,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "mx-badge": MxBadge;
+        "mx-banner": MxBanner;
         "mx-button": MxButton;
         "mx-checkbox": MxCheckbox;
         "mx-chip": MxChip;
@@ -1987,6 +2017,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
+            "mx-banner": LocalJSX.MxBanner & JSXBase.HTMLAttributes<HTMLMxBannerElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
             "mx-chip": LocalJSX.MxChip & JSXBase.HTMLAttributes<HTMLMxChipElement>;

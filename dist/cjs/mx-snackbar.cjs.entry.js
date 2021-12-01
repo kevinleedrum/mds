@@ -3,7 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-5f1d14aa.js');
-const transitions = require('./transitions-c509b1c9.js');
+const transitions = require('./transitions-4e1f18be.js');
 const portal = require('./portal-0b4649d0.js');
 require('./utils-1f7ef40d.js');
 

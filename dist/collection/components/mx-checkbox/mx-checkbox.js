@@ -42,7 +42,7 @@ export class MxCheckbox {
             (this.disabled ? '' : ' cursor-pointer'),
           this.labelClass,
         ].join(' ') },
-        h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes, { onInput: this.onInput.bind(this) })),
+        h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled, indeterminate: this.indeterminate }, this.dataAttributes, { onInput: this.onInput.bind(this) })),
         h("span", { class: this.checkClass }),
         h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }

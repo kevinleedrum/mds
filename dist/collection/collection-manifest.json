@@ -9,6 +9,7 @@
     "./components/mx-table/mx-table.js",
     "./components/mx-tab/mx-tab.js",
     "./components/mx-badge/mx-badge.js",
+    "./components/mx-banner/mx-banner.js",
     "./components/mx-checkbox/mx-checkbox.js",
     "./components/mx-chip/mx-chip.js",
     "./components/mx-chip-group/mx-chip-group.js",
