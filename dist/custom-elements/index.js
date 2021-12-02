@@ -2941,13 +2941,13 @@ const MxDropdownMenu$1 = class extends HTMLElement {
     this.flat = false;
     this.isFocused = false;
   }
-  onClick(e) {
+  async onClick(e) {
     // Resize the menu width to match the input.  This is done every click in case the input is resized after initial load.
     this.menu.style.width = this.dropdownWrapper.getBoundingClientRect().width + 'px';
     const clickedMenuItem = e.target.closest('mx-menu-item');
     if (!clickedMenuItem)
       return;
-    this.value = clickedMenuItem.innerText;
+    this.value = await clickedMenuItem.getValue();
     // Fire native input event for consistency with mx-select
     this.inputElem.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
   }
@@ -3135,7 +3135,7 @@ const MxIconButton$1 = class extends HTMLElement {
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-1', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" }, h("span", { "data-testid": "chevron", class: this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : '', innerHTML: chevronSvg })))));
-    return (h(Host, { class: "mx-icon-button inline-block" }, h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
+    return (h(Host, { class: "mx-icon-button inline-block" }, h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
   }
   get element() { return this; }
 };
@@ -3742,6 +3742,10 @@ const MxMenuItem$1 = class extends HTMLElement {
       return await this.submenu.closeMenu();
     }
   }
+  /** Returns the menu item inner text (excluding any label or subtitle) */
+  async getValue() {
+    return this.slotWrapper && this.slotWrapper.innerText.trim();
+  }
   /** Focuses the menu item. */
   async focusMenuItem() {
     if (this.multiSelect) {
@@ -3805,7 +3809,7 @@ const MxMenuItem$1 = class extends HTMLElement {
   }
   render() {
     return (h(Host, { class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') }, h("div", { ref: el => (this.menuItemElem = el), role: "menuitem", "aria-selected": this.checked, "aria-disabled": this.disabled, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) }, this.label && (h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" }, h("span", { class: "block -mb-4" }, this.label))), h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +
-        (this.multiSelect ? ' hidden' : '') }, h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), h("span", { ref: el => (this.slotWrapper = el), class: "overflow-hidden overflow-ellipsis" }, h("slot", null))), this.checked && !this.multiSelect && (h("span", { class: "check ml-12", "data-testid": "check", innerHTML: checkSvg })), !!this.submenu && h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowSvg$1 })), this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), h("slot", { name: "submenu" })));
+        (this.multiSelect ? ' hidden' : '') }, h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), h("span", { ref: el => (this.slotWrapper = el), class: "truncate" }, h("slot", null))), this.checked && !this.multiSelect && (h("span", { class: "check ml-12", "data-testid": "check", innerHTML: checkSvg })), !!this.submenu && h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowSvg$1 })), this.subtitle && (h("p", { class: "item-subtitle flex items-start py-0 px-12 my-0 h-16 caption2" }, h("span", { class: "block -mt-4 truncate" }, this.subtitle))), this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), h("slot", { name: "submenu" })));
   }
   get element() { return this; }
 };
@@ -6509,7 +6513,7 @@ const MxImageUpload = /*@__PURE__*/proxyCustomElement(MxImageUpload$1, [4,"mx-im
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"placeholder":[1],"value":[1025],"type":[1],"dense":[4],"disabled":[4],"readonly":[4],"maxlength":[2],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"suffix":[1],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"floatLabel":[4,"float-label"],"textarea":[4],"textareaHeight":[1025,"textarea-height"],"isFocused":[32],"characterCount":[32]}]);
 const MxLinearProgress = /*@__PURE__*/proxyCustomElement(MxLinearProgress$1, [0,"mx-linear-progress",{"value":[2],"appearDelay":[2,"appear-delay"]}]);
 const MxMenu = /*@__PURE__*/proxyCustomElement(MxMenu$1, [4,"mx-menu",{"anchorEl":[16],"autocompleteOnly":[4,"autocomplete-only"],"triggerEl":[16],"offset":[16],"placement":[1],"isOpen":[1540,"is-open"]},[[0,"mxClick","onMenuItemClick"],[6,"click","onClick"],[6,"focus","onFocus"],[4,"keydown","onDocumentKeyDown"],[0,"keydown","onKeydown"]]]);
-const MxMenuItem = /*@__PURE__*/proxyCustomElement(MxMenuItem$1, [4,"mx-menu-item",{"checked":[4],"disabled":[4],"icon":[1],"label":[1],"multiSelect":[4,"multi-select"],"minWidths":[32]},[[1,"mouseenter","onMouseEnter"],[1,"mouseleave","onMouseLeave"],[0,"focus","onFocus"],[0,"keydown","onKeyDown"]]]);
+const MxMenuItem = /*@__PURE__*/proxyCustomElement(MxMenuItem$1, [4,"mx-menu-item",{"checked":[4],"disabled":[4],"icon":[1],"label":[1],"subtitle":[1],"multiSelect":[4,"multi-select"],"minWidths":[32]},[[1,"mouseenter","onMouseEnter"],[1,"mouseleave","onMouseLeave"],[0,"focus","onFocus"],[0,"keydown","onKeyDown"]]]);
 const MxModal = /*@__PURE__*/proxyCustomElement(MxModal$1, [4,"mx-modal",{"buttons":[16],"closeOnEscape":[4,"close-on-escape"],"closeOnOutsideClick":[4,"close-on-outside-click"],"contentClass":[1,"content-class"],"description":[1],"fromLeft":[4,"from-left"],"fromRight":[4,"from-right"],"isOpen":[4,"is-open"],"previousPageTitle":[1,"previous-page-title"],"previousPageUrl":[1,"previous-page-url"],"large":[4],"minWidths":[32],"isVisible":[32]},[[0,"keydown","onKeyDown"],[4,"keydown","onDocumentKeyDown"]]]);
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"modal":[4],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);
 const MxPagination = /*@__PURE__*/proxyCustomElement(MxPagination$1, [4,"mx-pagination",{"page":[2],"rowsPerPageOptions":[16],"rowsPerPage":[2,"rows-per-page"],"simple":[4],"totalRows":[2,"total-rows"],"disabled":[4],"disableNextPage":[4,"disable-next-page"],"hideRowsPerPage":[32],"moveStatusToBottom":[32],"isXSmallMinWidth":[32],"isSmallMinWidth":[32]}]);

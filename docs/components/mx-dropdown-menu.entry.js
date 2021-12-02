@@ -11,13 +11,13 @@ const MxDropdownMenu = class {
     this.flat = false;
     this.isFocused = false;
   }
-  onClick(e) {
+  async onClick(e) {
     // Resize the menu width to match the input.  This is done every click in case the input is resized after initial load.
     this.menu.style.width = this.dropdownWrapper.getBoundingClientRect().width + 'px';
     const clickedMenuItem = e.target.closest('mx-menu-item');
     if (!clickedMenuItem)
       return;
-    this.value = clickedMenuItem.innerText;
+    this.value = await clickedMenuItem.getValue();
     // Fire native input event for consistency with mx-select
     this.inputElem.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
   }

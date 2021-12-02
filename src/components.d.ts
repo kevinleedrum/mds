@@ -431,6 +431,10 @@ export namespace Components {
          */
         "focusMenuItem": () => Promise<void>;
         /**
+          * Returns the menu item inner text (excluding any label or subtitle)
+         */
+        "getValue": () => Promise<string>;
+        /**
           * The class name of the icon to display on the left. This is sometimes automatically set to `null` to add an empty icon for alignment purposes (when a sibling menu item has an icon).
          */
         "icon": string;
@@ -442,6 +446,10 @@ export namespace Components {
           * Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right.
          */
         "multiSelect": boolean;
+        /**
+          * A subtitle to display below the menu item text
+         */
+        "subtitle": string;
     }
     interface MxModal {
         /**
@@ -1536,6 +1544,10 @@ declare namespace LocalJSX {
           * Fired when an enabled menu item without a submenu is clicked. Used interally to close all ancestor menus.
          */
         "onMxClick"?: (event: CustomEvent<MouseEvent>) => void;
+        /**
+          * A subtitle to display below the menu item text
+         */
+        "subtitle"?: string;
     }
     interface MxModal {
         /**
