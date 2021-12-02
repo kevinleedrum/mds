@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, Event, EventEmitter, State, Method } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Event, EventEmitter, State, Method, Watch } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import dotsSvg from '../../assets/svg/dots-vertical.svg';
 import dragDotsSvg from '../../assets/svg/drag-dots.svg';
@@ -31,9 +31,11 @@ export class MxTableRow {
   @Prop() rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   @Prop() actions: ITableRowAction[] = [];
+  @Prop({ reflect: true }) doNotCollapse: boolean = false;
   /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
   @Prop() rowIndex: number;
   @Prop({ mutable: true }) checked: boolean = false;
+  @Prop({ reflect: true }) collapseNestedRows: boolean = false;
   /** Style the row as a subheader. */
   @Prop() subheader: boolean = false;
 
@@ -55,6 +57,19 @@ export class MxTableRow {
   @Event() mxRowDragEnd: EventEmitter<{ isKeyboard: boolean; isCancel: boolean }>;
   /** Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table. */
   @Event() mxDragKeyDown: EventEmitter<string>;
+
+  @Watch('collapseNestedRows')
+  async toggleNestedRows() {
+    const nestedRows = Array.from(this.childRowWrapper.children).filter(
+      (row: HTMLMxTableRowElement) => !row.doNotCollapse,
+    ) as HTMLMxTableRowElement[];
+    nestedRows.forEach(async (row: HTMLMxTableRowElement) => {
+      const children = await row.getChildren();
+      const transition = this.collapseNestedRows ? collapse : expand;
+      await Promise.all(children.map(child => transition(child)));
+      children.forEach(child => (child.style.border = this.collapseNestedRows ? '0' : ''));
+    });
+  }
 
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
   @Method()
