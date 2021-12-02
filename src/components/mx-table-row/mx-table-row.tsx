@@ -59,16 +59,8 @@ export class MxTableRow {
   @Event() mxDragKeyDown: EventEmitter<string>;
 
   @Watch('collapseNestedRows')
-  async toggleNestedRows() {
-    const nestedRows = Array.from(this.childRowWrapper.children).filter(
-      (row: HTMLMxTableRowElement) => !row.doNotCollapse,
-    ) as HTMLMxTableRowElement[];
-    nestedRows.forEach(async (row: HTMLMxTableRowElement) => {
-      const children = await row.getChildren();
-      const transition = this.collapseNestedRows ? collapse : expand;
-      await Promise.all(children.map(child => transition(child)));
-      children.forEach(child => (child.style.border = this.collapseNestedRows ? '0' : ''));
-    });
+  async onCollapseNestedRowsChange() {
+    this.toggleNestedRows();
   }
 
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
@@ -83,6 +75,10 @@ export class MxTableRow {
     minWidthSync.subscribeComponent(this);
     if (this.actions.some(action => !action.value)) throw new Error('Table row actions must have a value property!');
     this.setIndentLevel();
+  }
+
+  componentDidLoad() {
+    if (this.collapseNestedRows) this.toggleNestedRows(true);
   }
 
   componentWillRender() {
@@ -121,6 +117,23 @@ export class MxTableRow {
       if (!parentRow.subheader) this.indentLevel++;
       parentRow = parentRow.parentElement.closest('mx-table-row');
     }
+  }
+
+  toggleNestedRows(skipTransition = false) {
+    const nestedRows = Array.from(this.childRowWrapper.children).filter(
+      (row: HTMLMxTableRowElement) => !row.doNotCollapse,
+    ) as HTMLMxTableRowElement[];
+    nestedRows.forEach(async (row: HTMLMxTableRowElement) => {
+      const children = await row.getChildren();
+      const transition = this.collapseNestedRows ? collapse : expand;
+      if (skipTransition) {
+        console.log('skip');
+        children.forEach(child => (child.style.maxHeight = this.collapseNestedRows ? '0' : ''));
+      } else {
+        await Promise.all(children.map(child => transition(child)));
+      }
+      children.forEach(child => (child.style.border = this.collapseNestedRows ? '0' : ''));
+    });
   }
 
   /** Move first cell into same container as checkbox and drag handle. */
