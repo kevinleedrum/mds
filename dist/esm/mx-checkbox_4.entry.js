@@ -2,7 +2,7 @@ import { r as registerInstance, h, H as Host, g as getElement, c as createEvent 
 import { p as propagateDataAttributes } from './utils-18e3dfde.js';
 import { c as chevronSvg } from './chevron-down-6a7bb36b.js';
 import { c as createPopover, a as convertPlacementToOrigin } from './popover-56a66892.js';
-import { b as fadeScaleIn, a as fadeOut } from './transitions-3624d9c4.js';
+import { d as fadeScaleIn, b as fadeOut } from './transitions-db5fff66.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { c as checkSvg } from './check-754da8c1.js';
 import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
@@ -48,7 +48,7 @@ const MxCheckbox = class {
         'relative flex-1 inline-flex flex-nowrap align-center items-center text-4' +
           (this.disabled ? '' : ' cursor-pointer'),
         this.labelClass,
-      ].join(' ') }, h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("span", { class: this.checkClass }), h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
+      ].join(' ') }, h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled, indeterminate: this.indeterminate }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("span", { class: this.checkClass }), h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
   get element() { return getElement(this); }
 };

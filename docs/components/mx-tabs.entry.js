@@ -1,4 +1,4 @@
-import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-e21e00f4.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-b3442404.js';
 import { q as queryPrefersReducedMotion } from './utils-18e3dfde.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 

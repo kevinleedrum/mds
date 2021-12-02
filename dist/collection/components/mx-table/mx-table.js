@@ -147,7 +147,7 @@ export class MxTable {
     this.dragRowElIndex = null;
   }
   onVisibleRowsChange() {
-    this.getTableRows().forEach(row => row.collapse());
+    this.getTableRows().forEach(row => row.collapse(true));
     this.mxVisibleRowsChange.emit(this.visibleRows);
   }
   onPageChange() {

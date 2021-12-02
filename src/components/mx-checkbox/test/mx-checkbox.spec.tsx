@@ -34,10 +34,10 @@ describe('mx-checkbox', () => {
     expect(input.disabled).toBeTruthy();
   });
 
-  it('adds an indeterminate class when the indeterminate prop is set', async () => {
+  it('sets the indeterminate attribute on the input when the indeterminate prop is set', async () => {
     root.indeterminate = true;
     await page.waitForChanges();
-    expect(input.getAttribute('class').includes('indeterminate')).toBe(true);
+    expect(input.getAttribute('indeterminate')).not.toBeNull();
   });
 
   it('applies any data attributes to the input element', async () => {

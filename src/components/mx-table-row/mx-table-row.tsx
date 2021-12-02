@@ -136,7 +136,7 @@ export class MxTableRow {
   }
 
   onClick(e: MouseEvent) {
-    if (!!(e.target as HTMLElement).closest('button, input, mx-menu')) return; // Ignore clicks on buttons, etc.
+    if (!!(e.target as HTMLElement).closest('a, button, input, mx-menu')) return; // Ignore clicks on links, buttons, etc.
     if (!this.minWidths.sm) {
       // Collapse/expand row when the exposed column cell is clicked
       const exposedCell = this.getExposedCell();

@@ -143,6 +143,7 @@ function executeTransition(
 }
 
 function setStyleProperty(el: HTMLElement, property, value) {
+  if (!el) return;
   if (property !== 'transform') {
     // Set typical style property (e.g. opacity)
     el.style[property] = value;

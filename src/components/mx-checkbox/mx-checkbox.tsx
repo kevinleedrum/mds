@@ -60,6 +60,7 @@ export class MxCheckbox {
             value={this.value}
             checked={this.checked}
             disabled={this.disabled}
+            indeterminate={this.indeterminate}
             {...this.dataAttributes}
             onInput={this.onInput.bind(this)}
           />
