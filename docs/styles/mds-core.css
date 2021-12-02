@@ -315,6 +315,7 @@
   --mds-text-menu-item-check: #0457af;
   --mds-text-menu-item-disabled: #909090;
   --mds-text-menu-item-label: #828282;
+  --mds-text-menu-item-subtitle: #5a5a5a;
   --mds-text-menu-item: #333;
   --mds-text-menu-section-label: #0457af;
   /* #endregion menus */
@@ -4054,6 +4055,10 @@ video {
 
   margin-bottom: -0.25rem;
 }
+.mds .-mt-4{
+
+  margin-top: -0.25rem;
+}
 .mds .mr-10{
 
   margin-right: 0.625rem;
@@ -4394,6 +4399,10 @@ video {
 
   height: 0.25rem;
 }
+.mds .h-16{
+
+  height: 1rem;
+}
 .mds .h-80{
 
   height: 5rem;
@@ -4417,10 +4426,6 @@ video {
 .mds .h-192{
 
   height: 12rem;
-}
-.mds .h-16{
-
-  height: 1rem;
 }
 .mds .h-1{
 
@@ -11706,6 +11711,10 @@ video {
 .mx-menu-item > div .item-label {
       color: #828282;
       color: var(--mds-text-menu-item-label);
+    }
+.mx-menu-item > div .item-subtitle {
+      color: #5a5a5a;
+      color: var(--mds-text-menu-item-subtitle);
     }
 .mx-menu-item > div .check {
       color: #0457af;

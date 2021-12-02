@@ -16,7 +16,7 @@ export declare class MxDropdownMenu {
   suffix: string;
   value: any;
   isFocused: boolean;
-  onClick(e: MouseEvent): void;
+  onClick(e: MouseEvent): Promise<void>;
   componentDidLoad(): void;
   onValueChange(): void;
   onBlur(): void;

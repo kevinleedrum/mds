@@ -24,6 +24,18 @@ describe('mx-menu-item', () => {
     expect(menuItem.innerText).toBe('Open');
   });
 
+  it('renders the label', async () => {
+    root.label = 'Label';
+    await page.waitForChanges();
+    expect(menuItem.innerText).toBe(['Label', 'Open'].join(''));
+  });
+
+  it('renders the subtitle', async () => {
+    root.subtitle = 'Subtitle';
+    await page.waitForChanges();
+    expect(menuItem.innerText).toBe(['Open', 'Subtitle'].join(''));
+  });
+
   it('emits an mxClick event on click', () => {
     const listener = jest.fn();
     root.addEventListener('mxClick', listener);
@@ -82,6 +94,13 @@ describe('mx-menu-item', () => {
     await page.waitForChanges();
     checkbox = menuItem.querySelector('mx-checkbox');
     expect(checkbox.getAttribute('checked')).not.toBeNull();
+  });
+
+  it('getValue() returns the inner text without the label or subtitle', async () => {
+    root.label = 'Label';
+    root.subtitle = 'Subtitle';
+    await page.waitForChanges();
+    expect(await root.getValue()).toBe('Open');
   });
 });
 

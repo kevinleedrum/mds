@@ -28,6 +28,8 @@ export class MxMenuItem implements IMxMenuItemProps {
   @Prop() icon: string;
   /** A label to display above the menu item */
   @Prop() label: string;
+  /** A subtitle to display below the menu item text */
+  @Prop() subtitle: string;
   /** Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right. */
   @Prop() multiSelect: boolean = false;
 
@@ -92,6 +94,12 @@ export class MxMenuItem implements IMxMenuItemProps {
       clearTimeout(this.submenuDelayTimeout);
       return await this.submenu.closeMenu();
     }
+  }
+
+  /** Returns the menu item inner text (excluding any label or subtitle) */
+  @Method()
+  async getValue(): Promise<string> {
+    return this.slotWrapper && this.slotWrapper.innerText.trim();
   }
 
   /** Focuses the menu item. */
@@ -187,7 +195,7 @@ export class MxMenuItem implements IMxMenuItemProps {
               {this.icon !== undefined && (
                 <i class={'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon}></i>
               )}
-              <span ref={el => (this.slotWrapper = el)} class="overflow-hidden overflow-ellipsis">
+              <span ref={el => (this.slotWrapper = el)} class="truncate">
                 <slot></slot>
               </span>
             </div>
@@ -196,6 +204,11 @@ export class MxMenuItem implements IMxMenuItemProps {
             )}
             {!!this.submenu && <span class="transform -rotate-90" data-testid="arrow" innerHTML={arrowSvg}></span>}
           </div>
+          {this.subtitle && (
+            <p class="item-subtitle flex items-start py-0 px-12 my-0 h-16 caption2">
+              <span class="block -mt-4 truncate">{this.subtitle}</span>
+            </p>
+          )}
           {this.multiSelect && (
             <mx-checkbox
               class="flex items-stretch w-full overflow-hidden h-48 sm:h-32"
