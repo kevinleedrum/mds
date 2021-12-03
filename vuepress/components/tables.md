@@ -597,6 +597,7 @@ Click the <i class="ph-plus"></i> icon in the example below to expand the collap
 </section>
 
 <<< @/vuepress/components/tables.md#collapse-nested-rows
+<<< @/vuepress/components/tables.md#toggle-nested-rows
 
 ## Grouping and subheader rows
 
@@ -1319,12 +1320,14 @@ export default {
       this.getApiData()
     },
     // #endregion api-request
+    // #region toggle-nested-rows
     toggleNestedRows(e) {
       const row = e.target.closest('mx-table-row')
+      row.collapseNestedRows = !row.collapseNestedRows
       e.target.closest('i').classList.toggle('ph-plus')
       e.target.closest('i').classList.toggle('ph-minus')
-      row.collapseNestedRows = !row.collapseNestedRows
     }
+    // #endregion toggle-nested-rows
   }
 }
 </script>
