@@ -31,10 +31,12 @@ export class MxTableRow {
   @Prop() rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   @Prop() actions: ITableRowAction[] = [];
+  /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
   @Prop({ reflect: true }) doNotCollapse: boolean = false;
   /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
   @Prop() rowIndex: number;
   @Prop({ mutable: true }) checked: boolean = false;
+  /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
   @Prop({ reflect: true }) collapseNestedRows: boolean = false;
   /** Style the row as a subheader. */
   @Prop() subheader: boolean = false;
