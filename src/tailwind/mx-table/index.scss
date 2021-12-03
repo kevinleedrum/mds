@@ -65,7 +65,8 @@
       &:focus-within > .first-column-wrapper > *:not(.table-row-indent) {
         background: var(--mds-bg-table-focus);
       }
-      .first-column-wrapper > :nth-child(2) {
+      .first-column-wrapper > :nth-child(2):not(.mx-table-cell),
+      .first-column-wrapper > :nth-child(2).mx-table-cell > div {
         @apply pl-24;
       }
       .mobile-row-chevron {
@@ -115,9 +116,9 @@
   }
 }
 
-.mx-table-cell > * {
-  @apply ml-24 sm:ml-16 m-16;
+.mx-table-cell > div {
+  @apply pl-24 sm:pl-16 p-16;
 }
-.subheader > .first-column-wrapper > .mx-table-cell {
+.subheader > .first-column-wrapper > .mx-table-cell > div {
   @apply pl-24 sm:pl-12 p-12;
 }

@@ -39,11 +39,14 @@ export class MxTableCell {
         aria-describedby={this.columnIndex != null ? `column-header-${this.columnIndex}` : null}
         class={this.cellClass}
       >
-        <div class="min-h-16 max-w-full break-words" role={this.columnIndex == null ? 'heading' : null}>
-          {!this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (
-            <p class="subtitle5 my-0 mb-4" innerHTML={this.heading}></p>
-          )}
-          <slot></slot>
+        {/* Padding is applied to this inner div in the scss file so the <mx-table-cell> can be collapsed with max-height:0 */}
+        <div>
+          <div class="min-h-16 max-w-full break-words" role={this.columnIndex == null ? 'heading' : null}>
+            {!this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (
+              <p class="subtitle5 my-0 mb-4" innerHTML={this.heading}></p>
+            )}
+            <slot></slot>
+          </div>
         </div>
       </Host>
     );
