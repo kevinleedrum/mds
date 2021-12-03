@@ -1,6 +1,10 @@
 .mx-menu > div {
   background: var(--mds-bg-menu);
 
+  .scroll-wrapper:not(:empty) {
+    @apply py-8;
+  }
+
   ::-webkit-scrollbar {
     width: 12px;
     background: var(--mds-bg-menu);

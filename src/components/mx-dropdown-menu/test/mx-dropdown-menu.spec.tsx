@@ -76,6 +76,7 @@ describe('mx-menu', () => {
     const listener = jest.fn();
     root.addEventListener('input', listener);
     menuItems[0].click();
+    await page.waitForChanges();
     expect(listener).toHaveBeenCalled();
   });
 

@@ -20,9 +20,9 @@ The options in the menu are represented by [Menu Items](/components/menus.html).
           @input="animal = $event.target.value"
         >
           <mx-menu-item></mx-menu-item>
-          <mx-menu-item>Cat</mx-menu-item>
-          <mx-menu-item>Dog</mx-menu-item>
-          <mx-menu-item>Walrus</mx-menu-item>
+          <mx-menu-item subtitle="Felis catus">Cat</mx-menu-item>
+          <mx-menu-item subtitle="Canis familiaris">Dog</mx-menu-item>
+          <mx-menu-item subtitle="Odobenus rosmarus">Walrus</mx-menu-item>
         </mx-dropdown-menu>
       </div>
     </div>

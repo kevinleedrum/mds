@@ -58,7 +58,9 @@ To nest a Menu inside a Menu Item, add `slot="submenu"` to the child Menu compon
 <<< @/vuepress/components/menus.md#menus
 <<< @/vuepress/components/menus.md#menus-anchorEl
 
-Place a paragraph element with a `role` of "heading" inside a menu to add a section label. Use the Menu Item's `label` prop to add a label to an individual item.
+### Headings, labels, subtitles & checkboxes
+
+Place a paragraph element with a `role` of "heading" inside a menu to add a section label. Use the Menu Item's `label` prop to add a label to an individual item. Use the `subtitle` prop to add a subtitle below the menu item text.
 
 To add checkboxes to Menu Items, add the `multi-select` property, and set the `checked` accordingly. The `checked` property can also be used without `multi-select` to simply add a checkmark icon to the item.
 
@@ -73,6 +75,9 @@ To add checkboxes to Menu Items, add the `multi-select` property, and set the `c
           <mx-menu-item multi-select checked @click="clickHandler">Show Minimap</mx-menu-item>
           <mx-menu-item multi-select @click="clickHandler">Word Wrap</mx-menu-item>
           <mx-menu-item @click="clickHandler" label="Email">design@moxiworks.com</mx-menu-item>
+          <mx-menu-item @click="clickHandler" subtitle="123 Bremerton Pl Ne">
+            Office One
+          </mx-menu-item>
         </mx-menu>
       </div>
       <div>
@@ -203,6 +208,10 @@ Open the menu. Returns a promise that resolves to false if the menu was already 
 #### `closeSubMenu() => Promise<boolean>`
 
 Closes the item's submenu.
+
+#### `getValue() => Promise<string>`
+
+Returns the menu item inner text (excluding any label or subtitle)
 
 #### `focusMenuItem() => Promise<void>`
 

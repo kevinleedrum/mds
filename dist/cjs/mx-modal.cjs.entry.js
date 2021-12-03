@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const index = require('./index-5f1d14aa.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 const portal = require('./portal-0b4649d0.js');
-const transitions = require('./transitions-812912af.js');
+const transitions = require('./transitions-4e1f18be.js');
 const bodyScroll = require('./bodyScroll-0692b749.js');
 const arrowLeft = require('./arrow-left-a3a34f65.js');
 require('./utils-1f7ef40d.js');
@@ -150,7 +150,7 @@ const MxModal = class {
     if (this.fromRight)
       transition = transitions.fadeSlideIn;
     else if (this.fromLeft)
-      transition = (el) => transitions.fadeSlideIn(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+      transition = (el) => transitions.fadeSlideIn(el, undefined, transitions.Direction.left);
     return transition;
   }
   get closeTransition() {
@@ -158,7 +158,7 @@ const MxModal = class {
     if (this.fromRight)
       transition = transitions.fadeSlideOut;
     else if (this.fromLeft)
-      transition = (el) => transitions.fadeSlideOut(el, undefined, false); // Change fromRight/toRight to fromLeft/toLeft
+      transition = (el) => transitions.fadeSlideOut(el, undefined, transitions.Direction.left);
     return transition;
   }
   get hasFooter() {

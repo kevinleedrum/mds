@@ -49,6 +49,17 @@ export namespace Components {
          */
         "value": any;
     }
+    interface MxBanner {
+        "error": boolean;
+        /**
+          * Toggles the banner with a transition.
+         */
+        "isOpen": boolean;
+        /**
+          * When set, `position: sticky` will be applied to the banner.
+         */
+        "sticky": boolean;
+    }
     interface MxButton {
         "btnType": BtnType;
         "disabled": boolean;
@@ -420,6 +431,10 @@ export namespace Components {
          */
         "focusMenuItem": () => Promise<void>;
         /**
+          * Returns the menu item inner text (excluding any label or subtitle)
+         */
+        "getValue": () => Promise<string>;
+        /**
           * The class name of the icon to display on the left. This is sometimes automatically set to `null` to add an empty icon for alignment purposes (when a sibling menu item has an icon).
          */
         "icon": string;
@@ -431,6 +446,10 @@ export namespace Components {
           * Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right.
          */
         "multiSelect": boolean;
+        /**
+          * A subtitle to display below the menu item text
+         */
+        "subtitle": string;
     }
     interface MxModal {
         /**
@@ -739,7 +758,7 @@ export namespace Components {
          */
         "actions": ITableRowAction[];
         "checked": boolean;
-        "collapse": () => Promise<void>;
+        "collapse": (skipTransition?: boolean) => Promise<void>;
         "expand": () => Promise<void>;
         "focusDragHandle": () => Promise<void>;
         /**
@@ -860,6 +879,12 @@ declare global {
     var HTMLMxBadgeElement: {
         prototype: HTMLMxBadgeElement;
         new (): HTMLMxBadgeElement;
+    };
+    interface HTMLMxBannerElement extends Components.MxBanner, HTMLStencilElement {
+    }
+    var HTMLMxBannerElement: {
+        prototype: HTMLMxBannerElement;
+        new (): HTMLMxBannerElement;
     };
     interface HTMLMxButtonElement extends Components.MxButton, HTMLStencilElement {
     }
@@ -1061,6 +1086,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "mx-badge": HTMLMxBadgeElement;
+        "mx-banner": HTMLMxBannerElement;
         "mx-button": HTMLMxButtonElement;
         "mx-checkbox": HTMLMxCheckboxElement;
         "mx-chip": HTMLMxChipElement;
@@ -1130,6 +1156,17 @@ declare namespace LocalJSX {
           * The value to display inside the badge
          */
         "value"?: any;
+    }
+    interface MxBanner {
+        "error"?: boolean;
+        /**
+          * Toggles the banner with a transition.
+         */
+        "isOpen"?: boolean;
+        /**
+          * When set, `position: sticky` will be applied to the banner.
+         */
+        "sticky"?: boolean;
     }
     interface MxButton {
         "btnType"?: BtnType;
@@ -1507,6 +1544,10 @@ declare namespace LocalJSX {
           * Fired when an enabled menu item without a submenu is clicked. Used interally to close all ancestor menus.
          */
         "onMxClick"?: (event: CustomEvent<MouseEvent>) => void;
+        /**
+          * A subtitle to display below the menu item text
+         */
+        "subtitle"?: string;
     }
     interface MxModal {
         /**
@@ -1947,6 +1988,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "mx-badge": MxBadge;
+        "mx-banner": MxBanner;
         "mx-button": MxButton;
         "mx-checkbox": MxCheckbox;
         "mx-chip": MxChip;
@@ -1987,6 +2029,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
+            "mx-banner": LocalJSX.MxBanner & JSXBase.HTMLAttributes<HTMLMxBannerElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
             "mx-chip": LocalJSX.MxChip & JSXBase.HTMLAttributes<HTMLMxChipElement>;

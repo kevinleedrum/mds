@@ -8,6 +8,10 @@
       color: var(--mds-text-menu-item-label);
     }
 
+    .item-subtitle {
+      color: var(--mds-text-menu-item-subtitle);
+    }
+
     .check {
       color: var(--mds-text-menu-item-check);
     }
@@ -26,13 +30,6 @@
     /* Add focused background to menu item when its submenu is focused */
     background: var(--mds-bg-menu-item-focus);
   }
-}
-
-.mx-menu .mx-menu-item:first-child > div {
-  @apply mt-8;
-}
-.mx-menu .mx-menu-item:last-child > div {
-  @apply mb-8;
 }
 
 .mx-menu.autocomplete-only:not(:focus-within) .mx-menu-item:not([aria-disabled]):first-child > div {

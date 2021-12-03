@@ -19,6 +19,8 @@ export declare class MxMenuItem implements IMxMenuItemProps {
   icon: string;
   /** A label to display above the menu item */
   label: string;
+  /** A subtitle to display below the menu item text */
+  subtitle: string;
   /** Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right. */
   multiSelect: boolean;
   minWidths: MinWidths;
@@ -34,6 +36,8 @@ export declare class MxMenuItem implements IMxMenuItemProps {
   disconnectedCallback(): void;
   /** Close the item's submenu. */
   closeSubMenu(): Promise<boolean>;
+  /** Returns the menu item inner text (excluding any label or subtitle) */
+  getValue(): Promise<string>;
   /** Focuses the menu item. */
   focusMenuItem(): Promise<void>;
   onKeyDownSubMenu(e: KeyboardEvent): Promise<void>;

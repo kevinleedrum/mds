@@ -28,7 +28,7 @@
 
 ## Methods
 
-### `collapse() => Promise<void>`
+### `collapse(skipTransition?: boolean) => Promise<void>`
 
 
 
