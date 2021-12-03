@@ -98,10 +98,14 @@ export const collapse = async (el: HTMLElement, duration = 150, collapsedHeight 
 
 /** Expand accordion-style */
 export const expand = async (el: HTMLElement, duration = 150): Promise<void> => {
+  const startValue = el.style.maxHeight || '0';
+  // Remove maxHeight temporarily to get an accurate expanded scrollHeight
+  el.style.maxHeight = '';
+  const expandedHeight = el.scrollHeight;
   const options: TransitionOptions = {
     property: 'max-height',
-    startValue: el.style.maxHeight || '0',
-    endValue: el.scrollHeight + 'px',
+    startValue,
+    endValue: expandedHeight + 'px',
     timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
   };
   await executeTransition(el, [options], duration);
@@ -143,7 +147,6 @@ function executeTransition(
 }
 
 function setStyleProperty(el: HTMLElement, property, value) {
-  if (!el) return;
   if (property !== 'transform') {
     // Set typical style property (e.g. opacity)
     el.style[property] = value;
