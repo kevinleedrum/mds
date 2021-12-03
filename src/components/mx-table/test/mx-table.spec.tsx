@@ -408,7 +408,7 @@ describe('mx-table (nested rows, non-mobile)', () => {
               <mx-table-cell>A1i</mx-table-cell>
             </mx-table-row>
           </mx-table-row>
-          <mx-table-row>
+          <mx-table-row do-not-collapse>
             <mx-table-cell>A2</mx-table-cell>
           </mx-table-row>
         </mx-table-row>
@@ -436,5 +436,15 @@ describe('mx-table (nested rows, non-mobile)', () => {
   it('does not add an indent to rows nested under a subheader row', () => {
     const rows = root.querySelectorAll('mx-table-row');
     expect(rows[4].querySelector('[data-testid="indent-0"]')).not.toBeNull();
+  });
+
+  it('collapses nested rows (without doNotCollapse prop) when collapseNestedRows is true', async () => {
+    const rows = root.querySelectorAll('mx-table-row');
+    expect(rows[1].getAttribute('aria-hidden')).toBeNull();
+    expect(rows[3].getAttribute('aria-hidden')).toBeNull();
+    rows[0].collapseNestedRows = true;
+    await page.waitForChanges();
+    expect(rows[1].getAttribute('aria-hidden')).toBe('true');
+    expect(rows[3].getAttribute('aria-hidden')).toBeNull(); // doNotCollapse
   });
 });
