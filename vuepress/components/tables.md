@@ -857,7 +857,7 @@ Expands the row (on mobile)
 
 Get an array of row IDs for rows nested directly inside this row
 
-#### `toggle(skipTransition?: boolean) => Promise<void>`
+#### `toggle(hideRow: boolean, skipTransition: boolean) => Promise<void>`
 
 Show/hide the row (with an optional accordion transition)
 

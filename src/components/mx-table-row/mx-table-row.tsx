@@ -76,8 +76,8 @@ export class MxTableRow {
 
   /** Show/hide the row (with an optional accordion transition) */
   @Method()
-  async toggle(skipTransition = false) {
-    this.isHidden = !this.isHidden;
+  async toggle(hideRow: boolean, skipTransition: boolean) {
+    this.isHidden = hideRow;
     const children = await this.getChildren();
     if (skipTransition) {
       children.forEach(child => {
@@ -145,7 +145,7 @@ export class MxTableRow {
       (row: HTMLMxTableRowElement) => !row.doNotCollapse,
     ) as HTMLMxTableRowElement[];
     nestedRows.forEach(async (row: HTMLMxTableRowElement) => {
-      row.toggle(skipTransition);
+      row.toggle(this.collapseNestedRows, skipTransition);
     });
   }
 
