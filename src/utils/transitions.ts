@@ -127,18 +127,17 @@ function executeTransition(
       setStyleProperty(el, transition.property, transition.startValue);
     });
     if (transformOrigin) el.style.transformOrigin = transformOrigin;
+    el.style.transition = transitionOptions
+      .map(transition => {
+        return `${transition.property} ${duration}ms ${transition.timing}`;
+      })
+      .join(', ');
+    await new Promise(requestAnimationFrame);
+    // After a tick, change each property to start the transition
+    if (!el) return;
     requestAnimationFrame(() => {
-      // After a tick, change each property and start the transition
-      if (!el) return;
-      el.style.transition = transitionOptions
-        .map(transition => {
-          return `${transition.property} ${duration}ms ${transition.timing}`;
-        })
-        .join(', ');
-      requestAnimationFrame(() => {
-        transitionOptions.forEach(transition => {
-          setStyleProperty(el, transition.property, transition.endValue);
-        });
+      transitionOptions.forEach(transition => {
+        setStyleProperty(el, transition.property, transition.endValue);
       });
     });
     // Resolve once the duration passes (setTimeout is safer than transition events)
