@@ -557,7 +557,6 @@ Click the <i class="ph-plus"></i> icon in the example below to expand the collap
   <div class="mt-20">
     <!-- #region collapse-nested-rows -->
     <mx-table
-      checkable
       :columns.prop="[
         { heading: 'Name', sortable: false },
         { heading: 'Description', sortable: false },

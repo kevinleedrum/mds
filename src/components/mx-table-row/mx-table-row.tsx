@@ -134,6 +134,7 @@ export class MxTableRow {
         await Promise.all(children.map(child => transition(child)));
       }
       children.forEach(child => (child.style.border = this.collapseNestedRows ? '0' : ''));
+      row.setAttribute('aria-hidden', this.collapseNestedRows ? 'true' : 'false');
     });
   }
 
