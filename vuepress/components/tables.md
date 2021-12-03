@@ -569,7 +569,7 @@ Click the <i class="ph-plus"></i> icon in the example below to expand the collap
         </mx-table-row>
         <mx-table-row collapse-nested-rows>
           <mx-table-cell>
-            <i class="ph-plus py-4 pr-8 cursor-pointer" @click="toggleNestedRows($event)" />
+            <i class="ph-plus py-4 pr-8 cursor-pointer" @click.stop="toggleNestedRows($event)" />
             Products
           </mx-table-cell>
           <mx-table-cell>All products</mx-table-cell>
@@ -856,6 +856,10 @@ Expands the row (on mobile)
 #### `getNestedRowIndexes() => Promise<number[]>`
 
 Get an array of row IDs for rows nested directly inside this row
+
+#### `toggle(skipTransition?: boolean) => Promise<void>`
+
+Show/hide the row (with an optional accordion transition)
 
 <script>
 // #region beatles

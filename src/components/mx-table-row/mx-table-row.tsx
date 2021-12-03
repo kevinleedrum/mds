@@ -74,6 +74,7 @@ export class MxTableRow {
     (await this.getChildren()).forEach((child: HTMLElement) => (child.style.transform = transform));
   }
 
+  /** Show/hide the row (with an optional accordion transition) */
   @Method()
   async toggle(skipTransition = false) {
     this.isHidden = !this.isHidden;
