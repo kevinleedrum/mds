@@ -28,7 +28,7 @@ export class MxTableCell {
   get cellClass() {
     let str = 'mx-table-cell flex flex-1 items-center overflow-hidden';
     if (!this.minWidths.sm && this.isExposedMobileColumn) str += ' row-start-1 exposed-cell';
-    else if (!this.minWidths.sm) str += ' py-0 pb-12 col-start-2 col-span-4';
+    else if (!this.minWidths.sm) str += ' col-start-2 col-span-4';
     return str;
   }
 
@@ -40,7 +40,7 @@ export class MxTableCell {
         class={this.cellClass}
       >
         {/* Padding is applied to this inner div in the scss file so the <mx-table-cell> can be collapsed with max-height:0 */}
-        <div>
+        <div class={!this.isExposedMobileColumn && !this.minWidths.sm ? 'py-0 pb-12' : ''}>
           <div class="min-h-16 max-w-full break-words" role={this.columnIndex == null ? 'heading' : null}>
             {!this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (
               <p class="subtitle5 my-0 mb-4" innerHTML={this.heading}></p>

@@ -26,6 +26,7 @@ export class MxTableRow {
   dragScroller: DragScroller;
   indentLevel = 0;
   columnCount = 1;
+  isHidden: boolean = false;
 
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   @Prop() rowId: string;
@@ -73,6 +74,22 @@ export class MxTableRow {
     (await this.getChildren()).forEach((child: HTMLElement) => (child.style.transform = transform));
   }
 
+  @Method()
+  async toggle(skipTransition = false) {
+    this.isHidden = !this.isHidden;
+    const children = await this.getChildren();
+    if (skipTransition) {
+      children.forEach(child => {
+        child.style.maxHeight = this.isHidden ? '0' : '';
+      });
+    } else {
+      const transition = this.isHidden ? collapse : expand;
+      await Promise.all(children.map(child => transition(child)));
+    }
+    children.forEach(child => (child.style.border = this.isHidden ? '0' : ''));
+    this.element.setAttribute('aria-hidden', this.isHidden ? 'true' : 'false');
+  }
+
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
     if (this.actions.some(action => !action.value)) throw new Error('Table row actions must have a value property!');
@@ -105,7 +122,8 @@ export class MxTableRow {
     this.wrapFirstColumn();
     this.moveNestedRows();
     // Render collapsed mobile row
-    if (!this.minWidths.sm && !this.isMobileExpanded) this.rowEl.style.maxHeight = this.getCollapsedHeight();
+    if (!this.minWidths.sm && !this.isMobileExpanded && !this.isHidden)
+      this.rowEl.style.maxHeight = this.getCollapsedHeight();
   }
 
   disconnectedCallback() {
@@ -126,15 +144,7 @@ export class MxTableRow {
       (row: HTMLMxTableRowElement) => !row.doNotCollapse,
     ) as HTMLMxTableRowElement[];
     nestedRows.forEach(async (row: HTMLMxTableRowElement) => {
-      const children = await row.getChildren();
-      const transition = this.collapseNestedRows ? collapse : expand;
-      if (skipTransition) {
-        children.forEach(child => (child.style.maxHeight = this.collapseNestedRows ? '0' : ''));
-      } else {
-        await Promise.all(children.map(child => transition(child)));
-      }
-      children.forEach(child => (child.style.border = this.collapseNestedRows ? '0' : ''));
-      row.setAttribute('aria-hidden', this.collapseNestedRows ? 'true' : 'false');
+      row.toggle(skipTransition);
     });
   }
 
