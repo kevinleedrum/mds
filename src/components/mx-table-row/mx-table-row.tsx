@@ -129,7 +129,6 @@ export class MxTableRow {
       const children = await row.getChildren();
       const transition = this.collapseNestedRows ? collapse : expand;
       if (skipTransition) {
-        console.log('skip');
         children.forEach(child => (child.style.maxHeight = this.collapseNestedRows ? '0' : ''));
       } else {
         await Promise.all(children.map(child => transition(child)));
