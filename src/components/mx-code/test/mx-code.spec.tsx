@@ -1,22 +1,23 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { MxCode } from '../mx-code';
 
-describe('mx-code (standalone, icon + value, squared)', () => {
+describe('mx-code (code prop)', () => {
   let page: SpecPage;
   let root: HTMLMxCodeElement;
   let pre: HTMLPreElement;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxCode],
-      html: `<mx-code language="html" code="<b>Hello</b>&nbsp;World" />`,
+      html: `<mx-code language="html" />`,
     });
     root = page.root as HTMLMxCodeElement;
-    pre = root.querySelector('pre');
+    root.code = '<b>Hello</b>&nbsp;World';
     await page.waitForChanges();
+    pre = root.querySelector('pre');
   });
 
-  it('renders escaped code passed via the code prop', () => {
-    expect(root.innerText).toBe('<b>Hello</b> World');
+  it('renders code passed via the code prop', () => {
+    expect(pre.innerText).toBe('<b>Hello</b>&nbsp;World');
   });
 
   it('adds a language class for Prism based on the language prop', () => {
@@ -40,5 +41,27 @@ describe('mx-code (standalone, icon + value, squared)', () => {
     root.code = ` <p>Test</p>  `;
     await page.waitForChanges();
     expect(root.innerText).toBe(`<p>Test</p>`);
+  });
+});
+
+describe('mx-code (default slot)', () => {
+  let page: SpecPage;
+  let root: HTMLMxCodeElement;
+  let pre: HTMLPreElement;
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [MxCode],
+      html: `
+      <mx-code language="html">
+        &lt;b&gt;Hello&lt;/b&gt;&amp;nbsp;World
+      </mx-code>`,
+    });
+    root = page.root as HTMLMxCodeElement;
+    pre = root.querySelector('pre');
+    await page.waitForChanges();
+  });
+
+  it('renders code passed via the default slot', () => {
+    expect(pre.innerText).toBe('<b>Hello</b>&nbsp;World');
   });
 });
