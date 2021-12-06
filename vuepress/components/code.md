@@ -70,11 +70,10 @@ export default {
       this.$refs.placeholder.style.height = rect.height + 'px'
     }, 200)
     const repositionCodeElements = () => {
-      const rect = this.$refs.placeholder.getBoundingClientRect()
-      this.$refs.code.style.top = rect.top + 'px'
-      this.$refs.code.style.left = rect.left + 'px'
-      this.$refs.code.style.width = rect.width + 'px'
-      this.$refs.code.style.height = rect.height + 'px'
+      this.$refs.code.style.top = this.$refs.placeholder.offsetTop + 'px'
+      this.$refs.code.style.left =  this.$refs.placeholder.offsetLeft + 'px'
+      this.$refs.code.style.width = this.$refs.placeholder.offsetWidth + 'px'
+      this.$refs.code.style.height = this.$refs.placeholder.offsetHeight + 'px'
     }
     window.addEventListener('resize', repositionCodeElements)
     this.$once('hook:beforeDestroy', () => {
