@@ -9,13 +9,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
 
 /***************************
-* Import Prism (Syntax Highlighting) CSS
-***************************/
-@import 'prismjs/themes/prism-tomorrow.css';
-@import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
-@import 'prismjs/plugins/line-highlight/prism-line-highlight.css';
-
-/***************************
 * Import Tailwind helpers
 ***************************/
 @import 'tailwindcss/base';
@@ -53,6 +46,7 @@
 @import './mx-pagination/index.scss';
 @import './mx-snackbar/index.scss';
 @import './mx-image-upload/index.scss';
+@import './mx-code/index.scss';
 @import './ripple.scss';
 
 /***************************
