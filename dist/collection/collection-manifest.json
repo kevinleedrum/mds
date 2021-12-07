@@ -14,6 +14,7 @@
     "./components/mx-chip/mx-chip.js",
     "./components/mx-chip-group/mx-chip-group.js",
     "./components/mx-circular-progress/mx-circular-progress.js",
+    "./components/mx-code/mx-code.js",
     "./components/mx-date-picker/mx-date-picker.js",
     "./components/mx-dropdown-menu/mx-dropdown-menu.js",
     "./components/mx-fab/mx-fab.js",

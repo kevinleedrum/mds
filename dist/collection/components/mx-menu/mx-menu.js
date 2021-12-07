@@ -149,6 +149,8 @@ export class MxMenu {
     return true;
   }
   connectedCallback() {
+    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+    this.element.setAttribute('role', role);
     this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
   }
   componentDidLoad() {
@@ -165,6 +167,12 @@ export class MxMenu {
       this.menuItems.forEach(m => {
         if (m.icon === undefined)
           m.icon = null;
+      });
+    }
+    // Set selected prop on dropdown menu items (which updates aria-selected attribute)
+    if (this.inputEl) {
+      this.menuItems.forEach(async (m) => {
+        m.selected = this.inputEl.value === (await m.getValue());
       });
     }
   }
@@ -190,7 +198,7 @@ export class MxMenu {
     return str;
   }
   render() {
-    return (h(Host, { class: this.hostClass, role: "menu" },
+    return (h(Host, { class: this.hostClass },
       h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" },
         h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain" },
           h("slot", null)))));

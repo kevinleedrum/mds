@@ -568,9 +568,9 @@ export class MxTable {
       multiRowActionUI =
         this.multiRowActions.length === 1 ? (
         // Multi-Row Action Button
-        h("mx-button", Object.assign({ "data-testid": "multi-action-button", "btn-type": "outlined" }, this.multiRowActions[0], { class: 'whitespace-nowrap' + (!this.checkedRowIds.length ? ' invisible' : ''), "aria-hidden": this.checkedRowIds.length === 0 }), this.multiRowActions[0].value)) : (
+        h("mx-button", Object.assign({ "data-testid": "multi-action-button", "btn-type": "outlined" }, this.multiRowActions[0], { class: 'whitespace-nowrap' + (!this.checkedRowIds.length ? ' invisible' : ''), "aria-hidden": this.checkedRowIds.length === 0 ? 'true' : null }), this.multiRowActions[0].value)) : (
         // Multi-Row Action Menu
-        h("span", { class: !this.checkedRowIds.length ? 'invisible' : null, "aria-hidden": this.checkedRowIds.length === 0 },
+        h("span", { class: !this.checkedRowIds.length ? 'invisible' : null, "aria-hidden": this.checkedRowIds.length === 0 ? 'true' : null },
           h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true },
             h("span", { class: "h-full flex items-center px-2" },
               h("span", { innerHTML: gearSvg }))),

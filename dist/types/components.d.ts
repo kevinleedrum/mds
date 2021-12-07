@@ -155,6 +155,18 @@ export namespace Components {
          */
         "value": number;
     }
+    interface MxCode {
+        /**
+          * Unescaped code to format and display.  Escaped code may be placed inside the default slot instead.
+         */
+        "code": string;
+        /**
+          * The language of the code.  Add a `diff-` prefix for diff highlighting.  See [Supported languages](#supported-languages)
+         */
+        "language": string;
+        "lineNumberStart": number;
+        "showLineNumbers": boolean;
+    }
     interface MxDatePicker {
         "ariaLabel": string;
         /**
@@ -446,6 +458,10 @@ export namespace Components {
           * Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right.
          */
         "multiSelect": boolean;
+        /**
+          * This is automatically set by a parent Dropdown Menu.
+         */
+        "selected": boolean;
         /**
           * A subtitle to display below the menu item text
          */
@@ -759,6 +775,14 @@ export namespace Components {
         "actions": ITableRowAction[];
         "checked": boolean;
         "collapse": (skipTransition?: boolean) => Promise<void>;
+        /**
+          * Toggles the visibility of all nested rows (except those set to `doNotCollapse`)
+         */
+        "collapseNestedRows": boolean;
+        /**
+          * Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`.
+         */
+        "doNotCollapse": boolean;
         "expand": () => Promise<void>;
         "focusDragHandle": () => Promise<void>;
         /**
@@ -785,6 +809,10 @@ export namespace Components {
           * Style the row as a subheader.
          */
         "subheader": boolean;
+        /**
+          * Show/hide the row (with an optional accordion transition)
+         */
+        "toggle": (hideRow: boolean, skipTransition: boolean) => Promise<void>;
         /**
           * Apply a CSS transform to translate the row by `x` and `y` pixels
          */
@@ -915,6 +943,12 @@ declare global {
     var HTMLMxCircularProgressElement: {
         prototype: HTMLMxCircularProgressElement;
         new (): HTMLMxCircularProgressElement;
+    };
+    interface HTMLMxCodeElement extends Components.MxCode, HTMLStencilElement {
+    }
+    var HTMLMxCodeElement: {
+        prototype: HTMLMxCodeElement;
+        new (): HTMLMxCodeElement;
     };
     interface HTMLMxDatePickerElement extends Components.MxDatePicker, HTMLStencilElement {
     }
@@ -1092,6 +1126,7 @@ declare global {
         "mx-chip": HTMLMxChipElement;
         "mx-chip-group": HTMLMxChipGroupElement;
         "mx-circular-progress": HTMLMxCircularProgressElement;
+        "mx-code": HTMLMxCodeElement;
         "mx-date-picker": HTMLMxDatePickerElement;
         "mx-dialog": HTMLMxDialogElement;
         "mx-dropdown-menu": HTMLMxDropdownMenuElement;
@@ -1270,6 +1305,18 @@ declare namespace LocalJSX {
           * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
          */
         "value"?: number;
+    }
+    interface MxCode {
+        /**
+          * Unescaped code to format and display.  Escaped code may be placed inside the default slot instead.
+         */
+        "code"?: string;
+        /**
+          * The language of the code.  Add a `diff-` prefix for diff highlighting.  See [Supported languages](#supported-languages)
+         */
+        "language"?: string;
+        "lineNumberStart"?: number;
+        "showLineNumbers"?: boolean;
     }
     interface MxDatePicker {
         "ariaLabel"?: string;
@@ -1544,6 +1591,10 @@ declare namespace LocalJSX {
           * Fired when an enabled menu item without a submenu is clicked. Used interally to close all ancestor menus.
          */
         "onMxClick"?: (event: CustomEvent<MouseEvent>) => void;
+        /**
+          * This is automatically set by a parent Dropdown Menu.
+         */
+        "selected"?: boolean;
         /**
           * A subtitle to display below the menu item text
          */
@@ -1868,6 +1919,14 @@ declare namespace LocalJSX {
         "actions"?: ITableRowAction[];
         "checked"?: boolean;
         /**
+          * Toggles the visibility of all nested rows (except those set to `doNotCollapse`)
+         */
+        "collapseNestedRows"?: boolean;
+        /**
+          * Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`.
+         */
+        "doNotCollapse"?: boolean;
+        /**
           * Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked
          */
         "onMxCheck"?: (event: CustomEvent<{ rowId: string; checked: boolean }>) => void;
@@ -1994,6 +2053,7 @@ declare namespace LocalJSX {
         "mx-chip": MxChip;
         "mx-chip-group": MxChipGroup;
         "mx-circular-progress": MxCircularProgress;
+        "mx-code": MxCode;
         "mx-date-picker": MxDatePicker;
         "mx-dialog": MxDialog;
         "mx-dropdown-menu": MxDropdownMenu;
@@ -2035,6 +2095,7 @@ declare module "@stencil/core" {
             "mx-chip": LocalJSX.MxChip & JSXBase.HTMLAttributes<HTMLMxChipElement>;
             "mx-chip-group": LocalJSX.MxChipGroup & JSXBase.HTMLAttributes<HTMLMxChipGroupElement>;
             "mx-circular-progress": LocalJSX.MxCircularProgress & JSXBase.HTMLAttributes<HTMLMxCircularProgressElement>;
+            "mx-code": LocalJSX.MxCode & JSXBase.HTMLAttributes<HTMLMxCodeElement>;
             "mx-date-picker": LocalJSX.MxDatePicker & JSXBase.HTMLAttributes<HTMLMxDatePickerElement>;
             "mx-dialog": LocalJSX.MxDialog & JSXBase.HTMLAttributes<HTMLMxDialogElement>;
             "mx-dropdown-menu": LocalJSX.MxDropdownMenu & JSXBase.HTMLAttributes<HTMLMxDropdownMenuElement>;

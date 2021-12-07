@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, Event, State, Method } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Event, State, Method, Watch } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import dotsSvg from '../../assets/svg/dots-vertical.svg';
 import dragDotsSvg from '../../assets/svg/drag-dots.svg';
@@ -12,9 +12,14 @@ export class MxTableRow {
     this.dragOrigin = { x: 0, y: 0 };
     this.indentLevel = 0;
     this.columnCount = 1;
+    this.isHidden = false;
     /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
     this.actions = [];
+    /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
+    this.doNotCollapse = false;
     this.checked = false;
+    /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
+    this.collapseNestedRows = false;
     /** Style the row as a subheader. */
     this.subheader = false;
     this.minWidths = new MinWidths();
@@ -25,6 +30,9 @@ export class MxTableRow {
     this.isMobileExpanded = false;
     this.isMobileCollapsing = false;
   }
+  async onCollapseNestedRowsChange() {
+    this.toggleNestedRows();
+  }
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
   async translateRow(x, y) {
     const transform = `translate3d(${x}px, ${y}px, 0)`;
@@ -32,11 +40,31 @@ export class MxTableRow {
       this.dragShadowEl.style.transform = transform;
     (await this.getChildren()).forEach((child) => (child.style.transform = transform));
   }
+  /** Show/hide the row (with an optional accordion transition) */
+  async toggle(hideRow, skipTransition) {
+    this.isHidden = hideRow;
+    const children = await this.getChildren();
+    if (skipTransition) {
+      children.forEach(child => {
+        child.style.maxHeight = this.isHidden ? '0' : '';
+      });
+    }
+    else {
+      const transition = this.isHidden ? collapse : expand;
+      await Promise.all(children.map(child => transition(child)));
+    }
+    children.forEach(child => (child.style.border = this.isHidden ? '0' : ''));
+    this.element.setAttribute('aria-hidden', this.isHidden ? 'true' : 'false');
+  }
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
     if (this.actions.some(action => !action.value))
       throw new Error('Table row actions must have a value property!');
     this.setIndentLevel();
+  }
+  componentDidLoad() {
+    if (this.collapseNestedRows)
+      this.toggleNestedRows(true);
   }
   componentWillRender() {
     // Determine `checkable` and `isDraggable` by pulling props from parent table.
@@ -60,7 +88,7 @@ export class MxTableRow {
     this.wrapFirstColumn();
     this.moveNestedRows();
     // Render collapsed mobile row
-    if (!this.minWidths.sm && !this.isMobileExpanded)
+    if (!this.minWidths.sm && !this.isMobileExpanded && !this.isHidden)
       this.rowEl.style.maxHeight = this.getCollapsedHeight();
   }
   disconnectedCallback() {
@@ -74,6 +102,12 @@ export class MxTableRow {
         this.indentLevel++;
       parentRow = parentRow.parentElement.closest('mx-table-row');
     }
+  }
+  toggleNestedRows(skipTransition = false) {
+    const nestedRows = Array.from(this.childRowWrapper.children).filter((row) => !row.doNotCollapse);
+    nestedRows.forEach(async (row) => {
+      row.toggle(this.collapseNestedRows, skipTransition);
+    });
   }
   /** Move first cell into same container as checkbox and drag handle. */
   wrapFirstColumn() {
@@ -407,6 +441,24 @@ export class MxTableRow {
       },
       "defaultValue": "[]"
     },
+    "doNotCollapse": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`."
+      },
+      "attribute": "do-not-collapse",
+      "reflect": true,
+      "defaultValue": "false"
+    },
     "rowIndex": {
       "type": "number",
       "mutable": false,
@@ -440,6 +492,24 @@ export class MxTableRow {
       },
       "attribute": "checked",
       "reflect": false,
+      "defaultValue": "false"
+    },
+    "collapseNestedRows": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Toggles the visibility of all nested rows (except those set to `doNotCollapse`)"
+      },
+      "attribute": "collapse-nested-rows",
+      "reflect": true,
       "defaultValue": "false"
     },
     "subheader": {
@@ -557,6 +627,28 @@ export class MxTableRow {
         "tags": []
       }
     },
+    "toggle": {
+      "complexType": {
+        "signature": "(hideRow: boolean, skipTransition: boolean) => Promise<void>",
+        "parameters": [{
+            "tags": [],
+            "text": ""
+          }, {
+            "tags": [],
+            "text": ""
+          }],
+        "references": {
+          "Promise": {
+            "location": "global"
+          }
+        },
+        "return": "Promise<void>"
+      },
+      "docs": {
+        "text": "Show/hide the row (with an optional accordion transition)",
+        "tags": []
+      }
+    },
     "collapse": {
       "complexType": {
         "signature": "(skipTransition?: boolean) => Promise<void>",
@@ -670,4 +762,8 @@ export class MxTableRow {
     }
   }; }
   static get elementRef() { return "element"; }
+  static get watchers() { return [{
+      "propName": "collapseNestedRows",
+      "methodName": "onCollapseNestedRowsChange"
+    }]; }
 }

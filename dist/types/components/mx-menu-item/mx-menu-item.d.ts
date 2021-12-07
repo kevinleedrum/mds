@@ -9,6 +9,7 @@ export interface IMxMenuItemProps {
 }
 export declare class MxMenuItem implements IMxMenuItemProps {
   menuItemElem: HTMLElement;
+  role: string;
   submenu: HTMLMxMenuElement;
   slotWrapper: HTMLElement;
   submenuDelayTimeout: any;
@@ -23,6 +24,8 @@ export declare class MxMenuItem implements IMxMenuItemProps {
   subtitle: string;
   /** Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right. */
   multiSelect: boolean;
+  /** This is automatically set by a parent Dropdown Menu. */
+  selected: boolean;
   minWidths: MinWidths;
   element: HTMLMxMenuItemElement;
   /** Fired when an enabled menu item without a submenu is clicked. Used interally to close all ancestor menus. */

@@ -1,6 +1,6 @@
 import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-b3442404.js';
 import { c as createPopover, a as convertPlacementToOrigin } from './popover-1f909484.js';
-import { d as fadeScaleIn, b as fadeOut } from './transitions-db5fff66.js';
+import { d as fadeScaleIn, b as fadeOut } from './transitions-9167f568.js';
 import './utils-18e3dfde.js';
 
 const MxMenu = class {
@@ -154,6 +154,8 @@ const MxMenu = class {
     return true;
   }
   connectedCallback() {
+    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+    this.element.setAttribute('role', role);
     this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
   }
   componentDidLoad() {
@@ -170,6 +172,12 @@ const MxMenu = class {
       this.menuItems.forEach(m => {
         if (m.icon === undefined)
           m.icon = null;
+      });
+    }
+    // Set selected prop on dropdown menu items (which updates aria-selected attribute)
+    if (this.inputEl) {
+      this.menuItems.forEach(async (m) => {
+        m.selected = this.inputEl.value === (await m.getValue());
       });
     }
   }
@@ -195,7 +203,7 @@ const MxMenu = class {
     return str;
   }
   render() {
-    return (h(Host, { class: this.hostClass, role: "menu" }, h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain" }, h("slot", null)))));
+    return (h(Host, { class: this.hostClass }, h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain" }, h("slot", null)))));
   }
   get element() { return getElement(this); }
 };

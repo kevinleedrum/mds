@@ -9,6 +9,8 @@ export class MxMenuItem {
     this.disabled = false;
     /** Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right. */
     this.multiSelect = false;
+    /** This is automatically set by a parent Dropdown Menu. */
+    this.selected = false;
     this.minWidths = new MinWidths();
   }
   onMouseEnter() {
@@ -45,6 +47,7 @@ export class MxMenuItem {
     this.submenu = this.element.querySelector('[slot="submenu"]');
   }
   connectedCallback() {
+    this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
     minWidthSync.subscribeComponent(this);
   }
   disconnectedCallback() {
@@ -124,7 +127,7 @@ export class MxMenuItem {
   }
   render() {
     return (h(Host, { class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') },
-      h("div", { ref: el => (this.menuItemElem = el), role: "menuitem", "aria-selected": this.checked, "aria-disabled": this.disabled, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) },
+      h("div", { ref: el => (this.menuItemElem = el), role: this.role, "aria-checked": this.checked ? 'true' : null, "aria-disabled": this.disabled ? 'true' : null, "aria-selected": this.selected ? 'true' : null, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) },
         this.label && (h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" },
           h("span", { class: "block -mb-4" }, this.label))),
         h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +
@@ -244,6 +247,24 @@ export class MxMenuItem {
         "text": "Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right."
       },
       "attribute": "multi-select",
+      "reflect": false,
+      "defaultValue": "false"
+    },
+    "selected": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "This is automatically set by a parent Dropdown Menu."
+      },
+      "attribute": "selected",
       "reflect": false,
       "defaultValue": "false"
     }

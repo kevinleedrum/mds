@@ -38,7 +38,7 @@ export class MxTab {
   }
   render() {
     return (h(Host, { class: this.tabClass },
-      h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected, "aria-label": this.label || this.ariaLabel, class: "relative overflow-hidden w-full h-full border border-transparent", onClick: this.onClick.bind(this) },
+      h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected ? 'true' : null, "aria-label": this.label || this.ariaLabel, class: "relative overflow-hidden w-full h-full border border-transparent", onClick: this.onClick.bind(this) },
         h("div", { class: "relative flex flex-col items-center justify-center space-y-6 pointer-events-none" },
           !this.isTextOnly && (h("span", { class: "flex items-center space-x-6" },
             !this.label && this.badge && this.badgeEl,
