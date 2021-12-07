@@ -68,7 +68,7 @@ describe('mx-button as disabled', () => {
 
   it('is a disabled button', async () => {
     const btn = root.querySelector('button');
-    expect(btn.getAttribute('aria-disabled')).not.toBeNull();
+    expect(btn.getAttribute('aria-disabled')).toBe('true');
   });
 });
 

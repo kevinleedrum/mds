@@ -128,7 +128,7 @@ export class MxButton implements IMxButtonProps {
             class={this.buttonClass}
             ref={el => (this.btnElem = el as HTMLButtonElement)}
             onClick={this.onClick.bind(this)}
-            aria-disabled={this.disabled}
+            aria-disabled={this.disabled ? 'true' : null}
             {...this.dataAttributes}
           >
             {buttonContent}

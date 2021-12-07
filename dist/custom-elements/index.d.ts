@@ -44,6 +44,12 @@ export const MxCircularProgress: {
   new (): MxCircularProgress;
 };
 
+interface MxCode extends Components.MxCode, HTMLElement {}
+export const MxCode: {
+  prototype: MxCode;
+  new (): MxCode;
+};
+
 interface MxDatePicker extends Components.MxDatePicker, HTMLElement {}
 export const MxDatePicker: {
   prototype: MxDatePicker;

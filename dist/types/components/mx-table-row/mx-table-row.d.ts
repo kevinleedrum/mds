@@ -17,13 +17,18 @@ export declare class MxTableRow {
   dragScroller: DragScroller;
   indentLevel: number;
   columnCount: number;
+  isHidden: boolean;
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   actions: ITableRowAction[];
+  /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
+  doNotCollapse: boolean;
   /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
   rowIndex: number;
   checked: boolean;
+  /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
+  collapseNestedRows: boolean;
   /** Style the row as a subheader. */
   subheader: boolean;
   element: HTMLMxTableRowElement;
@@ -50,13 +55,18 @@ export declare class MxTableRow {
   }>;
   /** Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table. */
   mxDragKeyDown: EventEmitter<string>;
+  onCollapseNestedRowsChange(): Promise<void>;
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
   translateRow(x: number, y: number): Promise<void>;
+  /** Show/hide the row (with an optional accordion transition) */
+  toggle(hideRow: boolean, skipTransition: boolean): Promise<void>;
   connectedCallback(): void;
+  componentDidLoad(): void;
   componentWillRender(): void;
   componentDidRender(): void;
   disconnectedCallback(): void;
   setIndentLevel(): void;
+  toggleNestedRows(skipTransition?: boolean): void;
   /** Move first cell into same container as checkbox and drag handle. */
   wrapFirstColumn(): void;
   /** Move nested rows from the default slot to a container outside the collapsible row. */

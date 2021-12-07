@@ -122,7 +122,7 @@ const config = {
         modifySelectors(({ className }) => {
           return `.${e(`disabled${separator}${className}`)}:disabled, .${e(
             `disabled${separator}${className}`,
-          )}[aria-disabled]`;
+          )}[aria-disabled='true']`;
         });
       });
       addVariant('first-of-type', ({ modifySelectors, separator }) => {

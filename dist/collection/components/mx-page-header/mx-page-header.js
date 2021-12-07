@@ -123,7 +123,7 @@ export class MxPageHeader {
           h("mx-icon-button", { ref: el => (this.menuButton = el), innerHTML: dotsSvg }),
           h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton },
             h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))),
-        h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
+        h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {

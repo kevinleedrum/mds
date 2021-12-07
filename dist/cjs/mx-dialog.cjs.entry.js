@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const index = require('./index-5f1d14aa.js');
 const bodyScroll = require('./bodyScroll-0692b749.js');
 const portal = require('./portal-0b4649d0.js');
-const transitions = require('./transitions-4e1f18be.js');
+const transitions = require('./transitions-c9a33e78.js');
 require('./utils-1f7ef40d.js');
 
 const MxDialog = class {

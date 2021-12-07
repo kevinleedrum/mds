@@ -3,7 +3,7 @@ import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { d as dotsSvg } from './dots-vertical-717ab421.js';
 import { c as chevronSvg } from './chevron-down-6a7bb36b.js';
 import { d as getScrollingParent, a as getCursorCoords, e as getBounds, g as getPageRect, f as isScrolledOutOfView } from './utils-18e3dfde.js';
-import { c as collapse, e as expand } from './transitions-db5fff66.js';
+import { c as collapse, e as expand } from './transitions-9167f568.js';
 
 const dragDotsSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M14 13C14.5523 13 15 12.5523 15 12C15 11.4477 14.5523 11 14 11C13.4477 11 13 11.4477 13 12C13 12.5523 13.4477 13 14 13Z" fill="currentColor"/>
@@ -53,9 +53,14 @@ const MxTableRow = class {
     this.dragOrigin = { x: 0, y: 0 };
     this.indentLevel = 0;
     this.columnCount = 1;
+    this.isHidden = false;
     /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
     this.actions = [];
+    /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
+    this.doNotCollapse = false;
     this.checked = false;
+    /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
+    this.collapseNestedRows = false;
     /** Style the row as a subheader. */
     this.subheader = false;
     this.minWidths = new MinWidths();
@@ -66,6 +71,9 @@ const MxTableRow = class {
     this.isMobileExpanded = false;
     this.isMobileCollapsing = false;
   }
+  async onCollapseNestedRowsChange() {
+    this.toggleNestedRows();
+  }
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
   async translateRow(x, y) {
     const transform = `translate3d(${x}px, ${y}px, 0)`;
@@ -73,11 +81,31 @@ const MxTableRow = class {
       this.dragShadowEl.style.transform = transform;
     (await this.getChildren()).forEach((child) => (child.style.transform = transform));
   }
+  /** Show/hide the row (with an optional accordion transition) */
+  async toggle(hideRow, skipTransition) {
+    this.isHidden = hideRow;
+    const children = await this.getChildren();
+    if (skipTransition) {
+      children.forEach(child => {
+        child.style.maxHeight = this.isHidden ? '0' : '';
+      });
+    }
+    else {
+      const transition = this.isHidden ? collapse : expand;
+      await Promise.all(children.map(child => transition(child)));
+    }
+    children.forEach(child => (child.style.border = this.isHidden ? '0' : ''));
+    this.element.setAttribute('aria-hidden', this.isHidden ? 'true' : 'false');
+  }
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
     if (this.actions.some(action => !action.value))
       throw new Error('Table row actions must have a value property!');
     this.setIndentLevel();
+  }
+  componentDidLoad() {
+    if (this.collapseNestedRows)
+      this.toggleNestedRows(true);
   }
   componentWillRender() {
     // Determine `checkable` and `isDraggable` by pulling props from parent table.
@@ -101,7 +129,7 @@ const MxTableRow = class {
     this.wrapFirstColumn();
     this.moveNestedRows();
     // Render collapsed mobile row
-    if (!this.minWidths.sm && !this.isMobileExpanded)
+    if (!this.minWidths.sm && !this.isMobileExpanded && !this.isHidden)
       this.rowEl.style.maxHeight = this.getCollapsedHeight();
   }
   disconnectedCallback() {
@@ -115,6 +143,12 @@ const MxTableRow = class {
         this.indentLevel++;
       parentRow = parentRow.parentElement.closest('mx-table-row');
     }
+  }
+  toggleNestedRows(skipTransition = false) {
+    const nestedRows = Array.from(this.childRowWrapper.children).filter((row) => !row.doNotCollapse);
+    nestedRows.forEach(async (row) => {
+      row.toggle(this.collapseNestedRows, skipTransition);
+    });
   }
   /** Move first cell into same container as checkbox and drag handle. */
   wrapFirstColumn() {
@@ -390,6 +424,9 @@ const MxTableRow = class {
         (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : ''), innerHTML: chevronSvg }))), this.actions.length === 1 && (h("div", { class: "action-cell flex items-center p-16 sm:p-0 justify-end col-start-2 col-span-4 sm:col-span-1" }, h("mx-button", Object.assign({ "data-testid": "action-button", "btn-type": "text" }, this.actions[0]), this.actions[0].value))), this.actions.length > 1 && (h("div", { class: "action-cell flex items-center p-0 justify-end col-start-2 col-span-4 sm:col-span-1" }, h("mx-icon-button", { ref: el => (this.actionMenuButton = el), innerHTML: dotsSvg }), h("mx-menu", { "data-testid": "action-menu", ref: el => (this.actionMenu = el) }, this.actions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))))), h("div", { ref: el => (this.childRowWrapper = el), class: "contents" })));
   }
   get element() { return getElement(this); }
+  static get watchers() { return {
+    "collapseNestedRows": ["onCollapseNestedRowsChange"]
+  }; }
 };
 
 export { MxTableRow as mx_table_row };

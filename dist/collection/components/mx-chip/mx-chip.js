@@ -83,7 +83,7 @@ export class MxChip {
   }
   render() {
     return (h(Host, { class: "mx-chip inline-block" },
-      h("div", { ref: el => (this.chipElem = el), class: this.chipClass, "aria-checked": this.selected, "aria-disabled": this.disabled, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) },
+      h("div", { ref: el => (this.chipElem = el), class: this.chipClass, "aria-checked": this.selected ? 'true' : null, "aria-disabled": this.disabled ? 'true' : null, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) },
         this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" },
           this.icon && h("i", { class: this.icon + ' text-1' }),
           this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" },

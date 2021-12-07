@@ -79,10 +79,14 @@ export const collapse = async (el, duration = 150, collapsedHeight = '0') => {
 };
 /** Expand accordion-style */
 export const expand = async (el, duration = 150) => {
+  const startValue = el.style.maxHeight || '0';
+  // Remove maxHeight temporarily to get an accurate expanded scrollHeight
+  el.style.maxHeight = '';
+  const expandedHeight = el.scrollHeight;
   const options = {
     property: 'max-height',
-    startValue: el.style.maxHeight || '0',
-    endValue: el.scrollHeight + 'px',
+    startValue,
+    endValue: expandedHeight + 'px',
     timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
   };
   await executeTransition(el, [options], duration);
@@ -100,19 +104,18 @@ function executeTransition(el, transitionOptions, duration, transformOrigin) {
     });
     if (transformOrigin)
       el.style.transformOrigin = transformOrigin;
+    el.style.transition = transitionOptions
+      .map(transition => {
+      return `${transition.property} ${duration}ms ${transition.timing}`;
+    })
+      .join(', ');
+    await new Promise(requestAnimationFrame);
+    // After a tick, change each property to start the transition
+    if (!el)
+      return;
     requestAnimationFrame(() => {
-      // After a tick, change each property and start the transition
-      if (!el)
-        return;
-      el.style.transition = transitionOptions
-        .map(transition => {
-        return `${transition.property} ${duration}ms ${transition.timing}`;
-      })
-        .join(', ');
-      requestAnimationFrame(() => {
-        transitionOptions.forEach(transition => {
-          setStyleProperty(el, transition.property, transition.endValue);
-        });
+      transitionOptions.forEach(transition => {
+        setStyleProperty(el, transition.property, transition.endValue);
       });
     });
     // Resolve once the duration passes (setTimeout is safer than transition events)

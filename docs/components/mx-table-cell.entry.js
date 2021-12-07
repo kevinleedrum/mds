@@ -19,11 +19,11 @@ const MxTableCell = class {
     if (!this.minWidths.sm && this.isExposedMobileColumn)
       str += ' row-start-1 exposed-cell';
     else if (!this.minWidths.sm)
-      str += ' py-0 pb-12 col-start-2 col-span-4';
+      str += ' col-start-2 col-span-4';
     return str;
   }
   render() {
-    return (h(Host, { role: "gridcell", "aria-describedby": this.columnIndex != null ? `column-header-${this.columnIndex}` : null, class: this.cellClass }, h("div", { class: "min-h-16 max-w-full break-words", role: this.columnIndex == null ? 'heading' : null }, !this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (h("p", { class: "subtitle5 my-0 mb-4", innerHTML: this.heading })), h("slot", null))));
+    return (h(Host, { role: "gridcell", "aria-describedby": this.columnIndex != null ? `column-header-${this.columnIndex}` : null, class: this.cellClass }, h("div", { class: !this.isExposedMobileColumn && !this.minWidths.sm ? 'py-0 pb-12' : '' }, h("div", { class: "min-h-16 max-w-full break-words", role: this.columnIndex == null ? 'heading' : null }, !this.minWidths.sm && !this.isExposedMobileColumn && this.heading != null && (h("p", { class: "subtitle5 my-0 mb-4", innerHTML: this.heading })), h("slot", null)))));
   }
   get element() { return getElement(this); }
 };

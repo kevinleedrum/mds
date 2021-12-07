@@ -60,10 +60,10 @@ describe('mx-menu-item', () => {
   });
 
   it('sets aria-disabled to true when disabled', async () => {
-    expect(menuItem.getAttribute('aria-disabled')).toBeNull();
+    expect(menuItem.getAttribute('aria-disabled')).not.toBe('true');
     root.disabled = true;
     await page.waitForChanges();
-    expect(menuItem.getAttribute('aria-disabled')).not.toBeNull();
+    expect(menuItem.getAttribute('aria-disabled')).toBe('true');
   });
 
   it('displays an icon if the prop is set', async () => {
@@ -72,10 +72,11 @@ describe('mx-menu-item', () => {
     expect(menuItem.querySelector('i')).not.toBeNull();
   });
 
-  it('displays a checkmark if the checked prop is set', async () => {
+  it('displays a checkmark and sets aria-checked to true if the checked prop is set', async () => {
     root.checked = true;
     await page.waitForChanges();
     expect(menuItem.querySelector('[data-testid="check"]')).not.toBeNull();
+    expect(menuItem.getAttribute('aria-checked')).toBe('true');
   });
 
   it('renders an mx-checkbox if the multiSelect prop is set', async () => {
@@ -94,6 +95,13 @@ describe('mx-menu-item', () => {
     await page.waitForChanges();
     checkbox = menuItem.querySelector('mx-checkbox');
     expect(checkbox.getAttribute('checked')).not.toBeNull();
+  });
+
+  it('sets aria-selected to true if the selected prop is true', async () => {
+    expect(root.children[0].getAttribute('aria-selected')).not.toBe('true');
+    root.selected = true;
+    await page.waitForChanges();
+    expect(root.children[0].getAttribute('aria-selected')).toBe('true');
   });
 
   it('getValue() returns the inner text without the label or subtitle', async () => {

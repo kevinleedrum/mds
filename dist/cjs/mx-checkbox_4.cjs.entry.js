@@ -6,7 +6,7 @@ const index = require('./index-5f1d14aa.js');
 const utils = require('./utils-1f7ef40d.js');
 const chevronDown = require('./chevron-down-696a796a.js');
 const popover = require('./popover-8846ea88.js');
-const transitions = require('./transitions-4e1f18be.js');
+const transitions = require('./transitions-c9a33e78.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 const check = require('./check-830696a9.js');
 const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
@@ -83,7 +83,7 @@ const MxIconButton = class {
   }
   render() {
     const buttonContent = (index.h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && index.h("i", { class: ['text-1', this.icon].join(' ') }), index.h("span", { class: "slot-content" }, index.h("slot", null)), this.isChevron && (index.h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" }, index.h("span", { "data-testid": "chevron", class: this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : '', innerHTML: chevronDown.chevronSvg })))));
-    return (index.h(index.Host, { class: "mx-icon-button inline-block" }, index.h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
+    return (index.h(index.Host, { class: "mx-icon-button inline-block" }, index.h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
   }
   get element() { return index.getElement(this); }
 };
@@ -239,6 +239,8 @@ const MxMenu = class {
     return true;
   }
   connectedCallback() {
+    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+    this.element.setAttribute('role', role);
     this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
   }
   componentDidLoad() {
@@ -255,6 +257,12 @@ const MxMenu = class {
       this.menuItems.forEach(m => {
         if (m.icon === undefined)
           m.icon = null;
+      });
+    }
+    // Set selected prop on dropdown menu items (which updates aria-selected attribute)
+    if (this.inputEl) {
+      this.menuItems.forEach(async (m) => {
+        m.selected = this.inputEl.value === (await m.getValue());
       });
     }
   }
@@ -280,7 +288,7 @@ const MxMenu = class {
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: this.hostClass, role: "menu" }, index.h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, index.h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain" }, index.h("slot", null)))));
+    return (index.h(index.Host, { class: this.hostClass }, index.h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, index.h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain" }, index.h("slot", null)))));
   }
   get element() { return index.getElement(this); }
 };
@@ -294,6 +302,8 @@ const MxMenuItem = class {
     this.disabled = false;
     /** Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right. */
     this.multiSelect = false;
+    /** This is automatically set by a parent Dropdown Menu. */
+    this.selected = false;
     this.minWidths = new minWidthSync.MinWidths();
   }
   onMouseEnter() {
@@ -330,6 +340,7 @@ const MxMenuItem = class {
     this.submenu = this.element.querySelector('[slot="submenu"]');
   }
   connectedCallback() {
+    this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
     minWidthSync.minWidthSync.subscribeComponent(this);
   }
   disconnectedCallback() {
@@ -408,7 +419,7 @@ const MxMenuItem = class {
     return (this.slotWrapper || this.element).innerText;
   }
   render() {
-    return (index.h(index.Host, { class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') }, index.h("div", { ref: el => (this.menuItemElem = el), role: "menuitem", "aria-selected": this.checked, "aria-disabled": this.disabled, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) }, this.label && (index.h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" }, index.h("span", { class: "block -mb-4" }, this.label))), index.h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +
+    return (index.h(index.Host, { class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') }, index.h("div", { ref: el => (this.menuItemElem = el), role: this.role, "aria-checked": this.checked ? 'true' : null, "aria-disabled": this.disabled ? 'true' : null, "aria-selected": this.selected ? 'true' : null, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) }, this.label && (index.h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" }, index.h("span", { class: "block -mb-4" }, this.label))), index.h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +
         (this.multiSelect ? ' hidden' : '') }, index.h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (index.h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), index.h("span", { ref: el => (this.slotWrapper = el), class: "truncate" }, index.h("slot", null))), this.checked && !this.multiSelect && (index.h("span", { class: "check ml-12", "data-testid": "check", innerHTML: check.checkSvg })), !!this.submenu && index.h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowTriangleDown.arrowSvg })), this.subtitle && (index.h("p", { class: "item-subtitle flex items-start py-0 px-12 my-0 h-16 caption2" }, index.h("span", { class: "block -mt-4 truncate" }, this.subtitle))), this.multiSelect && (index.h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), index.h("slot", { name: "submenu" })));
   }
   get element() { return index.getElement(this); }
