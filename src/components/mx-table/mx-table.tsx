@@ -695,13 +695,16 @@ export class MxTable {
             btn-type="outlined"
             {...this.multiRowActions[0]}
             class={'whitespace-nowrap' + (!this.checkedRowIds.length ? ' invisible' : '')}
-            aria-hidden={this.checkedRowIds.length === 0}
+            aria-hidden={this.checkedRowIds.length === 0 ? 'true' : null}
           >
             {this.multiRowActions[0].value}
           </mx-button>
         ) : (
           // Multi-Row Action Menu
-          <span class={!this.checkedRowIds.length ? 'invisible' : null} aria-hidden={this.checkedRowIds.length === 0}>
+          <span
+            class={!this.checkedRowIds.length ? 'invisible' : null}
+            aria-hidden={this.checkedRowIds.length === 0 ? 'true' : null}
+          >
             <mx-button ref={el => (this.actionMenuButton = el)} btn-type="text" dropdown>
               <span class="h-full flex items-center px-2">
                 <span innerHTML={gearSvg}></span>

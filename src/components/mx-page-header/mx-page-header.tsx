@@ -147,7 +147,7 @@ export class MxPageHeader {
                 {...button}
                 xl={this.minWidths.lg}
                 btn-type={btnType}
-                aria-hidden={isTertiary && this.renderTertiaryButtonAsMenu}
+                aria-hidden={isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null}
                 class={isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : ''}
               >
                 {button.label}

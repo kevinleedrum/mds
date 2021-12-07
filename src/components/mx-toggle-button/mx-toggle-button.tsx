@@ -44,9 +44,9 @@ export class MxToggleButton {
             (this.selected ? ' selected' : '')
           }
           ref={el => (this.btnElem = el as HTMLButtonElement)}
-          aria-disabled={this.disabled}
+          aria-disabled={this.disabled ? 'true' : null}
           role={this.value === undefined ? 'switch' : 'radio'}
-          aria-checked={this.selected}
+          aria-checked={this.selected ? 'true' : null}
           aria-label={this.ariaLabel}
           onClick={this.onClick.bind(this)}
           {...this.dataAttributes}

@@ -172,6 +172,8 @@ export class MxMenu {
   }
 
   connectedCallback() {
+    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+    this.element.setAttribute('role', role);
     this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
   }
 
@@ -188,6 +190,12 @@ export class MxMenu {
     if (anyMenuItemHasIcon) {
       this.menuItems.forEach(m => {
         if (m.icon === undefined) m.icon = null;
+      });
+    }
+    // Set selected prop on dropdown menu items (which updates aria-selected attribute)
+    if (this.inputEl) {
+      this.menuItems.forEach(async (m: HTMLMxMenuItemElement) => {
+        m.selected = this.inputEl.value === (await m.getValue());
       });
     }
   }

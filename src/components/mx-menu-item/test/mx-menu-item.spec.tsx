@@ -60,10 +60,10 @@ describe('mx-menu-item', () => {
   });
 
   it('sets aria-disabled to true when disabled', async () => {
-    expect(menuItem.getAttribute('aria-disabled')).toBeNull();
+    expect(menuItem.getAttribute('aria-disabled')).not.toBe('true');
     root.disabled = true;
     await page.waitForChanges();
-    expect(menuItem.getAttribute('aria-disabled')).not.toBeNull();
+    expect(menuItem.getAttribute('aria-disabled')).toBe('true');
   });
 
   it('displays an icon if the prop is set', async () => {

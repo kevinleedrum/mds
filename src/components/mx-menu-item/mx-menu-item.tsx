@@ -17,6 +17,7 @@ export interface IMxMenuItemProps {
 })
 export class MxMenuItem implements IMxMenuItemProps {
   menuItemElem: HTMLElement;
+  role: string;
   submenu: HTMLMxMenuElement;
   slotWrapper: HTMLElement;
   submenuDelayTimeout;
@@ -32,6 +33,8 @@ export class MxMenuItem implements IMxMenuItemProps {
   @Prop() subtitle: string;
   /** Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right. */
   @Prop() multiSelect: boolean = false;
+  /** This is automatically set by a parent Dropdown Menu. */
+  @Prop() selected: boolean = false;
 
   @State() minWidths = new MinWidths();
 
@@ -80,6 +83,7 @@ export class MxMenuItem implements IMxMenuItemProps {
   }
 
   connectedCallback() {
+    this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
     minWidthSync.subscribeComponent(this);
   }
 
@@ -173,9 +177,10 @@ export class MxMenuItem implements IMxMenuItemProps {
       <Host class={'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '')}>
         <div
           ref={el => (this.menuItemElem = el)}
-          role="menuitem"
-          aria-selected={this.checked}
-          aria-disabled={this.disabled}
+          role={this.role}
+          aria-checked={this.checked ? 'true' : null}
+          aria-disabled={this.disabled ? 'true' : null}
+          aria-selected={this.selected ? 'true' : null}
           tabindex={this.disabled || this.multiSelect ? '-1' : '0'}
           class="block w-full cursor-pointer select-none text-4 outline-none"
           onClick={this.onClick.bind(this)}
