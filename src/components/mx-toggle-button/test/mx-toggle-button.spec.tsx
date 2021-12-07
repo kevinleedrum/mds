@@ -20,7 +20,7 @@ describe('mx-toggle-button', () => {
 
   it('is not selected by default', async () => {
     expect(btn.getAttribute('class')).not.toContain('selected');
-    expect(btn.getAttribute('aria-checked')).toBeNull();
+    expect(btn.getAttribute('aria-checked')).not.toBe('true');
   });
 
   it('has a switch role by default', async () => {
@@ -45,15 +45,13 @@ describe('mx-toggle-button as disabled and selected', () => {
 
   it('is disabled', async () => {
     const btn = root.querySelector('button');
-    expect(btn.getAttribute('aria-disabled')).not.toBeNull();
-    expect(btn.getAttribute('aria-disabled')).not.toBe('false');
+    expect(btn.getAttribute('aria-disabled')).toBe('true');
   });
 
   it('is selected', async () => {
     const btn = root.querySelector('button');
     expect(btn.getAttribute('class')).toContain('selected');
-    expect(btn.getAttribute('aria-checked')).not.toBeNull();
-    expect(btn.getAttribute('aria-checked')).not.toBe('false');
+    expect(btn.getAttribute('aria-checked')).toBe('true');
   });
 });
 

@@ -62,7 +62,7 @@ export class MxTab implements IMxTabProps {
           ref={el => (this.btnElem = el)}
           role="tab"
           type="button"
-          aria-selected={this.selected}
+          aria-selected={this.selected ? 'true' : null}
           aria-label={this.label || this.ariaLabel}
           class="relative overflow-hidden w-full h-full border border-transparent"
           onClick={this.onClick.bind(this)}

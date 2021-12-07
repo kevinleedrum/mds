@@ -21,7 +21,7 @@
       background: var(--mds-bg-menu-item-focus);
     }
 
-    &[aria-disabled] {
+    &[aria-disabled='true'] {
       color: var(--mds-text-menu-item-disabled);
     }
   }
@@ -32,7 +32,7 @@
   }
 }
 
-.mx-menu.autocomplete-only:not(:focus-within) .mx-menu-item:not([aria-disabled]):first-child > div {
+.mx-menu.autocomplete-only:not(:focus-within) .mx-menu-item:not([aria-disabled='true']):first-child > div {
   /* Add focused background to first enabled menu item for autocomplete-only menus */
   background: var(--mds-bg-menu-item-focus);
 }

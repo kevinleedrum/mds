@@ -92,13 +92,13 @@ describe('mx-chip', () => {
     root.addEventListener('click', listener);
     innerDiv.click();
     expect(listener).toHaveBeenCalled();
-    expect(innerDiv.getAttribute('aria-disabled')).toBeNull();
+    expect(innerDiv.getAttribute('aria-disabled')).not.toBe('true');
     root.disabled = true;
     await page.waitForChanges();
     listener.mockReset();
     innerDiv.click();
     expect(listener).not.toHaveBeenCalled();
-    expect(innerDiv.getAttribute('aria-disabled')).not.toBeNull();
+    expect(innerDiv.getAttribute('aria-disabled')).toBe('true');
   });
 
   it('sets the role attribute appropriately', async () => {

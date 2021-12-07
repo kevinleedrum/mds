@@ -1,13 +1,14 @@
 import '../../../utils/matchMedia.mock';
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { MxDropdownMenu } from '../mx-dropdown-menu';
+import { MxMenu } from '../../mx-menu/mx-menu';
 import { MxMenuItem } from '../../mx-menu-item/mx-menu-item';
 
 // Behavior not tested due to spec page testing limitations:
 // - opening the menu when the anchorEl is clicked (because `anchorEl.contains(e.target)` is always false)
 // - full menu keyboard navigation (because `page.doc.activeElement` is always undefined)
 
-describe('mx-menu', () => {
+describe('mx-dropdown-menu', () => {
   let page: SpecPage;
   let root: HTMLMxDropdownMenuElement;
   let dropdownWrapper: HTMLElement;
@@ -15,7 +16,7 @@ describe('mx-menu', () => {
   let menuItems: NodeListOf<HTMLMxMenuItemElement>;
   beforeEach(async () => {
     page = await newSpecPage({
-      components: [MxDropdownMenu, MxMenuItem],
+      components: [MxDropdownMenu, MxMenu, MxMenuItem],
       html: `
       <mx-dropdown-menu
         value="1000-3000"
@@ -66,6 +67,12 @@ describe('mx-menu', () => {
     expect(root.querySelector('[data-testid="arrow"]')).not.toBeNull();
   });
 
+  it('sets the selected prop to true for the selected item', () => {
+    expect(menuItems[0].selected).toBe(false);
+    expect(menuItems[1].selected).toBe(true);
+    expect(menuItems[2].selected).toBe(false);
+  });
+
   it('updates the value when a menu item is clicked', async () => {
     menuItems[0].click();
     await page.waitForChanges();
@@ -97,5 +104,10 @@ describe('mx-menu', () => {
     root.dense = true;
     await page.waitForChanges();
     expect(dropdownWrapper.getAttribute('class')).toContain('h-36');
+  });
+
+  it('sets the mx-menu and mx-menu-item roles to "listbox" and "option"', async () => {
+    expect(root.querySelector('mx-menu').getAttribute('role')).toBe('listbox');
+    expect(Array.from(menuItems).every(m => m.children[0].getAttribute('role') === 'option')).toBe(true);
   });
 });
