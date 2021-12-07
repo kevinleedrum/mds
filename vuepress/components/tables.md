@@ -549,6 +549,56 @@ The example below combines nested rows with the `draggableRows` prop. For the sa
 <<< @/vuepress/components/tables.md#indent
 <<< @/vuepress/components/tables.md#nested-row-move
 
+Nested rows can be collapsed under the parent row by toggling the `collapseNestedRows` prop. If there are rows that should never be collapsed, set the `doNotCollapse` prop on those rows.
+
+Click the <i class="ph-plus"></i> icon in the example below to expand the collapsed rows.
+
+<section class="mds">
+  <div class="mt-20">
+    <!-- #region collapse-nested-rows -->
+    <mx-table
+      :columns.prop="[
+        { heading: 'Name', sortable: false },
+        { heading: 'Description', sortable: false },
+      ]"
+    >
+      <div>
+        <mx-table-row>
+          <mx-table-cell>Home</mx-table-cell>
+          <mx-table-cell>Home page</mx-table-cell>
+        </mx-table-row>
+        <mx-table-row collapse-nested-rows>
+          <mx-table-cell>
+            <i class="ph-plus py-4 pr-8 cursor-pointer" @click.stop="toggleNestedRows($event)" />
+            Products
+          </mx-table-cell>
+          <mx-table-cell>All products</mx-table-cell>
+          <mx-table-row>
+            <mx-table-cell>Appliances</mx-table-cell>
+            <mx-table-cell>Refrigerators, dishwashers, ovens</mx-table-cell>
+          </mx-table-row>
+          <mx-table-row>
+            <mx-table-cell>Flooring</mx-table-cell>
+            <mx-table-cell>Carpet, hardwood, tile</mx-table-cell>
+          </mx-table-row>
+          <mx-table-row do-not-collapse>
+            <mx-table-cell>Sale Items</mx-table-cell>
+            <mx-table-cell>Clearance, Black Friday</mx-table-cell>
+          </mx-table-row>
+        </mx-table-row>
+        <mx-table-row>
+          <mx-table-cell>Contact</mx-table-cell>
+          <mx-table-cell>Contact and support information</mx-table-cell>
+        </mx-table-row>
+      </div>
+    </mx-table>
+<!-- #endregion collapse-nested-rows -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#collapse-nested-rows
+<<< @/vuepress/components/tables.md#toggle-nested-rows
+
 ## Grouping and subheader rows
 
 The `groupBy` prop specifies a property on the `rows` objects to use for grouping rows under subheaders.
@@ -748,13 +798,15 @@ The `ITableColumn` interface describes the objects passed to the `columns` prop.
 
 ### Table Row Properties
 
-| Property    | Attribute   | Description                                                                                                           | Type                | Default     |
-| ----------- | ----------- | --------------------------------------------------------------------------------------------------------------------- | ------------------- | ----------- |
-| `actions`   | --          | An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. | `ITableRowAction[]` | `[]`        |
-| `checked`   | `checked`   |                                                                                                                       | `boolean`           | `false`     |
-| `rowId`     | `row-id`    | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
-| `rowIndex`  | `row-index` | This row's index in the `HTMLMxTableElement.rows` array. This is set internally by the table component.               | `number`            | `undefined` |
-| `subheader` | `subheader` | Style the row as a subheader.                                                                                         | `boolean`           | `false`     |
+| Property             | Attribute              | Description                                                                                                           | Type                | Default     |
+| -------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------- | ----------- |
+| `actions`            | --                     | An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. | `ITableRowAction[]` | `[]`        |
+| `checked`            | `checked`              |                                                                                                                       | `boolean`           | `false`     |
+| `collapseNestedRows` | `collapse-nested-rows` | Toggles the visibility of all nested rows (except those set to `doNotCollapse`)                                       | `boolean`           | `false`     |
+| `doNotCollapse`      | `do-not-collapse`      | Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`.                              | `boolean`           | `false`     |
+| `rowId`              | `row-id`               | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
+| `rowIndex`           | `row-index`            | This row's index in the `HTMLMxTableElement.rows` array. This is set internally by the table component.               | `number`            | `undefined` |
+| `subheader`          | `subheader`            | Style the row as a subheader.                                                                                         | `boolean`           | `false`     |
 
 ### Table Events
 
@@ -804,6 +856,10 @@ Expands the row (on mobile)
 #### `getNestedRowIndexes() => Promise<number[]>`
 
 Get an array of row IDs for rows nested directly inside this row
+
+#### `toggle(hideRow: boolean, skipTransition: boolean) => Promise<void>`
+
+Show/hide the row (with an optional accordion transition)
 
 <script>
 // #region beatles
@@ -1266,8 +1322,16 @@ export default {
       this.apiPage = e.detail.page
       this.apiPageSize = e.detail.rowsPerPage
       this.getApiData()
-    }
+    },
     // #endregion api-request
+    // #region toggle-nested-rows
+    toggleNestedRows(e) {
+      const row = e.target.closest('mx-table-row')
+      row.collapseNestedRows = !row.collapseNestedRows
+      e.target.closest('i').classList.toggle('ph-plus')
+      e.target.closest('i').classList.toggle('ph-minus')
+    }
+    // #endregion toggle-nested-rows
   }
 }
 </script>

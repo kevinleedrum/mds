@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, Event, EventEmitter, State, Method } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Event, EventEmitter, State, Method, Watch } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import dotsSvg from '../../assets/svg/dots-vertical.svg';
 import dragDotsSvg from '../../assets/svg/drag-dots.svg';
@@ -26,14 +26,19 @@ export class MxTableRow {
   dragScroller: DragScroller;
   indentLevel = 0;
   columnCount = 1;
+  isHidden: boolean = false;
 
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   @Prop() rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   @Prop() actions: ITableRowAction[] = [];
+  /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
+  @Prop({ reflect: true }) doNotCollapse: boolean = false;
   /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
   @Prop() rowIndex: number;
   @Prop({ mutable: true }) checked: boolean = false;
+  /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
+  @Prop({ reflect: true }) collapseNestedRows: boolean = false;
   /** Style the row as a subheader. */
   @Prop() subheader: boolean = false;
 
@@ -56,6 +61,11 @@ export class MxTableRow {
   /** Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table. */
   @Event() mxDragKeyDown: EventEmitter<string>;
 
+  @Watch('collapseNestedRows')
+  async onCollapseNestedRowsChange() {
+    this.toggleNestedRows();
+  }
+
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
   @Method()
   async translateRow(x: number, y: number) {
@@ -64,10 +74,31 @@ export class MxTableRow {
     (await this.getChildren()).forEach((child: HTMLElement) => (child.style.transform = transform));
   }
 
+  /** Show/hide the row (with an optional accordion transition) */
+  @Method()
+  async toggle(hideRow: boolean, skipTransition: boolean) {
+    this.isHidden = hideRow;
+    const children = await this.getChildren();
+    if (skipTransition) {
+      children.forEach(child => {
+        child.style.maxHeight = this.isHidden ? '0' : '';
+      });
+    } else {
+      const transition = this.isHidden ? collapse : expand;
+      await Promise.all(children.map(child => transition(child)));
+    }
+    children.forEach(child => (child.style.border = this.isHidden ? '0' : ''));
+    this.element.setAttribute('aria-hidden', this.isHidden ? 'true' : 'false');
+  }
+
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
     if (this.actions.some(action => !action.value)) throw new Error('Table row actions must have a value property!');
     this.setIndentLevel();
+  }
+
+  componentDidLoad() {
+    if (this.collapseNestedRows) this.toggleNestedRows(true);
   }
 
   componentWillRender() {
@@ -92,7 +123,8 @@ export class MxTableRow {
     this.wrapFirstColumn();
     this.moveNestedRows();
     // Render collapsed mobile row
-    if (!this.minWidths.sm && !this.isMobileExpanded) this.rowEl.style.maxHeight = this.getCollapsedHeight();
+    if (!this.minWidths.sm && !this.isMobileExpanded && !this.isHidden)
+      this.rowEl.style.maxHeight = this.getCollapsedHeight();
   }
 
   disconnectedCallback() {
@@ -106,6 +138,15 @@ export class MxTableRow {
       if (!parentRow.subheader) this.indentLevel++;
       parentRow = parentRow.parentElement.closest('mx-table-row');
     }
+  }
+
+  toggleNestedRows(skipTransition = false) {
+    const nestedRows = Array.from(this.childRowWrapper.children).filter(
+      (row: HTMLMxTableRowElement) => !row.doNotCollapse,
+    ) as HTMLMxTableRowElement[];
+    nestedRows.forEach(async (row: HTMLMxTableRowElement) => {
+      row.toggle(this.collapseNestedRows, skipTransition);
+    });
   }
 
   /** Move first cell into same container as checkbox and drag handle. */
