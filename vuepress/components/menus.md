@@ -180,6 +180,8 @@ selected on <kbd>Enter</kbd>.
 | `icon`        | `icon`         | The class name of the icon to display on the left. This is sometimes automatically set to `null` to add an empty icon for alignment purposes (when a sibling menu item has an icon).                 | `string`  | `undefined` |
 | `label`       | `label`        | A label to display above the menu item                                                                                                                                                               | `string`  | `undefined` |
 | `multiSelect` | `multi-select` | Render a checkbox as part of the menu item. On small screens, the checkbox will appear on the left; otherwise, it will be on the right.                                                              | `boolean` | `false`     |
+| `selected`    | `selected`     | This is automatically set by a parent Dropdown Menu.                                                                                                                                                 | `boolean` | `false`     |
+| `subtitle`    | `subtitle`     | A subtitle to display below the menu item text                                                                                                                                                       | `string`  | `undefined` |
 
 ### Menu Events
 
