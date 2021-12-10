@@ -3,6 +3,10 @@ import { Chart, ChartType, ChartData, ChartOptions, registerables } from 'chart.
 
 Chart.register(...registerables);
 
+// These interfaces prevent the Stencil documentation generator from expanding these type aliases (resulting in realllly long type definitions)
+export interface ChartJsData extends ChartData {}
+export interface ChartJsOptions extends ChartOptions {}
+
 @Component({
   tag: 'mx-chart',
   shadow: false,
@@ -11,11 +15,16 @@ export class MxChart {
   canvasEl: HTMLCanvasElement;
   chart: Chart;
 
-  @Prop() type: ChartType = 'line';
-  @Prop() data: ChartData;
-  @Prop() options: ChartOptions;
-  @Prop() width: number;
+  /** The labels and datasets to render. See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/). */
+  @Prop() data: ChartJsData;
+  /** Explicit height in pixels */
   @Prop() height: number;
+  /** See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/). */
+  @Prop() options: ChartJsOptions;
+  /** The type of chart to render. For mixed charts, set the `type` in the dataset instead. */
+  @Prop() type: ChartType;
+  /** Explicit width in pixels */
+  @Prop() width: number;
 
   @Element() element: HTMLMxChartElement;
 

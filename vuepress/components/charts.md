@@ -46,9 +46,36 @@ set the `maintainAspectRatio` option to `false` if necessary when setting an exp
     <!-- #region pie -->
     <mx-chart width="320" type="pie" :data.prop="pieData" />
     <mx-chart width="320" type="doughnut" :data.prop="pieData" />
-    <!-- #endregion -->
+    <!-- #endregion pie -->
   </div>
 </section>
+
+<<< @/vuepress/components/charts.md#pie
+<<< @/vuepress/components/charts.md#pie-data
+
+## Mixed charts
+
+It is possible to combine chart types. Instead of setting the `type` prop, set the `type` within each
+dataset individually.
+
+<section class="mds">
+  <!-- #region mixed -->
+  <mx-chart :data.prop="mixedData" />
+  <!-- #endregion mixed -->
+</section>
+
+<<< @/vuepress/components/charts.md#mixed
+<<< @/vuepress/components/charts.md#mixed-data
+
+### Properties
+
+| Property  | Attribute | Description                                                                                               | Type                                                                                        | Default     |
+| --------- | --------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ----------- |
+| `data`    | --        | The labels and datasets to render. See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/). | `ChartJsData`                                                                               | `undefined` |
+| `height`  | `height`  | Explicit height in pixels                                                                                 | `number`                                                                                    | `undefined` |
+| `options` | --        | See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/).                                    | `ChartJsOptions`                                                                            | `undefined` |
+| `type`    | `type`    | The type of chart to render. For mixed charts, set the `type` in the dataset instead.                     | `"bar" \| "bubble" \| "doughnut" \| "line" \| "pie" \| "polarArea" \| "radar" \| "scatter"` | `undefined` |
+| `width`   | `width`   | Explicit width in pixels                                                                                  | `number`                                                                                    | `undefined` |
 
 <script>
 export default {
@@ -126,6 +153,27 @@ export default {
           ],
         }]
       },
+      // #endregion pie-data
+      // #region mixed-data
+      mixedData: {
+        labels: ['January', 'Febrary', 'March', 'April'],
+        datasets: [{
+          type: 'line',
+          label: 'Line data',
+          data: [10, 15, 55, 40],
+        }, {
+          type: 'bar',
+          label: 'Bar data',
+          data: [10, 30, 60, 40],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(20, 205, 86, 0.2)',
+          ]
+        }]
+      }
+      // #endregion mixed-data
     }
   }
 }
