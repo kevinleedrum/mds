@@ -14,13 +14,10 @@ export class MxChart {
   @Prop() type: ChartType = 'line';
   @Prop() data: ChartData;
   @Prop() options: ChartOptions;
+  @Prop() width: number;
+  @Prop() height: number;
 
   @Element() element: HTMLMxChartElement;
-
-  componentDidRender() {
-    this.canvasEl.width = this.element.scrollWidth;
-    this.canvasEl.height = this.element.scrollHeight;
-  }
 
   componentDidLoad() {
     this.chart = new Chart(this.canvasEl, {
@@ -30,10 +27,14 @@ export class MxChart {
     });
   }
 
+  get chartStyle() {
+    return { width: this.width && this.width + 'px', height: this.height && this.height + 'px' };
+  }
+
   render() {
     return (
-      <Host class="mx-chart relative block">
-        <canvas ref={el => (this.canvasEl = el)} role="img" class="w-full h-full" />
+      <Host class="mx-chart relative block" style={this.chartStyle}>
+        <canvas ref={el => (this.canvasEl = el)} role="img" style={this.chartStyle} />
       </Host>
     );
   }

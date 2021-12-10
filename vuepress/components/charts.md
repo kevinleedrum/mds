@@ -1,19 +1,24 @@
 # Charts
 
-The `mx-chart` component provides chart generation via Chart.js.
+The `mx-chart` component provides chart generation via [Chart.js](https://www.chartjs.org/docs/3.6.2/).
+The `type`, `data`, and `options` are all passed via three props of the same name.
+
+By default, the charts are sized to the container width, and the chart's height is determined by its
+aspect ratio. The `width` and `height` props may be used to set an explicit size in pixels. Be sure to
+set the `maintainAspectRatio` option to `false` if necessary when setting an explicit height.
 
 ## Line charts
 
 <section class="mds">
   <div>
     <!-- #region line -->
-    <mx-chart class="h-240 sm:h-320" type="line" :data.prop="lineData" />
+    <mx-chart type="line" :data.prop="lineData" />
     <!-- #endregion line -->
   </div>
   <div class="my-40">
     <strong class="block mb-20">Sparkline</strong>
     <!-- #region sparkline -->
-    <mx-chart class="w-128 h-48" type="line" :data.prop="lineData" :options.prop="sparklineOptions" />
+    <mx-chart width="128" height="48" type="line" :data.prop="lineData" :options.prop="sparklineOptions" />
     <!-- #endregion sparkline -->
   </div>
 </section>
@@ -27,7 +32,7 @@ The `mx-chart` component provides chart generation via Chart.js.
 
 <section class="mds">
   <!-- #region bar -->
-  <mx-chart class="h-320" type="bar" :data.prop="barData" />
+  <mx-chart type="bar" :data.prop="barData" />
   <!-- #endregion bar -->
 </section>
 
@@ -37,10 +42,12 @@ The `mx-chart` component provides chart generation via Chart.js.
 ## Pie and doughnut charts
 
 <section class="mds">
-  <!-- #region pie -->
-  <mx-chart class="h-320" type="pie" :data.prop="pieData" />
-  <mx-chart class="h-128" type="doughnut" :data.prop="pieData" />
-  <!-- #endregion -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 my-40">
+    <!-- #region pie -->
+    <mx-chart width="320" type="pie" :data.prop="pieData" />
+    <mx-chart width="320" type="doughnut" :data.prop="pieData" />
+    <!-- #endregion -->
+  </div>
 </section>
 
 <script>
@@ -54,25 +61,18 @@ export default {
           {
             label: 'Example data',
             data: [435, 321, 532, 801, 1231, 1098, 732, 321, 451, 482, 513, 397],
-            fill: true,
+            borderColor: '#d93b65'
           },
         ]
       },
       // #endregion line-data
       // #region sparkline-options
       sparklineOptions: {
-        responsive: false,
-        legend: {
-          display: false,
-        },
+        maintainAspectRactio: false,
         elements: {
           point: {
             radius: 0
           },
-          line: {
-            borderWidth: 2,
-            borderColor: "#6a9"
-          }
         },
         scales: {
           x: {
