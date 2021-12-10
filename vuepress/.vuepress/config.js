@@ -157,6 +157,7 @@ module.exports = {
         'snackbars',
         'uploads',
         'code',
+        'charts',
       ],
     },
   },
