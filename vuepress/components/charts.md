@@ -95,7 +95,7 @@ export default {
       // #endregion line-data
       // #region sparkline-options
       sparklineOptions: {
-        maintainAspectRactio: false,
+        maintainAspectRatio: false,
         elements: {
           point: {
             radius: 0
