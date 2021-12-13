@@ -12,9 +12,10 @@ set the `maintainAspectRatio` option to `false` if necessary when setting an exp
 <section class="mds">
   <div>
     <!-- #region line -->
-    <mx-chart type="line" :data.prop="lineData" />
+    <mx-chart ref="lineChart" type="line" :data.prop="lineData" />
     <!-- #endregion line -->
   </div>
+  <mx-button btn-type="outlined" class="mt-20" @click="randomizeLineData">Randomize</mx-button>
   <div class="my-40">
     <strong class="block mb-20">Sparkline</strong>
     <!-- #region sparkline -->
@@ -76,6 +77,12 @@ dataset individually.
 | `options` | --        | See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/).                                    | `ChartJsOptions`                                                                            | `undefined` |
 | `type`    | `type`    | The type of chart to render. For mixed charts, set the `type` in the dataset instead.                     | `"bar" \| "bubble" \| "doughnut" \| "line" \| "pie" \| "polarArea" \| "radar" \| "scatter"` | `undefined` |
 | `width`   | `width`   | Explicit width in pixels                                                                                  | `number`                                                                                    | `undefined` |
+
+### Methods
+
+#### `update() => Promise<void>`
+
+Force the chart to rerender.
 
 <script>
 export default {
@@ -174,6 +181,18 @@ export default {
         }]
       }
       // #endregion mixed-data
+    }
+  },
+  methods: {
+    randomizeLineData() {
+      const randomDataPoints = Array.from({length: 12}, () => (Math.floor(Math.random() * 700) + 300))
+      this.lineData = {
+        ...this.lineData,
+        datasets: [{
+          ...this.lineData.datasets[0],
+          data: randomDataPoints
+        }]
+      }
     }
   }
 }

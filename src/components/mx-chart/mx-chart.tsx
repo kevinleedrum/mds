@@ -1,7 +1,7 @@
-import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Watch, Method } from '@stencil/core';
 import { Chart, ChartType, ChartData, ChartOptions, registerables } from 'chart.js';
 
-Chart.register(...registerables);
+Chart.register(...(registerables || []));
 
 // These interfaces prevent the Stencil documentation generator from expanding these type aliases (resulting in realllly long type definitions)
 export interface ChartJsData extends ChartData {}
@@ -28,7 +28,22 @@ export class MxChart {
 
   @Element() element: HTMLMxChartElement;
 
+  @Watch('data')
+  @Watch('options')
+  @Watch('type')
+  onDataChange() {
+    this.update();
+  }
+
   componentDidLoad() {
+    this.update();
+  }
+
+  /** Force the chart to rerender. */
+  @Method()
+  async update() {
+    if (!this.canvasEl) return;
+    if (this.chart) this.chart.destroy();
     this.chart = new Chart(this.canvasEl, {
       type: this.type,
       data: this.data,
