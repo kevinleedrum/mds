@@ -127,6 +127,7 @@ function executeTransition(
       setStyleProperty(el, transition.property, transition.startValue);
     });
     if (transformOrigin) el.style.transformOrigin = transformOrigin;
+    await new Promise(requestAnimationFrame);
     el.style.transition = transitionOptions
       .map(transition => {
         return `${transition.property} ${duration}ms ${transition.timing}`;

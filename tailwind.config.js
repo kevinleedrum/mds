@@ -79,6 +79,7 @@ const config = {
       320: '20rem',
       360: '22.5rem',
       384: '24rem',
+      480: '30rem',
     },
     extend: {
       backgroundColor: {
@@ -102,6 +103,9 @@ const config = {
       },
       minHeight: theme => ({
         ...theme('spacing'), // Extend to include spacing values (e.g. min-h-128)
+      }),
+      maxHeight: theme => ({
+        ...theme('spacing'), // Extend to include spacing values (e.g. max-h-128)
       }),
       container: {
         center: true,
