@@ -2,7 +2,7 @@ import { r as registerInstance, h, H as Host, g as getElement, c as createEvent 
 import { p as propagateDataAttributes } from './utils-18e3dfde.js';
 import { c as chevronSvg } from './chevron-down-6a7bb36b.js';
 import { c as createPopover, a as convertPlacementToOrigin } from './popover-56a66892.js';
-import { d as fadeScaleIn, b as fadeOut } from './transitions-9167f568.js';
+import { d as fadeScaleIn, b as fadeOut } from './transitions-5e6f10a3.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { c as checkSvg } from './check-754da8c1.js';
 import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';

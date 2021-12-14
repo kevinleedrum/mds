@@ -20,6 +20,12 @@ export const MxButton: {
   new (): MxButton;
 };
 
+interface MxChart extends Components.MxChart, HTMLElement {}
+export const MxChart: {
+  prototype: MxChart;
+  new (): MxChart;
+};
+
 interface MxCheckbox extends Components.MxCheckbox, HTMLElement {}
 export const MxCheckbox: {
   prototype: MxCheckbox;

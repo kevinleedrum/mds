@@ -5,6 +5,21 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property     | Attribute     | Description                                                              | Type      | Default     |
+| ------------ | ------------- | ------------------------------------------------------------------------ | --------- | ----------- |
+| `isOpen`     | `is-open`     | Toggles the visibility of the dialog (when using the slots for content). | `boolean` | `false`     |
+| `modalClass` | `modal-class` | Additional classes to apply to the inner modal element.                  | `string`  | `undefined` |
+
+
+## Events
+
+| Event     | Description | Type                |
+| --------- | ----------- | ------------------- |
+| `mxClose` |             | `CustomEvent<void>` |
+
+
 ## Methods
 
 ### `alert(message: string, { confirmLabel, cancelLabel, heading }?: DialogOptions) => Promise<void>`

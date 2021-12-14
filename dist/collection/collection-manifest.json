@@ -1,6 +1,7 @@
 {
   "entries": [
     "./components/mx-button/mx-button.js",
+    "./components/mx-chart/mx-chart.js",
     "./components/mx-dialog/mx-dialog.js",
     "./components/mx-modal/mx-modal.js",
     "./components/mx-page-header/mx-page-header.js",

@@ -353,6 +353,7 @@
   /* #region dialogs */
   /* Dialogs */
   --mds-bg-dialog-backdrop: rgba(0, 0, 0, 0.5);
+  --mds-bg-dialog-scroll-thumb: #d4d4d4;
   --mds-bg-dialog: #f8f8f8;
   --mds-text-dialog: #333;
   /* #endregion dialogs */
@@ -3717,6 +3718,10 @@ video {
 
   clear: none;
 }
+.mds .m-16{
+
+  margin: 1rem;
+}
 .mds .m-4{
 
   margin: 0.25rem;
@@ -3740,10 +3745,6 @@ video {
 .mds .m-12{
 
   margin: 0.75rem;
-}
-.mds .m-16{
-
-  margin: 1rem;
 }
 .mds .m-20{
 
@@ -3817,17 +3818,17 @@ video {
 
   margin-bottom: 1.25rem;
 }
-.mds .my-10{
-
-  margin-top: 0.625rem;
-
-  margin-bottom: 0.625rem;
-}
 .mds .my-40{
 
   margin-top: 2.5rem;
 
   margin-bottom: 2.5rem;
+}
+.mds .my-10{
+
+  margin-top: 0.625rem;
+
+  margin-bottom: 0.625rem;
 }
 .mds .-mx-32{
 
@@ -4095,6 +4096,10 @@ video {
 
   margin-top: 2.5rem;
 }
+.mds .mb-20{
+
+  margin-bottom: 1.25rem;
+}
 .mds .mb-40{
 
   margin-bottom: 2.5rem;
@@ -4198,10 +4203,6 @@ video {
 .mds .mb-12{
 
   margin-bottom: 0.75rem;
-}
-.mds .mb-20{
-
-  margin-bottom: 1.25rem;
 }
 .mds .mb-32{
 
@@ -4574,6 +4575,10 @@ video {
 .mds .max-h-216{
 
   max-height: 13.5rem;
+}
+.mds .max-h-480{
+
+  max-height: 30rem;
 }
 .mds .max-h-0{
 
@@ -12617,6 +12622,22 @@ video {
     background: #f8f8f8;
     background: var(--mds-bg-dialog);
   }
+.mx-dialog .modal [slot='buttons'] > *{
+
+  margin: 0.25rem;
+}
+.mx-dialog .modal ::-webkit-scrollbar {
+      width: 12px;
+      background: #f8f8f8;
+      background: var(--mds-bg-dialog);
+    }
+.mx-dialog .modal ::-webkit-scrollbar-thumb {
+      border-radius: 0.5rem;
+      border: 0.25rem solid #f8f8f8;
+      border: 0.25rem solid var(--mds-bg-dialog);
+      background: #d4d4d4;
+      background: var(--mds-bg-dialog-scroll-thumb);
+    }
 .mx-dialog .bg-dialog-backdrop {
     background: rgba(0, 0, 0, 0.5);
     background: var(--mds-bg-dialog-backdrop);
@@ -13476,6 +13497,10 @@ span.ripple {
   .mds .sm\:w-360{
 
     width: 22.5rem;
+  }
+  .mds .sm\:w-480{
+
+    width: 30rem;
   }
   .mds .sm\:grid-cols-3{
 

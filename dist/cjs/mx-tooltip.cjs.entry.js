@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-5f1d14aa.js');
 const popover = require('./popover-8846ea88.js');
-const transitions = require('./transitions-c9a33e78.js');
+const transitions = require('./transitions-bd8ec9f0.js');
 const utils = require('./utils-1f7ef40d.js');
 
 const MxTooltip = class {

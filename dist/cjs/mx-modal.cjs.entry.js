@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const index = require('./index-5f1d14aa.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 const portal = require('./portal-0b4649d0.js');
-const transitions = require('./transitions-c9a33e78.js');
+const transitions = require('./transitions-bd8ec9f0.js');
 const bodyScroll = require('./bodyScroll-0692b749.js');
 const arrowLeft = require('./arrow-left-a3a34f65.js');
 require('./utils-1f7ef40d.js');
