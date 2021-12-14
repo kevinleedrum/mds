@@ -6,6 +6,8 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
+import { ChartJsData, ChartJsOptions } from "./components/mx-chart/mx-chart";
+import { ChartType } from "chart.js";
 import { DialogOptions } from "./components/mx-dialog/mx-dialog";
 import { PopoverOffset, PopoverPlacement } from "./utils/popover";
 import { IModalButton } from "./components/mx-modal/mx-modal";
@@ -87,6 +89,32 @@ export namespace Components {
         "type": ButtonTypeAttribute;
         "value": string;
         "xl": boolean;
+    }
+    interface MxChart {
+        /**
+          * The labels and datasets to render. See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/).
+         */
+        "data": ChartJsData;
+        /**
+          * Explicit height in pixels
+         */
+        "height": number;
+        /**
+          * See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/).
+         */
+        "options": ChartJsOptions;
+        /**
+          * The type of chart to render. For mixed charts, set the `type` in the dataset instead.
+         */
+        "type": ChartType;
+        /**
+          * Force the chart to rerender.
+         */
+        "update": () => Promise<void>;
+        /**
+          * Explicit width in pixels
+         */
+        "width": number;
     }
     interface MxCheckbox {
         "checked": boolean;
@@ -197,6 +225,14 @@ export namespace Components {
           * A Promise-based replacement for `Window.confirm()` that resolves to a boolean
          */
         "confirm": (message: string, { confirmLabel, cancelLabel, heading }?: DialogOptions) => Promise<boolean>;
+        /**
+          * Toggles the visibility of the dialog (when using the slots for content).
+         */
+        "isOpen": boolean;
+        /**
+          * Additional classes to apply to the inner modal element.
+         */
+        "modalClass": string;
     }
     interface MxDropdownMenu {
         "ariaLabel": string;
@@ -920,6 +956,12 @@ declare global {
         prototype: HTMLMxButtonElement;
         new (): HTMLMxButtonElement;
     };
+    interface HTMLMxChartElement extends Components.MxChart, HTMLStencilElement {
+    }
+    var HTMLMxChartElement: {
+        prototype: HTMLMxChartElement;
+        new (): HTMLMxChartElement;
+    };
     interface HTMLMxCheckboxElement extends Components.MxCheckbox, HTMLStencilElement {
     }
     var HTMLMxCheckboxElement: {
@@ -1122,6 +1164,7 @@ declare global {
         "mx-badge": HTMLMxBadgeElement;
         "mx-banner": HTMLMxBannerElement;
         "mx-button": HTMLMxButtonElement;
+        "mx-chart": HTMLMxChartElement;
         "mx-checkbox": HTMLMxCheckboxElement;
         "mx-chip": HTMLMxChipElement;
         "mx-chip-group": HTMLMxChipGroupElement;
@@ -1230,6 +1273,28 @@ declare namespace LocalJSX {
         "type"?: ButtonTypeAttribute;
         "value"?: string;
         "xl"?: boolean;
+    }
+    interface MxChart {
+        /**
+          * The labels and datasets to render. See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/).
+         */
+        "data"?: ChartJsData;
+        /**
+          * Explicit height in pixels
+         */
+        "height"?: number;
+        /**
+          * See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/).
+         */
+        "options"?: ChartJsOptions;
+        /**
+          * The type of chart to render. For mixed charts, set the `type` in the dataset instead.
+         */
+        "type"?: ChartType;
+        /**
+          * Explicit width in pixels
+         */
+        "width"?: number;
     }
     interface MxCheckbox {
         "checked"?: boolean;
@@ -1340,6 +1405,15 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface MxDialog {
+        /**
+          * Toggles the visibility of the dialog (when using the slots for content).
+         */
+        "isOpen"?: boolean;
+        /**
+          * Additional classes to apply to the inner modal element.
+         */
+        "modalClass"?: string;
+        "onMxClose"?: (event: CustomEvent<void>) => void;
     }
     interface MxDropdownMenu {
         "ariaLabel"?: string;
@@ -2049,6 +2123,7 @@ declare namespace LocalJSX {
         "mx-badge": MxBadge;
         "mx-banner": MxBanner;
         "mx-button": MxButton;
+        "mx-chart": MxChart;
         "mx-checkbox": MxCheckbox;
         "mx-chip": MxChip;
         "mx-chip-group": MxChipGroup;
@@ -2091,6 +2166,7 @@ declare module "@stencil/core" {
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
             "mx-banner": LocalJSX.MxBanner & JSXBase.HTMLAttributes<HTMLMxBannerElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;
+            "mx-chart": LocalJSX.MxChart & JSXBase.HTMLAttributes<HTMLMxChartElement>;
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
             "mx-chip": LocalJSX.MxChip & JSXBase.HTMLAttributes<HTMLMxChipElement>;
             "mx-chip-group": LocalJSX.MxChipGroup & JSXBase.HTMLAttributes<HTMLMxChipGroupElement>;

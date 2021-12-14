@@ -104,6 +104,7 @@ function executeTransition(el, transitionOptions, duration, transformOrigin) {
     });
     if (transformOrigin)
       el.style.transformOrigin = transformOrigin;
+    await new Promise(requestAnimationFrame);
     el.style.transition = transitionOptions
       .map(transition => {
       return `${transition.property} ${duration}ms ${transition.timing}`;

@@ -4,7 +4,7 @@ import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { c as chevronSvg } from './chevron-down-6a7bb36b.js';
 import { d as getScrollingParent, e as getBounds, a as getCursorCoords, g as getPageRect, f as isScrolledOutOfView } from './utils-18e3dfde.js';
-import { c as collapse, e as expand } from './transitions-9167f568.js';
+import { c as collapse, e as expand } from './transitions-5e6f10a3.js';
 
 const MxLinearProgress = class {
   constructor(hostRef) {

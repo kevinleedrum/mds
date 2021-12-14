@@ -1,5 +1,5 @@
 import { r as registerInstance, h, H as Host, g as getElement } from './index-540e1634.js';
-import { c as collapse, s as slideOut, e as expand, a as slideIn } from './transitions-9167f568.js';
+import { c as collapse, s as slideOut, e as expand, a as slideIn } from './transitions-5e6f10a3.js';
 import './utils-18e3dfde.js';
 
 const MxBanner = class {

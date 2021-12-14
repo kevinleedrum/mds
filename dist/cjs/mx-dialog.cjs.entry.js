@@ -5,13 +5,22 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const index = require('./index-5f1d14aa.js');
 const bodyScroll = require('./bodyScroll-0692b749.js');
 const portal = require('./portal-0b4649d0.js');
-const transitions = require('./transitions-c9a33e78.js');
+const transitions = require('./transitions-bd8ec9f0.js');
 require('./utils-1f7ef40d.js');
 
 const MxDialog = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
+    this.mxClose = index.createEvent(this, "mxClose", 7);
+    this.isSimple = true;
+    this.hasButtons = false;
+    this.hasHeading = false;
+    /** Toggles the visibility of the dialog (when using the slots for content). */
+    this.isOpen = false;
     this.isVisible = false;
+  }
+  onIsOpenChange() {
+    this.isOpen ? this.showDialog() : this.closeDialog();
   }
   onKeyDown(e) {
     if (!this.isVisible)
@@ -52,6 +61,15 @@ const MxDialog = class {
   async confirm(message, { confirmLabel = 'Okay', cancelLabel = 'Cancel', heading } = {}) {
     return this.open(message, { heading, confirmLabel, cancelLabel });
   }
+  componentWillRender() {
+    this.hasHeading = !!this.heading || !!this.element.querySelector('[slot="heading"]');
+    this.hasButtons = !!this.confirmLabel || !!this.cancelLabel || !!this.element.querySelector('[slot="buttons"]');
+    this.isSimple = !this.element.innerText;
+  }
+  componentDidLoad() {
+    if (this.isOpen)
+      this.showDialog();
+  }
   disconnectedCallback() {
     bodyScroll.unlockBodyScroll(this.element);
   }
@@ -69,6 +87,8 @@ const MxDialog = class {
     });
   }
   async showDialog() {
+    if (this.isVisible)
+      return;
     this.ancestorFocusedElement = document.activeElement;
     portal.moveToPortal(this.element);
     bodyScroll.lockBodyScroll(this.element);
@@ -77,12 +97,16 @@ const MxDialog = class {
     await Promise.all([transitions.fadeIn(this.backdrop), transitions.fadeScaleIn(this.modal)]);
   }
   async closeDialog(isConfirmed = false) {
+    if (!this.isVisible)
+      return;
     await Promise.all([transitions.fadeOut(this.backdrop), transitions.fadeOut(this.modal)]);
     this.isVisible = false;
     bodyScroll.unlockBodyScroll(this.element);
     // Restore focus to the element that was focused before the modal was opened
     this.ancestorFocusedElement && this.ancestorFocusedElement.focus();
-    this.deferredResolve(isConfirmed);
+    if (this.deferredResolve)
+      this.deferredResolve(isConfirmed);
+    this.mxClose.emit();
   }
   getFocusElements() {
     const isVisible = (el) => !!el.offsetParent;
@@ -98,10 +122,21 @@ const MxDialog = class {
       str += ' hidden';
     return str;
   }
+  get modalClassNames() {
+    let str = 'modal w-320 m-16 flex flex-col rounded-lg shadow-4 relative overflow-hidden';
+    if (this.isSimple)
+      str += ' w-320';
+    if (this.modalClass)
+      str += ' ' + this.modalClass;
+    return str;
+  }
   render() {
-    return (index.h(index.Host, { class: this.hostClass }, index.h("div", { ref: el => (this.backdrop = el), class: "bg-dialog-backdrop absolute inset-0 z-0" }), index.h("div", { ref: el => (this.modal = el), role: "alertdialog", "aria-labelledby": this.heading ? 'dialog-heading' : null, "aria-describedby": this.message ? 'dialog-message' : null, "aria-modal": "true", "data-testid": "modal", class: "modal w-320 flex flex-col rounded-lg shadow-4 relative overflow-hidden" }, index.h("div", { class: "p-24 flex-grow" }, this.heading && (index.h("h1", { id: "dialog-heading", class: "text-h6 emphasis !my-0 pb-16" }, this.heading)), this.message && (index.h("p", { id: "dialog-message", class: "text-4 my-0" }, this.message))), (this.confirmLabel || this.cancelLabel) && (index.h("div", { class: "flex flex-wrap items-center justify-end p-4" }, this.confirmLabel && (index.h("mx-button", { class: "m-4 order-2", btnType: "text", onClick: () => this.closeDialog(true) }, this.confirmLabel)), this.cancelLabel && (index.h("mx-button", { class: "m-4 order-1", btnType: "text", onClick: () => this.closeDialog() }, this.cancelLabel)))))));
+    return (index.h(index.Host, { class: this.hostClass }, index.h("div", { ref: el => (this.backdrop = el), class: "bg-dialog-backdrop absolute inset-0 z-0" }), index.h("div", { ref: el => (this.modal = el), role: "alertdialog", "aria-labelledby": this.heading ? 'dialog-heading' : null, "aria-describedby": this.message ? 'dialog-message' : null, "aria-modal": "true", "data-testid": "modal", class: this.modalClassNames }, index.h("div", { class: "p-24 text-4 flex-grow overflow-auto", "data-testid": "modal-content" }, this.hasHeading && (index.h("h1", { id: "dialog-heading", class: "text-h6 emphasis !my-0 pb-16", "data-testid": "heading" }, this.heading, index.h("slot", { name: "heading" }))), this.message && (index.h("p", { id: "dialog-message", class: "my-0" }, this.message)), index.h("slot", null)), this.hasButtons && (index.h("div", { class: "flex flex-wrap items-center justify-end p-4", "data-testid": "button-tray" }, this.confirmLabel && (index.h("mx-button", { class: "m-4 order-2", btnType: "text", onClick: () => this.closeDialog(true) }, this.confirmLabel)), this.cancelLabel && (index.h("mx-button", { class: "m-4 order-1", btnType: "text", onClick: () => this.closeDialog() }, this.cancelLabel)), index.h("slot", { name: "buttons" }))))));
   }
   get element() { return index.getElement(this); }
+  static get watchers() { return {
+    "isOpen": ["onIsOpenChange"]
+  }; }
 };
 
 exports.mx_dialog = MxDialog;
