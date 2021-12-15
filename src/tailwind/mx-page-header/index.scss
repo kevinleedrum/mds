@@ -1,4 +1,8 @@
 .mx-page-header {
   background-color: var(--mds-bg-page-header);
   color: var(--mds-text-page-header);
+
+  [slot='buttons'] {
+    @apply flex space-x-8 md:space-x-24 md:justify-end md:flex-row-reverse md:space-x-reverse items-center;
+  }
 }
