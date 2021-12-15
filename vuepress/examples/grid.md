@@ -74,7 +74,7 @@ This is an example of a full page layout for a dashboard. The number of columns 
 viewport width, as does the grid gap and padding around the grid.
 
 <section class="mds full-width">
-  <div class="mt-40 shadow-24 w-screen">
+  <div class="my-40 shadow-24 w-screen">
     <!-- #region dashboard-grid -->
     <mx-page-header pattern class="shadow-2">Dashboard</mx-page-header>
     <div class="p-24 md:p-40 xl:p-72">
