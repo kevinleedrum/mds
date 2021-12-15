@@ -79,7 +79,8 @@ viewport width, as does the grid gap and padding around the grid.
     <mx-page-header pattern class="shadow-2">Dashboard</mx-page-header>
     <div class="p-24 md:p-40 xl:p-72">
       <div class="grid grid-cols-1 gap-16 md:grid-cols-2 md:gap-24 2xl:grid-cols-3 2xl:gap-40">
-        <div class="elevation8 min-w-full p-24" v-for="n in 5" :key="'chart-' + n">
+        <div class="shadow-8 rounded-3xl min-w-full px-24 pb-24 bg-white" v-for="n in 5" :key="'chart-' + n">
+          <h5 class="emphasis">Chart</h5>
           <mx-chart type="line" :data.prop="chartData" :options.prop="chartOptions" />
         </div>
       </div>
