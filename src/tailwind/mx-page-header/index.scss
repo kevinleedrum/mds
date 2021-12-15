@@ -3,6 +3,6 @@
   color: var(--mds-text-page-header);
 
   [slot='buttons'] {
-    @apply flex space-x-8 md:space-x-24 md:justify-end md:flex-row-reverse md:space-x-reverse items-center;
+    @apply py-1 flex space-x-8 md:space-x-24 md:justify-end md:flex-row-reverse md:space-x-reverse items-center max-w-full;
   }
 }
