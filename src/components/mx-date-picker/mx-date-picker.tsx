@@ -1,7 +1,5 @@
 import { Component, Host, h, Prop, Watch, State, Element, Listen } from '@stencil/core';
 import datepicker from 'js-datepicker';
-import calendarSvg from '../../assets/svg/calendar.svg';
-import warningCircleSvg from '../../assets/svg/warning-circle.svg';
 import { createPopover, PopoverInstance } from '../../utils/popover';
 import { isDateObject, propagateDataAttributes, uuidv4 } from '../../utils/utils';
 import { fadeIn, fadeOut } from '../../utils/transitions';
@@ -221,7 +219,7 @@ export class MxDatePicker {
   }
 
   get calendarButtonClass() {
-    let str = 'calendar-button cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
+    let str = 'calendar-button cursor-pointer border-0 absolute flex items-center text-icon h-full right-12 space-x-8';
     if (this.disabled) str += ' pointer-events-none';
     if (this.isFocused || this.error) str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
@@ -261,9 +259,10 @@ export class MxDatePicker {
             ref={el => (this.calendarButton = el)}
             class={this.calendarButtonClass}
             data-testid="calendar-button"
-            innerHTML={this.error ? warningCircleSvg : calendarSvg}
             disabled={this.disabled}
-          ></button>
+          >
+            <i class={this.error ? 'mds-warning-circle' : 'mds-calendar'}></i>
+          </button>
         </div>
 
         {this.assistiveText && (

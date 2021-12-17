@@ -1,6 +1,5 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
-import chevronSvg from '../../assets/svg/chevron-down.svg';
 import { propagateDataAttributes } from '../../utils/utils';
 export class MxButton {
   constructor() {
@@ -58,7 +57,7 @@ export class MxButton {
       h("span", { class: "slot-content" },
         h("slot", null)),
       this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }),
-      this.dropdown && (h("span", { "data-testid": "chevron", class: this.btnType === 'text' ? 'chevron-icon ml-4' : 'ml-8', innerHTML: chevronSvg }))));
+      this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
     return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null }, this.dataAttributes), buttonContent))));
   }
   static get is() { return "mx-button"; }

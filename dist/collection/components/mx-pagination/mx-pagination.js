@@ -1,10 +1,5 @@
 import { Component, Host, h, Prop, Event, Element, State } from '@stencil/core';
 import { ResizeObserver } from '@juggle/resize-observer';
-import chevronLeftSvg from '../../assets/svg/chevron-left.svg';
-import chevronRightSvg from '../../assets/svg/chevron-right.svg';
-import pageFirstSvg from '../../assets/svg/page-first.svg';
-import pageLastSvg from '../../assets/svg/page-last.svg';
-import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 export class MxPagination {
   constructor() {
     this.hasStatus = false;
@@ -113,17 +108,17 @@ export class MxPagination {
             "Rows per page: \u00A0",
             h("div", { "data-testid": "rows-per-page", ref: el => (this.rowsMenuAnchor = el), class: "flex items-center cursor-pointer" },
               this.rowsPerPage,
-              h("span", { class: "ml-12", innerHTML: arrowSvg })),
+              h("i", { class: "mds-arrow-triangle-down ml-12 text-icon" })),
             h("mx-menu", { ref: el => (this.rowsMenu = el) }, this.rowsPerPageOptions.map(option => (h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))),
           this.totalRows > 0 && (h("div", { "data-testid": "row-range", class: this.rowRangeClass },
             this.currentRange,
             " of ",
             this.totalRows)),
           h("div", { class: "flex items-center sm:space-x-8" },
-            h("mx-icon-button", { "aria-label": "First page", innerHTML: pageFirstSvg, disabled: this.page === 1 || this.disabled, onClick: this.onClickFirstPage.bind(this) }),
-            h("mx-icon-button", { "aria-label": "Previous page", innerHTML: chevronLeftSvg, disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
-            h("mx-icon-button", { "aria-label": "Next page", innerHTML: chevronRightSvg, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }),
-            this.lastPage !== null && (h("mx-icon-button", { "aria-label": "Last page", innerHTML: pageLastSvg, disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
+            h("mx-icon-button", { "aria-label": "First page", icon: "mds-page-first", disabled: this.page === 1 || this.disabled, onClick: this.onClickFirstPage.bind(this) }),
+            h("mx-icon-button", { "aria-label": "Previous page", icon: "mds-chevron-left", disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
+            h("mx-icon-button", { "aria-label": "Next page", icon: "mds-chevron-right", disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }),
+            this.lastPage !== null && (h("mx-icon-button", { "aria-label": "Last page", icon: "mds-page-last", disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
   }
   static get is() { return "mx-pagination"; }
   static get properties() { return {

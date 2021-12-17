@@ -3,7 +3,6 @@ import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { moveToPortal } from '../../utils/portal';
 import { Direction, fadeIn, fadeOut, fadeScaleIn, fadeSlideIn, fadeSlideOut } from '../../utils/transitions';
 import { lockBodyScroll, unlockBodyScroll } from '../../utils/bodyScroll';
-import arrowSvg from '../../assets/svg/arrow-left.svg';
 export class MxModal {
   constructor() {
     this.hasCard = false;
@@ -187,7 +186,7 @@ export class MxModal {
             (this.hasFooter ? '' : ' hidden') },
           h("div", null,
             h("slot", { name: "footer-left" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "flex items-center uppercase text-4 font-semibold tracking-1-25", "data-testid": "previous-page" },
-              h("span", { class: "mr-10", innerHTML: arrowSvg }),
+              h("i", { class: "mds-arrow-left mr-10" }),
               this.previousPageTitle)))),
           h("div", { class: "ml-16" },
             h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))),

@@ -1,6 +1,4 @@
 import { Component, Host, h, Prop, Element, State, Method, Watch } from '@stencil/core';
-import imageSvg from '../../assets/svg/image.svg';
-import userCircleSvg from '../../assets/svg/user-circle.svg';
 
 @Component({
   tag: 'mx-image-upload',
@@ -172,9 +170,9 @@ export class MxImageUpload {
     if (this.icon) {
       iconJsx = <i data-testid="upload-icon" class={'dropzone-icon ' + this.icon}></i>;
     } else if (this.avatar) {
-      iconJsx = <span data-testid="avatar-icon" innerHTML={userCircleSvg}></span>;
+      iconJsx = <i data-testid="avatar-icon" class="mds-user-circle text-icon"></i>;
     } else {
-      iconJsx = <span data-testid="image-icon" class={this.showDropzoneText ? 'mb-8' : ''} innerHTML={imageSvg}></span>;
+      iconJsx = <i data-testid="image-icon" class={'mds-image text-icon' + (this.showDropzoneText ? ' mb-8' : '')}></i>;
     }
 
     return (

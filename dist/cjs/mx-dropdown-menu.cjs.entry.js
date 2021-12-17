@@ -3,7 +3,6 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-5f1d14aa.js');
-const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
 
 const MxDropdownMenu = class {
   constructor(hostRef) {
@@ -64,13 +63,13 @@ const MxDropdownMenu = class {
     return str;
   }
   get suffixClass() {
-    let str = 'icon-suffix absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
+    let str = 'icon-suffix absolute flex items-center h-full right-12 space-x-8 pointer-events-none';
     if (this.isFocused)
       str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: "mx-dropdown-menu" }, index.h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass }, index.h("input", { "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }), index.h("span", { class: this.suffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), index.h("span", { "data-testid": "arrow", innerHTML: arrowTriangleDown.arrowSvg }))), index.h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) }, index.h("slot", null))));
+    return (index.h(index.Host, { class: "mx-dropdown-menu" }, index.h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass }, index.h("input", { "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }), index.h("span", { class: this.suffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), index.h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" }))), index.h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) }, index.h("slot", null))));
   }
   static get watchers() { return {
     "value": ["onValueChange"]

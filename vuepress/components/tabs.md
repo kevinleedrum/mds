@@ -18,8 +18,8 @@ The `mx-tabs` component will render as an `mx-select` when the screen width is l
         fill
         :tabs.prop="[
           { label: 'Home', icon: 'ph-house' },
-          { label: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'bg-green-600' },
-          { label: 'Search', icon: 'ph-magnifying-glass' },
+          { label: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'text-green-600' },
+          { label: 'Search', icon: 'mds-search' },
         ]"
         :value="activeTab"
         @mxChange="e => activeTab = e.detail"
@@ -30,8 +30,8 @@ The `mx-tabs` component will render as an `mx-select` when the screen width is l
       <mx-tabs
         :tabs.prop="[
           { label: 'Home', icon: 'ph-house' },
-          { label: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'bg-green-600' },
-          { label: 'Search', icon: 'ph-magnifying-glass' },
+          { label: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'text-green-600' },
+          { label: 'Search', icon: 'mds-search' },
         ]"
         :value="activeTab"
         @mxChange="e => activeTab = e.detail"
@@ -42,8 +42,8 @@ The `mx-tabs` component will render as an `mx-select` when the screen width is l
       <mx-tabs
         :tabs.prop="[
           { ariaLabel: 'Home', icon: 'ph-house' },
-          { ariaLabel: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'bg-red-600' },
-          { ariaLabel: 'Search', icon: 'ph-magnifying-glass' },
+          { ariaLabel: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'text-red-600' },
+          { ariaLabel: 'Search', icon: 'mds-search' },
         ]"
         :value="activeTab"
         @mxChange="e => activeTab = e.detail"
@@ -80,7 +80,7 @@ for the `value` prop (a variable containing the active tab index), and each `mx-
       :tabs.prop="[
         { label: 'Home', icon: 'ph-house' },
         { label: 'Favorites', icon: 'ph-heart' },
-        { label: 'Search', icon: 'ph-magnifying-glass' },
+        { label: 'Search', icon: 'mds-search' },
       ]"
       :value="activeTab"
       @mxChange="e => activeTab = e.detail"

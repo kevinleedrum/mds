@@ -28,6 +28,7 @@ export declare class MxPageHeader {
   element: HTMLMxPageHeaderElement;
   /** Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu` */
   resetResizeObserver(): Promise<void>;
+  updateSlottedButtonSize(): void;
   componentWillLoad(): void;
   connectedCallback(): void;
   disconnectedCallback(): void;

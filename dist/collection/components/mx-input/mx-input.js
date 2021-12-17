@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop, State, Watch, Element } from '@stencil/core';
-import warningCircleSvg from '../../assets/svg/warning-circle.svg';
 import { uuidv4, propagateDataAttributes } from '../../utils/utils';
 export class MxInput {
   constructor() {
@@ -130,7 +129,7 @@ export class MxInput {
             "/",
             this.maxlength)),
           this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)),
-          this.error && h("span", { innerHTML: warningCircleSvg }),
+          this.error && h("i", { class: "mds-warning-circle text-icon" }),
           this.rightIcon && !this.error && h("i", { class: this.rightIcon })))),
       (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" },
         h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText),

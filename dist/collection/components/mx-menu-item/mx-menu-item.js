@@ -1,7 +1,5 @@
 import { Component, Host, h, Element, Prop, Event, Listen, Method, State } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
-import checkSvg from '../../assets/svg/check.svg';
-import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 export class MxMenuItem {
   constructor() {
     /** If `multiSelect` is false, this will render a checkmark on the right side of the menu item.  If both `multiSelect` and `checked` are `true`, then the rendered multi-select checkbox will be checked. */
@@ -136,8 +134,8 @@ export class MxMenuItem {
             this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })),
             h("span", { ref: el => (this.slotWrapper = el), class: "truncate" },
               h("slot", null))),
-          this.checked && !this.multiSelect && (h("span", { class: "check ml-12", "data-testid": "check", innerHTML: checkSvg })),
-          !!this.submenu && h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowSvg })),
+          this.checked && !this.multiSelect && h("i", { class: "check mds-check text-icon ml-12", "data-testid": "check" }),
+          !!this.submenu && (h("i", { class: "mds-arrow-triangle-down text-icon transform -rotate-90", "data-testid": "arrow" }))),
         this.subtitle && (h("p", { class: "item-subtitle flex items-start py-0 px-12 my-0 h-16 caption2" },
           h("span", { class: "block -mt-4 truncate" }, this.subtitle))),
         this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))),

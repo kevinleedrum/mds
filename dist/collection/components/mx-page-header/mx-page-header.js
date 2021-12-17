@@ -9,11 +9,9 @@ var __rest = (this && this.__rest) || function (s, e) {
     }
   return t;
 };
-import { Component, Host, h, Prop, Element, State, Method } from '@stencil/core';
+import { Component, Host, h, Prop, Element, State, Method, Watch } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { ResizeObserver } from '@juggle/resize-observer';
-import dotsSvg from '../../assets/svg/dots-vertical.svg';
-import arrowSvg from '../../assets/svg/arrow-left.svg';
 export class MxPageHeader {
   constructor() {
     this.hasTabs = false;
@@ -40,9 +38,14 @@ export class MxPageHeader {
     // Wait one tick for layout shifts in order to detect overflow correctly.
     requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
+  updateSlottedButtonSize() {
+    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] > mx-button');
+    slottedButtons.forEach((button) => (button.xl = this.minWidths.lg));
+  }
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
     this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
+    this.updateSlottedButtonSize();
   }
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
@@ -120,7 +123,7 @@ export class MxPageHeader {
       const { label } = button, menuItemProps = __rest(button, ["label"]); // Do not use button label as menu item label (use in slot instead)
       return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' },
         isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" },
-          h("mx-icon-button", { ref: el => (this.menuButton = el), innerHTML: dotsSvg }),
+          h("mx-icon-button", { ref: el => (this.menuButton = el), icon: "mds-dots-vertical" }),
           h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton },
             h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))),
         h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
@@ -131,7 +134,7 @@ export class MxPageHeader {
       h("div", { class: "absolute top-16 md:top-20 md:mt-2 right-24 md:right-40" },
         h("slot", { name: "modal-header-right" })),
       h("slot", { name: "previous-page" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: this.previousPageClass },
-        h("span", { class: "mr-10", innerHTML: arrowSvg }),
+        h("i", { class: "mds-arrow-left mr-10" }),
         this.previousPageTitle))),
       h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" },
         h("div", { class: 'flex-1 items-center' + (this.hasModalHeaderCenter ? ' grid grid-cols-1 sm:grid-cols-3 h-full' : ' flex') // HACK: Safari needs the `h-full` to constrain the grid to its parent
@@ -261,4 +264,8 @@ export class MxPageHeader {
     }
   }; }
   static get elementRef() { return "element"; }
+  static get watchers() { return [{
+      "propName": "minWidths",
+      "methodName": "updateSlottedButtonSize"
+    }]; }
 }

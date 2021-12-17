@@ -46,7 +46,7 @@
       border-color: var(--mds-border-select-error);
 
       label,
-      i {
+      .icon-suffix i {
         color: var(--mds-text-select-error);
       }
     }
@@ -59,7 +59,7 @@
       background: var(--mds-bg-select);
 
       i {
-        font-size: 24px;
+        color: var(--mds-text-select-arrow);
       }
 
       .suffix {

@@ -1,7 +1,5 @@
 import { Component, Host, h, Element, Prop, Event, EventEmitter, Listen, Method, State } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
-import checkSvg from '../../assets/svg/check.svg';
-import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 
 export interface IMxMenuItemProps {
   checked?: boolean;
@@ -204,10 +202,10 @@ export class MxMenuItem implements IMxMenuItemProps {
                 <slot></slot>
               </span>
             </div>
-            {this.checked && !this.multiSelect && (
-              <span class="check ml-12" data-testid="check" innerHTML={checkSvg}></span>
+            {this.checked && !this.multiSelect && <i class="check mds-check text-icon ml-12" data-testid="check"></i>}
+            {!!this.submenu && (
+              <i class="mds-arrow-triangle-down text-icon transform -rotate-90" data-testid="arrow"></i>
             )}
-            {!!this.submenu && <span class="transform -rotate-90" data-testid="arrow" innerHTML={arrowSvg}></span>}
           </div>
           {this.subtitle && (
             <p class="item-subtitle flex items-start py-0 px-12 my-0 h-16 caption2">

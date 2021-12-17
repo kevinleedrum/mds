@@ -1,6 +1,4 @@
 import { Component, Host, h, Prop, Watch, State, Element } from '@stencil/core';
-import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
-import warningCircleSvg from '../../assets/svg/warning-circle.svg';
 import { propagateDataAttributes, uuidv4 } from '../../utils/utils';
 export class MxSelect {
   constructor() {
@@ -78,15 +76,15 @@ export class MxSelect {
     return (str += ' ' + this.labelClass);
   }
   get iconSuffixClass() {
-    let str = 'icon-suffix absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
+    let str = 'icon-suffix absolute flex items-center h-full right-12 space-x-8 pointer-events-none';
     if (this.isFocused)
       str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
   }
   get iconEl() {
-    let icon = h("span", { "data-testid": "arrow", innerHTML: arrowSvg });
+    let icon = h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" });
     if (this.error)
-      icon = h("span", { "data-testid": "error-icon", innerHTML: warningCircleSvg });
+      icon = h("i", { "data-testid": "error-icon", class: "mds-warning-circle text-icon" });
     return icon;
   }
   render() {

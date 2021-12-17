@@ -1,6 +1,4 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
-import xSvg from '../../assets/svg/x.svg';
-import searchSvg from '../../assets/svg/search.svg';
 import { propagateDataAttributes } from '../../utils/utils';
 export class MxSearch {
   constructor() {
@@ -35,9 +33,9 @@ export class MxSearch {
   render() {
     return (h(Host, { class: "mx-search flex items-center relative" },
       h("input", Object.assign({ ref: el => (this.inputEl = el), type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes, { onInput: this.onInput.bind(this) })),
-      h("span", { innerHTML: searchSvg, class: "absolute left-16 pointer-events-none" }),
+      h("i", { class: "absolute mds-search text-icon left-16 pointer-events-none" }),
       this.showClear && (h("button", { class: this.clearButtonClass, "data-testid": "clear-button", onClick: this.onClear.bind(this) },
-        h("span", { innerHTML: xSvg })))));
+        h("i", { class: "mds-x text-icon" })))));
   }
   static get is() { return "mx-search"; }
   static get properties() { return {

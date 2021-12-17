@@ -1,8 +1,5 @@
 import { Component, Host, h, Prop, Element, Event, EventEmitter, State, Method, Watch } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
-import dotsSvg from '../../assets/svg/dots-vertical.svg';
-import dragDotsSvg from '../../assets/svg/drag-dots.svg';
-import chevronSvg from '../../assets/svg/chevron-down.svg';
 import { ITableRowAction } from '../mx-table/mx-table';
 import { getCursorCoords, getPageRect, isScrolledOutOfView } from '../../utils/utils';
 import DragScroller from '../../utils/DragScroller';
@@ -470,14 +467,13 @@ export class MxTableRow {
                 onMouseDown={this.startDragging.bind(this)}
                 onTouchStart={this.startDragging.bind(this)}
               >
-                <span
+                <i
                   aria-label="Press Space or Enter to move this row"
                   ref={el => (this.keyboardDragHandle = el)}
                   tabindex="0"
-                  class={'pointer-events-none' + (this.checkable ? ' mx-8' : '')}
-                  innerHTML={dragDotsSvg}
+                  class={'mds-drag-dots text-icon pointer-events-none' + (this.checkable ? ' mx-8' : '')}
                   onKeyDown={this.onKeyboardHandleKeyDown.bind(this)}
-                ></span>
+                ></i>
                 {this.isDragging && (
                   <p class="sr-only" role="alert">
                     Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to
@@ -495,18 +491,17 @@ export class MxTableRow {
           {/* Mobile accordion chevron */}
           {!this.minWidths.sm && !this.subheader && this.columnCount > 1 && (
             <button
-              class="flex border-0 items-center justify-end px-16 row-start-1"
+              class="flex border-0 items-center justify-end px-12 row-start-1"
               aria-hidden="true"
               onClick={this.accordion.bind(this)}
               onMouseDown={e => e.preventDefault() /* Do not focus on click */}
             >
-              <span
+              <i
                 class={
-                  'mobile-row-chevron text-1 transform' +
+                  'mobile-row-chevron mds-chevron-down text-icon transform' +
                   (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : '')
                 }
-                innerHTML={chevronSvg}
-              ></span>
+              ></i>
             </button>
           )}
           {/* Single Action Button */}
@@ -520,7 +515,7 @@ export class MxTableRow {
           {/* Action Menu */}
           {this.actions.length > 1 && (
             <div class="action-cell flex items-center p-0 justify-end col-start-2 col-span-4 sm:col-span-1">
-              <mx-icon-button ref={el => (this.actionMenuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
+              <mx-icon-button ref={el => (this.actionMenuButton = el)} icon="mds-dots-vertical"></mx-icon-button>
               <mx-menu data-testid="action-menu" ref={el => (this.actionMenu = el)}>
                 {this.actions.map(action => (
                   <mx-menu-item {...action}>{action.value}</mx-menu-item>

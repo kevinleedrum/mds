@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop, State, Watch, Element } from '@stencil/core';
-import warningCircleSvg from '../../assets/svg/warning-circle.svg';
 import { uuidv4, propagateDataAttributes } from '../../utils/utils';
 
 @Component({
@@ -213,7 +212,7 @@ export class MxInput {
                   {this.suffix}
                 </span>
               )}
-              {this.error && <span innerHTML={warningCircleSvg}></span>}
+              {this.error && <i class="mds-warning-circle text-icon"></i>}
               {this.rightIcon && !this.error && <i class={this.rightIcon}></i>}
             </span>
           )}

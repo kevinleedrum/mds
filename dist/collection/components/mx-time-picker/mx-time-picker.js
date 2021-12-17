@@ -1,6 +1,4 @@
 import { Component, Host, h, Prop, State, Watch, Listen, Element } from '@stencil/core';
-import clockSvg from '../../assets/svg/clock.svg';
-import warningCircleSvg from '../../assets/svg/warning-circle.svg';
 import { parseTimeString, propagateDataAttributes, uuidv4 } from '../../utils/utils';
 const timeOptions = [];
 for (let i = 0; i < 24; i++) {
@@ -142,7 +140,7 @@ export class MxTimePicker {
     return str;
   }
   get menuButtonClass() {
-    let str = 'menu-button cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
+    let str = 'menu-button text-icon cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
     if (this.disabled)
       str += ' pointer-events-none';
     if (this.isFocused || this.error)
@@ -156,7 +154,8 @@ export class MxTimePicker {
       h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass },
         h("input", Object.assign({ "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }, this.dataAttributes)),
         this.label && this.floatLabel && labelJsx,
-        h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", innerHTML: this.error ? warningCircleSvg : clockSvg, disabled: this.disabled })),
+        h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", disabled: this.disabled },
+          h("i", { class: this.error ? 'mds-warning-circle' : 'mds-clock' }))),
       this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" },
         h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText))),
       h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this), onMxOpen: this.onMenuOpen.bind(this) }, timeOptions.map(timeOption => (h("mx-menu-item", { onClick: this.setValue.bind(this, timeOption) }, this.getLocalizedTimeString(timeOption)))))));
