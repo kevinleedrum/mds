@@ -121,7 +121,7 @@ In the Moxi Design System, the default body font size is **16px**. To achieve th
 <body class="mds"></body>
 ```
 
-There are four utility classes for setting the body font size.
+There are five utility classes for setting the body font size.
 
 | Class           | Size            | Line-Height    | Letter-Spacing |
 | --------------- | --------------- | -------------- | -------------- |
@@ -129,6 +129,7 @@ There are four utility classes for setting the body font size.
 | `text-2`        | 18px (1.125rem) | 24px (1.5rem)  | 0.5px          |
 | `text-3` (base) | 16px (1rem)     | 24px (1.5rem)  | 0.15px         |
 | `text-4`        | 14px (0.875rem) | 20px (1.25rem) | 0.25px         |
+| `text-icon`     | 24px (1.5rem)   | inherit        | inherit        |
 
 ### Examples
 
