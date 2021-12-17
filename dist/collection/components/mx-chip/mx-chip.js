@@ -1,7 +1,5 @@
 import { Component, Host, h, Prop, Event } from '@stencil/core';
 import ripple from '../../utils/ripple';
-import removeSvg from '../../assets/svg/remove.svg';
-import checkSvg from '../../assets/svg/check.svg';
 export class MxChip {
   constructor() {
     this.outlined = false;
@@ -87,10 +85,11 @@ export class MxChip {
         this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" },
           this.icon && h("i", { class: this.icon + ' text-1' }),
           this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" },
-            h("span", { innerHTML: checkSvg }))))),
+            h("i", { class: "mds-check" }))))),
         h("span", null,
           h("slot", null)),
-        this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", class: "remove inline-flex items-center justify-center w-24 h-24 cursor-pointer", innerHTML: removeSvg, onClick: this.onRemove.bind(this) })))));
+        this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", class: "remove inline-flex items-center justify-center w-24 h-24 cursor-pointer", onClick: this.onRemove.bind(this) },
+          h("i", { class: "mds-remove text-3" }))))));
   }
   static get is() { return "mx-chip"; }
   static get properties() { return {

@@ -4,8 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-5f1d14aa.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
-const dotsVertical = require('./dots-vertical-8fe5a309.js');
-const arrowLeft = require('./arrow-left-a3a34f65.js');
+const ResizeObserver = require('./ResizeObserver-6bb15032.js');
 
 var __rest = (undefined && undefined.__rest) || function (s, e) {
   var t = {};
@@ -41,14 +40,19 @@ const MxPageHeader = class {
   async resetResizeObserver() {
     if (this.resizeObserver)
       this.resizeObserver.disconnect();
-    this.resizeObserver = new dotsVertical.ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
+    this.resizeObserver = new ResizeObserver.ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
     this.resizeObserver.observe(this.element);
     // Wait one tick for layout shifts in order to detect overflow correctly.
     requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
+  updateSlottedButtonSize() {
+    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] > mx-button');
+    slottedButtons.forEach((button) => (button.xl = this.minWidths.lg));
+  }
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
     this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
+    this.updateSlottedButtonSize();
   }
   connectedCallback() {
     minWidthSync.minWidthSync.subscribeComponent(this);
@@ -124,14 +128,17 @@ const MxPageHeader = class {
         btnType = index$1 === 0 ? 'contained' : index$1 === 1 ? 'outlined' : 'text';
       const isTertiary = index$1 === 2;
       const menuItemProps = __rest(button, ["label"]); // Do not use button label as menu item label (use in slot instead)
-      return (index.h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (index.h("div", { class: "absolute !ml-auto -top-6" }, index.h("mx-icon-button", { ref: el => (this.menuButton = el), innerHTML: dotsVertical.dotsSvg }), index.h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, index.h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), index.h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
+      return (index.h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (index.h("div", { class: "absolute !ml-auto -top-6" }, index.h("mx-icon-button", { ref: el => (this.menuButton = el), icon: "mds-dots-vertical" }), index.h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, index.h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), index.h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {
-    return (index.h(index.Host, { class: this.hostClass }, index.h("div", { class: "absolute top-16 md:top-20 md:mt-2 right-24 md:right-40" }, index.h("slot", { name: "modal-header-right" })), index.h("slot", { name: "previous-page" }, this.previousPageUrl && (index.h("a", { href: this.previousPageUrl, class: this.previousPageClass }, index.h("span", { class: "mr-10", innerHTML: arrowLeft.arrowSvg }), this.previousPageTitle))), index.h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, index.h("div", { class: 'flex-1 items-center' + (this.hasModalHeaderCenter ? ' grid grid-cols-1 sm:grid-cols-3 h-full' : ' flex') // HACK: Safari needs the `h-full` to constrain the grid to its parent
+    return (index.h(index.Host, { class: this.hostClass }, index.h("div", { class: "absolute top-16 md:top-20 md:mt-2 right-24 md:right-40" }, index.h("slot", { name: "modal-header-right" })), index.h("slot", { name: "previous-page" }, this.previousPageUrl && (index.h("a", { href: this.previousPageUrl, class: this.previousPageClass }, index.h("i", { class: "mds-arrow-left mr-10" }), this.previousPageTitle))), index.h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, index.h("div", { class: 'flex-1 items-center' + (this.hasModalHeaderCenter ? ' grid grid-cols-1 sm:grid-cols-3 h-full' : ' flex') // HACK: Safari needs the `h-full` to constrain the grid to its parent
     }, index.h("h1", { class: this.headingClass }, index.h("slot", null)), index.h("slot", { name: "modal-header-center" })), !(this.modal && this.minWidths.md) && this.buttons.length > 0 && this.buttonsJsx, index.h("slot", { name: "buttons" })), index.h("slot", { name: "tabs" })));
   }
   get element() { return index.getElement(this); }
+  static get watchers() { return {
+    "minWidths": ["updateSlottedButtonSize"]
+  }; }
 };
 
 exports.mx_page_header = MxPageHeader;

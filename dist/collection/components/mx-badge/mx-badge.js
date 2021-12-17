@@ -1,10 +1,4 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
-import circleSvg from '../../assets/svg/badge-circle.svg';
-import hexagonSvg from '../../assets/svg/badge-hexagon.svg';
-import squareSvg from '../../assets/svg/badge-square.svg';
-import starSvg from '../../assets/svg/badge-star.svg';
-import triangleDownSvg from '../../assets/svg/badge-triangle-down.svg';
-import triangleUpSvg from '../../assets/svg/badge-triangle-up.svg';
 export class MxBadge {
   constructor() {
     /** Make the corners a little more square (best for standalone text) */
@@ -16,24 +10,18 @@ export class MxBadge {
     /** Anchor the badge to the left of the wrapped content */
     this.left = false;
   }
-  get indicatorSvg() {
-    if (this.indicator === 'star')
-      return starSvg;
-    if (this.indicator === 'triangle-down')
-      return triangleDownSvg;
-    if (this.indicator === 'hexagon')
-      return hexagonSvg;
-    if (this.indicator === 'triangle-up')
-      return triangleUpSvg;
-    if (this.indicator === 'square')
-      return squareSvg;
-    return circleSvg;
-  }
   get isStandalone() {
     return !this.element.firstElementChild;
   }
   get isIconOnly() {
     return this.icon && this.value === undefined;
+  }
+  get indicatorIcon() {
+    if ([false, undefined].includes(this.indicator))
+      return null;
+    if (this.indicator.length)
+      return this.indicator;
+    return 'circle';
   }
   get badgeClassNames() {
     let str = 'badge inline-flex items-center justify-center text-4 font-semibold pointer-events-none';
@@ -77,7 +65,8 @@ export class MxBadge {
   render() {
     return (h(Host, { class: "mx-badge inline-flex relative" },
       h("slot", null),
-      this.indicator != null ? (h("span", { class: this.badgeClassNames, "data-testid": 'indicator-' + (this.indicator || 'circle'), innerHTML: this.indicatorSvg })) : (h("span", { class: this.badgeClassNames },
+      this.indicatorIcon ? (h("span", { class: this.badgeClassNames, "data-testid": 'indicator-' + this.indicatorIcon },
+        h("i", { class: 'mds-badge-' + this.indicatorIcon }))) : (h("span", { class: this.badgeClassNames },
         this.icon && h("i", { class: this.icon + (this.isIconOnly ? '' : ' mr-4') }),
         this.value))));
   }

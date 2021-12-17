@@ -1,6 +1,4 @@
 import { Component, Host, h, Prop, Element, State, Method, Watch } from '@stencil/core';
-import imageSvg from '../../assets/svg/image.svg';
-import userCircleSvg from '../../assets/svg/user-circle.svg';
 export class MxImageUpload {
   constructor() {
     this.hasInstructions = false;
@@ -149,10 +147,10 @@ export class MxImageUpload {
       iconJsx = h("i", { "data-testid": "upload-icon", class: 'dropzone-icon ' + this.icon });
     }
     else if (this.avatar) {
-      iconJsx = h("span", { "data-testid": "avatar-icon", innerHTML: userCircleSvg });
+      iconJsx = h("i", { "data-testid": "avatar-icon", class: "mds-user-circle text-icon" });
     }
     else {
-      iconJsx = h("span", { "data-testid": "image-icon", class: this.showDropzoneText ? 'mb-8' : '', innerHTML: imageSvg });
+      iconJsx = h("i", { "data-testid": "image-icon", class: 'mds-image text-icon' + (this.showDropzoneText ? ' mb-8' : '') });
     }
     return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } },
       h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } },

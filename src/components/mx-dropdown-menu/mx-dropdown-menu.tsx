@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop, State, Watch, Listen } from '@stencil/core';
-import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 
 @Component({
   tag: 'mx-dropdown-menu',
@@ -80,7 +79,7 @@ export class MxDropdownMenu {
   }
 
   get suffixClass() {
-    let str = 'icon-suffix absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
+    let str = 'icon-suffix absolute flex items-center h-full right-12 space-x-8 pointer-events-none';
     if (this.isFocused) str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
   }
@@ -104,7 +103,7 @@ export class MxDropdownMenu {
           />
           <span class={this.suffixClass}>
             {this.suffix && <span class="suffix flex items-center h-full px-4">{this.suffix}</span>}
-            <span data-testid="arrow" innerHTML={arrowSvg}></span>
+            <i data-testid="arrow" class="mds-arrow-triangle-down text-icon"></i>
           </span>
         </div>
         <mx-menu

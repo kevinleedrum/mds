@@ -3,8 +3,6 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-5f1d14aa.js');
-const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
-const warningCircle = require('./warning-circle-453368c1.js');
 const utils = require('./utils-1f7ef40d.js');
 const ripple = require('./ripple-93b636e3.js');
 
@@ -85,15 +83,15 @@ const MxSelect = class {
     return (str += ' ' + this.labelClass);
   }
   get iconSuffixClass() {
-    let str = 'icon-suffix absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
+    let str = 'icon-suffix absolute flex items-center h-full right-12 space-x-8 pointer-events-none';
     if (this.isFocused)
       str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
   }
   get iconEl() {
-    let icon = index.h("span", { "data-testid": "arrow", innerHTML: arrowTriangleDown.arrowSvg });
+    let icon = index.h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" });
     if (this.error)
-      icon = index.h("span", { "data-testid": "error-icon", innerHTML: warningCircle.warningCircleSvg });
+      icon = index.h("i", { "data-testid": "error-icon", class: "mds-warning-circle text-icon" });
     return icon;
   }
   render() {

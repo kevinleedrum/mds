@@ -1,7 +1,5 @@
 import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-b3442404.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { c as checkSvg } from './check-754da8c1.js';
-import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
 
 const MxMenuItem = class {
   constructor(hostRef) {
@@ -130,7 +128,7 @@ const MxMenuItem = class {
   }
   render() {
     return (h(Host, { class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') }, h("div", { ref: el => (this.menuItemElem = el), role: this.role, "aria-checked": this.checked ? 'true' : null, "aria-disabled": this.disabled ? 'true' : null, "aria-selected": this.selected ? 'true' : null, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) }, this.label && (h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" }, h("span", { class: "block -mb-4" }, this.label))), h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +
-        (this.multiSelect ? ' hidden' : '') }, h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), h("span", { ref: el => (this.slotWrapper = el), class: "truncate" }, h("slot", null))), this.checked && !this.multiSelect && (h("span", { class: "check ml-12", "data-testid": "check", innerHTML: checkSvg })), !!this.submenu && h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowSvg })), this.subtitle && (h("p", { class: "item-subtitle flex items-start py-0 px-12 my-0 h-16 caption2" }, h("span", { class: "block -mt-4 truncate" }, this.subtitle))), this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), h("slot", { name: "submenu" })));
+        (this.multiSelect ? ' hidden' : '') }, h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), h("span", { ref: el => (this.slotWrapper = el), class: "truncate" }, h("slot", null))), this.checked && !this.multiSelect && h("i", { class: "check mds-check text-icon ml-12", "data-testid": "check" }), !!this.submenu && (h("i", { class: "mds-arrow-triangle-down text-icon transform -rotate-90", "data-testid": "arrow" }))), this.subtitle && (h("p", { class: "item-subtitle flex items-start py-0 px-12 my-0 h-16 caption2" }, h("span", { class: "block -mt-4 truncate" }, this.subtitle))), this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), h("slot", { name: "submenu" })));
   }
   get element() { return getElement(this); }
 };

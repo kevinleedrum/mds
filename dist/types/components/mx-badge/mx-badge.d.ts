@@ -17,9 +17,9 @@ export declare class MxBadge {
   bottom: boolean;
   /** Anchor the badge to the left of the wrapped content */
   left: boolean;
-  get indicatorSvg(): string;
   get isStandalone(): boolean;
   get isIconOnly(): boolean;
+  get indicatorIcon(): string;
   get badgeClassNames(): string;
   render(): any;
 }

@@ -1,6 +1,4 @@
 import { Component, Host, h, Prop, State, Watch, Listen, Element } from '@stencil/core';
-import clockSvg from '../../assets/svg/clock.svg';
-import warningCircleSvg from '../../assets/svg/warning-circle.svg';
 import { parseTimeString, propagateDataAttributes, uuidv4 } from '../../utils/utils';
 
 const timeOptions: { hours: number; minutes: number }[] = [];
@@ -175,7 +173,7 @@ export class MxTimePicker {
   }
 
   get menuButtonClass() {
-    let str = 'menu-button cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
+    let str = 'menu-button text-icon cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
     if (this.disabled) str += ' pointer-events-none';
     if (this.isFocused || this.error) str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
@@ -213,9 +211,10 @@ export class MxTimePicker {
             ref={el => (this.menuButton = el)}
             class={this.menuButtonClass}
             data-testid="menu-button"
-            innerHTML={this.error ? warningCircleSvg : clockSvg}
             disabled={this.disabled}
-          ></button>
+          >
+            <i class={this.error ? 'mds-warning-circle' : 'mds-clock'}></i>
+          </button>
         </div>
 
         {this.assistiveText && (

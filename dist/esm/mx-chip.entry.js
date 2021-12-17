@@ -1,11 +1,5 @@
 import { r as registerInstance, c as createEvent, h, H as Host } from './index-540e1634.js';
 import { r as ripple } from './ripple-54ef50dc.js';
-import { c as checkSvg } from './check-754da8c1.js';
-
-const removeSvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 10.87L10.87 12L8 9.13L5.13 12L4 10.87L6.87 8L4 5.13L5.13 4L8 6.87L10.87 4L12 5.13L9.13 8L12 10.87ZM8 0C3.58 0 0 3.58 0 8C0 12.42 3.58 16 8 16C12.42 16 16 12.42 16 8C16 3.58 12.42 0 8 0Z" fill="currentColor" />
-</svg>
-`;
 
 const MxChip = class {
   constructor(hostRef) {
@@ -89,7 +83,7 @@ const MxChip = class {
     return { background, backgroundSize: 'cover' };
   }
   render() {
-    return (h(Host, { class: "mx-chip inline-block" }, h("div", { ref: el => (this.chipElem = el), class: this.chipClass, "aria-checked": this.selected ? 'true' : null, "aria-disabled": this.disabled ? 'true' : null, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) }, this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" }, this.icon && h("i", { class: this.icon + ' text-1' }), this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" }, h("span", { innerHTML: checkSvg }))))), h("span", null, h("slot", null)), this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", class: "remove inline-flex items-center justify-center w-24 h-24 cursor-pointer", innerHTML: removeSvg, onClick: this.onRemove.bind(this) })))));
+    return (h(Host, { class: "mx-chip inline-block" }, h("div", { ref: el => (this.chipElem = el), class: this.chipClass, "aria-checked": this.selected ? 'true' : null, "aria-disabled": this.disabled ? 'true' : null, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) }, this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" }, this.icon && h("i", { class: this.icon + ' text-1' }), this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" }, h("i", { class: "mds-check" }))))), h("span", null, h("slot", null)), this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", class: "remove inline-flex items-center justify-center w-24 h-24 cursor-pointer", onClick: this.onRemove.bind(this) }, h("i", { class: "mds-remove text-3" }))))));
   }
 };
 

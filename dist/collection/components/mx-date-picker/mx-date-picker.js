@@ -1,7 +1,5 @@
 import { Component, Host, h, Prop, Watch, State, Element, Listen } from '@stencil/core';
 import datepicker from 'js-datepicker';
-import calendarSvg from '../../assets/svg/calendar.svg';
-import warningCircleSvg from '../../assets/svg/warning-circle.svg';
 import { createPopover } from '../../utils/popover';
 import { isDateObject, propagateDataAttributes, uuidv4 } from '../../utils/utils';
 import { fadeIn, fadeOut } from '../../utils/transitions';
@@ -198,7 +196,7 @@ export class MxDatePicker {
     return str;
   }
   get calendarButtonClass() {
-    let str = 'calendar-button cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
+    let str = 'calendar-button cursor-pointer border-0 absolute flex items-center text-icon h-full right-12 space-x-8';
     if (this.disabled)
       str += ' pointer-events-none';
     if (this.isFocused || this.error)
@@ -212,7 +210,8 @@ export class MxDatePicker {
       h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass },
         h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.ariaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", required: true, onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)),
         this.label && this.floatLabel && labelJsx,
-        h("button", { ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", innerHTML: this.error ? warningCircleSvg : calendarSvg, disabled: this.disabled })),
+        h("button", { ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled },
+          h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))),
       this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" },
         h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
   }

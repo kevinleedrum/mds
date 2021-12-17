@@ -10,6 +10,10 @@
   .icon-suffix {
     background: var(--mds-bg-dropdown);
 
+    i {
+      color: var(--mds-text-dropdown-arrow);
+    }
+
     .suffix {
       color: var(--mds-text-dropdown-label);
     }
