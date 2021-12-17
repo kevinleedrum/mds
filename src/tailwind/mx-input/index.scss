@@ -43,6 +43,19 @@
       }
     }
 
+    textarea {
+      &::-webkit-scrollbar {
+        width: 12px;
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 0.5rem;
+        border: 0.25rem solid transparent;
+        background-clip: content-box;
+        background-color: var(--mds-bg-input-scroll-thumb);
+      }
+    }
+
     &.error {
       border-color: var(--mds-border-input-error);
 
