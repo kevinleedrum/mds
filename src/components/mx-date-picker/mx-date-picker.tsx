@@ -199,7 +199,7 @@ export class MxDatePicker {
   }
 
   get pickerWrapperClass() {
-    let str = 'picker-wrapper flex items-center relative rounded-lg';
+    let str = 'picker-wrapper w-320 flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.disabled) str += ' disabled';
@@ -235,7 +235,7 @@ export class MxDatePicker {
     );
 
     return (
-      <Host class={'mx-date-picker block w-320' + (this.error ? ' error' : '')}>
+      <Host class={'mx-date-picker block' + (this.error ? ' error' : '')}>
         {this.label && !this.floatLabel && labelJsx}
 
         <div ref={el => (this.pickerWrapper = el)} class={this.pickerWrapperClass}>
