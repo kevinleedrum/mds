@@ -4,7 +4,6 @@ import { moveToPortal } from '../../utils/portal';
 import { Direction, fadeIn, fadeOut, fadeScaleIn, fadeSlideIn, fadeSlideOut } from '../../utils/transitions';
 import { lockBodyScroll, unlockBodyScroll } from '../../utils/bodyScroll';
 import { IMxButtonProps } from '../mx-button/mx-button';
-import arrowSvg from '../../assets/svg/arrow-left.svg';
 
 export interface IModalButton extends IMxButtonProps {
   label: string;
@@ -268,7 +267,7 @@ export class MxModal {
                     class="flex items-center uppercase text-4 font-semibold tracking-1-25"
                     data-testid="previous-page"
                   >
-                    <span class="mr-10" innerHTML={arrowSvg}></span>
+                    <i class="mds-arrow-left mr-10"></i>
                     {this.previousPageTitle}
                   </a>
                 )}

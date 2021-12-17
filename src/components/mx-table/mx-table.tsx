@@ -1,8 +1,6 @@
 import { Component, Host, h, Prop, Element, Event, EventEmitter, Watch, Listen, State, Method } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { capitalize, getCursorCoords, getPageRect, isDateObject } from '../../utils/utils';
-import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
-import gearSvg from '../../assets/svg/gear.svg';
 import { IMxMenuItemProps } from '../mx-menu-item/mx-menu-item';
 import { PageChangeEventDetail } from '../mx-pagination/mx-pagination';
 
@@ -609,7 +607,7 @@ export class MxTable {
   }
 
   getHeaderArrowClass(col: ITableColumn) {
-    let str = 'ml-12 transform scale-75';
+    let str = 'inline-flex items-center ml-8 transform scale-75';
     if (col.property !== this.sortBy) str += ' opacity-30 sm:opacity-0 sm:group-hover:opacity-30 rotate-180';
     else if (this.sortAscending) str += ' rotate-180';
     return str;
@@ -707,7 +705,7 @@ export class MxTable {
           >
             <mx-button ref={el => (this.actionMenuButton = el)} btn-type="text" dropdown>
               <span class="h-full flex items-center px-2">
-                <span innerHTML={gearSvg}></span>
+                <i class="mds-gear text-icon"></i>
               </span>
             </mx-button>
             <mx-menu data-testid="multi-action-menu" ref={el => (this.actionMenu = el)}>
@@ -785,7 +783,9 @@ export class MxTable {
                     <div class="inline-flex items-center overflow-hidden whitespace-nowrap select-none">
                       <span class="truncate flex-shrink" innerHTML={col.heading}></span>
                       {!this.draggableRows && col.sortable && col.property && (
-                        <div class={this.getHeaderArrowClass(col)} data-testid="arrow" innerHTML={arrowSvg}></div>
+                        <div class={this.getHeaderArrowClass(col)} data-testid="arrow">
+                          <i class="mds-arrow-triangle-down text-icon"></i>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -804,11 +804,9 @@ export class MxTable {
                   <div class="inline-flex items-center overflow-hidden whitespace-nowrap select-none">
                     <span class="truncate flex-shrink" innerHTML={this.exposedMobileColumn.heading}></span>
                     {!this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (
-                      <div
-                        class={this.getHeaderArrowClass(this.exposedMobileColumn)}
-                        data-testid="arrow"
-                        innerHTML={arrowSvg}
-                      ></div>
+                      <div class={this.getHeaderArrowClass(this.exposedMobileColumn)} data-testid="arrow">
+                        <i class="mds-arrow-triangle-down text-icon"></i>
+                      </div>
                     )}
                   </div>
                 </div>

@@ -2,8 +2,6 @@ import { Component, Host, h, Prop, Element, State, Method } from '@stencil/core'
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { IMxButtonProps } from '../mx-button/mx-button';
-import dotsSvg from '../../assets/svg/dots-vertical.svg';
-import arrowSvg from '../../assets/svg/arrow-left.svg';
 
 export interface IPageHeaderButton extends IMxButtonProps {
   label: string;
@@ -136,7 +134,7 @@ export class MxPageHeader {
               {/* Tertiary menu (shown when the tertiary button does not fit in the viewport) */}
               {isTertiary && this.renderTertiaryButtonAsMenu && (
                 <div class="absolute !ml-auto -top-6">
-                  <mx-icon-button ref={el => (this.menuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
+                  <mx-icon-button ref={el => (this.menuButton = el)} icon="mds-dots-vertical"></mx-icon-button>
                   <mx-menu ref={el => (this.tertiaryMenu = el)} anchor-el={this.menuButton}>
                     <mx-menu-item {...menuItemProps}>{button.label}</mx-menu-item>
                   </mx-menu>
@@ -169,7 +167,7 @@ export class MxPageHeader {
         <slot name="previous-page">
           {this.previousPageUrl && (
             <a href={this.previousPageUrl} class={this.previousPageClass}>
-              <span class="mr-10" innerHTML={arrowSvg}></span>
+              <i class="mds-arrow-left mr-10"></i>
               {this.previousPageTitle}
             </a>
           )}
