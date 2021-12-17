@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, State, Method } from '@stencil/core';
+import { Component, Host, h, Prop, Element, State, Method, Watch } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { IMxButtonProps } from '../mx-button/mx-button';
@@ -47,9 +47,16 @@ export class MxPageHeader {
     requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
 
+  @Watch('minWidths')
+  updateSlottedButtonSize() {
+    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] > mx-button');
+    slottedButtons.forEach((button: HTMLMxButtonElement) => (button.xl = this.minWidths.lg));
+  }
+
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
     this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
+    this.updateSlottedButtonSize();
   }
 
   connectedCallback() {
