@@ -1,8 +1,6 @@
 import { r as registerInstance, h, e as Host, g as getElement } from './index-b3442404.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { R as ResizeObserver } from './resize-observer-9111af2a.js';
-import { d as dotsSvg } from './dots-vertical-717ab421.js';
-import { a as arrowSvg } from './arrow-left-2380c496.js';
 
 var __rest = (undefined && undefined.__rest) || function (s, e) {
   var t = {};
@@ -43,9 +41,14 @@ const MxPageHeader = class {
     // Wait one tick for layout shifts in order to detect overflow correctly.
     requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
+  updateSlottedButtonSize() {
+    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] > mx-button');
+    slottedButtons.forEach((button) => (button.xl = this.minWidths.lg));
+  }
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
     this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
+    this.updateSlottedButtonSize();
   }
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
@@ -121,14 +124,17 @@ const MxPageHeader = class {
         btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
       const isTertiary = index === 2;
       const { label } = button, menuItemProps = __rest(button, ["label"]); // Do not use button label as menu item label (use in slot instead)
-      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" }, h("mx-icon-button", { ref: el => (this.menuButton = el), innerHTML: dotsSvg }), h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
+      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" }, h("mx-icon-button", { ref: el => (this.menuButton = el), icon: "mds-dots-vertical" }), h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {
-    return (h(Host, { class: this.hostClass }, h("div", { class: "absolute top-16 md:top-20 md:mt-2 right-24 md:right-40" }, h("slot", { name: "modal-header-right" })), h("slot", { name: "previous-page" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: this.previousPageClass }, h("span", { class: "mr-10", innerHTML: arrowSvg }), this.previousPageTitle))), h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, h("div", { class: 'flex-1 items-center' + (this.hasModalHeaderCenter ? ' grid grid-cols-1 sm:grid-cols-3 h-full' : ' flex') // HACK: Safari needs the `h-full` to constrain the grid to its parent
+    return (h(Host, { class: this.hostClass }, h("div", { class: "absolute top-16 md:top-20 md:mt-2 right-24 md:right-40" }, h("slot", { name: "modal-header-right" })), h("slot", { name: "previous-page" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: this.previousPageClass }, h("i", { class: "mds-arrow-left mr-10" }), this.previousPageTitle))), h("div", { class: "flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap" }, h("div", { class: 'flex-1 items-center' + (this.hasModalHeaderCenter ? ' grid grid-cols-1 sm:grid-cols-3 h-full' : ' flex') // HACK: Safari needs the `h-full` to constrain the grid to its parent
     }, h("h1", { class: this.headingClass }, h("slot", null)), h("slot", { name: "modal-header-center" })), !(this.modal && this.minWidths.md) && this.buttons.length > 0 && this.buttonsJsx, h("slot", { name: "buttons" })), h("slot", { name: "tabs" })));
   }
   get element() { return getElement(this); }
+  static get watchers() { return {
+    "minWidths": ["updateSlottedButtonSize"]
+  }; }
 };
 
 export { MxPageHeader as mx_page_header };

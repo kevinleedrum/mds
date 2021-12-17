@@ -1,6 +1,4 @@
 import { r as registerInstance, h, e as Host, g as getElement } from './index-b3442404.js';
-import { a as arrowSvg } from './arrow-triangle-down-6c587423.js';
-import { w as warningCircleSvg } from './warning-circle-7e1a7781.js';
 import { u as uuidv4, p as propagateDataAttributes } from './utils-18e3dfde.js';
 
 const MxSelect = class {
@@ -80,15 +78,15 @@ const MxSelect = class {
     return (str += ' ' + this.labelClass);
   }
   get iconSuffixClass() {
-    let str = 'icon-suffix absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
+    let str = 'icon-suffix absolute flex items-center h-full right-12 space-x-8 pointer-events-none';
     if (this.isFocused)
       str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
   }
   get iconEl() {
-    let icon = h("span", { "data-testid": "arrow", innerHTML: arrowSvg });
+    let icon = h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" });
     if (this.error)
-      icon = h("span", { "data-testid": "error-icon", innerHTML: warningCircleSvg });
+      icon = h("i", { "data-testid": "error-icon", class: "mds-warning-circle text-icon" });
     return icon;
   }
   render() {

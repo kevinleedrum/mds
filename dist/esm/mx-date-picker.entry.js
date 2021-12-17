@@ -1,6 +1,5 @@
 import { r as registerInstance, h, H as Host, g as getElement } from './index-540e1634.js';
 import { c as createCommonjsModule, g as getDefaultExportFromCjs } from './_commonjsHelpers-ba3f0406.js';
-import { w as warningCircleSvg } from './warning-circle-7e1a7781.js';
 import { c as createPopover } from './popover-56a66892.js';
 import { u as uuidv4, p as propagateDataAttributes, i as isDateObject } from './utils-18e3dfde.js';
 import { f as fadeIn, b as fadeOut } from './transitions-5e6f10a3.js';
@@ -10,16 +9,6 @@ var datepicker_min = createCommonjsModule(function (module, exports) {
 });
 
 const datepicker = /*@__PURE__*/getDefaultExportFromCjs(datepicker_min);
-
-const calendarSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M3 4.5C3 3.67157 3.67157 3 4.5 3H19.5C20.3284 3 21 3.67157 21 4.5V19.5C21 20.3284 20.3284 21 19.5 21H4.5C3.67157 21 3 20.3284 3 19.5V4.5ZM19.5 4.5H4.5V19.5H19.5V4.5Z" fill="currentColor"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5 1.5C16.9142 1.5 17.25 1.83579 17.25 2.25V5.25C17.25 5.66421 16.9142 6 16.5 6C16.0858 6 15.75 5.66421 15.75 5.25V2.25C15.75 1.83579 16.0858 1.5 16.5 1.5Z" fill="currentColor"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 1.5C7.91421 1.5 8.25 1.83579 8.25 2.25V5.25C8.25 5.66421 7.91421 6 7.5 6C7.08579 6 6.75 5.66421 6.75 5.25V2.25C6.75 1.83579 7.08579 1.5 7.5 1.5Z" fill="currentColor"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M3 8.25C3 7.83579 3.33579 7.5 3.75 7.5H20.25C20.6642 7.5 21 7.83579 21 8.25C21 8.66421 20.6642 9 20.25 9H3.75C3.33579 9 3 8.66421 3 8.25Z" fill="currentColor"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.875 11.9998C7.875 11.5855 8.21079 11.2498 8.625 11.2498H11.25C11.5383 11.2498 11.8011 11.415 11.926 11.6749C12.0509 11.9347 12.0158 12.2431 11.8357 12.4683L11.0046 13.507C11.2477 13.6703 11.4571 13.8798 11.6206 14.1244C11.8262 14.432 11.9528 14.7855 11.9891 15.1537C12.0255 15.5219 11.9705 15.8933 11.829 16.2352C11.6875 16.577 11.4639 16.8787 11.178 17.1135C10.8922 17.3483 10.5528 17.509 10.19 17.5813C9.82715 17.6537 9.45209 17.6354 9.09801 17.5282C8.74392 17.421 8.42174 17.2282 8.15998 16.9667C7.86691 16.674 7.86662 16.1991 8.15933 15.9061C8.45205 15.613 8.92692 15.6127 9.21999 15.9054C9.30725 15.9926 9.41464 16.0568 9.53267 16.0926C9.6507 16.1283 9.77571 16.1344 9.89665 16.1103C10.0176 16.0862 10.1307 16.0326 10.226 15.9543C10.3213 15.8761 10.3958 15.7755 10.443 15.6616C10.4902 15.5476 10.5085 15.4238 10.4964 15.3011C10.4843 15.1784 10.4421 15.0605 10.3735 14.958C10.305 14.8555 10.2123 14.7714 10.1035 14.7133C9.99474 14.6552 9.87332 14.6248 9.75 14.6248C9.4617 14.6248 9.19891 14.4595 9.07402 14.1996C8.94913 13.9398 8.98425 13.6314 9.16435 13.4062L9.68953 12.7498H8.625C8.21079 12.7498 7.875 12.414 7.875 11.9998Z" fill="currentColor"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M15.3355 11.3289C15.5895 11.456 15.75 11.7157 15.75 11.9998V16.8748C15.75 17.289 15.4143 17.6248 15 17.6248C14.5858 17.6248 14.25 17.289 14.25 16.8748V13.4998L13.95 13.7248C13.6187 13.9733 13.1486 13.9061 12.9 13.5748C12.6515 13.2434 12.7187 12.7733 13.05 12.5248L14.55 11.3998C14.7773 11.2293 15.0814 11.2019 15.3355 11.3289Z" fill="currentColor"/>
-</svg>
-`;
 
 const yyyymmdd = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -215,7 +204,7 @@ const MxDatePicker = class {
     return str;
   }
   get calendarButtonClass() {
-    let str = 'calendar-button cursor-pointer border-0 absolute flex items-center h-full right-12 space-x-8';
+    let str = 'calendar-button cursor-pointer border-0 absolute flex items-center text-icon h-full right-12 space-x-8';
     if (this.disabled)
       str += ' pointer-events-none';
     if (this.isFocused || this.error)
@@ -224,7 +213,7 @@ const MxDatePicker = class {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
-    return (h(Host, { class: 'mx-date-picker block w-320' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.ariaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", required: true, onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", innerHTML: this.error ? warningCircleSvg : calendarSvg, disabled: this.disabled })), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
+    return (h(Host, { class: 'mx-date-picker block w-320' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.ariaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", required: true, onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled }, h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

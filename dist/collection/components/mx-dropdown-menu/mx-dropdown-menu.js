@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop, State, Watch, Listen } from '@stencil/core';
-import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 export class MxDropdownMenu {
   constructor() {
     this.dense = false;
@@ -58,7 +57,7 @@ export class MxDropdownMenu {
     return str;
   }
   get suffixClass() {
-    let str = 'icon-suffix absolute flex items-center h-full right-16 space-x-8 pointer-events-none';
+    let str = 'icon-suffix absolute flex items-center h-full right-12 space-x-8 pointer-events-none';
     if (this.isFocused)
       str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
@@ -69,7 +68,7 @@ export class MxDropdownMenu {
         h("input", { "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }),
         h("span", { class: this.suffixClass },
           this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix),
-          h("span", { "data-testid": "arrow", innerHTML: arrowSvg }))),
+          h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" }))),
       h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) },
         h("slot", null))));
   }

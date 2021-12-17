@@ -4,12 +4,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-5f1d14aa.js');
 const utils = require('./utils-1f7ef40d.js');
-const chevronDown = require('./chevron-down-696a796a.js');
 const popover = require('./popover-8846ea88.js');
 const transitions = require('./transitions-bd8ec9f0.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
-const check = require('./check-830696a9.js');
-const arrowTriangleDown = require('./arrow-triangle-down-a4cc75c3.js');
 
 const MxCheckbox = class {
   constructor(hostRef) {
@@ -82,7 +79,7 @@ const MxIconButton = class {
     return this.chevronDown || this.chevronLeft || this.chevronRight;
   }
   render() {
-    const buttonContent = (index.h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && index.h("i", { class: ['text-1', this.icon].join(' ') }), index.h("span", { class: "slot-content" }, index.h("slot", null)), this.isChevron && (index.h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" }, index.h("span", { "data-testid": "chevron", class: this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : '', innerHTML: chevronDown.chevronSvg })))));
+    const buttonContent = (index.h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && index.h("i", { class: ['text-icon', this.icon].join(' ') }), index.h("span", { class: "slot-content" }, index.h("slot", null)), this.isChevron && (index.h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center text-icon shadow-1" }, index.h("i", { "data-testid": "chevron", class: this.chevronLeft ? 'mds-chevron-left' : this.chevronRight ? 'mds-chevron-right' : 'mds-chevron-down' })))));
     return (index.h(index.Host, { class: "mx-icon-button inline-block" }, index.h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
   }
   get element() { return index.getElement(this); }
@@ -420,7 +417,7 @@ const MxMenuItem = class {
   }
   render() {
     return (index.h(index.Host, { class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') }, index.h("div", { ref: el => (this.menuItemElem = el), role: this.role, "aria-checked": this.checked ? 'true' : null, "aria-disabled": this.disabled ? 'true' : null, "aria-selected": this.selected ? 'true' : null, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) }, this.label && (index.h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" }, index.h("span", { class: "block -mb-4" }, this.label))), index.h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +
-        (this.multiSelect ? ' hidden' : '') }, index.h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (index.h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), index.h("span", { ref: el => (this.slotWrapper = el), class: "truncate" }, index.h("slot", null))), this.checked && !this.multiSelect && (index.h("span", { class: "check ml-12", "data-testid": "check", innerHTML: check.checkSvg })), !!this.submenu && index.h("span", { class: "transform -rotate-90", "data-testid": "arrow", innerHTML: arrowTriangleDown.arrowSvg })), this.subtitle && (index.h("p", { class: "item-subtitle flex items-start py-0 px-12 my-0 h-16 caption2" }, index.h("span", { class: "block -mt-4 truncate" }, this.subtitle))), this.multiSelect && (index.h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), index.h("slot", { name: "submenu" })));
+        (this.multiSelect ? ' hidden' : '') }, index.h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (index.h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), index.h("span", { ref: el => (this.slotWrapper = el), class: "truncate" }, index.h("slot", null))), this.checked && !this.multiSelect && index.h("i", { class: "check mds-check text-icon ml-12", "data-testid": "check" }), !!this.submenu && (index.h("i", { class: "mds-arrow-triangle-down text-icon transform -rotate-90", "data-testid": "arrow" }))), this.subtitle && (index.h("p", { class: "item-subtitle flex items-start py-0 px-12 my-0 h-16 caption2" }, index.h("span", { class: "block -mt-4 truncate" }, this.subtitle))), this.multiSelect && (index.h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), index.h("slot", { name: "submenu" })));
   }
   get element() { return index.getElement(this); }
 };

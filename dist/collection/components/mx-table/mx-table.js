@@ -1,8 +1,6 @@
 import { Component, Host, h, Prop, Element, Event, Watch, Listen, State, Method } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { capitalize, getCursorCoords, getPageRect, isDateObject } from '../../utils/utils';
-import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
-import gearSvg from '../../assets/svg/gear.svg';
 export class MxTable {
   constructor() {
     this.hasDefaultSlot = false;
@@ -501,7 +499,7 @@ export class MxTable {
     return str;
   }
   getHeaderArrowClass(col) {
-    let str = 'ml-12 transform scale-75';
+    let str = 'inline-flex items-center ml-8 transform scale-75';
     if (col.property !== this.sortBy)
       str += ' opacity-30 sm:opacity-0 sm:group-hover:opacity-30 rotate-180';
     else if (this.sortAscending)
@@ -573,7 +571,7 @@ export class MxTable {
         h("span", { class: !this.checkedRowIds.length ? 'invisible' : null, "aria-hidden": this.checkedRowIds.length === 0 ? 'true' : null },
           h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true },
             h("span", { class: "h-full flex items-center px-2" },
-              h("span", { innerHTML: gearSvg }))),
+              h("i", { class: "mds-gear text-icon" }))),
           h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
     const operationsBar = (h("div", { class: "grid gap-x-16 gap-y-12 pb-12", style: this.operationsBarStyle },
@@ -615,7 +613,8 @@ export class MxTable {
               colIndex === 0 && this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox,
               h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" },
                 h("span", { class: "truncate flex-shrink", innerHTML: col.heading }),
-                !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow", innerHTML: arrowSvg })))));
+                !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow" },
+                  h("i", { class: "mds-arrow-triangle-down text-icon" }))))));
           })) : (
           // Mobile Column Header Navigation
           h("div", { class: "flex items-stretch" },
@@ -623,7 +622,8 @@ export class MxTable {
             h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) },
               h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" },
                 h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }),
-                !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow", innerHTML: arrowSvg })))),
+                !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow" },
+                  h("i", { class: "mds-arrow-triangle-down text-icon" }))))),
             this.columns.length >= 2 && (h("div", { class: "flex items-center" },
               h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.isPreviousColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, -1) }),
               h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.isNextColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, 1) }))))),
