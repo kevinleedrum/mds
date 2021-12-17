@@ -1,10 +1,5 @@
 import { Component, Host, h, Prop, Event, EventEmitter, Element, State } from '@stencil/core';
 import { ResizeObserver } from '@juggle/resize-observer';
-import chevronLeftSvg from '../../assets/svg/chevron-left.svg';
-import chevronRightSvg from '../../assets/svg/chevron-right.svg';
-import pageFirstSvg from '../../assets/svg/page-first.svg';
-import pageLastSvg from '../../assets/svg/page-last.svg';
-import arrowSvg from '../../assets/svg/arrow-triangle-down.svg';
 
 export type PageChangeEventDetail = {
   rowsPerPage: number;
@@ -170,7 +165,7 @@ export class MxPagination {
                     class="flex items-center cursor-pointer"
                   >
                     {this.rowsPerPage}
-                    <span class="ml-12" innerHTML={arrowSvg}></span>
+                    <i class="mds-arrow-triangle-down ml-12 text-icon"></i>
                   </div>
                   <mx-menu ref={el => (this.rowsMenu = el)}>
                     {this.rowsPerPageOptions.map(option => (
@@ -191,26 +186,26 @@ export class MxPagination {
               <div class="flex items-center sm:space-x-8">
                 <mx-icon-button
                   aria-label="First page"
-                  innerHTML={pageFirstSvg}
+                  icon="mds-page-first"
                   disabled={this.page === 1 || this.disabled}
                   onClick={this.onClickFirstPage.bind(this)}
                 />
                 <mx-icon-button
                   aria-label="Previous page"
-                  innerHTML={chevronLeftSvg}
+                  icon="mds-chevron-left"
                   disabled={this.page === 1 || this.disabled}
                   onClick={this.onClickPreviousPage.bind(this)}
                 />
                 <mx-icon-button
                   aria-label="Next page"
-                  innerHTML={chevronRightSvg}
+                  icon="mds-chevron-right"
                   disabled={this.page === this.lastPage || this.disabled || this.disableNextPage}
                   onClick={this.onClickNextPage.bind(this)}
                 />
                 {this.lastPage !== null && (
                   <mx-icon-button
                     aria-label="Last page"
-                    innerHTML={pageLastSvg}
+                    icon="mds-page-last"
                     disabled={this.page === this.lastPage || this.disabled}
                     onClick={this.onClickLastPage.bind(this)}
                   />

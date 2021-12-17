@@ -37,11 +37,11 @@ describe('mx-icon-button', () => {
     root.chevronLeft = true;
     await page.waitForChanges();
     expect(chevron).not.toBeNull();
-    expect(chevron.getAttribute('class')).toContain('rotate-90');
+    expect(chevron.getAttribute('class')).toContain('chevron-left');
     root.chevronLeft = false;
     root.chevronRight = true;
     await page.waitForChanges();
-    expect(chevron.getAttribute('class')).toContain('-rotate-90');
+    expect(chevron.getAttribute('class')).toContain('chevron-right');
   });
 
   it('does not emit a click event when disabled is true', async () => {

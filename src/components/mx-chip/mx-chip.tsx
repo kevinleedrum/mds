@@ -1,7 +1,5 @@
 import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 import ripple from '../../utils/ripple';
-import removeSvg from '../../assets/svg/remove.svg';
-import checkSvg from '../../assets/svg/check.svg';
 
 @Component({
   tag: 'mx-chip',
@@ -115,7 +113,7 @@ export class MxChip {
               {this.icon && <i class={this.icon + ' text-1'}></i>}
               {this.selected && (
                 <div data-testid="check" class="check flex absolute inset-0 items-center justify-center">
-                  <span innerHTML={checkSvg}></span>
+                  <i class="mds-check"></i>
                 </div>
               )}
             </div>
@@ -129,9 +127,10 @@ export class MxChip {
               data-testid="remove"
               aria-label="Remove"
               class="remove inline-flex items-center justify-center w-24 h-24 cursor-pointer"
-              innerHTML={removeSvg}
               onClick={this.onRemove.bind(this)}
-            ></button>
+            >
+              <i class="mds-remove text-3"></i>
+            </button>
           )}
         </div>
       </Host>

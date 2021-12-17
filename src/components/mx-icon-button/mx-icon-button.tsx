@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
-import chevronSvg from '../../assets/svg/chevron-down.svg';
 import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
@@ -45,17 +44,18 @@ export class MxIconButton {
   render() {
     const buttonContent = (
       <div class="flex justify-center items-center content-center relative">
-        {this.icon && <i class={['text-1', this.icon].join(' ')}></i>}
+        {this.icon && <i class={['text-icon', this.icon].join(' ')}></i>}
         <span class="slot-content">
           <slot />
         </span>
         {this.isChevron && (
-          <span class="chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1">
-            <span
+          <span class="chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center text-icon shadow-1">
+            <i
               data-testid="chevron"
-              class={this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : ''}
-              innerHTML={chevronSvg}
-            ></span>
+              class={
+                this.chevronLeft ? 'mds-chevron-left' : this.chevronRight ? 'mds-chevron-right' : 'mds-chevron-down'
+              }
+            ></i>
           </span>
         )}
       </div>

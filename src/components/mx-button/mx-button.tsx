@@ -1,6 +1,5 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
-import chevronSvg from '../../assets/svg/chevron-down.svg';
 import { propagateDataAttributes } from '../../utils/utils';
 
 export type BtnType = 'contained' | 'outlined' | 'action' | 'text';
@@ -99,11 +98,10 @@ export class MxButton implements IMxButtonProps {
         </span>
         {this.dropdown && this.btnType === 'text' && <span class="separator inline-block w-1 ml-4 -my-4 h-24"></span>}
         {this.dropdown && (
-          <span
+          <i
             data-testid="chevron"
-            class={this.btnType === 'text' ? 'chevron-icon ml-4' : 'ml-8'}
-            innerHTML={chevronSvg}
-          ></span>
+            class={'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4')}
+          ></i>
         )}
       </div>
     );

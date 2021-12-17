@@ -47,6 +47,8 @@
 @import './mx-snackbar/index.scss';
 @import './mx-image-upload/index.scss';
 @import './mx-code/index.scss';
+
+@import './icons.scss';
 @import './ripple.scss';
 
 /***************************

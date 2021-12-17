@@ -140,7 +140,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
       <div class="flex my-20 items-center">
         <mx-icon-button icon="ph-thumbs-up"></mx-icon-button>
         <mx-icon-button icon="ph-heart"></mx-icon-button>
-        <mx-icon-button icon="ph-x"></mx-icon-button>
+        <mx-icon-button icon="mds-x"></mx-icon-button>
         <mx-icon-button>
           <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1 7l4.5 4.5L14 3" stroke="currentColor" stroke-linecap="square"></path></svg>
         </mx-icon-button>
@@ -154,7 +154,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
       <div class="flex my-20 items-center">
         <mx-icon-button icon="ph-thumbs-up" disabled></mx-icon-button>
         <mx-icon-button icon="ph-heart" disabled></mx-icon-button>
-        <mx-icon-button icon="ph-x" disabled></mx-icon-button>
+        <mx-icon-button icon="mds-x" disabled></mx-icon-button>
         <mx-icon-button disabled>
           <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1 7l4.5 4.5L14 3" stroke="currentColor" stroke-linecap="square"></path></svg>
         </mx-icon-button>
