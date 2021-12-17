@@ -131,11 +131,11 @@ export class MxPageHeader {
           return (
             <div
               ref={el => isTertiary && (this.tertiaryButtonWrapper = el)}
-              class={isTertiary ? 'relative !ml-auto md:!ml-0' : ''}
+              class={isTertiary ? 'relative flex flex-1 justify-end' : ''}
             >
               {/* Tertiary menu (shown when the tertiary button does not fit in the viewport) */}
               {isTertiary && this.renderTertiaryButtonAsMenu && (
-                <div class="absolute !ml-auto -top-6">
+                <div class="absolute -top-6">
                   <mx-icon-button ref={el => (this.menuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
                   <mx-menu ref={el => (this.tertiaryMenu = el)} anchor-el={this.menuButton}>
                     <mx-menu-item {...menuItemProps}>{button.label}</mx-menu-item>
