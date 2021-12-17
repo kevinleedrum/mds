@@ -49,7 +49,7 @@ export class MxPageHeader {
 
   @Watch('minWidths')
   updateSlottedButtonSize() {
-    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] > mx-button');
+    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] mx-button');
     slottedButtons.forEach((button: HTMLMxButtonElement) => (button.xl = this.minWidths.lg));
   }
 
