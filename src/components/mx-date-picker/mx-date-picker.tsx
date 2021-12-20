@@ -72,6 +72,7 @@ export class MxDatePicker {
   componentWillRender = propagateDataAttributes;
 
   componentDidLoad() {
+    if (!this.inputEl) return;
     this.isDateInputSupported = this.inputEl.type === 'date';
     this.datepicker = datepicker(this.inputEl, {
       alwaysShow: true,
