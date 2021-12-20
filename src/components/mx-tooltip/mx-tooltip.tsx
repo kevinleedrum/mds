@@ -1,6 +1,6 @@
 import { Component, Host, h, Element, Prop, Watch } from '@stencil/core';
-import { createPopover, PopoverInstance, PopoverPlacement, convertPlacementToOrigin } from '../../utils/popover';
-import { fadeScaleIn, fadeOut } from '../../utils/transitions';
+import { createPopover, PopoverInstance, PopoverPlacement } from '../../utils/popover';
+import { fadeIn, fadeOut } from '../../utils/transitions';
 import { uuidv4 } from '../../utils/utils';
 
 @Component({
@@ -60,7 +60,7 @@ export class MxTooltip {
         this.placement,
         [0, 4],
       );
-      fadeScaleIn(this.tooltipElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
+      fadeIn(this.tooltipElem);
     }, this.appearDelay);
   }
 

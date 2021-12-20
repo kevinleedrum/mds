@@ -183,7 +183,7 @@ export class MxDialog {
         >
           <div class="p-24 text-4 flex-grow overflow-auto" data-testid="modal-content">
             {this.hasHeading && (
-              <h1 id="dialog-heading" class="text-h6 emphasis !my-0 pb-16" data-testid="heading">
+              <h1 id="dialog-heading" class="text-h6 emphasis my-0 pb-16" data-testid="heading">
                 {this.heading}
                 <slot name="heading"></slot>
               </h1>
