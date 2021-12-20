@@ -46,7 +46,7 @@ const MxPageHeader = class {
     requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
   updateSlottedButtonSize() {
-    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] > mx-button');
+    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] mx-button');
     slottedButtons.forEach((button) => (button.xl = this.minWidths.lg));
   }
   componentWillLoad() {
@@ -107,7 +107,7 @@ const MxPageHeader = class {
     return str;
   }
   get headingClass() {
-    let str = '!my-0 pr-20 emphasis ';
+    let str = 'my-0 pr-20 emphasis ';
     if (!this.minWidths.md)
       str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else
@@ -128,7 +128,7 @@ const MxPageHeader = class {
         btnType = index$1 === 0 ? 'contained' : index$1 === 1 ? 'outlined' : 'text';
       const isTertiary = index$1 === 2;
       const menuItemProps = __rest(button, ["label"]); // Do not use button label as menu item label (use in slot instead)
-      return (index.h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (index.h("div", { class: "absolute !ml-auto -top-6" }, index.h("mx-icon-button", { ref: el => (this.menuButton = el), icon: "mds-dots-vertical" }), index.h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, index.h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), index.h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
+      return (index.h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative flex flex-1 justify-end' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (index.h("div", { class: "absolute -top-6" }, index.h("mx-icon-button", { ref: el => (this.menuButton = el), icon: "mds-dots-vertical" }), index.h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, index.h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), index.h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {

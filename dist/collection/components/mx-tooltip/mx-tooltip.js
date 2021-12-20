@@ -1,6 +1,6 @@
 import { Component, Host, h, Element, Prop, Watch } from '@stencil/core';
-import { createPopover, convertPlacementToOrigin } from '../../utils/popover';
-import { fadeScaleIn, fadeOut } from '../../utils/transitions';
+import { createPopover } from '../../utils/popover';
+import { fadeIn, fadeOut } from '../../utils/transitions';
 import { uuidv4 } from '../../utils/utils';
 export class MxTooltip {
   constructor() {
@@ -40,7 +40,7 @@ export class MxTooltip {
     this.openTimeout = setTimeout(async () => {
       this.isOpen = true;
       this.popoverInstance = await createPopover(this.element.firstElementChild, this.tooltipElem, this.placement, [0, 4]);
-      fadeScaleIn(this.tooltipElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
+      fadeIn(this.tooltipElem);
     }, this.appearDelay);
   }
   async hide() {

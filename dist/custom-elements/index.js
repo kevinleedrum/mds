@@ -18459,7 +18459,7 @@ const MxDatePicker$1 = class extends HTMLElement {
     return this.inputEl.value || this.inputEl.validity.badInput;
   }
   get pickerWrapperClass() {
-    let str = 'picker-wrapper flex items-center relative rounded-lg';
+    let str = 'picker-wrapper w-320 flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.disabled)
@@ -18492,7 +18492,7 @@ const MxDatePicker$1 = class extends HTMLElement {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
-    return (h(Host, { class: 'mx-date-picker block w-320' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.ariaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", required: true, onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled }, h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
+    return (h(Host, { class: 'mx-date-picker block' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.ariaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", required: true, onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled }, h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
   }
   get element() { return this; }
   static get watchers() { return {
@@ -18671,7 +18671,7 @@ const MxDialog$1 = class extends HTMLElement {
     return str;
   }
   render() {
-    return (h(Host, { class: this.hostClass }, h("div", { ref: el => (this.backdrop = el), class: "bg-dialog-backdrop absolute inset-0 z-0" }), h("div", { ref: el => (this.modal = el), role: "alertdialog", "aria-labelledby": this.heading ? 'dialog-heading' : null, "aria-describedby": this.message ? 'dialog-message' : null, "aria-modal": "true", "data-testid": "modal", class: this.modalClassNames }, h("div", { class: "p-24 text-4 flex-grow overflow-auto", "data-testid": "modal-content" }, this.hasHeading && (h("h1", { id: "dialog-heading", class: "text-h6 emphasis !my-0 pb-16", "data-testid": "heading" }, this.heading, h("slot", { name: "heading" }))), this.message && (h("p", { id: "dialog-message", class: "my-0" }, this.message)), h("slot", null)), this.hasButtons && (h("div", { class: "flex flex-wrap items-center justify-end p-4", "data-testid": "button-tray" }, this.confirmLabel && (h("mx-button", { class: "m-4 order-2", btnType: "text", onClick: () => this.closeDialog(true) }, this.confirmLabel)), this.cancelLabel && (h("mx-button", { class: "m-4 order-1", btnType: "text", onClick: () => this.closeDialog() }, this.cancelLabel)), h("slot", { name: "buttons" }))))));
+    return (h(Host, { class: this.hostClass }, h("div", { ref: el => (this.backdrop = el), class: "bg-dialog-backdrop absolute inset-0 z-0" }), h("div", { ref: el => (this.modal = el), role: "alertdialog", "aria-labelledby": this.heading ? 'dialog-heading' : null, "aria-describedby": this.message ? 'dialog-message' : null, "aria-modal": "true", "data-testid": "modal", class: this.modalClassNames }, h("div", { class: "p-24 text-4 flex-grow overflow-auto", "data-testid": "modal-content" }, this.hasHeading && (h("h1", { id: "dialog-heading", class: "text-h6 emphasis my-0 pb-16", "data-testid": "heading" }, this.heading, h("slot", { name: "heading" }))), this.message && (h("p", { id: "dialog-message", class: "my-0" }, this.message)), h("slot", null)), this.hasButtons && (h("div", { class: "flex flex-wrap items-center justify-end p-4", "data-testid": "button-tray" }, this.confirmLabel && (h("mx-button", { class: "m-4 order-2", btnType: "text", onClick: () => this.closeDialog(true) }, this.confirmLabel)), this.cancelLabel && (h("mx-button", { class: "m-4 order-1", btnType: "text", onClick: () => this.closeDialog() }, this.cancelLabel)), h("slot", { name: "buttons" }))))));
   }
   get element() { return this; }
   static get watchers() { return {
@@ -19120,12 +19120,12 @@ const MxInput$1 = class extends HTMLElement {
     return str;
   }
   get inputClass() {
-    let str = 'flex-1 overflow-hidden outline-none appearance-none bg-transparent';
+    let str = 'flex-1 outline-none appearance-none bg-transparent';
     if (!this.textarea) {
-      str += ' px-16';
+      str += ' px-16 overflow-hidden';
     }
     else {
-      str += ' p-16 resize-none';
+      str += ' p-16 overflow-y-auto resize-none';
     }
     if (this.isFocused || this.error)
       str += this.leftIcon ? ' -mr-1' : ' -m-1'; // prevent shifting due to border-width change
@@ -20282,7 +20282,7 @@ const MxPageHeader$1 = class extends HTMLElement {
     requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
   updateSlottedButtonSize() {
-    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] > mx-button');
+    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] mx-button');
     slottedButtons.forEach((button) => (button.xl = this.minWidths.lg));
   }
   componentWillLoad() {
@@ -20343,7 +20343,7 @@ const MxPageHeader$1 = class extends HTMLElement {
     return str;
   }
   get headingClass() {
-    let str = '!my-0 pr-20 emphasis ';
+    let str = 'my-0 pr-20 emphasis ';
     if (!this.minWidths.md)
       str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else
@@ -20364,7 +20364,7 @@ const MxPageHeader$1 = class extends HTMLElement {
         btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
       const isTertiary = index === 2;
       const menuItemProps = __rest(button, ["label"]); // Do not use button label as menu item label (use in slot instead)
-      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" }, h("mx-icon-button", { ref: el => (this.menuButton = el), icon: "mds-dots-vertical" }), h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
+      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative flex flex-1 justify-end' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute -top-6" }, h("mx-icon-button", { ref: el => (this.menuButton = el), icon: "mds-dots-vertical" }), h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton }, h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {
@@ -20583,6 +20583,8 @@ const MxSelect$1 = class extends HTMLElement {
   get selectWrapperClass() {
     let str = 'mx-select-wrapper flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
+    if (!this.hasValue)
+      str += ' no-value';
     if (this.elevated)
       str += ' elevated shadow-1';
     if (this.flat)
@@ -22030,7 +22032,7 @@ const MxTimePicker$1 = class extends HTMLElement {
     return this.value || (this.inputElem && this.inputElem.validity.badInput);
   }
   get pickerWrapperClass() {
-    let str = 'picker-wrapper flex items-center relative rounded-lg';
+    let str = 'picker-wrapper w-152 flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.disabled)
@@ -22057,7 +22059,7 @@ const MxTimePicker$1 = class extends HTMLElement {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
-    return (h(Host, { class: 'mx-time-picker block w-152' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", disabled: this.disabled }, h("i", { class: this.error ? 'mds-warning-circle' : 'mds-clock' }))), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this), onMxOpen: this.onMenuOpen.bind(this) }, timeOptions.map(timeOption => (h("mx-menu-item", { onClick: this.setValue.bind(this, timeOption) }, this.getLocalizedTimeString(timeOption)))))));
+    return (h(Host, { class: 'mx-time-picker block' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", disabled: this.disabled }, h("i", { class: this.error ? 'mds-warning-circle' : 'mds-clock' }))), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this), onMxOpen: this.onMenuOpen.bind(this) }, timeOptions.map(timeOption => (h("mx-menu-item", { onClick: this.setValue.bind(this, timeOption) }, this.getLocalizedTimeString(timeOption)))))));
   }
   get element() { return this; }
   static get watchers() { return {
@@ -22167,7 +22169,7 @@ const MxTooltip$1 = class extends HTMLElement {
     this.openTimeout = setTimeout(async () => {
       this.isOpen = true;
       this.popoverInstance = await createPopover(this.element.firstElementChild, this.tooltipElem, this.placement, [0, 4]);
-      fadeScaleIn(this.tooltipElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
+      fadeIn(this.tooltipElem);
     }, this.appearDelay);
   }
   async hide() {

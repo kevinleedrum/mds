@@ -1,6 +1,6 @@
 import { r as registerInstance, h, e as Host, g as getElement } from './index-b3442404.js';
-import { c as createPopover, a as convertPlacementToOrigin } from './popover-1f909484.js';
-import { d as fadeScaleIn, b as fadeOut } from './transitions-5e6f10a3.js';
+import { c as createPopover } from './popover-1f909484.js';
+import { f as fadeIn, b as fadeOut } from './transitions-5e6f10a3.js';
 import { u as uuidv4 } from './utils-18e3dfde.js';
 
 const MxTooltip = class {
@@ -42,7 +42,7 @@ const MxTooltip = class {
     this.openTimeout = setTimeout(async () => {
       this.isOpen = true;
       this.popoverInstance = await createPopover(this.element.firstElementChild, this.tooltipElem, this.placement, [0, 4]);
-      fadeScaleIn(this.tooltipElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
+      fadeIn(this.tooltipElem);
     }, this.appearDelay);
   }
   async hide() {
