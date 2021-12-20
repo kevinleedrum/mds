@@ -39,7 +39,7 @@ export class MxPageHeader {
     requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
   }
   updateSlottedButtonSize() {
-    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] > mx-button');
+    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] mx-button');
     slottedButtons.forEach((button) => (button.xl = this.minWidths.lg));
   }
   componentWillLoad() {
@@ -100,7 +100,7 @@ export class MxPageHeader {
     return str;
   }
   get headingClass() {
-    let str = '!my-0 pr-20 emphasis ';
+    let str = 'my-0 pr-20 emphasis ';
     if (!this.minWidths.md)
       str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else
@@ -121,8 +121,8 @@ export class MxPageHeader {
         btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
       const isTertiary = index === 2;
       const { label } = button, menuItemProps = __rest(button, ["label"]); // Do not use button label as menu item label (use in slot instead)
-      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative !ml-auto md:!ml-0' : '' },
-        isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute !ml-auto -top-6" },
+      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative flex flex-1 justify-end' : '' },
+        isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute -top-6" },
           h("mx-icon-button", { ref: el => (this.menuButton = el), icon: "mds-dots-vertical" }),
           h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton },
             h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))),

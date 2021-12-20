@@ -49,7 +49,7 @@ export class MxPageHeader {
 
   @Watch('minWidths')
   updateSlottedButtonSize() {
-    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] > mx-button');
+    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] mx-button');
     slottedButtons.forEach((button: HTMLMxButtonElement) => (button.xl = this.minWidths.lg));
   }
 
@@ -109,7 +109,7 @@ export class MxPageHeader {
   }
 
   get headingClass() {
-    let str = '!my-0 pr-20 emphasis ';
+    let str = 'my-0 pr-20 emphasis ';
     if (!this.minWidths.md) str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else str += this.previousPageUrl || this.modal ? 'text-h5' : 'text-h3';
     return str;
@@ -136,11 +136,11 @@ export class MxPageHeader {
           return (
             <div
               ref={el => isTertiary && (this.tertiaryButtonWrapper = el)}
-              class={isTertiary ? 'relative !ml-auto md:!ml-0' : ''}
+              class={isTertiary ? 'relative flex flex-1 justify-end' : ''}
             >
               {/* Tertiary menu (shown when the tertiary button does not fit in the viewport) */}
               {isTertiary && this.renderTertiaryButtonAsMenu && (
-                <div class="absolute !ml-auto -top-6">
+                <div class="absolute -top-6">
                   <mx-icon-button ref={el => (this.menuButton = el)} icon="mds-dots-vertical"></mx-icon-button>
                   <mx-menu ref={el => (this.tertiaryMenu = el)} anchor-el={this.menuButton}>
                     <mx-menu-item {...menuItemProps}>{button.label}</mx-menu-item>

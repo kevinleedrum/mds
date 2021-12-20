@@ -103,77 +103,99 @@
       letter-spacing: -0.5px;
       font-weight: bold;
       line-height: 4.5rem;
-      @apply mb-24;
+      &:not(.my-0) {
+        @apply mb-24;
+      }
     }
     .text-h1.xl {
       font-size: 6rem;
       letter-spacing: -1.5px;
       font-weight: bold;
       line-height: 7.5rem;
-      @apply mb-24;
+      &:not(.my-0) {
+        @apply mb-24;
+      }
     }
     .text-h2 {
       font-size: 3rem;
       letter-spacing: 0;
       font-weight: 600;
       line-height: 4rem;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h3 {
       font-size: 2.5rem;
       letter-spacing: 0.25px;
       line-height: 3.5rem;
       font-weight: normal;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h3.emphasis {
       font-size: 2.5rem;
       letter-spacing: 0.25px;
       line-height: 3.5rem;
       font-weight: bold;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h4 {
       font-size: 2.25rem;
       letter-spacing: 0.25px;
       line-height: 3.5rem;
       font-weight: normal;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h4.emphasis {
       font-size: 2.25rem;
       letter-spacing: 0.25px;
       line-height: 3.5rem;
       font-weight: 600;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h5 {
       font-size: 1.5rem;
       letter-spacing: 0;
       line-height: 2.5rem;
       font-weight: normal;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h5.emphasis {
       font-size: 1.5rem;
       letter-spacing: 0;
       line-height: 2.5rem;
       font-weight: 800;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h6 {
       font-size: 1.125rem;
       letter-spacing: 0.25px;
       line-height: 1.5rem;
       font-weight: normal;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h6.emphasis {
       font-size: 1.125rem;
       letter-spacing: 0.25px;
       line-height: 1.5rem;
       font-weight: bold;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .subtitle1 {
       @apply text-3 tracking-0-15 leading-6 font-semibold;

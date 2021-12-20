@@ -46,7 +46,7 @@ const MxTooltip = class {
     this.openTimeout = setTimeout(async () => {
       this.isOpen = true;
       this.popoverInstance = await popover.createPopover(this.element.firstElementChild, this.tooltipElem, this.placement, [0, 4]);
-      transitions.fadeScaleIn(this.tooltipElem, undefined, popover.convertPlacementToOrigin(this.popoverInstance.state.placement));
+      transitions.fadeIn(this.tooltipElem);
     }, this.appearDelay);
   }
   async hide() {

@@ -127,7 +127,7 @@ export class MxDialog {
       h("div", { ref: el => (this.backdrop = el), class: "bg-dialog-backdrop absolute inset-0 z-0" }),
       h("div", { ref: el => (this.modal = el), role: "alertdialog", "aria-labelledby": this.heading ? 'dialog-heading' : null, "aria-describedby": this.message ? 'dialog-message' : null, "aria-modal": "true", "data-testid": "modal", class: this.modalClassNames },
         h("div", { class: "p-24 text-4 flex-grow overflow-auto", "data-testid": "modal-content" },
-          this.hasHeading && (h("h1", { id: "dialog-heading", class: "text-h6 emphasis !my-0 pb-16", "data-testid": "heading" },
+          this.hasHeading && (h("h1", { id: "dialog-heading", class: "text-h6 emphasis my-0 pb-16", "data-testid": "heading" },
             this.heading,
             h("slot", { name: "heading" }))),
           this.message && (h("p", { id: "dialog-message", class: "my-0" }, this.message)),

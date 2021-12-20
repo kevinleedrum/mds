@@ -101,11 +101,11 @@ export class MxInput {
   }
 
   get inputClass() {
-    let str = 'flex-1 overflow-hidden outline-none appearance-none bg-transparent';
+    let str = 'flex-1 outline-none appearance-none bg-transparent';
     if (!this.textarea) {
-      str += ' px-16';
+      str += ' px-16 overflow-hidden';
     } else {
-      str += ' p-16 resize-none';
+      str += ' p-16 overflow-y-auto resize-none';
     }
     if (this.isFocused || this.error) str += this.leftIcon ? ' -mr-1' : ' -m-1'; // prevent shifting due to border-width change
     return str;

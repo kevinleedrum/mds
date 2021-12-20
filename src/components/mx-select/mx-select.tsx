@@ -70,6 +70,7 @@ export class MxSelect {
   get selectWrapperClass() {
     let str = 'mx-select-wrapper flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
+    if (!this.hasValue) str += ' no-value';
     if (this.elevated) str += ' elevated shadow-1';
     if (this.flat) str += ' flat';
     str += this.error || this.isFocused ? ' border-2' : ' border';

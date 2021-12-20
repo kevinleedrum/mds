@@ -122,7 +122,7 @@ export class MxTimePicker {
     return this.value || (this.inputElem && this.inputElem.validity.badInput);
   }
   get pickerWrapperClass() {
-    let str = 'picker-wrapper flex items-center relative rounded-lg';
+    let str = 'picker-wrapper w-152 flex items-center relative rounded-lg';
     str += this.dense ? ' h-36' : ' h-48';
     str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.disabled)
@@ -149,7 +149,7 @@ export class MxTimePicker {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
-    return (h(Host, { class: 'mx-time-picker block w-152' + (this.error ? ' error' : '') },
+    return (h(Host, { class: 'mx-time-picker block' + (this.error ? ' error' : '') },
       this.label && !this.floatLabel && labelJsx,
       h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass },
         h("input", Object.assign({ "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }, this.dataAttributes)),
