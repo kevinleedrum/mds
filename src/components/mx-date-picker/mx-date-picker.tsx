@@ -246,7 +246,6 @@ export class MxDatePicker {
             id={this.inputId || this.uuid}
             name={this.name}
             type="date"
-            required
             onBlur={this.onBlur.bind(this)}
             onClick={e => e.preventDefault() /* Prevent browser's native calender */}
             onKeyDown={this.onKeyDown.bind(this)}

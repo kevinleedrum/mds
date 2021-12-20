@@ -203,7 +203,6 @@ export class MxTimePicker {
             tabindex="0"
             type="time"
             disabled={this.disabled}
-            required
             {...this.dataAttributes}
           />
           {this.label && this.floatLabel && labelJsx}
