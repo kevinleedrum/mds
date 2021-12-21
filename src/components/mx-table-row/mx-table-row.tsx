@@ -31,6 +31,8 @@ export class MxTableRow {
   @Prop() actions: ITableRowAction[] = [];
   /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
   @Prop({ reflect: true }) doNotCollapse: boolean = false;
+  /** Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`. */
+  @Prop() doNotDrag: boolean = false;
   /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
   @Prop() rowIndex: number;
   @Prop({ mutable: true }) checked: boolean = false;
@@ -104,7 +106,7 @@ export class MxTableRow {
     // default slot.
     const table = this.element.closest('mx-table') as HTMLMxTableElement;
     this.checkable = table && table.checkable;
-    this.isDraggable = table && table.draggableRows;
+    this.isDraggable = table && table.draggableRows && !this.doNotDrag;
     this.columnCount = (table && table.columns.length) + (this.actions.length ? 1 : 0);
     if (this.checkable && this.rowId == null)
       throw new Error('Checkable rows require either a getRowId prop on the table, or a rowId on the row!');
