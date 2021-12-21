@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-5f1d14aa.js');
+const index = require('./index-54a36eac.js');
 const _commonjsHelpers = require('./_commonjsHelpers-bcc1208a.js');
 const popover = require('./popover-8846ea88.js');
 const utils = require('./utils-1f7ef40d.js');
@@ -56,6 +56,8 @@ const MxDatePicker = class {
     }
   }
   componentDidLoad() {
+    if (!this.inputEl)
+      return;
     this.isDateInputSupported = this.inputEl.type === 'date';
     this.datepicker = datepicker(this.inputEl, {
       alwaysShow: true,
@@ -217,7 +219,7 @@ const MxDatePicker = class {
   }
   render() {
     const labelJsx = (index.h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
-    return (index.h(index.Host, { class: 'mx-date-picker block' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, index.h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.ariaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", required: true, onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, index.h("button", { ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled }, index.h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))), this.assistiveText && (index.h("div", { class: "caption1 mt-4 ml-16" }, index.h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
+    return (index.h(index.Host, { class: 'mx-date-picker block' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, index.h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.ariaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, index.h("button", { ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled }, index.h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))), this.assistiveText && (index.h("div", { class: "caption1 mt-4 ml-16" }, index.h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
   }
   get element() { return index.getElement(this); }
   static get watchers() { return {

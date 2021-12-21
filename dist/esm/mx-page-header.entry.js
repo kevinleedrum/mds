@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host, g as getElement } from './index-540e1634.js';
+import { r as registerInstance, h, H as Host, g as getElement } from './index-de1da671.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { R as ResizeObserver } from './ResizeObserver-f193871f.js';
 
@@ -55,7 +55,6 @@ const MxPageHeader = class {
   }
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
-    this.resizeObserver.disconnect();
   }
   updateRenderTertiaryButtonAsMenu() {
     // Only move tertiary button to menu, and only for small screens

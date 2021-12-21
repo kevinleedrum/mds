@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-b3442404.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-a5350afa.js';
 import { u as uuidv4, p as propagateDataAttributes } from './utils-18e3dfde.js';
 
 const MxInput = class {

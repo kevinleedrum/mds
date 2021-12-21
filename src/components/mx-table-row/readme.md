@@ -13,6 +13,7 @@
 | `checked`            | `checked`              |                                                                                                                       | `boolean`           | `false`     |
 | `collapseNestedRows` | `collapse-nested-rows` | Toggles the visibility of all nested rows (except those set to `doNotCollapse`)                                       | `boolean`           | `false`     |
 | `doNotCollapse`      | `do-not-collapse`      | Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`.                              | `boolean`           | `false`     |
+| `doNotDrag`          | `do-not-drag`          | Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`.                   | `boolean`           | `false`     |
 | `rowId`              | `row-id`               | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
 | `rowIndex`           | `row-index`            | This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component.              | `number`            | `undefined` |
 | `subheader`          | `subheader`            | Style the row as a subheader.                                                                                         | `boolean`           | `false`     |

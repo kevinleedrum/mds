@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-5f1d14aa.js');
+const index = require('./index-54a36eac.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 const ResizeObserver = require('./ResizeObserver-6bb15032.js');
 
@@ -59,7 +59,6 @@ const MxPageHeader = class {
   }
   disconnectedCallback() {
     minWidthSync.minWidthSync.unsubscribeComponent(this);
-    this.resizeObserver.disconnect();
   }
   updateRenderTertiaryButtonAsMenu() {
     // Only move tertiary button to menu, and only for small screens

@@ -1,4 +1,4 @@
-import { r as registerInstance, c as createEvent, h, H as Host } from './index-540e1634.js';
+import { r as registerInstance, c as createEvent, h, H as Host } from './index-de1da671.js';
 import { r as ripple } from './ripple-54ef50dc.js';
 
 const MxChip = class {
