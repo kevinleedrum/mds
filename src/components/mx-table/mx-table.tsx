@@ -398,13 +398,7 @@ export class MxTable {
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
-    const rows = this.getTableRows();
-    if (!this.paginate) {
-      rows.forEach((row, i) => {
-        const addOrRemove = i === rows.length - 1 ? 'add' : 'remove';
-        row.classList[addOrRemove]('last-row');
-      });
-    }
+    this.setLastRowClass();
     requestAnimationFrame(this.setCellProps.bind(this));
   }
 
@@ -669,6 +663,15 @@ export class MxTable {
     if (this.serverPaginate) return;
     this.page = e.detail.page;
     this.rowsPerPage = e.detail.rowsPerPage;
+  }
+
+  setLastRowClass() {
+    if (this.paginate) return;
+    const rows = this.getTableRows().filter(row => row.getAttribute('aria-hidden') !== 'true');
+    rows.forEach((row, i) => {
+      const addOrRemove = i === rows.length - 1 ? 'add' : 'remove';
+      row.classList[addOrRemove]('last-row');
+    });
   }
 
   render() {
