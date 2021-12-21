@@ -1,4 +1,6 @@
 .mx-table {
+  color: var(--mds-text-table);
+
   [slot='search'] {
     @apply sm:w-240;
   }
