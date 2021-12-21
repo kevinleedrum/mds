@@ -91,7 +91,7 @@ export class MxButton implements IMxButtonProps {
 
   render() {
     const buttonContent = (
-      <div class="flex justify-center items-center content-center relative">
+      <div class="flex justify-center items-center content-center relative whitespace-nowrap">
         {this.icon && <i class={'mr-8 text-3 ' + this.icon}></i>}
         <span class="slot-content">
           <slot />
