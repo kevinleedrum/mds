@@ -1,4 +1,6 @@
 .mx-switch {
+  color: var(--mds-text-switch);
+
   .slider {
     background-color: var(--mds-bg-switch-track);
     -webkit-transition: 0.4s;
