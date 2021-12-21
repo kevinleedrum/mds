@@ -65,7 +65,6 @@ export class MxPageHeader {
 
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
-    this.resizeObserver.disconnect();
   }
 
   updateRenderTertiaryButtonAsMenu() {

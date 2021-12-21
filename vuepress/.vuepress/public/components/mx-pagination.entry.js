@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-b3442404.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-a5350afa.js';
 import { R as ResizeObserver } from './resize-observer-9111af2a.js';
 
 const MxPagination = class {

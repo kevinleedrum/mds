@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-b3442404.js';
+import { r as registerInstance, f as createEvent, h, i as forceUpdate, e as Host, g as getElement } from './index-a5350afa.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { g as getPageRect, a as getCursorCoords, c as capitalize, i as isDateObject } from './utils-18e3dfde.js';
 
@@ -550,13 +550,17 @@ const MxTable = class {
     }
     this.mxSortChange.emit({ sortBy: this.sortBy, sortAscending: this.sortAscending });
   }
-  changeExposedColumnIndex(delta) {
+  async changeExposedColumnIndex(delta) {
     if (this.isPreviousColumnDisabled && delta === -1)
       return;
     if (this.isNextColumnDisabled && delta === 1)
       return;
     const navigableColumnIndex = this.navigableColumnIndexes.indexOf(this.exposedMobileColumnIndex);
     this.exposedMobileColumnIndex = this.navigableColumnIndexes[navigableColumnIndex + delta];
+    await new Promise(requestAnimationFrame);
+    const rows = this.element.querySelectorAll('mx-table-row');
+    // Force update rows since the collapsed height may have changed.
+    rows.forEach(forceUpdate);
   }
   onMxPageChange(e) {
     if (this.serverPaginate)

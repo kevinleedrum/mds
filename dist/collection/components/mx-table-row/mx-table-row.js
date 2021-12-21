@@ -14,6 +14,8 @@ export class MxTableRow {
     this.actions = [];
     /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
     this.doNotCollapse = false;
+    /** Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`. */
+    this.doNotDrag = false;
     this.checked = false;
     /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
     this.collapseNestedRows = false;
@@ -69,7 +71,7 @@ export class MxTableRow {
     // default slot.
     const table = this.element.closest('mx-table');
     this.checkable = table && table.checkable;
-    this.isDraggable = table && table.draggableRows;
+    this.isDraggable = table && table.draggableRows && !this.doNotDrag;
     this.columnCount = (table && table.columns.length) + (this.actions.length ? 1 : 0);
     if (this.checkable && this.rowId == null)
       throw new Error('Checkable rows require either a getRowId prop on the table, or a rowId on the row!');
@@ -454,6 +456,24 @@ export class MxTableRow {
       },
       "attribute": "do-not-collapse",
       "reflect": true,
+      "defaultValue": "false"
+    },
+    "doNotDrag": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`."
+      },
+      "attribute": "do-not-drag",
+      "reflect": false,
       "defaultValue": "false"
     },
     "rowIndex": {

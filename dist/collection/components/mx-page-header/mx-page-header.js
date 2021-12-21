@@ -52,7 +52,6 @@ export class MxPageHeader {
   }
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
-    this.resizeObserver.disconnect();
   }
   updateRenderTertiaryButtonAsMenu() {
     // Only move tertiary button to menu, and only for small screens

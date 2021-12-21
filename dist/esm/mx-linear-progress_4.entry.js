@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host, g as getElement, c as createEvent } from './index-540e1634.js';
+import { r as registerInstance, h, H as Host, g as getElement, c as createEvent } from './index-de1da671.js';
 import { R as ResizeObserver } from './ResizeObserver-f193871f.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { d as getScrollingParent, e as getBounds, a as getCursorCoords, g as getPageRect, f as isScrolledOutOfView } from './utils-18e3dfde.js';
@@ -213,6 +213,8 @@ const MxTableRow = class {
     this.actions = [];
     /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
     this.doNotCollapse = false;
+    /** Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`. */
+    this.doNotDrag = false;
     this.checked = false;
     /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
     this.collapseNestedRows = false;
@@ -268,7 +270,7 @@ const MxTableRow = class {
     // default slot.
     const table = this.element.closest('mx-table');
     this.checkable = table && table.checkable;
-    this.isDraggable = table && table.draggableRows;
+    this.isDraggable = table && table.draggableRows && !this.doNotDrag;
     this.columnCount = (table && table.columns.length) + (this.actions.length ? 1 : 0);
     if (this.checkable && this.rowId == null)
       throw new Error('Checkable rows require either a getRowId prop on the table, or a rowId on the row!');

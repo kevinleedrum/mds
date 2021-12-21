@@ -44,6 +44,8 @@ export class MxDatePicker {
     }
   }
   componentDidLoad() {
+    if (!this.inputEl)
+      return;
     this.isDateInputSupported = this.inputEl.type === 'date';
     this.datepicker = datepicker(this.inputEl, {
       alwaysShow: true,
@@ -208,7 +210,7 @@ export class MxDatePicker {
     return (h(Host, { class: 'mx-date-picker block' + (this.error ? ' error' : '') },
       this.label && !this.floatLabel && labelJsx,
       h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass },
-        h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.ariaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", required: true, onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)),
+        h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.ariaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)),
         this.label && this.floatLabel && labelJsx,
         h("button", { ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled },
           h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))),

@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-5f1d14aa.js');
+const index = require('./index-54a36eac.js');
 
 const DIAMETER = 44;
 const THICKNESS = 3.6;

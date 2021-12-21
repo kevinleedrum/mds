@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, Event, Watch, Listen, State, Method } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Event, Watch, Listen, State, Method, forceUpdate, } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { capitalize, getCursorCoords, getPageRect, isDateObject } from '../../utils/utils';
 export class MxTable {
@@ -545,13 +545,17 @@ export class MxTable {
     }
     this.mxSortChange.emit({ sortBy: this.sortBy, sortAscending: this.sortAscending });
   }
-  changeExposedColumnIndex(delta) {
+  async changeExposedColumnIndex(delta) {
     if (this.isPreviousColumnDisabled && delta === -1)
       return;
     if (this.isNextColumnDisabled && delta === 1)
       return;
     const navigableColumnIndex = this.navigableColumnIndexes.indexOf(this.exposedMobileColumnIndex);
     this.exposedMobileColumnIndex = this.navigableColumnIndexes[navigableColumnIndex + delta];
+    await new Promise(requestAnimationFrame);
+    const rows = this.element.querySelectorAll('mx-table-row');
+    // Force update rows since the collapsed height may have changed.
+    rows.forEach(forceUpdate);
   }
   onMxPageChange(e) {
     if (this.serverPaginate)

@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-b3442404.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-a5350afa.js';
 
 const MxBadge = class {
   constructor(hostRef) {

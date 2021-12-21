@@ -152,7 +152,7 @@ export class MxTimePicker {
     return (h(Host, { class: 'mx-time-picker block' + (this.error ? ' error' : '') },
       this.label && !this.floatLabel && labelJsx,
       h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass },
-        h("input", Object.assign({ "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled, required: true }, this.dataAttributes)),
+        h("input", Object.assign({ "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled }, this.dataAttributes)),
         this.label && this.floatLabel && labelJsx,
         h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", disabled: this.disabled },
           h("i", { class: this.error ? 'mds-warning-circle' : 'mds-clock' }))),

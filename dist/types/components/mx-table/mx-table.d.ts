@@ -178,7 +178,7 @@ export declare class MxTable {
   getAlignClasses(col: ITableColumn): string[];
   getRowJsx(row: any, rowIndex: number): any;
   onHeaderClick(col: ITableColumn): void;
-  changeExposedColumnIndex(delta: number): void;
+  changeExposedColumnIndex(delta: number): Promise<void>;
   onMxPageChange(e: {
     detail: PageChangeEventDetail;
   }): void;

@@ -1,4 +1,4 @@
-import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-540e1634.js';
+import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-de1da671.js';
 import { d as fadeScaleIn, b as fadeOut } from './transitions-5e6f10a3.js';
 import { m as moveToPortal } from './portal-3ca3a2a3.js';
 import './utils-18e3dfde.js';

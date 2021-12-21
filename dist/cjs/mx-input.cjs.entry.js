@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-5f1d14aa.js');
+const index = require('./index-54a36eac.js');
 const utils = require('./utils-1f7ef40d.js');
 
 const MxInput = class {

@@ -24,6 +24,8 @@ export declare class MxTableRow {
   actions: ITableRowAction[];
   /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
   doNotCollapse: boolean;
+  /** Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`. */
+  doNotDrag: boolean;
   /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
   rowIndex: number;
   checked: boolean;

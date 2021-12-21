@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-5f1d14aa.js');
+const index = require('./index-54a36eac.js');
 const ResizeObserver = require('./ResizeObserver-6bb15032.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 const utils = require('./utils-1f7ef40d.js');
@@ -217,6 +217,8 @@ const MxTableRow = class {
     this.actions = [];
     /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
     this.doNotCollapse = false;
+    /** Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`. */
+    this.doNotDrag = false;
     this.checked = false;
     /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
     this.collapseNestedRows = false;
@@ -272,7 +274,7 @@ const MxTableRow = class {
     // default slot.
     const table = this.element.closest('mx-table');
     this.checkable = table && table.checkable;
-    this.isDraggable = table && table.draggableRows;
+    this.isDraggable = table && table.draggableRows && !this.doNotDrag;
     this.columnCount = (table && table.columns.length) + (this.actions.length ? 1 : 0);
     if (this.checkable && this.rowId == null)
       throw new Error('Checkable rows require either a getRowId prop on the table, or a rowId on the row!');

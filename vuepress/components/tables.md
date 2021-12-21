@@ -526,7 +526,7 @@ The example below combines nested rows with the `draggableRows` prop. For the sa
             <mx-table-cell>-</mx-table-cell>
             <mx-table-cell>-</mx-table-cell>
             <mx-table-cell>$5.90</mx-table-cell>
-            <mx-table-row row-id="5">
+            <mx-table-row row-id="5" do-not-drag>
               <mx-table-cell>English Cucumber</mx-table-cell>
               <mx-table-cell>$2.59</mx-table-cell>
               <mx-table-cell>10</mx-table-cell>
@@ -804,6 +804,7 @@ The `ITableColumn` interface describes the objects passed to the `columns` prop.
 | `checked`            | `checked`              |                                                                                                                       | `boolean`           | `false`     |
 | `collapseNestedRows` | `collapse-nested-rows` | Toggles the visibility of all nested rows (except those set to `doNotCollapse`)                                       | `boolean`           | `false`     |
 | `doNotCollapse`      | `do-not-collapse`      | Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`.                              | `boolean`           | `false`     |
+| `doNotDrag`          | `do-not-drag`          | Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`.                   | `boolean`           | `false`     |
 | `rowId`              | `row-id`               | This is required for checkable rows in order to persist the checked state through sorting and pagination.             | `string`            | `undefined` |
 | `rowIndex`           | `row-index`            | This row's index in the `HTMLMxTableElement.rows` array. This is set internally by the table component.               | `number`            | `undefined` |
 | `subheader`          | `subheader`            | Style the row as a subheader.                                                                                         | `boolean`           | `false`     |

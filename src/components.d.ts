@@ -819,6 +819,10 @@ export namespace Components {
           * Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`.
          */
         "doNotCollapse": boolean;
+        /**
+          * Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`.
+         */
+        "doNotDrag": boolean;
         "expand": () => Promise<void>;
         "focusDragHandle": () => Promise<void>;
         /**
@@ -2000,6 +2004,10 @@ declare namespace LocalJSX {
           * Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`.
          */
         "doNotCollapse"?: boolean;
+        /**
+          * Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`.
+         */
+        "doNotDrag"?: boolean;
         /**
           * Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked
          */

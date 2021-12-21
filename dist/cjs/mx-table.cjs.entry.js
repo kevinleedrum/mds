@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-5f1d14aa.js');
+const index = require('./index-54a36eac.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
 const utils = require('./utils-1f7ef40d.js');
 
@@ -554,13 +554,17 @@ const MxTable = class {
     }
     this.mxSortChange.emit({ sortBy: this.sortBy, sortAscending: this.sortAscending });
   }
-  changeExposedColumnIndex(delta) {
+  async changeExposedColumnIndex(delta) {
     if (this.isPreviousColumnDisabled && delta === -1)
       return;
     if (this.isNextColumnDisabled && delta === 1)
       return;
     const navigableColumnIndex = this.navigableColumnIndexes.indexOf(this.exposedMobileColumnIndex);
     this.exposedMobileColumnIndex = this.navigableColumnIndexes[navigableColumnIndex + delta];
+    await new Promise(requestAnimationFrame);
+    const rows = this.element.querySelectorAll('mx-table-row');
+    // Force update rows since the collapsed height may have changed.
+    rows.forEach(index.forceUpdate);
   }
   onMxPageChange(e) {
     if (this.serverPaginate)
