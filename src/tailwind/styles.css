@@ -236,67 +236,46 @@
   ***************************/
 
   .elevation0 {
-    background: #fafafa;
-    border-radius: 8px;
+    @apply rounded-lg;
   }
 
   .elevation1 {
-    background: #fafafa;
-    @apply shadow-1;
-    border-radius: 8px;
+    @apply shadow-1 rounded-lg;
   }
 
   .elevation2 {
-    background: #fafafa;
-    @apply shadow-2;
-    border-radius: 8px;
+    @apply shadow-2 rounded-lg;
   }
 
   .elevation3 {
-    background: #fafafa;
-    @apply shadow-3;
-    border-radius: 8px;
+    @apply shadow-3 rounded-lg;
   }
 
   .elevation4 {
-    background: #fafafa;
-    @apply shadow-4;
-    border-radius: 8px;
+    @apply shadow-4 rounded-lg;
   }
 
   .elevation6 {
-    background: #fafafa;
-    @apply shadow-6;
-    border-radius: 8px;
+    @apply shadow-6 rounded-lg;
   }
 
   .elevation8 {
-    background: #fafafa;
-    @apply shadow-8;
-    border-radius: 8px;
+    @apply shadow-8 rounded-lg;
   }
 
   .elevation9 {
-    background: #fafafa;
-    @apply shadow-9;
-    border-radius: 8px;
+    @apply shadow-9 rounded-lg;
   }
 
   .elevation12 {
-    background: #fafafa;
-    @apply shadow-12;
-    border-radius: 8px;
+    @apply shadow-12 rounded-lg;
   }
 
   .elevation16 {
-    background: #fafafa;
-    @apply shadow-16;
-    border-radius: 8px;
+    @apply shadow-16 rounded-lg;
   }
 
   .elevation24 {
-    background: #fafafa;
-    @apply shadow-24;
-    border-radius: 8px;
+    @apply shadow-24 rounded-lg;
   }
 }
