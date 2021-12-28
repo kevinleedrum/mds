@@ -9,6 +9,7 @@ import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
 import { ChartJsData, ChartJsOptions } from "./components/mx-chart/mx-chart";
 import { ChartType } from "chart.js";
 import { DialogOptions } from "./components/mx-dialog/mx-dialog";
+import { BtnType as BtnType1 } from "./components/mx-button/mx-button";
 import { PopoverOffset, PopoverPlacement } from "./utils/popover";
 import { IModalButton } from "./components/mx-modal/mx-modal";
 import { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
@@ -362,6 +363,10 @@ export namespace Components {
           * The URL for the thumbnail of the currently selected image.
          */
         "thumbnailUrl": string;
+        /**
+          * The [`btnType` prop](/components/buttons.html) for the Upload button.
+         */
+        "uploadBtnType": BtnType;
         /**
           * The text to display on the Upload button
          */
@@ -1545,6 +1550,10 @@ declare namespace LocalJSX {
           * The URL for the thumbnail of the currently selected image.
          */
         "thumbnailUrl"?: string;
+        /**
+          * The [`btnType` prop](/components/buttons.html) for the Upload button.
+         */
+        "uploadBtnType"?: BtnType;
         /**
           * The text to display on the Upload button
          */

@@ -12,6 +12,8 @@ export class MxImageUpload {
     this.assetName = 'image';
     /** Sets the width and height to 80px and changes the icon. */
     this.avatar = false;
+    /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
+    this.uploadBtnType = 'contained';
     /** Sets the thumbnail sizing strategy relative to the container. */
     this.thumbnailSize = 'cover';
     /** Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content. */
@@ -175,7 +177,7 @@ export class MxImageUpload {
           h("slot", { name: "uploaded" })),
         this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" },
           h("mx-circular-progress", { size: "2rem" })))),
-      this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : 'contained', onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)),
+      this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : this.uploadBtnType, onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)),
       this.hasInstructions && (h("p", { class: "caption1 my-16" },
         h("slot", { name: "instructions" }))),
       this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" },
@@ -256,6 +258,29 @@ export class MxImageUpload {
       "attribute": "avatar",
       "reflect": false,
       "defaultValue": "false"
+    },
+    "uploadBtnType": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "BtnType",
+        "resolved": "\"action\" | \"contained\" | \"outlined\" | \"text\"",
+        "references": {
+          "BtnType": {
+            "location": "import",
+            "path": "../mx-button/mx-button"
+          }
+        }
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "The [`btnType` prop](/components/buttons.html) for the Upload button."
+      },
+      "attribute": "upload-btn-type",
+      "reflect": false,
+      "defaultValue": "'contained'"
     },
     "thumbnailSize": {
       "type": "string",

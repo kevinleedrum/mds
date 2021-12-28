@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-54a36eac.js');
 const bodyScroll = require('./bodyScroll-0692b749.js');
-const portal = require('./portal-0b4649d0.js');
+const portal = require('./portal-f1986577.js');
 const transitions = require('./transitions-bd8ec9f0.js');
 require('./utils-1f7ef40d.js');
 
