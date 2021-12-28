@@ -89,10 +89,12 @@ const config = {
         'secondary-inverted': 'var(--mds-bg-secondary-inverted)',
         'gray': 'var(--mds-bg-gray)',
         'gray-inverted': 'var(--mds-bg-gray-inverted)',
+        'error': 'var(--mds-bg-error)',
       },
       textColor: {
         'primary': 'var(--mds-text-primary)',
         'primary-inverted': 'var(--mds-text-primary-inverted)',
+        'error': 'var(--mds-text-error)',
       },
       borderColor: {
         'primary': 'var(--mds-border-primary)',

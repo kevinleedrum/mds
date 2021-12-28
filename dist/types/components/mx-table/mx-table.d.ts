@@ -182,5 +182,6 @@ export declare class MxTable {
   onMxPageChange(e: {
     detail: PageChangeEventDetail;
   }): void;
+  setLastRowClass(): void;
   render(): any;
 }

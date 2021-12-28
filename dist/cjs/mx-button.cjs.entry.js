@@ -58,7 +58,7 @@ const MxButton = class {
     return str;
   }
   render() {
-    const buttonContent = (index.h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && index.h("i", { class: 'mr-8 text-3 ' + this.icon }), index.h("span", { class: "slot-content" }, index.h("slot", null)), this.dropdown && this.btnType === 'text' && index.h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (index.h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
+    const buttonContent = (index.h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" }, this.icon && index.h("i", { class: 'mr-8 text-3 ' + this.icon }), index.h("span", { class: "slot-content" }, index.h("slot", null)), this.dropdown && this.btnType === 'text' && index.h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (index.h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
     return (index.h(index.Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (index.h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (index.h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null }, this.dataAttributes), buttonContent))));
   }
   get element() { return index.getElement(this); }

@@ -293,13 +293,7 @@ const MxTable = class {
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
-    const rows = this.getTableRows();
-    if (!this.paginate) {
-      rows.forEach((row, i) => {
-        const addOrRemove = i === rows.length - 1 ? 'add' : 'remove';
-        row.classList[addOrRemove]('last-row');
-      });
-    }
+    this.setLastRowClass();
     requestAnimationFrame(this.setCellProps.bind(this));
   }
   componentDidRender() {
@@ -567,6 +561,15 @@ const MxTable = class {
       return;
     this.page = e.detail.page;
     this.rowsPerPage = e.detail.rowsPerPage;
+  }
+  setLastRowClass() {
+    if (this.paginate)
+      return;
+    const rows = this.getTableRows().filter(row => row.getAttribute('aria-hidden') !== 'true');
+    rows.forEach((row, i) => {
+      const addOrRemove = i === rows.length - 1 ? 'add' : 'remove';
+      row.classList[addOrRemove]('last-row');
+    });
   }
   render() {
     const checkAllCheckbox = this.checkable && this.showCheckAll && (h("mx-checkbox", { checked: this.allRowsChecked, class: this.showOperationsBar ? 'ml-24' : 'pr-4', indeterminate: this.someRowsChecked, onClick: this.onCheckAllClick.bind(this), "label-name": "Select all rows", "hide-label": true }));
