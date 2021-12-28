@@ -52,7 +52,7 @@ export class MxButton {
     return str;
   }
   render() {
-    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" },
+    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" },
       this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }),
       h("span", { class: "slot-content" },
         h("slot", null)),

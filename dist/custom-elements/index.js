@@ -463,7 +463,7 @@ const MxButton$1 = class extends HTMLElement {
     return str;
   }
   render() {
-    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
+    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
     return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null }, this.dataAttributes), buttonContent))));
   }
   get element() { return this; }
@@ -21076,13 +21076,7 @@ const MxTable$1 = class extends HTMLElement {
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
-    const rows = this.getTableRows();
-    if (!this.paginate) {
-      rows.forEach((row, i) => {
-        const addOrRemove = i === rows.length - 1 ? 'add' : 'remove';
-        row.classList[addOrRemove]('last-row');
-      });
-    }
+    this.setLastRowClass();
     requestAnimationFrame(this.setCellProps.bind(this));
   }
   componentDidRender() {
@@ -21350,6 +21344,15 @@ const MxTable$1 = class extends HTMLElement {
       return;
     this.page = e.detail.page;
     this.rowsPerPage = e.detail.rowsPerPage;
+  }
+  setLastRowClass() {
+    if (this.paginate)
+      return;
+    const rows = this.getTableRows().filter(row => row.getAttribute('aria-hidden') !== 'true');
+    rows.forEach((row, i) => {
+      const addOrRemove = i === rows.length - 1 ? 'add' : 'remove';
+      row.classList[addOrRemove]('last-row');
+    });
   }
   render() {
     const checkAllCheckbox = this.checkable && this.showCheckAll && (h("mx-checkbox", { checked: this.allRowsChecked, class: this.showOperationsBar ? 'ml-24' : 'pr-4', indeterminate: this.someRowsChecked, onClick: this.onCheckAllClick.bind(this), "label-name": "Select all rows", "hide-label": true }));
