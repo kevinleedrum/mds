@@ -1,3 +1,4 @@
+import { BtnType } from '../mx-button/mx-button';
 export declare class MxImageUpload {
   fileInput: HTMLInputElement;
   hasInstructions: boolean;
@@ -11,6 +12,8 @@ export declare class MxImageUpload {
   assetName: string;
   /** Sets the width and height to 80px and changes the icon. */
   avatar: boolean;
+  /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
+  uploadBtnType: BtnType;
   /** Sets the thumbnail sizing strategy relative to the container. */
   thumbnailSize: 'cover' | 'stretch' | 'contain' | 'auto';
   /** The height of the dropzone / thumbnail container (e.g. "400px" or "50%"). */
