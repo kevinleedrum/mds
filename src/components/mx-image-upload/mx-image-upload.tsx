@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Element, State, Method, Watch } from '@stencil/core';
+import { BtnType } from '../mx-button/mx-button';
 
 @Component({
   tag: 'mx-image-upload',
@@ -18,6 +19,8 @@ export class MxImageUpload {
   @Prop() assetName = 'image';
   /** Sets the width and height to 80px and changes the icon. */
   @Prop() avatar = false;
+  /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
+  @Prop() uploadBtnType: BtnType = 'contained';
   /** Sets the thumbnail sizing strategy relative to the container. */
   @Prop() thumbnailSize: 'cover' | 'stretch' | 'contain' | 'auto' = 'cover';
   /** The height of the dropzone / thumbnail container (e.g. "400px" or "50%"). */
@@ -241,7 +244,7 @@ export class MxImageUpload {
           <mx-button
             data-testid="upload-button"
             class="mt-16"
-            btnType={this.hasFile && !this.isUploading ? 'outlined' : 'contained'}
+            btnType={this.hasFile && !this.isUploading ? 'outlined' : this.uploadBtnType}
             onClick={this.onButtonClick.bind(this)}
             disabled={this.isUploading}
           >
