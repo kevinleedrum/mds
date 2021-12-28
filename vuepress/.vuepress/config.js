@@ -10,7 +10,7 @@ module.exports = {
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
     ['link', { rel: 'stylesheet', href: '/styles/mds-core.css' }],
-    ['script', { src: 'https://unpkg.com/phosphor-icons' }],
+    ['script', { src: 'https://unpkg.com/phosphor-icons@1.3.1' }],
     ['script', { type: 'module', src: '/components/mds-components.esm.js' }],
     ['script', { nomodule: '', src: '/components/mds-components.js' }],
     ['script', { src: '/fixProdInitialLoad.js' }],

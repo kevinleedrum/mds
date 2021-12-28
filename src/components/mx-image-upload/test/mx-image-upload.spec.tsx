@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+import { MxButton } from '../../mx-button/mx-button';
 import { MxImageUpload } from '../mx-image-upload';
 
 describe('mx-image-upload', () => {
@@ -9,7 +10,7 @@ describe('mx-image-upload', () => {
   let button: HTMLMxButtonElement;
   beforeEach(async () => {
     page = await newSpecPage({
-      components: [MxImageUpload],
+      components: [MxImageUpload, MxButton],
       html: `
       <mx-image-upload>
         <span slot="uploaded">File uploaded!</span>
@@ -19,7 +20,7 @@ describe('mx-image-upload', () => {
     root = page.root;
     input = root.querySelector('input[type="file"]');
     dropzoneWrapper = root.querySelector('[data-testid="dropzone-wrapper"]');
-    button = root.querySelector('[data-testid="upload-button"]');
+    button = root.querySelector('[data-testid="upload-button"]').closest('mx-button');
   });
 
   it('renders an input[type="file"]', async () => {
@@ -95,6 +96,12 @@ describe('mx-image-upload', () => {
     expect(input.getAttribute('name')).toBe('abc');
   });
 
+  it('sets the upload button btnType prop to the uploadBtnType prop value', async () => {
+    root.uploadBtnType = 'outlined';
+    await page.waitForChanges();
+    expect(button.btnType).toBe('outlined');
+  });
+
   it('hides the button if showButton is false', async () => {
     expect(button).not.toBeNull();
     root.showButton = false;
@@ -128,11 +135,10 @@ describe('mx-image-upload', () => {
 
   it('disables the button and shows a progress indicator if isUploading is true', async () => {
     expect(button.disabled).toBeFalsy();
-    expect(button.attributes.getNamedItem('disabled')).toBeNull();
     expect(root.querySelector('[data-testid="progress"]')).toBeNull();
     root.isUploading = true;
     await page.waitForChanges();
-    expect(button.attributes.getNamedItem('disabled')).not.toBeNull();
+    expect(button.disabled).toBe(true);
     expect(root.querySelector('[data-testid="progress"]')).not.toBeNull();
   });
 
