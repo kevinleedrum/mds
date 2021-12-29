@@ -56,7 +56,7 @@ export class MxConfirmInput implements IMxInputProps {
   }
 
   onCancel(e?: MouseEvent) {
-    if (e) e.stopPropagation();
+    if (e) e.stopPropagation(); // Do not focus input when clicking cancel button
     if (!this.mxInput) return;
     this.mxInput.value = this.previousValue;
     if (document.activeElement && this.mxInput.contains(document.activeElement))
@@ -64,11 +64,11 @@ export class MxConfirmInput implements IMxInputProps {
   }
 
   onConfirm(e?: MouseEvent) {
-    if (e) e.stopPropagation();
+    if (e) e.stopPropagation(); // Do not focus input when clicking confirm button
     this.value = this.mxInput.value;
     if (this.mxInput) {
       const input = this.mxInput.querySelector('input');
-      this.isEmittingEventAfterConfirm = true;
+      this.isEmittingEventAfterConfirm = true; // Stop blocking input events temporarily
       input && input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
     }
     if (document.activeElement) (document.activeElement as HTMLElement).blur();
@@ -79,7 +79,7 @@ export class MxConfirmInput implements IMxInputProps {
   }
 
   async onFocusout() {
-    await new Promise(requestAnimationFrame);
+    await new Promise(requestAnimationFrame); // Wait a tick in case confirm button was clicked
     if (document.activeElement && this.mxInput.contains(document.activeElement)) return;
     this.isFocused = false;
     this.onCancel();
@@ -95,7 +95,7 @@ export class MxConfirmInput implements IMxInputProps {
 
   onInput(e: InputEvent) {
     if (!this.isEmittingEventAfterConfirm) {
-      e.stopPropagation();
+      e.stopPropagation(); // Only emit input event after confirmation
     } else {
       this.isEmittingEventAfterConfirm = false;
     }
