@@ -142,16 +142,28 @@ describe('mx-image-upload', () => {
     expect(root.querySelector('[data-testid="progress"]')).not.toBeNull();
   });
 
-  it('emits both an input and a change event when Remove is clicked', async () => {
+  it('emits an mxThumbnailChange event when thumbnailUrl is changed', async () => {
+    const listener = jest.fn();
+    root.addEventListener('mxThumbnailChange', listener);
+    root.thumbnailUrl = 'test.jpg';
+    await page.waitForChanges();
+    expect(listener).toHaveBeenCalled();
+    expect(listener.mock.calls[0][0].detail).toBe('test.jpg');
+  });
+
+  it('emits input, change, and mxThumbnailChange events when Remove is clicked', async () => {
     root.thumbnailUrl = 'test.jpg';
     await page.waitForChanges();
     const listener = jest.fn();
     root.addEventListener('input', listener);
     root.addEventListener('change', listener);
+    root.addEventListener('mxThumbnailChange', listener);
     button.click();
-    expect(listener).toHaveBeenCalledTimes(2);
+    expect(listener).toHaveBeenCalledTimes(3);
     const value = listener.mock.calls[0][0].target.value;
+    const thumbnailUrl = listener.mock.calls[2][0].target.value;
     expect(value).toBe('');
+    expect(thumbnailUrl).toBeFalsy();
   });
 
   it('removes the thumbnail when the removeFile method is called', async () => {
