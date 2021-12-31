@@ -11,7 +11,7 @@
       color: var(--mds-text-tab-selected);
     }
 
-    &:not([aria-selected='true'], :active) i {
+    &:not([aria-selected='true'], :active) i:not(.mx-badge i) {
       color: var(--mds-text-tab-icon);
       &.icon-only {
         color: var(--mds-text-tab-icon-only);
