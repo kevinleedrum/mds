@@ -5,7 +5,7 @@ import { Component, Host, h, Prop, Element } from '@stencil/core';
   shadow: false,
 })
 export class MxBadge {
-  childElement: HTMLElement;
+  isStandalone: boolean = true;
 
   @Element() private element: HTMLElement;
 
@@ -26,8 +26,8 @@ export class MxBadge {
   /** Anchor the badge to the left of the wrapped content */
   @Prop() left: boolean = false;
 
-  get isStandalone() {
-    return !this.element.firstElementChild;
+  componentWillLoad() {
+    this.isStandalone = !this.element.firstElementChild;
   }
 
   get isIconOnly() {
