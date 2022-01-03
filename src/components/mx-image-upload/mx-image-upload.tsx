@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, State, Method, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, Element, State, Method, Watch, Event, EventEmitter } from '@stencil/core';
 import { BtnType } from '../mx-button/mx-button';
 
 @Component({
@@ -17,6 +17,8 @@ export class MxImageUpload {
   @Prop() acceptPdf = false;
   /** Replaces the word "image" in the default dropzone text (i.e. "No image to show"). */
   @Prop() assetName = 'image';
+  /** Assistive text to display under the dropzone. To add markup, use the `instructions` slot directly instead. */
+  @Prop() assistiveText: string;
   /** Sets the width and height to 80px and changes the icon. */
   @Prop() avatar = false;
   /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
@@ -56,9 +58,13 @@ export class MxImageUpload {
 
   @Element() element: HTMLMxTableElement;
 
+  /** Emits the thumbnail url as `CustomEvent.detail` whenever it changes (i.e. after generating a data URI) */
+  @Event() mxThumbnailChange: EventEmitter<string>;
+
   @Watch('thumbnailUrl')
   onThumbnailUrlChange() {
     if (this.thumbnailUrl) this.isUploaded = true;
+    this.mxThumbnailChange.emit(this.thumbnailUrl);
   }
 
   connectedCallback() {
@@ -78,8 +84,9 @@ export class MxImageUpload {
     this.isUploaded = false;
     this.isUploading = false;
     this.fileInput.value = '';
-    this.fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-    this.fileInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+    this.fileInput.dispatchEvent(new window.Event('change', { bubbles: true, cancelable: true }));
+    this.fileInput.dispatchEvent(new window.Event('input', { bubbles: true, cancelable: true }));
+    this.mxThumbnailChange.emit(null);
   }
 
   @Method()
@@ -113,6 +120,7 @@ export class MxImageUpload {
     const reader = new FileReader();
     reader.onload = () => {
       this.thumbnailDataUri = reader.result as string;
+      this.mxThumbnailChange.emit(this.thumbnailDataUri);
     };
     reader.readAsDataURL(file);
   }
@@ -251,9 +259,9 @@ export class MxImageUpload {
             {this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel}
           </mx-button>
         )}
-        {this.hasInstructions && (
+        {(this.hasInstructions || this.assistiveText) && (
           <p class="caption1 my-16">
-            <slot name="instructions"></slot>
+            <slot name="instructions">{this.assistiveText}</slot>
           </p>
         )}
         {this.hasSuccess && (

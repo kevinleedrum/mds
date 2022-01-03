@@ -9,9 +9,7 @@ The component wraps an [`<input type="file">`](https://developer.mozilla.org/en-
 <section class="mds">
   <div class="flex flex-col my-20 space-y-40">
 <!-- #region image-uploads -->
-    <mx-image-upload @input="onInput">
-      <span slot="instructions">Upload instructions go here</span>
-    </mx-image-upload>
+    <mx-image-upload @input="onInput" assistive-text="This is assistive text" />
     <mx-image-upload show-icon="false" asset-name="logo" @input="onInput">
       <span slot="instructions">
         The <code>assetName</code> prop is set to "logo" in this example.
@@ -128,6 +126,7 @@ Set the `showButton` prop to `false` if you want to leverage the `selectFile` an
 | Property            | Attribute             | Description                                                                                                              | Type                                              | Default       |
 | ------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- | ------------- |
 | `acceptImage`       | `accept-image`        | Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files. Set both to `false` to accept any file. | `boolean`                                         | `true`        |
+| `assistiveText`     | `assistive-text`      | Assistive text to display under the dropzone. To add markup, use the `instructions` slot directly instead.               | `string`                                          | `undefined`   |
 | `acceptPdf`         | `accept-pdf`          | Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files. Set both to `false` to accept any file. | `boolean`                                         | `false`       |
 | `assetName`         | `asset-name`          | Replaces the word "image" in the default dropzone text (i.e. "No image to show").                                        | `string`                                          | `'image'`     |
 | `avatar`            | `avatar`              | Sets the width and height to 80px and changes the icon.                                                                  | `boolean`                                         | `false`       |
@@ -146,6 +145,12 @@ Set the `showButton` prop to `false` if you want to leverage the `selectFile` an
 | `uploadBtnType`     | `upload-btn-type`     | The [`btnType` prop](/components/buttons.html) for the Upload button.                                                    | `"action" \| "contained" \| "outlined" \| "text"` | `'contained'` |
 | `uploadButtonLabel` | `upload-button-label` | The text to display on the Upload button                                                                                 | `string`                                          | `'Upload'`    |
 | `width`             | `width`               | The width of the dropzone / thumbnail container (e.g. "400px" or "50%").                                                 | `string`                                          | `undefined`   |
+
+### Image Upload Events
+
+| Event               | Description                                                                                            | Type                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------ | --------------------- |
+| `mxThumbnailChange` | Emits the thumbnail url as `CustomEvent.detail` whenever it changes (i.e. after generating a data URI) | `CustomEvent<string>` |
 
 ### Image Upload Methods
 
