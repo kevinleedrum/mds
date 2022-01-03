@@ -1,11 +1,43 @@
 import { Component, Host, h, Prop, State, Watch, Element } from '@stencil/core';
 import { uuidv4, propagateDataAttributes } from '../../utils/utils';
 
+export interface IMxInputProps {
+  name: string;
+  inputId: string;
+  label: string;
+  placeholder: string;
+  value: string;
+  type: string;
+  dense: boolean;
+  disabled: boolean;
+  readonly: boolean;
+  maxlength: number;
+  leftIcon: string | MxInputIcon[];
+  rightIcon: string | MxInputIcon[];
+  suffix: string;
+  outerContainerClass: string;
+  labelClass: string;
+  error: boolean;
+  assistiveText: string;
+  floatLabel: boolean;
+  textarea: boolean;
+  textareaHeight: string;
+}
+
+export type MxInputIcon = {
+  /** The class name of the icon */
+  icon: string;
+  /** If providing an `onClick` handler, this will be used for the rendered button's aria-label */
+  ariaLabel?: string;
+  /** A click handler for the icon. If provided, the icon will be wrapped in a <button> element */
+  onClick?: (event: MouseEvent) => void;
+};
+
 @Component({
   tag: 'mx-input',
   shadow: false,
 })
-export class MxInput {
+export class MxInput implements IMxInputProps {
   dataAttributes = {};
   textInput!: HTMLInputElement;
   textArea!: HTMLTextAreaElement;
@@ -26,10 +58,10 @@ export class MxInput {
   @Prop() disabled: boolean = false;
   @Prop() readonly: boolean = false;
   @Prop() maxlength: number;
-  /** The class name of the icon to show on the left side of the input */
-  @Prop() leftIcon: string;
-  /** The class name of the icon to show on the right side of the input */
-  @Prop() rightIcon: string;
+  /** The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler */
+  @Prop() leftIcon: string | MxInputIcon[];
+  /** The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler */
+  @Prop() rightIcon: string | MxInputIcon[];
   /** Text shown to the right of the input value */
   @Prop() suffix: string;
   @Prop() outerContainerClass: string = '';
@@ -75,9 +107,27 @@ export class MxInput {
     this.isFocused = false;
   }
 
+  onContainerClick() {
+    if (!this.disabled && !this.readonly) this.workingElem.focus();
+  }
+
   onInput(e: InputEvent) {
     this.characterCount = (e.target as HTMLInputElement).value.length;
     this.value = (e.target as HTMLInputElement).value;
+  }
+
+  getIconJsx(icon: MxInputIcon) {
+    return icon.onClick ? (
+      <button
+        class="inline-flex items-center justify-center cursor-pointer"
+        aria-label={icon.ariaLabel}
+        onClick={icon.onClick}
+      >
+        <i class={icon.icon}></i>
+      </button>
+    ) : (
+      <i class={icon.icon + ' pointer-events-none'}></i>
+    );
   }
 
   get workingElem() {
@@ -129,19 +179,29 @@ export class MxInput {
   }
 
   get leftIconWrapperClass() {
-    let str = 'flex items-center h-full pointer-events-none pl-16';
+    let str = 'flex items-center h-full pl-16 space-x-16';
     if (this.isFocused || this.error) str += ' -ml-1'; // prevent shifting due to border-width change
     return str;
   }
 
   get rightContentClass() {
-    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8 pointer-events-none';
+    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8';
     if (this.isFocused || this.error) str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
   }
 
   get textareaClass() {
     return this.textarea ? ' textarea items-start' : '';
+  }
+
+  get leftIcons(): MxInputIcon[] {
+    if (typeof this.leftIcon === 'string') return [{ icon: this.leftIcon }];
+    return this.leftIcon;
+  }
+
+  get rightIcons(): MxInputIcon[] {
+    if (typeof this.rightIcon === 'string') return [{ icon: this.rightIcon }];
+    return this.rightIcon;
   }
 
   render() {
@@ -154,12 +214,8 @@ export class MxInput {
       <Host class={'mx-input block' + (this.disabled ? ' disabled' : '')}>
         {this.label && !this.floatLabel && labelJsx}
 
-        <div class={this.containerClass}>
-          {this.leftIcon && (
-            <div class={this.leftIconWrapperClass}>
-              <i class={this.leftIcon}></i>
-            </div>
-          )}
+        <div class={this.containerClass} onClick={this.onContainerClick.bind(this)}>
+          {this.leftIcon && <div class={this.leftIconWrapperClass}>{this.leftIcons.map(this.getIconJsx)}</div>}
 
           {this.label && this.floatLabel && labelJsx}
 
@@ -203,17 +259,19 @@ export class MxInput {
           {!this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (
             <span class={this.rightContentClass}>
               {this.maxlength && (
-                <span data-testid="character-count" class="character-count">
+                <span data-testid="character-count" class="character-count pointer-events-none">
                   {this.characterCount}/{this.maxlength}
                 </span>
               )}
               {this.suffix && (
-                <span data-testid="suffix" class="suffix flex items-center h-full px-4">
+                <span data-testid="suffix" class="suffix flex items-center h-full px-4 pointer-events-none">
                   {this.suffix}
                 </span>
               )}
-              {this.error && <i class="mds-warning-circle text-icon"></i>}
-              {this.rightIcon && !this.error && <i class={this.rightIcon}></i>}
+              {this.error && <i class="mds-warning-circle text-icon pointer-events-none"></i>}
+              {this.rightIcon && !this.error && (
+                <span class="flex items-center space-x-16">{this.rightIcons.map(this.getIconJsx)}</span>
+              )}
             </span>
           )}
         </div>

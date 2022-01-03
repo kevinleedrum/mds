@@ -1,6 +1,10 @@
 # Inputs & Textareas
 
+The `mx-input` component serves as both a single-line and multi-line text field. Optional elements
+include icons, assistive text, and a label.
+
 The icons for Moxi Design System are from [https://phosphoricons.com/](https://phosphoricons.com/).
+Icons that are embedded in the design system are also available.
 
 ## Standard Input
 
@@ -23,7 +27,13 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
         <mx-input label="Floating Label & Left Icon" float-label left-icon="ph-apple-logo"></mx-input>
       </div>
       <div class="my-20">
-        <mx-input label="Label & Right Icon" right-icon="ph-apple-logo"></mx-input>
+        <mx-input
+          label="Label & Clickable Right Icons"
+          :right-icon.prop="[
+            { icon: 'ph-x', onClick: clickHandler },
+            { icon: 'ph-check', onClick: clickHandler },
+          ]"
+        />
       </div>
       <div class="my-20">
         <mx-input label="Label & Assistive Text" assistive-text="Helpful text about input"></mx-input>
@@ -59,7 +69,14 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
         <mx-input label="Floating Label & Left Icon" float-label left-icon="ph-apple-logo" dense></mx-input>
       </div>
       <div class="my-20">
-        <mx-input label="Label & Right Icon" right-icon="ph-apple-logo" dense></mx-input>
+        <mx-input
+          label="Label & Clickable Right Icons"
+          :right-icon.prop="[
+            { icon: 'ph-x', onClick: clickHandler },
+            { icon: 'ph-check', onClick: clickHandler },
+          ]"
+          dense
+        />
       </div>
       <div class="my-20">
         <mx-input label="Label & Assistive Text" assistive-text="Helpful text about input" dense></mx-input>
@@ -97,32 +114,50 @@ The icons for Moxi Design System are from [https://phosphoricons.com/](https://p
   <!-- #endregion textareas -->
 </section>
 
-<<< @/vuepress/components/inputs.md#textareas
+## Click-to-edit inputs with confirmation
+
+The `mx-confirm-input` component wraps the `mx-input` component, and provides additional edit-in-place behaviors.
+
+- &bull; If a `value` is present, the input has no border or background color when not hovered or focused.
+- &bull; If <kbd>Escape</kbd> is pressed, or if the <i class="mds-x"></i> icon is clicked, then changes inside the input are discarded.
+- &bull; If <kbd>Enter</kbd> is pressed, or if the <i class="mds-check"></i> icon is clicked, then the `value` is updated and an `input` event is fired.
+
+<section class="mds">
+  <div class="space-y-20 my-40">
+    <!-- #region confirm-input -->
+    <mx-confirm-input placeholder="Placeholder" value="Click to edit this value." />
+    <mx-confirm-input float-label label="Label" value="" />
+    <mx-confirm-input disabled value="This is a value, but the input is disabled." />
+    <!-- #endregion confirm-input -->
+  </div>
+</section>
+
+<<< @/vuepress/components/inputs.md#confirm-input
 
 ### Properties
 
-| Property              | Attribute               | Description                                                                     | Type      | Default     |
-| --------------------- | ----------------------- | ------------------------------------------------------------------------------- | --------- | ----------- |
-| `assistiveText`       | `assistive-text`        |                                                                                 | `string`  | `undefined` |
-| `dense`               | `dense`                 |                                                                                 | `boolean` | `false`     |
-| `disabled`            | `disabled`              |                                                                                 | `boolean` | `false`     |
-| `error`               | `error`                 |                                                                                 | `boolean` | `false`     |
-| `floatLabel`          | `float-label`           |                                                                                 | `boolean` | `false`     |
-| `inputId`             | `input-id`              | The `id` attribute for the text input                                           | `string`  | `undefined` |
-| `label`               | `label`                 | Text for the label element                                                      | `string`  | `undefined` |
-| `labelClass`          | `label-class`           |                                                                                 | `string`  | `''`        |
-| `leftIcon`            | `left-icon`             | The class name of the icon to show on the left side of the input                | `string`  | `undefined` |
-| `maxlength`           | `maxlength`             |                                                                                 | `number`  | `undefined` |
-| `name`                | `name`                  | The `name` attribute for the text input                                         | `string`  | `undefined` |
-| `outerContainerClass` | `outer-container-class` |                                                                                 | `string`  | `''`        |
-| `placeholder`         | `placeholder`           | Placeholder text for the input. This will be ignored if `floatLabel` is `true`. | `string`  | `undefined` |
-| `readonly`            | `readonly`              |                                                                                 | `boolean` | `false`     |
-| `rightIcon`           | `right-icon`            | The class name of the icon to show on the right side of the input               | `string`  | `undefined` |
-| `suffix`              | `suffix`                | Text shown to the right of the input value                                      | `string`  | `undefined` |
-| `textarea`            | `textarea`              | Display a multi-line `textarea` instead of an `input`                           | `boolean` | `false`     |
-| `textareaHeight`      | `textarea-height`       |                                                                                 | `string`  | `'250px'`   |
-| `type`                | `type`                  | The `type` attribute for the text input                                         | `string`  | `'text'`    |
-| `value`               | `value`                 |                                                                                 | `string`  | `undefined` |
+| Property              | Attribute               | Description                                                                                                                                          | Type                      | Default     |
+| --------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------- |
+| `assistiveText`       | `assistive-text`        |                                                                                                                                                      | `string`                  | `undefined` |
+| `dense`               | `dense`                 |                                                                                                                                                      | `boolean`                 | `false`     |
+| `disabled`            | `disabled`              |                                                                                                                                                      | `boolean`                 | `false`     |
+| `error`               | `error`                 |                                                                                                                                                      | `boolean`                 | `false`     |
+| `floatLabel`          | `float-label`           |                                                                                                                                                      | `boolean`                 | `false`     |
+| `inputId`             | `input-id`              | The `id` attribute for the text input                                                                                                                | `string`                  | `undefined` |
+| `label`               | `label`                 | Text for the label element                                                                                                                           | `string`                  | `undefined` |
+| `labelClass`          | `label-class`           |                                                                                                                                                      | `string`                  | `''`        |
+| `leftIcon`            | `left-icon`             | The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler  | `MxInputIcon[] \| string` | `undefined` |
+| `maxlength`           | `maxlength`             |                                                                                                                                                      | `number`                  | `undefined` |
+| `name`                | `name`                  | The `name` attribute for the text input                                                                                                              | `string`                  | `undefined` |
+| `outerContainerClass` | `outer-container-class` |                                                                                                                                                      | `string`                  | `''`        |
+| `placeholder`         | `placeholder`           | Placeholder text for the input. This will be ignored if `floatLabel` is `true`.                                                                      | `string`                  | `undefined` |
+| `readonly`            | `readonly`              |                                                                                                                                                      | `boolean`                 | `false`     |
+| `rightIcon`           | `right-icon`            | The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler | `MxInputIcon[] \| string` | `undefined` |
+| `suffix`              | `suffix`                | Text shown to the right of the input value                                                                                                           | `string`                  | `undefined` |
+| `textarea`            | `textarea`              | Display a multi-line `textarea` instead of an `input`                                                                                                | `boolean`                 | `false`     |
+| `textareaHeight`      | `textarea-height`       |                                                                                                                                                      | `string`                  | `'250px'`   |
+| `type`                | `type`                  | The `type` attribute for the text input                                                                                                              | `string`                  | `'text'`    |
+| `value`               | `value`                 |                                                                                                                                                      | `string`                  | `undefined` |
 
 ### CSS Variables
 
@@ -134,6 +169,11 @@ export default {
     return {
       inputValue: 'Input text'
     }
+  },
+  methods: {
+    clickHandler() {
+      console.log('Icon clicked!')
+    },
   }
 }
 </script>

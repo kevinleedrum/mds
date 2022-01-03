@@ -19,6 +19,7 @@
 * Import Component CSS
 ***************************/
 @import './mx-input/index.scss';
+@import './mx-confirm-input/index.scss';
 @import './mx-search/index.scss';
 @import './mx-button/index.scss';
 @import './mx-icon-button/index.scss';
