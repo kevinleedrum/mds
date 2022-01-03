@@ -3,6 +3,7 @@ export declare class MxSwitch {
   dataAttributes: {};
   name: string;
   value: string;
+  labelClass: string;
   labelName: string;
   checked: boolean;
   element: HTMLMxInputElement;

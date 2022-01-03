@@ -12,6 +12,7 @@
 | `acceptImage`       | `accept-image`        | Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. | `boolean`                                         | `true`        |
 | `acceptPdf`         | `accept-pdf`          | Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. | `boolean`                                         | `false`       |
 | `assetName`         | `asset-name`          | Replaces the word "image" in the default dropzone text (i.e. "No image to show").                                         | `string`                                          | `'image'`     |
+| `assistiveText`     | `assistive-text`      | Assistive text to display under the dropzone. To add markup, use the `instructions` slot directly instead.                | `string`                                          | `undefined`   |
 | `avatar`            | `avatar`              | Sets the width and height to 80px and changes the icon.                                                                   | `boolean`                                         | `false`       |
 | `height`            | `height`              | The height of the dropzone / thumbnail container (e.g. "400px" or "50%").                                                 | `string`                                          | `undefined`   |
 | `icon`              | `icon`                | The class name of the icon to use instead of the default icon.                                                            | `string`                                          | `undefined`   |
@@ -28,6 +29,13 @@
 | `uploadBtnType`     | `upload-btn-type`     | The [`btnType` prop](/components/buttons.html) for the Upload button.                                                     | `"action" \| "contained" \| "outlined" \| "text"` | `'contained'` |
 | `uploadButtonLabel` | `upload-button-label` | The text to display on the Upload button                                                                                  | `string`                                          | `'Upload'`    |
 | `width`             | `width`               | The width of the dropzone / thumbnail container (e.g. "400px" or "50%").                                                  | `string`                                          | `undefined`   |
+
+
+## Events
+
+| Event               | Description                                                                                            | Type                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------ | --------------------- |
+| `mxThumbnailChange` | Emits the thumbnail url as `CustomEvent.detail` whenever it changes (i.e. after generating a data URI) | `CustomEvent<string>` |
 
 
 ## Methods

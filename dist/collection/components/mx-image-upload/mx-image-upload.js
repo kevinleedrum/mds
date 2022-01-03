@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, State, Method, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, Element, State, Method, Watch, Event } from '@stencil/core';
 export class MxImageUpload {
   constructor() {
     this.hasInstructions = false;
@@ -36,6 +36,7 @@ export class MxImageUpload {
   onThumbnailUrlChange() {
     if (this.thumbnailUrl)
       this.isUploaded = true;
+    this.mxThumbnailChange.emit(this.thumbnailUrl);
   }
   connectedCallback() {
     this.onThumbnailUrlChange();
@@ -52,8 +53,9 @@ export class MxImageUpload {
     this.isUploaded = false;
     this.isUploading = false;
     this.fileInput.value = '';
-    this.fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-    this.fileInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+    this.fileInput.dispatchEvent(new window.Event('change', { bubbles: true, cancelable: true }));
+    this.fileInput.dispatchEvent(new window.Event('input', { bubbles: true, cancelable: true }));
+    this.mxThumbnailChange.emit(null);
   }
   async selectFile() {
     if (this.hasFile)
@@ -88,6 +90,7 @@ export class MxImageUpload {
     const reader = new FileReader();
     reader.onload = () => {
       this.thumbnailDataUri = reader.result;
+      this.mxThumbnailChange.emit(this.thumbnailDataUri);
     };
     reader.readAsDataURL(file);
   }
@@ -178,8 +181,8 @@ export class MxImageUpload {
         this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" },
           h("mx-circular-progress", { size: "2rem" })))),
       this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : this.uploadBtnType, onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)),
-      this.hasInstructions && (h("p", { class: "caption1 my-16" },
-        h("slot", { name: "instructions" }))),
+      (this.hasInstructions || this.assistiveText) && (h("p", { class: "caption1 my-16" },
+        h("slot", { name: "instructions" }, this.assistiveText))),
       this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" },
         h("slot", { name: "success" }))),
       this.hasError && (h("p", { class: "upload-error caption1 my-16" },
@@ -240,6 +243,23 @@ export class MxImageUpload {
       "attribute": "asset-name",
       "reflect": false,
       "defaultValue": "'image'"
+    },
+    "assistiveText": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Assistive text to display under the dropzone. To add markup, use the `instructions` slot directly instead."
+      },
+      "attribute": "assistive-text",
+      "reflect": false
     },
     "avatar": {
       "type": "boolean",
@@ -534,6 +554,22 @@ export class MxImageUpload {
     "isFileSelected": {},
     "thumbnailDataUri": {}
   }; }
+  static get events() { return [{
+      "method": "mxThumbnailChange",
+      "name": "mxThumbnailChange",
+      "bubbles": true,
+      "cancelable": true,
+      "composed": true,
+      "docs": {
+        "tags": [],
+        "text": "Emits the thumbnail url as `CustomEvent.detail` whenever it changes (i.e. after generating a data URI)"
+      },
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      }
+    }]; }
   static get methods() { return {
     "removeFile": {
       "complexType": {

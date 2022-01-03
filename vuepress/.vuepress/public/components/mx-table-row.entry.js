@@ -57,7 +57,14 @@ const MxTableRow = class {
     this.isMobileExpanded = false;
     this.isMobileCollapsing = false;
   }
-  async onCollapseNestedRowsChange() {
+  onCollapseNestedRowsChange() {
+    this.toggleNestedRows();
+  }
+  async onMinWidthsChange() {
+    if (!this.collapseNestedRows)
+      return;
+    // Ensure that collapsed, nested rows are hidden after switching to/from mobile UI
+    await new Promise(requestAnimationFrame);
     this.toggleNestedRows();
   }
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
@@ -411,7 +418,8 @@ const MxTableRow = class {
   }
   get element() { return getElement(this); }
   static get watchers() { return {
-    "collapseNestedRows": ["onCollapseNestedRowsChange"]
+    "collapseNestedRows": ["onCollapseNestedRowsChange"],
+    "minWidths": ["onMinWidthsChange"]
   }; }
 };
 

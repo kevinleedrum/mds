@@ -1,8 +1,9 @@
-import { r as registerInstance, h, H as Host, g as getElement } from './index-de1da671.js';
+import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-de1da671.js';
 
 const MxImageUpload = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
+    this.mxThumbnailChange = createEvent(this, "mxThumbnailChange", 7);
     this.hasInstructions = false;
     this.hasSuccess = false;
     this.hasError = false;
@@ -38,6 +39,7 @@ const MxImageUpload = class {
   onThumbnailUrlChange() {
     if (this.thumbnailUrl)
       this.isUploaded = true;
+    this.mxThumbnailChange.emit(this.thumbnailUrl);
   }
   connectedCallback() {
     this.onThumbnailUrlChange();
@@ -54,8 +56,9 @@ const MxImageUpload = class {
     this.isUploaded = false;
     this.isUploading = false;
     this.fileInput.value = '';
-    this.fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-    this.fileInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+    this.fileInput.dispatchEvent(new window.Event('change', { bubbles: true, cancelable: true }));
+    this.fileInput.dispatchEvent(new window.Event('input', { bubbles: true, cancelable: true }));
+    this.mxThumbnailChange.emit(null);
   }
   async selectFile() {
     if (this.hasFile)
@@ -90,6 +93,7 @@ const MxImageUpload = class {
     const reader = new FileReader();
     reader.onload = () => {
       this.thumbnailDataUri = reader.result;
+      this.mxThumbnailChange.emit(this.thumbnailDataUri);
     };
     reader.readAsDataURL(file);
   }
@@ -157,7 +161,7 @@ const MxImageUpload = class {
       iconJsx = h("i", { "data-testid": "image-icon", class: 'mds-image text-icon' + (this.showDropzoneText ? ' mb-8' : '') });
     }
     return (h(Host, { class: "mx-image-upload inline-block", style: { width: this.dropzoneWidth } }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer", onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0 pointer-events-none ' +
-        (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : this.uploadBtnType, onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)), this.hasInstructions && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
+        (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : this.uploadBtnType, onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)), (this.hasInstructions || this.assistiveText) && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }, this.assistiveText))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

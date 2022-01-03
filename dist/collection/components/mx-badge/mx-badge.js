@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
 export class MxBadge {
   constructor() {
+    this.isStandalone = true;
     /** Make the corners a little more square (best for standalone text) */
     this.squared = false;
     /** Offset badge inward by this many pixels (e.g. 10 for icon buttons) */
@@ -10,8 +11,8 @@ export class MxBadge {
     /** Anchor the badge to the left of the wrapped content */
     this.left = false;
   }
-  get isStandalone() {
-    return !this.element.firstElementChild;
+  componentWillLoad() {
+    this.isStandalone = !this.element.firstElementChild;
   }
   get isIconOnly() {
     return this.icon && this.value === undefined;
