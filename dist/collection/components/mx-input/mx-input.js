@@ -40,9 +40,17 @@ export class MxInput {
   onBlur() {
     this.isFocused = false;
   }
+  onContainerClick() {
+    if (!this.disabled && !this.readonly)
+      this.workingElem.focus();
+  }
   onInput(e) {
     this.characterCount = e.target.value.length;
     this.value = e.target.value;
+  }
+  getIconJsx(icon) {
+    return icon.onClick ? (h("button", { class: "inline-flex items-center justify-center cursor-pointer", "aria-label": icon.ariaLabel, onClick: icon.onClick },
+      h("i", { class: icon.icon }))) : (h("i", { class: icon.icon + ' pointer-events-none' }));
   }
   get workingElem() {
     return this.textarea ? this.textArea : this.textInput;
@@ -100,13 +108,13 @@ export class MxInput {
     return str;
   }
   get leftIconWrapperClass() {
-    let str = 'flex items-center h-full pointer-events-none pl-16';
+    let str = 'flex items-center h-full pl-16 space-x-16';
     if (this.isFocused || this.error)
       str += ' -ml-1'; // prevent shifting due to border-width change
     return str;
   }
   get rightContentClass() {
-    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8 pointer-events-none';
+    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8';
     if (this.isFocused || this.error)
       str += ' -mr-1'; // prevent shifting due to border-width change
     return str;
@@ -114,23 +122,32 @@ export class MxInput {
   get textareaClass() {
     return this.textarea ? ' textarea items-start' : '';
   }
+  get leftIcons() {
+    if (typeof this.leftIcon === 'string')
+      return [{ icon: this.leftIcon }];
+    return this.leftIcon;
+  }
+  get rightIcons() {
+    if (typeof this.rightIcon === 'string')
+      return [{ icon: this.rightIcon }];
+    return this.rightIcon;
+  }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames }, this.label));
     return (h(Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') },
       this.label && !this.floatLabel && labelJsx,
-      h("div", { class: this.containerClass },
-        this.leftIcon && (h("div", { class: this.leftIconWrapperClass },
-          h("i", { class: this.leftIcon }))),
+      h("div", { class: this.containerClass, onClick: this.onContainerClick.bind(this) },
+        this.leftIcon && h("div", { class: this.leftIconWrapperClass }, this.leftIcons.map(this.getIconJsx)),
         this.label && this.floatLabel && labelJsx,
         !this.textarea ? (h("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (h("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)),
         !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass },
-          this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" },
+          this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count pointer-events-none" },
             this.characterCount,
             "/",
             this.maxlength)),
-          this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4" }, this.suffix)),
-          this.error && h("i", { class: "mds-warning-circle text-icon" }),
-          this.rightIcon && !this.error && h("i", { class: this.rightIcon })))),
+          this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4 pointer-events-none" }, this.suffix)),
+          this.error && h("i", { class: "mds-warning-circle text-icon pointer-events-none" }),
+          this.rightIcon && !this.error && (h("span", { class: "flex items-center space-x-16" }, this.rightIcons.map(this.getIconJsx)))))),
       (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" },
         h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText),
         this.textarea && this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" },
@@ -318,15 +335,19 @@ export class MxInput {
       "type": "string",
       "mutable": false,
       "complexType": {
-        "original": "string",
-        "resolved": "string",
-        "references": {}
+        "original": "string | MxInputIcon[]",
+        "resolved": "MxInputIcon[] | string",
+        "references": {
+          "MxInputIcon": {
+            "location": "local"
+          }
+        }
       },
       "required": false,
       "optional": false,
       "docs": {
         "tags": [],
-        "text": "The class name of the icon to show on the left side of the input"
+        "text": "The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler"
       },
       "attribute": "left-icon",
       "reflect": false
@@ -335,15 +356,19 @@ export class MxInput {
       "type": "string",
       "mutable": false,
       "complexType": {
-        "original": "string",
-        "resolved": "string",
-        "references": {}
+        "original": "string | MxInputIcon[]",
+        "resolved": "MxInputIcon[] | string",
+        "references": {
+          "MxInputIcon": {
+            "location": "local"
+          }
+        }
       },
       "required": false,
       "optional": false,
       "docs": {
         "tags": [],
-        "text": "The class name of the icon to show on the right side of the input"
+        "text": "The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler"
       },
       "attribute": "right-icon",
       "reflect": false

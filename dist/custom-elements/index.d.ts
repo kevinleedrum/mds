@@ -56,6 +56,12 @@ export const MxCode: {
   new (): MxCode;
 };
 
+interface MxConfirmInput extends Components.MxConfirmInput, HTMLElement {}
+export const MxConfirmInput: {
+  prototype: MxConfirmInput;
+  new (): MxConfirmInput;
+};
+
 interface MxDatePicker extends Components.MxDatePicker, HTMLElement {}
 export const MxDatePicker: {
   prototype: MxDatePicker;

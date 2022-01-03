@@ -26,8 +26,6 @@ export class MxTab {
   get tabClass() {
     let str = 'mx-tab relative inline-flex items-center justify-center min-w-full';
     str += this.label && this.icon ? ' h-72' : ' h-48';
-    if (this.badge && this.label)
-      str += ' wider';
     return str;
   }
   get badgeEl() {
@@ -38,7 +36,7 @@ export class MxTab {
   }
   render() {
     return (h(Host, { class: this.tabClass },
-      h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected ? 'true' : null, "aria-label": this.label || this.ariaLabel, class: "relative overflow-hidden w-full h-full border border-transparent", onClick: this.onClick.bind(this) },
+      h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected ? 'true' : null, "aria-label": this.label || this.ariaLabel, class: "relative overflow-hidden w-full h-full border border-transparent px-44", onClick: this.onClick.bind(this) },
         h("div", { class: "relative flex flex-col items-center justify-center space-y-6 pointer-events-none" },
           !this.isTextOnly && (h("span", { class: "flex items-center space-x-6" },
             !this.label && this.badge && this.badgeEl,

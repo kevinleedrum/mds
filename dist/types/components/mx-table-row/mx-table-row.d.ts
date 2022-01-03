@@ -57,7 +57,8 @@ export declare class MxTableRow {
   }>;
   /** Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table. */
   mxDragKeyDown: EventEmitter<string>;
-  onCollapseNestedRowsChange(): Promise<void>;
+  onCollapseNestedRowsChange(): void;
+  onMinWidthsChange(): Promise<void>;
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
   translateRow(x: number, y: number): Promise<void>;
   /** Show/hide the row (with an optional accordion transition) */

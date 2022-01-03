@@ -29,7 +29,14 @@ export class MxTableRow {
     this.isMobileExpanded = false;
     this.isMobileCollapsing = false;
   }
-  async onCollapseNestedRowsChange() {
+  onCollapseNestedRowsChange() {
+    this.toggleNestedRows();
+  }
+  async onMinWidthsChange() {
+    if (!this.collapseNestedRows)
+      return;
+    // Ensure that collapsed, nested rows are hidden after switching to/from mobile UI
+    await new Promise(requestAnimationFrame);
     this.toggleNestedRows();
   }
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
@@ -782,5 +789,8 @@ export class MxTableRow {
   static get watchers() { return [{
       "propName": "collapseNestedRows",
       "methodName": "onCollapseNestedRowsChange"
+    }, {
+      "propName": "minWidths",
+      "methodName": "onMinWidthsChange"
     }]; }
 }

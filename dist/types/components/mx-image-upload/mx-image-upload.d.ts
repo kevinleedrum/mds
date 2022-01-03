@@ -1,3 +1,4 @@
+import { EventEmitter } from '../../stencil-public-runtime';
 import { BtnType } from '../mx-button/mx-button';
 export declare class MxImageUpload {
   fileInput: HTMLInputElement;
@@ -10,6 +11,8 @@ export declare class MxImageUpload {
   acceptPdf: boolean;
   /** Replaces the word "image" in the default dropzone text (i.e. "No image to show"). */
   assetName: string;
+  /** Assistive text to display under the dropzone. To add markup, use the `instructions` slot directly instead. */
+  assistiveText: string;
   /** Sets the width and height to 80px and changes the icon. */
   avatar: boolean;
   /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
@@ -46,6 +49,8 @@ export declare class MxImageUpload {
   isFileSelected: boolean;
   thumbnailDataUri: string;
   element: HTMLMxTableElement;
+  /** Emits the thumbnail url as `CustomEvent.detail` whenever it changes (i.e. after generating a data URI) */
+  mxThumbnailChange: EventEmitter<string>;
   onThumbnailUrlChange(): void;
   connectedCallback(): void;
   componentWillRender(): void;

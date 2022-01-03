@@ -8,8 +8,10 @@ import { HTMLStencilElement, JSXBase } from "./stencil-public-runtime";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
 import { ChartJsData, ChartJsOptions } from "./components/mx-chart/mx-chart";
 import { ChartType } from "chart.js";
+import { MxInputIcon } from "./components/mx-input/mx-input";
 import { DialogOptions } from "./components/mx-dialog/mx-dialog";
 import { BtnType as BtnType1 } from "./components/mx-button/mx-button";
+import { MxInputIcon as MxInputIcon1 } from "./components/mx-input/mx-input";
 import { PopoverOffset, PopoverPlacement } from "./utils/popover";
 import { IModalButton } from "./components/mx-modal/mx-modal";
 import { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
@@ -196,6 +198,28 @@ export namespace Components {
         "lineNumberStart": number;
         "showLineNumbers": boolean;
     }
+    interface MxConfirmInput {
+        "assistiveText": string;
+        "dense": boolean;
+        "disabled": boolean;
+        "error": boolean;
+        "floatLabel": boolean;
+        "inputId": string;
+        "label": string;
+        "labelClass": string;
+        "leftIcon": string | MxInputIcon[];
+        "maxlength": number;
+        "name": string;
+        "outerContainerClass": string;
+        "placeholder": string;
+        "readonly": boolean;
+        "rightIcon": string | MxInputIcon[];
+        "suffix": string;
+        "textarea": boolean;
+        "textareaHeight": string;
+        "type": string;
+        "value": string;
+    }
     interface MxDatePicker {
         "ariaLabel": string;
         /**
@@ -310,6 +334,10 @@ export namespace Components {
          */
         "assetName": string;
         /**
+          * Assistive text to display under the dropzone. To add markup, use the `instructions` slot directly instead.
+         */
+        "assistiveText": string;
+        /**
           * Sets the width and height to 80px and changes the icon.
          */
         "avatar": boolean;
@@ -392,9 +420,9 @@ export namespace Components {
         "label": string;
         "labelClass": string;
         /**
-          * The class name of the icon to show on the left side of the input
+          * The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
-        "leftIcon": string;
+        "leftIcon": string | MxInputIcon[];
         "maxlength": number;
         /**
           * The `name` attribute for the text input
@@ -407,9 +435,9 @@ export namespace Components {
         "placeholder": string;
         "readonly": boolean;
         /**
-          * The class name of the icon to show on the right side of the input
+          * The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
-        "rightIcon": string;
+        "rightIcon": string | MxInputIcon[];
         /**
           * Text shown to the right of the input value
          */
@@ -659,6 +687,7 @@ export namespace Components {
     }
     interface MxSwitch {
         "checked": boolean;
+        "labelClass": string;
         "labelName": string;
         "name": string;
         "value": string;
@@ -1001,6 +1030,12 @@ declare global {
         prototype: HTMLMxCodeElement;
         new (): HTMLMxCodeElement;
     };
+    interface HTMLMxConfirmInputElement extends Components.MxConfirmInput, HTMLStencilElement {
+    }
+    var HTMLMxConfirmInputElement: {
+        prototype: HTMLMxConfirmInputElement;
+        new (): HTMLMxConfirmInputElement;
+    };
     interface HTMLMxDatePickerElement extends Components.MxDatePicker, HTMLStencilElement {
     }
     var HTMLMxDatePickerElement: {
@@ -1179,6 +1214,7 @@ declare global {
         "mx-chip-group": HTMLMxChipGroupElement;
         "mx-circular-progress": HTMLMxCircularProgressElement;
         "mx-code": HTMLMxCodeElement;
+        "mx-confirm-input": HTMLMxConfirmInputElement;
         "mx-date-picker": HTMLMxDatePickerElement;
         "mx-dialog": HTMLMxDialogElement;
         "mx-dropdown-menu": HTMLMxDropdownMenuElement;
@@ -1392,6 +1428,28 @@ declare namespace LocalJSX {
         "lineNumberStart"?: number;
         "showLineNumbers"?: boolean;
     }
+    interface MxConfirmInput {
+        "assistiveText"?: string;
+        "dense"?: boolean;
+        "disabled"?: boolean;
+        "error"?: boolean;
+        "floatLabel"?: boolean;
+        "inputId"?: string;
+        "label"?: string;
+        "labelClass"?: string;
+        "leftIcon"?: string | MxInputIcon[];
+        "maxlength"?: number;
+        "name"?: string;
+        "outerContainerClass"?: string;
+        "placeholder"?: string;
+        "readonly"?: boolean;
+        "rightIcon"?: string | MxInputIcon[];
+        "suffix"?: string;
+        "textarea"?: boolean;
+        "textareaHeight"?: string;
+        "type"?: string;
+        "value"?: string;
+    }
     interface MxDatePicker {
         "ariaLabel"?: string;
         /**
@@ -1499,6 +1557,10 @@ declare namespace LocalJSX {
          */
         "assetName"?: string;
         /**
+          * Assistive text to display under the dropzone. To add markup, use the `instructions` slot directly instead.
+         */
+        "assistiveText"?: string;
+        /**
           * Sets the width and height to 80px and changes the icon.
          */
         "avatar"?: boolean;
@@ -1526,6 +1588,10 @@ declare namespace LocalJSX {
           * The `name` attribute for the `input` element.
          */
         "name"?: string;
+        /**
+          * Emits the thumbnail url as `CustomEvent.detail` whenever it changes (i.e. after generating a data URI)
+         */
+        "onMxThumbnailChange"?: (event: CustomEvent<string>) => void;
         /**
           * The text to display on the Remove button
          */
@@ -1579,9 +1645,9 @@ declare namespace LocalJSX {
         "label"?: string;
         "labelClass"?: string;
         /**
-          * The class name of the icon to show on the left side of the input
+          * The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
-        "leftIcon"?: string;
+        "leftIcon"?: string | MxInputIcon[];
         "maxlength"?: number;
         /**
           * The `name` attribute for the text input
@@ -1594,9 +1660,9 @@ declare namespace LocalJSX {
         "placeholder"?: string;
         "readonly"?: boolean;
         /**
-          * The class name of the icon to show on the right side of the input
+          * The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
-        "rightIcon"?: string;
+        "rightIcon"?: string | MxInputIcon[];
         /**
           * Text shown to the right of the input value
          */
@@ -1837,6 +1903,7 @@ declare namespace LocalJSX {
     }
     interface MxSwitch {
         "checked"?: boolean;
+        "labelClass"?: string;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
@@ -2146,6 +2213,7 @@ declare namespace LocalJSX {
         "mx-chip-group": MxChipGroup;
         "mx-circular-progress": MxCircularProgress;
         "mx-code": MxCode;
+        "mx-confirm-input": MxConfirmInput;
         "mx-date-picker": MxDatePicker;
         "mx-dialog": MxDialog;
         "mx-dropdown-menu": MxDropdownMenu;
@@ -2189,6 +2257,7 @@ declare module "@stencil/core" {
             "mx-chip-group": LocalJSX.MxChipGroup & JSXBase.HTMLAttributes<HTMLMxChipGroupElement>;
             "mx-circular-progress": LocalJSX.MxCircularProgress & JSXBase.HTMLAttributes<HTMLMxCircularProgressElement>;
             "mx-code": LocalJSX.MxCode & JSXBase.HTMLAttributes<HTMLMxCodeElement>;
+            "mx-confirm-input": LocalJSX.MxConfirmInput & JSXBase.HTMLAttributes<HTMLMxConfirmInputElement>;
             "mx-date-picker": LocalJSX.MxDatePicker & JSXBase.HTMLAttributes<HTMLMxDatePickerElement>;
             "mx-dialog": LocalJSX.MxDialog & JSXBase.HTMLAttributes<HTMLMxDialogElement>;
             "mx-dropdown-menu": LocalJSX.MxDropdownMenu & JSXBase.HTMLAttributes<HTMLMxDropdownMenuElement>;

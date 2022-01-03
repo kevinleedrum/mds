@@ -1,0 +1,13 @@
+.mx-confirm-input {
+  &.has-value,
+  &[disabled] {
+    --mds-border-input: transparent;
+    &:not(:focus-within, :hover),
+    &[disabled] {
+      --mds-bg-input: transparent;
+    }
+  }
+  &[disabled] {
+    --mds-text-input-disabled: var(--mds-text-input);
+  }
+}

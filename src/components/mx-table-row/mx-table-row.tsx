@@ -61,7 +61,15 @@ export class MxTableRow {
   @Event() mxDragKeyDown: EventEmitter<string>;
 
   @Watch('collapseNestedRows')
-  async onCollapseNestedRowsChange() {
+  onCollapseNestedRowsChange() {
+    this.toggleNestedRows();
+  }
+
+  @Watch('minWidths')
+  async onMinWidthsChange() {
+    if (!this.collapseNestedRows) return;
+    // Ensure that collapsed, nested rows are hidden after switching to/from mobile UI
+    await new Promise(requestAnimationFrame);
     this.toggleNestedRows();
   }
 
