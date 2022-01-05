@@ -50,15 +50,8 @@ export class MxTableRow {
   async toggle(hideRow, skipTransition) {
     this.isHidden = hideRow;
     const children = await this.getChildren();
-    if (skipTransition) {
-      children.forEach(child => {
-        child.style.maxHeight = this.isHidden ? '0' : '';
-      });
-    }
-    else {
-      const transition = this.isHidden ? collapse : expand;
-      await Promise.all(children.map(child => transition(child)));
-    }
+    const transition = this.isHidden ? collapse : expand;
+    await Promise.all(children.map(child => transition(child, skipTransition ? 0 : undefined)));
     children.forEach(child => (child.style.border = this.isHidden ? '0' : ''));
     this.element.setAttribute('aria-hidden', this.isHidden ? 'true' : 'false');
   }
