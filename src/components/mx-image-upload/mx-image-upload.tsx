@@ -187,11 +187,11 @@ export class MxImageUpload {
     }
 
     return (
-      <Host class="mx-image-upload inline-block" style={{ width: this.dropzoneWidth }}>
+      <Host class="mx-image-upload inline-block">
         <div
           data-testid="dropzone-wrapper"
           class="dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden"
-          style={{ height: this.dropzoneHeight }}
+          style={{ height: this.dropzoneHeight, width: this.dropzoneWidth }}
         >
           <div class={this.dropzoneClass}>
             <div class="flex flex-col items-center justify-center w-full h-full">
