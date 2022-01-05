@@ -62,7 +62,7 @@ export class MxIconButton {
     );
 
     return (
-      <Host class="mx-icon-button inline-block">
+      <Host class="mx-icon-button inline-block appearance-none">
         <button
           type={this.type}
           formaction={this.formaction}
