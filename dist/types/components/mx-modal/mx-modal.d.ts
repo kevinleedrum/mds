@@ -12,6 +12,7 @@ export declare class MxModal {
   hasCard: boolean;
   hasHeader: boolean;
   hasHeaderBottom: boolean;
+  hasHeaderCenter: boolean;
   modal: HTMLElement;
   ancestorFocusedElement: HTMLElement;
   headerBottomSlotWrapper: HTMLElement;
@@ -44,6 +45,7 @@ export declare class MxModal {
   element: HTMLMxModalElement;
   mxClose: EventEmitter<any>;
   toggleModal(): void;
+  updateSlottedButtonSize(): void;
   onKeyDown(e: KeyboardEvent): void;
   onDocumentKeyDown(e: KeyboardEvent): void;
   componentWillRender(): void;

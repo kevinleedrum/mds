@@ -157,7 +157,7 @@ export class MxImageUpload {
     else {
       iconJsx = h("i", { "data-testid": "image-icon", class: 'mds-image text-icon' + (this.showDropzoneText ? ' mb-8' : '') });
     }
-    return (h(Host, { class: "mx-image-upload inline-block" },
+    return (h(Host, { class: "mx-image-upload block" },
       h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight, width: this.dropzoneWidth } },
         h("div", { class: this.dropzoneClass },
           h("div", { class: "flex flex-col items-center justify-center w-full h-full" },
