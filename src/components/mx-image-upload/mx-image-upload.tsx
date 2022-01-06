@@ -187,7 +187,7 @@ export class MxImageUpload {
     }
 
     return (
-      <Host class="mx-image-upload inline-block">
+      <Host class="mx-image-upload block">
         <div
           data-testid="dropzone-wrapper"
           class="dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden"
