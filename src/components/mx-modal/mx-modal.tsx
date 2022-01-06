@@ -152,7 +152,7 @@ export class MxModal {
     else {
       str += ' pt-24 md:pt-0 md:items-center justify-center';
       if (this.minWidths.md) {
-        str += this.large ? ' modal-large flex-grow h-full' : ' modal-medium';
+        str += this.large ? ' modal-large' : ' modal-medium';
       }
     }
     return str;
