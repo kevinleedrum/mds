@@ -441,7 +441,7 @@ const MxButton$1 = class extends HTMLElement {
       str += ' dropdown';
     // Common classes
     str +=
-      ' flex items-center justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto hover:no-underline';
+      ' flex items-center justify-center relative overflow-hidden cursor-pointer appearance-none disabled:cursor-auto hover:no-underline';
     // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
       str += ' w-full rounded-lg font-semibold uppercase';
@@ -465,7 +465,7 @@ const MxButton$1 = class extends HTMLElement {
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
-    return (h(Host, { class: 'mx-button' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null }, this.dataAttributes), buttonContent))));
+    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null }, this.dataAttributes), buttonContent))));
   }
   get element() { return this; }
 };
@@ -16541,7 +16541,8 @@ const MxConfirmInput$1 = class extends HTMLElement {
       ];
     }
     const canEdit = this.value != null && this.value !== '' && !this.readonly && !this.disabled;
-    if (this.isHovered && canEdit)
+    const canHover = window.matchMedia('(hover: hover)');
+    if ((this.isHovered || !canHover.matches) && canEdit)
       return 'mds-edit';
   }
   onCancel(e) {
@@ -18984,7 +18985,7 @@ const MxIconButton$1 = class extends HTMLElement {
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-icon', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center text-icon shadow-1" }, h("i", { "data-testid": "chevron", class: this.chevronLeft ? 'mds-chevron-left' : this.chevronRight ? 'mds-chevron-right' : 'mds-chevron-down' })))));
-    return (h(Host, { class: "mx-icon-button inline-block" }, h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
+    return (h(Host, { class: "mx-icon-button inline-block appearance-none" }, h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.ariaLabel }, this.dataAttributes), buttonContent)));
   }
   get element() { return this; }
 };
@@ -19150,7 +19151,7 @@ const MxImageUpload$1 = class extends HTMLElement {
     else {
       iconJsx = h("i", { "data-testid": "image-icon", class: 'mds-image text-icon' + (this.showDropzoneText ? ' mb-8' : '') });
     }
-    return (h(Host, { class: "mx-image-upload inline-block" }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight, width: this.dropzoneWidth } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer", onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0 pointer-events-none ' +
+    return (h(Host, { class: "mx-image-upload block" }, h("div", { "data-testid": "dropzone-wrapper", class: "dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden", style: { height: this.dropzoneHeight, width: this.dropzoneWidth } }, h("div", { class: this.dropzoneClass }, h("div", { class: "flex flex-col items-center justify-center w-full h-full" }, this.showIcon && iconJsx, h("slot", { name: "dropzone-text" }, h("div", { "data-testid": "dropzone-text", class: 'text-center' + (this.showDropzoneText && !this.avatar ? '' : ' hidden') }, h("p", { class: "subtitle1 my-0" }, "No ", this.assetName, " to show"), h("p", { class: "text-4 my-0 mt-4" }, "Click to add ", this.assetName)))), h("svg", { class: "dashed-border absolute inset-0 pointer-events-none", width: "100%", height: "100%" }, h("rect", { width: "100%", height: "100%", fill: "none", rx: "16", ry: "16", "stroke-width": "1", "stroke-dasharray": "4,8" })), h("input", { ref: el => (this.fileInput = el), id: this.inputId, name: this.name, type: "file", accept: this.accept, class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer", onInput: this.onInput.bind(this), onDragOver: this.onDragOver.bind(this), onDragLeave: this.onDragLeave.bind(this), onDrop: this.onDragLeave.bind(this) })), this.hasFile && this.thumbnailBackgroundImage && (h("div", { "data-testid": "thumbnail", class: "thumbnail absolute inset-0 bg-center bg-no-repeat pointer-events-none", style: { backgroundImage: this.thumbnailBackgroundImage, backgroundSize: this.thumbnailBackgroundSize } })), h("div", { "data-testid": "uploaded", class: 'flex items-center justify-center absolute inset-0 pointer-events-none ' +
         (this.isUploaded ? '' : ' hidden') }, h("slot", { name: "uploaded" })), this.isUploading && (h("div", { "data-testid": "progress", class: "uploading-progress flex items-center justify-center opacity-50 absolute inset-0" }, h("mx-circular-progress", { size: "2rem" })))), this.showButton && (h("mx-button", { "data-testid": "upload-button", class: "mt-16", btnType: this.hasFile && !this.isUploading ? 'outlined' : this.uploadBtnType, onClick: this.onButtonClick.bind(this), disabled: this.isUploading }, this.hasFile && !this.isUploading ? this.removeButtonLabel : this.uploadButtonLabel)), (this.hasInstructions || this.assistiveText) && (h("p", { class: "caption1 my-16" }, h("slot", { name: "instructions" }, this.assistiveText))), this.hasSuccess && (h("p", { class: "upload-success caption1 my-16" }, h("slot", { name: "success" }))), this.hasError && (h("p", { class: "upload-error caption1 my-16" }, h("slot", { name: "error" })))));
   }
   get element() { return this; }
@@ -19691,6 +19692,7 @@ const MxModal$1 = class extends HTMLElement {
     this.hasCard = false;
     this.hasHeader = false;
     this.hasHeaderBottom = false;
+    this.hasHeaderCenter = false;
     /** An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text. */
     this.buttons = [];
     /** If set to false, pressing Escape will not close the modal. */
@@ -19717,6 +19719,10 @@ const MxModal$1 = class extends HTMLElement {
   }
   toggleModal() {
     this.isOpen ? this.openModal() : this.closeModal();
+  }
+  updateSlottedButtonSize() {
+    const slottedButtons = this.element.querySelectorAll('[slot*="footer-"] mx-button');
+    slottedButtons.forEach((button) => (button.xl = this.minWidths.lg));
   }
   onKeyDown(e) {
     if (!this.isOpen)
@@ -19746,6 +19752,7 @@ const MxModal$1 = class extends HTMLElement {
       !!this.element.querySelector('[slot="header-left"]') || !!this.element.querySelector('[slot="header-right"]');
     this.hasCard = !!this.element.querySelector('[slot="card"]');
     this.hasHeaderBottom = !!this.element.querySelector('[slot="header-bottom"]');
+    this.hasHeaderCenter = !!this.element.querySelector('[slot="header-center"]');
     const tabs = this.element.querySelector('mx-tabs');
     // Place mx-tabs in either the header-bottom slot OR the mobile mx-page-header tabs slot
     if (tabs && this.headerBottomSlotWrapper && this.mobilePageHeader) {
@@ -19857,11 +19864,12 @@ const MxModal$1 = class extends HTMLElement {
   }
   render() {
     return (h(Host, { class: this.hostClass, "aria-labelledby": this.hasHeader ? 'headerText' : null, "aria-modal": "true", role: "dialog" }, h("div", { ref: el => (this.backdrop = el), class: 'bg-modal-backdrop absolute inset-0 z-0' + (this.closeOnOutsideClick ? ' cursor-pointer' : ''), "data-testid": "backdrop", onClick: this.onBackdropClick.bind(this) }), h("div", { ref: el => (this.modal = el), class: this.modalClass, style: { maxWidth: this.minWidths.md && (this.fromRight || this.fromLeft) ? '37.5rem' : '' } }, h("div", { class: this.modalContentClasses, "data-testid": "modal-content" }, this.description && (h("p", { class: "text-4 my-0 mb-16 sm:mb-24", "data-testid": "modal-description" }, this.description)), h("slot", null), this.hasCard && (h("div", null, h("div", { class: "bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl", "data-testid": "modal-card" }, h("slot", { name: "card" }))))), h("footer", { class: 'bg-modal-footer order-3 flex items-center justify-between h-80 py-20 px-40' +
-        (this.hasFooter ? '' : ' hidden') }, h("div", null, h("slot", { name: "footer-left" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "flex items-center uppercase text-4 font-semibold tracking-1-25", "data-testid": "previous-page" }, h("i", { class: "mds-arrow-left mr-10" }), this.previousPageTitle)))), h("div", { class: "ml-16" }, h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))), h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "order-1", buttons: this.buttons, modal: true, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl }, h("span", { id: "headerText", "data-testid": "header-text" }, h("slot", { name: "header-left" })), this.hasHeaderBottom && (h("div", { slot: "tabs" }, h("slot", { name: "header-bottom" }))), h("div", { slot: "modal-header-center", class: "flex items-center justify-center" }, h("slot", { name: "header-center" })), h("div", { slot: "modal-header-right" }, h("slot", { name: "header-right" }, h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))))));
+        (this.hasFooter ? '' : ' hidden') }, h("div", null, h("slot", { name: "footer-left" }, this.previousPageUrl && (h("a", { href: this.previousPageUrl, class: "flex items-center uppercase text-4 font-semibold tracking-1-25", "data-testid": "previous-page" }, h("i", { class: "mds-arrow-left mr-10" }), this.previousPageTitle)))), h("div", { class: "ml-16" }, h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))), h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "order-1 flex-shrink-0", buttons: this.buttons, modal: true, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl }, h("span", { id: "headerText", "data-testid": "header-text" }, h("slot", { name: "header-left" })), this.hasHeaderBottom && (h("div", { slot: "tabs" }, h("slot", { name: "header-bottom" }))), this.hasHeaderCenter && (h("div", { slot: "modal-header-center", class: "flex items-center justify-center" }, h("slot", { name: "header-center" }))), h("div", { slot: "modal-header-right" }, h("slot", { name: "header-right" }, h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))))));
   }
   get element() { return this; }
   static get watchers() { return {
-    "isOpen": ["toggleModal"]
+    "isOpen": ["toggleModal"],
+    "minWidths": ["updateSlottedButtonSize"]
   }; }
 };
 

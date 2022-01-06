@@ -36,7 +36,8 @@ const MxConfirmInput = class {
       ];
     }
     const canEdit = this.value != null && this.value !== '' && !this.readonly && !this.disabled;
-    if (this.isHovered && canEdit)
+    const canHover = window.matchMedia('(hover: hover)');
+    if ((this.isHovered || !canHover.matches) && canEdit)
       return 'mds-edit';
   }
   onCancel(e) {

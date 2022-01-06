@@ -9793,6 +9793,12 @@ video {
     max-width: 50rem; /* 800px */
     max-height: 37.5rem; /* 600px */
   }
+.mx-modal.modal-large > .modal{
+  height: 100%;
+}
+.mx-modal.modal-large > .modal{
+  flex-grow: 1;
+}
 .mx-modal.modal-large > .modal {
     /* 40px margin around modal */
     max-width: calc(100vw - 5rem);

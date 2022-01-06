@@ -8,6 +8,7 @@ export class MxModal {
     this.hasCard = false;
     this.hasHeader = false;
     this.hasHeaderBottom = false;
+    this.hasHeaderCenter = false;
     /** An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text. */
     this.buttons = [];
     /** If set to false, pressing Escape will not close the modal. */
@@ -34,6 +35,10 @@ export class MxModal {
   }
   toggleModal() {
     this.isOpen ? this.openModal() : this.closeModal();
+  }
+  updateSlottedButtonSize() {
+    const slottedButtons = this.element.querySelectorAll('[slot*="footer-"] mx-button');
+    slottedButtons.forEach((button) => (button.xl = this.minWidths.lg));
   }
   onKeyDown(e) {
     if (!this.isOpen)
@@ -63,6 +68,7 @@ export class MxModal {
       !!this.element.querySelector('[slot="header-left"]') || !!this.element.querySelector('[slot="header-right"]');
     this.hasCard = !!this.element.querySelector('[slot="card"]');
     this.hasHeaderBottom = !!this.element.querySelector('[slot="header-bottom"]');
+    this.hasHeaderCenter = !!this.element.querySelector('[slot="header-center"]');
     const tabs = this.element.querySelector('mx-tabs');
     // Place mx-tabs in either the header-bottom slot OR the mobile mx-page-header tabs slot
     if (tabs && this.headerBottomSlotWrapper && this.mobilePageHeader) {
@@ -190,13 +196,13 @@ export class MxModal {
               this.previousPageTitle)))),
           h("div", { class: "ml-16" },
             h("slot", { name: "footer-right" }, this.buttons.length > 0 && this.buttonsJsx))),
-        h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "order-1", buttons: this.buttons, modal: true, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl },
+        h("mx-page-header", { ref: el => (this.mobilePageHeader = el), class: "order-1 flex-shrink-0", buttons: this.buttons, modal: true, "previous-page-title": this.previousPageTitle, "previous-page-url": this.previousPageUrl },
           h("span", { id: "headerText", "data-testid": "header-text" },
             h("slot", { name: "header-left" })),
           this.hasHeaderBottom && (h("div", { slot: "tabs" },
             h("slot", { name: "header-bottom" }))),
-          h("div", { slot: "modal-header-center", class: "flex items-center justify-center" },
-            h("slot", { name: "header-center" })),
+          this.hasHeaderCenter && (h("div", { slot: "modal-header-center", class: "flex items-center justify-center" },
+            h("slot", { name: "header-center" }))),
           h("div", { slot: "modal-header-right" },
             h("slot", { name: "header-right" },
               h("mx-button", { "btn-type": "text", "data-testid": "close-button", onClick: this.mxClose.emit }, "Close")))))));
@@ -427,6 +433,9 @@ export class MxModal {
   static get watchers() { return [{
       "propName": "isOpen",
       "methodName": "toggleModal"
+    }, {
+      "propName": "minWidths",
+      "methodName": "updateSlottedButtonSize"
     }]; }
   static get listeners() { return [{
       "name": "keydown",
