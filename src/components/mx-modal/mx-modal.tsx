@@ -62,6 +62,12 @@ export class MxModal {
     this.isOpen ? this.openModal() : this.closeModal();
   }
 
+  @Watch('minWidths')
+  updateSlottedButtonSize() {
+    const slottedButtons = this.element.querySelectorAll('[slot*="footer-"] mx-button');
+    slottedButtons.forEach((button: HTMLMxButtonElement) => (button.xl = this.minWidths.lg));
+  }
+
   @Listen('keydown')
   onKeyDown(e: KeyboardEvent) {
     if (!this.isOpen) return;
