@@ -65,7 +65,7 @@ export class MxButton implements IMxButtonProps {
 
     // Common classes
     str +=
-      ' flex items-center justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto hover:no-underline';
+      ' flex items-center justify-center relative overflow-hidden cursor-pointer appearance-none disabled:cursor-auto hover:no-underline';
 
     // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
@@ -107,7 +107,7 @@ export class MxButton implements IMxButtonProps {
     );
 
     return (
-      <Host class={'mx-button' + (this.full ? ' flex' : ' inline-flex')}>
+      <Host class={'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex')}>
         {this.href ? (
           <a
             href={this.href}
