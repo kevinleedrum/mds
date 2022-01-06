@@ -21,6 +21,7 @@ export class MxModal {
   hasCard: boolean = false;
   hasHeader: boolean = false;
   hasHeaderBottom: boolean = false;
+  hasHeaderCenter: boolean = false;
   modal: HTMLElement;
   ancestorFocusedElement: HTMLElement;
   headerBottomSlotWrapper: HTMLElement;
@@ -97,6 +98,7 @@ export class MxModal {
       !!this.element.querySelector('[slot="header-left"]') || !!this.element.querySelector('[slot="header-right"]');
     this.hasCard = !!this.element.querySelector('[slot="card"]');
     this.hasHeaderBottom = !!this.element.querySelector('[slot="header-bottom"]');
+    this.hasHeaderCenter = !!this.element.querySelector('[slot="header-center"]');
     const tabs = this.element.querySelector('mx-tabs');
     // Place mx-tabs in either the header-bottom slot OR the mobile mx-page-header tabs slot
     if (tabs && this.headerBottomSlotWrapper && this.mobilePageHeader) {
@@ -286,7 +288,7 @@ export class MxModal {
           {/* Modal Header - Placed last in the DOM so it is also the last in the tab focus order */}
           <mx-page-header
             ref={el => (this.mobilePageHeader = el)}
-            class="order-1"
+            class="order-1 flex-shrink-0"
             buttons={this.buttons}
             modal
             previous-page-title={this.previousPageTitle}
@@ -300,9 +302,11 @@ export class MxModal {
                 <slot name="header-bottom"></slot>
               </div>
             )}
-            <div slot="modal-header-center" class="flex items-center justify-center">
-              <slot name="header-center"></slot>
-            </div>
+            {this.hasHeaderCenter && (
+              <div slot="modal-header-center" class="flex items-center justify-center">
+                <slot name="header-center"></slot>
+              </div>
+            )}
             <div slot="modal-header-right">
               <slot name="header-right">
                 <mx-button btn-type="text" data-testid="close-button" onClick={this.mxClose.emit}>
