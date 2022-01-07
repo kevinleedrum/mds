@@ -118,7 +118,7 @@ export class MxSelect {
       </label>
     );
     return (
-      <Host class={'mx-select' + (this.disabled ? ' disabled' : '')}>
+      <Host class={'mx-select block' + (this.disabled ? ' disabled' : '')}>
         {this.label && !this.floatLabel && labelJsx}
 
         <div data-testid="select-wrapper" class={this.selectWrapperClass}>
