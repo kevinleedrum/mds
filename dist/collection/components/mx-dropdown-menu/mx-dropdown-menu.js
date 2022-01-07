@@ -63,7 +63,7 @@ export class MxDropdownMenu {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-dropdown-menu" },
+    return (h(Host, { class: "mx-dropdown-menu block" },
       h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass },
         h("input", { "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }),
         h("span", { class: this.suffixClass },

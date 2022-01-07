@@ -8712,6 +8712,7 @@ video {
     color: var(--mds-text-select-disabled);
   }
 .mx-select .mx-select-wrapper {
+    min-width: 20.5rem;
     color: #454545;
     color: var(--mds-text-select);
     background: #fff;
@@ -8791,6 +8792,7 @@ video {
     color: var(--mds-text-select-error);
   }
 .mx-dropdown-menu > .dropdown-wrapper {
+  min-width: 20.5rem;
   color: #454545;
   color: var(--mds-text-dropdown);
   background: #fff;
