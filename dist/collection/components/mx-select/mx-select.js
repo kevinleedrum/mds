@@ -91,7 +91,7 @@ export class MxSelect {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.selectId || this.uuid, class: this.labelClassNames }, this.label));
-    return (h(Host, { class: 'mx-select' + (this.disabled ? ' disabled' : '') },
+    return (h(Host, { class: 'mx-select block' + (this.disabled ? ' disabled' : '') },
       this.label && !this.floatLabel && labelJsx,
       h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass },
         h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes),
