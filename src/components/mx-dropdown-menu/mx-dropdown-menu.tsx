@@ -86,7 +86,7 @@ export class MxDropdownMenu {
 
   render() {
     return (
-      <Host class="mx-dropdown-menu">
+      <Host class="mx-dropdown-menu block">
         <div ref={el => (this.dropdownWrapper = el)} class={this.dropdownWrapperClass}>
           <input
             aria-label={this.ariaLabel || this.label}
