@@ -22,13 +22,13 @@ itelf in a corner of that element.
     <strong>Anchored Badges</strong>
     <div class="flex items-center my-20 space-x-20">
       <mx-badge badge-class="bg-purple-500 text-white" value="237">
-        <mx-button btn-type="action" icon="ph-bell">Notifications</mx-button>
+        <mx-button btn-type="simple" icon="ph-bell">Notifications</mx-button>
       </mx-badge>
       <mx-badge badge-class="bg-red-500 text-white" icon="mds-x" bottom offset="10">
         <mx-icon-button icon="ph-video-camera" />
       </mx-badge>
       <mx-badge badge-class="text-red-600" indicator offset="4">
-        <mx-button btn-type="action">Announcements</mx-button>
+        <mx-button btn-type="simple">Announcements</mx-button>
       </mx-badge>
       <mx-badge badge-class="text-yellow-300" indicator="star" top left offset="12">
         <mx-icon-button icon="mds-user-circle" />

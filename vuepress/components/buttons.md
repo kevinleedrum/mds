@@ -62,29 +62,29 @@
 
 <<< @/vuepress/components/buttons.md#standard-buttons
 
-## Action Buttons
+## Simple Buttons
 
-<!-- #region action-buttons -->
+<!-- #region simple-buttons -->
 <section class="mds">
   <div class="my-20">
-    <mx-button btn-type="action">Button</mx-button>
+    <mx-button btn-type="simple">Button</mx-button>
   </div>
   <div class="my-20">
-    <mx-button btn-type="action" icon="ph-apple-logo">Button with Icon</mx-button>
+    <mx-button btn-type="simple" icon="ph-apple-logo">Button with Icon</mx-button>
   </div>
   <div class="my-20">
-    <mx-button btn-type="action" disabled>Disabled</mx-button>
+    <mx-button btn-type="simple" disabled>Disabled</mx-button>
   </div>
   <div class="my-20">
-    <mx-button btn-type="action" dropdown>Dropdown</mx-button>
+    <mx-button btn-type="simple" dropdown>Dropdown</mx-button>
   </div>
   <div class="my-20">
-    <mx-button btn-type="action" dropdown disabled>Disabled</mx-button>
+    <mx-button btn-type="simple" dropdown disabled>Disabled</mx-button>
   </div>
 </section>
-<!-- #endregion action-buttons -->
+<!-- #endregion simple-buttons -->
 
-<<< @/vuepress/components/buttons.md#action-buttons
+<<< @/vuepress/components/buttons.md#simple-buttons
 
 ## Text Buttons
 
@@ -114,7 +114,7 @@
 
 | Property   | Attribute  | Description                                 | Type                                           | Default       |
 | ---------- | ---------- | ------------------------------------------- | ---------------------------------------------- | ------------- |
-| `btnType`  | `btn-type` |                                             | `"action" | "contained" | "outlined" | "text"` | `'contained'` |
+| `btnType`  | `btn-type` |                                             | `"simple" | "contained" | "outlined" | "text"` | `'contained'` |
 | `disabled` | `disabled` |                                             | `boolean`                                      | `false`       |
 | `dropdown` | `dropdown` | Show chevron icon                           | `boolean`                                      | `false`       |
 | `full`     | `full`     | Sets display to flex instead of inline-flex | `boolean`                                      | `false`       |

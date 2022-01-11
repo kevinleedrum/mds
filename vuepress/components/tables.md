@@ -328,7 +328,7 @@ The `mx-table` component has both a `search` slot to accomodate a Search field, 
         @input="albumSearch = $event.target.value"
       />
       <div slot="filter">
-        <mx-button ref="labelMenuButton" btn-type="action" dropdown>
+        <mx-button ref="labelMenuButton" btn-type="simple" dropdown>
           {{ (this.albumLabelFilters.length || 'All') +
           (this.albumLabelFilters.length === 1 ? ' Label' : ' Labels') }}
         </mx-button>
@@ -708,7 +708,7 @@ The following example combines checkable, slotted table rows with pagination, ro
         @input="albumSearch2 = $event.target.value"
       />
       <div slot="filter">
-        <mx-button ref="labelMenuButton2" class="whitespace-nowrap" btn-type="action" dropdown>
+        <mx-button ref="labelMenuButton2" class="whitespace-nowrap" btn-type="simple" dropdown>
           {{ (this.albumLabelFilters2.length || 'All') +
           (this.albumLabelFilters2.length === 1 ? ' Label' : ' Labels') }}
         </mx-button>
