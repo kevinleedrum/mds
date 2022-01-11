@@ -16,6 +16,8 @@ export class MxDropdownMenu {
   /** Style as a filter dropdown with a "flat" border color */
   @Prop() flat: boolean = false;
   @Prop() label: string;
+  /** Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`) */
+  @Prop() dropdownClass: string;
   /** The `id` attribute for the internal input element */
   @Prop() dropdownId: string;
   @Prop() name: string;
@@ -68,6 +70,7 @@ export class MxDropdownMenu {
     if (this.elevated) str += ' elevated shadow-1';
     if (this.flat) str += ' flat';
     str += this.isFocused ? ' focused border-2' : ' border';
+    if (this.dropdownClass) str += ' ' + this.dropdownClass;
     return str;
   }
 
