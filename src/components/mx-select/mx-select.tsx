@@ -22,6 +22,8 @@ export class MxSelect {
   @Prop() label: string;
   @Prop() floatLabel: boolean = false;
   @Prop() ariaLabel: string;
+  /** Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`) */
+  @Prop() selectClass: string;
   /** The `id` attribute for the select element */
   @Prop() selectId: string;
   @Prop() name: string;
@@ -76,10 +78,11 @@ export class MxSelect {
     str += this.error || this.isFocused ? ' border-2' : ' border';
     if (this.error) str += ' error';
     if (this.disabled) str += ' disabled';
+    if (this.selectClass) str += ' ' + this.selectClass;
     return str;
   }
 
-  get selectClass() {
+  get selectElClass() {
     let str =
       'absolute inset-0 w-full pl-16 overflow-hidden outline-none appearance-none bg-transparent cursor-pointer disabled:cursor-auto';
     if (this.isFocused) str += ' -m-1'; // prevent shifting due to border-width change
@@ -124,7 +127,7 @@ export class MxSelect {
         <div data-testid="select-wrapper" class={this.selectWrapperClass}>
           <select
             aria-label={this.label || this.ariaLabel}
-            class={this.selectClass}
+            class={this.selectElClass}
             disabled={this.disabled}
             id={this.selectId || this.uuid}
             name={this.name}

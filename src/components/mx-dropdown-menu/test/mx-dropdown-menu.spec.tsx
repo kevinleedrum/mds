@@ -106,6 +106,12 @@ describe('mx-dropdown-menu', () => {
     expect(dropdownWrapper.getAttribute('class')).toContain('h-36');
   });
 
+  it('appends the dropdownClass value to the dropdown wrapper class list', async () => {
+    root.dropdownClass = 'test-class';
+    await page.waitForChanges();
+    expect(dropdownWrapper.classList.contains('test-class')).toBe(true);
+  });
+
   it('sets the mx-menu and mx-menu-item roles to "listbox" and "option"', async () => {
     expect(root.querySelector('mx-menu').getAttribute('role')).toBe('listbox');
     expect(Array.from(menuItems).every(m => m.children[0].getAttribute('role') === 'option')).toBe(true);
