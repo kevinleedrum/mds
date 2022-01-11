@@ -53,9 +53,11 @@ export class MxSelect {
       str += ' error';
     if (this.disabled)
       str += ' disabled';
+    if (this.selectClass)
+      str += ' ' + this.selectClass;
     return str;
   }
-  get selectClass() {
+  get selectElClass() {
     let str = 'absolute inset-0 w-full pl-16 overflow-hidden outline-none appearance-none bg-transparent cursor-pointer disabled:cursor-auto';
     if (this.isFocused)
       str += ' -m-1'; // prevent shifting due to border-width change
@@ -94,7 +96,7 @@ export class MxSelect {
     return (h(Host, { class: 'mx-select block' + (this.disabled ? ' disabled' : '') },
       this.label && !this.floatLabel && labelJsx,
       h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass },
-        h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes),
+        h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectElClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes),
           h("slot", null)),
         this.label && this.floatLabel && labelJsx,
         h("span", { class: this.iconSuffixClass },
@@ -243,6 +245,23 @@ export class MxSelect {
         "text": ""
       },
       "attribute": "aria-label",
+      "reflect": false
+    },
+    "selectClass": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`)"
+      },
+      "attribute": "select-class",
       "reflect": false
     },
     "selectId": {

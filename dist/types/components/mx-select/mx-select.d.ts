@@ -15,6 +15,8 @@ export declare class MxSelect {
   label: string;
   floatLabel: boolean;
   ariaLabel: string;
+  /** Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`) */
+  selectClass: string;
   /** The `id` attribute for the select element */
   selectId: string;
   name: string;
@@ -35,7 +37,7 @@ export declare class MxSelect {
   onInput(e: InputEvent): void;
   get hasValue(): boolean;
   get selectWrapperClass(): string;
-  get selectClass(): string;
+  get selectElClass(): string;
   get labelClassNames(): string;
   get iconSuffixClass(): string;
   get iconEl(): any;

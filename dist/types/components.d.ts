@@ -263,6 +263,10 @@ export namespace Components {
         "ariaLabel": string;
         "dense": boolean;
         /**
+          * Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`)
+         */
+        "dropdownClass": string;
+        /**
           * The `id` attribute for the internal input element
          */
         "dropdownId": string;
@@ -671,6 +675,10 @@ export namespace Components {
          */
         "labelClass": string;
         "name": string;
+        /**
+          * Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`)
+         */
+        "selectClass": string;
         /**
           * The `id` attribute for the select element
          */
@@ -1486,6 +1494,10 @@ declare namespace LocalJSX {
         "ariaLabel"?: string;
         "dense"?: boolean;
         /**
+          * Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`)
+         */
+        "dropdownClass"?: string;
+        /**
           * The `id` attribute for the internal input element
          */
         "dropdownId"?: string;
@@ -1886,6 +1898,10 @@ declare namespace LocalJSX {
          */
         "labelClass"?: string;
         "name"?: string;
+        /**
+          * Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`)
+         */
+        "selectClass"?: string;
         /**
           * The `id` attribute for the select element
          */

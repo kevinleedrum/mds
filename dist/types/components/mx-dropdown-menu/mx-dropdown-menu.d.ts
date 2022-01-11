@@ -9,6 +9,8 @@ export declare class MxDropdownMenu {
   /** Style as a filter dropdown with a "flat" border color */
   flat: boolean;
   label: string;
+  /** Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`) */
+  dropdownClass: string;
   /** The `id` attribute for the internal input element */
   dropdownId: string;
   name: string;
