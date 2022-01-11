@@ -110,6 +110,12 @@ describe('mx-select', () => {
     expect(selectWrapper.getAttribute('class')).toContain('flat');
   });
 
+  it('appends the dropdownClass value to the dropdown wrapper class list', async () => {
+    root.selectClass = 'test-class';
+    await page.waitForChanges();
+    expect(selectWrapper.classList.contains('test-class')).toBe(true);
+  });
+
   it('disables the select when the disabled prop is set', async () => {
     root.disabled = true;
     await page.waitForChanges();

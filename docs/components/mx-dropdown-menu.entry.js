@@ -50,6 +50,8 @@ const MxDropdownMenu = class {
     if (this.flat)
       str += ' flat';
     str += this.isFocused ? ' focused border-2' : ' border';
+    if (this.dropdownClass)
+      str += ' ' + this.dropdownClass;
     return str;
   }
   get inputClass() {

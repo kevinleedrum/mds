@@ -48,6 +48,8 @@ export class MxDropdownMenu {
     if (this.flat)
       str += ' flat';
     str += this.isFocused ? ' focused border-2' : ' border';
+    if (this.dropdownClass)
+      str += ' ' + this.dropdownClass;
     return str;
   }
   get inputClass() {
@@ -160,6 +162,23 @@ export class MxDropdownMenu {
         "text": ""
       },
       "attribute": "label",
+      "reflect": false
+    },
+    "dropdownClass": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`)"
+      },
+      "attribute": "dropdown-class",
       "reflect": false
     },
     "dropdownId": {
