@@ -452,8 +452,8 @@ const MxButton$1 = class extends HTMLElement {
       else
         str += ' min-h-36 px-16 text-4 tracking tracking-1-25';
     }
-    // Action Button
-    if (this.btnType === 'action') {
+    // Simple Button
+    if (this.btnType === 'simple') {
       str += ' w-full min-h-36 px-16 border rounded-3xl text-4';
     }
     // Text Button
@@ -462,6 +462,11 @@ const MxButton$1 = class extends HTMLElement {
       str += this.dropdown ? ' font-normal' : ' font-semibold uppercase tracking-1-25';
     }
     return str;
+  }
+  connectedCallback() {
+    // The 'action' type has been renamed to 'simple'
+    if (this.btnType === 'action')
+      this.btnType = 'simple';
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
@@ -20621,6 +20626,7 @@ const MxRadio$1 = class extends HTMLElement {
     this.value = '';
     this.labelName = '';
     this.checked = false;
+    this.disabled = false;
     this.componentWillRender = propagateDataAttributes;
   }
   /** Keep checked prop in sync with input element attribute */
@@ -20628,7 +20634,8 @@ const MxRadio$1 = class extends HTMLElement {
     this.checked = e.target.checked;
   }
   render() {
-    return (h(Host, { class: "mx-radio" }, h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("span", { class: "flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
+    return (h(Host, { class: "mx-radio" }, h("label", { class: 'relative inline-flex flex-nowrap align-center items-center text-4' +
+        (this.disabled ? '' : ' cursor-pointer') }, h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("span", { class: 'flex h-20 w-20 flex-shrink-0 rounded-full' + (this.disabled ? '' : ' cursor-pointer') }), h("div", { class: "radio-label ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
   get element() { return this; }
 };
@@ -20849,17 +20856,23 @@ const MxSwitch$1 = class extends HTMLElement {
     this.labelClass = '';
     this.labelName = '';
     this.checked = false;
+    this.disabled = false;
     this.componentWillRender = propagateDataAttributes;
   }
   /** Keep checked prop in sync with input element attribute */
   onInput(e) {
     this.checked = e.target.checked;
   }
+  get labelClassNames() {
+    let str = 'elative inline-flex flex-nowrap align-center items-center text-4';
+    if (!this.disabled)
+      str += ' cursor-pointer';
+    if (this.labelClass)
+      str += ' ' + this.labelClass;
+    return str;
+  }
   render() {
-    return (h(Host, { class: "mx-switch" }, h("label", { class: [
-        'relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4',
-        this.labelClass,
-      ].join(' ') }, h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", role: "switch", type: "checkbox", name: this.name, value: this.value, checked: this.checked }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("div", { class: "slider relative cursor-pointer round w-36 h-14 flex-shrink-0" }), h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
+    return (h(Host, { class: "mx-switch" }, h("label", { class: this.labelClassNames }, h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", role: "switch", type: "checkbox", name: this.name, value: this.value, disabled: this.disabled, checked: this.checked }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("div", { class: 'slider relative round w-36 h-14 flex-shrink-0' + (this.disabled ? '' : ' cursor-pointer') }), h("div", { class: "switch-label ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
   get element() { return this; }
 };
@@ -21630,7 +21643,7 @@ const MxTableRow$1 = class extends HTMLElement {
       return;
     // Ensure that collapsed, nested rows are hidden after switching to/from mobile UI
     await new Promise(requestAnimationFrame);
-    this.toggleNestedRows();
+    this.toggleNestedRows(true);
   }
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
   async translateRow(x, y) {
@@ -22348,7 +22361,7 @@ const MxTooltip$1 = class extends HTMLElement {
     return str;
   }
   render() {
-    return (h(Host, { class: "inline-block" }, h("slot", null), h("div", { ref: el => (this.tooltipElem = el), id: this.uuid, role: "tooltip", class: this.tooltipClasses, style: { maxWidth: this.maxWidth }, "data-testid": "tooltip" }, h("slot", { name: "tooltip" }, this.value))));
+    return (h(Host, { class: "inline-flex" }, h("slot", null), h("div", { ref: el => (this.tooltipElem = el), id: this.uuid, role: "tooltip", class: this.tooltipClasses, style: { maxWidth: this.maxWidth }, "data-testid": "tooltip" }, h("slot", { name: "tooltip" }, this.value))));
   }
   get element() { return this; }
   static get watchers() { return {
@@ -22358,7 +22371,7 @@ const MxTooltip$1 = class extends HTMLElement {
 
 const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"indicator":[8],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
 const MxBanner = /*@__PURE__*/proxyCustomElement(MxBanner$1, [4,"mx-banner",{"error":[4],"isOpen":[4,"is-open"],"sticky":[4],"isVisible":[32]}]);
-const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1,"btn-type"],"type":[1],"value":[1],"formaction":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
+const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1025,"btn-type"],"type":[1],"value":[1],"formaction":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
 const MxChart = /*@__PURE__*/proxyCustomElement(MxChart$1, [0,"mx-chart",{"data":[16],"height":[2],"options":[16],"type":[1],"width":[2]}]);
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelLeft":[4,"label-left"],"labelName":[1,"label-name"],"labelClass":[1,"label-class"],"hideLabel":[4,"hide-label"],"checked":[1028],"disabled":[4],"indeterminate":[4]}]);
 const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined":[4],"disabled":[4],"selected":[516],"clickable":[4],"removable":[4],"avatarUrl":[1,"avatar-url"],"icon":[1],"value":[8],"choice":[4],"filter":[4]}]);
@@ -22379,11 +22392,11 @@ const MxMenuItem = /*@__PURE__*/proxyCustomElement(MxMenuItem$1, [4,"mx-menu-ite
 const MxModal = /*@__PURE__*/proxyCustomElement(MxModal$1, [4,"mx-modal",{"buttons":[16],"closeOnEscape":[4,"close-on-escape"],"closeOnOutsideClick":[4,"close-on-outside-click"],"contentClass":[1,"content-class"],"description":[1],"fromLeft":[4,"from-left"],"fromRight":[4,"from-right"],"isOpen":[4,"is-open"],"previousPageTitle":[1,"previous-page-title"],"previousPageUrl":[1,"previous-page-url"],"large":[4],"minWidths":[32],"isVisible":[32]},[[0,"keydown","onKeyDown"],[4,"keydown","onDocumentKeyDown"]]]);
 const MxPageHeader = /*@__PURE__*/proxyCustomElement(MxPageHeader$1, [4,"mx-page-header",{"buttons":[16],"modal":[4],"previousPageUrl":[1,"previous-page-url"],"previousPageTitle":[1,"previous-page-title"],"pattern":[4],"minWidths":[32],"renderTertiaryButtonAsMenu":[32]}]);
 const MxPagination = /*@__PURE__*/proxyCustomElement(MxPagination$1, [4,"mx-pagination",{"page":[2],"rowsPerPageOptions":[16],"rowsPerPage":[2,"rows-per-page"],"simple":[4],"totalRows":[2,"total-rows"],"disabled":[4],"disableNextPage":[4,"disable-next-page"],"hideRowsPerPage":[32],"moveStatusToBottom":[32],"isXSmallMinWidth":[32],"isSmallMinWidth":[32]}]);
-const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[1028]}]);
+const MxRadio = /*@__PURE__*/proxyCustomElement(MxRadio$1, [0,"mx-radio",{"name":[1],"value":[1],"labelName":[1,"label-name"],"checked":[1028],"disabled":[4]}]);
 const MxSearch = /*@__PURE__*/proxyCustomElement(MxSearch$1, [0,"mx-search",{"ariaLabel":[1,"aria-label"],"dense":[4],"flat":[4],"name":[1],"placeholder":[1],"showClear":[4,"show-clear"],"value":[1025]}]);
 const MxSelect = /*@__PURE__*/proxyCustomElement(MxSelect$1, [4,"mx-select",{"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elevated":[4],"flat":[4],"label":[1],"floatLabel":[4,"float-label"],"ariaLabel":[1,"aria-label"],"selectClass":[1,"select-class"],"selectId":[1,"select-id"],"name":[1],"suffix":[1],"error":[1028],"labelClass":[1025,"label-class"],"value":[1032],"isFocused":[32]}]);
 const MxSnackbar = /*@__PURE__*/proxyCustomElement(MxSnackbar$1, [4,"mx-snackbar",{"duration":[2],"isOpen":[1540,"is-open"],"isVisible":[32]}]);
-const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelClass":[1,"label-class"],"labelName":[1,"label-name"],"checked":[1028]}]);
+const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelClass":[1,"label-class"],"labelName":[1,"label-name"],"checked":[1028],"disabled":[4]}]);
 const MxTab = /*@__PURE__*/proxyCustomElement(MxTab$1, [0,"mx-tab",{"label":[1],"ariaLabel":[1,"aria-label"],"icon":[1],"selected":[516],"badge":[4],"badgeClass":[1,"badge-class"]}]);
 const MxTabContent = /*@__PURE__*/proxyCustomElement(MxTabContent$1, [4,"mx-tab-content",{"index":[2],"value":[2]}]);
 const MxTable = /*@__PURE__*/proxyCustomElement(MxTable$1, [4,"mx-table",{"rows":[1040],"columns":[16],"getRowId":[16],"checkable":[4],"checkOnRowClick":[4,"check-on-row-click"],"showCheckAll":[4,"show-check-all"],"draggableRows":[4,"draggable-rows"],"mutateOnDrag":[4,"mutate-on-drag"],"groupBy":[1,"group-by"],"getGroupByHeading":[16],"hoverable":[4],"autoWidth":[4,"auto-width"],"sortBy":[1025,"sort-by"],"sortAscending":[1028,"sort-ascending"],"paginate":[4],"page":[1026],"rowsPerPage":[1026,"rows-per-page"],"totalRows":[2,"total-rows"],"disableNextPage":[4,"disable-next-page"],"rowsPerPageOptions":[16],"serverPaginate":[4,"server-paginate"],"getRowActions":[16],"getMultiRowActions":[16],"showProgressBar":[4,"show-progress-bar"],"disablePagination":[4,"disable-pagination"],"progressValue":[2,"progress-value"],"progressAppearDelay":[2,"progress-appear-delay"],"minWidths":[32],"checkedRowIds":[32],"exposedMobileColumnIndex":[32],"hasActionsColumnFromSlot":[32]},[[0,"mxCheck","onMxCheck"],[0,"mxRowDragStart","onMxRowDragStart"],[0,"mxDragKeyDown","onDragKeyDown"],[0,"mxRowDragEnd","onMxRowDragEnd"]]]);
