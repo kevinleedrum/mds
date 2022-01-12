@@ -29,6 +29,12 @@ describe('mx-checkbox', () => {
     expect(input.checked).toBeTruthy();
   });
 
+  it('disables the input when the disabled prop is set', async () => {
+    root.disabled = true;
+    await page.waitForChanges();
+    expect(input.disabled).toBeTruthy();
+  });
+
   it('applies any data attributes to the input element', async () => {
     expect(input.getAttribute('data-test')).toBe('test');
   });

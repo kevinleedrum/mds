@@ -44,6 +44,8 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-radio name="foo" label-name="W Collection" /></div>
     <div><mx-radio name="foo" label-name="Equestrian" /></div>
     <div><mx-radio name="foo" label-name="Darkness falls across the land, The midnight hour is close at hand" /></div>
+    <div><mx-radio name="foo" disabled label-name="Disabled" /></div>
+    <div><mx-radio name="foo" disabled checked label-name="Disabled" /></div>
   </div>
 </div>
 <!-- #endregion radio-buttons -->
@@ -55,6 +57,7 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 | Property    | Attribute    | Description | Type      | Default |
 | ----------- | ------------ | ----------- | --------- | ------- |
 | `checked`   | `checked`    |             | `boolean` | `false` |
+| `disabled`  | `disabled`   |             | `boolean` | `false` |
 | `labelName` | `label-name` |             | `string`  | `''`    |
 | `name`      | `name`       |             | `string`  | `''`    |
 | `value`     | `value`      |             | `string`  | `''`    |
@@ -68,6 +71,8 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-switch name="foo" label-name="W Collection" /></div>
     <div><mx-switch name="foo" label-name="Equestrian" /></div>
     <div><mx-switch name="foo" label-name="Darkness falls across the land, The midnight hour is close at hand" /></div>
+    <div><mx-switch name="foo" disabled label-name="Disabled" /></div>
+    <div><mx-switch name="foo" disabled checked label-name="Disabled" /></div>
   </div>
 </div>
 <!-- #endregion switches -->
@@ -79,6 +84,7 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 | Property     | Attribute     | Description | Type      | Default |
 | ------------ | ------------- | ----------- | --------- | ------- |
 | `checked`    | `checked`     |             | `boolean` | `false` |
+| `disabled`   | `disabled`    |             | `boolean` | `false` |
 | `labelClass` | `label-class` |             | `string`  | `''`    |
 | `labelName`  | `label-name`  |             | `string`  | `''`    |
 | `name`       | `name`        |             | `string`  | `''`    |

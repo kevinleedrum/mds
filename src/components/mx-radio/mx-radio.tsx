@@ -12,6 +12,7 @@ export class MxRadio {
   @Prop() value: string = '';
   @Prop() labelName: string = '';
   @Prop({ mutable: true }) checked: boolean = false;
+  @Prop() disabled: boolean = false;
 
   @Element() element: HTMLMxInputElement;
 
@@ -25,18 +26,24 @@ export class MxRadio {
   render() {
     return (
       <Host class="mx-radio">
-        <label class="relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4">
+        <label
+          class={
+            'relative inline-flex flex-nowrap align-center items-center text-4' +
+            (this.disabled ? '' : ' cursor-pointer')
+          }
+        >
           <input
             class="absolute h-0 w-0 opacity-0"
             type="radio"
             name={this.name}
             value={this.value}
             checked={this.checked}
+            disabled={this.disabled}
             {...this.dataAttributes}
             onInput={this.onInput.bind(this)}
           />
-          <span class="flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full"></span>
-          <div class="ml-16 inline-block" data-testid="labelName">
+          <span class={'flex h-20 w-20 flex-shrink-0 rounded-full' + (this.disabled ? '' : ' cursor-pointer')}></span>
+          <div class="radio-label ml-16 inline-block" data-testid="labelName">
             {this.labelName}
           </div>
         </label>
