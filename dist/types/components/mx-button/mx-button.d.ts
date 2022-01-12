@@ -1,5 +1,5 @@
 import { propagateDataAttributes } from '../../utils/utils';
-export declare type BtnType = 'contained' | 'outlined' | 'action' | 'text';
+export declare type BtnType = 'contained' | 'outlined' | 'simple' | 'text' | 'action';
 export declare type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
 export interface IMxButtonProps {
   btnType?: BtnType;
@@ -37,5 +37,6 @@ export declare class MxButton implements IMxButtonProps {
   componentWillRender: typeof propagateDataAttributes;
   onClick(e: MouseEvent): void;
   get buttonClass(): string;
+  connectedCallback(): void;
   render(): any;
 }

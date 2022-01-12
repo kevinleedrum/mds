@@ -66,7 +66,7 @@
     background: var(--mds-bg-switch-thumb-checked);
   }
 
-  input:checked + .slider:after {
+  input:checked + .slider::after {
     -webkit-transform: translateX(20px);
     -ms-transform: translateX(20px);
     transform: translateX(20px);
@@ -75,6 +75,30 @@
 
   input:checked + .slider:hover::after {
     background: var(--mds-bg-switch-overlay-checked-hover);
+  }
+
+  input:disabled {
+    & + .slider {
+      background-color: var(--mds-bg-switch-track-disabled);
+    }
+    & + .slider:before {
+      background: var(--mds-bg-switch-thumb-disabled);
+    }
+    & + .slider:after,
+    & + .slider:hover::after {
+      background: transparent;
+    }
+    &:checked {
+      & + .slider {
+        background: var(--mds-bg-switch-track-checked-disabled);
+      }
+      & + .slider:before {
+        background: var(--mds-bg-switch-thumb-checked-disabled);
+      }
+    }
+    & ~ .switch-label {
+      color: var(--mds-text-switch-disabled);
+    }
   }
 
   /* Rounded sliders */

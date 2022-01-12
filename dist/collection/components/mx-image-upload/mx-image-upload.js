@@ -284,7 +284,7 @@ export class MxImageUpload {
       "mutable": false,
       "complexType": {
         "original": "BtnType",
-        "resolved": "\"action\" | \"contained\" | \"outlined\" | \"text\"",
+        "resolved": "\"action\" | \"contained\" | \"outlined\" | \"simple\" | \"text\"",
         "references": {
           "BtnType": {
             "location": "import",

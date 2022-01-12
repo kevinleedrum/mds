@@ -10,20 +10,20 @@ If multiple snackbars are triggered, they will be queued and displayed consecuti
 <!-- #region snackbars -->
 <section class="mds">
   <div class="my-20">
-    <mx-button btn-type="action" @click="isOpen1 = true">Trigger Simple Snackbar</mx-button>
+    <mx-button btn-type="simple" @click="isOpen1 = true">Trigger Simple Snackbar</mx-button>
     <mx-snackbar :is-open="isOpen1" @mxClose="isOpen1 = false">
       Page has been published
     </mx-snackbar>
   </div>
   <div class="my-20">
-    <mx-button btn-type="action" @click="isOpen2 = true">Trigger Snackbar with Action</mx-button>
+    <mx-button btn-type="simple" @click="isOpen2 = true">Trigger Snackbar with Action</mx-button>
     <mx-snackbar :is-open="isOpen2" duration="5000" @mxClose="isOpen2 = false">
       Page has been published
       <mx-button slot="action" btn-type="text">Undo</mx-button>
     </mx-snackbar>
   </div>
   <div class="my-20">
-    <mx-button btn-type="action" @click="isOpen3 = true">Trigger Multi-Line Snackbar with Action</mx-button>
+    <mx-button btn-type="simple" @click="isOpen3 = true">Trigger Multi-Line Snackbar with Action</mx-button>
     <mx-snackbar :is-open="isOpen3" @mxClose="isOpen3 = false">
       The <strong>Hello World</strong> page has been successfully published
       <mx-button slot="action" btn-type="text">Dismiss</mx-button>
