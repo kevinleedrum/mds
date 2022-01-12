@@ -2,7 +2,7 @@ import { Component, Host, h, Prop, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
 import { propagateDataAttributes } from '../../utils/utils';
 
-export type BtnType = 'contained' | 'outlined' | 'action' | 'text';
+export type BtnType = 'contained' | 'outlined' | 'simple' | 'text' | 'action'; // 'action' is deprecated in favor of 'simple'
 export type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
 
 export interface IMxButtonProps {
@@ -27,7 +27,7 @@ export class MxButton implements IMxButtonProps {
   anchorElem!: HTMLAnchorElement;
   dataAttributes = {};
 
-  @Prop() btnType: BtnType = 'contained';
+  @Prop({ mutable: true }) btnType: BtnType = 'contained';
   @Prop() type: ButtonTypeAttribute = 'button';
   @Prop() value: string;
   @Prop() formaction: string;
@@ -75,8 +75,8 @@ export class MxButton implements IMxButtonProps {
       else str += ' min-h-36 px-16 text-4 tracking tracking-1-25';
     }
 
-    // Action Button
-    if (this.btnType === 'action') {
+    // Simple Button
+    if (this.btnType === 'simple') {
       str += ' w-full min-h-36 px-16 border rounded-3xl text-4';
     }
 
@@ -87,6 +87,11 @@ export class MxButton implements IMxButtonProps {
     }
 
     return str;
+  }
+
+  connectedCallback() {
+    // The 'action' type has been renamed to 'simple'
+    if (this.btnType === 'action') this.btnType = 'simple';
   }
 
   render() {

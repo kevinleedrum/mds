@@ -107,13 +107,13 @@ describe('mx-button as outlined', () => {
   });
 });
 
-describe('mx-button as an action button', () => {
+describe('mx-button as a simple button', () => {
   let page;
   let root;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxButton],
-      html: `<mx-button btn-type="action" value="foo" dropdown>button</mx-button>`,
+      html: `<mx-button btn-type="simple" value="foo" dropdown>button</mx-button>`,
     });
     root = page.root;
   });

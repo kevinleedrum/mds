@@ -108,7 +108,7 @@ Set the `showButton` prop to `false` if you want to leverage the `selectFile` an
 <!-- #region external-button -->
     <mx-image-upload ref="upload" show-button="false" @change="onChange" />
     <mx-button
-      btn-type="action"
+      btn-type="simple"
       :icon="hasFile ? 'ph-trash-simple' : 'ph-arrow-fat-line-up'"
       @click="onButtonClick"
     >

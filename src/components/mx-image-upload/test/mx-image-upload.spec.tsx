@@ -48,14 +48,14 @@ describe('mx-image-upload', () => {
     root.width = '50%';
     root.height = '50px';
     await page.waitForChanges();
-    expect(root.style.width).toBe('50%');
+    expect(dropzoneWrapper.style.width).toBe('50%');
     expect(dropzoneWrapper.style.height).toBe('50px');
   });
 
   it('sets the width and height to 80px and changes the icon if the avatar prop is set', async () => {
     root.avatar = true;
     await page.waitForChanges();
-    expect(root.style.width).toBe('80px');
+    expect(dropzoneWrapper.style.width).toBe('80px');
     expect(dropzoneWrapper.style.height).toBe('80px');
     expect(root.querySelector('[data-testid="avatar-icon"]')).not.toBeNull();
   });
