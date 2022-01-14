@@ -802,10 +802,8 @@ export class MxTable {
                   >
                     {colIndex === 0 && this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox}
                     <div class="inline-flex items-center overflow-hidden whitespace-nowrap select-none">
-                      <span
-                        class="truncate flex-shrink"
-                        innerHTML={col.heading || (col.isActionColumn ? 'Actions' : col.property)}
-                      ></span>
+                      {col.heading && <span class="truncate flex-shrink" innerHTML={col.heading}></span>}
+                      {!col.heading && <span class="sr-only">{col.isActionColumn ? 'Action' : col.property}</span>}
                       {!this.draggableRows && col.sortable && col.property && (
                         <div class={this.getHeaderArrowClass(col)} data-testid="arrow">
                           <i class="mds-arrow-triangle-down text-icon"></i>
