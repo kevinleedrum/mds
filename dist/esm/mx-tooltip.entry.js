@@ -73,7 +73,7 @@ const MxTooltip = class {
     return str;
   }
   render() {
-    return (h(Host, { class: "inline-block" }, h("slot", null), h("div", { ref: el => (this.tooltipElem = el), id: this.uuid, role: "tooltip", class: this.tooltipClasses, style: { maxWidth: this.maxWidth }, "data-testid": "tooltip" }, h("slot", { name: "tooltip" }, this.value))));
+    return (h(Host, { class: "inline-flex" }, h("slot", null), h("div", { ref: el => (this.tooltipElem = el), id: this.uuid, role: "tooltip", class: this.tooltipClasses, style: { maxWidth: this.maxWidth }, "data-testid": "tooltip" }, h("slot", { name: "tooltip" }, this.value))));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

@@ -65,7 +65,7 @@ const MxTableRow = class {
       return;
     // Ensure that collapsed, nested rows are hidden after switching to/from mobile UI
     await new Promise(requestAnimationFrame);
-    this.toggleNestedRows();
+    this.toggleNestedRows(true);
   }
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */
   async translateRow(x, y) {

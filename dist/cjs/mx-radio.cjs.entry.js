@@ -13,6 +13,7 @@ const MxRadio = class {
     this.value = '';
     this.labelName = '';
     this.checked = false;
+    this.disabled = false;
     this.componentWillRender = utils.propagateDataAttributes;
   }
   /** Keep checked prop in sync with input element attribute */
@@ -20,7 +21,8 @@ const MxRadio = class {
     this.checked = e.target.checked;
   }
   render() {
-    return (index.h(index.Host, { class: "mx-radio" }, index.h("label", { class: "relative inline-flex flex-nowrap align-center items-center cursor-pointer text-4" }, index.h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked }, this.dataAttributes, { onInput: this.onInput.bind(this) })), index.h("span", { class: "flex h-20 w-20 cursor-pointer flex-shrink-0 rounded-full" }), index.h("div", { class: "ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
+    return (index.h(index.Host, { class: "mx-radio" }, index.h("label", { class: 'relative inline-flex flex-nowrap align-center items-center text-4' +
+        (this.disabled ? '' : ' cursor-pointer') }, index.h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes, { onInput: this.onInput.bind(this) })), index.h("span", { class: 'flex h-20 w-20 flex-shrink-0 rounded-full' + (this.disabled ? '' : ' cursor-pointer') }), index.h("div", { class: "radio-label ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
   }
   get element() { return index.getElement(this); }
 };
