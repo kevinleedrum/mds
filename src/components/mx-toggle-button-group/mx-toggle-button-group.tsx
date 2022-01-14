@@ -41,7 +41,7 @@ export class MxToggleButtonGroup {
 
   render() {
     return (
-      <Host class="inline-flex" role="radio-group">
+      <Host class="inline-flex" role="radiogroup">
         <slot></slot>
       </Host>
     );

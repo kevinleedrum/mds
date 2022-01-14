@@ -2,6 +2,7 @@ import { Component, Host, h, Element, State, Listen, Method, Prop, Watch, Event,
 import { lockBodyScroll, unlockBodyScroll } from '../../utils/bodyScroll';
 import { moveToPortal } from '../../utils/portal';
 import { fadeIn, fadeOut, fadeScaleIn } from '../../utils/transitions';
+import { uuidv4 } from '../../utils/utils';
 
 export type DialogOptions = {
   /** The label for the cancel button.  If `null`, the button is not shown. */
@@ -27,6 +28,7 @@ export class MxDialog {
   isSimple: boolean = true;
   hasButtons: boolean = false;
   hasHeading: boolean = false;
+  uuid: string = uuidv4();
 
   heading: string;
   message: string;
@@ -175,21 +177,21 @@ export class MxDialog {
         <div
           ref={el => (this.modal = el)}
           role="alertdialog"
-          aria-labelledby={this.heading ? 'dialog-heading' : null}
-          aria-describedby={this.message ? 'dialog-message' : null}
+          aria-labelledby={this.heading ? this.uuid + '-dialog-heading' : null}
+          aria-describedby={this.message ? this.uuid + '-dialog-message' : null}
           aria-modal="true"
           data-testid="modal"
           class={this.modalClassNames}
         >
-          <div class="p-24 text-4 flex-grow overflow-auto" data-testid="modal-content">
+          <div class="p-24 text-4 flex-grow overflow-auto" tabindex="0" data-testid="modal-content">
             {this.hasHeading && (
-              <h1 id="dialog-heading" class="text-h6 emphasis my-0 pb-16" data-testid="heading">
+              <h1 id={this.uuid + '-dialog-heading'} class="text-h6 emphasis my-0 pb-16" data-testid="heading">
                 {this.heading}
                 <slot name="heading"></slot>
               </h1>
             )}
             {this.message && (
-              <p id="dialog-message" class="my-0">
+              <p id={this.uuid + '-dialog-message'} class="my-0">
                 {this.message}
               </p>
             )}

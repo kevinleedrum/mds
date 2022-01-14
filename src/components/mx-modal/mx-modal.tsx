@@ -4,6 +4,7 @@ import { moveToPortal } from '../../utils/portal';
 import { Direction, fadeIn, fadeOut, fadeScaleIn, fadeSlideIn, fadeSlideOut } from '../../utils/transitions';
 import { lockBodyScroll, unlockBodyScroll } from '../../utils/bodyScroll';
 import { IMxButtonProps } from '../mx-button/mx-button';
+import { uuidv4 } from '../../utils/utils';
 
 export interface IModalButton extends IMxButtonProps {
   label: string;
@@ -26,6 +27,7 @@ export class MxModal {
   ancestorFocusedElement: HTMLElement;
   headerBottomSlotWrapper: HTMLElement;
   mobilePageHeader: HTMLMxPageHeaderElement;
+  uuid: string = uuidv4();
 
   /** An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text. */
   @Prop() buttons: IModalButton[] = [];
@@ -226,7 +228,7 @@ export class MxModal {
     return (
       <Host
         class={this.hostClass}
-        aria-labelledby={this.hasHeader ? 'headerText' : null}
+        aria-labelledby={this.hasHeader ? this.uuid + '-header-text' : null}
         aria-modal="true"
         role="dialog"
       >
@@ -242,7 +244,7 @@ export class MxModal {
           style={{ maxWidth: this.minWidths.md && (this.fromRight || this.fromLeft) ? '37.5rem' : '' }}
         >
           {/* Modal Content */}
-          <div class={this.modalContentClasses} data-testid="modal-content">
+          <div tabindex="0" class={this.modalContentClasses} data-testid="modal-content">
             {this.description && (
               <p class="text-4 my-0 mb-16 sm:mb-24" data-testid="modal-description">
                 {this.description}
@@ -294,7 +296,7 @@ export class MxModal {
             previous-page-title={this.previousPageTitle}
             previous-page-url={this.previousPageUrl}
           >
-            <span id="headerText" data-testid="header-text">
+            <span id={this.uuid + '-header-text'} data-testid="header-text">
               <slot name="header-left"></slot>
             </span>
             {this.hasHeaderBottom && (
