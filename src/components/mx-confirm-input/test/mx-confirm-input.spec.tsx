@@ -11,7 +11,7 @@ describe('mx-confirm-input', () => {
     page = await newSpecPage({
       components: [MxConfirmInput, MxInput],
       html: `
-        <mx-confirm-input />
+        <mx-confirm-input el-aria-label="aria label" />
       `,
     });
     root = page.root as HTMLMxConfirmInputElement;
@@ -46,5 +46,9 @@ describe('mx-confirm-input', () => {
     await page.waitForChanges();
     expect(listener).not.toHaveBeenCalled();
     expect(root.value).toBeFalsy();
+  });
+
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    expect(input.getAttribute('aria-label')).toBe('aria label');
   });
 });

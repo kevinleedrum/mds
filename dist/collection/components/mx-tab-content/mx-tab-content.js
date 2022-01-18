@@ -4,7 +4,7 @@ export class MxTabContent {
     return this.value >= 0 && this.index === this.value;
   }
   render() {
-    return (h(Host, { class: !this.isActiveTab ? 'hidden' : '' },
+    return (h(Host, { class: !this.isActiveTab ? 'hidden' : '', role: "tabpanel" },
       h("slot", null)));
   }
   static get is() { return "mx-tab-content"; }

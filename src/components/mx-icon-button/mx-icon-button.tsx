@@ -14,8 +14,8 @@ export class MxIconButton {
   @Prop() formaction: string;
   @Prop() value: string;
   @Prop({ reflect: true }) disabled: boolean = false;
-  /** An aria-label is highly recommended */
-  @Prop() ariaLabel: string;
+  /** The aria-label attribute for the inner button element. */
+  @Prop() elAriaLabel: string;
   /** Show downward chevron icon */
   @Prop() chevronDown: boolean = false;
   /** Show left-pointing chevron icon */
@@ -71,7 +71,7 @@ export class MxIconButton {
           ref={el => (this.btnElem = el as HTMLButtonElement)}
           onClick={this.onClick.bind(this)}
           aria-disabled={this.disabled ? 'true' : null}
-          aria-label={this.ariaLabel}
+          aria-label={this.elAriaLabel}
           {...this.dataAttributes}
         >
           {buttonContent}

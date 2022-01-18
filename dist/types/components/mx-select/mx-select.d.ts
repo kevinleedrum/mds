@@ -14,7 +14,8 @@ export declare class MxSelect {
   flat: boolean;
   label: string;
   floatLabel: boolean;
-  ariaLabel: string;
+  /** The aria-label attribute for the inner select element. */
+  elAriaLabel: string;
   /** Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`) */
   selectClass: string;
   /** The `id` attribute for the select element */

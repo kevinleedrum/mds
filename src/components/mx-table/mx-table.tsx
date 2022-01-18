@@ -726,6 +726,7 @@ export class MxTable {
             <mx-button ref={el => (this.actionMenuButton = el)} btn-type="text" dropdown>
               <span class="h-full flex items-center px-2">
                 <i class="mds-gear text-icon"></i>
+                <span class="sr-only">Action Menu</span>
               </span>
             </mx-button>
             <mx-menu data-testid="multi-action-menu" ref={el => (this.actionMenu = el)}>
@@ -786,9 +787,9 @@ export class MxTable {
         {/* Operations Bar */}
         {this.showOperationsBar && operationsBar}
 
-        <div data-testid="grid" class="table-grid relative" style={this.gridStyle}>
+        <div data-testid="grid" role="grid" class="table-grid relative" style={this.gridStyle}>
           {/* Header Row */}
-          <div class="header-row">
+          <div class="header-row" role="row">
             {this.minWidths.sm ? (
               // Non-Mobile Column Headers
               this.cols.map((col: ITableColumn, colIndex: number) => {
@@ -801,7 +802,8 @@ export class MxTable {
                   >
                     {colIndex === 0 && this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox}
                     <div class="inline-flex items-center overflow-hidden whitespace-nowrap select-none">
-                      <span class="truncate flex-shrink" innerHTML={col.heading}></span>
+                      {col.heading && <span class="truncate flex-shrink" innerHTML={col.heading}></span>}
+                      {!col.heading && <span class="sr-only">{col.isActionColumn ? 'Action' : col.property}</span>}
                       {!this.draggableRows && col.sortable && col.property && (
                         <div class={this.getHeaderArrowClass(col)} data-testid="arrow">
                           <i class="mds-arrow-triangle-down text-icon"></i>

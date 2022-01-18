@@ -5,7 +5,8 @@ export declare class MxFab {
   icon: string;
   /** Style as a secondary action */
   secondary: boolean;
-  ariaLabel: string;
+  /** The aria-label attribute for the inner button element. */
+  elAriaLabel: string;
   value: string;
   minWidths: MinWidths;
   isExtended: boolean;

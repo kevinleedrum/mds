@@ -3,7 +3,7 @@ import ripple from '../../utils/ripple';
 
 export interface IMxTabProps {
   label?: string;
-  ariaLabel?: string;
+  elAriaLabel?: string;
   icon?: string;
   selected?: boolean;
   badge?: boolean;
@@ -20,7 +20,7 @@ export class MxTab implements IMxTabProps {
   /** Label text to display */
   @Prop() label: string = '';
   /** If you are not providing a `label`, this should be provided instead for accessibility */
-  @Prop() ariaLabel: string = '';
+  @Prop() elAriaLabel: string = '';
   /** Class name of icon to display */
   @Prop() icon: string = '';
   /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
@@ -31,7 +31,7 @@ export class MxTab implements IMxTabProps {
   @Prop() badgeClass: string = '';
 
   componentDidLoad() {
-    if (!this.label && !this.ariaLabel) {
+    if (!this.label && !this.elAriaLabel) {
       throw new Error('Please provide either a label or an aria-label for each tab.');
     }
   }
@@ -62,7 +62,7 @@ export class MxTab implements IMxTabProps {
           role="tab"
           type="button"
           aria-selected={this.selected ? 'true' : null}
-          aria-label={this.label || this.ariaLabel}
+          aria-label={this.elAriaLabel || this.label}
           class="relative overflow-hidden w-full h-full border border-transparent px-44"
           onClick={this.onClick.bind(this)}
         >

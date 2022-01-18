@@ -38,7 +38,7 @@ export class MxFab {
   }
   render() {
     return (h(Host, { class: 'mx-fab inline-block min-w-max' + (this.minWidths.md ? ' w-56' : ' w-40') },
-      h("button", { ref: el => (this.buttonElem = el), type: "button", value: this.value, class: this.buttonClass, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) },
+      h("button", { ref: el => (this.buttonElem = el), type: "button", value: this.value, class: this.buttonClass, "aria-label": this.elAriaLabel, onClick: this.onClick.bind(this) },
         this.icon && h("i", { class: this.icon + ' text-1' }),
         h("div", { class: this.slotWrapperClass },
           h("slot", null)))));
@@ -80,7 +80,7 @@ export class MxFab {
       "reflect": false,
       "defaultValue": "false"
     },
-    "ariaLabel": {
+    "elAriaLabel": {
       "type": "string",
       "mutable": false,
       "complexType": {
@@ -92,9 +92,9 @@ export class MxFab {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": ""
+        "text": "The aria-label attribute for the inner button element."
       },
-      "attribute": "aria-label",
+      "attribute": "el-aria-label",
       "reflect": false
     },
     "value": {

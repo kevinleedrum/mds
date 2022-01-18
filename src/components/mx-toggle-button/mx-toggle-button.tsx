@@ -13,7 +13,8 @@ export class MxToggleButton {
   @Prop() icon: string;
   @Prop({ reflect: true }) selected: boolean = false;
   @Prop() disabled: boolean = false;
-  @Prop() ariaLabel: string;
+  /** The aria-label attribute for the inner button element. */
+  @Prop() elAriaLabel: string;
   /** Only used inside a toggle button group */
   @Prop() value: any;
 
@@ -46,8 +47,8 @@ export class MxToggleButton {
           ref={el => (this.btnElem = el as HTMLButtonElement)}
           aria-disabled={this.disabled ? 'true' : null}
           role={this.value === undefined ? 'switch' : 'radio'}
-          aria-checked={this.selected ? 'true' : null}
-          aria-label={this.ariaLabel}
+          aria-checked={this.selected ? 'true' : 'false'}
+          aria-label={this.elAriaLabel}
           onClick={this.onClick.bind(this)}
           {...this.dataAttributes}
         >

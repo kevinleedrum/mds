@@ -25,16 +25,16 @@ itelf in a corner of that element.
         <mx-button btn-type="simple" icon="ph-bell">Notifications</mx-button>
       </mx-badge>
       <mx-badge badge-class="bg-red-500 text-white" icon="mds-x" bottom offset="10">
-        <mx-icon-button icon="ph-video-camera" />
+        <mx-icon-button icon="ph-video-camera" el-aria-label="Camera Settings" />
       </mx-badge>
       <mx-badge badge-class="text-red-600" indicator offset="4">
         <mx-button btn-type="simple">Announcements</mx-button>
       </mx-badge>
       <mx-badge badge-class="text-yellow-300" indicator="star" top left offset="12">
-        <mx-icon-button icon="mds-user-circle" />
+        <mx-icon-button icon="mds-user-circle" el-aria-label="User Profile" />
       </mx-badge>
       <mx-badge badge-class="bg-blue-700 text-white" value="3" bottom left offset="10">
-        <mx-icon-button icon="ph-shopping-cart" />
+        <mx-icon-button icon="ph-shopping-cart" el-aria-label="Cart (3)" />
       </mx-badge>
     </div>
   </div>

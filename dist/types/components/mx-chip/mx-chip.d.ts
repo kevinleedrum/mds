@@ -1,6 +1,7 @@
 import { EventEmitter } from '../../stencil-public-runtime';
 export declare class MxChip {
   chipElem: HTMLElement;
+  uuid: string;
   outlined: boolean;
   disabled: boolean;
   /** Display a checkmark on the left side of the chip */
@@ -29,6 +30,7 @@ export declare class MxChip {
   get hasLeftIcon(): string | boolean;
   get isClickable(): boolean;
   get chipClass(): string;
+  get removeButtonClass(): string;
   get ariaRole(): "button" | "checkbox" | "radio";
   get avatarStyle(): {
     background: string;

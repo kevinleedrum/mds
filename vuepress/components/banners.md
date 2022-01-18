@@ -23,7 +23,7 @@ A banner displays a prominent message and related optional actions. Banners can 
     </mx-banner>
     <mx-banner :is-open="isOpenC">
       It is now safe to turn off your computer.
-      <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" class="w-40 h-40" slot="image">
+      <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" class="w-40 h-40" slot="image" alt="">
       <div slot="actions">
         <mx-button btn-type="text" @click="isOpenC = false">Shut down</mx-button>
       </div>

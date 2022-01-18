@@ -18,6 +18,8 @@ export class MxCheckbox {
   @Prop({ mutable: true }) checked: boolean = false;
   @Prop() disabled: boolean = false;
   @Prop() indeterminate: boolean = false;
+  /** The aria-label attribute for the inner input element. */
+  @Prop() elAriaLabel: string;
 
   @Element() element: HTMLMxInputElement;
 
@@ -56,6 +58,7 @@ export class MxCheckbox {
           <input
             class={'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : '')}
             type="checkbox"
+            aria-label={this.elAriaLabel}
             name={this.name}
             value={this.value}
             checked={this.checked}

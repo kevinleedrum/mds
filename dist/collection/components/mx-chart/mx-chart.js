@@ -2,6 +2,10 @@ import { Component, Host, h, Prop, Element, Watch, Method } from '@stencil/core'
 import { Chart, registerables } from 'chart.js';
 Chart.register(...(registerables || []));
 export class MxChart {
+  constructor() {
+    /** The aria-label attribute for the inner canvas element. */
+    this.elAriaLabel = 'Chart';
+  }
   onDataChange() {
     this.update();
   }
@@ -25,7 +29,7 @@ export class MxChart {
   }
   render() {
     return (h(Host, { class: "mx-chart relative block", style: this.chartStyle },
-      h("canvas", { ref: el => (this.canvasEl = el), role: "img", style: this.chartStyle })));
+      h("canvas", { ref: el => (this.canvasEl = el), role: "img", "aria-label": this.elAriaLabel, style: this.chartStyle })));
   }
   static get is() { return "mx-chart"; }
   static get properties() { return {
@@ -47,6 +51,24 @@ export class MxChart {
         "tags": [],
         "text": "The labels and datasets to render. See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/)."
       }
+    },
+    "elAriaLabel": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "The aria-label attribute for the inner canvas element."
+      },
+      "attribute": "el-aria-label",
+      "reflect": false,
+      "defaultValue": "'Chart'"
     },
     "height": {
       "type": "number",

@@ -12,6 +12,7 @@
 | `assistiveText`       | `assistive-text`        |             | `string`                  | `undefined` |
 | `dense`               | `dense`                 |             | `boolean`                 | `false`     |
 | `disabled`            | `disabled`              |             | `boolean`                 | `false`     |
+| `elAriaLabel`         | `el-aria-label`         |             | `string`                  | `undefined` |
 | `error`               | `error`                 |             | `boolean`                 | `false`     |
 | `floatLabel`          | `float-label`           |             | `boolean`                 | `false`     |
 | `inputId`             | `input-id`              |             | `string`                  | `undefined` |

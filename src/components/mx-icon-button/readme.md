@@ -7,17 +7,17 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                         | Type                              | Default     |
-| -------------- | --------------- | ----------------------------------- | --------------------------------- | ----------- |
-| `ariaLabel`    | `aria-label`    | An aria-label is highly recommended | `string`                          | `undefined` |
-| `chevronDown`  | `chevron-down`  | Show downward chevron icon          | `boolean`                         | `false`     |
-| `chevronLeft`  | `chevron-left`  | Show left-pointing chevron icon     | `boolean`                         | `false`     |
-| `chevronRight` | `chevron-right` | Show right-pointing chevron icon    | `boolean`                         | `false`     |
-| `disabled`     | `disabled`      |                                     | `boolean`                         | `false`     |
-| `formaction`   | `formaction`    |                                     | `string`                          | `undefined` |
-| `icon`         | `icon`          | Class name of icon (for icon font)  | `string`                          | `undefined` |
-| `type`         | `type`          |                                     | `"button" \| "reset" \| "submit"` | `'button'`  |
-| `value`        | `value`         |                                     | `string`                          | `undefined` |
+| Property       | Attribute       | Description                                            | Type                              | Default     |
+| -------------- | --------------- | ------------------------------------------------------ | --------------------------------- | ----------- |
+| `chevronDown`  | `chevron-down`  | Show downward chevron icon                             | `boolean`                         | `false`     |
+| `chevronLeft`  | `chevron-left`  | Show left-pointing chevron icon                        | `boolean`                         | `false`     |
+| `chevronRight` | `chevron-right` | Show right-pointing chevron icon                       | `boolean`                         | `false`     |
+| `disabled`     | `disabled`      |                                                        | `boolean`                         | `false`     |
+| `elAriaLabel`  | `el-aria-label` | The aria-label attribute for the inner button element. | `string`                          | `undefined` |
+| `formaction`   | `formaction`    |                                                        | `string`                          | `undefined` |
+| `icon`         | `icon`          | Class name of icon (for icon font)                     | `string`                          | `undefined` |
+| `type`         | `type`          |                                                        | `"button" \| "reset" \| "submit"` | `'button'`  |
+| `value`        | `value`         |                                                        | `string`                          | `undefined` |
 
 
 ## Dependencies

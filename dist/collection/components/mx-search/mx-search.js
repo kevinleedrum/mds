@@ -32,30 +32,13 @@ export class MxSearch {
   }
   render() {
     return (h(Host, { class: "mx-search flex items-center relative" },
-      h("input", Object.assign({ ref: el => (this.inputEl = el), type: "search", "aria-label": this.ariaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes, { onInput: this.onInput.bind(this) })),
+      h("input", Object.assign({ ref: el => (this.inputEl = el), type: "search", "aria-label": this.elAriaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes, { onInput: this.onInput.bind(this) })),
       h("i", { class: "absolute mds-search text-icon left-16 pointer-events-none" }),
       this.showClear && (h("button", { class: this.clearButtonClass, "data-testid": "clear-button", onClick: this.onClear.bind(this) },
         h("i", { class: "mds-x text-icon" })))));
   }
   static get is() { return "mx-search"; }
   static get properties() { return {
-    "ariaLabel": {
-      "type": "string",
-      "mutable": false,
-      "complexType": {
-        "original": "string",
-        "resolved": "string",
-        "references": {}
-      },
-      "required": false,
-      "optional": false,
-      "docs": {
-        "tags": [],
-        "text": "If not provided, the `aria-label` will fallback to either the `placeholder` value or simply \"Search\"."
-      },
-      "attribute": "aria-label",
-      "reflect": false
-    },
     "dense": {
       "type": "boolean",
       "mutable": false,
@@ -73,6 +56,23 @@ export class MxSearch {
       "attribute": "dense",
       "reflect": false,
       "defaultValue": "false"
+    },
+    "elAriaLabel": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "The `aria-label` attribute for the `<input>` element. If not provided, the `aria-label` will fallback to either the `placeholder` value or simply \"Search\"."
+      },
+      "attribute": "el-aria-label",
+      "reflect": false
     },
     "flat": {
       "type": "boolean",

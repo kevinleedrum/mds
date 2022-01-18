@@ -9,14 +9,14 @@ The component wraps an [`<input type="file">`](https://developer.mozilla.org/en-
 <section class="mds">
   <div class="flex flex-col my-20 space-y-40">
 <!-- #region image-uploads -->
-    <mx-image-upload @input="onInput" assistive-text="This is assistive text" />
-    <mx-image-upload show-icon="false" asset-name="logo" @input="onInput">
+    <mx-image-upload el-aria-label="Upload file" assistive-text="This is assistive text" @input="onInput" />
+    <mx-image-upload el-aria-label="Upload file" show-icon="false" asset-name="logo" @input="onInput">
       <span slot="instructions">
         The <code>assetName</code> prop is set to "logo" in this example.
       </span>
     </mx-image-upload>
-    <mx-image-upload show-dropzone-text="false" upload-btn-type="outlined" upload-button-label="Attach" @input="onInput" />
-    <mx-image-upload accept-pdf accept-image="false" icon="ph-file-arrow-up" @input="onInput">
+    <mx-image-upload el-aria-label="Upload file" show-dropzone-text="false" upload-btn-type="outlined" upload-button-label="Attach" @input="onInput" />
+    <mx-image-upload el-aria-label="Upload file" accept-pdf accept-image="false" icon="ph-file-arrow-up" @input="onInput">
       <span slot="dropzone-text" class="mt-8">
         Upload PDF &hellip;
       </span>
@@ -41,12 +41,12 @@ There are two slots for success and error status messages, named `success` and `
 <section class="mds">
   <div class="flex flex-col my-20 space-y-40">
 <!-- #region status-messages -->
-    <mx-image-upload thumbnail-size="cover" thumbnail-url="https://picsum.photos/300">
+    <mx-image-upload el-aria-label="Upload file" thumbnail-size="cover" thumbnail-url="https://picsum.photos/300">
       <span slot="success">
         The image was uploaded successfully
       </span>
     </mx-image-upload>
-    <mx-image-upload thumbnail-size="cover" thumbnail-url="https://picsum.photos/320">
+    <mx-image-upload el-aria-label="Upload file" thumbnail-size="cover" thumbnail-url="https://picsum.photos/320">
       <span slot="instructions">
         Images may be up to 4800px in width or height.
       </span>
@@ -71,6 +71,7 @@ To provide an initial thumbnail image (e.g. if the user has previously uploaded 
 <!-- #region avatar -->
     <mx-image-upload
       avatar
+      el-aria-label="Upload avatar"
       thumbnail-url="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" 
       @input="onInput"
     />
@@ -89,10 +90,10 @@ The `thumbnailSize` prop may also be used to set how the thumbnail fits inside t
 <section class="mds">
   <div class="flex flex-col my-20 space-y-40">
 <!-- #region image-upload-dimensions -->
-    <mx-image-upload width="75%" height="150px" thumbnail-size="cover" thumbnail-url="https://via.placeholder.com/200x100" />
-    <mx-image-upload width="75%" height="150px" thumbnail-size="stretch" thumbnail-url="https://via.placeholder.com/200x100" />
-    <mx-image-upload width="75%" height="150px" thumbnail-size="contain" thumbnail-url="https://via.placeholder.com/200x100" />
-    <mx-image-upload width="75%" height="150px" thumbnail-size="auto" thumbnail-url="https://via.placeholder.com/200x100" />
+    <mx-image-upload el-aria-label="Upload file" width="75%" height="150px" thumbnail-size="cover" thumbnail-url="https://via.placeholder.com/200x100" />
+    <mx-image-upload el-aria-label="Upload file" width="75%" height="150px" thumbnail-size="stretch" thumbnail-url="https://via.placeholder.com/200x100" />
+    <mx-image-upload el-aria-label="Upload file" width="75%" height="150px" thumbnail-size="contain" thumbnail-url="https://via.placeholder.com/200x100" />
+    <mx-image-upload el-aria-label="Upload file" width="75%" height="150px" thumbnail-size="auto" thumbnail-url="https://via.placeholder.com/200x100" />
 <!-- #endregion image-upload-dimensions -->
   </div>
 </section>
@@ -106,7 +107,7 @@ Set the `showButton` prop to `false` if you want to leverage the `selectFile` an
 <section class="mds">
   <div class="inline-flex flex-col items-center space-y-20">
 <!-- #region external-button -->
-    <mx-image-upload ref="upload" show-button="false" @change="onChange" />
+    <mx-image-upload el-aria-label="Upload file" ref="upload" show-button="false" @change="onChange" />
     <mx-button
       btn-type="simple"
       :icon="hasFile ? 'ph-trash-simple' : 'ph-arrow-fat-line-up'"
@@ -130,6 +131,7 @@ Set the `showButton` prop to `false` if you want to leverage the `selectFile` an
 | `acceptPdf`         | `accept-pdf`          | Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files. Set both to `false` to accept any file. | `boolean`                                         | `false`       |
 | `assetName`         | `asset-name`          | Replaces the word "image" in the default dropzone text (i.e. "No image to show").                                        | `string`                                          | `'image'`     |
 | `avatar`            | `avatar`              | Sets the width and height to 80px and changes the icon.                                                                  | `boolean`                                         | `false`       |
+| `elAriaLabel`       | `el-aria-label`       | The aria-label attribute for the inner input element.                                                                    | `string`                                          | `undefined`   |
 | `height`            | `height`              | The height of the dropzone / thumbnail container (e.g. "400px" or "50%").                                                | `string`                                          | `undefined`   |
 | `icon`              | `icon`                | The class name of the icon to use instead of the default icon.                                                           | `string`                                          | `undefined`   |
 | `inputId`           | `input-id`            | The `id` attribute to apply to the input element.                                                                        | `string`                                          | `undefined`   |

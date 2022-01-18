@@ -31,11 +31,11 @@ The component emits `input` events (via the internal `input` element), so the up
     </div>
     <div class="space-y-20">
       <strong>No Label</strong>
-      <mx-date-picker :value="selectedDate" @input="selectedDate = $event.target.value" :assistive-text="'The input value is ' + (selectedDate || 'empty')" />
+      <mx-date-picker el-aria-label="Date" :value="selectedDate" @input="selectedDate = $event.target.value" :assistive-text="'The input value is ' + (selectedDate || 'empty')" />
     </div>
     <div class="space-y-20">
       <strong>No Label - Dense</strong>
-      <mx-date-picker dense :value="selectedDate" @input="selectedDate = $event.target.value" :assistive-text="'The input value is ' + (selectedDate || 'empty')" />
+      <mx-date-picker dense el-aria-label="Date" :value="selectedDate" @input="selectedDate = $event.target.value" :assistive-text="'The input value is ' + (selectedDate || 'empty')" />
     </div>
     <div class="space-y-20">
       <strong>Disabled</strong>
@@ -90,11 +90,11 @@ The component emits `input` events (via the internal `input` element), so the up
     </div>
     <div class="space-y-20">
       <strong>No Label</strong>
-      <mx-time-picker :value="selectedTime" @input="selectedTime = $event.target.value" :assistive-text="'The value is ' + (selectedTime || 'empty')" />
+      <mx-time-picker el-aria-label="Time" :value="selectedTime" @input="selectedTime = $event.target.value" :assistive-text="'The value is ' + (selectedTime || 'empty')" />
     </div>
     <div class="space-y-20">
       <strong>No Label - Dense</strong>
-      <mx-time-picker dense :value="selectedTime" @input="selectedTime = $event.target.value" :assistive-text="'The value is ' + (selectedTime || 'empty')" />
+      <mx-time-picker dense el-aria-label="Time" :value="selectedTime" @input="selectedTime = $event.target.value" :assistive-text="'The value is ' + (selectedTime || 'empty')" />
     </div>
     <div class="space-y-20">
       <strong>Disabled</strong>
@@ -120,33 +120,33 @@ The component emits `input` events (via the internal `input` element), so the up
 
 ### Date Picker Properties
 
-| Property        | Attribute        | Description                                       | Type      | Default     |
-| --------------- | ---------------- | ------------------------------------------------- | --------- | ----------- |
-| `ariaLabel`     | `aria-label`     |                                                   | `string`  | `undefined` |
-| `assistiveText` | `assistive-text` | Helpful text to show below the picker             | `string`  | `undefined` |
-| `dense`         | `dense`          |                                                   | `boolean` | `false`     |
-| `disabled`      | `disabled`       |                                                   | `boolean` | `false`     |
-| `error`         | `error`          |                                                   | `boolean` | `false`     |
-| `floatLabel`    | `float-label`    |                                                   | `boolean` | `false`     |
-| `inputId`       | `input-id`       | The `id` attribute for the internal input element | `string`  | `undefined` |
-| `label`         | `label`          |                                                   | `string`  | `undefined` |
-| `name`          | `name`           |                                                   | `string`  | `undefined` |
-| `value`         | `value`          | The selected date in YYYY-MM-DD format            | `string`  | `undefined` |
+| Property        | Attribute        | Description                                           | Type      | Default     |
+| --------------- | ---------------- | ----------------------------------------------------- | --------- | ----------- |
+| `assistiveText` | `assistive-text` | Helpful text to show below the picker                 | `string`  | `undefined` |
+| `dense`         | `dense`          |                                                       | `boolean` | `false`     |
+| `disabled`      | `disabled`       |                                                       | `boolean` | `false`     |
+| `elAriaLabel`   | `el-aria-label`  | The aria-label attribute for the inner input element. | `string`  | `undefined` |
+| `error`         | `error`          |                                                       | `boolean` | `false`     |
+| `floatLabel`    | `float-label`    |                                                       | `boolean` | `false`     |
+| `inputId`       | `input-id`       | The `id` attribute for the internal input element     | `string`  | `undefined` |
+| `label`         | `label`          |                                                       | `string`  | `undefined` |
+| `name`          | `name`           |                                                       | `string`  | `undefined` |
+| `value`         | `value`          | The selected date in YYYY-MM-DD format                | `string`  | `undefined` |
 
 ### Time Picker Properties
 
-| Property        | Attribute        | Description                                       | Type      | Default     |
-| --------------- | ---------------- | ------------------------------------------------- | --------- | ----------- |
-| `ariaLabel`     | `aria-label`     |                                                   | `string`  | `undefined` |
-| `assistiveText` | `assistive-text` | Helpful text to show below the picker             | `string`  | `undefined` |
-| `dense`         | `dense`          |                                                   | `boolean` | `false`     |
-| `disabled`      | `disabled`       |                                                   | `boolean` | `false`     |
-| `error`         | `error`          |                                                   | `boolean` | `false`     |
-| `floatLabel`    | `float-label`    |                                                   | `boolean` | `false`     |
-| `inputId`       | `input-id`       | The `id` attribute for the internal input element | `string`  | `undefined` |
-| `label`         | `label`          |                                                   | `string`  | `undefined` |
-| `name`          | `name`           |                                                   | `string`  | `undefined` |
-| `value`         | `value`          | The time in 24-hour hh:mm format                  | `string`  | `undefined` |
+| Property        | Attribute        | Description                                           | Type      | Default     |
+| --------------- | ---------------- | ----------------------------------------------------- | --------- | ----------- |
+| `assistiveText` | `assistive-text` | Helpful text to show below the picker                 | `string`  | `undefined` |
+| `dense`         | `dense`          |                                                       | `boolean` | `false`     |
+| `disabled`      | `disabled`       |                                                       | `boolean` | `false`     |
+| `elAriaLabel`   | `el-aria-label`  | The aria-label attribute for the inner input element. | `string`  | `undefined` |
+| `error`         | `error`          |                                                       | `boolean` | `false`     |
+| `floatLabel`    | `float-label`    |                                                       | `boolean` | `false`     |
+| `inputId`       | `input-id`       | The `id` attribute for the internal input element     | `string`  | `undefined` |
+| `label`         | `label`          |                                                       | `string`  | `undefined` |
+| `name`          | `name`           |                                                       | `string`  | `undefined` |
+| `value`         | `value`          | The time in 24-hour hh:mm format                      | `string`  | `undefined` |
 
 ### CSS Variables
 

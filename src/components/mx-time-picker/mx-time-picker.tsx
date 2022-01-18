@@ -21,11 +21,12 @@ export class MxTimePicker {
   isTimeInputSupported: boolean = false;
   uuid: string = uuidv4();
 
-  @Prop() ariaLabel: string;
   /** Helpful text to show below the picker */
   @Prop() assistiveText: string;
   @Prop() dense: boolean = false;
   @Prop() disabled: boolean = false;
+  /** The aria-label attribute for the inner input element. */
+  @Prop() elAriaLabel: string;
   @Prop({ mutable: true }) error: boolean = false;
   @Prop() floatLabel: boolean = false;
   /** The `id` attribute for the internal input element */
@@ -192,7 +193,7 @@ export class MxTimePicker {
 
         <div ref={el => (this.pickerWrapper = el)} class={this.pickerWrapperClass}>
           <input
-            aria-label={this.ariaLabel || this.label}
+            aria-label={this.elAriaLabel || this.label}
             class={this.inputClass}
             id={this.inputId || this.uuid}
             name={this.name}
@@ -207,6 +208,7 @@ export class MxTimePicker {
           />
           {this.label && this.floatLabel && labelJsx}
           <button
+            aria-label="Open time menu"
             ref={el => (this.menuButton = el)}
             class={this.menuButtonClass}
             data-testid="menu-button"

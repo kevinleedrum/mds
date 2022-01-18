@@ -56,8 +56,8 @@ describe('mx-icon-button', () => {
     expect(listener).not.toHaveBeenCalled();
   });
 
-  it('uses the ariaLabel prop as an attribute on the button', async () => {
-    root.ariaLabel = 'Open';
+  it('uses the elAriaLabel prop for the aria-label attribute on the button', async () => {
+    root.elAriaLabel = 'Open';
     await page.waitForChanges();
     expect(button.getAttribute('aria-label')).toBe('Open');
   });

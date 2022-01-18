@@ -96,9 +96,9 @@ export class MxPagination {
       this.simple ? (
       // Simple pagination
       h("div", { class: "simple flex items-center justify-center h-48" },
-        h("mx-icon-button", { "aria-label": "Previous page", "chevron-left": true, disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
+        h("mx-icon-button", { "el-aria-label": "Previous page", "chevron-left": true, disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
         this.lastPage !== null ? this.page + ' of ' + this.lastPage : '',
-        h("mx-icon-button", { "aria-label": "Next page", "chevron-right": true, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }))) : (
+        h("mx-icon-button", { "el-aria-label": "Next page", "chevron-right": true, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }))) : (
       // Standard pagination
       h("div", { ref: el => (this.paginationWrapper = el), class: this.paginationWrapperClass },
         this.hasStatus && (h("div", { "data-testid": "status", class: "px-24 py-10 flex relative items-center justify-self-start" },
@@ -115,10 +115,10 @@ export class MxPagination {
             " of ",
             this.totalRows)),
           h("div", { class: "flex items-center sm:space-x-8" },
-            h("mx-icon-button", { "aria-label": "First page", icon: "mds-page-first", disabled: this.page === 1 || this.disabled, onClick: this.onClickFirstPage.bind(this) }),
-            h("mx-icon-button", { "aria-label": "Previous page", icon: "mds-chevron-left", disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
-            h("mx-icon-button", { "aria-label": "Next page", icon: "mds-chevron-right", disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }),
-            this.lastPage !== null && (h("mx-icon-button", { "aria-label": "Last page", icon: "mds-page-last", disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
+            h("mx-icon-button", { "el-aria-label": "First page", icon: "mds-page-first", disabled: this.page === 1 || this.disabled, onClick: this.onClickFirstPage.bind(this) }),
+            h("mx-icon-button", { "el-aria-label": "Previous page", icon: "mds-chevron-left", disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
+            h("mx-icon-button", { "el-aria-label": "Next page", icon: "mds-chevron-right", disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }),
+            this.lastPage !== null && (h("mx-icon-button", { "el-aria-label": "Last page", icon: "mds-page-last", disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
   }
   static get is() { return "mx-pagination"; }
   static get properties() { return {

@@ -28,7 +28,7 @@ export class MxChipGroup {
     });
   }
   render() {
-    return (h(Host, { class: "inline-flex", role: "radio-group" },
+    return (h(Host, { class: "inline-flex", role: "radiogroup" },
       h("slot", null)));
   }
   static get is() { return "mx-chip-group"; }

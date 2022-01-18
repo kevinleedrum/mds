@@ -89,7 +89,7 @@ export class MxConfirmInput {
   }
   render() {
     return (h(Host, { class: 'mx-confirm-input block' + (this.value != null && this.value !== '' ? ' has-value' : '') },
-      h("mx-input", { ref: el => (this.mxInput = el), name: this.name, inputId: this.inputId, label: this.label, placeholder: this.placeholder, value: this.value, type: this.type, dense: this.dense, disabled: this.disabled, readonly: this.readonly, maxlength: this.maxlength, leftIcon: this.leftIcon, suffix: this.suffix, outerContainerClass: this.outerContainerClass, labelClass: this.labelClass, error: this.error, assistiveText: this.assistiveText, floatLabel: this.floatLabel, rightIcon: this.rightIcons, onFocusin: this.onFocusin.bind(this), onFocusout: this.onFocusout.bind(this), onInput: this.onInput.bind(this), onKeyDown: this.onKeyDown.bind(this), onMouseEnter: this.onMouseEnter.bind(this), onMouseLeave: this.onMouseLeave.bind(this) })));
+      h("mx-input", { ref: el => (this.mxInput = el), name: this.name, inputId: this.inputId, label: this.label, placeholder: this.placeholder, value: this.value, type: this.type, dense: this.dense, disabled: this.disabled, readonly: this.readonly, maxlength: this.maxlength, leftIcon: this.leftIcon, suffix: this.suffix, outerContainerClass: this.outerContainerClass, labelClass: this.labelClass, error: this.error, assistiveText: this.assistiveText, floatLabel: this.floatLabel, rightIcon: this.rightIcons, elAriaLabel: this.elAriaLabel, onFocusin: this.onFocusin.bind(this), onFocusout: this.onFocusout.bind(this), onInput: this.onInput.bind(this), onKeyDown: this.onKeyDown.bind(this), onMouseEnter: this.onMouseEnter.bind(this), onMouseLeave: this.onMouseLeave.bind(this) })));
   }
   static get is() { return "mx-confirm-input"; }
   static get properties() { return {
@@ -452,6 +452,23 @@ export class MxConfirmInput {
       "attribute": "textarea-height",
       "reflect": false,
       "defaultValue": "'250px'"
+    },
+    "elAriaLabel": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "el-aria-label",
+      "reflect": false
     }
   }; }
   static get states() { return {

@@ -21,6 +21,8 @@ export class MxImageUpload {
   @Prop() assistiveText: string;
   /** Sets the width and height to 80px and changes the icon. */
   @Prop() avatar = false;
+  /** The aria-label attribute for the inner input element. */
+  @Prop() elAriaLabel: string;
   /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
   @Prop() uploadBtnType: BtnType = 'contained';
   /** Sets the thumbnail sizing strategy relative to the container. */
@@ -216,6 +218,7 @@ export class MxImageUpload {
               name={this.name}
               type="file"
               accept={this.accept}
+              aria-label={this.elAriaLabel}
               class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               onInput={this.onInput.bind(this)}
               onDragOver={this.onDragOver.bind(this)}

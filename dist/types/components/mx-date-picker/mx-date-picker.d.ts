@@ -9,7 +9,8 @@ export declare class MxDatePicker {
   inputEl: HTMLInputElement;
   popoverInstance: PopoverInstance;
   isDateInputSupported: boolean;
-  ariaLabel: string;
+  /** The aria-label attribute for the inner input element. */
+  elAriaLabel: string;
   /** Helpful text to show below the picker */
   assistiveText: string;
   dense: boolean;

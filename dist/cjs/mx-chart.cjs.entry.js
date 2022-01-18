@@ -13047,6 +13047,8 @@ Chart.register(...(registerables || []));
 const MxChart = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
+    /** The aria-label attribute for the inner canvas element. */
+    this.elAriaLabel = 'Chart';
   }
   onDataChange() {
     this.update();
@@ -13070,7 +13072,7 @@ const MxChart = class {
     return { width: this.width && this.width + 'px', height: this.height && this.height + 'px' };
   }
   render() {
-    return (index.h(index.Host, { class: "mx-chart relative block", style: this.chartStyle }, index.h("canvas", { ref: el => (this.canvasEl = el), role: "img", style: this.chartStyle })));
+    return (index.h(index.Host, { class: "mx-chart relative block", style: this.chartStyle }, index.h("canvas", { ref: el => (this.canvasEl = el), role: "img", "aria-label": this.elAriaLabel, style: this.chartStyle })));
   }
   get element() { return index.getElement(this); }
   static get watchers() { return {

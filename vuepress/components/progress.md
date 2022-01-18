@@ -7,24 +7,24 @@
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 mt-20">
     <div class="flex flex-col space-y-20">
       <strong>Indeterminate</strong>
-      <mx-circular-progress />
+      <mx-circular-progress aria-label="Progress"  />
     </div>
     <div class="flex flex-col space-y-20">
       <strong>Determinate</strong>
       <div>
-        <mx-circular-progress value="25" />
-        <mx-circular-progress value="75" />
-        <mx-circular-progress value="100" />
-        <mx-circular-progress :value="progress" />
+        <mx-circular-progress aria-label="Progress" value="25" />
+        <mx-circular-progress aria-label="Progress" value="75" />
+        <mx-circular-progress aria-label="Progress" value="100" />
+        <mx-circular-progress aria-label="Progress" :value="progress" />
       </div>
     </div>
     <div class="flex flex-col space-y-20">
       <strong>Custom Sizes</strong>
       <div>
-        <mx-circular-progress size="1.5rem" />
-        <mx-circular-progress size="2rem" :value="progress" />
-        <mx-circular-progress size="2.5rem" />
-        <mx-circular-progress size="4rem" :value="progress" />
+        <mx-circular-progress aria-label="Progress" size="1.5rem" />
+        <mx-circular-progress aria-label="Progress" size="2rem" :value="progress" />
+        <mx-circular-progress aria-label="Progress" size="2.5rem" />
+        <mx-circular-progress aria-label="Progress" size="4rem" :value="progress" />
       </div>
     </div>
   </div>
@@ -40,15 +40,15 @@
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 mt-20">
     <div class="flex flex-col space-y-20">
       <strong>Indeterminate</strong>
-      <mx-linear-progress />
+      <mx-linear-progress aria-label="Progress" />
     </div>
     <div class="flex flex-col space-y-20">
       <strong>Determinate</strong>
       <div class="space-y-16">
-        <mx-linear-progress value="25" />
-        <mx-linear-progress value="75" />
-        <mx-linear-progress value="100" />
-        <mx-linear-progress :value="progress" />
+        <mx-linear-progress aria-label="Progress" value="25" />
+        <mx-linear-progress aria-label="Progress" value="75" />
+        <mx-linear-progress aria-label="Progress" value="100" />
+        <mx-linear-progress aria-label="Progress" :value="progress" />
       </div>
     </div>
   </div>
@@ -64,8 +64,8 @@ If you only want to show a progress indicator when a task is taking longer to fi
 <section class="mds">
 <!-- #region appear-delay -->
   <div class="h-192 flex flex-col items-center justify-end relative pb-16 border bg-white">
-    <mx-linear-progress v-if="isLoading" appear-delay="500" class="absolute top-0" />
-    <mx-circular-progress v-if="isLoading" appear-delay="500" class="absolute top-24" />
+    <mx-linear-progress v-if="isLoading" aria-label="Progress" appear-delay="500" class="absolute top-0" />
+    <mx-circular-progress v-if="isLoading" aria-label="Progress" appear-delay="500" class="absolute top-24" />
     <mx-button class="w-160" @click="isLoading = !isLoading">
       {{ isLoading ? 'Stop Loading' : 'Start Loading' }}
     </mx-button>

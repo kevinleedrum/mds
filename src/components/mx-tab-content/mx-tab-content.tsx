@@ -15,7 +15,7 @@ export class MxTabContent {
   }
   render() {
     return (
-      <Host class={!this.isActiveTab ? 'hidden' : ''}>
+      <Host class={!this.isActiveTab ? 'hidden' : ''} role="tabpanel">
         <slot></slot>
       </Host>
     );

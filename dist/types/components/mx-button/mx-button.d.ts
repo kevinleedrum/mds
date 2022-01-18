@@ -12,12 +12,16 @@ export interface IMxButtonProps {
   target?: string;
   full?: boolean;
   dropdown?: boolean;
+  icon: string;
+  elAriaLabel: string;
 }
 export declare class MxButton implements IMxButtonProps {
   btnElem: HTMLButtonElement;
   anchorElem: HTMLAnchorElement;
   dataAttributes: {};
   btnType: BtnType;
+  /** The aria-label attribute for the inner button element. */
+  elAriaLabel: string;
   type: ButtonTypeAttribute;
   value: string;
   formaction: string;

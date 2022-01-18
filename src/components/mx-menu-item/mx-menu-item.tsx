@@ -176,7 +176,7 @@ export class MxMenuItem implements IMxMenuItemProps {
         <div
           ref={el => (this.menuItemElem = el)}
           role={this.role}
-          aria-checked={this.checked ? 'true' : null}
+          aria-checked={this.role === 'menuitem' ? null : this.checked ? 'true' : 'false'}
           aria-disabled={this.disabled ? 'true' : null}
           aria-selected={this.selected ? 'true' : null}
           tabindex={this.disabled || this.multiSelect ? '-1' : '0'}

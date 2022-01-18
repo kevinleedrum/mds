@@ -24,7 +24,7 @@ describe('mx-chart (code prop)', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxChart],
-      html: `<mx-chart type="line" width="640" height="320" />`,
+      html: `<mx-chart el-aria-label="aria label" type="line" width="640" height="320" />`,
     });
     root = page.root as HTMLMxChartElement;
     root.data = chartData;
@@ -43,6 +43,10 @@ describe('mx-chart (code prop)', () => {
     expect(root.style.height).toBe('320px');
     expect(canvas.style.width).toBe('640px');
     expect(canvas.style.height).toBe('320px');
+  });
+
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    expect(canvas.getAttribute('aria-label')).toBe('aria label');
   });
 
   it('creates a new Chart of the provided type', async () => {

@@ -474,6 +474,7 @@ export class MxTableRow {
                 <i
                   aria-label="Press Space or Enter to move this row"
                   ref={el => (this.keyboardDragHandle = el)}
+                  role="button"
                   tabindex="0"
                   class={'mds-drag-dots text-icon pointer-events-none' + (this.checkable ? ' mx-8' : '')}
                   onKeyDown={this.onKeyboardHandleKeyDown.bind(this)}
@@ -519,7 +520,11 @@ export class MxTableRow {
           {/* Action Menu */}
           {this.actions.length > 1 && (
             <div class="action-cell flex items-center p-0 justify-end col-start-2 col-span-4 sm:col-span-1">
-              <mx-icon-button ref={el => (this.actionMenuButton = el)} icon="mds-dots-vertical"></mx-icon-button>
+              <mx-icon-button
+                ref={el => (this.actionMenuButton = el)}
+                el-aria-label="Row Actions"
+                icon="mds-dots-vertical"
+              ></mx-icon-button>
               <mx-menu data-testid="action-menu" ref={el => (this.actionMenu = el)}>
                 {this.actions.map(action => (
                   <mx-menu-item {...action}>{action.value}</mx-menu-item>

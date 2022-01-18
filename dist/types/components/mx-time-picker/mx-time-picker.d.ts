@@ -7,11 +7,12 @@ export declare class MxTimePicker {
   menu: HTMLMxMenuElement;
   isTimeInputSupported: boolean;
   uuid: string;
-  ariaLabel: string;
   /** Helpful text to show below the picker */
   assistiveText: string;
   dense: boolean;
   disabled: boolean;
+  /** The aria-label attribute for the inner input element. */
+  elAriaLabel: string;
   error: boolean;
   floatLabel: boolean;
   /** The `id` attribute for the internal input element */

@@ -24,7 +24,7 @@ export class MxToggleButtonGroup {
     buttons.forEach(button => (button.selected = button.value === this.value));
   }
   render() {
-    return (h(Host, { class: "inline-flex", role: "radio-group" },
+    return (h(Host, { class: "inline-flex", role: "radiogroup" },
       h("slot", null)));
   }
   static get is() { return "mx-toggle-button-group"; }

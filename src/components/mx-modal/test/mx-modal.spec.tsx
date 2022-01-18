@@ -31,8 +31,8 @@ describe('mx-modal', () => {
     expect(root.getAttribute('aria-modal')).toBe('true');
   });
 
-  it('has aria-labelledby set to the headerText element', () => {
-    expect(root.getAttribute('aria-labelledby')).toBe('headerText');
+  it('has aria-labelledby set to the header-text element', () => {
+    expect(root.getAttribute('aria-labelledby')).toContain('header-text');
   });
 
   it('renders the header-left slot content', () => {

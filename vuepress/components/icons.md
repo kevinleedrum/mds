@@ -10,7 +10,7 @@ To achieve a 24px (1.5rem) icon size, add the `text-icon` utility class.
   <div class="flex items-center flex-wrap my-40 space-x-20">
     <!-- #region icons -->
     <i class="mds-warning-circle text-icon text-red-600"></i>
-    <mx-icon-button icon="mds-x" />
+    <mx-icon-button icon="mds-x" el-aria-label="Close" />
     <i class="mds-clock text-icon text-blue-500"></i>
     <!-- #endregion icons -->
   </div>

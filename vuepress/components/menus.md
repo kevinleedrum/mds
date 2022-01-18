@@ -39,7 +39,7 @@ To nest a Menu inside a Menu Item, add `slot="submenu"` to the child Menu compon
         </mx-menu>
       </div>
       <div>
-        <mx-icon-button ref="actionButton" chevron-down />
+        <mx-icon-button ref="actionButton" el-aria-label="Open action menu" chevron-down />
         <mx-menu ref="actionMenu">
           <mx-menu-item icon="ph-file" @click="clickHandler">New&hellip;</mx-menu-item>
           <mx-menu-item icon="ph-folder-open" @click="clickHandler">Open&hellip;</mx-menu-item>
@@ -69,9 +69,9 @@ To add checkboxes to Menu Items, add the `multi-select` property, and set the `c
   <div class="mt-20">
     <div class="flex items-center mt-20 space-x-20">
       <div>
-        <mx-icon-button ref="dotsButton" icon="ph-dots-three-outline" />
+        <mx-icon-button ref="dotsButton" el-aria-label="Open menu" icon="ph-dots-three-outline" />
         <mx-menu ref="dotsMenu">
-          <p role="heading">Appearance</p>
+          <p role="heading" aria-level="1">Appearance</p>
           <mx-menu-item multi-select checked @click="clickHandler">Show Minimap</mx-menu-item>
           <mx-menu-item multi-select @click="clickHandler">Word Wrap</mx-menu-item>
           <mx-menu-item @click="clickHandler" label="Email">design@moxiworks.com</mx-menu-item>

@@ -33,7 +33,7 @@ const MxChipGroup = class {
     });
   }
   render() {
-    return (h(Host, { class: "inline-flex", role: "radio-group" }, h("slot", null)));
+    return (h(Host, { class: "inline-flex", role: "radiogroup" }, h("slot", null)));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

@@ -67,7 +67,7 @@ export class MxDropdownMenu {
   render() {
     return (h(Host, { class: "mx-dropdown-menu block" },
       h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass },
-        h("input", { "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }),
+        h("input", { "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }),
         h("span", { class: this.suffixClass },
           this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix),
           h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" }))),
@@ -76,7 +76,7 @@ export class MxDropdownMenu {
   }
   static get is() { return "mx-dropdown-menu"; }
   static get properties() { return {
-    "ariaLabel": {
+    "elAriaLabel": {
       "type": "string",
       "mutable": false,
       "complexType": {
@@ -88,9 +88,9 @@ export class MxDropdownMenu {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": ""
+        "text": "The aria-label attribute for the inner input element."
       },
-      "attribute": "aria-label",
+      "attribute": "el-aria-label",
       "reflect": false
     },
     "dense": {

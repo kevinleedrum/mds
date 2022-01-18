@@ -72,7 +72,7 @@ const MxTabs = class {
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: "mx-tabs relative block", role: "tablist" }, this.renderAsSelect ? (index.h("mx-select", { value: this.value, onInput: this.onInput.bind(this), dense: true }, this.tabs.map((tab, index$1) => (index.h("option", { value: index$1 }, tab.label || tab.ariaLabel))))) : (this.tabs && (index.h("div", { class: this.gridClass }, this.tabs.map((tab, index$1) => (index.h("mx-tab", Object.assign({ selected: this.value === index$1 }, tab)))))))));
+    return (index.h(index.Host, { class: "mx-tabs relative block", role: "tablist" }, this.renderAsSelect ? (index.h("mx-select", { value: this.value, onInput: this.onInput.bind(this), dense: true }, this.tabs.map((tab, index$1) => (index.h("option", { value: index$1 }, tab.label || tab.elAriaLabel))))) : (this.tabs && (index.h("div", { class: this.gridClass }, this.tabs.map((tab, index$1) => (index.h("mx-tab", Object.assign({ selected: this.value === index$1 }, tab)))))))));
   }
   get element() { return index.getElement(this); }
   static get watchers() { return {
