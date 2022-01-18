@@ -16,6 +16,8 @@ export interface IMxButtonProps {
   target?: string;
   full?: boolean;
   dropdown?: boolean;
+  icon: string;
+  elAriaLabel: string;
 }
 
 @Component({
@@ -28,6 +30,8 @@ export class MxButton implements IMxButtonProps {
   dataAttributes = {};
 
   @Prop({ mutable: true }) btnType: BtnType = 'contained';
+  /** The aria-label attribute for the inner button element. */
+  @Prop() elAriaLabel: string;
   @Prop() type: ButtonTypeAttribute = 'button';
   @Prop() value: string;
   @Prop() formaction: string;
@@ -131,6 +135,7 @@ export class MxButton implements IMxButtonProps {
             class={this.buttonClass}
             ref={el => (this.btnElem = el as HTMLButtonElement)}
             onClick={this.onClick.bind(this)}
+            aria-label={this.elAriaLabel}
             aria-disabled={this.disabled ? 'true' : null}
             {...this.dataAttributes}
           >

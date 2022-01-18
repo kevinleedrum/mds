@@ -21,7 +21,8 @@ export class MxSelect {
   @Prop() flat: boolean = false;
   @Prop() label: string;
   @Prop() floatLabel: boolean = false;
-  @Prop() ariaLabel: string;
+  /** The aria-label attribute for the inner select element. */
+  @Prop() elAriaLabel: string;
   /** Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`) */
   @Prop() selectClass: string;
   /** The `id` attribute for the select element */
@@ -126,7 +127,7 @@ export class MxSelect {
 
         <div data-testid="select-wrapper" class={this.selectWrapperClass}>
           <select
-            aria-label={this.label || this.ariaLabel}
+            aria-label={this.elAriaLabel || this.label}
             class={this.selectElClass}
             disabled={this.disabled}
             id={this.selectId || this.uuid}

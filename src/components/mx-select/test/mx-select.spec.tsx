@@ -60,9 +60,9 @@ describe('mx-select', () => {
     expect(select.getAttribute('aria-label')).toBe('Test Label');
   });
 
-  it('uses the ariaLabel prop for the aria-label attribute', async () => {
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
     root.label = '';
-    root.ariaLabel = 'Hidden Label';
+    root.elAriaLabel = 'Hidden Label';
     await page.waitForChanges();
     expect(select.getAttribute('aria-label')).toBe('Hidden Label');
   });

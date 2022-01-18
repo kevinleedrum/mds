@@ -32,7 +32,7 @@ describe('mx-tab (icon, badge, not selected)', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxTabs, MxTab],
-      html: `<mx-tab icon="ph-house" aria-label="Home" badge />`,
+      html: `<mx-tab icon="ph-house" el-aria-label="Home" badge />`,
     });
     root = page.root;
   });

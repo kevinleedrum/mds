@@ -24,6 +24,12 @@ describe('mx-checkbox', () => {
     expect(labelName.innerText).toBe('Premier');
   });
 
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    root.elAriaLabel = 'aria label';
+    await page.waitForChanges();
+    expect(input.getAttribute('aria-label')).toBe('aria label');
+  });
+
   it('is checked', async () => {
     expect(input.checked).toBeTruthy();
   });

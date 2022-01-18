@@ -18,6 +18,7 @@ describe('mx-date-picker', () => {
       html: `
         <mx-date-picker
           label="Date"
+          el-aria-label="aria label"
           input-id="test-id"
           name="test-name"
           value="2021-04-01"
@@ -74,6 +75,10 @@ describe('mx-date-picker', () => {
     await page.waitForChanges();
     label = root.querySelector('label');
     expect(label.classList.contains('floating')).toBe(true);
+  });
+
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    expect(input.getAttribute('aria-label')).toBe('aria label');
   });
 
   it('applies any data attributes to the input element', async () => {

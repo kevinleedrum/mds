@@ -8,7 +8,7 @@ describe('mx-toggle-button', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxToggleButton],
-      html: `<mx-toggle-button icon="ph-apple-logo" data-test="test"></mx-toggle-button>`,
+      html: `<mx-toggle-button el-aria-label="aria label" icon="ph-apple-logo" data-test="test"></mx-toggle-button>`,
     });
     root = page.root;
     btn = root.querySelector('button');
@@ -25,6 +25,10 @@ describe('mx-toggle-button', () => {
 
   it('has a switch role by default', async () => {
     expect(btn.getAttribute('role')).toBe('switch');
+  });
+
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    expect(btn.getAttribute('aria-label')).toBe('aria label');
   });
 
   it('applies any data attributes to the button element', async () => {

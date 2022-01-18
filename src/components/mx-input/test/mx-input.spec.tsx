@@ -11,6 +11,7 @@ describe('mx-input', () => {
       html: `
         <mx-input
           label="Placeholder"
+          el-aria-label="aria label"
           left-icon="ph-apple-logo"
           name="testInput"
           value="foo"
@@ -97,6 +98,10 @@ describe('mx-input', () => {
     await page.waitForChanges();
     label = root.querySelector('label');
     expect(label.classList.contains('floating')).toBe(true);
+  });
+
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    expect(input.getAttribute('aria-label')).toBe('aria label');
   });
 
   it('applies any data attributes to the input element', async () => {

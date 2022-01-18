@@ -21,7 +21,7 @@ describe('mx-dropdown-menu', () => {
       <mx-dropdown-menu
         value="1000-3000"
         label="Size"
-        aria-label="size-aria-label"
+        el-aria-label="size-aria-label"
         name="size-name"
         dropdown-id="size-id"
         suffix="SQFT"

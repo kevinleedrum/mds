@@ -22,7 +22,8 @@ export class MxDatePicker {
   popoverInstance: PopoverInstance;
   isDateInputSupported: boolean = false;
 
-  @Prop() ariaLabel: string;
+  /** The aria-label attribute for the inner input element. */
+  @Prop() elAriaLabel: string;
   /** Helpful text to show below the picker */
   @Prop() assistiveText: string;
   @Prop() dense: boolean = false;
@@ -240,7 +241,7 @@ export class MxDatePicker {
         <div ref={el => (this.pickerWrapper = el)} class={this.pickerWrapperClass}>
           <input
             ref={el => (this.inputEl = el)}
-            aria-label={this.ariaLabel || this.label}
+            aria-label={this.elAriaLabel || this.label}
             class={this.inputClass}
             disabled={this.disabled}
             id={this.inputId || this.uuid}

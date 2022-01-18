@@ -124,14 +124,14 @@ export class MxPagination {
           // Simple pagination
           <div class="simple flex items-center justify-center h-48">
             <mx-icon-button
-              aria-label="Previous page"
+              el-aria-label="Previous page"
               chevron-left
               disabled={this.page === 1 || this.disabled}
               onClick={this.onClickPreviousPage.bind(this)}
             />
             {this.lastPage !== null ? this.page + ' of ' + this.lastPage : ''}
             <mx-icon-button
-              aria-label="Next page"
+              el-aria-label="Next page"
               chevron-right
               disabled={this.page === this.lastPage || this.disabled || this.disableNextPage}
               onClick={this.onClickNextPage.bind(this)}
@@ -185,26 +185,26 @@ export class MxPagination {
               {/* Page Buttons */}
               <div class="flex items-center sm:space-x-8">
                 <mx-icon-button
-                  aria-label="First page"
+                  el-aria-label="First page"
                   icon="mds-page-first"
                   disabled={this.page === 1 || this.disabled}
                   onClick={this.onClickFirstPage.bind(this)}
                 />
                 <mx-icon-button
-                  aria-label="Previous page"
+                  el-aria-label="Previous page"
                   icon="mds-chevron-left"
                   disabled={this.page === 1 || this.disabled}
                   onClick={this.onClickPreviousPage.bind(this)}
                 />
                 <mx-icon-button
-                  aria-label="Next page"
+                  el-aria-label="Next page"
                   icon="mds-chevron-right"
                   disabled={this.page === this.lastPage || this.disabled || this.disableNextPage}
                   onClick={this.onClickNextPage.bind(this)}
                 />
                 {this.lastPage !== null && (
                   <mx-icon-button
-                    aria-label="Last page"
+                    el-aria-label="Last page"
                     icon="mds-page-last"
                     disabled={this.page === this.lastPage || this.disabled}
                     onClick={this.onClickLastPage.bind(this)}

@@ -25,10 +25,10 @@ describe('mx-pagination (standard)', () => {
       </mx-pagination>`,
     });
     root = page.root;
-    firstPageButton = root.querySelector('[aria-label="First page"]');
-    prevPageButton = root.querySelector('[aria-label="Previous page"]');
-    nextPageButton = root.querySelector('[aria-label="Next page"]');
-    lastPageButton = root.querySelector('[aria-label="Last page"]');
+    firstPageButton = root.querySelector('[el-aria-label="First page"]');
+    prevPageButton = root.querySelector('[el-aria-label="Previous page"]');
+    nextPageButton = root.querySelector('[el-aria-label="Next page"]');
+    lastPageButton = root.querySelector('[el-aria-label="Last page"]');
   });
 
   it('renders the status slot content', () => {
@@ -124,13 +124,13 @@ describe('mx-pagination (simple)', () => {
       />`,
     });
     root = page.root;
-    prevPageButton = root.querySelector('[aria-label="Previous page"]');
-    nextPageButton = root.querySelector('[aria-label="Next page"]');
+    prevPageButton = root.querySelector('[el-aria-label="Previous page"]');
+    nextPageButton = root.querySelector('[el-aria-label="Next page"]');
   });
 
   it('renders only previous-page and next-page buttons', () => {
-    expect(root.querySelector('[aria-label="First page"]')).toBeNull();
-    expect(root.querySelector('[aria-label="Last page"]')).toBeNull();
+    expect(root.querySelector('[el-aria-label="First page"]')).toBeNull();
+    expect(root.querySelector('[el-aria-label="Last page"]')).toBeNull();
     expect(prevPageButton).not.toBeNull();
     expect(nextPageButton).not.toBeNull();
   });

@@ -30,8 +30,8 @@ Icons that are embedded in the design system are also available.
         <mx-input
           label="Label & Clickable Right Icons"
           :right-icon.prop="[
-            { icon: 'ph-x', onClick: clickHandler },
-            { icon: 'ph-check', onClick: clickHandler },
+            { icon: 'ph-x', ariaLabel: 'Cancel', onClick: clickHandler },
+            { icon: 'ph-check', ariaLabel: 'OK', onClick: clickHandler },
           ]"
         />
       </div>
@@ -72,8 +72,8 @@ Icons that are embedded in the design system are also available.
         <mx-input
           label="Label & Clickable Right Icons"
           :right-icon.prop="[
-            { icon: 'ph-x', onClick: clickHandler },
-            { icon: 'ph-check', onClick: clickHandler },
+            { icon: 'ph-x', ariaLabel: 'Cancel', onClick: clickHandler },
+            { icon: 'ph-check', ariaLabel: 'OK', onClick: clickHandler },
           ]"
           dense
         />
@@ -127,7 +127,7 @@ The `mx-confirm-input` component wraps the `mx-input` component, and provides ad
     <!-- #region confirm-input -->
     <mx-confirm-input placeholder="Placeholder" value="Click to edit this value." />
     <mx-confirm-input float-label label="Label" value="" />
-    <mx-confirm-input disabled value="This is a value, but the input is disabled." />
+    <mx-confirm-input disabled el-aria-label="Disabled input" value="This is a value, but the input is disabled." />
     <!-- #endregion confirm-input -->
   </div>
 </section>
@@ -141,6 +141,7 @@ The `mx-confirm-input` component wraps the `mx-input` component, and provides ad
 | `assistiveText`       | `assistive-text`        |                                                                                                                                                      | `string`                  | `undefined` |
 | `dense`               | `dense`                 |                                                                                                                                                      | `boolean`                 | `false`     |
 | `disabled`            | `disabled`              |                                                                                                                                                      | `boolean`                 | `false`     |
+| `elAriaLabel`         | `el-aria-label`         | The aria-label attribute for the inner input element.                                                                                                | `string`                  | `undefined` |
 | `error`               | `error`                 |                                                                                                                                                      | `boolean`                 | `false`     |
 | `floatLabel`          | `float-label`           |                                                                                                                                                      | `boolean`                 | `false`     |
 | `inputId`             | `input-id`              | The `id` attribute for the text input                                                                                                                | `string`                  | `undefined` |

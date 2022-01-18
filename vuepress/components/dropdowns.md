@@ -155,10 +155,10 @@ The options in the menu are represented by [Menu Items](/components/menus.html).
 
 | Property        | Attribute        | Description                                                                                      | Type      | Default     |
 | --------------- | ---------------- | ------------------------------------------------------------------------------------------------ | --------- | ----------- |
-| `ariaLabel`     | `aria-label`     |                                                                                                  | `string`  | `undefined` |
 | `dense`         | `dense`          |                                                                                                  | `boolean` | `false`     |
 | `dropdownClass` | `dropdown-class` | Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`) | `string`  | `undefined` |
 | `dropdownId`    | `dropdown-id`    | The `id` attribute for the internal input element                                                | `string`  | `undefined` |
+| `elAriaLabel`   | `el-aria-label`  | The aria-label attribute for the inner input element.                                            | `string`  | `undefined` |
 | `elevated`      | `elevated`       | Style as a filter dropdown with a 1dp elevation                                                  | `boolean` | `false`     |
 | `flat`          | `flat`           | Style as a filter dropdown with a "flat" border color                                            | `boolean` | `false`     |
 | `label`         | `label`          |                                                                                                  | `string`  | `undefined` |
@@ -307,7 +307,7 @@ The `mx-select` component wraps the browser's native `select` element. It is des
 
 ### Floating Label / No Label
 
-Add the `floatLabel` prop to create a floating label. The Select component's label is also optional; the Select could simply have an `aria-label` for screen readers.
+Add the `floatLabel` prop to create a floating label. The Select component's label is also optional; the Select could simply have an `el-aria-label` prop for screen readers.
 
 <!-- #region select-labels -->
 <section class="mds">
@@ -330,7 +330,7 @@ Add the `floatLabel` prop to create a floating label. The Select component's lab
   </div>
   <div>
     <div class="my-20 w-320">
-      <mx-select aria-label="Toast condiment" assistive-text="This select only has an aria-label attribute.">
+      <mx-select el-aria-label="Toast condiment" assistive-text="This select only has an aria-label attribute.">
         <option></option>
         <option>Butter</option>
         <option>Jam</option>
@@ -421,7 +421,6 @@ Like the [Dropdown Menu](#dropdown-menus), the Select component also has `flat` 
 
 | Property        | Attribute        | Description                                                                                    | Type      | Default     |
 | --------------- | ---------------- | ---------------------------------------------------------------------------------------------- | --------- | ----------- |
-| `ariaLabel`     | `aria-label`     |                                                                                                | `string`  | `undefined` |
 | `assistiveText` | `assistive-text` | Helpful text to show below the select                                                          | `string`  | `undefined` |
 | `dense`         | `dense`          |                                                                                                | `boolean` | `false`     |
 | `disabled`      | `disabled`       |                                                                                                | `boolean` | `false`     |
