@@ -60,17 +60,6 @@
     }
   }
 
-  .remove {
-    color: var(--mds-text-chip-remove);
-    opacity: 0.64;
-    outline-offset: -4px;
-
-    &:hover,
-    &:focus {
-      opacity: 1;
-    }
-  }
-
   &.outlined {
     background: var(--mds-bg-chip-outlined);
     border-color: var(--mds-border-chip-outlined);
@@ -106,5 +95,16 @@
       border-color: var(--mds-border-chip-outlined-disabled);
       color: var(--mds-text-chip-outlined-disabled);
     }
+  }
+}
+
+.mx-chip > .remove {
+  color: var(--mds-text-chip-remove);
+  opacity: 0.64;
+  outline-offset: -4px;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
   }
 }
