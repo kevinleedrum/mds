@@ -24,14 +24,14 @@ describe('mx-dialog (simple)', () => {
     root.alert('test');
     await page.waitForChanges();
     await page.waitForChanges();
-    expect(modal.getAttribute('aria-describedby')).toBe('dialog-message');
+    expect(modal.getAttribute('aria-describedby')).toContain('dialog-message');
   });
 
   it('has aria-labelledby set to the heading element if a heading is present', async () => {
     root.alert('test', { heading: 'test' });
     await page.waitForChanges();
     await page.waitForChanges();
-    expect(modal.getAttribute('aria-labelledby')).toBe('dialog-heading');
+    expect(modal.getAttribute('aria-labelledby')).toContain('dialog-heading');
   });
 
   it('displays the specified message', async () => {

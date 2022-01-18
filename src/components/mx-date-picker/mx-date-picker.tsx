@@ -256,6 +256,7 @@ export class MxDatePicker {
           />
           {this.label && this.floatLabel && labelJsx}
           <button
+            aria-label="Open calendar"
             ref={el => (this.calendarButton = el)}
             class={this.calendarButtonClass}
             data-testid="calendar-button"

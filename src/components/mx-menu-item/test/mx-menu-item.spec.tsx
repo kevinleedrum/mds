@@ -72,11 +72,10 @@ describe('mx-menu-item', () => {
     expect(menuItem.querySelector('i')).not.toBeNull();
   });
 
-  it('displays a checkmark and sets aria-checked to true if the checked prop is set', async () => {
+  it('displays a checkmark if the checked prop is set', async () => {
     root.checked = true;
     await page.waitForChanges();
     expect(menuItem.querySelector('[data-testid="check"]')).not.toBeNull();
-    expect(menuItem.getAttribute('aria-checked')).toBe('true');
   });
 
   it('renders an mx-checkbox if the multiSelect prop is set', async () => {
