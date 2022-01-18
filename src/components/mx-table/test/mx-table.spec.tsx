@@ -169,7 +169,7 @@ describe('mx-table (non-mobile)', () => {
     headers[1].click();
     expect(emitted.map(row => row.name).join(',')).toBe('Theodore,Simon');
     await page.waitForChanges();
-    const nextPageButton = root.querySelector('[aria-label="Next page"]') as HTMLMxIconButtonElement;
+    const nextPageButton = root.querySelector('[el-aria-label="Next page"]') as HTMLMxIconButtonElement;
     nextPageButton.click();
     expect(emitted.map(row => row.name).join(',')).toBe('Alvin');
   });

@@ -12,7 +12,7 @@ describe('mx-image-upload', () => {
     page = await newSpecPage({
       components: [MxImageUpload, MxButton],
       html: `
-      <mx-image-upload>
+      <mx-image-upload el-aria-label="aria label">
         <span slot="uploaded">File uploaded!</span>
       </mx-image-upload>
       `,
@@ -94,6 +94,10 @@ describe('mx-image-upload', () => {
     await page.waitForChanges();
     expect(input.getAttribute('id')).toBe('123');
     expect(input.getAttribute('name')).toBe('abc');
+  });
+
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    expect(input.getAttribute('aria-label')).toBe('aria label');
   });
 
   it('sets the upload button btnType prop to the uploadBtnType prop value', async () => {

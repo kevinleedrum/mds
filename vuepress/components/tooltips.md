@@ -15,10 +15,10 @@ use the `appearDelay` prop.
       <i class="ph-smiley text-h5"></i>
     </mx-tooltip>
     <mx-tooltip value="Print" appear-delay="500">
-      <mx-icon-button icon="ph-printer"></mx-icon-button>
+      <mx-icon-button el-aria-label="Print" icon="ph-printer"></mx-icon-button>
     </mx-tooltip>
     <mx-tooltip value="Mute" appear-delay="500">
-      <mx-toggle-button icon="ph-microphone-slash" />
+      <mx-toggle-button el-aria-label="Mute" icon="ph-microphone-slash" />
     </mx-tooltip>
 <!-- #endregion standard -->
   </div>

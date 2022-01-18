@@ -17,6 +17,8 @@ export class MxChart {
 
   /** The labels and datasets to render. See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/). */
   @Prop() data: ChartJsData;
+  /** The aria-label attribute for the inner canvas element. */
+  @Prop() elAriaLabel: string = 'Chart';
   /** Explicit height in pixels */
   @Prop() height: number;
   /** See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/). */
@@ -58,7 +60,7 @@ export class MxChart {
   render() {
     return (
       <Host class="mx-chart relative block" style={this.chartStyle}>
-        <canvas ref={el => (this.canvasEl = el)} role="img" style={this.chartStyle} />
+        <canvas ref={el => (this.canvasEl = el)} role="img" aria-label={this.elAriaLabel} style={this.chartStyle} />
       </Host>
     );
   }

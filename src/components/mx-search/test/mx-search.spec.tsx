@@ -23,7 +23,7 @@ describe('mx-search', () => {
     root.placeholder = 'Placeholder';
     await page.waitForChanges();
     expect(input.getAttribute('aria-label')).toBe('Placeholder');
-    root.ariaLabel = 'ARIA Label';
+    root.elAriaLabel = 'ARIA Label';
     await page.waitForChanges();
     expect(input.getAttribute('aria-label')).toBe('ARIA Label');
   });

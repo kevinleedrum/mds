@@ -9,7 +9,8 @@ export class MxDropdownMenu {
   inputElem: HTMLInputElement;
   menu: HTMLMxMenuElement;
 
-  @Prop() ariaLabel: string;
+  /** The aria-label attribute for the inner input element. */
+  @Prop() elAriaLabel: string;
   @Prop() dense: boolean = false;
   /** Style as a filter dropdown with a 1dp elevation */
   @Prop() elevated: boolean = false;
@@ -92,7 +93,7 @@ export class MxDropdownMenu {
       <Host class="mx-dropdown-menu block">
         <div ref={el => (this.dropdownWrapper = el)} class={this.dropdownWrapperClass}>
           <input
-            aria-label={this.ariaLabel || this.label}
+            aria-label={this.elAriaLabel || this.label}
             class={this.inputClass}
             id={this.dropdownId}
             name={this.name}

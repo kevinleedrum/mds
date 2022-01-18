@@ -22,6 +22,7 @@ export interface IMxInputProps {
   floatLabel: boolean;
   textarea: boolean;
   textareaHeight: string;
+  elAriaLabel: string;
 }
 
 export type MxInputIcon = {
@@ -72,6 +73,8 @@ export class MxInput implements IMxInputProps {
   /** Display a multi-line `textarea` instead of an `input` */
   @Prop() textarea: boolean = false;
   @Prop({ mutable: true }) textareaHeight: string = '250px';
+  /** The aria-label attribute for the inner input element. */
+  @Prop() elAriaLabel: string;
 
   @State() isFocused: boolean = false;
   @State() characterCount: number = 0;
@@ -227,6 +230,7 @@ export class MxInput implements IMxInputProps {
               id={this.inputId || this.uuid}
               value={this.value}
               placeholder={this.floatLabel ? null : this.placeholder}
+              aria-label={this.elAriaLabel || this.placeholder}
               maxlength={this.maxlength}
               disabled={this.disabled}
               readonly={this.readonly}

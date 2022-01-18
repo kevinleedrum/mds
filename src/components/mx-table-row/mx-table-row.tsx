@@ -522,7 +522,7 @@ export class MxTableRow {
             <div class="action-cell flex items-center p-0 justify-end col-start-2 col-span-4 sm:col-span-1">
               <mx-icon-button
                 ref={el => (this.actionMenuButton = el)}
-                aria-label="Row Actions"
+                el-aria-label="Row Actions"
                 icon="mds-dots-vertical"
               ></mx-icon-button>
               <mx-menu data-testid="action-menu" ref={el => (this.actionMenu = el)}>

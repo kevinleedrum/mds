@@ -14,6 +14,7 @@ describe('mx-time-picker', () => {
       html: `
         <mx-time-picker
           label="Time"
+          el-aria-label="aria label"
           input-id="test-id"
           name="test-name"
           value="16:30"
@@ -39,6 +40,10 @@ describe('mx-time-picker', () => {
     expect(input.getAttribute('name')).toBe('test-name');
     expect(input.getAttribute('id')).toBe('test-id');
     expect(input.value).toBe('16:30');
+  });
+
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    expect(input.getAttribute('aria-label')).toBe('aria label');
   });
 
   it('sets the height to 36px if dense prop is set', async () => {

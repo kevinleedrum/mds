@@ -263,8 +263,8 @@ to `true`.
           <mx-table-cell>Lennon</mx-table-cell>
           <mx-table-cell>10/9/1940</mx-table-cell>
           <mx-table-cell>
-            <mx-icon-button aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'John' })"></mx-icon-button>
-            <mx-icon-button aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'John' })"></mx-icon-button>
+            <mx-icon-button el-aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'John' })"></mx-icon-button>
+            <mx-icon-button el-aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'John' })"></mx-icon-button>
           </mx-table-cell>
         </mx-table-row>
         <mx-table-row>
@@ -272,8 +272,8 @@ to `true`.
           <mx-table-cell>McCartney</mx-table-cell>
           <mx-table-cell>6/18/1942</mx-table-cell>
           <mx-table-cell>
-            <mx-icon-button aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'Paul' })"></mx-icon-button>
-            <mx-icon-button aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'Paul' })"></mx-icon-button>
+            <mx-icon-button el-aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'Paul' })"></mx-icon-button>
+            <mx-icon-button el-aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'Paul' })"></mx-icon-button>
           </mx-table-cell>
         </mx-table-row>
         <mx-table-row>
@@ -281,8 +281,8 @@ to `true`.
           <mx-table-cell>Harrison</mx-table-cell>
           <mx-table-cell>2/25/1943</mx-table-cell>
           <mx-table-cell>
-            <mx-icon-button aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'George' })"></mx-icon-button>
-            <mx-icon-button aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'George' })"></mx-icon-button>
+            <mx-icon-button el-aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'George' })"></mx-icon-button>
+            <mx-icon-button el-aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'George' })"></mx-icon-button>
           </mx-table-cell>
         </mx-table-row>
         <mx-table-row>
@@ -290,8 +290,8 @@ to `true`.
           <mx-table-cell>Starr</mx-table-cell>
           <mx-table-cell>7/7/1940</mx-table-cell>
           <mx-table-cell>
-            <mx-icon-button aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'Ringo' })"></mx-icon-button>
-            <mx-icon-button aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'Ringo' })"></mx-icon-button>
+            <mx-icon-button el-aria-label="Like" icon="ph-heart" @click="clickHandler({ firstName: 'Ringo' })"></mx-icon-button>
+            <mx-icon-button el-aria-label="Delete" icon="ph-trash" @click="clickHandler({ firstName: 'Ringo' })"></mx-icon-button>
           </mx-table-cell>
         </mx-table-row>
       </div>

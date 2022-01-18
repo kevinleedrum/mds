@@ -9,9 +9,9 @@ export class MxSearch {
   dataAttributes = {};
   inputEl: HTMLInputElement;
 
-  /** If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search". */
-  @Prop() ariaLabel: string;
   @Prop() dense: boolean = false;
+  /** The `aria-label` attribute for the `<input>` element. If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search". */
+  @Prop() elAriaLabel: string;
   @Prop() flat: boolean = false;
   @Prop() name: string;
   @Prop() placeholder: string;
@@ -52,7 +52,7 @@ export class MxSearch {
         <input
           ref={el => (this.inputEl = el)}
           type="search"
-          aria-label={this.ariaLabel || this.placeholder || 'Search'}
+          aria-label={this.elAriaLabel || this.placeholder || 'Search'}
           name={this.name}
           placeholder={this.placeholder}
           value={this.value}

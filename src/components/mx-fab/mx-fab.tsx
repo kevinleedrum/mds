@@ -13,7 +13,8 @@ export class MxFab {
   @Prop() icon: string;
   /** Style as a secondary action */
   @Prop() secondary: boolean = false;
-  @Prop() ariaLabel: string;
+  /** The aria-label attribute for the inner button element. */
+  @Prop() elAriaLabel: string;
   @Prop() value: string;
 
   @State() minWidths = new MinWidths();
@@ -59,7 +60,7 @@ export class MxFab {
           type="button"
           value={this.value}
           class={this.buttonClass}
-          aria-label={this.ariaLabel}
+          aria-label={this.elAriaLabel}
           onClick={this.onClick.bind(this)}
         >
           {this.icon && <i class={this.icon + ' text-1'}></i>}

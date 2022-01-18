@@ -10,6 +10,7 @@ describe('mx-button', () => {
       components: [MxButton],
       html: `
       <mx-button
+        el-aria-label="aria label"
         icon="ph-apple-logo"
         btn-type="contained"
         value="foo"
@@ -48,6 +49,10 @@ describe('mx-button', () => {
 
   it('has a min-height of 36px', async () => {
     expect(btn.getAttribute('class')).toContain('min-h-36');
+  });
+
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    expect(btn.getAttribute('aria-label')).toBe('aria label');
   });
 
   it('applies any data attributes to the button element', async () => {

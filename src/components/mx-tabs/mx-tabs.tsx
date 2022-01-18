@@ -86,7 +86,7 @@ export class MxTabs {
         {this.renderAsSelect ? (
           <mx-select value={this.value} onInput={this.onInput.bind(this)} dense>
             {this.tabs.map((tab: IMxTabProps, index: number) => (
-              <option value={index}>{tab.label || tab.ariaLabel}</option>
+              <option value={index}>{tab.label || tab.elAriaLabel}</option>
             ))}
           </mx-select>
         ) : (
