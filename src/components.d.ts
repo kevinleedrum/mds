@@ -72,6 +72,10 @@ export namespace Components {
           * Show chevron icon
          */
         "dropdown": boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel": string;
         "formaction": string;
         /**
           * Sets display to flex instead of inline-flex
@@ -99,6 +103,10 @@ export namespace Components {
          */
         "data": ChartJsData;
         /**
+          * The aria-label attribute for the inner canvas element.
+         */
+        "elAriaLabel": string;
+        /**
           * Explicit height in pixels
          */
         "height": number;
@@ -122,6 +130,10 @@ export namespace Components {
     interface MxCheckbox {
         "checked": boolean;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
         /**
           * Hide the label text visually, but still make it accessible for screen readers
          */
@@ -202,6 +214,7 @@ export namespace Components {
         "assistiveText": string;
         "dense": boolean;
         "disabled": boolean;
+        "elAriaLabel": string;
         "error": boolean;
         "floatLabel": boolean;
         "inputId": string;
@@ -221,13 +234,16 @@ export namespace Components {
         "value": string;
     }
     interface MxDatePicker {
-        "ariaLabel": string;
         /**
           * Helpful text to show below the picker
          */
         "assistiveText": string;
         "dense": boolean;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
         "error": boolean;
         "floatLabel": boolean;
         /**
@@ -260,7 +276,6 @@ export namespace Components {
         "modalClass": string;
     }
     interface MxDropdownMenu {
-        "ariaLabel": string;
         "dense": boolean;
         /**
           * Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`)
@@ -270,6 +285,10 @@ export namespace Components {
           * The `id` attribute for the internal input element
          */
         "dropdownId": string;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
         /**
           * Style as a filter dropdown with a 1dp elevation
          */
@@ -287,7 +306,10 @@ export namespace Components {
         "value": any;
     }
     interface MxFab {
-        "ariaLabel": string;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel": string;
         /**
           * Class name of icon
          */
@@ -299,10 +321,6 @@ export namespace Components {
         "value": string;
     }
     interface MxIconButton {
-        /**
-          * An aria-label is highly recommended
-         */
-        "ariaLabel": string;
         /**
           * Show downward chevron icon
          */
@@ -316,6 +334,10 @@ export namespace Components {
          */
         "chevronRight": boolean;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel": string;
         "formaction": string;
         /**
           * Class name of icon (for icon font)
@@ -345,6 +367,10 @@ export namespace Components {
           * Sets the width and height to 80px and changes the icon.
          */
         "avatar": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
         /**
           * The height of the dropzone / thumbnail container (e.g. "400px" or "50%").
          */
@@ -412,6 +438,10 @@ export namespace Components {
         "assistiveText": string;
         "dense": boolean;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
         "error": boolean;
         "floatLabel": boolean;
         /**
@@ -638,11 +668,11 @@ export namespace Components {
         "value": string;
     }
     interface MxSearch {
-        /**
-          * If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search".
-         */
-        "ariaLabel": string;
         "dense": boolean;
+        /**
+          * The `aria-label` attribute for the `<input>` element. If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search".
+         */
+        "elAriaLabel": string;
         "flat": boolean;
         "name": string;
         "placeholder": string;
@@ -653,13 +683,16 @@ export namespace Components {
         "value": string;
     }
     interface MxSelect {
-        "ariaLabel": string;
         /**
           * Helpful text to show below the select
          */
         "assistiveText": string;
         "dense": boolean;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner select element.
+         */
+        "elAriaLabel": string;
         /**
           * Style with a 1dp elevation
          */
@@ -704,10 +737,6 @@ export namespace Components {
     }
     interface MxTab {
         /**
-          * If you are not providing a `label`, this should be provided instead for accessibility
-         */
-        "ariaLabel": string;
-        /**
           * Display a circular badge
          */
         "badge": boolean;
@@ -715,6 +744,10 @@ export namespace Components {
           * Additional classes for the badge
          */
         "badgeClass": string;
+        /**
+          * If you are not providing a `label`, this should be provided instead for accessibility
+         */
+        "elAriaLabel": string;
         /**
           * Class name of icon to display
          */
@@ -917,13 +950,16 @@ export namespace Components {
         "value": number;
     }
     interface MxTimePicker {
-        "ariaLabel": string;
         /**
           * Helpful text to show below the picker
          */
         "assistiveText": string;
         "dense": boolean;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
         "error": boolean;
         "floatLabel": boolean;
         /**
@@ -938,8 +974,11 @@ export namespace Components {
         "value": string;
     }
     interface MxToggleButton {
-        "ariaLabel": string;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel": string;
         "icon": string;
         "selected": boolean;
         /**
@@ -1308,6 +1347,10 @@ declare namespace LocalJSX {
           * Show chevron icon
          */
         "dropdown"?: boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel"?: string;
         "formaction"?: string;
         /**
           * Sets display to flex instead of inline-flex
@@ -1335,6 +1378,10 @@ declare namespace LocalJSX {
          */
         "data"?: ChartJsData;
         /**
+          * The aria-label attribute for the inner canvas element.
+         */
+        "elAriaLabel"?: string;
+        /**
           * Explicit height in pixels
          */
         "height"?: number;
@@ -1354,6 +1401,10 @@ declare namespace LocalJSX {
     interface MxCheckbox {
         "checked"?: boolean;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
         /**
           * Hide the label text visually, but still make it accessible for screen readers
          */
@@ -1442,6 +1493,7 @@ declare namespace LocalJSX {
         "assistiveText"?: string;
         "dense"?: boolean;
         "disabled"?: boolean;
+        "elAriaLabel"?: string;
         "error"?: boolean;
         "floatLabel"?: boolean;
         "inputId"?: string;
@@ -1461,13 +1513,16 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface MxDatePicker {
-        "ariaLabel"?: string;
         /**
           * Helpful text to show below the picker
          */
         "assistiveText"?: string;
         "dense"?: boolean;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
         "error"?: boolean;
         "floatLabel"?: boolean;
         /**
@@ -1493,7 +1548,6 @@ declare namespace LocalJSX {
         "onMxClose"?: (event: CustomEvent<void>) => void;
     }
     interface MxDropdownMenu {
-        "ariaLabel"?: string;
         "dense"?: boolean;
         /**
           * Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`)
@@ -1503,6 +1557,10 @@ declare namespace LocalJSX {
           * The `id` attribute for the internal input element
          */
         "dropdownId"?: string;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
         /**
           * Style as a filter dropdown with a 1dp elevation
          */
@@ -1520,7 +1578,10 @@ declare namespace LocalJSX {
         "value"?: any;
     }
     interface MxFab {
-        "ariaLabel"?: string;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel"?: string;
         /**
           * Class name of icon
          */
@@ -1532,10 +1593,6 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface MxIconButton {
-        /**
-          * An aria-label is highly recommended
-         */
-        "ariaLabel"?: string;
         /**
           * Show downward chevron icon
          */
@@ -1549,6 +1606,10 @@ declare namespace LocalJSX {
          */
         "chevronRight"?: boolean;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel"?: string;
         "formaction"?: string;
         /**
           * Class name of icon (for icon font)
@@ -1578,6 +1639,10 @@ declare namespace LocalJSX {
           * Sets the width and height to 80px and changes the icon.
          */
         "avatar"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
         /**
           * The height of the dropzone / thumbnail container (e.g. "400px" or "50%").
          */
@@ -1647,6 +1712,10 @@ declare namespace LocalJSX {
         "assistiveText"?: string;
         "dense"?: boolean;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
         "error"?: boolean;
         "floatLabel"?: boolean;
         /**
@@ -1863,11 +1932,11 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface MxSearch {
-        /**
-          * If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search".
-         */
-        "ariaLabel"?: string;
         "dense"?: boolean;
+        /**
+          * The `aria-label` attribute for the `<input>` element. If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search".
+         */
+        "elAriaLabel"?: string;
         "flat"?: boolean;
         "name"?: string;
         "placeholder"?: string;
@@ -1878,13 +1947,16 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface MxSelect {
-        "ariaLabel"?: string;
         /**
           * Helpful text to show below the select
          */
         "assistiveText"?: string;
         "dense"?: boolean;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner select element.
+         */
+        "elAriaLabel"?: string;
         /**
           * Style with a 1dp elevation
          */
@@ -1930,10 +2002,6 @@ declare namespace LocalJSX {
     }
     interface MxTab {
         /**
-          * If you are not providing a `label`, this should be provided instead for accessibility
-         */
-        "ariaLabel"?: string;
-        /**
           * Display a circular badge
          */
         "badge"?: boolean;
@@ -1941,6 +2009,10 @@ declare namespace LocalJSX {
           * Additional classes for the badge
          */
         "badgeClass"?: string;
+        /**
+          * If you are not providing a `label`, this should be provided instead for accessibility
+         */
+        "elAriaLabel"?: string;
         /**
           * Class name of icon to display
          */
@@ -2152,13 +2224,16 @@ declare namespace LocalJSX {
         "value"?: number;
     }
     interface MxTimePicker {
-        "ariaLabel"?: string;
         /**
           * Helpful text to show below the picker
          */
         "assistiveText"?: string;
         "dense"?: boolean;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
         "error"?: boolean;
         "floatLabel"?: boolean;
         /**
@@ -2173,8 +2248,11 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface MxToggleButton {
-        "ariaLabel"?: string;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel"?: string;
         "icon"?: string;
         "selected"?: boolean;
         /**

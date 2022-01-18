@@ -17,6 +17,7 @@ export declare class MxModal {
   ancestorFocusedElement: HTMLElement;
   headerBottomSlotWrapper: HTMLElement;
   mobilePageHeader: HTMLMxPageHeaderElement;
+  uuid: string;
   /** An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text. */
   buttons: IModalButton[];
   /** If set to false, pressing Escape will not close the modal. */

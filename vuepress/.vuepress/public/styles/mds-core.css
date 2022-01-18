@@ -1831,6 +1831,15 @@ video {
   left: -100%;
   right: -100%;
 }
+.mds .top-4{
+  top: 0.25rem;
+}
+.mds .right-2{
+  right: 0.125rem;
+}
+.mds .right-8{
+  right: 0.5rem;
+}
 .mds .left-12{
   left: 0.75rem;
 }
@@ -1857,9 +1866,6 @@ video {
 }
 .mds .left-0{
   left: 0px;
-}
-.mds .right-8{
-  right: 0.5rem;
 }
 .mds .left-16{
   left: 1rem;
@@ -1924,9 +1930,6 @@ video {
 .mds .top-2{
   top: 0.125rem;
 }
-.mds .right-2{
-  right: 0.125rem;
-}
 .mds .bottom-2{
   bottom: 0.125rem;
 }
@@ -1944,9 +1947,6 @@ video {
 }
 .mds .-left-2{
   left: -0.125rem;
-}
-.mds .top-4{
-  top: 0.25rem;
 }
 .mds .right-4{
   right: 0.25rem;
@@ -6417,11 +6417,11 @@ video {
 .mds .pr-12{
   padding-right: 0.75rem;
 }
-.mds .pr-2{
-  padding-right: 0.125rem;
+.mds .pr-32{
+  padding-right: 2rem;
 }
-.mds .pr-8{
-  padding-right: 0.5rem;
+.mds .pr-40{
+  padding-right: 2.5rem;
 }
 .mds .pb-16{
   padding-bottom: 1rem;
@@ -6456,8 +6456,14 @@ video {
 .mds .pl-56{
   padding-left: 3.5rem;
 }
+.mds .pr-8{
+  padding-right: 0.5rem;
+}
 .mds .pb-2{
   padding-bottom: 0.125rem;
+}
+.mds .pr-2{
+  padding-right: 0.125rem;
 }
 .mds .pl-2{
   padding-left: 0.125rem;
@@ -6500,12 +6506,6 @@ video {
 }
 .mds .pt-80{
   padding-top: 5rem;
-}
-.mds .pr-32{
-  padding-right: 2rem;
-}
-.mds .pr-40{
-  padding-right: 2.5rem;
 }
 .mds .pr-48{
   padding-right: 3rem;
@@ -8072,9 +8072,9 @@ video {
     color: var(--mds-text-chip-disabled);
   }
 .mx-chip > div[aria-disabled='true'] .left-icon,
-    .mx-chip > div[aria-disabled='true'] .remove,
-    .mx-chip > div[aria-disabled='true'] .remove:hover,
-    .mx-chip > div[aria-disabled='true'] .remove:focus {
+    .mx-chip > div[aria-disabled='true'] + .remove,
+    .mx-chip > div[aria-disabled='true'] + .remove:hover,
+    .mx-chip > div[aria-disabled='true'] + .remove:focus {
       opacity: 0.24;
       cursor: initial;
     }
@@ -8088,14 +8088,14 @@ video {
       background: transparent;
       background: var(--mds-bg-chip-filter-check);
     }
-.mx-chip > div .remove {
+.mx-chip > div + .remove {
     color: #000;
     color: var(--mds-text-chip-remove);
     opacity: 0.64;
     outline-offset: -4px;
   }
-.mx-chip > div .remove:hover,
-    .mx-chip > div .remove:focus {
+.mx-chip > div + .remove:hover,
+    .mx-chip > div + .remove:focus {
       opacity: 1;
     }
 .mx-chip > div.outlined {

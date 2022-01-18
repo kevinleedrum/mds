@@ -5,7 +5,7 @@ export class MxTab {
     /** Label text to display */
     this.label = '';
     /** If you are not providing a `label`, this should be provided instead for accessibility */
-    this.ariaLabel = '';
+    this.elAriaLabel = '';
     /** Class name of icon to display */
     this.icon = '';
     /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
@@ -16,7 +16,7 @@ export class MxTab {
     this.badgeClass = '';
   }
   componentDidLoad() {
-    if (!this.label && !this.ariaLabel) {
+    if (!this.label && !this.elAriaLabel) {
       throw new Error('Please provide either a label or an aria-label for each tab.');
     }
   }
@@ -36,7 +36,7 @@ export class MxTab {
   }
   render() {
     return (h(Host, { class: this.tabClass },
-      h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected ? 'true' : null, "aria-label": this.label || this.ariaLabel, class: "relative overflow-hidden w-full h-full border border-transparent px-44", onClick: this.onClick.bind(this) },
+      h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected ? 'true' : null, "aria-label": this.elAriaLabel || this.label, class: "relative overflow-hidden w-full h-full border border-transparent px-44", onClick: this.onClick.bind(this) },
         h("div", { class: "relative flex flex-col items-center justify-center space-y-6 pointer-events-none" },
           !this.isTextOnly && (h("span", { class: "flex items-center space-x-6" },
             !this.label && this.badge && this.badgeEl,
@@ -67,7 +67,7 @@ export class MxTab {
       "reflect": false,
       "defaultValue": "''"
     },
-    "ariaLabel": {
+    "elAriaLabel": {
       "type": "string",
       "mutable": false,
       "complexType": {
@@ -81,7 +81,7 @@ export class MxTab {
         "tags": [],
         "text": "If you are not providing a `label`, this should be provided instead for accessibility"
       },
-      "attribute": "aria-label",
+      "attribute": "el-aria-label",
       "reflect": false,
       "defaultValue": "''"
     },

@@ -2,7 +2,8 @@ export declare class MxDropdownMenu {
   dropdownWrapper: HTMLElement;
   inputElem: HTMLInputElement;
   menu: HTMLMxMenuElement;
-  ariaLabel: string;
+  /** The aria-label attribute for the inner input element. */
+  elAriaLabel: string;
   dense: boolean;
   /** Style as a filter dropdown with a 1dp elevation */
   elevated: boolean;

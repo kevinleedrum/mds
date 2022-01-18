@@ -63,7 +63,7 @@ export class MxButton {
         h("slot", null)),
       this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }),
       this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
-    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null }, this.dataAttributes), buttonContent))));
+    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-label": this.elAriaLabel, "aria-disabled": this.disabled ? 'true' : null }, this.dataAttributes), buttonContent))));
   }
   static get is() { return "mx-button"; }
   static get properties() { return {
@@ -88,6 +88,23 @@ export class MxButton {
       "attribute": "btn-type",
       "reflect": false,
       "defaultValue": "'contained'"
+    },
+    "elAriaLabel": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "The aria-label attribute for the inner button element."
+      },
+      "attribute": "el-aria-label",
+      "reflect": false
     },
     "type": {
       "type": "string",

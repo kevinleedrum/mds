@@ -9,10 +9,10 @@
 
 | Property        | Attribute        | Description                                                                                    | Type      | Default     |
 | --------------- | ---------------- | ---------------------------------------------------------------------------------------------- | --------- | ----------- |
-| `ariaLabel`     | `aria-label`     |                                                                                                | `string`  | `undefined` |
 | `assistiveText` | `assistive-text` | Helpful text to show below the select                                                          | `string`  | `undefined` |
 | `dense`         | `dense`          |                                                                                                | `boolean` | `false`     |
 | `disabled`      | `disabled`       |                                                                                                | `boolean` | `false`     |
+| `elAriaLabel`   | `el-aria-label`  | The aria-label attribute for the inner select element.                                         | `string`  | `undefined` |
 | `elevated`      | `elevated`       | Style with a 1dp elevation                                                                     | `boolean` | `false`     |
 | `error`         | `error`          |                                                                                                | `boolean` | `false`     |
 | `flat`          | `flat`           | Style with a "flat" border color                                                               | `boolean` | `false`     |

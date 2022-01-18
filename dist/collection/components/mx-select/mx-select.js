@@ -96,7 +96,7 @@ export class MxSelect {
     return (h(Host, { class: 'mx-select block' + (this.disabled ? ' disabled' : '') },
       this.label && !this.floatLabel && labelJsx,
       h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass },
-        h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectElClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes),
+        h("select", Object.assign({ "aria-label": this.elAriaLabel || this.label, class: this.selectElClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes),
           h("slot", null)),
         this.label && this.floatLabel && labelJsx,
         h("span", { class: this.iconSuffixClass },
@@ -230,7 +230,7 @@ export class MxSelect {
       "reflect": false,
       "defaultValue": "false"
     },
-    "ariaLabel": {
+    "elAriaLabel": {
       "type": "string",
       "mutable": false,
       "complexType": {
@@ -242,9 +242,9 @@ export class MxSelect {
       "optional": false,
       "docs": {
         "tags": [],
-        "text": ""
+        "text": "The aria-label attribute for the inner select element."
       },
-      "attribute": "aria-label",
+      "attribute": "el-aria-label",
       "reflect": false
     },
     "selectClass": {

@@ -15,6 +15,8 @@ export declare class MxImageUpload {
   assistiveText: string;
   /** Sets the width and height to 80px and changes the icon. */
   avatar: boolean;
+  /** The aria-label attribute for the inner input element. */
+  elAriaLabel: string;
   /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
   uploadBtnType: BtnType;
   /** Sets the thumbnail sizing strategy relative to the container. */

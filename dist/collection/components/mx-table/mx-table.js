@@ -578,7 +578,8 @@ export class MxTable {
         h("span", { class: !this.checkedRowIds.length ? 'invisible' : null, "aria-hidden": this.checkedRowIds.length === 0 ? 'true' : null },
           h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true },
             h("span", { class: "h-full flex items-center px-2" },
-              h("i", { class: "mds-gear text-icon" }))),
+              h("i", { class: "mds-gear text-icon" }),
+              h("span", { class: "sr-only" }, "Action Menu"))),
           h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
     const operationsBar = (h("div", { class: "grid gap-x-16 gap-y-12 pb-12", style: this.operationsBarStyle },
@@ -611,15 +612,16 @@ export class MxTable {
     }
     return (h(Host, { class: 'mx-table block text-4' + (this.hoverable ? ' hoverable' : '') },
       this.showOperationsBar && operationsBar,
-      h("div", { "data-testid": "grid", class: "table-grid relative", style: this.gridStyle },
-        h("div", { class: "header-row" },
+      h("div", { "data-testid": "grid", role: "grid", class: "table-grid relative", style: this.gridStyle },
+        h("div", { class: "header-row", role: "row" },
           this.minWidths.sm ? (
           // Non-Mobile Column Headers
           this.cols.map((col, colIndex) => {
             return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) },
               colIndex === 0 && this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox,
               h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" },
-                h("span", { class: "truncate flex-shrink", innerHTML: col.heading }),
+                col.heading && h("span", { class: "truncate flex-shrink", innerHTML: col.heading }),
+                !col.heading && h("span", { class: "sr-only" }, col.isActionColumn ? 'Action' : col.property),
                 !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow" },
                   h("i", { class: "mds-arrow-triangle-down text-icon" }))))));
           })) : (

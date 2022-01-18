@@ -11,6 +11,8 @@ export declare class MxCheckbox {
   checked: boolean;
   disabled: boolean;
   indeterminate: boolean;
+  /** The aria-label attribute for the inner input element. */
+  elAriaLabel: string;
   element: HTMLMxInputElement;
   componentWillRender: typeof propagateDataAttributes;
   get checkClass(): string;

@@ -8,6 +8,8 @@ export declare class MxChart {
   chart: Chart;
   /** The labels and datasets to render. See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/). */
   data: ChartJsData;
+  /** The aria-label attribute for the inner canvas element. */
+  elAriaLabel: string;
   /** Explicit height in pixels */
   height: number;
   /** See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/). */

@@ -18,6 +18,7 @@ export declare class MxDialog {
   isSimple: boolean;
   hasButtons: boolean;
   hasHeading: boolean;
+  uuid: string;
   heading: string;
   message: string;
   confirmLabel: string;

@@ -152,9 +152,9 @@ export class MxTimePicker {
     return (h(Host, { class: 'mx-time-picker block' + (this.error ? ' error' : '') },
       this.label && !this.floatLabel && labelJsx,
       h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass },
-        h("input", Object.assign({ "aria-label": this.ariaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled }, this.dataAttributes)),
+        h("input", Object.assign({ "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled }, this.dataAttributes)),
         this.label && this.floatLabel && labelJsx,
-        h("button", { ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", disabled: this.disabled },
+        h("button", { "aria-label": "Open time menu", ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", disabled: this.disabled },
           h("i", { class: this.error ? 'mds-warning-circle' : 'mds-clock' }))),
       this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" },
         h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText))),
@@ -162,23 +162,6 @@ export class MxTimePicker {
   }
   static get is() { return "mx-time-picker"; }
   static get properties() { return {
-    "ariaLabel": {
-      "type": "string",
-      "mutable": false,
-      "complexType": {
-        "original": "string",
-        "resolved": "string",
-        "references": {}
-      },
-      "required": false,
-      "optional": false,
-      "docs": {
-        "tags": [],
-        "text": ""
-      },
-      "attribute": "aria-label",
-      "reflect": false
-    },
     "assistiveText": {
       "type": "string",
       "mutable": false,
@@ -231,6 +214,23 @@ export class MxTimePicker {
       "attribute": "disabled",
       "reflect": false,
       "defaultValue": "false"
+    },
+    "elAriaLabel": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "The aria-label attribute for the inner input element."
+      },
+      "attribute": "el-aria-label",
+      "reflect": false
     },
     "error": {
       "type": "boolean",

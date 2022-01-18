@@ -12,7 +12,7 @@ const MxTabContent = class {
     return this.value >= 0 && this.index === this.value;
   }
   render() {
-    return (index.h(index.Host, { class: !this.isActiveTab ? 'hidden' : '' }, index.h("slot", null)));
+    return (index.h(index.Host, { class: !this.isActiveTab ? 'hidden' : '', role: "tabpanel" }, index.h("slot", null)));
   }
 };
 

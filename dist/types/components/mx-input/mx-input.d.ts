@@ -20,6 +20,7 @@ export interface IMxInputProps {
   floatLabel: boolean;
   textarea: boolean;
   textareaHeight: string;
+  elAriaLabel: string;
 }
 export declare type MxInputIcon = {
   /** The class name of the icon */
@@ -63,6 +64,8 @@ export declare class MxInput implements IMxInputProps {
   /** Display a multi-line `textarea` instead of an `input` */
   textarea: boolean;
   textareaHeight: string;
+  /** The aria-label attribute for the inner input element. */
+  elAriaLabel: string;
   isFocused: boolean;
   characterCount: number;
   element: HTMLMxInputElement;

@@ -7,8 +7,8 @@ export declare class MxIconButton {
   formaction: string;
   value: string;
   disabled: boolean;
-  /** An aria-label is highly recommended */
-  ariaLabel: string;
+  /** The aria-label attribute for the inner button element. */
+  elAriaLabel: string;
   /** Show downward chevron icon */
   chevronDown: boolean;
   /** Show left-pointing chevron icon */

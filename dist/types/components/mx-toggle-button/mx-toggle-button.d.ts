@@ -5,7 +5,8 @@ export declare class MxToggleButton {
   icon: string;
   selected: boolean;
   disabled: boolean;
-  ariaLabel: string;
+  /** The aria-label attribute for the inner button element. */
+  elAriaLabel: string;
   /** Only used inside a toggle button group */
   value: any;
   element: HTMLMxToggleButtonElement;

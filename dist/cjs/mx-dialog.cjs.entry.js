@@ -6,7 +6,7 @@ const index = require('./index-54a36eac.js');
 const bodyScroll = require('./bodyScroll-0692b749.js');
 const portal = require('./portal-f1986577.js');
 const transitions = require('./transitions-bd8ec9f0.js');
-require('./utils-1f7ef40d.js');
+const utils = require('./utils-1f7ef40d.js');
 
 const MxDialog = class {
   constructor(hostRef) {
@@ -15,6 +15,7 @@ const MxDialog = class {
     this.isSimple = true;
     this.hasButtons = false;
     this.hasHeading = false;
+    this.uuid = utils.uuidv4();
     /** Toggles the visibility of the dialog (when using the slots for content). */
     this.isOpen = false;
     this.isVisible = false;
@@ -131,7 +132,7 @@ const MxDialog = class {
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: this.hostClass }, index.h("div", { ref: el => (this.backdrop = el), class: "bg-dialog-backdrop absolute inset-0 z-0" }), index.h("div", { ref: el => (this.modal = el), role: "alertdialog", "aria-labelledby": this.heading ? 'dialog-heading' : null, "aria-describedby": this.message ? 'dialog-message' : null, "aria-modal": "true", "data-testid": "modal", class: this.modalClassNames }, index.h("div", { class: "p-24 text-4 flex-grow overflow-auto", "data-testid": "modal-content" }, this.hasHeading && (index.h("h1", { id: "dialog-heading", class: "text-h6 emphasis my-0 pb-16", "data-testid": "heading" }, this.heading, index.h("slot", { name: "heading" }))), this.message && (index.h("p", { id: "dialog-message", class: "my-0" }, this.message)), index.h("slot", null)), this.hasButtons && (index.h("div", { class: "flex flex-wrap items-center justify-end p-4", "data-testid": "button-tray" }, this.confirmLabel && (index.h("mx-button", { class: "m-4 order-2", btnType: "text", onClick: () => this.closeDialog(true) }, this.confirmLabel)), this.cancelLabel && (index.h("mx-button", { class: "m-4 order-1", btnType: "text", onClick: () => this.closeDialog() }, this.cancelLabel)), index.h("slot", { name: "buttons" }))))));
+    return (index.h(index.Host, { class: this.hostClass }, index.h("div", { ref: el => (this.backdrop = el), class: "bg-dialog-backdrop absolute inset-0 z-0" }), index.h("div", { ref: el => (this.modal = el), role: "alertdialog", "aria-labelledby": this.heading ? this.uuid + '-dialog-heading' : null, "aria-describedby": this.message ? this.uuid + '-dialog-message' : null, "aria-modal": "true", "data-testid": "modal", class: this.modalClassNames }, index.h("div", { class: "p-24 text-4 flex-grow overflow-auto", tabindex: "0", "data-testid": "modal-content" }, this.hasHeading && (index.h("h1", { id: this.uuid + '-dialog-heading', class: "text-h6 emphasis my-0 pb-16", "data-testid": "heading" }, this.heading, index.h("slot", { name: "heading" }))), this.message && (index.h("p", { id: this.uuid + '-dialog-message', class: "my-0" }, this.message)), index.h("slot", null)), this.hasButtons && (index.h("div", { class: "flex flex-wrap items-center justify-end p-4", "data-testid": "button-tray" }, this.confirmLabel && (index.h("mx-button", { class: "m-4 order-2", btnType: "text", onClick: () => this.closeDialog(true) }, this.confirmLabel)), this.cancelLabel && (index.h("mx-button", { class: "m-4 order-1", btnType: "text", onClick: () => this.closeDialog() }, this.cancelLabel)), index.h("slot", { name: "buttons" }))))));
   }
   get element() { return index.getElement(this); }
   static get watchers() { return {

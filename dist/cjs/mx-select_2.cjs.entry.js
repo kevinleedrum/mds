@@ -100,7 +100,7 @@ const MxSelect = class {
   }
   render() {
     const labelJsx = (index.h("label", { htmlFor: this.selectId || this.uuid, class: this.labelClassNames }, this.label));
-    return (index.h(index.Host, { class: 'mx-select block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass }, index.h("select", Object.assign({ "aria-label": this.label || this.ariaLabel, class: this.selectElClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes), index.h("slot", null)), this.label && this.floatLabel && labelJsx, index.h("span", { class: this.iconSuffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && index.h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
+    return (index.h(index.Host, { class: 'mx-select block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { "data-testid": "select-wrapper", class: this.selectWrapperClass }, index.h("select", Object.assign({ "aria-label": this.elAriaLabel || this.label, class: this.selectElClass, disabled: this.disabled, id: this.selectId || this.uuid, name: this.name, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.selectElem = el) }, this.dataAttributes), index.h("slot", null)), this.label && this.floatLabel && labelJsx, index.h("span", { class: this.iconSuffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.iconEl)), this.assistiveText && index.h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText)));
   }
   get element() { return index.getElement(this); }
   static get watchers() { return {
@@ -114,7 +114,7 @@ const MxTab = class {
     /** Label text to display */
     this.label = '';
     /** If you are not providing a `label`, this should be provided instead for accessibility */
-    this.ariaLabel = '';
+    this.elAriaLabel = '';
     /** Class name of icon to display */
     this.icon = '';
     /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
@@ -125,7 +125,7 @@ const MxTab = class {
     this.badgeClass = '';
   }
   componentDidLoad() {
-    if (!this.label && !this.ariaLabel) {
+    if (!this.label && !this.elAriaLabel) {
       throw new Error('Please provide either a label or an aria-label for each tab.');
     }
   }
@@ -144,7 +144,7 @@ const MxTab = class {
     return this.label && !this.icon;
   }
   render() {
-    return (index.h(index.Host, { class: this.tabClass }, index.h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected ? 'true' : null, "aria-label": this.label || this.ariaLabel, class: "relative overflow-hidden w-full h-full border border-transparent px-44", onClick: this.onClick.bind(this) }, index.h("div", { class: "relative flex flex-col items-center justify-center space-y-6 pointer-events-none" }, !this.isTextOnly && (index.h("span", { class: "flex items-center space-x-6" }, !this.label && this.badge && this.badgeEl, this.icon && index.h("i", { class: this.icon + ' text-1' + (!this.label ? ' icon-only' : '') }))), this.label && (index.h("span", { class: "flex items-center uppercase text-4 font-semibold leading-4 tracking-1-25 space-x-6" }, this.badge && this.badgeEl, index.h("span", null, this.label))))), index.h("span", { class: 'active-tab-indicator absolute bottom-0 left-0 w-full h-2 pointer-events-none' +
+    return (index.h(index.Host, { class: this.tabClass }, index.h("button", { ref: el => (this.btnElem = el), role: "tab", type: "button", "aria-selected": this.selected ? 'true' : null, "aria-label": this.elAriaLabel || this.label, class: "relative overflow-hidden w-full h-full border border-transparent px-44", onClick: this.onClick.bind(this) }, index.h("div", { class: "relative flex flex-col items-center justify-center space-y-6 pointer-events-none" }, !this.isTextOnly && (index.h("span", { class: "flex items-center space-x-6" }, !this.label && this.badge && this.badgeEl, this.icon && index.h("i", { class: this.icon + ' text-1' + (!this.label ? ' icon-only' : '') }))), this.label && (index.h("span", { class: "flex items-center uppercase text-4 font-semibold leading-4 tracking-1-25 space-x-6" }, this.badge && this.badgeEl, index.h("span", null, this.label))))), index.h("span", { class: 'active-tab-indicator absolute bottom-0 left-0 w-full h-2 pointer-events-none' +
         (this.selected ? '' : ' opacity-0') })));
   }
 };

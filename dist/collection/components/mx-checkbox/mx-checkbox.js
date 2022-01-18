@@ -42,7 +42,7 @@ export class MxCheckbox {
             (this.disabled ? '' : ' cursor-pointer'),
           this.labelClass,
         ].join(' ') },
-        h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled, indeterminate: this.indeterminate }, this.dataAttributes, { onInput: this.onInput.bind(this) })),
+        h("input", Object.assign({ class: 'absolute h-0 w-0 opacity-0' + (this.indeterminate ? ' indeterminate' : ''), type: "checkbox", "aria-label": this.elAriaLabel, name: this.name, value: this.value, checked: this.checked, disabled: this.disabled, indeterminate: this.indeterminate }, this.dataAttributes, { onInput: this.onInput.bind(this) })),
         h("span", { class: this.checkClass }),
         h("div", { class: this.checkLabelClass, "data-testid": "labelName" }, this.labelName))));
   }
@@ -209,6 +209,23 @@ export class MxCheckbox {
       "attribute": "indeterminate",
       "reflect": false,
       "defaultValue": "false"
+    },
+    "elAriaLabel": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "The aria-label attribute for the inner input element."
+      },
+      "attribute": "el-aria-label",
+      "reflect": false
     }
   }; }
   static get elementRef() { return "element"; }
