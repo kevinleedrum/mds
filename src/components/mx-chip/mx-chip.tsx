@@ -96,7 +96,7 @@ export class MxChip {
         <div
           ref={el => (this.chipElem = el)}
           class={this.chipClass}
-          aria-checked={this.choice || this.filter ? null : this.selected ? 'true' : 'false'}
+          aria-checked={this.choice || this.filter ? (this.selected ? 'true' : 'false') : null}
           aria-disabled={this.disabled ? 'true' : null}
           role={this.ariaRole}
           tabindex={this.isClickable ? '0' : '-1'}
