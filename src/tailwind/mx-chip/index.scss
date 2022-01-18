@@ -41,9 +41,9 @@
     background: var(--mds-bg-chip-disabled);
     color: var(--mds-text-chip-disabled);
     .left-icon,
-    .remove,
-    .remove:hover,
-    .remove:focus {
+    & + .remove,
+    & + .remove:hover,
+    & + .remove:focus {
       opacity: 0.24;
       cursor: initial;
     }
@@ -60,7 +60,7 @@
     }
   }
 
-  .remove {
+  & + .remove {
     color: var(--mds-text-chip-remove);
     opacity: 0.64;
     outline-offset: -4px;

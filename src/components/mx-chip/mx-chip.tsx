@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 import ripple from '../../utils/ripple';
+import { uuidv4 } from '../../utils/utils';
 
 @Component({
   tag: 'mx-chip',
@@ -7,6 +8,7 @@ import ripple from '../../utils/ripple';
 })
 export class MxChip {
   chipElem: HTMLElement;
+  uuid: string = uuidv4();
 
   @Prop() outlined: boolean = false;
   @Prop() disabled: boolean = false;
@@ -73,7 +75,13 @@ export class MxChip {
     if (this.isClickable) str += ' clickable transform cursor-pointer disabled:cursor-auto';
     str += this.hasLeftIcon ? ' pl-6' : ' pl-12';
     if (!this.removable) str += ' pr-12';
-    else str += this.hasLeftIcon ? ' pr-2' : ' pr-8';
+    else str += this.hasLeftIcon ? ' pr-32' : ' pr-40';
+    return str;
+  }
+
+  get removeButtonClass() {
+    let str = 'remove inline-flex absolute top-4 items-center justify-center w-24 h-24 cursor-pointer';
+    str += this.hasLeftIcon ? ' right-2' : ' right-8';
     return str;
   }
 
@@ -92,9 +100,10 @@ export class MxChip {
 
   render() {
     return (
-      <Host class="mx-chip inline-block">
+      <Host class="mx-chip inline-block relative">
         <div
           ref={el => (this.chipElem = el)}
+          id={this.uuid}
           class={this.chipClass}
           aria-checked={this.choice || this.filter ? (this.selected ? 'true' : 'false') : null}
           aria-disabled={this.disabled ? 'true' : null}
@@ -121,18 +130,19 @@ export class MxChip {
           <span>
             <slot></slot>
           </span>
-          {this.removable && (
-            <button
-              type="button"
-              data-testid="remove"
-              aria-label="Remove"
-              class="remove inline-flex items-center justify-center w-24 h-24 cursor-pointer"
-              onClick={this.onRemove.bind(this)}
-            >
-              <i class="mds-remove text-3"></i>
-            </button>
-          )}
         </div>
+        {this.removable && (
+          <button
+            type="button"
+            data-testid="remove"
+            aria-label="Remove"
+            aria-controls={this.uuid}
+            class={this.removeButtonClass}
+            onClick={this.onRemove.bind(this)}
+          >
+            <i class="mds-remove text-3"></i>
+          </button>
+        )}
       </Host>
     );
   }
