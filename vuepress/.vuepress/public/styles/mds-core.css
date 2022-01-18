@@ -53,17 +53,17 @@
   --mds-text-btn-outlined-disabled: #a7a7a7;
   --mds-text-btn-outlined: #2d2d2d;
 
-  /* Action Buttons */
-  --mds-bg-btn-action-active: #fff;
-  --mds-bg-btn-action-disabled: #fcfcfc;
-  --mds-bg-btn-action-focus: #d7d7d7;
-  --mds-bg-btn-action-hover: #eeeeee;
-  --mds-bg-btn-action: #fff;
-  --mds-border-btn-action-disabled: #f2f2f2;
-  --mds-border-btn-action: #e7e7e7;
-  --mds-ripple-btn-action: rgba(0, 0, 0, 0.12);
-  --mds-text-btn-action-disabled: #909090;
-  --mds-text-btn-action: #2d2d2d;
+  /* Simple Buttons */
+  --mds-bg-btn-simple-active: #fff;
+  --mds-bg-btn-simple-disabled: #fcfcfc;
+  --mds-bg-btn-simple-focus: #d7d7d7;
+  --mds-bg-btn-simple-hover: #eeeeee;
+  --mds-bg-btn-simple: #fff;
+  --mds-border-btn-simple-disabled: #f2f2f2;
+  --mds-border-btn-simple: #e7e7e7;
+  --mds-ripple-btn-simple: rgba(0, 0, 0, 0.12);
+  --mds-text-btn-simple-disabled: #909090;
+  --mds-text-btn-simple: #2d2d2d;
 
   /* Text Buttons */
   --mds-bg-btn-text-active: transparent;
@@ -241,6 +241,7 @@
   /* #region selection-controls */
   /* Radio Buttons */
   --mds-bg-radio-checked: #0457af;
+  --mds-bg-radio-disabled: #a4a4a4;
   --mds-bg-radio-overlay-active: rgba(0, 0, 0, 0.12);
   --mds-bg-radio-overlay-checked-active: rgba(4, 87, 175, 0.32);
   --mds-bg-radio-overlay-checked-focus: rgba(4, 87, 175, 0.24);
@@ -248,6 +249,9 @@
   --mds-bg-radio-overlay-focus: rgba(0, 0, 0, 0.12);
   --mds-bg-radio-overlay-hover: rgba(0, 0, 0, 0.04);
   --mds-border-radio: #505050;
+  --mds-border-radio-checked: #0457af;
+  --mds-border-radio-disabled: #a4a4a4;
+  --mds-text-radio-disabled: #a4a4a4;
   --mds-text-radio: #2d2d2d;
 
   /* Switches */
@@ -257,10 +261,15 @@
   --mds-bg-switch-overlay-checked-hover: rgba(4, 87, 175, 0.08);
   --mds-bg-switch-overlay-focus: rgba(0, 0, 0, 0.12);
   --mds-bg-switch-overlay-hover: rgba(0, 0, 0, 0.04);
+  --mds-bg-switch-thumb-checked-disabled: #abc6e2;
   --mds-bg-switch-thumb-checked: #0457af;
+  --mds-bg-switch-thumb-disabled: #fcfcfc;
   --mds-bg-switch-thumb: #fff;
+  --mds-bg-switch-track-checked-disabled: #d4e2f1;
   --mds-bg-switch-track-checked: #abc6e2;
+  --mds-bg-switch-track-disabled: #ddd;
   --mds-bg-switch-track: #b9b9b9;
+  --mds-text-switch-disabled: #a4a4a4;
   --mds-text-switch: #2d2d2d;
 
   /* Checkboxes */
@@ -7856,34 +7865,34 @@ video {
         color: #a7a7a7;
         color: var(--mds-text-btn-outlined-disabled);
       }
-.mx-button button.action, .mx-button a.action {
+.mx-button button.simple, .mx-button a.simple {
       color: #2d2d2d;
-      color: var(--mds-text-btn-action);
+      color: var(--mds-text-btn-simple);
       background: #fff;
-      background: var(--mds-bg-btn-action);
+      background: var(--mds-bg-btn-simple);
       border-color: #e7e7e7;
-      border-color: var(--mds-border-btn-action);
-      --ripple-color: var(--mds-ripple-btn-action);
+      border-color: var(--mds-border-btn-simple);
+      --ripple-color: var(--mds-ripple-btn-simple);
     }
-.mx-button button.action:focus:not([aria-disabled='true']), .mx-button a.action:focus:not([aria-disabled='true']) {
+.mx-button button.simple:focus:not([aria-disabled='true']), .mx-button a.simple:focus:not([aria-disabled='true']) {
         background: #d7d7d7;
-        background: var(--mds-bg-btn-action-focus);
+        background: var(--mds-bg-btn-simple-focus);
       }
-.mx-button button.action:hover:not([aria-disabled='true']), .mx-button a.action:hover:not([aria-disabled='true']) {
+.mx-button button.simple:hover:not([aria-disabled='true']), .mx-button a.simple:hover:not([aria-disabled='true']) {
         background: #eeeeee;
-        background: var(--mds-bg-btn-action-hover);
+        background: var(--mds-bg-btn-simple-hover);
       }
-.mx-button button.action:active:not([aria-disabled='true']), .mx-button a.action:active:not([aria-disabled='true']) {
+.mx-button button.simple:active:not([aria-disabled='true']), .mx-button a.simple:active:not([aria-disabled='true']) {
         background: #fff;
-        background: var(--mds-bg-btn-action-active);
+        background: var(--mds-bg-btn-simple-active);
       }
-.mx-button button.action[aria-disabled='true'], .mx-button a.action[aria-disabled='true'] {
+.mx-button button.simple[aria-disabled='true'], .mx-button a.simple[aria-disabled='true'] {
         background: #fcfcfc;
-        background: var(--mds-bg-btn-action-disabled);
+        background: var(--mds-bg-btn-simple-disabled);
         border-color: #f2f2f2;
-        border-color: var(--mds-border-btn-action-disabled);
+        border-color: var(--mds-border-btn-simple-disabled);
         color: #909090;
-        color: var(--mds-text-btn-action-disabled);
+        color: var(--mds-text-btn-simple-disabled);
       }
 .mx-button button.text, .mx-button a.text {
       color: #0457af;
@@ -8316,6 +8325,10 @@ video {
       background: rgba(4, 87, 175, 0.24);
       background: var(--mds-bg-radio-overlay-checked-focus);
     }
+.mx-radio input:checked ~ span {
+    border-color: #0457af;
+    border-color: var(--mds-border-radio-checked);
+  }
 .mx-radio input:checked ~ span::after {
       display: block;
     }
@@ -8328,6 +8341,22 @@ video {
         background: rgba(4, 87, 175, 0.32);
         background: var(--mds-bg-radio-overlay-checked-active);
       }
+.mx-radio input:disabled ~ span {
+      border-color: #a4a4a4;
+      border-color: var(--mds-border-radio-disabled);
+    }
+.mx-radio input:disabled ~ span::after {
+      background: #a4a4a4;
+      background: var(--mds-bg-radio-disabled);
+    }
+.mx-radio input:disabled ~ span::before,
+    .mx-radio input:disabled:checked ~ span::before {
+      background: transparent;
+    }
+.mx-radio input:disabled ~ .radio-label {
+      color: #a4a4a4;
+      color: var(--mds-text-radio-disabled);
+    }
 .mx-switch {
   color: #2d2d2d;
   color: var(--mds-text-switch);
@@ -8399,7 +8428,7 @@ video {
     background: #0457af;
     background: var(--mds-bg-switch-thumb-checked);
   }
-.mx-switch input:checked + .slider:after {
+.mx-switch input:checked + .slider::after {
     transform: translateX(20px);
     background: rgba(4, 87, 175, 0.32);
     background: var(--mds-bg-switch-overlay-checked-active);
@@ -8408,6 +8437,30 @@ video {
     background: rgba(4, 87, 175, 0.08);
     background: var(--mds-bg-switch-overlay-checked-hover);
   }
+.mx-switch input:disabled + .slider {
+      background-color: #ddd;
+      background-color: var(--mds-bg-switch-track-disabled);
+    }
+.mx-switch input:disabled + .slider:before {
+      background: #fcfcfc;
+      background: var(--mds-bg-switch-thumb-disabled);
+    }
+.mx-switch input:disabled + .slider:after,
+    .mx-switch input:disabled + .slider:hover::after {
+      background: transparent;
+    }
+.mx-switch input:disabled:checked + .slider {
+        background: #d4e2f1;
+        background: var(--mds-bg-switch-track-checked-disabled);
+      }
+.mx-switch input:disabled:checked + .slider:before {
+        background: #abc6e2;
+        background: var(--mds-bg-switch-thumb-checked-disabled);
+      }
+.mx-switch input:disabled ~ .switch-label {
+      color: #a4a4a4;
+      color: var(--mds-text-switch-disabled);
+    }
 /* Rounded sliders */
 .mx-switch .slider.round {
     border-radius: 34px;
@@ -9814,11 +9867,11 @@ video {
   color: #333;
   color: var(--mds-text-table);
 }
-@media (min-width: 640px){
-  .mx-table [slot='search']{
-    width: 15rem;
+@media (min-width: 640px) {
+.mx-table [slot='search'] {
+      min-width: 15rem
   }
-}
+    }
 .mx-table .table-grid > *:not(.hidden) {
     /* Only place table cell elements into the grid (not row elements). */
   }

@@ -13,7 +13,7 @@ To nest a Menu inside a Menu Item, add `slot="submenu"` to the child Menu compon
   <div class="mt-20">
     <div class="flex items-center mt-20 space-x-20">
       <div>
-        <mx-button ref="editButton" btn-type="action" dropdown>Edit</mx-button>
+        <mx-button ref="editButton" btn-type="simple" dropdown>Edit</mx-button>
         <mx-menu ref="editMenu">
           <mx-menu-item @click="clickHandler">Undo</mx-menu-item>
           <mx-menu-item @click="clickHandler" disabled>Redo</mx-menu-item>

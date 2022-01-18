@@ -42,8 +42,8 @@ const MxButton = class {
       else
         str += ' min-h-36 px-16 text-4 tracking tracking-1-25';
     }
-    // Action Button
-    if (this.btnType === 'action') {
+    // Simple Button
+    if (this.btnType === 'simple') {
       str += ' w-full min-h-36 px-16 border rounded-3xl text-4';
     }
     // Text Button
@@ -52,6 +52,11 @@ const MxButton = class {
       str += this.dropdown ? ' font-normal' : ' font-semibold uppercase tracking-1-25';
     }
     return str;
+  }
+  connectedCallback() {
+    // The 'action' type has been renamed to 'simple'
+    if (this.btnType === 'action')
+      this.btnType = 'simple';
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));

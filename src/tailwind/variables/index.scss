@@ -48,17 +48,17 @@
   --mds-text-btn-outlined-disabled: #a7a7a7;
   --mds-text-btn-outlined: #2d2d2d;
 
-  /* Action Buttons */
-  --mds-bg-btn-action-active: #fff;
-  --mds-bg-btn-action-disabled: #fcfcfc;
-  --mds-bg-btn-action-focus: #d7d7d7;
-  --mds-bg-btn-action-hover: #eeeeee;
-  --mds-bg-btn-action: #fff;
-  --mds-border-btn-action-disabled: #f2f2f2;
-  --mds-border-btn-action: #e7e7e7;
-  --mds-ripple-btn-action: rgba(0, 0, 0, 0.12);
-  --mds-text-btn-action-disabled: #909090;
-  --mds-text-btn-action: #2d2d2d;
+  /* Simple Buttons */
+  --mds-bg-btn-simple-active: #fff;
+  --mds-bg-btn-simple-disabled: #fcfcfc;
+  --mds-bg-btn-simple-focus: #d7d7d7;
+  --mds-bg-btn-simple-hover: #eeeeee;
+  --mds-bg-btn-simple: #fff;
+  --mds-border-btn-simple-disabled: #f2f2f2;
+  --mds-border-btn-simple: #e7e7e7;
+  --mds-ripple-btn-simple: rgba(0, 0, 0, 0.12);
+  --mds-text-btn-simple-disabled: #909090;
+  --mds-text-btn-simple: #2d2d2d;
 
   /* Text Buttons */
   --mds-bg-btn-text-active: transparent;
@@ -236,6 +236,7 @@
   /* #region selection-controls */
   /* Radio Buttons */
   --mds-bg-radio-checked: #0457af;
+  --mds-bg-radio-disabled: #a4a4a4;
   --mds-bg-radio-overlay-active: rgba(0, 0, 0, 0.12);
   --mds-bg-radio-overlay-checked-active: rgba(4, 87, 175, 0.32);
   --mds-bg-radio-overlay-checked-focus: rgba(4, 87, 175, 0.24);
@@ -243,6 +244,9 @@
   --mds-bg-radio-overlay-focus: rgba(0, 0, 0, 0.12);
   --mds-bg-radio-overlay-hover: rgba(0, 0, 0, 0.04);
   --mds-border-radio: #505050;
+  --mds-border-radio-checked: #0457af;
+  --mds-border-radio-disabled: #a4a4a4;
+  --mds-text-radio-disabled: #a4a4a4;
   --mds-text-radio: #2d2d2d;
 
   /* Switches */
@@ -252,10 +256,15 @@
   --mds-bg-switch-overlay-checked-hover: rgba(4, 87, 175, 0.08);
   --mds-bg-switch-overlay-focus: rgba(0, 0, 0, 0.12);
   --mds-bg-switch-overlay-hover: rgba(0, 0, 0, 0.04);
+  --mds-bg-switch-thumb-checked-disabled: #abc6e2;
   --mds-bg-switch-thumb-checked: #0457af;
+  --mds-bg-switch-thumb-disabled: #fcfcfc;
   --mds-bg-switch-thumb: #fff;
+  --mds-bg-switch-track-checked-disabled: #d4e2f1;
   --mds-bg-switch-track-checked: #abc6e2;
+  --mds-bg-switch-track-disabled: #ddd;
   --mds-bg-switch-track: #b9b9b9;
+  --mds-text-switch-disabled: #a4a4a4;
   --mds-text-switch: #2d2d2d;
 
   /* Checkboxes */

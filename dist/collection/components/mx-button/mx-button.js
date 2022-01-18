@@ -40,8 +40,8 @@ export class MxButton {
       else
         str += ' min-h-36 px-16 text-4 tracking tracking-1-25';
     }
-    // Action Button
-    if (this.btnType === 'action') {
+    // Simple Button
+    if (this.btnType === 'simple') {
       str += ' w-full min-h-36 px-16 border rounded-3xl text-4';
     }
     // Text Button
@@ -50,6 +50,11 @@ export class MxButton {
       str += this.dropdown ? ' font-normal' : ' font-semibold uppercase tracking-1-25';
     }
     return str;
+  }
+  connectedCallback() {
+    // The 'action' type has been renamed to 'simple'
+    if (this.btnType === 'action')
+      this.btnType = 'simple';
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" },
@@ -64,10 +69,10 @@ export class MxButton {
   static get properties() { return {
     "btnType": {
       "type": "string",
-      "mutable": false,
+      "mutable": true,
       "complexType": {
         "original": "BtnType",
-        "resolved": "\"action\" | \"contained\" | \"outlined\" | \"text\"",
+        "resolved": "\"action\" | \"contained\" | \"outlined\" | \"simple\" | \"text\"",
         "references": {
           "BtnType": {
             "location": "local"

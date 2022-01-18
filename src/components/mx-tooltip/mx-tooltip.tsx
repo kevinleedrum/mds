@@ -89,7 +89,7 @@ export class MxTooltip {
 
   render() {
     return (
-      <Host class="inline-block">
+      <Host class="inline-flex">
         <slot></slot>
         <div
           ref={el => (this.tooltipElem = el)}

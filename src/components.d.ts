@@ -632,6 +632,7 @@ export namespace Components {
     }
     interface MxRadio {
         "checked": boolean;
+        "disabled": boolean;
         "labelName": string;
         "name": string;
         "value": string;
@@ -695,6 +696,7 @@ export namespace Components {
     }
     interface MxSwitch {
         "checked": boolean;
+        "disabled": boolean;
         "labelClass": string;
         "labelName": string;
         "name": string;
@@ -1855,6 +1857,7 @@ declare namespace LocalJSX {
     }
     interface MxRadio {
         "checked"?: boolean;
+        "disabled"?: boolean;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
@@ -1919,6 +1922,7 @@ declare namespace LocalJSX {
     }
     interface MxSwitch {
         "checked"?: boolean;
+        "disabled"?: boolean;
         "labelClass"?: string;
         "labelName"?: string;
         "name"?: string;
