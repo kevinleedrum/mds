@@ -135,6 +135,8 @@ export class MxTable {
   @Prop() progressValue: number = null;
   /** Delay the appearance of the progress bar for this many milliseconds */
   @Prop() progressAppearDelay: number = 0;
+  /** Additional class names for the operation bar grid */
+  @Prop() operationsBarClass: string = '';
 
   @State() minWidths = new MinWidths();
   @State() checkedRowIds: string[] = [];
@@ -531,13 +533,13 @@ export class MxTable {
   get searchStyle(): any {
     if (this.minWidths.sm) {
       // On larger screens, place in last column of first grid row
-      return { width: '240px', gridColumnStart: '-1' };
+      return { minWidth: '240px', gridColumnStart: '-1' };
     } else if (!(this.checkable && this.showCheckAll)) {
       // If no checkbox on mobile, span the entire first grid row
       return { width: '100%', gridColumnStart: '1' };
     } else {
-      // If checkbox on mobile, span remaining space in first grid row (up to 240px)
-      return { width: '100%', maxWidth: '240px', gridColumnStart: '2' };
+      // If checkbox on mobile, span remaining space in first grid row
+      return { width: '100%', gridColumnStart: '2' };
     }
   }
 
@@ -741,7 +743,7 @@ export class MxTable {
     }
 
     const operationsBar = (
-      <div class="grid gap-x-16 gap-y-12 pb-12" style={this.operationsBarStyle}>
+      <div class={['grid gap-x-16 gap-y-12 pb-12', this.operationsBarClass].join(' ')} style={this.operationsBarStyle}>
         {this.checkable && this.showCheckAll && (
           <div class="col-start-1 flex items-center min-h-36 space-x-16">
             {checkAllCheckbox}
