@@ -706,7 +706,7 @@ export class MxTable {
     );
 
     let multiRowActionUI;
-    if (this.checkable) {
+    if (this.checkable && this.multiRowActions.length) {
       multiRowActionUI =
         this.multiRowActions.length === 1 ? (
           // Multi-Row Action Button
