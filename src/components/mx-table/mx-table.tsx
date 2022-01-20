@@ -313,6 +313,7 @@ export class MxTable {
     } else {
       this.checkNone();
     }
+    this.mxRowCheck.emit(this.checkedRowIds);
   }
 
   /** Animate table rows while dragging a row */
@@ -699,6 +700,7 @@ export class MxTable {
         indeterminate={this.someRowsChecked}
         onClick={this.onCheckAllClick.bind(this)}
         label-name="Select all rows"
+        data-testid="check-all-checkbox"
         hide-label
       />
     );

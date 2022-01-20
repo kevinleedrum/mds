@@ -239,6 +239,16 @@ describe('mx-table (checkable, non-mobile)', () => {
     expect(actionMenu).not.toBeNull();
   });
 
+  it('emits an mxRowCheck event when the check-all checkbox is clicked', async () => {
+    let emitted;
+    const listener = (e: CustomEvent) => (emitted = e.detail);
+    root.addEventListener('mxRowCheck', listener);
+    (root.querySelector('[data-testid="check-all-checkbox"]') as HTMLElement).click();
+    expect(JSON.stringify(emitted)).toBe('["0","1","2"]');
+    (root.querySelector('[data-testid="check-all-checkbox"]') as HTMLElement).click();
+    expect(JSON.stringify(emitted)).toBe('[]');
+  });
+
   it('emits an mxRowCheck event when a row is checked or unchecked', async () => {
     let emitted;
     const listener = (e: CustomEvent) => (emitted = e.detail);
