@@ -33,7 +33,7 @@ export class MxRadio {
 
   render() {
     return (
-      <Host class="mx-radio">
+      <Host class="mx-radio inline-block">
         <label class={this.labelClassNames}>
           <input
             class="absolute h-0 w-0 opacity-0"
