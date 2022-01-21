@@ -10,6 +10,7 @@ export class MxRadio {
 
   @Prop() name: string = '';
   @Prop() value: string = '';
+  @Prop() labelClass: string = '';
   @Prop() labelName: string = '';
   @Prop({ mutable: true }) checked: boolean = false;
   @Prop() disabled: boolean = false;
@@ -23,15 +24,17 @@ export class MxRadio {
     this.checked = (e.target as HTMLInputElement).checked;
   }
 
+  get labelClassNames(): string {
+    let str = 'relative inline-flex flex-nowrap align-center items-center text-4';
+    if (!this.disabled) str += ' cursor-pointer';
+    if (this.labelClass) str += ' ' + this.labelClass;
+    return str;
+  }
+
   render() {
     return (
-      <Host class="mx-radio">
-        <label
-          class={
-            'relative inline-flex flex-nowrap align-center items-center text-4' +
-            (this.disabled ? '' : ' cursor-pointer')
-          }
-        >
+      <Host class="mx-radio inline-block">
+        <label class={this.labelClassNames}>
           <input
             class="absolute h-0 w-0 opacity-0"
             type="radio"

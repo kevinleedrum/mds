@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host } from './index-a5350afa.js';
+import { r as registerInstance, f as createEvent, h, e as Host } from './index-f6edd80d.js';
 import { r as ripple } from './ripple-54ef50dc.js';
 import { u as uuidv4 } from './utils-18e3dfde.js';
 

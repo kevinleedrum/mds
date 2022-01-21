@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-a5350afa.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
 import { u as uuidv4, p as propagateDataAttributes, b as parseTimeString } from './utils-18e3dfde.js';
 
 const timeOptions = [];

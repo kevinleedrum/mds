@@ -6,6 +6,8 @@ export declare class MxIconButton {
   type: 'button' | 'submit' | 'reset';
   formaction: string;
   value: string;
+  /** Create button as link */
+  href: string;
   disabled: boolean;
   /** The aria-label attribute for the inner button element. */
   elAriaLabel: string;

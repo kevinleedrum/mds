@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-a5350afa.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
 import { c as createCommonjsModule, g as getDefaultExportFromCjs } from './_commonjsHelpers-8fe71198.js';
 import { c as createPopover } from './popover-1f909484.js';
 import { u as uuidv4, p as propagateDataAttributes, i as isDateObject } from './utils-18e3dfde.js';

@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-a5350afa.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { d as getScrollingParent, a as getCursorCoords, e as getBounds, g as getPageRect, f as isScrolledOutOfView } from './utils-18e3dfde.js';
 import { c as collapse, e as expand } from './transitions-5e6f10a3.js';

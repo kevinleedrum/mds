@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host, g as getElement } from './index-de1da671.js';
+import { r as registerInstance, h, H as Host, g as getElement } from './index-d3b6906c.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { R as ResizeObserver } from './ResizeObserver-f193871f.js';
 

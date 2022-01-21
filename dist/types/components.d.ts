@@ -340,6 +340,10 @@ export namespace Components {
         "elAriaLabel": string;
         "formaction": string;
         /**
+          * Create button as link
+         */
+        "href": string;
+        /**
           * Class name of icon (for icon font)
          */
         "icon": string;
@@ -663,6 +667,7 @@ export namespace Components {
     interface MxRadio {
         "checked": boolean;
         "disabled": boolean;
+        "labelClass": string;
         "labelName": string;
         "name": string;
         "value": string;
@@ -822,6 +827,10 @@ export namespace Components {
           * Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.
          */
         "mutateOnDrag": boolean;
+        /**
+          * Additional class names for the operation bar grid
+         */
+        "operationsBarClass": string;
         /**
           * The page to display
          */
@@ -1612,6 +1621,10 @@ declare namespace LocalJSX {
         "elAriaLabel"?: string;
         "formaction"?: string;
         /**
+          * Create button as link
+         */
+        "href"?: string;
+        /**
           * Class name of icon (for icon font)
          */
         "icon"?: string;
@@ -1927,6 +1940,7 @@ declare namespace LocalJSX {
     interface MxRadio {
         "checked"?: boolean;
         "disabled"?: boolean;
+        "labelClass"?: string;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
@@ -2100,6 +2114,10 @@ declare namespace LocalJSX {
           * Emitted when the sorting, pagination, or rows data changes. The `Event.detail` will contain the sorted, paginated array of visible rows.  This is useful for building a custom row layout via the default slot.
          */
         "onMxVisibleRowsChange"?: (event: CustomEvent<Object[]>) => void;
+        /**
+          * Additional class names for the operation bar grid
+         */
+        "operationsBarClass"?: string;
         /**
           * The page to display
          */

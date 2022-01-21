@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-54a36eac.js');
+const index = require('./index-7252b109.js');
 const utils = require('./utils-1f7ef40d.js');
 
 const MxSwitch = class {
@@ -22,7 +22,7 @@ const MxSwitch = class {
     this.checked = e.target.checked;
   }
   get labelClassNames() {
-    let str = 'elative inline-flex flex-nowrap align-center items-center text-4';
+    let str = 'relative inline-flex flex-nowrap align-center items-center text-4';
     if (!this.disabled)
       str += ' cursor-pointer';
     if (this.labelClass)

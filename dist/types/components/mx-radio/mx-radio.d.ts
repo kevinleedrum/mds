@@ -3,6 +3,7 @@ export declare class MxRadio {
   dataAttributes: {};
   name: string;
   value: string;
+  labelClass: string;
   labelName: string;
   checked: boolean;
   disabled: boolean;
@@ -10,5 +11,6 @@ export declare class MxRadio {
   componentWillRender: typeof propagateDataAttributes;
   /** Keep checked prop in sync with input element attribute */
   onInput(e: InputEvent): void;
+  get labelClassNames(): string;
   render(): any;
 }
