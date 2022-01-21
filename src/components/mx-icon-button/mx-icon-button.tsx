@@ -13,6 +13,7 @@ export class MxIconButton {
   @Prop() type: 'button' | 'submit' | 'reset' = 'button';
   @Prop() formaction: string;
   @Prop() value: string;
+  /** Create button as link */
   @Prop() href: string;
   @Prop({ reflect: true }) disabled: boolean = false;
   /** The aria-label attribute for the inner button element. */
