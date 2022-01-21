@@ -24,6 +24,7 @@ export class MxIconButton {
     return this.chevronDown || this.chevronLeft || this.chevronRight;
   }
   render() {
+    const Tag = this.href ? 'a' : 'button';
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" },
       this.icon && h("i", { class: ['text-icon', this.icon].join(' ') }),
       h("span", { class: "slot-content" },
@@ -31,7 +32,7 @@ export class MxIconButton {
       this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center text-icon shadow-1" },
         h("i", { "data-testid": "chevron", class: this.chevronLeft ? 'mds-chevron-left' : this.chevronRight ? 'mds-chevron-right' : 'mds-chevron-down' })))));
     return (h(Host, { class: "mx-icon-button inline-block appearance-none" },
-      h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent)));
+      h(Tag, Object.assign({ type: this.href ? null : this.type, formaction: this.formaction, value: this.value, href: this.href, class: "flex text-current appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent)));
   }
   static get is() { return "mx-icon-button"; }
   static get properties() { return {
@@ -85,6 +86,23 @@ export class MxIconButton {
         "text": ""
       },
       "attribute": "value",
+      "reflect": false
+    },
+    "href": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Create button as link"
+      },
+      "attribute": "href",
       "reflect": false
     },
     "disabled": {

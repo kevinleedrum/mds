@@ -1,4 +1,4 @@
-import { r as registerInstance, c as createEvent, h, f as forceUpdate, H as Host, g as getElement } from './index-de1da671.js';
+import { r as registerInstance, c as createEvent, h, f as forceUpdate, H as Host, g as getElement } from './index-d3b6906c.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { g as getPageRect, c as capitalize, i as isDateObject, a as getCursorCoords } from './utils-18e3dfde.js';
 
@@ -51,6 +51,8 @@ const MxTable = class {
     this.progressValue = null;
     /** Delay the appearance of the progress bar for this many milliseconds */
     this.progressAppearDelay = 0;
+    /** Additional class names for the operation bar grid */
+    this.operationsBarClass = '';
     this.minWidths = new MinWidths();
     this.checkedRowIds = [];
     this.exposedMobileColumnIndex = 0;
@@ -192,6 +194,7 @@ const MxTable = class {
     else {
       this.checkNone();
     }
+    this.mxRowCheck.emit(this.checkedRowIds);
   }
   /** Animate table rows while dragging a row */
   onDragMove(e) {
@@ -407,15 +410,15 @@ const MxTable = class {
   get searchStyle() {
     if (this.minWidths.sm) {
       // On larger screens, place in last column of first grid row
-      return { width: '240px', gridColumnStart: '-1' };
+      return { minWidth: '240px', gridColumnStart: '-1' };
     }
     else if (!(this.checkable && this.showCheckAll)) {
       // If no checkbox on mobile, span the entire first grid row
       return { width: '100%', gridColumnStart: '1' };
     }
     else {
-      // If checkbox on mobile, span remaining space in first grid row (up to 240px)
-      return { width: '100%', maxWidth: '240px', gridColumnStart: '2' };
+      // If checkbox on mobile, span remaining space in first grid row
+      return { width: '100%', gridColumnStart: '2' };
     }
   }
   get gridStyle() {
@@ -572,9 +575,9 @@ const MxTable = class {
     });
   }
   render() {
-    const checkAllCheckbox = this.checkable && this.showCheckAll && (h("mx-checkbox", { checked: this.allRowsChecked, class: this.showOperationsBar ? 'ml-24' : 'pr-4', indeterminate: this.someRowsChecked, onClick: this.onCheckAllClick.bind(this), "label-name": "Select all rows", "hide-label": true }));
+    const checkAllCheckbox = this.checkable && this.showCheckAll && (h("mx-checkbox", { checked: this.allRowsChecked, class: this.showOperationsBar ? 'ml-24' : 'pr-4', indeterminate: this.someRowsChecked, onClick: this.onCheckAllClick.bind(this), "label-name": "Select all rows", "data-testid": "check-all-checkbox", "hide-label": true }));
     let multiRowActionUI;
-    if (this.checkable) {
+    if (this.checkable && this.multiRowActions.length) {
       multiRowActionUI =
         this.multiRowActions.length === 1 ? (
         // Multi-Row Action Button
@@ -582,7 +585,7 @@ const MxTable = class {
         // Multi-Row Action Menu
         h("span", { class: !this.checkedRowIds.length ? 'invisible' : null, "aria-hidden": this.checkedRowIds.length === 0 ? 'true' : null }, h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true }, h("span", { class: "h-full flex items-center px-2" }, h("i", { class: "mds-gear text-icon" }), h("span", { class: "sr-only" }, "Action Menu"))), h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
-    const operationsBar = (h("div", { class: "grid gap-x-16 gap-y-12 pb-12", style: this.operationsBarStyle }, this.checkable && this.showCheckAll && (h("div", { class: "col-start-1 flex items-center min-h-36 space-x-16" }, checkAllCheckbox, multiRowActionUI)), this.hasFilter && (h("div", { class: "flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1" }, h("slot", { name: "filter" }))), this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle }, h("slot", { name: "search" })))));
+    const operationsBar = (h("div", { class: ['grid gap-x-16 gap-y-12 pb-12', this.operationsBarClass].join(' '), style: this.operationsBarStyle }, this.checkable && this.showCheckAll && (h("div", { class: "col-start-1 flex items-center min-h-36 space-x-16" }, checkAllCheckbox, multiRowActionUI)), this.hasFilter && (h("div", { class: "flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1" }, h("slot", { name: "filter" }))), this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle }, h("slot", { name: "search" })))));
     let generatedRows = [];
     if (!this.hasDefaultSlot && !this.groupBy && this.groupedRows.length) {
       generatedRows = this.visibleRows.map(row => {

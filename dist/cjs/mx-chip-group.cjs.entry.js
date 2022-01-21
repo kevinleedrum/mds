@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-54a36eac.js');
+const index = require('./index-7252b109.js');
 
 const MxChipGroup = class {
   constructor(hostRef) {

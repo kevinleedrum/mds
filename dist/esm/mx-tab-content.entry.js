@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host } from './index-de1da671.js';
+import { r as registerInstance, h, H as Host } from './index-d3b6906c.js';
 
 const MxTabContent = class {
   constructor(hostRef) {

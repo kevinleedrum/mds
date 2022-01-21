@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-a5350afa.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
 import { p as propagateDataAttributes } from './utils-18e3dfde.js';
 
 const MxSwitch = class {
@@ -18,7 +18,7 @@ const MxSwitch = class {
     this.checked = e.target.checked;
   }
   get labelClassNames() {
-    let str = 'elative inline-flex flex-nowrap align-center items-center text-4';
+    let str = 'relative inline-flex flex-nowrap align-center items-center text-4';
     if (!this.disabled)
       str += ' cursor-pointer';
     if (this.labelClass)

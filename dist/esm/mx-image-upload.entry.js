@@ -1,4 +1,4 @@
-import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-de1da671.js';
+import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-d3b6906c.js';
 
 const MxImageUpload = class {
   constructor(hostRef) {

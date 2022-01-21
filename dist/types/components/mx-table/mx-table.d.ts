@@ -112,6 +112,8 @@ export declare class MxTable {
   progressValue: number;
   /** Delay the appearance of the progress bar for this many milliseconds */
   progressAppearDelay: number;
+  /** Additional class names for the operation bar grid */
+  operationsBarClass: string;
   minWidths: MinWidths;
   checkedRowIds: string[];
   exposedMobileColumnIndex: number;

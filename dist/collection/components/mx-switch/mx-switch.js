@@ -16,7 +16,7 @@ export class MxSwitch {
     this.checked = e.target.checked;
   }
   get labelClassNames() {
-    let str = 'elative inline-flex flex-nowrap align-center items-center text-4';
+    let str = 'relative inline-flex flex-nowrap align-center items-center text-4';
     if (!this.disabled)
       str += ' cursor-pointer';
     if (this.labelClass)

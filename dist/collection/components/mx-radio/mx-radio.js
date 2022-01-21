@@ -5,6 +5,7 @@ export class MxRadio {
     this.dataAttributes = {};
     this.name = '';
     this.value = '';
+    this.labelClass = '';
     this.labelName = '';
     this.checked = false;
     this.disabled = false;
@@ -14,10 +15,17 @@ export class MxRadio {
   onInput(e) {
     this.checked = e.target.checked;
   }
+  get labelClassNames() {
+    let str = 'relative inline-flex flex-nowrap align-center items-center text-4';
+    if (!this.disabled)
+      str += ' cursor-pointer';
+    if (this.labelClass)
+      str += ' ' + this.labelClass;
+    return str;
+  }
   render() {
-    return (h(Host, { class: "mx-radio" },
-      h("label", { class: 'relative inline-flex flex-nowrap align-center items-center text-4' +
-          (this.disabled ? '' : ' cursor-pointer') },
+    return (h(Host, { class: "mx-radio inline-block" },
+      h("label", { class: this.labelClassNames },
         h("input", Object.assign({ class: "absolute h-0 w-0 opacity-0", type: "radio", name: this.name, value: this.value, checked: this.checked, disabled: this.disabled }, this.dataAttributes, { onInput: this.onInput.bind(this) })),
         h("span", { class: 'flex h-20 w-20 flex-shrink-0 rounded-full' + (this.disabled ? '' : ' cursor-pointer') }),
         h("div", { class: "radio-label ml-16 inline-block", "data-testid": "labelName" }, this.labelName))));
@@ -57,6 +65,24 @@ export class MxRadio {
         "text": ""
       },
       "attribute": "value",
+      "reflect": false,
+      "defaultValue": "''"
+    },
+    "labelClass": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "label-class",
       "reflect": false,
       "defaultValue": "''"
     },
