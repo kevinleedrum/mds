@@ -84,3 +84,24 @@ describe('mx-icon-button', () => {
     expect(button.getAttribute('data-test')).toBe('test');
   });
 });
+
+describe('mx-icon-button (as link)', () => {
+  let page;
+  let root: HTMLMxIconButtonElement;
+  let button: HTMLAnchorElement;
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [MxIconButton],
+      html: `<mx-icon-button href="/" icon="icon"></mx-icon-button>`,
+    });
+    root = page.root;
+    button = root.querySelector('a');
+  });
+
+  it('renders an <a>', async () => {
+    expect(button).not.toBeNull();
+    expect(button.getAttribute('class')).toContain('w-48');
+    expect(button.getAttribute('class')).toContain('h-48');
+    expect(button.getAttribute('class')).toContain('rounded-full');
+  });
+});

@@ -149,6 +149,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
         <mx-icon-button chevron-down el-aria-label="Down" />
         <mx-icon-button chevron-left el-aria-label="Left" />
         <mx-icon-button chevron-right el-aria-label="Right" />
+        <mx-icon-button icon="ph-link" href="/" el-aria-label="Link" />
       </div>
     </div>
     <div>
@@ -163,6 +164,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
         <mx-icon-button chevron-down disabled el-aria-label="Down" />
         <mx-icon-button chevron-left disabled el-aria-label="Left" />
         <mx-icon-button chevron-right disabled el-aria-label="Right" />
+        <mx-icon-button icon="ph-link" href="/" disabled el-aria-label="Link" />
       </div>
     </div>
   </div>

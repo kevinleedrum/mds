@@ -13,6 +13,7 @@ export class MxIconButton {
   @Prop() type: 'button' | 'submit' | 'reset' = 'button';
   @Prop() formaction: string;
   @Prop() value: string;
+  @Prop() href: string;
   @Prop({ reflect: true }) disabled: boolean = false;
   /** The aria-label attribute for the inner button element. */
   @Prop() elAriaLabel: string;
@@ -42,6 +43,8 @@ export class MxIconButton {
   }
 
   render() {
+    const Tag = this.href ? 'a' : 'button';
+
     const buttonContent = (
       <div class="flex justify-center items-center content-center relative">
         {this.icon && <i class={['text-icon', this.icon].join(' ')}></i>}
@@ -63,11 +66,12 @@ export class MxIconButton {
 
     return (
       <Host class="mx-icon-button inline-block appearance-none">
-        <button
-          type={this.type}
+        <Tag
+          type={this.href ? null : this.type}
           formaction={this.formaction}
           value={this.value}
-          class="flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto"
+          href={this.href}
+          class="flex text-current appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto"
           ref={el => (this.btnElem = el as HTMLButtonElement)}
           onClick={this.onClick.bind(this)}
           aria-disabled={this.disabled ? 'true' : null}
@@ -75,7 +79,7 @@ export class MxIconButton {
           {...this.dataAttributes}
         >
           {buttonContent}
-        </button>
+        </Tag>
       </Host>
     );
   }
