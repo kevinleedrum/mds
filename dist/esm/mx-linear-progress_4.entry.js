@@ -1,8 +1,8 @@
 import { r as registerInstance, h, H as Host, g as getElement, c as createEvent } from './index-d3b6906c.js';
 import { R as ResizeObserver } from './ResizeObserver-f193871f.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { d as getScrollingParent, e as getBounds, a as getCursorCoords, g as getPageRect, f as isScrolledOutOfView } from './utils-e11a77cf.js';
-import { c as collapse, e as expand } from './transitions-d677cc52.js';
+import { d as getScrollingParent, e as getBounds, a as getCursorCoords, g as getPageRect, f as isScrolledOutOfView } from './utils-a354c65f.js';
+import { c as collapse, e as expand } from './transitions-58780ad1.js';
 
 const MxLinearProgress = class {
   constructor(hostRef) {
