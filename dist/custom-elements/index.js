@@ -175,10 +175,12 @@ function isScrollable(el) {
  * so they can be applied to the native element in the render function. */
 function propagateDataAttributes() {
   Object.keys(this.element.dataset).forEach(key => {
+    key = camelToKebab(key);
     this.dataAttributes['data-' + key] = this.element.dataset[key];
     this.element.removeAttribute(`data-${key}`);
   });
 }
+const camelToKebab = str => str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase());
 
 var Direction;
 (function (Direction) {
@@ -13622,6 +13624,12 @@ const MxChip$1 = class extends HTMLElement {
     /** Style as a filter chip when selected */
     this.filter = false;
   }
+  componentWillRender() {
+    const chipGroup = this.element.closest('mx-chip-group');
+    if (!chipGroup)
+      return;
+    this.selected = chipGroup.value === this.value;
+  }
   onClick(e) {
     if (this.disabled) {
       e.stopPropagation();
@@ -13692,6 +13700,7 @@ const MxChip$1 = class extends HTMLElement {
   render() {
     return (h(Host, { class: "mx-chip inline-block relative" }, h("div", { ref: el => (this.chipElem = el), id: this.uuid, class: this.chipClass, "aria-checked": this.choice || this.filter ? (this.selected ? 'true' : 'false') : null, "aria-disabled": this.disabled ? 'true' : null, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) }, this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" }, this.icon && h("i", { class: this.icon + ' text-1' }), this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" }, h("i", { class: "mds-check" }))))), h("span", null, h("slot", null))), this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", "aria-controls": this.uuid, class: this.removeButtonClass, onClick: this.onRemove.bind(this) }, h("i", { class: "mds-remove text-3" })))));
   }
+  get element() { return this; }
 };
 
 const MxChipGroup$1 = class extends HTMLElement {
@@ -20962,6 +20971,7 @@ const MxTable$1 = class extends HTMLElement {
     this.hasDefaultSlot = false;
     this.hasSearch = false;
     this.hasFilter = false;
+    this.hasFooter = false;
     this.showOperationsBar = false;
     /** An array of objects that defines the table's dataset. */
     this.rows = [];
@@ -21243,6 +21253,7 @@ const MxTable$1 = class extends HTMLElement {
   componentWillRender() {
     this.hasFilter = !!this.element.querySelector('[slot="filter"]');
     this.hasSearch = !!this.element.querySelector('[slot="search"]');
+    this.hasFooter = !!this.element.querySelector('[slot="footer"]');
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
@@ -21516,7 +21527,7 @@ const MxTable$1 = class extends HTMLElement {
     this.rowsPerPage = e.detail.rowsPerPage;
   }
   setLastRowClass() {
-    if (this.paginate)
+    if (this.paginate || this.hasFooter)
       return;
     const rows = this.getTableRows().filter(row => row.getAttribute('aria-hidden') !== 'true');
     rows.forEach((row, i) => {
@@ -21560,7 +21571,7 @@ const MxTable$1 = class extends HTMLElement {
       return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) }, colIndex === 0 && this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, col.heading && h("span", { class: "truncate flex-shrink", innerHTML: col.heading }), !col.heading && h("span", { class: "sr-only" }, col.isActionColumn ? 'Action' : col.property), !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow" }, h("i", { class: "mds-arrow-triangle-down text-icon" }))))));
     })) : (
     // Mobile Column Header Navigation
-    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow" }, h("i", { class: "mds-arrow-triangle-down text-icon" }))))), this.columns.length >= 2 && (h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.isPreviousColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.isNextColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, 1) }))))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && h("div", null, generatedRows), h("div", { "data-testid": "empty-state", class: this.emptyStateClass }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found.")))), this.paginate && (
+    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow" }, h("i", { class: "mds-arrow-triangle-down text-icon" }))))), this.columns.length >= 2 && (h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.isPreviousColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.isNextColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, 1) }))))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && h("div", null, generatedRows), h("div", { "data-testid": "empty-state", class: this.emptyStateClass }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found.")))), this.hasFooter && (h("div", { "data-testid": "table-footer", class: "table-footer" }, h("div", { class: "col-span-full px-24 py-16 text-4" }, h("slot", { name: "footer" })))), this.paginate && (
     // Pagination Row
     h("div", { class: "pagination-row" }, h("mx-pagination", { page: this.page, "rows-per-page": this.rowsPerPage, rowsPerPageOptions: this.rowsPerPageOptions, "total-rows": this.serverPaginate ? this.totalRows : this.rows.length, class: "col-span-full p-0 rounded-b-2xl", onMxPageChange: this.onMxPageChange.bind(this), disabled: this.disablePagination, disableNextPage: this.disableNextPage }))))));
   }
@@ -22396,7 +22407,7 @@ const MxBanner = /*@__PURE__*/proxyCustomElement(MxBanner$1, [4,"mx-banner",{"er
 const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1025,"btn-type"],"elAriaLabel":[1,"el-aria-label"],"type":[1],"value":[1],"formaction":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
 const MxChart = /*@__PURE__*/proxyCustomElement(MxChart$1, [0,"mx-chart",{"data":[16],"elAriaLabel":[1,"el-aria-label"],"height":[2],"options":[16],"type":[1],"width":[2]}]);
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelLeft":[4,"label-left"],"labelName":[1,"label-name"],"labelClass":[1,"label-class"],"hideLabel":[4,"hide-label"],"checked":[1028],"disabled":[4],"indeterminate":[4],"elAriaLabel":[1,"el-aria-label"]}]);
-const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined":[4],"disabled":[4],"selected":[516],"clickable":[4],"removable":[4],"avatarUrl":[1,"avatar-url"],"icon":[1],"value":[8],"choice":[4],"filter":[4]}]);
+const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined":[4],"disabled":[4],"selected":[1540],"clickable":[4],"removable":[4],"avatarUrl":[1,"avatar-url"],"icon":[1],"value":[8],"choice":[4],"filter":[4]}]);
 const MxChipGroup = /*@__PURE__*/proxyCustomElement(MxChipGroup$1, [4,"mx-chip-group",{"value":[1032]},[[0,"click","onChipClick"]]]);
 const MxCircularProgress = /*@__PURE__*/proxyCustomElement(MxCircularProgress$1, [0,"mx-circular-progress",{"value":[2],"size":[1],"appearDelay":[2,"appear-delay"]}]);
 const MxCode = /*@__PURE__*/proxyCustomElement(MxCode$1, [4,"mx-code",{"code":[1],"language":[1],"lineNumberStart":[2,"line-number-start"],"showLineNumbers":[4,"show-line-numbers"]}]);

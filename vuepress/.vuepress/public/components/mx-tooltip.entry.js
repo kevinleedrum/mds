@@ -1,7 +1,7 @@
 import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
 import { c as createPopover } from './popover-1f909484.js';
-import { f as fadeIn, b as fadeOut } from './transitions-5e6f10a3.js';
-import { u as uuidv4 } from './utils-18e3dfde.js';
+import { f as fadeIn, b as fadeOut } from './transitions-d677cc52.js';
+import { u as uuidv4 } from './utils-e11a77cf.js';
 
 const MxTooltip = class {
   constructor(hostRef) {

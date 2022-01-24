@@ -52,6 +52,7 @@ export declare class MxTable {
   hasDefaultSlot: boolean;
   hasSearch: boolean;
   hasFilter: boolean;
+  hasFooter: boolean;
   showOperationsBar: boolean;
   dragRowEl: HTMLMxTableRowElement;
   dragRowElSiblings: HTMLMxTableRowElement[];

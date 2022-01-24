@@ -1,6 +1,6 @@
 import { r as registerInstance, c as createEvent, h, f as forceUpdate, H as Host, g as getElement } from './index-d3b6906c.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { g as getPageRect, c as capitalize, i as isDateObject, a as getCursorCoords } from './utils-18e3dfde.js';
+import { g as getPageRect, c as capitalize, i as isDateObject, a as getCursorCoords } from './utils-e11a77cf.js';
 
 const MxTable = class {
   constructor(hostRef) {
@@ -12,6 +12,7 @@ const MxTable = class {
     this.hasDefaultSlot = false;
     this.hasSearch = false;
     this.hasFilter = false;
+    this.hasFooter = false;
     this.showOperationsBar = false;
     /** An array of objects that defines the table's dataset. */
     this.rows = [];
@@ -293,6 +294,7 @@ const MxTable = class {
   componentWillRender() {
     this.hasFilter = !!this.element.querySelector('[slot="filter"]');
     this.hasSearch = !!this.element.querySelector('[slot="search"]');
+    this.hasFooter = !!this.element.querySelector('[slot="footer"]');
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
@@ -566,7 +568,7 @@ const MxTable = class {
     this.rowsPerPage = e.detail.rowsPerPage;
   }
   setLastRowClass() {
-    if (this.paginate)
+    if (this.paginate || this.hasFooter)
       return;
     const rows = this.getTableRows().filter(row => row.getAttribute('aria-hidden') !== 'true');
     rows.forEach((row, i) => {
@@ -610,7 +612,7 @@ const MxTable = class {
       return (h("div", { id: `column-header-${colIndex}`, role: "columnheader", class: this.getHeaderClass(col, colIndex), onClick: this.onHeaderClick.bind(this, col) }, colIndex === 0 && this.minWidths.sm && !this.showOperationsBar && checkAllCheckbox, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, col.heading && h("span", { class: "truncate flex-shrink", innerHTML: col.heading }), !col.heading && h("span", { class: "sr-only" }, col.isActionColumn ? 'Action' : col.property), !this.draggableRows && col.sortable && col.property && (h("div", { class: this.getHeaderArrowClass(col), "data-testid": "arrow" }, h("i", { class: "mds-arrow-triangle-down text-icon" }))))));
     })) : (
     // Mobile Column Header Navigation
-    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow" }, h("i", { class: "mds-arrow-triangle-down text-icon" }))))), this.columns.length >= 2 && (h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.isPreviousColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.isNextColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, 1) }))))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && h("div", null, generatedRows), h("div", { "data-testid": "empty-state", class: this.emptyStateClass }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found.")))), this.paginate && (
+    h("div", { class: "flex items-stretch" }, !this.showOperationsBar && checkAllCheckbox, h("div", { id: `column-header-${this.exposedMobileColumnIndex}`, role: "columnheader", class: this.getHeaderClass(this.exposedMobileColumn, this.exposedMobileColumnIndex), onClick: this.onHeaderClick.bind(this, this.exposedMobileColumn) }, h("div", { class: "inline-flex items-center overflow-hidden whitespace-nowrap select-none" }, h("span", { class: "truncate flex-shrink", innerHTML: this.exposedMobileColumn.heading }), !this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (h("div", { class: this.getHeaderArrowClass(this.exposedMobileColumn), "data-testid": "arrow" }, h("i", { class: "mds-arrow-triangle-down text-icon" }))))), this.columns.length >= 2 && (h("div", { class: "flex items-center" }, h("mx-icon-button", { "data-testid": "previous-column-button", chevronLeft: true, disabled: this.isPreviousColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, -1) }), h("mx-icon-button", { "data-testid": "next-column-button", chevronRight: true, disabled: this.isNextColumnDisabled, onClick: this.changeExposedColumnIndex.bind(this, 1) }))))), this.minWidths.sm && this.hasActionsColumn && h("div", null)), this.showProgressBar && (h("div", null, h("div", { class: "block h-0 col-span-full" }, h("mx-linear-progress", { class: "transform -translate-y-1/2", value: this.progressValue, "appear-delay": this.progressAppearDelay })))), h("slot", null), !this.hasDefaultSlot && h("div", null, generatedRows), h("div", { "data-testid": "empty-state", class: this.emptyStateClass }, h("div", { class: "col-span-full p-16 text-4" }, h("slot", { name: "empty-state" }, h("span", null, "No results found.")))), this.hasFooter && (h("div", { "data-testid": "table-footer", class: "table-footer" }, h("div", { class: "col-span-full px-24 py-16 text-4" }, h("slot", { name: "footer" })))), this.paginate && (
     // Pagination Row
     h("div", { class: "pagination-row" }, h("mx-pagination", { page: this.page, "rows-per-page": this.rowsPerPage, rowsPerPageOptions: this.rowsPerPageOptions, "total-rows": this.serverPaginate ? this.totalRows : this.rows.length, class: "col-span-full p-0 rounded-b-2xl", onMxPageChange: this.onMxPageChange.bind(this), disabled: this.disablePagination, disableNextPage: this.disableNextPage }))))));
   }

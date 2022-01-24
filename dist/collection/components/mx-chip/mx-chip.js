@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Event } from '@stencil/core';
+import { Component, Host, h, Prop, Event, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
 import { uuidv4 } from '../../utils/utils';
 export class MxChip {
@@ -18,6 +18,12 @@ export class MxChip {
     this.choice = false;
     /** Style as a filter chip when selected */
     this.filter = false;
+  }
+  componentWillRender() {
+    const chipGroup = this.element.closest('mx-chip-group');
+    if (!chipGroup)
+      return;
+    this.selected = chipGroup.value === this.value;
   }
   onClick(e) {
     if (this.disabled) {
@@ -138,7 +144,7 @@ export class MxChip {
     },
     "selected": {
       "type": "boolean",
-      "mutable": false,
+      "mutable": true,
       "complexType": {
         "original": "boolean",
         "resolved": "boolean",
@@ -298,4 +304,5 @@ export class MxChip {
         }
       }
     }]; }
+  static get elementRef() { return "element"; }
 }

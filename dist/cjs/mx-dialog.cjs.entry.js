@@ -5,8 +5,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const index = require('./index-7252b109.js');
 const bodyScroll = require('./bodyScroll-0692b749.js');
 const portal = require('./portal-f1986577.js');
-const transitions = require('./transitions-bd8ec9f0.js');
-const utils = require('./utils-1f7ef40d.js');
+const transitions = require('./transitions-ae6c7348.js');
+const utils = require('./utils-33993629.js');
 
 const MxDialog = class {
   constructor(hostRef) {

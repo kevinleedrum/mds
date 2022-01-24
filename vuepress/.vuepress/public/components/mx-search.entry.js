@@ -1,5 +1,5 @@
 import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { p as propagateDataAttributes } from './utils-18e3dfde.js';
+import { p as propagateDataAttributes } from './utils-e11a77cf.js';
 
 const MxSearch = class {
   constructor(hostRef) {
