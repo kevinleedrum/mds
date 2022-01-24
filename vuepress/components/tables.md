@@ -387,6 +387,30 @@ The `mx-table` component has a default empty state for when there are no visible
 
 <<< @/vuepress/components/tables.md#empty-state
 
+## Footer slot
+
+<section class="mds">
+  <div class="mt-20">
+    <!-- #region footer -->
+    <mx-table
+      paginate="false"
+      :rows.prop="beatles"
+      :columns.prop="[
+        { property: 'firstName', heading: 'First Name' },
+        { property: 'lastName', heading: 'Last Name' },
+        { property: 'credits', heading: 'Song Credits', type: 'number' },
+        { property: 'birthdate', heading: 'Birthdate', type: 'date' },
+        { property: 'eyeColor', heading: 'Eye Color', sortable: false }
+      ]"
+    >
+      <span slot="footer" class="italic">Last updated {{ new Date().toLocaleString() }}</span>
+    </mx-table>
+    <!-- #endregion footer -->
+  </div>
+</section>
+
+<<< @/vuepress/components/tables.md#footer
+
 ## Server-side pagination
 
 This example uses paginated data from [An API of Ice And Fire](https://anapioficeandfire.com/). To prevent client-side pagination, the `server-paginate` prop must be passed, and the pagination component's `mxPageChange` event should be leveraged to update the request parameters. If the API request needs to include sorting parameters as well, attach a listener to the `mxSortChange` event as well.
