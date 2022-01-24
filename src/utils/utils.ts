@@ -98,8 +98,8 @@ function isScrollable(el: HTMLElement) {
  * so they can be applied to the native element in the render function. */
 export function propagateDataAttributes() {
   Object.keys(this.element.dataset).forEach(key => {
-    key = camelToKebab(key);
-    this.dataAttributes['data-' + key] = this.element.dataset[key];
+    const attribute = camelToKebab(key);
+    this.dataAttributes['data-' + attribute] = this.element.dataset[key];
     this.element.removeAttribute(`data-${key}`);
   });
 }

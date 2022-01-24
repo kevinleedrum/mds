@@ -15,7 +15,7 @@ describe('mx-button', () => {
         btn-type="contained"
         value="foo"
         formaction="/foo"
-        data-test="test"
+        data-test-test="test"
       >
         button
       </mx-button>`,
@@ -56,7 +56,7 @@ describe('mx-button', () => {
   });
 
   it('applies any data attributes to the button element', async () => {
-    expect(btn.getAttribute('data-test')).toBe('test');
+    expect(btn.getAttribute('data-test-test')).toBe('test');
   });
 });
 
