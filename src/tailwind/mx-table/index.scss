@@ -26,7 +26,8 @@
 
   .mx-table-row > .table-row > *,
   .first-column-wrapper > *,
-  .empty-state > * {
+  .empty-state > *,
+  .table-footer > * {
     background: var(--mds-bg-table);
   }
   .mx-table-row > .table-row.subheader > *,
@@ -35,7 +36,8 @@
     color: var(--mds-text-table-subheader);
   }
 
-  .empty-state {
+  .empty-state,
+  .table-footer {
     &:last-child {
       & > :first-child {
         @apply rounded-bl-2xl;
