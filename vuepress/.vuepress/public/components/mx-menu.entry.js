@@ -1,7 +1,7 @@
 import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
 import { c as createPopover, a as convertPlacementToOrigin } from './popover-1f909484.js';
-import { d as fadeScaleIn, b as fadeOut } from './transitions-d677cc52.js';
-import './utils-e11a77cf.js';
+import { d as fadeScaleIn, b as fadeOut } from './transitions-58780ad1.js';
+import './utils-a354c65f.js';
 
 const MxMenu = class {
   constructor(hostRef) {

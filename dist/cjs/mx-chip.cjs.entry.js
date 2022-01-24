@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-7252b109.js');
 const ripple = require('./ripple-93b636e3.js');
-const utils = require('./utils-33993629.js');
+const utils = require('./utils-4d672927.js');
 
 const MxChip = class {
   constructor(hostRef) {
