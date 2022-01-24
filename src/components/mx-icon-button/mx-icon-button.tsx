@@ -72,7 +72,7 @@ export class MxIconButton {
           formaction={this.formaction}
           value={this.value}
           href={this.href}
-          class="flex text-current appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto"
+          class="flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto"
           ref={el => (this.btnElem = el as HTMLButtonElement)}
           onClick={this.onClick.bind(this)}
           aria-disabled={this.disabled ? 'true' : null}
