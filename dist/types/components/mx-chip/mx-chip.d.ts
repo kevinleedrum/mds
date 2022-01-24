@@ -22,8 +22,10 @@ export declare class MxChip {
   choice: boolean;
   /** Style as a filter chip when selected */
   filter: boolean;
+  element: HTMLMxChipElement;
   /** Emitted when the remove icon is clicked */
   mxRemove: EventEmitter<MouseEvent>;
+  componentWillRender(): void;
   onClick(e: MouseEvent): void;
   onKeyDown(e: KeyboardEvent): void;
   onRemove(e: MouseEvent): void;

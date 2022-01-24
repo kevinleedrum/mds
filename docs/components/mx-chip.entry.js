@@ -1,6 +1,6 @@
-import { r as registerInstance, f as createEvent, h, e as Host } from './index-f6edd80d.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
 import { r as ripple } from './ripple-54ef50dc.js';
-import { u as uuidv4 } from './utils-18e3dfde.js';
+import { u as uuidv4 } from './utils-e11a77cf.js';
 
 const MxChip = class {
   constructor(hostRef) {
@@ -21,6 +21,12 @@ const MxChip = class {
     this.choice = false;
     /** Style as a filter chip when selected */
     this.filter = false;
+  }
+  componentWillRender() {
+    const chipGroup = this.element.closest('mx-chip-group');
+    if (!chipGroup)
+      return;
+    this.selected = chipGroup.value === this.value;
   }
   onClick(e) {
     if (this.disabled) {
@@ -92,6 +98,7 @@ const MxChip = class {
   render() {
     return (h(Host, { class: "mx-chip inline-block relative" }, h("div", { ref: el => (this.chipElem = el), id: this.uuid, class: this.chipClass, "aria-checked": this.choice || this.filter ? (this.selected ? 'true' : 'false') : null, "aria-disabled": this.disabled ? 'true' : null, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) }, this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" }, this.icon && h("i", { class: this.icon + ' text-1' }), this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" }, h("i", { class: "mds-check" }))))), h("span", null, h("slot", null))), this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", "aria-controls": this.uuid, class: this.removeButtonClass, onClick: this.onRemove.bind(this) }, h("i", { class: "mds-remove text-3" })))));
   }
+  get element() { return getElement(this); }
 };
 
 export { MxChip as mx_chip };

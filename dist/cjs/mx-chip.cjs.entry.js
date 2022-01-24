@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const index = require('./index-7252b109.js');
 const ripple = require('./ripple-93b636e3.js');
-const utils = require('./utils-1f7ef40d.js');
+const utils = require('./utils-33993629.js');
 
 const MxChip = class {
   constructor(hostRef) {
@@ -25,6 +25,12 @@ const MxChip = class {
     this.choice = false;
     /** Style as a filter chip when selected */
     this.filter = false;
+  }
+  componentWillRender() {
+    const chipGroup = this.element.closest('mx-chip-group');
+    if (!chipGroup)
+      return;
+    this.selected = chipGroup.value === this.value;
   }
   onClick(e) {
     if (this.disabled) {
@@ -96,6 +102,7 @@ const MxChip = class {
   render() {
     return (index.h(index.Host, { class: "mx-chip inline-block relative" }, index.h("div", { ref: el => (this.chipElem = el), id: this.uuid, class: this.chipClass, "aria-checked": this.choice || this.filter ? (this.selected ? 'true' : 'false') : null, "aria-disabled": this.disabled ? 'true' : null, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) }, this.hasLeftIcon && (index.h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" }, this.icon && index.h("i", { class: this.icon + ' text-1' }), this.selected && (index.h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" }, index.h("i", { class: "mds-check" }))))), index.h("span", null, index.h("slot", null))), this.removable && (index.h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", "aria-controls": this.uuid, class: this.removeButtonClass, onClick: this.onRemove.bind(this) }, index.h("i", { class: "mds-remove text-3" })))));
   }
+  get element() { return index.getElement(this); }
 };
 
 exports.mx_chip = MxChip;

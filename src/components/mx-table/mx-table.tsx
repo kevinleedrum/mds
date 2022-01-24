@@ -74,6 +74,7 @@ export class MxTable {
   hasDefaultSlot: boolean = false;
   hasSearch: boolean = false;
   hasFilter: boolean = false;
+  hasFooter: boolean = false;
   showOperationsBar: boolean = false;
   dragRowEl: HTMLMxTableRowElement;
   dragRowElSiblings: HTMLMxTableRowElement[];
@@ -411,6 +412,7 @@ export class MxTable {
   componentWillRender() {
     this.hasFilter = !!this.element.querySelector('[slot="filter"]');
     this.hasSearch = !!this.element.querySelector('[slot="search"]');
+    this.hasFooter = !!this.element.querySelector('[slot="footer"]');
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
@@ -686,7 +688,7 @@ export class MxTable {
   }
 
   setLastRowClass() {
-    if (this.paginate) return;
+    if (this.paginate || this.hasFooter) return;
     const rows = this.getTableRows().filter(row => row.getAttribute('aria-hidden') !== 'true');
     rows.forEach((row, i) => {
       const addOrRemove = i === rows.length - 1 ? 'add' : 'remove';
@@ -881,6 +883,13 @@ export class MxTable {
               </slot>
             </div>
           </div>
+          {this.hasFooter && (
+            <div data-testid="table-footer" class="table-footer">
+              <div class="col-span-full px-24 py-16 text-4">
+                <slot name="footer"></slot>
+              </div>
+            </div>
+          )}
           {this.paginate && (
             // Pagination Row
             <div class="pagination-row">

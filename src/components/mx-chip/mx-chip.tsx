@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
 import { uuidv4 } from '../../utils/utils';
 
@@ -13,7 +13,7 @@ export class MxChip {
   @Prop() outlined: boolean = false;
   @Prop() disabled: boolean = false;
   /** Display a checkmark on the left side of the chip */
-  @Prop({ reflect: true }) selected: boolean = false;
+  @Prop({ mutable: true, reflect: true }) selected: boolean = false;
   /** Use the pointer cursor and show a ripple animation.
    * This does not need to be explicitly set for `choice` or `filter` chips. */
   @Prop() clickable: boolean = false;
@@ -31,8 +31,16 @@ export class MxChip {
   /** Style as a filter chip when selected */
   @Prop() filter: boolean = false;
 
+  @Element() element: HTMLMxChipElement;
+
   /** Emitted when the remove icon is clicked */
   @Event() mxRemove: EventEmitter<MouseEvent>;
+
+  componentWillRender() {
+    const chipGroup = this.element.closest('mx-chip-group') as HTMLMxChipGroupElement;
+    if (!chipGroup) return;
+    this.selected = chipGroup.value === this.value;
+  }
 
   onClick(e: MouseEvent) {
     if (this.disabled) {

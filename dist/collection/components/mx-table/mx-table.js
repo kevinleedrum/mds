@@ -6,6 +6,7 @@ export class MxTable {
     this.hasDefaultSlot = false;
     this.hasSearch = false;
     this.hasFilter = false;
+    this.hasFooter = false;
     this.showOperationsBar = false;
     /** An array of objects that defines the table's dataset. */
     this.rows = [];
@@ -287,6 +288,7 @@ export class MxTable {
   componentWillRender() {
     this.hasFilter = !!this.element.querySelector('[slot="filter"]');
     this.hasSearch = !!this.element.querySelector('[slot="search"]');
+    this.hasFooter = !!this.element.querySelector('[slot="footer"]');
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
@@ -561,7 +563,7 @@ export class MxTable {
     this.rowsPerPage = e.detail.rowsPerPage;
   }
   setLastRowClass() {
-    if (this.paginate)
+    if (this.paginate || this.hasFooter)
       return;
     const rows = this.getTableRows().filter(row => row.getAttribute('aria-hidden') !== 'true');
     rows.forEach((row, i) => {
@@ -649,6 +651,9 @@ export class MxTable {
           h("div", { class: "col-span-full p-16 text-4" },
             h("slot", { name: "empty-state" },
               h("span", null, "No results found.")))),
+        this.hasFooter && (h("div", { "data-testid": "table-footer", class: "table-footer" },
+          h("div", { class: "col-span-full px-24 py-16 text-4" },
+            h("slot", { name: "footer" })))),
         this.paginate && (
         // Pagination Row
         h("div", { class: "pagination-row" },
