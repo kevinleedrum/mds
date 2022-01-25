@@ -1,6 +1,6 @@
 import { r as registerInstance, c as createEvent, h, f as forceUpdate, H as Host, g as getElement } from './index-d3b6906c.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { g as getPageRect, c as capitalize, i as isDateObject, a as getCursorCoords } from './utils-a354c65f.js';
+import { g as getPageRect, c as capitalize, i as isDateObject, a as getCursorCoords } from './utils-f31b72fe.js';
 
 const MxTable = class {
   constructor(hostRef) {

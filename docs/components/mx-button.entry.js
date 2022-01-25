@@ -1,6 +1,6 @@
 import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
 import { r as ripple } from './ripple-54ef50dc.js';
-import { p as propagateDataAttributes } from './utils-a354c65f.js';
+import { p as propagateDataAttributes } from './utils-f31b72fe.js';
 
 const MxButton = class {
   constructor(hostRef) {
