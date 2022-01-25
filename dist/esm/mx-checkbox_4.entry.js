@@ -1,7 +1,7 @@
 import { r as registerInstance, h, H as Host, g as getElement, c as createEvent } from './index-d3b6906c.js';
-import { p as propagateDataAttributes } from './utils-a354c65f.js';
+import { p as propagateDataAttributes } from './utils-f31b72fe.js';
 import { c as createPopover, a as convertPlacementToOrigin } from './popover-56a66892.js';
-import { d as fadeScaleIn, b as fadeOut } from './transitions-58780ad1.js';
+import { d as fadeScaleIn, b as fadeOut } from './transitions-4a0eb798.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
 const MxCheckbox = class {

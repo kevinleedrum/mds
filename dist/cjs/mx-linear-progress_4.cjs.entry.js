@@ -5,8 +5,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const index = require('./index-7252b109.js');
 const ResizeObserver = require('./ResizeObserver-6bb15032.js');
 const minWidthSync = require('./minWidthSync-93e92215.js');
-const utils = require('./utils-4d672927.js');
-const transitions = require('./transitions-215db1b1.js');
+const utils = require('./utils-64c16a02.js');
+const transitions = require('./transitions-5444524e.js');
 
 const MxLinearProgress = class {
   constructor(hostRef) {

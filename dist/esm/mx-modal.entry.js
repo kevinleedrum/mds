@@ -1,9 +1,9 @@
 import { r as registerInstance, c as createEvent, h, H as Host, g as getElement } from './index-d3b6906c.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { m as moveToPortal } from './portal-9203402a.js';
-import { f as fadeIn, b as fadeOut, d as fadeScaleIn, g as fadeSlideIn, h as fadeSlideOut, D as Direction } from './transitions-58780ad1.js';
+import { f as fadeIn, b as fadeOut, d as fadeScaleIn, g as fadeSlideIn, h as fadeSlideOut, D as Direction } from './transitions-4a0eb798.js';
 import { l as lockBodyScroll, u as unlockBodyScroll } from './bodyScroll-166c2095.js';
-import { u as uuidv4 } from './utils-a354c65f.js';
+import { u as uuidv4 } from './utils-f31b72fe.js';
 
 const MxModal = class {
   constructor(hostRef) {

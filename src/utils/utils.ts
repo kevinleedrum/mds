@@ -99,6 +99,7 @@ function isScrollable(el: HTMLElement) {
 export function propagateDataAttributes() {
   Array.from(this.element.attributes).forEach((attribute: Attr) => {
     if (!/^data\-/.test(attribute.name)) return;
+    this.element.removeAttribute(attribute.name);
     this.dataAttributes[attribute.name] = attribute.value;
   });
 }
