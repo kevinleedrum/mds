@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Event, EventEmitter } from '@stencil/core';
 import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
@@ -21,6 +21,9 @@ export class MxSearch {
 
   @Element() element: HTMLMxSearchElement;
 
+  /** Emitted when the clear button is clicked. */
+  @Event() mxClear: EventEmitter<void>;
+
   componentWillRender = propagateDataAttributes;
 
   onInput(e: InputEvent) {
@@ -29,7 +32,8 @@ export class MxSearch {
 
   onClear() {
     this.inputEl.value = '';
-    this.inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+    this.inputEl.dispatchEvent(new window.Event('input', { bubbles: true }));
+    this.mxClear.emit();
     if (typeof jest === 'undefined') this.inputEl.focus();
   }
 
