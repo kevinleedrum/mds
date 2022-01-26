@@ -1953,6 +1953,10 @@ declare namespace LocalJSX {
         "elAriaLabel"?: string;
         "flat"?: boolean;
         "name"?: string;
+        /**
+          * Emitted when the clear button is clicked.
+         */
+        "onMxClear"?: (event: CustomEvent<void>) => void;
         "placeholder"?: string;
         /**
           * Set to `false` to hide the clear button.

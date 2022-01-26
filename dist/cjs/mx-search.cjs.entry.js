@@ -8,6 +8,7 @@ const utils = require('./utils-64c16a02.js');
 const MxSearch = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
+    this.mxClear = index.createEvent(this, "mxClear", 7);
     this.dataAttributes = {};
     this.dense = false;
     this.flat = false;
@@ -20,7 +21,8 @@ const MxSearch = class {
   }
   onClear() {
     this.inputEl.value = '';
-    this.inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+    this.inputEl.dispatchEvent(new window.Event('input', { bubbles: true }));
+    this.mxClear.emit();
     if (typeof jest === 'undefined')
       this.inputEl.focus();
   }

@@ -525,7 +525,11 @@ export class MxTableRow {
                 el-aria-label="Row Actions"
                 icon="mds-dots-vertical"
               ></mx-icon-button>
-              <mx-menu data-testid="action-menu" ref={el => (this.actionMenu = el)}>
+              <mx-menu
+                data-testid="action-menu"
+                ref={el => (this.actionMenu = el)}
+                onMxClose={e => e.stopPropagation()}
+              >
                 {this.actions.map(action => (
                   <mx-menu-item {...action}>{action.value}</mx-menu-item>
                 ))}

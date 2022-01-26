@@ -109,7 +109,7 @@ export class MxPagination {
             h("div", { "data-testid": "rows-per-page", ref: el => (this.rowsMenuAnchor = el), class: "flex items-center cursor-pointer" },
               this.rowsPerPage,
               h("i", { class: "mds-arrow-triangle-down ml-12 text-icon" })),
-            h("mx-menu", { ref: el => (this.rowsMenu = el) }, this.rowsPerPageOptions.map(option => (h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))),
+            h("mx-menu", { ref: el => (this.rowsMenu = el), onMxClose: e => e.stopPropagation() }, this.rowsPerPageOptions.map(option => (h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))),
           this.totalRows > 0 && (h("div", { "data-testid": "row-range", class: this.rowRangeClass },
             this.currentRange,
             " of ",
