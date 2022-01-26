@@ -100,7 +100,8 @@ export class MxTimePicker {
     this.inputElem.focus();
   }
 
-  onMenuClose() {
+  onMenuClose(e) {
+    e.stopPropagation();
     if (!this.inputElem.contains(document.activeElement)) this.isFocused = false;
   }
 

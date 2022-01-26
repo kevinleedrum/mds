@@ -167,7 +167,7 @@ export class MxPagination {
                     {this.rowsPerPage}
                     <i class="mds-arrow-triangle-down ml-12 text-icon"></i>
                   </div>
-                  <mx-menu ref={el => (this.rowsMenu = el)}>
+                  <mx-menu ref={el => (this.rowsMenu = el)} onMxClose={e => e.stopPropagation()}>
                     {this.rowsPerPageOptions.map(option => (
                       <mx-menu-item disabled={this.disabled} onClick={this.onChangeRowsPerPage.bind(this, option)}>
                         {option}
