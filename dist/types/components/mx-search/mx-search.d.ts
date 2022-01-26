@@ -1,3 +1,4 @@
+import { EventEmitter } from '../../stencil-public-runtime';
 import { propagateDataAttributes } from '../../utils/utils';
 export declare class MxSearch {
   dataAttributes: {};
@@ -12,6 +13,8 @@ export declare class MxSearch {
   showClear: boolean;
   value: string;
   element: HTMLMxSearchElement;
+  /** Emitted when the clear button is clicked. */
+  mxClear: EventEmitter<void>;
   componentWillRender: typeof propagateDataAttributes;
   onInput(e: InputEvent): void;
   onClear(): void;
