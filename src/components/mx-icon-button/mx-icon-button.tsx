@@ -11,6 +11,7 @@ export class MxIconButton {
   dataAttributes = {};
 
   @Prop() type: 'button' | 'submit' | 'reset' = 'button';
+  @Prop() form: string;
   @Prop() formaction: string;
   @Prop() value: string;
   /** Create button as link */
@@ -69,6 +70,7 @@ export class MxIconButton {
       <Host class="mx-icon-button inline-block appearance-none">
         <Tag
           type={this.href ? null : this.type}
+          form={this.form}
           formaction={this.formaction}
           value={this.value}
           href={this.href}

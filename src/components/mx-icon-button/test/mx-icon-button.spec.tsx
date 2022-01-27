@@ -68,9 +68,11 @@ describe('mx-icon-button', () => {
     expect(button.getAttribute('value')).toBe('Open');
   });
 
-  it('uses the formaction prop as an attribute on the button', async () => {
+  it('uses the form and formaction props as attributes on the button', async () => {
+    root.form = 'the-form';
     root.formaction = '/login';
     await page.waitForChanges();
+    expect(button.getAttribute('form')).toBe('the-form');
     expect(button.getAttribute('formaction')).toBe('/login');
   });
 
