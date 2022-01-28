@@ -247,14 +247,19 @@ describe('mx-table (checkable, non-mobile)', () => {
     expect(root.querySelector('.test-class')).not.toBeNull();
   });
 
-  it('emits an mxRowCheck event when the check-all checkbox is clicked', async () => {
-    let emitted;
-    const listener = (e: CustomEvent) => (emitted = e.detail);
-    root.addEventListener('mxRowCheck', listener);
+  it('emits mxRowCheck and mxCheckAll events when the check-all checkbox is clicked', async () => {
+    let emittedRowIds;
+    let emittedCheckedAll;
+    const rowCheckListener = (e: CustomEvent) => (emittedRowIds = e.detail);
+    const checkAllListener = (e: CustomEvent) => (emittedCheckedAll = e.detail);
+    root.addEventListener('mxRowCheck', rowCheckListener);
+    root.addEventListener('mxCheckAll', checkAllListener);
     (root.querySelector('[data-testid="check-all-checkbox"]') as HTMLElement).click();
-    expect(JSON.stringify(emitted)).toBe('["0","1","2"]');
+    expect(emittedCheckedAll).toBe(true);
+    expect(JSON.stringify(emittedRowIds)).toBe('["0","1","2"]');
     (root.querySelector('[data-testid="check-all-checkbox"]') as HTMLElement).click();
-    expect(JSON.stringify(emitted)).toBe('[]');
+    expect(emittedCheckedAll).toBe(false);
+    expect(JSON.stringify(emittedRowIds)).toBe('[]');
   });
 
   it('emits an mxRowCheck event when a row is checked or unchecked', async () => {
