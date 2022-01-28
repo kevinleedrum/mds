@@ -149,6 +149,8 @@ export class MxTable {
   @Event() mxSortChange: EventEmitter<SortChangeEventDetail>;
   /** Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s. */
   @Event() mxRowCheck: EventEmitter<string[]>;
+  /** Emitted when the (un)check-all checkbox is clicked.  The `Event.detail` will be the new `checked` value. */
+  @Event() mxCheckAll: EventEmitter<boolean>;
   /** Emitted when the sorting, pagination, or rows data changes.
    * The `Event.detail` will contain the sorted, paginated array of visible rows.  This is useful
    * for building a custom row layout via the default slot. */
@@ -311,12 +313,14 @@ export class MxTable {
   onCheckAllClick(e: InputEvent) {
     e.preventDefault();
     e.stopPropagation(); // Prevent triggering a sort when checkbox is in first column header
-    if (this.checkedRowIds.length === 0) {
+    const willCheckAll = this.checkedRowIds.length === 0;
+    if (willCheckAll) {
       this.checkAll();
     } else {
       this.checkNone();
     }
     this.mxRowCheck.emit(this.checkedRowIds);
+    this.mxCheckAll.emit(willCheckAll);
   }
 
   /** Animate table rows while dragging a row */
