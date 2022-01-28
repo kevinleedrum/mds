@@ -14,6 +14,7 @@ describe('mx-button', () => {
         icon="ph-apple-logo"
         btn-type="contained"
         value="foo"
+        form="bar"
         formaction="/foo"
         data-admin--a--b-c="test"
       >
@@ -37,8 +38,9 @@ describe('mx-button', () => {
     expect(innerText.trim()).toBe('button');
   });
 
-  it('has the correct value and formaction', async () => {
+  it('has the correct value, form, and formaction', async () => {
     expect(btn.getAttribute('value')).toBe('foo');
+    expect(btn.getAttribute('form')).toBe('bar');
     expect(btn.getAttribute('formaction')).toBe('/foo');
   });
 

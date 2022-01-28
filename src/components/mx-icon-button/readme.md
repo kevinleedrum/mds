@@ -14,6 +14,7 @@
 | `chevronRight` | `chevron-right` | Show right-pointing chevron icon                       | `boolean`                         | `false`     |
 | `disabled`     | `disabled`      |                                                        | `boolean`                         | `false`     |
 | `elAriaLabel`  | `el-aria-label` | The aria-label attribute for the inner button element. | `string`                          | `undefined` |
+| `form`         | `form`          |                                                        | `string`                          | `undefined` |
 | `formaction`   | `formaction`    |                                                        | `string`                          | `undefined` |
 | `href`         | `href`          | Create button as link                                  | `string`                          | `undefined` |
 | `icon`         | `icon`          | Class name of icon (for icon font)                     | `string`                          | `undefined` |

@@ -35,7 +35,8 @@ const MxDropdownMenu = class {
   onFocus() {
     this.isFocused = true;
   }
-  onMenuClose() {
+  onMenuClose(e) {
+    e.stopPropagation();
     if (!this.inputElem.contains(document.activeElement))
       this.isFocused = false;
   }

@@ -9,6 +9,7 @@ export interface IMxButtonProps {
   btnType?: BtnType;
   type?: ButtonTypeAttribute;
   value?: string;
+  form?: string;
   formaction?: string;
   disabled?: boolean;
   xl?: boolean;
@@ -34,6 +35,7 @@ export class MxButton implements IMxButtonProps {
   @Prop() elAriaLabel: string;
   @Prop() type: ButtonTypeAttribute = 'button';
   @Prop() value: string;
+  @Prop() form: string;
   @Prop() formaction: string;
   @Prop() disabled: boolean = false;
   @Prop() xl: boolean = false;
@@ -130,6 +132,7 @@ export class MxButton implements IMxButtonProps {
         ) : (
           <button
             type={this.type}
+            form={this.form}
             formaction={this.formaction}
             value={this.value}
             class={this.buttonClass}

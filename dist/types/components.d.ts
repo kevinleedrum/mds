@@ -76,6 +76,7 @@ export namespace Components {
           * The aria-label attribute for the inner button element.
          */
         "elAriaLabel": string;
+        "form": string;
         "formaction": string;
         /**
           * Sets display to flex instead of inline-flex
@@ -338,6 +339,7 @@ export namespace Components {
           * The aria-label attribute for the inner button element.
          */
         "elAriaLabel": string;
+        "form": string;
         "formaction": string;
         /**
           * Create button as link
@@ -1360,6 +1362,7 @@ declare namespace LocalJSX {
           * The aria-label attribute for the inner button element.
          */
         "elAriaLabel"?: string;
+        "form"?: string;
         "formaction"?: string;
         /**
           * Sets display to flex instead of inline-flex
@@ -1619,6 +1622,7 @@ declare namespace LocalJSX {
           * The aria-label attribute for the inner button element.
          */
         "elAriaLabel"?: string;
+        "form"?: string;
         "formaction"?: string;
         /**
           * Create button as link
