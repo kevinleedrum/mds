@@ -2107,6 +2107,10 @@ declare namespace LocalJSX {
          */
         "mutateOnDrag"?: boolean;
         /**
+          * Emitted when the (un)check-all checkbox is clicked.  The `Event.detail` will be the new `checked` value.
+         */
+        "onMxCheckAll"?: (event: CustomEvent<boolean>) => void;
+        /**
           * Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s.
          */
         "onMxRowCheck"?: (event: CustomEvent<string[]>) => void;

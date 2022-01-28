@@ -373,13 +373,13 @@ const MxBanner$1 = class extends HTMLElement {
     return str;
   }
   get messageClass() {
-    let str = 'flex items-center space-x-12 mt-16 md:mt-0';
+    let str = 'flex items-center max-w-full overflow-hidden space-x-12 mt-16 md:mt-0';
     str += this.hasActions ? ' mb-8' : ' mb-16';
     str += ' md:mb-0';
     return str;
   }
   render() {
-    return (h(Host, { class: this.hostClass, role: "alert" }, h("div", { ref: el => (this.bannerEl = el), class: "flex flex-col md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10" }, h("div", { "data-testid": "message", class: this.messageClass }, this.hasImage && (h("div", { class: "flex-shrink-0" }, h("slot", { name: "image" }))), h("p", { class: "my-0 text-4 flex-grow" }, h("slot", null))), h("div", { "data-testid": "actions", class: "text-right flex-shrink-0" }, h("slot", { name: "actions" })))));
+    return (h(Host, { class: this.hostClass, role: "alert" }, h("div", { ref: el => (this.bannerEl = el), class: "flex flex-col max-w-full md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10" }, h("div", { "data-testid": "message", class: this.messageClass }, this.hasImage && (h("div", { class: "flex-shrink-0" }, h("slot", { name: "image" }))), h("p", { class: "my-0 text-4 flex-grow" }, h("slot", null))), h("div", { "data-testid": "actions", class: "text-right flex-shrink-0" }, h("slot", { name: "actions" })))));
   }
   get element() { return this; }
   static get watchers() { return {
@@ -20969,6 +20969,7 @@ const MxTable$1 = class extends HTMLElement {
     this.__registerHost();
     this.mxSortChange = createEvent(this, "mxSortChange", 7);
     this.mxRowCheck = createEvent(this, "mxRowCheck", 7);
+    this.mxCheckAll = createEvent(this, "mxCheckAll", 7);
     this.mxVisibleRowsChange = createEvent(this, "mxVisibleRowsChange", 7);
     this.mxRowMove = createEvent(this, "mxRowMove", 7);
     this.hasDefaultSlot = false;
@@ -21151,13 +21152,15 @@ const MxTable$1 = class extends HTMLElement {
   onCheckAllClick(e) {
     e.preventDefault();
     e.stopPropagation(); // Prevent triggering a sort when checkbox is in first column header
-    if (this.checkedRowIds.length === 0) {
+    const willCheckAll = this.checkedRowIds.length === 0;
+    if (willCheckAll) {
       this.checkAll();
     }
     else {
       this.checkNone();
     }
     this.mxRowCheck.emit(this.checkedRowIds);
+    this.mxCheckAll.emit(willCheckAll);
   }
   /** Animate table rows while dragging a row */
   onDragMove(e) {
