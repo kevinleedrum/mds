@@ -49,13 +49,13 @@ const MxBanner = class {
     return str;
   }
   get messageClass() {
-    let str = 'flex items-center space-x-12 mt-16 md:mt-0';
+    let str = 'flex items-center max-w-full overflow-hidden space-x-12 mt-16 md:mt-0';
     str += this.hasActions ? ' mb-8' : ' mb-16';
     str += ' md:mb-0';
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: this.hostClass, role: "alert" }, index.h("div", { ref: el => (this.bannerEl = el), class: "flex flex-col md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10" }, index.h("div", { "data-testid": "message", class: this.messageClass }, this.hasImage && (index.h("div", { class: "flex-shrink-0" }, index.h("slot", { name: "image" }))), index.h("p", { class: "my-0 text-4 flex-grow" }, index.h("slot", null))), index.h("div", { "data-testid": "actions", class: "text-right flex-shrink-0" }, index.h("slot", { name: "actions" })))));
+    return (index.h(index.Host, { class: this.hostClass, role: "alert" }, index.h("div", { ref: el => (this.bannerEl = el), class: "flex flex-col max-w-full md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10" }, index.h("div", { "data-testid": "message", class: this.messageClass }, this.hasImage && (index.h("div", { class: "flex-shrink-0" }, index.h("slot", { name: "image" }))), index.h("p", { class: "my-0 text-4 flex-grow" }, index.h("slot", null))), index.h("div", { "data-testid": "actions", class: "text-right flex-shrink-0" }, index.h("slot", { name: "actions" })))));
   }
   get element() { return index.getElement(this); }
   static get watchers() { return {

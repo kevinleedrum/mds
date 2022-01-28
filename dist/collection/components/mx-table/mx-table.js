@@ -183,13 +183,15 @@ export class MxTable {
   onCheckAllClick(e) {
     e.preventDefault();
     e.stopPropagation(); // Prevent triggering a sort when checkbox is in first column header
-    if (this.checkedRowIds.length === 0) {
+    const willCheckAll = this.checkedRowIds.length === 0;
+    if (willCheckAll) {
       this.checkAll();
     }
     else {
       this.checkNone();
     }
     this.mxRowCheck.emit(this.checkedRowIds);
+    this.mxCheckAll.emit(willCheckAll);
   }
   /** Animate table rows while dragging a row */
   onDragMove(e) {
@@ -1210,6 +1212,21 @@ export class MxTable {
       "complexType": {
         "original": "string[]",
         "resolved": "string[]",
+        "references": {}
+      }
+    }, {
+      "method": "mxCheckAll",
+      "name": "mxCheckAll",
+      "bubbles": true,
+      "cancelable": true,
+      "composed": true,
+      "docs": {
+        "tags": [],
+        "text": "Emitted when the (un)check-all checkbox is clicked.  The `Event.detail` will be the new `checked` value."
+      },
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
         "references": {}
       }
     }, {

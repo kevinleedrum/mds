@@ -11,6 +11,7 @@ const MxTable = class {
     index.registerInstance(this, hostRef);
     this.mxSortChange = index.createEvent(this, "mxSortChange", 7);
     this.mxRowCheck = index.createEvent(this, "mxRowCheck", 7);
+    this.mxCheckAll = index.createEvent(this, "mxCheckAll", 7);
     this.mxVisibleRowsChange = index.createEvent(this, "mxVisibleRowsChange", 7);
     this.mxRowMove = index.createEvent(this, "mxRowMove", 7);
     this.hasDefaultSlot = false;
@@ -193,13 +194,15 @@ const MxTable = class {
   onCheckAllClick(e) {
     e.preventDefault();
     e.stopPropagation(); // Prevent triggering a sort when checkbox is in first column header
-    if (this.checkedRowIds.length === 0) {
+    const willCheckAll = this.checkedRowIds.length === 0;
+    if (willCheckAll) {
       this.checkAll();
     }
     else {
       this.checkNone();
     }
     this.mxRowCheck.emit(this.checkedRowIds);
+    this.mxCheckAll.emit(willCheckAll);
   }
   /** Animate table rows while dragging a row */
   onDragMove(e) {

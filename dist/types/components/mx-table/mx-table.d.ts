@@ -123,6 +123,8 @@ export declare class MxTable {
   mxSortChange: EventEmitter<SortChangeEventDetail>;
   /** Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s. */
   mxRowCheck: EventEmitter<string[]>;
+  /** Emitted when the (un)check-all checkbox is clicked.  The `Event.detail` will be the new `checked` value. */
+  mxCheckAll: EventEmitter<boolean>;
   /** Emitted when the sorting, pagination, or rows data changes.
    * The `Event.detail` will contain the sorted, paginated array of visible rows.  This is useful
    * for building a custom row layout via the default slot. */
