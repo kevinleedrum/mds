@@ -27,7 +27,9 @@ export declare class MxTimePicker {
   onClick(e: MouseEvent): void;
   onValueChange(): void;
   componentWillRender: typeof propagateDataAttributes;
+  componentWillLoad(): void;
   componentDidLoad(): void;
+  normalizeValue(): void;
   onInput(e: InputEvent): void;
   onBlur(): void;
   onFocus(): void;

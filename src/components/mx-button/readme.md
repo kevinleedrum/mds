@@ -11,6 +11,7 @@
 | `disabled`    | `disabled`      |                                                        | `boolean`                                                     | `false`       |
 | `dropdown`    | `dropdown`      | Show chevron icon                                      | `boolean`                                                     | `false`       |
 | `elAriaLabel` | `el-aria-label` | The aria-label attribute for the inner button element. | `string`                                                      | `undefined`   |
+| `form`        | `form`          |                                                        | `string`                                                      | `undefined`   |
 | `formaction`  | `formaction`    |                                                        | `string`                                                      | `undefined`   |
 | `full`        | `full`          | Sets display to flex instead of inline-flex            | `boolean`                                                     | `false`       |
 | `href`        | `href`          | Create button as link                                  | `string`                                                      | `undefined`   |

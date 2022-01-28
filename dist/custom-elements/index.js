@@ -472,7 +472,7 @@ const MxButton$1 = class extends HTMLElement {
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
-    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-label": this.elAriaLabel, "aria-disabled": this.disabled ? 'true' : null }, this.dataAttributes), buttonContent))));
+    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, form: this.form, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-label": this.elAriaLabel, "aria-disabled": this.disabled ? 'true' : null }, this.dataAttributes), buttonContent))));
   }
   get element() { return this; }
 };
@@ -19012,7 +19012,7 @@ const MxIconButton$1 = class extends HTMLElement {
   render() {
     const Tag = this.href ? 'a' : 'button';
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-icon', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center text-icon shadow-1" }, h("i", { "data-testid": "chevron", class: this.chevronLeft ? 'mds-chevron-left' : this.chevronRight ? 'mds-chevron-right' : 'mds-chevron-down' })))));
-    return (h(Host, { class: "mx-icon-button inline-block appearance-none" }, h(Tag, Object.assign({ type: this.href ? null : this.type, formaction: this.formaction, value: this.value, href: this.href, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent)));
+    return (h(Host, { class: "mx-icon-button inline-block appearance-none" }, h(Tag, Object.assign({ type: this.href ? null : this.type, form: this.form, formaction: this.formaction, value: this.value, href: this.href, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent)));
   }
   get element() { return this; }
 };
@@ -22131,7 +22131,11 @@ const MxTimePicker$1 = class extends HTMLElement {
     this.menu.style.width = this.pickerWrapper.getBoundingClientRect().width + 'px';
   }
   onValueChange() {
+    this.normalizeValue();
     this.updateInputValue();
+  }
+  componentWillLoad() {
+    this.normalizeValue();
   }
   componentDidLoad() {
     this.menu.anchorEl = this.pickerWrapper;
@@ -22139,6 +22143,18 @@ const MxTimePicker$1 = class extends HTMLElement {
     // HTMLInputElement.type will return "text" if the "time" value is not supported (i.e. Safari <14.1)
     this.isTimeInputSupported = this.inputElem.type === 'time';
     this.updateInputValue();
+  }
+  normalizeValue() {
+    // If HH:MM:ss.mmm value is passed, change it to just HH:MM
+    if (this.value && /\d\d\:\d\d\:\d\d/.test(this.value)) {
+      let [hours, minutes] = this.value.split(':');
+      if (this.value.toUpperCase().includes('PM')) {
+        hours = (Number(hours) + 12).toString();
+      }
+      if (hours.length === 1)
+        hours = '0' + hours;
+      this.value = [hours, minutes].join(':');
+    }
   }
   onInput(e) {
     if (!this.isTimeInputSupported) {
@@ -22192,6 +22208,8 @@ const MxTimePicker$1 = class extends HTMLElement {
     this.inputElem.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
   }
   updateInputValue() {
+    if (!this.inputElem)
+      return;
     if (this.value == null) {
       this.inputElem.value = '';
       return;
@@ -22408,7 +22426,7 @@ const MxTooltip$1 = class extends HTMLElement {
 
 const MxBadge = /*@__PURE__*/proxyCustomElement(MxBadge$1, [4,"mx-badge",{"value":[8],"squared":[4],"indicator":[8],"badgeClass":[1,"badge-class"],"icon":[1],"offset":[2],"bottom":[4],"left":[4]}]);
 const MxBanner = /*@__PURE__*/proxyCustomElement(MxBanner$1, [4,"mx-banner",{"error":[4],"isOpen":[4,"is-open"],"sticky":[4],"isVisible":[32]}]);
-const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1025,"btn-type"],"elAriaLabel":[1,"el-aria-label"],"type":[1],"value":[1],"formaction":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
+const MxButton = /*@__PURE__*/proxyCustomElement(MxButton$1, [4,"mx-button",{"btnType":[1025,"btn-type"],"elAriaLabel":[1,"el-aria-label"],"type":[1],"value":[1],"form":[1],"formaction":[1],"disabled":[4],"xl":[4],"href":[1],"target":[1],"full":[4],"dropdown":[4],"icon":[1]}]);
 const MxChart = /*@__PURE__*/proxyCustomElement(MxChart$1, [0,"mx-chart",{"data":[16],"elAriaLabel":[1,"el-aria-label"],"height":[2],"options":[16],"type":[1],"width":[2]}]);
 const MxCheckbox = /*@__PURE__*/proxyCustomElement(MxCheckbox$1, [0,"mx-checkbox",{"name":[1],"value":[1],"labelLeft":[4,"label-left"],"labelName":[1,"label-name"],"labelClass":[1,"label-class"],"hideLabel":[4,"hide-label"],"checked":[1028],"disabled":[4],"indeterminate":[4],"elAriaLabel":[1,"el-aria-label"]}]);
 const MxChip = /*@__PURE__*/proxyCustomElement(MxChip$1, [4,"mx-chip",{"outlined":[4],"disabled":[4],"selected":[1540],"clickable":[4],"removable":[4],"avatarUrl":[1,"avatar-url"],"icon":[1],"value":[8],"choice":[4],"filter":[4]}]);
@@ -22420,7 +22438,7 @@ const MxDatePicker = /*@__PURE__*/proxyCustomElement(MxDatePicker$1, [0,"mx-date
 const MxDialog = /*@__PURE__*/proxyCustomElement(MxDialog$1, [4,"mx-dialog",{"isOpen":[4,"is-open"],"modalClass":[1,"modal-class"],"isVisible":[32]},[[16,"keydown","onKeyDown"]]]);
 const MxDropdownMenu = /*@__PURE__*/proxyCustomElement(MxDropdownMenu$1, [4,"mx-dropdown-menu",{"elAriaLabel":[1,"el-aria-label"],"dense":[4],"elevated":[4],"flat":[4],"label":[1],"dropdownClass":[1,"dropdown-class"],"dropdownId":[1,"dropdown-id"],"name":[1],"suffix":[1],"value":[1032],"isFocused":[32]},[[0,"click","onClick"]]]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"elAriaLabel":[1,"el-aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
-const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"formaction":[1],"value":[1],"href":[1],"disabled":[516],"elAriaLabel":[1,"el-aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
+const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"form":[1],"formaction":[1],"value":[1],"href":[1],"disabled":[516],"elAriaLabel":[1,"el-aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
 const MxImageUpload = /*@__PURE__*/proxyCustomElement(MxImageUpload$1, [4,"mx-image-upload",{"acceptImage":[4,"accept-image"],"acceptPdf":[4,"accept-pdf"],"assetName":[1,"asset-name"],"assistiveText":[1,"assistive-text"],"avatar":[4],"elAriaLabel":[1,"el-aria-label"],"uploadBtnType":[1,"upload-btn-type"],"thumbnailSize":[1,"thumbnail-size"],"height":[1],"icon":[1],"inputId":[1,"input-id"],"isUploaded":[1540,"is-uploaded"],"isUploading":[1540,"is-uploading"],"name":[1],"removeButtonLabel":[1,"remove-button-label"],"showButton":[4,"show-button"],"showIcon":[4,"show-icon"],"showDropzoneText":[4,"show-dropzone-text"],"thumbnailUrl":[1,"thumbnail-url"],"uploadButtonLabel":[1,"upload-button-label"],"width":[1],"isDraggingOver":[32],"isFileSelected":[32],"thumbnailDataUri":[32]}]);
 const MxInput = /*@__PURE__*/proxyCustomElement(MxInput$1, [0,"mx-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"placeholder":[1],"value":[1025],"type":[1],"dense":[4],"disabled":[4],"readonly":[4],"maxlength":[2],"leftIcon":[1,"left-icon"],"rightIcon":[1,"right-icon"],"suffix":[1],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"floatLabel":[4,"float-label"],"textarea":[4],"textareaHeight":[1025,"textarea-height"],"elAriaLabel":[1,"el-aria-label"],"isFocused":[32],"characterCount":[32]}]);
 const MxLinearProgress = /*@__PURE__*/proxyCustomElement(MxLinearProgress$1, [0,"mx-linear-progress",{"value":[2],"appearDelay":[2,"appear-delay"]}]);

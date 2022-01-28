@@ -24,7 +24,11 @@ export class MxTimePicker {
     this.menu.style.width = this.pickerWrapper.getBoundingClientRect().width + 'px';
   }
   onValueChange() {
+    this.normalizeValue();
     this.updateInputValue();
+  }
+  componentWillLoad() {
+    this.normalizeValue();
   }
   componentDidLoad() {
     this.menu.anchorEl = this.pickerWrapper;
@@ -32,6 +36,18 @@ export class MxTimePicker {
     // HTMLInputElement.type will return "text" if the "time" value is not supported (i.e. Safari <14.1)
     this.isTimeInputSupported = this.inputElem.type === 'time';
     this.updateInputValue();
+  }
+  normalizeValue() {
+    // If HH:MM:ss.mmm value is passed, change it to just HH:MM
+    if (this.value && /\d\d\:\d\d\:\d\d/.test(this.value)) {
+      let [hours, minutes] = this.value.split(':');
+      if (this.value.toUpperCase().includes('PM')) {
+        hours = (Number(hours) + 12).toString();
+      }
+      if (hours.length === 1)
+        hours = '0' + hours;
+      this.value = [hours, minutes].join(':');
+    }
   }
   onInput(e) {
     if (!this.isTimeInputSupported) {
@@ -85,6 +101,8 @@ export class MxTimePicker {
     this.inputElem.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
   }
   updateInputValue() {
+    if (!this.inputElem)
+      return;
     if (this.value == null) {
       this.inputElem.value = '';
       return;
