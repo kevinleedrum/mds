@@ -6,27 +6,28 @@
     background: var(--mds-bg-btn-icon-chevron);
   }
 
-  &:focus:not([aria-disabled='true']) {
+  &:focus:not(:disabled, [aria-disabled='true']) {
     background: var(--mds-bg-btn-icon-focus);
     .chevron-wrapper {
       background: var(--mds-bg-btn-icon-chevron-focus);
     }
   }
 
-  &:hover:not([aria-disabled='true']) {
+  &:hover:not(:disabled, [aria-disabled='true']) {
     background: var(--mds-bg-btn-icon-hover);
     .chevron-wrapper {
       background: var(--mds-bg-btn-icon-chevron-hover);
     }
   }
 
-  &:active:not([aria-disabled='true']) {
+  &:active:not(:disabled, [aria-disabled='true']) {
     background: var(--mds-bg-btn-icon-active);
     .chevron-wrapper {
       background: var(--mds-bg-btn-icon-chevron-active);
     }
   }
 
+  &:disabled,
   &[aria-disabled='true'] {
     color: var(--mds-text-btn-icon-disabled);
     background: var(--mds-bg-btn-icon-disabled);

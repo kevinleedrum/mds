@@ -80,7 +80,8 @@ export class MxChip {
     if (this.choice) str += ' choice';
     if (this.filter) str += ' filter';
     if (this.outlined) str += ' outlined border';
-    if (this.isClickable) str += ' clickable transform cursor-pointer disabled:cursor-auto';
+    if (this.isClickable)
+      str += ' clickable transform cursor-pointer disabled:pointer-events-none disabled:cursor-auto';
     str += this.hasLeftIcon ? ' pl-6' : ' pl-12';
     if (!this.removable) str += ' pr-12';
     else str += this.hasLeftIcon ? ' pr-32' : ' pr-40';
@@ -116,7 +117,7 @@ export class MxChip {
           aria-checked={this.choice || this.filter ? (this.selected ? 'true' : 'false') : null}
           aria-disabled={this.disabled ? 'true' : null}
           role={this.ariaRole}
-          tabindex={this.isClickable ? '0' : '-1'}
+          tabindex={this.isClickable && !this.disabled ? '0' : '-1'}
           onClick={this.onClick.bind(this)}
           onKeyDown={this.onKeyDown.bind(this)}
         >
@@ -145,6 +146,7 @@ export class MxChip {
             data-testid="remove"
             aria-label="Remove"
             aria-controls={this.uuid}
+            disabled={this.disabled}
             class={this.removeButtonClass}
             onClick={this.onRemove.bind(this)}
           >

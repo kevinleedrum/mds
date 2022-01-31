@@ -73,13 +73,15 @@ export class MxIconButton {
           form={this.form}
           formaction={this.formaction}
           value={this.value}
-          href={this.href}
-          class="flex text-current appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto"
+          href={!this.disabled ? this.href : null}
+          class="flex text-current appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:pointer-events-none disabled:cursor-auto"
           ref={el => (this.btnElem = el as HTMLButtonElement)}
-          onClick={this.onClick.bind(this)}
+          disabled={this.disabled}
           aria-disabled={this.disabled ? 'true' : null}
           aria-label={this.elAriaLabel}
+          tabindex={this.disabled ? '-1' : '0'}
           {...this.dataAttributes}
+          onClick={this.onClick.bind(this)}
         >
           {buttonContent}
         </Tag>
