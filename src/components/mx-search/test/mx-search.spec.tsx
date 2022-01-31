@@ -79,13 +79,16 @@ describe('mx-search', () => {
     expect(button.classList.contains('hidden')).toBe(false);
   });
 
-  it('clears the value when the clear button is clicked', async () => {
+  it('clears the value and emits an mxClear event when the clear button is clicked', async () => {
     root.value = 'boo';
+    const listener = jest.fn();
+    root.addEventListener('mxClear', listener);
     await page.waitForChanges();
     const button = root.querySelector('[data-testid="clear-button"]') as HTMLButtonElement;
     button.click();
     await page.waitForChanges();
     expect(root.value).toBe('');
+    expect(listener).toHaveBeenCalled();
   });
 
   it('does not show a clear button when showClear is false', async () => {

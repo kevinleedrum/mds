@@ -1,9 +1,10 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { p as propagateDataAttributes } from './utils-e11a77cf.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
+import { p as propagateDataAttributes } from './utils-f31b72fe.js';
 
 const MxSearch = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
+    this.mxClear = createEvent(this, "mxClear", 7);
     this.dataAttributes = {};
     this.dense = false;
     this.flat = false;
@@ -16,7 +17,8 @@ const MxSearch = class {
   }
   onClear() {
     this.inputEl.value = '';
-    this.inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+    this.inputEl.dispatchEvent(new window.Event('input', { bubbles: true }));
+    this.mxClear.emit();
     if (typeof jest === 'undefined')
       this.inputEl.focus();
   }

@@ -397,7 +397,7 @@ export class MxTableRow {
           h("mx-button", Object.assign({ "data-testid": "action-button", "btn-type": "text" }, this.actions[0]), this.actions[0].value))),
         this.actions.length > 1 && (h("div", { class: "action-cell flex items-center p-0 justify-end col-start-2 col-span-4 sm:col-span-1" },
           h("mx-icon-button", { ref: el => (this.actionMenuButton = el), "el-aria-label": "Row Actions", icon: "mds-dots-vertical" }),
-          h("mx-menu", { "data-testid": "action-menu", ref: el => (this.actionMenu = el) }, this.actions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))))),
+          h("mx-menu", { "data-testid": "action-menu", ref: el => (this.actionMenu = el), onMxClose: e => e.stopPropagation() }, this.actions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))))),
       h("div", { ref: el => (this.childRowWrapper = el), class: "contents" })));
   }
   static get is() { return "mx-table-row"; }

@@ -1,6 +1,6 @@
 import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { c as collapse, s as slideOut, e as expand, a as slideIn } from './transitions-d677cc52.js';
-import './utils-e11a77cf.js';
+import { c as collapse, s as slideOut, e as expand, a as slideIn } from './transitions-4a0eb798.js';
+import './utils-f31b72fe.js';
 
 const MxBanner = class {
   constructor(hostRef) {
@@ -45,13 +45,13 @@ const MxBanner = class {
     return str;
   }
   get messageClass() {
-    let str = 'flex items-center space-x-12 mt-16 md:mt-0';
+    let str = 'flex items-center max-w-full overflow-hidden space-x-12 mt-16 md:mt-0';
     str += this.hasActions ? ' mb-8' : ' mb-16';
     str += ' md:mb-0';
     return str;
   }
   render() {
-    return (h(Host, { class: this.hostClass, role: "alert" }, h("div", { ref: el => (this.bannerEl = el), class: "flex flex-col md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10" }, h("div", { "data-testid": "message", class: this.messageClass }, this.hasImage && (h("div", { class: "flex-shrink-0" }, h("slot", { name: "image" }))), h("p", { class: "my-0 text-4 flex-grow" }, h("slot", null))), h("div", { "data-testid": "actions", class: "text-right flex-shrink-0" }, h("slot", { name: "actions" })))));
+    return (h(Host, { class: this.hostClass, role: "alert" }, h("div", { ref: el => (this.bannerEl = el), class: "flex flex-col max-w-full md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10" }, h("div", { "data-testid": "message", class: this.messageClass }, this.hasImage && (h("div", { class: "flex-shrink-0" }, h("slot", { name: "image" }))), h("p", { class: "my-0 text-4 flex-grow" }, h("slot", null))), h("div", { "data-testid": "actions", class: "text-right flex-shrink-0" }, h("slot", { name: "actions" })))));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

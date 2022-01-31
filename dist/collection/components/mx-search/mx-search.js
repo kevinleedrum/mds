@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Event } from '@stencil/core';
 import { propagateDataAttributes } from '../../utils/utils';
 export class MxSearch {
   constructor() {
@@ -14,7 +14,8 @@ export class MxSearch {
   }
   onClear() {
     this.inputEl.value = '';
-    this.inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+    this.inputEl.dispatchEvent(new window.Event('input', { bubbles: true }));
+    this.mxClear.emit();
     if (typeof jest === 'undefined')
       this.inputEl.focus();
   }
@@ -162,5 +163,21 @@ export class MxSearch {
       "reflect": false
     }
   }; }
+  static get events() { return [{
+      "method": "mxClear",
+      "name": "mxClear",
+      "bubbles": true,
+      "cancelable": true,
+      "composed": true,
+      "docs": {
+        "tags": [],
+        "text": "Emitted when the clear button is clicked."
+      },
+      "complexType": {
+        "original": "void",
+        "resolved": "void",
+        "references": {}
+      }
+    }]; }
   static get elementRef() { return "element"; }
 }

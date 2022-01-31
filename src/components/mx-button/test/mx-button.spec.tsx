@@ -16,7 +16,7 @@ describe('mx-button', () => {
         value="foo"
         form="bar"
         formaction="/foo"
-        data-test="test"
+        data-admin--a--b-c="test"
       >
         button
       </mx-button>`,
@@ -58,7 +58,7 @@ describe('mx-button', () => {
   });
 
   it('applies any data attributes to the button element', async () => {
-    expect(btn.getAttribute('data-test')).toBe('test');
+    expect(btn.getAttribute('data-admin--a--b-c')).toBe('test');
   });
 });
 

@@ -24,7 +24,7 @@ export declare class MxDropdownMenu {
   onValueChange(): void;
   onBlur(): void;
   onFocus(): void;
-  onMenuClose(): void;
+  onMenuClose(e: any): void;
   updateInputValue(): void;
   get dropdownWrapperClass(): string;
   get inputClass(): string;

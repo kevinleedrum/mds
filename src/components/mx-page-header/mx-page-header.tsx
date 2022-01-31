@@ -141,7 +141,11 @@ export class MxPageHeader {
               {isTertiary && this.renderTertiaryButtonAsMenu && (
                 <div class="absolute -top-6">
                   <mx-icon-button ref={el => (this.menuButton = el)} icon="mds-dots-vertical"></mx-icon-button>
-                  <mx-menu ref={el => (this.tertiaryMenu = el)} anchor-el={this.menuButton}>
+                  <mx-menu
+                    ref={el => (this.tertiaryMenu = el)}
+                    anchor-el={this.menuButton}
+                    onMxClose={e => e.stopPropagation()}
+                  >
                     <mx-menu-item {...menuItemProps}>{button.label}</mx-menu-item>
                   </mx-menu>
                 </div>

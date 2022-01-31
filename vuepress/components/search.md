@@ -25,6 +25,12 @@
 
 <<< @/vuepress/components/search.md#search
 
+### Events
+
+| Event     | Description                               | Type                |
+| --------- | ----------------------------------------- | ------------------- |
+| `mxClear` | Emitted when the clear button is clicked. | `CustomEvent<void>` |
+
 ### Properties
 
 | Property      | Attribute       | Description                                                                                                                                                 | Type      | Default     |

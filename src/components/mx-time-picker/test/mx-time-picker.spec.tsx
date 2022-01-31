@@ -36,6 +36,13 @@ describe('mx-time-picker', () => {
     expect(input.type).toBe('time');
   });
 
+  it('changes HH:MM:ss.mmm values to just HH:MM', async () => {
+    root.value = '11:59:01.001';
+    await page.waitForChanges();
+    await page.waitForChanges();
+    expect(root.value).toBe('11:59');
+  });
+
   it('assigns name, id, and value to the input element', async () => {
     expect(input.getAttribute('name')).toBe('test-name');
     expect(input.getAttribute('id')).toBe('test-id');

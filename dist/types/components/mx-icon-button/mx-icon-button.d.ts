@@ -4,6 +4,7 @@ export declare class MxIconButton {
   anchorElem: HTMLAnchorElement;
   dataAttributes: {};
   type: 'button' | 'submit' | 'reset';
+  form: string;
   formaction: string;
   value: string;
   /** Create button as link */

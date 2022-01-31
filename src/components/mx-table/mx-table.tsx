@@ -739,7 +739,11 @@ export class MxTable {
                 <span class="sr-only">Action Menu</span>
               </span>
             </mx-button>
-            <mx-menu data-testid="multi-action-menu" ref={el => (this.actionMenu = el)}>
+            <mx-menu
+              data-testid="multi-action-menu"
+              ref={el => (this.actionMenu = el)}
+              onMxClose={e => e.stopPropagation()}
+            >
               {this.multiRowActions.map(action => (
                 <mx-menu-item {...action}>{action.value}</mx-menu-item>
               ))}

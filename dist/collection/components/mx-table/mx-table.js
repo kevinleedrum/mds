@@ -183,13 +183,15 @@ export class MxTable {
   onCheckAllClick(e) {
     e.preventDefault();
     e.stopPropagation(); // Prevent triggering a sort when checkbox is in first column header
-    if (this.checkedRowIds.length === 0) {
+    const willCheckAll = this.checkedRowIds.length === 0;
+    if (willCheckAll) {
       this.checkAll();
     }
     else {
       this.checkNone();
     }
     this.mxRowCheck.emit(this.checkedRowIds);
+    this.mxCheckAll.emit(willCheckAll);
   }
   /** Animate table rows while dragging a row */
   onDragMove(e) {
@@ -585,7 +587,7 @@ export class MxTable {
             h("span", { class: "h-full flex items-center px-2" },
               h("i", { class: "mds-gear text-icon" }),
               h("span", { class: "sr-only" }, "Action Menu"))),
-          h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
+          h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el), onMxClose: e => e.stopPropagation() }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
     const operationsBar = (h("div", { class: ['grid gap-x-16 gap-y-12 pb-12', this.operationsBarClass].join(' '), style: this.operationsBarStyle },
       this.checkable && this.showCheckAll && (h("div", { class: "col-start-1 flex items-center min-h-36 space-x-16" },
@@ -1210,6 +1212,21 @@ export class MxTable {
       "complexType": {
         "original": "string[]",
         "resolved": "string[]",
+        "references": {}
+      }
+    }, {
+      "method": "mxCheckAll",
+      "name": "mxCheckAll",
+      "bubbles": true,
+      "cancelable": true,
+      "composed": true,
+      "docs": {
+        "tags": [],
+        "text": "Emitted when the (un)check-all checkbox is clicked.  The `Event.detail` will be the new `checked` value."
+      },
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
         "references": {}
       }
     }, {

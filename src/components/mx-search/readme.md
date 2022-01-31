@@ -18,6 +18,13 @@
 | `value`       | `value`         |                                                                                                                                                             | `string`  | `undefined` |
 
 
+## Events
+
+| Event     | Description                               | Type                |
+| --------- | ----------------------------------------- | ------------------- |
+| `mxClear` | Emitted when the clear button is clicked. | `CustomEvent<void>` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -27,7 +27,9 @@ export declare class MxTimePicker {
   onClick(e: MouseEvent): void;
   onValueChange(): void;
   componentWillRender: typeof propagateDataAttributes;
+  componentWillLoad(): void;
   componentDidLoad(): void;
+  normalizeValue(): void;
   onInput(e: InputEvent): void;
   onBlur(): void;
   onFocus(): void;
@@ -35,7 +37,7 @@ export declare class MxTimePicker {
    * Using `pointer-events: none` on the label could cause the user to unknowingly click on
    * the minutes/AM/PM entry, which would be annoying. */
   onClickLabel(): void;
-  onMenuClose(): void;
+  onMenuClose(e: any): void;
   onMenuOpen(): void;
   /** This is only called if <input type="time"> is not supported. */
   setValue({ hours, minutes }: {

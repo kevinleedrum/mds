@@ -1,5 +1,5 @@
 import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { p as propagateDataAttributes } from './utils-e11a77cf.js';
+import { p as propagateDataAttributes } from './utils-f31b72fe.js';
 
 const MxCheckbox = class {
   constructor(hostRef) {

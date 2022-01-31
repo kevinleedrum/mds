@@ -76,6 +76,7 @@ export namespace Components {
           * The aria-label attribute for the inner button element.
          */
         "elAriaLabel": string;
+        "form": string;
         "formaction": string;
         /**
           * Sets display to flex instead of inline-flex
@@ -338,6 +339,7 @@ export namespace Components {
           * The aria-label attribute for the inner button element.
          */
         "elAriaLabel": string;
+        "form": string;
         "formaction": string;
         /**
           * Create button as link
@@ -1360,6 +1362,7 @@ declare namespace LocalJSX {
           * The aria-label attribute for the inner button element.
          */
         "elAriaLabel"?: string;
+        "form"?: string;
         "formaction"?: string;
         /**
           * Sets display to flex instead of inline-flex
@@ -1619,6 +1622,7 @@ declare namespace LocalJSX {
           * The aria-label attribute for the inner button element.
          */
         "elAriaLabel"?: string;
+        "form"?: string;
         "formaction"?: string;
         /**
           * Create button as link
@@ -1953,6 +1957,10 @@ declare namespace LocalJSX {
         "elAriaLabel"?: string;
         "flat"?: boolean;
         "name"?: string;
+        /**
+          * Emitted when the clear button is clicked.
+         */
+        "onMxClear"?: (event: CustomEvent<void>) => void;
         "placeholder"?: string;
         /**
           * Set to `false` to hide the clear button.
@@ -2098,6 +2106,10 @@ declare namespace LocalJSX {
           * Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.
          */
         "mutateOnDrag"?: boolean;
+        /**
+          * Emitted when the (un)check-all checkbox is clicked.  The `Event.detail` will be the new `checked` value.
+         */
+        "onMxCheckAll"?: (event: CustomEvent<boolean>) => void;
         /**
           * Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s.
          */

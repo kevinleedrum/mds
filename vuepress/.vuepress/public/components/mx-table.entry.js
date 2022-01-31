@@ -1,12 +1,13 @@
 import { r as registerInstance, f as createEvent, h, i as forceUpdate, e as Host, g as getElement } from './index-f6edd80d.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { g as getPageRect, a as getCursorCoords, c as capitalize, i as isDateObject } from './utils-e11a77cf.js';
+import { g as getPageRect, a as getCursorCoords, c as capitalize, i as isDateObject } from './utils-f31b72fe.js';
 
 const MxTable = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.mxSortChange = createEvent(this, "mxSortChange", 7);
     this.mxRowCheck = createEvent(this, "mxRowCheck", 7);
+    this.mxCheckAll = createEvent(this, "mxCheckAll", 7);
     this.mxVisibleRowsChange = createEvent(this, "mxVisibleRowsChange", 7);
     this.mxRowMove = createEvent(this, "mxRowMove", 7);
     this.hasDefaultSlot = false;
@@ -189,13 +190,15 @@ const MxTable = class {
   onCheckAllClick(e) {
     e.preventDefault();
     e.stopPropagation(); // Prevent triggering a sort when checkbox is in first column header
-    if (this.checkedRowIds.length === 0) {
+    const willCheckAll = this.checkedRowIds.length === 0;
+    if (willCheckAll) {
       this.checkAll();
     }
     else {
       this.checkNone();
     }
     this.mxRowCheck.emit(this.checkedRowIds);
+    this.mxCheckAll.emit(willCheckAll);
   }
   /** Animate table rows while dragging a row */
   onDragMove(e) {
@@ -585,7 +588,7 @@ const MxTable = class {
         // Multi-Row Action Button
         h("mx-button", Object.assign({ "data-testid": "multi-action-button", "btn-type": "outlined" }, this.multiRowActions[0], { class: 'whitespace-nowrap' + (!this.checkedRowIds.length ? ' invisible' : ''), "aria-hidden": this.checkedRowIds.length === 0 ? 'true' : null }), this.multiRowActions[0].value)) : (
         // Multi-Row Action Menu
-        h("span", { class: !this.checkedRowIds.length ? 'invisible' : null, "aria-hidden": this.checkedRowIds.length === 0 ? 'true' : null }, h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true }, h("span", { class: "h-full flex items-center px-2" }, h("i", { class: "mds-gear text-icon" }), h("span", { class: "sr-only" }, "Action Menu"))), h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el) }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
+        h("span", { class: !this.checkedRowIds.length ? 'invisible' : null, "aria-hidden": this.checkedRowIds.length === 0 ? 'true' : null }, h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true }, h("span", { class: "h-full flex items-center px-2" }, h("i", { class: "mds-gear text-icon" }), h("span", { class: "sr-only" }, "Action Menu"))), h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el), onMxClose: e => e.stopPropagation() }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
     const operationsBar = (h("div", { class: ['grid gap-x-16 gap-y-12 pb-12', this.operationsBarClass].join(' '), style: this.operationsBarStyle }, this.checkable && this.showCheckAll && (h("div", { class: "col-start-1 flex items-center min-h-36 space-x-16" }, checkAllCheckbox, multiRowActionUI)), this.hasFilter && (h("div", { class: "flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1" }, h("slot", { name: "filter" }))), this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle }, h("slot", { name: "search" })))));
     let generatedRows = [];
