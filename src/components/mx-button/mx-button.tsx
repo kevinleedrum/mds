@@ -121,7 +121,7 @@ export class MxButton implements IMxButtonProps {
       <Host class={'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex')}>
         {this.href ? (
           <a
-            href={!this.disabled ? this.href : null}
+            href={this.href}
             target={this.target}
             aria-disabled={this.disabled ? 'true' : null}
             class={this.buttonClass}
