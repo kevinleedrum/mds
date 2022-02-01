@@ -22,6 +22,9 @@
        <div class="my-20">
         <mx-button href="https://google.com" target="_blank">Button as Link</mx-button>
       </div>
+       <div class="my-20">
+        <mx-button disabled href="https://google.com" target="_blank">Button as Link Disabled</mx-button>
+      </div>
     </div>
     <div>
       <strong>Outline</strong>
@@ -39,6 +42,9 @@
       </div>
       <div class="my-20">
         <mx-button btn-type="outlined" href="https://google.com" target="_blank">Button as Link</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button disabled btn-type="outlined" href="https://google.com" target="_blank">Button as Link Disabled</mx-button>
       </div>
     </div>
   </div>

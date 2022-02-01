@@ -17,7 +17,7 @@ const MxChipGroup = class {
   }
   onChipClick(e) {
     const chip = e.target.closest('mx-chip');
-    if (!chip)
+    if (!chip || chip.disabled)
       return;
     this.toggleValue(chip.value);
     this.mxInput.emit(this.value);

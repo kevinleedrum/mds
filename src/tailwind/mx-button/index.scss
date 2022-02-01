@@ -18,6 +18,7 @@
         background: var(--mds-bg-btn-contained-active);
       }
 
+      &:disabled,
       &[aria-disabled='true'] {
         background: var(--mds-bg-btn-contained-disabled);
         color: var(--mds-text-btn-contained-disabled);
@@ -30,18 +31,19 @@
       color: var(--mds-text-btn-outlined);
       --ripple-color: var(--mds-ripple-btn-outlined);
 
-      &:focus:not([aria-disabled='true']) {
+      &:focus:not(:disabled, [aria-disabled='true']) {
         background: var(--mds-bg-btn-outlined-focus);
       }
 
-      &:hover:not([aria-disabled='true']) {
+      &:hover:not(:disabled, [aria-disabled='true']) {
         background: var(--mds-bg-btn-outlined-hover);
       }
 
-      &:active:not([aria-disabled='true']) {
+      &:active:not(:disabled, [aria-disabled='true']) {
         background: var(--mds-bg-btn-outlined-active);
       }
 
+      &:disabled,
       &[aria-disabled='true'] {
         background: var(--mds-bg-btn-outlined-disabled);
         border-color: var(--mds-border-btn-outlined-disabled);
@@ -55,18 +57,19 @@
       border-color: var(--mds-border-btn-simple);
       --ripple-color: var(--mds-ripple-btn-simple);
 
-      &:focus:not([aria-disabled='true']) {
+      &:focus:not(:disabled, [aria-disabled='true']) {
         background: var(--mds-bg-btn-simple-focus);
       }
 
-      &:hover:not([aria-disabled='true']) {
+      &:hover:not(:disabled, [aria-disabled='true']) {
         background: var(--mds-bg-btn-simple-hover);
       }
 
-      &:active:not([aria-disabled='true']) {
+      &:active:not(:disabled, [aria-disabled='true']) {
         background: var(--mds-bg-btn-simple-active);
       }
 
+      &:disabled,
       &[aria-disabled='true'] {
         background: var(--mds-bg-btn-simple-disabled);
         border-color: var(--mds-border-btn-simple-disabled);
@@ -83,30 +86,31 @@
         background: var(--mds-bg-btn-text-dropdown-separator);
       }
 
-      &:focus:not([aria-disabled='true']) {
+      &:focus:not(:disabled, [aria-disabled='true']) {
         background: var(--mds-bg-btn-text-focus);
         .separator {
           background: var(--mds-bg-btn-text-dropdown-separator-focus);
         }
       }
 
-      &:hover:not([aria-disabled='true']) {
+      &:hover:not(:disabled, [aria-disabled='true']) {
         background: var(--mds-bg-btn-text-hover);
         .separator {
           background: var(--mds-bg-btn-text-dropdown-separator-hover);
         }
       }
 
-      &:active:not([aria-disabled='true']) {
+      &:active:not(:disabled, [aria-disabled='true']) {
         background: var(--mds-bg-btn-text-active);
       }
 
+      &:disabled,
       &[aria-disabled='true'] {
         color: var(--mds-text-btn-text-disabled);
         background: var(--mds-bg-btn-text-disabled);
       }
 
-      &.dropdown:not([aria-disabled='true']) {
+      &.dropdown:not(:disabled, [aria-disabled='true']) {
         .slot-content,
         .chevron-icon {
           color: var(--mds-text-btn-text-dropdown);

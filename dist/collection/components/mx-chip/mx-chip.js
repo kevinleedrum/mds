@@ -64,7 +64,7 @@ export class MxChip {
     if (this.outlined)
       str += ' outlined border';
     if (this.isClickable)
-      str += ' clickable transform cursor-pointer disabled:cursor-auto';
+      str += ' clickable transform cursor-pointer disabled:pointer-events-none disabled:cursor-auto';
     str += this.hasLeftIcon ? ' pl-6' : ' pl-12';
     if (!this.removable)
       str += ' pr-12';
@@ -94,14 +94,14 @@ export class MxChip {
   }
   render() {
     return (h(Host, { class: "mx-chip inline-block relative" },
-      h("div", { ref: el => (this.chipElem = el), id: this.uuid, class: this.chipClass, "aria-checked": this.choice || this.filter ? (this.selected ? 'true' : 'false') : null, "aria-disabled": this.disabled ? 'true' : null, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) },
+      h("div", { ref: el => (this.chipElem = el), id: this.uuid, class: this.chipClass, "aria-checked": this.choice || this.filter ? (this.selected ? 'true' : 'false') : null, "aria-disabled": this.disabled ? 'true' : null, role: this.ariaRole, tabindex: this.isClickable && !this.disabled ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) },
         this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" },
           this.icon && h("i", { class: this.icon + ' text-1' }),
           this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" },
             h("i", { class: "mds-check" }))))),
         h("span", null,
           h("slot", null))),
-      this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", "aria-controls": this.uuid, class: this.removeButtonClass, onClick: this.onRemove.bind(this) },
+      this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", "aria-controls": this.uuid, disabled: this.disabled, class: this.removeButtonClass, onClick: this.onRemove.bind(this) },
         h("i", { class: "mds-remove text-3" })))));
   }
   static get is() { return "mx-chip"; }

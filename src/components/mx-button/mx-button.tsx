@@ -71,7 +71,7 @@ export class MxButton implements IMxButtonProps {
 
     // Common classes
     str +=
-      ' flex items-center justify-center relative overflow-hidden cursor-pointer appearance-none disabled:cursor-auto hover:no-underline';
+      ' flex items-center justify-center relative overflow-hidden cursor-pointer appearance-none disabled:pointer-events-none disabled:cursor-auto hover:no-underline';
 
     // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
@@ -123,6 +123,7 @@ export class MxButton implements IMxButtonProps {
           <a
             href={this.href}
             target={this.target}
+            aria-disabled={this.disabled ? 'true' : null}
             class={this.buttonClass}
             ref={el => (this.anchorElem = el as HTMLAnchorElement)}
             onClick={this.onClick.bind(this)}
@@ -135,11 +136,11 @@ export class MxButton implements IMxButtonProps {
             form={this.form}
             formaction={this.formaction}
             value={this.value}
+            disabled={this.disabled}
             class={this.buttonClass}
             ref={el => (this.btnElem = el as HTMLButtonElement)}
             onClick={this.onClick.bind(this)}
             aria-label={this.elAriaLabel}
-            aria-disabled={this.disabled ? 'true' : null}
             {...this.dataAttributes}
           >
             {buttonContent}

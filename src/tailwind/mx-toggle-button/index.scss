@@ -7,19 +7,20 @@
     background: var(--mds-bg-btn-toggle);
     outline-offset: -1px;
 
-    &:focus:not([aria-disabled='true']) {
+    &:focus:not(:disabled, [aria-disabled='true']) {
       background: var(--mds-bg-btn-toggle-focus);
     }
 
-    &:hover:not([aria-disabled='true']) {
+    &:hover:not(:disabled, [aria-disabled='true']) {
       background: var(--mds-bg-btn-toggle-hover);
     }
 
-    &:active:not([aria-disabled='true']) {
+    &:active:not(:disabled, [aria-disabled='true']) {
       background: var(--mds-bg-btn-toggle-active);
       color: var(--mds-text-btn-toggle-active);
     }
 
+    &:disabled,
     &[aria-disabled='true'] {
       color: var(--mds-text-btn-toggle-disabled);
       background: var(--mds-bg-btn-toggle-disabled);
