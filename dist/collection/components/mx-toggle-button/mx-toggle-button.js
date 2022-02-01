@@ -9,17 +9,12 @@ export class MxToggleButton {
     this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
-    if (this.disabled) {
-      e.stopPropagation();
-      e.preventDefault();
-      return;
-    }
     ripple(e, this.btnElem);
   }
   render() {
     return (h(Host, { class: "mx-toggle-button inline-flex overflow-hidden border-l\n      first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl\n      last-of-type:rounded-tr last-of-type:rounded-br" },
-      h("button", Object.assign({ class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer' +
-          (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), "aria-disabled": this.disabled ? 'true' : null, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected ? 'true' : 'false', "aria-label": this.elAriaLabel, onClick: this.onClick.bind(this) }, this.dataAttributes),
+      h("button", Object.assign({ class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer disabled:cursor-auto disabled:pointer-events-none' +
+          (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), disabled: this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected ? 'true' : 'false', "aria-label": this.elAriaLabel, onClick: this.onClick.bind(this) }, this.dataAttributes),
         h("i", { class: this.icon }))));
   }
   static get is() { return "mx-toggle-button"; }

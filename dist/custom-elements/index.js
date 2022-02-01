@@ -443,7 +443,7 @@ const MxButton$1 = class extends HTMLElement {
       str += ' dropdown';
     // Common classes
     str +=
-      ' flex items-center justify-center relative overflow-hidden cursor-pointer appearance-none disabled:cursor-auto hover:no-underline';
+      ' flex items-center justify-center relative overflow-hidden cursor-pointer appearance-none disabled:pointer-events-none disabled:cursor-auto hover:no-underline';
     // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
       str += ' w-full rounded-lg font-semibold uppercase';
@@ -472,7 +472,7 @@ const MxButton$1 = class extends HTMLElement {
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
-    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, form: this.form, formaction: this.formaction, value: this.value, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-label": this.elAriaLabel, "aria-disabled": this.disabled ? 'true' : null }, this.dataAttributes), buttonContent))));
+    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, "aria-disabled": this.disabled ? 'true' : null, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, form: this.form, formaction: this.formaction, value: this.value, disabled: this.disabled, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent))));
   }
   get element() { return this; }
 };
@@ -13669,7 +13669,7 @@ const MxChip$1 = class extends HTMLElement {
     if (this.outlined)
       str += ' outlined border';
     if (this.isClickable)
-      str += ' clickable transform cursor-pointer disabled:cursor-auto';
+      str += ' clickable transform cursor-pointer disabled:pointer-events-none disabled:cursor-auto';
     str += this.hasLeftIcon ? ' pl-6' : ' pl-12';
     if (!this.removable)
       str += ' pr-12';
@@ -13698,7 +13698,7 @@ const MxChip$1 = class extends HTMLElement {
     return { background, backgroundSize: 'cover' };
   }
   render() {
-    return (h(Host, { class: "mx-chip inline-block relative" }, h("div", { ref: el => (this.chipElem = el), id: this.uuid, class: this.chipClass, "aria-checked": this.choice || this.filter ? (this.selected ? 'true' : 'false') : null, "aria-disabled": this.disabled ? 'true' : null, role: this.ariaRole, tabindex: this.isClickable ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) }, this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" }, this.icon && h("i", { class: this.icon + ' text-1' }), this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" }, h("i", { class: "mds-check" }))))), h("span", null, h("slot", null))), this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", "aria-controls": this.uuid, class: this.removeButtonClass, onClick: this.onRemove.bind(this) }, h("i", { class: "mds-remove text-3" })))));
+    return (h(Host, { class: "mx-chip inline-block relative" }, h("div", { ref: el => (this.chipElem = el), id: this.uuid, class: this.chipClass, "aria-checked": this.choice || this.filter ? (this.selected ? 'true' : 'false') : null, "aria-disabled": this.disabled ? 'true' : null, role: this.ariaRole, tabindex: this.isClickable && !this.disabled ? '0' : '-1', onClick: this.onClick.bind(this), onKeyDown: this.onKeyDown.bind(this) }, this.hasLeftIcon && (h("div", { style: this.avatarStyle, role: "presentation", "data-testid": "left-icon", class: "left-icon flex items-center justify-center w-24 h-24 rounded-full relative overflow-hidden" }, this.icon && h("i", { class: this.icon + ' text-1' }), this.selected && (h("div", { "data-testid": "check", class: "check flex absolute inset-0 items-center justify-center" }, h("i", { class: "mds-check" }))))), h("span", null, h("slot", null))), this.removable && (h("button", { type: "button", "data-testid": "remove", "aria-label": "Remove", "aria-controls": this.uuid, disabled: this.disabled, class: this.removeButtonClass, onClick: this.onRemove.bind(this) }, h("i", { class: "mds-remove text-3" })))));
   }
   get element() { return this; }
 };
@@ -13717,7 +13717,7 @@ const MxChipGroup$1 = class extends HTMLElement {
   }
   onChipClick(e) {
     const chip = e.target.closest('mx-chip');
-    if (!chip)
+    if (!chip || chip.disabled)
       return;
     this.toggleValue(chip.value);
     this.mxInput.emit(this.value);
@@ -19012,7 +19012,7 @@ const MxIconButton$1 = class extends HTMLElement {
   render() {
     const Tag = this.href ? 'a' : 'button';
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-icon', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center text-icon shadow-1" }, h("i", { "data-testid": "chevron", class: this.chevronLeft ? 'mds-chevron-left' : this.chevronRight ? 'mds-chevron-right' : 'mds-chevron-down' })))));
-    return (h(Host, { class: "mx-icon-button inline-block appearance-none" }, h(Tag, Object.assign({ type: this.href ? null : this.type, form: this.form, formaction: this.formaction, value: this.value, href: this.href, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent)));
+    return (h(Host, { class: "mx-icon-button inline-block appearance-none" }, h(Tag, Object.assign({ type: this.href ? null : this.type, form: this.form, formaction: this.formaction, value: this.value, href: this.href, class: "flex text-current appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:pointer-events-none disabled:cursor-auto", ref: el => (this.btnElem = el), disabled: this.disabled, "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.elAriaLabel, tabindex: this.disabled ? '-1' : '0' }, this.dataAttributes, { onClick: this.onClick.bind(this) }), buttonContent)));
   }
   get element() { return this; }
 };
@@ -22296,16 +22296,11 @@ const MxToggleButton$1 = class extends HTMLElement {
     this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
-    if (this.disabled) {
-      e.stopPropagation();
-      e.preventDefault();
-      return;
-    }
     ripple(e, this.btnElem);
   }
   render() {
-    return (h(Host, { class: "mx-toggle-button inline-flex overflow-hidden border-l\n      first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl\n      last-of-type:rounded-tr last-of-type:rounded-br" }, h("button", Object.assign({ class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer' +
-        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), "aria-disabled": this.disabled ? 'true' : null, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected ? 'true' : 'false', "aria-label": this.elAriaLabel, onClick: this.onClick.bind(this) }, this.dataAttributes), h("i", { class: this.icon }))));
+    return (h(Host, { class: "mx-toggle-button inline-flex overflow-hidden border-l\n      first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl\n      last-of-type:rounded-tr last-of-type:rounded-br" }, h("button", Object.assign({ class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer disabled:cursor-auto disabled:pointer-events-none' +
+        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), disabled: this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected ? 'true' : 'false', "aria-label": this.elAriaLabel, onClick: this.onClick.bind(this) }, this.dataAttributes), h("i", { class: this.icon }))));
   }
   get element() { return this; }
 };

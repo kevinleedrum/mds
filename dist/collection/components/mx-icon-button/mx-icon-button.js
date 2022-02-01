@@ -32,7 +32,7 @@ export class MxIconButton {
       this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center text-icon shadow-1" },
         h("i", { "data-testid": "chevron", class: this.chevronLeft ? 'mds-chevron-left' : this.chevronRight ? 'mds-chevron-right' : 'mds-chevron-down' })))));
     return (h(Host, { class: "mx-icon-button inline-block appearance-none" },
-      h(Tag, Object.assign({ type: this.href ? null : this.type, form: this.form, formaction: this.formaction, value: this.value, href: this.href, class: "flex appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:cursor-auto", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent)));
+      h(Tag, Object.assign({ type: this.href ? null : this.type, form: this.form, formaction: this.formaction, value: this.value, href: this.href, class: "flex text-current appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:pointer-events-none disabled:cursor-auto", ref: el => (this.btnElem = el), disabled: this.disabled, "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.elAriaLabel, tabindex: this.disabled ? '-1' : '0' }, this.dataAttributes, { onClick: this.onClick.bind(this) }), buttonContent)));
   }
   static get is() { return "mx-icon-button"; }
   static get properties() { return {
