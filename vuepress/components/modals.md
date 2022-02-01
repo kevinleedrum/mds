@@ -15,7 +15,7 @@ The modal component uses a [Page Header](/page-headers.html) internally. The `pr
 - &bull; `footer-left` - This slot contains the previous page link (if the `previousPageUrl` prop is provided).
 - &bull; `footer-right` - If the `buttons` prop is provided, this slot contains those buttons by default.
 
-On small screens, the modal will fill the screen, except for a 24-px margin at the top. On larger screens, the max dimensions are based on whether the `large` prop is set. If `large` is `true`, the modal will stretch to nearly fill the entire page (with a 40px margin); otherwise, the max dimensions are 800x600px.
+On small screens, the modal will fill the screen, except for a 24-px margin at the top. On larger screens, the max dimensions are based on whether the `large` prop is set. If `large` is `true`, the modal will stretch to nearly fill the entire page (with a 40px margin) up to 1200px; otherwise, the max dimensions are 800x600px.
 
 If `fromLeft` or `fromRight` are set, then the modal will appear fixed to one side of the window, and it will stretch the entire height.
 
