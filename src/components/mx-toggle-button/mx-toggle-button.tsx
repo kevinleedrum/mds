@@ -23,12 +23,6 @@ export class MxToggleButton {
   componentWillRender = propagateDataAttributes;
 
   onClick(e: MouseEvent) {
-    if (this.disabled) {
-      e.stopPropagation();
-      e.preventDefault();
-      return;
-    }
-
     ripple(e, this.btnElem);
   }
 
@@ -41,11 +35,11 @@ export class MxToggleButton {
       >
         <button
           class={
-            'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer' +
+            'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer disabled:cursor-auto disabled:pointer-events-none' +
             (this.selected ? ' selected' : '')
           }
           ref={el => (this.btnElem = el as HTMLButtonElement)}
-          aria-disabled={this.disabled ? 'true' : null}
+          disabled={this.disabled}
           role={this.value === undefined ? 'switch' : 'radio'}
           aria-checked={this.selected ? 'true' : 'false'}
           aria-label={this.elAriaLabel}

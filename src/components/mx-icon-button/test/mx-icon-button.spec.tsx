@@ -51,7 +51,7 @@ describe('mx-icon-button', () => {
     expect(listener).toHaveBeenCalled();
     listener.mockReset();
     root.disabled = true;
-    page.waitForChanges();
+    await page.waitForChanges();
     button.click();
     expect(listener).not.toHaveBeenCalled();
   });

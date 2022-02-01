@@ -49,7 +49,7 @@ describe('mx-toggle-button as disabled and selected', () => {
 
   it('is disabled', async () => {
     const btn = root.querySelector('button');
-    expect(btn.getAttribute('aria-disabled')).toBe('true');
+    expect(btn.disabled).not.toBeNull();
   });
 
   it('is selected', async () => {
