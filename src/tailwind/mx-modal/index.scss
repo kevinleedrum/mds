@@ -33,7 +33,7 @@
   &.modal-large > .modal {
     @apply flex-grow h-full;
     /* 40px margin around modal */
-    max-width: calc(100vw - 5rem);
+    max-width: min(calc(100vw - 5rem), 75rem); /* True max width is 1200px */
     max-height: calc(100vh - 5rem);
   }
 }
