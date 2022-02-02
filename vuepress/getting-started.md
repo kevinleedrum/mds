@@ -5,9 +5,9 @@ to produce scalable, easy-to-use components and design tokens for our organizati
 
 <section class="mds">
   <div class="flex h-128 overflow-hidden mb-40">
-    <a class="flex items-center w-1/2 bg-white" href="https://stenciljs.com/" target="_blank"><img src="./assets/stencil.png" class="object-contain" alt="Stencil"></a>
+    <a class="flex items-center w-1/2 bg-white" href="https://stenciljs.com/" target="_blank"><img src="~@source/assets/stencil.png" class="object-contain" alt="Stencil"></a>
     <div class="w-20"></div>
-    <a class="flex items-center w-1/2 bg-white" href="https://tailwindcss.com/" target="_blank"><img src="./assets/tailwind.png" class="object-contain" alt="Tailwind CSS"></a>
+    <a class="flex items-center w-1/2 bg-white" href="https://tailwindcss.com/" target="_blank"><img src="~@source/assets/tailwind.png" class="object-contain" alt="Tailwind CSS"></a>
   </div>
 </section>
 
