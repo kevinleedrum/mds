@@ -71,7 +71,7 @@ export class MxBanner {
                 <slot name="image"></slot>
               </div>
             )}
-            <p class="my-0 text-4 flex-grow">
+            <p class="min-w-0 my-0 text-4 flex-grow">
               <slot></slot>
             </p>
           </div>
