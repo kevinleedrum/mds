@@ -59,6 +59,37 @@ The component emits `input` events (via the internal `input` element), so the up
 
 <<< @/vuepress/components/pickers.md#date-pickers
 
+### Min/Max Validation
+
+The date picker's min and max values may be set via the `min` and `max` props (in YYYY-MM-DD format).
+To automatically set the `min` or `max` to today's date, you may also set the `allow-past` or `allow-future`
+prop to `false`.
+
+The `error` state for the date picker will be automatically set to `true` on blur if the entered date
+is outside the valid range. You may also check the `InputEvent.target.validity` for `rangeOverflow` or
+`rangeUnderflow` (as long as the browser supports `<input type=date>`).
+
+<!-- #region date-validation -->
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+    <div class="space-y-20">
+      <mx-date-picker label="Date" allow-future="false" assistive-text="Future dates are not allowed" />
+    </div>
+    <div class="space-y-20">
+      <mx-date-picker label="Date" allow-past="false"  assistive-text="Past dates are not allowed" />
+    </div>
+    <div class="space-y-20">
+      <mx-date-picker label="Date" min="2022-01-01" assistive-text="The min date is 2022-01-01" />
+    </div>
+    <div class="space-y-20">
+      <mx-date-picker label="Date" max="2022-01-01"  assistive-text="The max date is 2022-01-01" />
+    </div>
+  </div>
+</section>
+<!-- #endregion date-validation -->
+
+<<< @/vuepress/components/pickers.md#date-validation
+
 ## Time Pickers
 
 The `mx-time-picker` component allows for time entry that is independent of the date. It accepts a string `value` in the form of `hh:mm` (24-hour time), which matches the behavior of the native [`<input type="time">`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time).
@@ -137,6 +168,8 @@ The component emits `input` events (via the internal `input` element), so the up
 
 | Property        | Attribute        | Description                                           | Type      | Default     |
 | --------------- | ---------------- | ----------------------------------------------------- | --------- | ----------- |
+| `allowFuture`   | `allow-future`   | Set to false to prevent entering a date after today   | `boolean` | `true`      |
+| `allowPast`     | `allow-past`     | Set to false to prevent entering a date before today  | `boolean` | `true`      |
 | `assistiveText` | `assistive-text` | Helpful text to show below the picker                 | `string`  | `undefined` |
 | `dense`         | `dense`          |                                                       | `boolean` | `false`     |
 | `disabled`      | `disabled`       |                                                       | `boolean` | `false`     |
@@ -145,8 +178,10 @@ The component emits `input` events (via the internal `input` element), so the up
 | `floatLabel`    | `float-label`    |                                                       | `boolean` | `false`     |
 | `inputId`       | `input-id`       | The `id` attribute for the internal input element     | `string`  | `undefined` |
 | `label`         | `label`          |                                                       | `string`  | `undefined` |
+| `max`           | `max`            | The latest date to accept (in YYYY-MM-DD format)      | `string`  | `undefined` |
+| `min`           | `min`            | The earliest date to accept (in YYYY-MM-DD format)    | `string`  | `undefined` |
 | `name`          | `name`           |                                                       | `string`  | `undefined` |
-| `value`         | `value`          | The time in 24-hour hh:mm format                      | `string`  | `undefined` |
+| `value`         | `value`          | The selected date in YYYY-MM-DD format                | `string`  | `undefined` |
 
 ### CSS Variables
 
