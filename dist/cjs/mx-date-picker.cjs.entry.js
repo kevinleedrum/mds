@@ -22,6 +22,10 @@ const MxDatePicker = class {
     this.uuid = utils.uuidv4();
     this.dataAttributes = {};
     this.isDateInputSupported = false;
+    /** Set to false to prevent entering a date after today */
+    this.allowFuture = true;
+    /** Set to false to prevent entering a date before today */
+    this.allowPast = true;
     this.dense = false;
     this.disabled = false;
     this.error = false;
@@ -33,7 +37,12 @@ const MxDatePicker = class {
   onValueChange() {
     if (this.value && !yyyymmdd.test(this.value))
       return;
-    this.datepicker.setDate(this.value ? new Date(this.value + 'T00:00:00') : undefined, true);
+    try {
+      this.datepicker.setDate(this.value ? new Date(this.value + 'T00:00:00') : undefined, true);
+    }
+    catch (err) {
+      // Ignore js-datepicker exceptions when entering date outside min/max
+    }
   }
   /** Open/close the calendar.  We're not using the js-datepicker's popover behavior because its
    * placement is buggy. */
@@ -64,6 +73,8 @@ const MxDatePicker = class {
       customDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       overlayButton: 'Confirm',
       overlayPlaceholder: 'Year (YYYY)',
+      minDate: this.minDate,
+      maxDate: this.maxDate,
       dateSelected: this.value ? new Date(this.value + 'T00:00:00') : undefined,
       formatter: (input, date) => {
         if (this.inputEl.contains(document.activeElement))
@@ -90,7 +101,10 @@ const MxDatePicker = class {
       // Style as focused/active while calendar is open
       this.isFocused = false;
     }
-    if (!this.isDateInputSupported && this.isInputDirty) {
+    if (this.isDateInputSupported && (this.inputEl.validity.rangeOverflow || this.inputEl.validity.rangeUnderflow)) {
+      this.error = true;
+    }
+    else if (!this.isDateInputSupported && this.isInputDirty) {
       if (this.disabled)
         return;
       this.error = false;
@@ -100,7 +114,6 @@ const MxDatePicker = class {
       else {
         date = new Date(Date.parse(this.inputEl.value));
         if (!utils.isDateObject(date)) {
-          // Invalid date entered into <input type=text>
           this.error = true;
           return;
         }
@@ -124,7 +137,12 @@ const MxDatePicker = class {
       e.stopPropagation();
     else if (this.datepicker && this.value !== value) {
       this.value = value;
-      this.datepicker.setDate(value ? new Date(value + 'T00:00:00') : undefined);
+      try {
+        this.datepicker.setDate(value ? new Date(value + 'T00:00:00') : undefined);
+      }
+      catch (err) {
+        // Ignore js-datepicker exceptions when entering date outside min/max
+      }
     }
     if (!this.isDateInputSupported && this.isFocused)
       this.isInputDirty = true;
@@ -159,6 +177,27 @@ const MxDatePicker = class {
       return;
     this.popoverInstance.destroy();
     this.popoverInstance = null;
+  }
+  get minDate() {
+    if (this.min)
+      return new Date(this.min + 'T00:00:00');
+    if (!this.allowPast) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return today;
+    }
+  }
+  get maxDate() {
+    if (this.max)
+      return new Date(this.max + 'T00:00:00');
+    if (!this.allowFuture)
+      return new Date();
+  }
+  get minValue() {
+    return this.minDate ? this.minDate.toISOString().split('T')[0] : null;
+  }
+  get maxValue() {
+    return this.maxDate ? this.maxDate.toISOString().split('T')[0] : null;
   }
   get isCalendarOpen() {
     return !this.datepicker.calendarContainer.classList.contains('hidden');
@@ -219,7 +258,7 @@ const MxDatePicker = class {
   }
   render() {
     const labelJsx = (index.h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
-    return (index.h(index.Host, { class: 'mx-date-picker block' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, index.h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.elAriaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, index.h("button", { "aria-label": "Open calendar", ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled }, index.h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))), this.assistiveText && (index.h("div", { class: "caption1 mt-4 ml-16" }, index.h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
+    return (index.h(index.Host, { class: 'mx-date-picker block' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, index.h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, index.h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.elAriaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", min: this.minValue, max: this.maxValue, onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, index.h("button", { "aria-label": "Open calendar", ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled }, index.h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))), this.assistiveText && (index.h("div", { class: "caption1 mt-4 ml-16" }, index.h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
   }
   get element() { return index.getElement(this); }
   static get watchers() { return {
