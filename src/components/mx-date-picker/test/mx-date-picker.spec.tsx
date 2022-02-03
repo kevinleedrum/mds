@@ -68,6 +68,26 @@ describe('mx-date-picker', () => {
     expect(calendarButton.getAttribute('disabled')).not.toBeNull();
   });
 
+  it('sets the min and max attributes based on the prop values', async () => {
+    root.min = '2020-01-01';
+    root.max = '2020-01-02';
+    await page.waitForChanges();
+    expect(input.getAttribute('min')).toBe('2020-01-01');
+    expect(input.getAttribute('max')).toBe('2020-01-02');
+  });
+
+  it('sets the min to today if allowPast is false', async () => {
+    root.allowPast = false;
+    await page.waitForChanges();
+    expect(input.getAttribute('min')).toBe(new Date().toISOString().split('T')[0]);
+  });
+
+  it('sets the max to today if allowFuture is false', async () => {
+    root.allowFuture = false;
+    await page.waitForChanges();
+    expect(input.getAttribute('max')).toBe(new Date().toISOString().split('T')[0]);
+  });
+
   it('renders a floating label if the float-label prop is set', async () => {
     let label = root.querySelector('label');
     expect(label.classList.contains('floating')).toBe(false);
