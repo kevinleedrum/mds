@@ -9,17 +9,25 @@ export declare class MxDatePicker {
   inputEl: HTMLInputElement;
   popoverInstance: PopoverInstance;
   isDateInputSupported: boolean;
-  /** The aria-label attribute for the inner input element. */
-  elAriaLabel: string;
+  /** Set to false to prevent entering a date after today */
+  allowFuture: boolean;
+  /** Set to false to prevent entering a date before today */
+  allowPast: boolean;
   /** Helpful text to show below the picker */
   assistiveText: string;
   dense: boolean;
   disabled: boolean;
+  /** The aria-label attribute for the inner input element. */
+  elAriaLabel: string;
   error: boolean;
   floatLabel: boolean;
   /** The `id` attribute for the internal input element */
   inputId: string;
   label: string;
+  /** The earliest date to accept (in YYYY-MM-DD format) */
+  min: string;
+  /** The latest date to accept (in YYYY-MM-DD format) */
+  max: string;
   name: string;
   /** The selected date in YYYY-MM-DD format */
   value: string;
@@ -41,6 +49,10 @@ export declare class MxDatePicker {
   openCalendar(): Promise<void>;
   repositionCalendar(): void;
   closeCalendar(): Promise<void>;
+  get minDate(): Date;
+  get maxDate(): Date;
+  get minValue(): string;
+  get maxValue(): string;
   get isCalendarOpen(): boolean;
   get labelClassNames(): string;
   get inputHasText(): string | boolean;

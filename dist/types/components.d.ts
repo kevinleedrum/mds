@@ -236,6 +236,14 @@ export namespace Components {
     }
     interface MxDatePicker {
         /**
+          * Set to false to prevent entering a date after today
+         */
+        "allowFuture": boolean;
+        /**
+          * Set to false to prevent entering a date before today
+         */
+        "allowPast": boolean;
+        /**
           * Helpful text to show below the picker
          */
         "assistiveText": string;
@@ -252,6 +260,14 @@ export namespace Components {
          */
         "inputId": string;
         "label": string;
+        /**
+          * The latest date to accept (in YYYY-MM-DD format)
+         */
+        "max": string;
+        /**
+          * The earliest date to accept (in YYYY-MM-DD format)
+         */
+        "min": string;
         "name": string;
         /**
           * The selected date in YYYY-MM-DD format
@@ -1526,6 +1542,14 @@ declare namespace LocalJSX {
     }
     interface MxDatePicker {
         /**
+          * Set to false to prevent entering a date after today
+         */
+        "allowFuture"?: boolean;
+        /**
+          * Set to false to prevent entering a date before today
+         */
+        "allowPast"?: boolean;
+        /**
           * Helpful text to show below the picker
          */
         "assistiveText"?: string;
@@ -1542,6 +1566,14 @@ declare namespace LocalJSX {
          */
         "inputId"?: string;
         "label"?: string;
+        /**
+          * The latest date to accept (in YYYY-MM-DD format)
+         */
+        "max"?: string;
+        /**
+          * The earliest date to accept (in YYYY-MM-DD format)
+         */
+        "min"?: string;
         "name"?: string;
         /**
           * The selected date in YYYY-MM-DD format

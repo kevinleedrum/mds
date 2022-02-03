@@ -53,7 +53,7 @@ export class MxBanner {
         h("div", { "data-testid": "message", class: this.messageClass },
           this.hasImage && (h("div", { class: "flex-shrink-0" },
             h("slot", { name: "image" }))),
-          h("p", { class: "my-0 text-4 flex-grow" },
+          h("p", { class: "min-w-0 my-0 text-4 flex-grow" },
             h("slot", null))),
         h("div", { "data-testid": "actions", class: "text-right flex-shrink-0" },
           h("slot", { name: "actions" })))));

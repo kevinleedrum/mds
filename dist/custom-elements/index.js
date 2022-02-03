@@ -379,7 +379,7 @@ const MxBanner$1 = class extends HTMLElement {
     return str;
   }
   render() {
-    return (h(Host, { class: this.hostClass, role: "alert" }, h("div", { ref: el => (this.bannerEl = el), class: "flex flex-col max-w-full md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10" }, h("div", { "data-testid": "message", class: this.messageClass }, this.hasImage && (h("div", { class: "flex-shrink-0" }, h("slot", { name: "image" }))), h("p", { class: "my-0 text-4 flex-grow" }, h("slot", null))), h("div", { "data-testid": "actions", class: "text-right flex-shrink-0" }, h("slot", { name: "actions" })))));
+    return (h(Host, { class: this.hostClass, role: "alert" }, h("div", { ref: el => (this.bannerEl = el), class: "flex flex-col max-w-full md:flex-row md:items-center md:justify-between min-h-56 px-24 md:px-72 py-8 md:py-10" }, h("div", { "data-testid": "message", class: this.messageClass }, this.hasImage && (h("div", { class: "flex-shrink-0" }, h("slot", { name: "image" }))), h("p", { class: "min-w-0 my-0 text-4 flex-grow" }, h("slot", null))), h("div", { "data-testid": "actions", class: "text-right flex-shrink-0" }, h("slot", { name: "actions" })))));
   }
   get element() { return this; }
   static get watchers() { return {
@@ -18418,6 +18418,10 @@ const MxDatePicker$1 = class extends HTMLElement {
     this.uuid = uuidv4();
     this.dataAttributes = {};
     this.isDateInputSupported = false;
+    /** Set to false to prevent entering a date after today */
+    this.allowFuture = true;
+    /** Set to false to prevent entering a date before today */
+    this.allowPast = true;
     this.dense = false;
     this.disabled = false;
     this.error = false;
@@ -18429,7 +18433,12 @@ const MxDatePicker$1 = class extends HTMLElement {
   onValueChange() {
     if (this.value && !yyyymmdd.test(this.value))
       return;
-    this.datepicker.setDate(this.value ? new Date(this.value + 'T00:00:00') : undefined, true);
+    try {
+      this.datepicker.setDate(this.value ? new Date(this.value + 'T00:00:00') : undefined, true);
+    }
+    catch (err) {
+      // Ignore js-datepicker exceptions when entering date outside min/max
+    }
   }
   /** Open/close the calendar.  We're not using the js-datepicker's popover behavior because its
    * placement is buggy. */
@@ -18460,6 +18469,8 @@ const MxDatePicker$1 = class extends HTMLElement {
       customDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       overlayButton: 'Confirm',
       overlayPlaceholder: 'Year (YYYY)',
+      minDate: this.minDate,
+      maxDate: this.maxDate,
       dateSelected: this.value ? new Date(this.value + 'T00:00:00') : undefined,
       formatter: (input, date) => {
         if (this.inputEl.contains(document.activeElement))
@@ -18486,7 +18497,10 @@ const MxDatePicker$1 = class extends HTMLElement {
       // Style as focused/active while calendar is open
       this.isFocused = false;
     }
-    if (!this.isDateInputSupported && this.isInputDirty) {
+    if (this.isDateInputSupported && (this.inputEl.validity.rangeOverflow || this.inputEl.validity.rangeUnderflow)) {
+      this.error = true;
+    }
+    else if (!this.isDateInputSupported && this.isInputDirty) {
       if (this.disabled)
         return;
       this.error = false;
@@ -18496,7 +18510,6 @@ const MxDatePicker$1 = class extends HTMLElement {
       else {
         date = new Date(Date.parse(this.inputEl.value));
         if (!isDateObject(date)) {
-          // Invalid date entered into <input type=text>
           this.error = true;
           return;
         }
@@ -18520,7 +18533,12 @@ const MxDatePicker$1 = class extends HTMLElement {
       e.stopPropagation();
     else if (this.datepicker && this.value !== value) {
       this.value = value;
-      this.datepicker.setDate(value ? new Date(value + 'T00:00:00') : undefined);
+      try {
+        this.datepicker.setDate(value ? new Date(value + 'T00:00:00') : undefined);
+      }
+      catch (err) {
+        // Ignore js-datepicker exceptions when entering date outside min/max
+      }
     }
     if (!this.isDateInputSupported && this.isFocused)
       this.isInputDirty = true;
@@ -18555,6 +18573,27 @@ const MxDatePicker$1 = class extends HTMLElement {
       return;
     this.popoverInstance.destroy();
     this.popoverInstance = null;
+  }
+  get minDate() {
+    if (this.min)
+      return new Date(this.min + 'T00:00:00');
+    if (!this.allowPast) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return today;
+    }
+  }
+  get maxDate() {
+    if (this.max)
+      return new Date(this.max + 'T00:00:00');
+    if (!this.allowFuture)
+      return new Date();
+  }
+  get minValue() {
+    return this.minDate ? this.minDate.toISOString().split('T')[0] : null;
+  }
+  get maxValue() {
+    return this.maxDate ? this.maxDate.toISOString().split('T')[0] : null;
   }
   get isCalendarOpen() {
     return !this.datepicker.calendarContainer.classList.contains('hidden');
@@ -18615,7 +18654,7 @@ const MxDatePicker$1 = class extends HTMLElement {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
-    return (h(Host, { class: 'mx-date-picker block' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.elAriaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { "aria-label": "Open calendar", ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled }, h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
+    return (h(Host, { class: 'mx-date-picker block' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ ref: el => (this.inputEl = el), "aria-label": this.elAriaLabel || this.label, class: this.inputClass, disabled: this.disabled, id: this.inputId || this.uuid, name: this.name, type: "date", min: this.minValue, max: this.maxValue, onBlur: this.onBlur.bind(this), onClick: e => e.preventDefault() /* Prevent browser's native calender */, onKeyDown: this.onKeyDown.bind(this), onFocus: this.onFocus.bind(this), onFocusin: e => e.stopPropagation() /* Prevent js-datepicker popover behavior */, onInput: this.onInput.bind(this) }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { "aria-label": "Open calendar", ref: el => (this.calendarButton = el), class: this.calendarButtonClass, "data-testid": "calendar-button", disabled: this.disabled }, h("i", { class: this.error ? 'mds-warning-circle' : 'mds-calendar' }))), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText)))));
   }
   get element() { return this; }
   static get watchers() { return {
@@ -22432,7 +22471,7 @@ const MxChipGroup = /*@__PURE__*/proxyCustomElement(MxChipGroup$1, [4,"mx-chip-g
 const MxCircularProgress = /*@__PURE__*/proxyCustomElement(MxCircularProgress$1, [0,"mx-circular-progress",{"value":[2],"size":[1],"appearDelay":[2,"appear-delay"]}]);
 const MxCode = /*@__PURE__*/proxyCustomElement(MxCode$1, [4,"mx-code",{"code":[1],"language":[1],"lineNumberStart":[2,"line-number-start"],"showLineNumbers":[4,"show-line-numbers"]}]);
 const MxConfirmInput = /*@__PURE__*/proxyCustomElement(MxConfirmInput$1, [0,"mx-confirm-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"placeholder":[1],"value":[1025],"type":[1],"dense":[4],"disabled":[4],"readonly":[4],"maxlength":[2],"leftIcon":[1,"left-icon"],"rightIcon":[1025,"right-icon"],"suffix":[1],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"floatLabel":[4,"float-label"],"textarea":[4],"textareaHeight":[1025,"textarea-height"],"elAriaLabel":[1,"el-aria-label"],"isFocused":[32],"isHovered":[32]}]);
-const MxDatePicker = /*@__PURE__*/proxyCustomElement(MxDatePicker$1, [0,"mx-date-picker",{"elAriaLabel":[1,"el-aria-label"],"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[6,"click","onClick"]]]);
+const MxDatePicker = /*@__PURE__*/proxyCustomElement(MxDatePicker$1, [0,"mx-date-picker",{"allowFuture":[4,"allow-future"],"allowPast":[4,"allow-past"],"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elAriaLabel":[1,"el-aria-label"],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"min":[1],"max":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[6,"click","onClick"]]]);
 const MxDialog = /*@__PURE__*/proxyCustomElement(MxDialog$1, [4,"mx-dialog",{"isOpen":[4,"is-open"],"modalClass":[1,"modal-class"],"isVisible":[32]},[[16,"keydown","onKeyDown"]]]);
 const MxDropdownMenu = /*@__PURE__*/proxyCustomElement(MxDropdownMenu$1, [4,"mx-dropdown-menu",{"elAriaLabel":[1,"el-aria-label"],"dense":[4],"elevated":[4],"flat":[4],"label":[1],"dropdownClass":[1,"dropdown-class"],"dropdownId":[1,"dropdown-id"],"name":[1],"suffix":[1],"value":[1032],"isFocused":[32]},[[0,"click","onClick"]]]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"elAriaLabel":[1,"el-aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);

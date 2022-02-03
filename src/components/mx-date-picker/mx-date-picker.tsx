@@ -22,17 +22,25 @@ export class MxDatePicker {
   popoverInstance: PopoverInstance;
   isDateInputSupported: boolean = false;
 
-  /** The aria-label attribute for the inner input element. */
-  @Prop() elAriaLabel: string;
+  /** Set to false to prevent entering a date after today */
+  @Prop() allowFuture: boolean = true;
+  /** Set to false to prevent entering a date before today */
+  @Prop() allowPast: boolean = true;
   /** Helpful text to show below the picker */
   @Prop() assistiveText: string;
   @Prop() dense: boolean = false;
   @Prop() disabled: boolean = false;
+  /** The aria-label attribute for the inner input element. */
+  @Prop() elAriaLabel: string;
   @Prop({ mutable: true }) error: boolean = false;
   @Prop() floatLabel: boolean = false;
   /** The `id` attribute for the internal input element */
   @Prop() inputId: string;
   @Prop() label: string;
+  /** The earliest date to accept (in YYYY-MM-DD format) */
+  @Prop() min: string;
+  /** The latest date to accept (in YYYY-MM-DD format) */
+  @Prop() max: string;
   @Prop() name: string;
   /** The selected date in YYYY-MM-DD format */
   @Prop({ mutable: true }) value: string;
@@ -45,7 +53,11 @@ export class MxDatePicker {
   @Watch('value')
   onValueChange() {
     if (this.value && !yyyymmdd.test(this.value)) return;
-    this.datepicker.setDate(this.value ? new Date(this.value + 'T00:00:00') : undefined, true);
+    try {
+      this.datepicker.setDate(this.value ? new Date(this.value + 'T00:00:00') : undefined, true);
+    } catch (err) {
+      // Ignore js-datepicker exceptions when entering date outside min/max
+    }
   }
 
   /** Open/close the calendar.  We're not using the js-datepicker's popover behavior because its
@@ -80,6 +92,8 @@ export class MxDatePicker {
       customDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       overlayButton: 'Confirm',
       overlayPlaceholder: 'Year (YYYY)',
+      minDate: this.minDate,
+      maxDate: this.maxDate,
       dateSelected: this.value ? new Date(this.value + 'T00:00:00') : undefined,
       formatter: (input: HTMLInputElement, date: Date) => {
         if (this.inputEl.contains(document.activeElement)) return; // Do not reformat while typing in date
@@ -105,7 +119,9 @@ export class MxDatePicker {
       // Style as focused/active while calendar is open
       this.isFocused = false;
     }
-    if (!this.isDateInputSupported && this.isInputDirty) {
+    if (this.isDateInputSupported && (this.inputEl.validity.rangeOverflow || this.inputEl.validity.rangeUnderflow)) {
+      this.error = true;
+    } else if (!this.isDateInputSupported && this.isInputDirty) {
       if (this.disabled) return;
       this.error = false;
       let date: Date;
@@ -113,7 +129,6 @@ export class MxDatePicker {
       else {
         date = new Date(Date.parse(this.inputEl.value));
         if (!isDateObject(date)) {
-          // Invalid date entered into <input type=text>
           this.error = true;
           return;
         }
@@ -137,7 +152,11 @@ export class MxDatePicker {
     if (value && !yyyymmdd.test(value)) e.stopPropagation();
     else if (this.datepicker && this.value !== value) {
       this.value = value;
-      this.datepicker.setDate(value ? new Date(value + 'T00:00:00') : undefined);
+      try {
+        this.datepicker.setDate(value ? new Date(value + 'T00:00:00') : undefined);
+      } catch (err) {
+        // Ignore js-datepicker exceptions when entering date outside min/max
+      }
     }
     if (!this.isDateInputSupported && this.isFocused) this.isInputDirty = true;
   }
@@ -173,6 +192,28 @@ export class MxDatePicker {
     if (!this.popoverInstance) return;
     this.popoverInstance.destroy();
     this.popoverInstance = null;
+  }
+
+  get minDate() {
+    if (this.min) return new Date(this.min + 'T00:00:00');
+    if (!this.allowPast) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return today;
+    }
+  }
+
+  get maxDate() {
+    if (this.max) return new Date(this.max + 'T00:00:00');
+    if (!this.allowFuture) return new Date();
+  }
+
+  get minValue() {
+    return this.minDate ? this.minDate.toISOString().split('T')[0] : null;
+  }
+
+  get maxValue() {
+    return this.maxDate ? this.maxDate.toISOString().split('T')[0] : null;
   }
 
   get isCalendarOpen(): boolean {
@@ -247,6 +288,8 @@ export class MxDatePicker {
             id={this.inputId || this.uuid}
             name={this.name}
             type="date"
+            min={this.minValue}
+            max={this.maxValue}
             onBlur={this.onBlur.bind(this)}
             onClick={e => e.preventDefault() /* Prevent browser's native calender */}
             onKeyDown={this.onKeyDown.bind(this)}
