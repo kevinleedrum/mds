@@ -1,5 +1,20 @@
 # Getting Started
 
+The Moxi Design System leverages the cross-framework capabilities of [Stencil](https://stenciljs.com/) and the convenience and composability of [Tailwind CSS](https://tailwindcss.com/)
+to produce scalable, easy-to-use components and design tokens for our organization.
+
+<section class="mds">
+  <div class="flex h-128 overflow-hidden mb-40">
+    <a class="flex items-center w-1/2 bg-white" href="https://stenciljs.com/" target="_blank">
+      <img src="~@source/assets/stencil.png" class="object-contain" alt="Stencil">
+    </a>
+    <div class="w-20"></div>
+    <a class="flex items-center w-1/2 bg-white" href="https://tailwindcss.com/" target="_blank">
+      <img src="~@source/assets/tailwind.png" class="object-contain" alt="Tailwind CSS">
+    </a>
+  </div>
+</section>
+
 ## Adding The Mx Design System via Yarn or NPM
 
 From your project run `yarn add @moxiworks/mds` or `npm install @moxiworks/mds` depending on your package manager. Once added to your project, you can start using the system by looking at the example below.
