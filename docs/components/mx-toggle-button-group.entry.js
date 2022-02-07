@@ -4,6 +4,8 @@ const MxToggleButtonGroup = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.mxInput = createEvent(this, "mxInput", 7);
+    /** Set to `true` to prevent deselecting once a selection has been made. */
+    this.required = false;
   }
   onValueChange() {
     this.updateChildButtons();
@@ -21,7 +23,7 @@ const MxToggleButtonGroup = class {
   toggleValue(value) {
     if (this.value !== value)
       this.value = value;
-    else
+    else if (!this.required)
       this.value = null;
   }
   updateChildButtons() {

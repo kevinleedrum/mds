@@ -8,6 +8,7 @@ export declare class MxPageHeader {
   buttonRow: HTMLElement;
   hasTabs: boolean;
   hasModalHeaderCenter: boolean;
+  hasModalHeaderRight: boolean;
   menuButton: HTMLMxIconButtonElement;
   resizeObserver: ResizeObserver;
   tabSlot: HTMLElement;

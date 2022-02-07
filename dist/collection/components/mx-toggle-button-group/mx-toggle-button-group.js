@@ -1,5 +1,9 @@
 import { Component, Host, h, Prop, Listen, Element, Event, Watch } from '@stencil/core';
 export class MxToggleButtonGroup {
+  constructor() {
+    /** Set to `true` to prevent deselecting once a selection has been made. */
+    this.required = false;
+  }
   onValueChange() {
     this.updateChildButtons();
   }
@@ -16,7 +20,7 @@ export class MxToggleButtonGroup {
   toggleValue(value) {
     if (this.value !== value)
       this.value = value;
-    else
+    else if (!this.required)
       this.value = null;
   }
   updateChildButtons() {
@@ -45,6 +49,24 @@ export class MxToggleButtonGroup {
       },
       "attribute": "value",
       "reflect": false
+    },
+    "required": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": "Set to `true` to prevent deselecting once a selection has been made."
+      },
+      "attribute": "required",
+      "reflect": false,
+      "defaultValue": "false"
     }
   }; }
   static get events() { return [{

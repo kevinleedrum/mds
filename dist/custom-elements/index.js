@@ -20457,6 +20457,7 @@ const MxPageHeader$1 = class extends HTMLElement {
     this.__registerHost();
     this.hasTabs = false;
     this.hasModalHeaderCenter = false;
+    this.hasModalHeaderRight = false;
     /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
     this.buttons = [];
     /** This flag is set by the Modal component to adjust the page header styling when used internally. */
@@ -20486,6 +20487,7 @@ const MxPageHeader$1 = class extends HTMLElement {
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
     this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
+    this.hasModalHeaderRight = !!this.element.querySelector('[slot="modal-header-right"]');
     this.updateSlottedButtonSize();
   }
   connectedCallback() {
@@ -20545,6 +20547,8 @@ const MxPageHeader$1 = class extends HTMLElement {
       str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else
       str += this.previousPageUrl || this.modal ? 'text-h5' : 'text-h3';
+    if (this.hasModalHeaderRight)
+      str += ' pr-80';
     return str;
   }
   get previousPageClass() {
@@ -20743,7 +20747,7 @@ const MxSearch$1 = class extends HTMLElement {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", Object.assign({ ref: el => (this.inputEl = el), type: "search", "aria-label": this.elAriaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("i", { class: "absolute mds-search text-icon left-16 pointer-events-none" }), this.showClear && (h("button", { class: this.clearButtonClass, "data-testid": "clear-button", onClick: this.onClear.bind(this) }, h("i", { class: "mds-x text-icon" })))));
+    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", Object.assign({ ref: el => (this.inputEl = el), type: "search", "aria-label": this.elAriaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("i", { class: "absolute mds-search text-icon left-16 pointer-events-none" }), this.showClear && (h("button", { "aria-label": "Clear search", class: this.clearButtonClass, "data-testid": "clear-button", onClick: this.onClear.bind(this) }, h("i", { class: "mds-x text-icon" })))));
   }
   get element() { return this; }
 };
@@ -22349,6 +22353,8 @@ const MxToggleButtonGroup$1 = class extends HTMLElement {
     super();
     this.__registerHost();
     this.mxInput = createEvent(this, "mxInput", 7);
+    /** Set to `true` to prevent deselecting once a selection has been made. */
+    this.required = false;
   }
   onValueChange() {
     this.updateChildButtons();
@@ -22366,7 +22372,7 @@ const MxToggleButtonGroup$1 = class extends HTMLElement {
   toggleValue(value) {
     if (this.value !== value)
       this.value = value;
-    else
+    else if (!this.required)
       this.value = null;
   }
   updateChildButtons() {
@@ -22497,7 +22503,7 @@ const MxTableRow = /*@__PURE__*/proxyCustomElement(MxTableRow$1, [4,"mx-table-ro
 const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [0,"mx-tabs",{"fill":[4],"value":[2],"tabs":[16],"minWidths":[32]},[[0,"click","onClick"]]]);
 const MxTimePicker = /*@__PURE__*/proxyCustomElement(MxTimePicker$1, [0,"mx-time-picker",{"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elAriaLabel":[1,"el-aria-label"],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[0,"click","onClick"]]]);
 const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"elAriaLabel":[1,"el-aria-label"],"value":[8]}]);
-const MxToggleButtonGroup = /*@__PURE__*/proxyCustomElement(MxToggleButtonGroup$1, [4,"mx-toggle-button-group",{"value":[1032]},[[0,"click","onToggleButtonClick"]]]);
+const MxToggleButtonGroup = /*@__PURE__*/proxyCustomElement(MxToggleButtonGroup$1, [4,"mx-toggle-button-group",{"value":[1032],"required":[4]},[[0,"click","onToggleButtonClick"]]]);
 const MxTooltip = /*@__PURE__*/proxyCustomElement(MxTooltip$1, [4,"mx-tooltip",{"appearDelay":[2,"appear-delay"],"extended":[4],"inverted":[4],"maxWidth":[1,"max-width"],"isOpen":[1540,"is-open"],"placement":[1],"tooltipClass":[1,"tooltip-class"],"value":[1]}]);
 const defineCustomElements = (opts) => {
   if (typeof customElements !== 'undefined') {

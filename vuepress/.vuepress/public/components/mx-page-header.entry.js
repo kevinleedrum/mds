@@ -19,6 +19,7 @@ const MxPageHeader = class {
     registerInstance(this, hostRef);
     this.hasTabs = false;
     this.hasModalHeaderCenter = false;
+    this.hasModalHeaderRight = false;
     /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
     this.buttons = [];
     /** This flag is set by the Modal component to adjust the page header styling when used internally. */
@@ -48,6 +49,7 @@ const MxPageHeader = class {
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
     this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
+    this.hasModalHeaderRight = !!this.element.querySelector('[slot="modal-header-right"]');
     this.updateSlottedButtonSize();
   }
   connectedCallback() {
@@ -107,6 +109,8 @@ const MxPageHeader = class {
       str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else
       str += this.previousPageUrl || this.modal ? 'text-h5' : 'text-h3';
+    if (this.hasModalHeaderRight)
+      str += ' pr-80';
     return str;
   }
   get previousPageClass() {
