@@ -282,9 +282,10 @@ emitted via a custom <code>mxInput</code> event.
 
 ### Toggle Button Group Properties
 
-| Property | Attribute | Description | Type  | Default     |
-| -------- | --------- | ----------- | ----- | ----------- |
-| `value`  | `value`   |             | `any` | `undefined` |
+| Property   | Attribute  | Description                                                          | Type      | Default     |
+| ---------- | ---------- | -------------------------------------------------------------------- | --------- | ----------- |
+| `required` | `required` | Set to `true` to prevent deselecting once a selection has been made. | `boolean` | `false`     |
+| `value`    | `value`    |                                                                      | `any`     | `undefined` |
 
 ### Toggle Button Group Events
 

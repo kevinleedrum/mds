@@ -28,13 +28,30 @@ describe('mx-toggle-button-group', () => {
     expect(heartBtn.getAttribute('selected')).not.toBeNull();
   });
 
-  it('selects the correct toggle button when a button is clicked', async () => {
+  it('(de)selects the correct toggle button when a button is clicked', async () => {
     const appleBtn = root.querySelector('mx-toggle-button[value="apple"]');
     const heartBtn = root.querySelector('mx-toggle-button[value="heart"]');
     appleBtn.click();
     await page.waitForChanges();
     expect(appleBtn.getAttribute('selected')).not.toBeNull();
     expect(heartBtn.getAttribute('selected')).toBeNull();
+    appleBtn.click();
+    await page.waitForChanges();
+    expect(appleBtn.getAttribute('selected')).toBeNull();
+  });
+
+  it('does not deselect a selected button if the required prop is set', async () => {
+    root.required = true;
+    await page.waitForChanges();
+    const appleBtn = root.querySelector('mx-toggle-button[value="apple"]');
+    appleBtn.click();
+    await page.waitForChanges();
+    expect(appleBtn.getAttribute('selected')).not.toBeNull();
+    expect(root.value).toBe('apple');
+    appleBtn.click();
+    await page.waitForChanges();
+    expect(appleBtn.getAttribute('selected')).not.toBeNull();
+    expect(root.value).toBe('apple');
   });
 
   it('selects the correct toggle button when the value prop changes', async () => {

@@ -15,6 +15,7 @@ export class MxPageHeader {
   buttonRow: HTMLElement;
   hasTabs: boolean = false;
   hasModalHeaderCenter: boolean = false;
+  hasModalHeaderRight: boolean = false;
   menuButton: HTMLMxIconButtonElement;
   resizeObserver: ResizeObserver;
   tabSlot: HTMLElement;
@@ -56,6 +57,7 @@ export class MxPageHeader {
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
     this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
+    this.hasModalHeaderRight = !!this.element.querySelector('[slot="modal-header-right"]');
     this.updateSlottedButtonSize();
   }
 
@@ -111,6 +113,7 @@ export class MxPageHeader {
     let str = 'my-0 pr-20 emphasis ';
     if (!this.minWidths.md) str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else str += this.previousPageUrl || this.modal ? 'text-h5' : 'text-h3';
+    if (this.hasModalHeaderRight) str += ' pr-80';
     return str;
   }
 
