@@ -1014,6 +1014,10 @@ export namespace Components {
         "value": any;
     }
     interface MxToggleButtonGroup {
+        /**
+          * Set to `true` to prevent deselecting once a selection has been made.
+         */
+        "required": boolean;
         "value": any;
     }
     interface MxTooltip {
@@ -2327,6 +2331,10 @@ declare namespace LocalJSX {
           * Emits the updated value as event.detail
          */
         "onMxInput"?: (event: CustomEvent<any>) => void;
+        /**
+          * Set to `true` to prevent deselecting once a selection has been made.
+         */
+        "required"?: boolean;
         "value"?: any;
     }
     interface MxTooltip {

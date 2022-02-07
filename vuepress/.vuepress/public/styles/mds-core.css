@@ -6447,6 +6447,9 @@ video {
 .mds .pr-20{
   padding-right: 1.25rem;
 }
+.mds .pr-80{
+  padding-right: 5rem;
+}
 .mds .pt-16{
   padding-top: 1rem;
 }
@@ -6518,9 +6521,6 @@ video {
 }
 .mds .pr-72{
   padding-right: 4.5rem;
-}
-.mds .pr-80{
-  padding-right: 5rem;
 }
 .mds .pb-4{
   padding-bottom: 0.25rem;
