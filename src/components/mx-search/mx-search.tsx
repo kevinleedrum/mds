@@ -66,7 +66,12 @@ export class MxSearch {
         ></input>
         <i class="absolute mds-search text-icon left-16 pointer-events-none"></i>
         {this.showClear && (
-          <button class={this.clearButtonClass} data-testid="clear-button" onClick={this.onClear.bind(this)}>
+          <button
+            aria-label="Clear search"
+            class={this.clearButtonClass}
+            data-testid="clear-button"
+            onClick={this.onClear.bind(this)}
+          >
             <i class="mds-x text-icon"></i>
           </button>
         )}
