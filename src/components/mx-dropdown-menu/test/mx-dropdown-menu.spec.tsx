@@ -59,6 +59,34 @@ describe('mx-dropdown-menu', () => {
     expect(input.value).toBe('1000-3000');
   });
 
+  it('disables the input and removes the readonly attribute if the disabled prop is set', async () => {
+    root.disabled = true;
+    await page.waitForChanges();
+    expect(input.getAttribute('disabled')).not.toBe(null);
+    expect(input.getAttribute('readonly')).toBe(null);
+  });
+
+  it('does not disable the input if the readonly prop is set', async () => {
+    root.readonly = true;
+    await page.waitForChanges();
+    expect(input.getAttribute('disabled')).toBe(null);
+    expect(input.getAttribute('readonly')).not.toBe(null);
+  });
+
+  it('does not anchor the menu if disabled or readonly is true', async () => {
+    const menu = root.querySelector('mx-menu');
+    expect(menu.anchorEl).not.toBeUndefined();
+    root.readonly = true;
+    await page.waitForChanges();
+    expect(menu.anchorEl).toBeUndefined();
+    root.readonly = false;
+    await page.waitForChanges();
+    expect(menu.anchorEl).not.toBeUndefined();
+    root.disabled = true;
+    await page.waitForChanges();
+    expect(menu.anchorEl).toBeUndefined();
+  });
+
   it('renders the suffix prop', () => {
     expect(root.innerText).toContain('SQFT');
   });
