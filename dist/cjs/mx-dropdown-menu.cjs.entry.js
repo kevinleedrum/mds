@@ -7,6 +7,8 @@ const index = require('./index-7252b109.js');
 const MxDropdownMenu = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
+    this.disabled = false;
+    this.readonly = false;
     this.dense = false;
     /** Style as a filter dropdown with a 1dp elevation */
     this.elevated = false;
@@ -26,10 +28,16 @@ const MxDropdownMenu = class {
   }
   componentDidLoad() {
     this.updateInputValue();
-    this.menu.anchorEl = this.dropdownWrapper;
+    this.attachMenu();
   }
   onValueChange() {
     this.updateInputValue();
+  }
+  attachMenu() {
+    if (!this.disabled && !this.readonly)
+      this.menu.anchorEl = this.dropdownWrapper;
+    else
+      this.menu.anchorEl = undefined;
   }
   onBlur() {
     if (this.menu && this.menu.isOpen)
@@ -55,6 +63,8 @@ const MxDropdownMenu = class {
     if (this.flat)
       str += ' flat';
     str += this.isFocused ? ' focused border-2' : ' border';
+    if (this.disabled || this.readonly)
+      str += ' disabled';
     if (this.dropdownClass)
       str += ' ' + this.dropdownClass;
     return str;
@@ -72,10 +82,12 @@ const MxDropdownMenu = class {
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: "mx-dropdown-menu block" }, index.h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass }, index.h("input", { "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }), index.h("span", { class: this.suffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), index.h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" }))), index.h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) }, index.h("slot", null))));
+    return (index.h(index.Host, { class: "mx-dropdown-menu block" }, index.h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass }, index.h("input", { "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, disabled: this.disabled, readonly: !this.disabled, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }), index.h("span", { class: this.suffixClass }, this.suffix && index.h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), index.h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" }))), index.h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) }, index.h("slot", null))));
   }
   static get watchers() { return {
-    "value": ["onValueChange"]
+    "value": ["onValueChange"],
+    "disabled": ["attachMenu"],
+    "readonly": ["attachMenu"]
   }; }
 };
 
