@@ -11,6 +11,8 @@ export class MxDropdownMenu {
 
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
+  @Prop() disabled: boolean = false;
+  @Prop() readonly: boolean = false;
   @Prop() dense: boolean = false;
   /** Style as a filter dropdown with a 1dp elevation */
   @Prop() elevated: boolean = false;
@@ -41,11 +43,18 @@ export class MxDropdownMenu {
 
   componentDidLoad() {
     this.updateInputValue();
-    this.menu.anchorEl = this.dropdownWrapper;
+    this.attachMenu();
   }
   @Watch('value')
   onValueChange() {
     this.updateInputValue();
+  }
+
+  @Watch('disabled')
+  @Watch('readonly')
+  attachMenu() {
+    if (!this.disabled && !this.readonly) this.menu.anchorEl = this.dropdownWrapper;
+    else this.menu.anchorEl = undefined;
   }
 
   onBlur() {
@@ -72,6 +81,7 @@ export class MxDropdownMenu {
     if (this.elevated) str += ' elevated shadow-1';
     if (this.flat) str += ' flat';
     str += this.isFocused ? ' focused border-2' : ' border';
+    if (this.disabled || this.readonly) str += ' disabled';
     if (this.dropdownClass) str += ' ' + this.dropdownClass;
     return str;
   }
@@ -93,6 +103,7 @@ export class MxDropdownMenu {
     return (
       <Host class="mx-dropdown-menu block">
         <div ref={el => (this.dropdownWrapper = el)} class={this.dropdownWrapperClass}>
+          {/* The input is always either readonly or disabled since you cannot type a value in the dropdown */}
           <input
             aria-label={this.elAriaLabel || this.label}
             class={this.inputClass}
@@ -101,7 +112,8 @@ export class MxDropdownMenu {
             onBlur={this.onBlur.bind(this)}
             onFocus={this.onFocus.bind(this)}
             placeholder={this.label}
-            readonly
+            disabled={this.disabled}
+            readonly={!this.disabled}
             ref={el => (this.inputElem = el)}
             tabindex="0"
             type="text"

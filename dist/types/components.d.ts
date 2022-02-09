@@ -294,6 +294,7 @@ export namespace Components {
     }
     interface MxDropdownMenu {
         "dense": boolean;
+        "disabled": boolean;
         /**
           * Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`)
          */
@@ -316,6 +317,7 @@ export namespace Components {
         "flat": boolean;
         "label": string;
         "name": string;
+        "readonly": boolean;
         /**
           * Text shown to the left of the arrow
          */
@@ -1597,6 +1599,7 @@ declare namespace LocalJSX {
     }
     interface MxDropdownMenu {
         "dense"?: boolean;
+        "disabled"?: boolean;
         /**
           * Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`)
          */
@@ -1619,6 +1622,7 @@ declare namespace LocalJSX {
         "flat"?: boolean;
         "label"?: string;
         "name"?: string;
+        "readonly"?: boolean;
         /**
           * Text shown to the left of the arrow
          */

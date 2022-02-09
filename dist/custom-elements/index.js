@@ -18846,6 +18846,8 @@ const MxDropdownMenu$1 = class extends HTMLElement {
   constructor() {
     super();
     this.__registerHost();
+    this.disabled = false;
+    this.readonly = false;
     this.dense = false;
     /** Style as a filter dropdown with a 1dp elevation */
     this.elevated = false;
@@ -18865,10 +18867,16 @@ const MxDropdownMenu$1 = class extends HTMLElement {
   }
   componentDidLoad() {
     this.updateInputValue();
-    this.menu.anchorEl = this.dropdownWrapper;
+    this.attachMenu();
   }
   onValueChange() {
     this.updateInputValue();
+  }
+  attachMenu() {
+    if (!this.disabled && !this.readonly)
+      this.menu.anchorEl = this.dropdownWrapper;
+    else
+      this.menu.anchorEl = undefined;
   }
   onBlur() {
     if (this.menu && this.menu.isOpen)
@@ -18894,6 +18902,8 @@ const MxDropdownMenu$1 = class extends HTMLElement {
     if (this.flat)
       str += ' flat';
     str += this.isFocused ? ' focused border-2' : ' border';
+    if (this.disabled || this.readonly)
+      str += ' disabled';
     if (this.dropdownClass)
       str += ' ' + this.dropdownClass;
     return str;
@@ -18911,10 +18921,12 @@ const MxDropdownMenu$1 = class extends HTMLElement {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-dropdown-menu block" }, h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass }, h("input", { "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }), h("span", { class: this.suffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" }))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) }, h("slot", null))));
+    return (h(Host, { class: "mx-dropdown-menu block" }, h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass }, h("input", { "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, disabled: this.disabled, readonly: !this.disabled, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }), h("span", { class: this.suffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" }))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) }, h("slot", null))));
   }
   static get watchers() { return {
-    "value": ["onValueChange"]
+    "value": ["onValueChange"],
+    "disabled": ["attachMenu"],
+    "readonly": ["attachMenu"]
   }; }
 };
 
@@ -19572,7 +19584,7 @@ const MxMenu$1 = class extends HTMLElement {
   }
   componentWillUpdate() {
     this.setInputEl();
-    if (this.inputEl)
+    if (this.inputEl && this.anchorEl)
       this.element.style.width = this.anchorEl.getBoundingClientRect().width + 'px';
     // If any menu item has an icon, ensure that all menu items at least have a null icon.
     // This will ensure the inner text of all the menu items is aligned.
@@ -22479,7 +22491,7 @@ const MxCode = /*@__PURE__*/proxyCustomElement(MxCode$1, [4,"mx-code",{"code":[1
 const MxConfirmInput = /*@__PURE__*/proxyCustomElement(MxConfirmInput$1, [0,"mx-confirm-input",{"name":[1],"inputId":[1,"input-id"],"label":[1],"placeholder":[1],"value":[1025],"type":[1],"dense":[4],"disabled":[4],"readonly":[4],"maxlength":[2],"leftIcon":[1,"left-icon"],"rightIcon":[1025,"right-icon"],"suffix":[1],"outerContainerClass":[1,"outer-container-class"],"labelClass":[1025,"label-class"],"error":[1028],"assistiveText":[1,"assistive-text"],"floatLabel":[4,"float-label"],"textarea":[4],"textareaHeight":[1025,"textarea-height"],"elAriaLabel":[1,"el-aria-label"],"isFocused":[32],"isHovered":[32]}]);
 const MxDatePicker = /*@__PURE__*/proxyCustomElement(MxDatePicker$1, [0,"mx-date-picker",{"allowFuture":[4,"allow-future"],"allowPast":[4,"allow-past"],"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elAriaLabel":[1,"el-aria-label"],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"min":[1],"max":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[6,"click","onClick"]]]);
 const MxDialog = /*@__PURE__*/proxyCustomElement(MxDialog$1, [4,"mx-dialog",{"isOpen":[4,"is-open"],"modalClass":[1,"modal-class"],"isVisible":[32]},[[16,"keydown","onKeyDown"]]]);
-const MxDropdownMenu = /*@__PURE__*/proxyCustomElement(MxDropdownMenu$1, [4,"mx-dropdown-menu",{"elAriaLabel":[1,"el-aria-label"],"dense":[4],"elevated":[4],"flat":[4],"label":[1],"dropdownClass":[1,"dropdown-class"],"dropdownId":[1,"dropdown-id"],"name":[1],"suffix":[1],"value":[1032],"isFocused":[32]},[[0,"click","onClick"]]]);
+const MxDropdownMenu = /*@__PURE__*/proxyCustomElement(MxDropdownMenu$1, [4,"mx-dropdown-menu",{"elAriaLabel":[1,"el-aria-label"],"disabled":[4],"readonly":[4],"dense":[4],"elevated":[4],"flat":[4],"label":[1],"dropdownClass":[1,"dropdown-class"],"dropdownId":[1,"dropdown-id"],"name":[1],"suffix":[1],"value":[1032],"isFocused":[32]},[[0,"click","onClick"]]]);
 const MxFab = /*@__PURE__*/proxyCustomElement(MxFab$1, [4,"mx-fab",{"icon":[1],"secondary":[4],"elAriaLabel":[1,"el-aria-label"],"value":[1],"minWidths":[32],"isExtended":[32]}]);
 const MxIconButton = /*@__PURE__*/proxyCustomElement(MxIconButton$1, [4,"mx-icon-button",{"type":[1],"form":[1],"formaction":[1],"value":[1],"href":[1],"disabled":[516],"elAriaLabel":[1,"el-aria-label"],"chevronDown":[4,"chevron-down"],"chevronLeft":[4,"chevron-left"],"chevronRight":[4,"chevron-right"],"icon":[1]}]);
 const MxImageUpload = /*@__PURE__*/proxyCustomElement(MxImageUpload$1, [4,"mx-image-upload",{"acceptImage":[4,"accept-image"],"acceptPdf":[4,"accept-pdf"],"assetName":[1,"asset-name"],"assistiveText":[1,"assistive-text"],"avatar":[4],"elAriaLabel":[1,"el-aria-label"],"uploadBtnType":[1,"upload-btn-type"],"thumbnailSize":[1,"thumbnail-size"],"height":[1],"icon":[1],"inputId":[1,"input-id"],"isUploaded":[1540,"is-uploaded"],"isUploading":[1540,"is-uploading"],"name":[1],"removeButtonLabel":[1,"remove-button-label"],"showButton":[4,"show-button"],"showIcon":[4,"show-icon"],"showDropzoneText":[4,"show-dropzone-text"],"thumbnailUrl":[1,"thumbnail-url"],"uploadButtonLabel":[1,"upload-button-label"],"width":[1],"isDraggingOver":[32],"isFileSelected":[32],"thumbnailDataUri":[32]}]);
