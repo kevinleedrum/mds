@@ -65,19 +65,35 @@ export class MxPagination {
     this.isSmallMinWidth = this.element.offsetWidth >= 640;
   }
 
+  get isPreviousPageDisabled(): boolean {
+    return this.page === 1 || this.disabled;
+  }
+
+  get isNextPageDisabled(): boolean {
+    return this.page === this.lastPage || this.disabled || this.disableNextPage;
+  }
+
+  get isLastPageDisabled(): boolean {
+    return this.page === this.lastPage || this.disabled;
+  }
+
   onClickFirstPage() {
+    if (this.isPreviousPageDisabled) return;
     this.mxPageChange.emit({ page: 1, rowsPerPage: this.rowsPerPage });
   }
 
   onClickPreviousPage() {
+    if (this.isPreviousPageDisabled) return;
     this.mxPageChange.emit({ page: this.page - 1, rowsPerPage: this.rowsPerPage });
   }
 
   onClickNextPage() {
+    if (this.isNextPageDisabled) return;
     this.mxPageChange.emit({ page: this.page + 1, rowsPerPage: this.rowsPerPage });
   }
 
   onClickLastPage() {
+    if (this.isLastPageDisabled) return;
     this.mxPageChange.emit({ page: this.lastPage, rowsPerPage: this.rowsPerPage });
   }
 
@@ -187,26 +203,26 @@ export class MxPagination {
                 <mx-icon-button
                   el-aria-label="First page"
                   icon="mds-page-first"
-                  disabled={this.page === 1 || this.disabled}
+                  disabled={this.isPreviousPageDisabled}
                   onClick={this.onClickFirstPage.bind(this)}
                 />
                 <mx-icon-button
                   el-aria-label="Previous page"
                   icon="mds-chevron-left"
-                  disabled={this.page === 1 || this.disabled}
+                  disabled={this.isPreviousPageDisabled}
                   onClick={this.onClickPreviousPage.bind(this)}
                 />
                 <mx-icon-button
                   el-aria-label="Next page"
                   icon="mds-chevron-right"
-                  disabled={this.page === this.lastPage || this.disabled || this.disableNextPage}
+                  disabled={this.isNextPageDisabled}
                   onClick={this.onClickNextPage.bind(this)}
                 />
                 {this.lastPage !== null && (
                   <mx-icon-button
                     el-aria-label="Last page"
                     icon="mds-page-last"
-                    disabled={this.page === this.lastPage || this.disabled}
+                    disabled={this.isLastPageDisabled}
                     onClick={this.onClickLastPage.bind(this)}
                   />
                 )}
