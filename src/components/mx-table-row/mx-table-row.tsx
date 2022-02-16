@@ -496,8 +496,9 @@ export class MxTableRow {
           {/* Mobile accordion chevron */}
           {!this.minWidths.sm && !this.subheader && this.columnCount > 1 && (
             <button
+              type="button"
               class="flex border-0 items-center justify-end px-12 row-start-1"
-              aria-hidden="true"
+              aria-label="Toggle visibility of more column data"
               onClick={this.accordion.bind(this)}
               onMouseDown={e => e.preventDefault() /* Do not focus on click */}
             >

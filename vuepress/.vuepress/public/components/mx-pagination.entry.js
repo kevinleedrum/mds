@@ -47,16 +47,33 @@ const MxPagination = class {
     this.isXSmallMinWidth = this.element.offsetWidth >= 320;
     this.isSmallMinWidth = this.element.offsetWidth >= 640;
   }
+  get isPreviousPageDisabled() {
+    return this.page === 1 || this.disabled;
+  }
+  get isNextPageDisabled() {
+    return this.page === this.lastPage || this.disabled || this.disableNextPage;
+  }
+  get isLastPageDisabled() {
+    return this.page === this.lastPage || this.disabled;
+  }
   onClickFirstPage() {
+    if (this.isPreviousPageDisabled)
+      return;
     this.mxPageChange.emit({ page: 1, rowsPerPage: this.rowsPerPage });
   }
   onClickPreviousPage() {
+    if (this.isPreviousPageDisabled)
+      return;
     this.mxPageChange.emit({ page: this.page - 1, rowsPerPage: this.rowsPerPage });
   }
   onClickNextPage() {
+    if (this.isNextPageDisabled)
+      return;
     this.mxPageChange.emit({ page: this.page + 1, rowsPerPage: this.rowsPerPage });
   }
   onClickLastPage() {
+    if (this.isLastPageDisabled)
+      return;
     this.mxPageChange.emit({ page: this.lastPage, rowsPerPage: this.rowsPerPage });
   }
   onChangeRowsPerPage(rowsPerPage) {
@@ -98,7 +115,7 @@ const MxPagination = class {
     // Simple pagination
     h("div", { class: "simple flex items-center justify-center h-48" }, h("mx-icon-button", { "el-aria-label": "Previous page", "chevron-left": true, disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), this.lastPage !== null ? this.page + ' of ' + this.lastPage : '', h("mx-icon-button", { "el-aria-label": "Next page", "chevron-right": true, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }))) : (
     // Standard pagination
-    h("div", { ref: el => (this.paginationWrapper = el), class: this.paginationWrapperClass }, this.hasStatus && (h("div", { "data-testid": "status", class: "px-24 py-10 flex relative items-center justify-self-start" }, h("slot", { name: "status" }))), h("div", { class: 'flex flex-grow-0 items-center justify-end h-56 pr-4' + (this.hideRowsPerPage ? ' relative' : '') }, this.rowsPerPageOptions && this.rowsPerPageOptions.length > 1 && (h("div", { ref: el => (this.rowsPerPageWrapper = el), "aria-hidden": this.hideRowsPerPage, class: 'flex items-center px-24' + (this.hideRowsPerPage ? ' absolute opacity-0 pointer-events-none' : '') }, "Rows per page: \u00A0", h("div", { "data-testid": "rows-per-page", ref: el => (this.rowsMenuAnchor = el), class: "flex items-center cursor-pointer" }, this.rowsPerPage, h("i", { class: "mds-arrow-triangle-down ml-12 text-icon" })), h("mx-menu", { ref: el => (this.rowsMenu = el), onMxClose: e => e.stopPropagation() }, this.rowsPerPageOptions.map(option => (h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))), this.totalRows > 0 && (h("div", { "data-testid": "row-range", class: this.rowRangeClass }, this.currentRange, " of ", this.totalRows)), h("div", { class: "flex items-center sm:space-x-8" }, h("mx-icon-button", { "el-aria-label": "First page", icon: "mds-page-first", disabled: this.page === 1 || this.disabled, onClick: this.onClickFirstPage.bind(this) }), h("mx-icon-button", { "el-aria-label": "Previous page", icon: "mds-chevron-left", disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), h("mx-icon-button", { "el-aria-label": "Next page", icon: "mds-chevron-right", disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }), this.lastPage !== null && (h("mx-icon-button", { "el-aria-label": "Last page", icon: "mds-page-last", disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
+    h("div", { ref: el => (this.paginationWrapper = el), class: this.paginationWrapperClass }, this.hasStatus && (h("div", { "data-testid": "status", class: "px-24 py-10 flex relative items-center justify-self-start" }, h("slot", { name: "status" }))), h("div", { class: 'flex flex-grow-0 items-center justify-end h-56 pr-4' + (this.hideRowsPerPage ? ' relative' : '') }, this.rowsPerPageOptions && this.rowsPerPageOptions.length > 1 && (h("div", { ref: el => (this.rowsPerPageWrapper = el), "aria-hidden": this.hideRowsPerPage, class: 'flex items-center px-24' + (this.hideRowsPerPage ? ' absolute opacity-0 pointer-events-none' : '') }, "Rows per page: \u00A0", h("div", { "data-testid": "rows-per-page", ref: el => (this.rowsMenuAnchor = el), class: "flex items-center cursor-pointer" }, this.rowsPerPage, h("i", { class: "mds-arrow-triangle-down ml-12 text-icon" })), h("mx-menu", { ref: el => (this.rowsMenu = el), onMxClose: e => e.stopPropagation() }, this.rowsPerPageOptions.map(option => (h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))), this.totalRows > 0 && (h("div", { "data-testid": "row-range", class: this.rowRangeClass }, this.currentRange, " of ", this.totalRows)), h("div", { class: "flex items-center sm:space-x-8" }, h("mx-icon-button", { "el-aria-label": "First page", icon: "mds-page-first", disabled: this.isPreviousPageDisabled, onClick: this.onClickFirstPage.bind(this) }), h("mx-icon-button", { "el-aria-label": "Previous page", icon: "mds-chevron-left", disabled: this.isPreviousPageDisabled, onClick: this.onClickPreviousPage.bind(this) }), h("mx-icon-button", { "el-aria-label": "Next page", icon: "mds-chevron-right", disabled: this.isNextPageDisabled, onClick: this.onClickNextPage.bind(this) }), this.lastPage !== null && (h("mx-icon-button", { "el-aria-label": "Last page", icon: "mds-page-last", disabled: this.isLastPageDisabled, onClick: this.onClickLastPage.bind(this) }))))))));
   }
   get element() { return getElement(this); }
 };

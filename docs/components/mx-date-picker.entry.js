@@ -28,7 +28,6 @@ const MxDatePicker = class {
     this.floatLabel = false;
     this.isFocused = false;
     this.isInputDirty = false;
-    this.componentWillRender = propagateDataAttributes;
   }
   onValueChange() {
     if (this.value && !yyyymmdd.test(this.value))
@@ -60,37 +59,47 @@ const MxDatePicker = class {
       throw new Error('The date picker value must be in YYYY-MM-DD format.');
     }
   }
+  componentWillRender() {
+    if (!this.datepicker)
+      this.componentDidLoad();
+    propagateDataAttributes.call(this);
+  }
   componentDidLoad() {
     if (!this.inputEl)
       return;
     this.isDateInputSupported = this.inputEl.type === 'date';
-    this.datepicker = datepicker(this.inputEl, {
-      alwaysShow: true,
-      customDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-      overlayButton: 'Confirm',
-      overlayPlaceholder: 'Year (YYYY)',
-      minDate: this.minDate,
-      maxDate: this.maxDate,
-      dateSelected: this.value ? new Date(this.value + 'T00:00:00') : undefined,
-      formatter: (input, date) => {
-        if (this.inputEl.contains(document.activeElement))
-          return; // Do not reformat while typing in date
-        input.value = date.toISOString().split('T')[0];
-        this.value = input.value;
-        input.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
-        if (!this.isDateInputSupported)
-          input.value = date.toLocaleDateString();
-      },
-      onSelect: () => {
-        this.error = false;
-        this.closeCalendar();
-      },
-    });
-    this.datepicker.calendarContainer.classList.add('hidden');
-    // HACK: Fix js-datepicker moving the calendar when interacting with the year/month selection.
-    this.datepicker.calendarContainer.addEventListener('click', this.repositionCalendar.bind(this));
-    this.datepicker.calendarContainer.addEventListener('focusin', this.repositionCalendar.bind(this));
-    this.datepicker.calendarContainer.addEventListener('mousedown', this.repositionCalendar.bind(this));
+    try {
+      this.datepicker = datepicker(this.inputEl, {
+        alwaysShow: true,
+        customDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        overlayButton: 'Confirm',
+        overlayPlaceholder: 'Year (YYYY)',
+        minDate: this.minDate,
+        maxDate: this.maxDate,
+        dateSelected: this.value ? new Date(this.value + 'T00:00:00') : undefined,
+        formatter: (input, date) => {
+          if (this.inputEl.contains(document.activeElement))
+            return; // Do not reformat while typing in date
+          input.value = date.toISOString().split('T')[0];
+          this.value = input.value;
+          input.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
+          if (!this.isDateInputSupported)
+            input.value = date.toLocaleDateString();
+        },
+        onSelect: () => {
+          this.error = false;
+          this.closeCalendar();
+        },
+      });
+      this.datepicker.calendarContainer.classList.add('hidden');
+      // HACK: Fix js-datepicker moving the calendar when interacting with the year/month selection.
+      this.datepicker.calendarContainer.addEventListener('click', this.repositionCalendar.bind(this));
+      this.datepicker.calendarContainer.addEventListener('focusin', this.repositionCalendar.bind(this));
+      this.datepicker.calendarContainer.addEventListener('mousedown', this.repositionCalendar.bind(this));
+    }
+    catch (err) {
+      // Ignore js-datepicker exceptions (e.g. inputEl is hidden)
+    }
   }
   onBlur() {
     if (!this.isCalendarOpen) {
@@ -152,6 +161,8 @@ const MxDatePicker = class {
     this.inputEl.focus();
   }
   async openCalendar() {
+    if (!this.datepicker)
+      return;
     this.isFocused = true;
     this.datepicker.navigate(this.datepicker.dateSelected || new Date());
     this.datepicker.calendarContainer.classList.remove('hidden');
@@ -165,6 +176,8 @@ const MxDatePicker = class {
     requestAnimationFrame(this.popoverInstance.forceUpdate);
   }
   async closeCalendar() {
+    if (!this.datepicker)
+      return;
     await fadeOut(this.datepicker.calendarContainer);
     this.datepicker.calendarContainer.classList.add('hidden');
     if (!this.inputEl.contains(document.activeElement))
@@ -196,6 +209,8 @@ const MxDatePicker = class {
     return this.maxDate ? this.maxDate.toISOString().split('T')[0] : null;
   }
   get isCalendarOpen() {
+    if (!this.datepicker)
+      return false;
     return !this.datepicker.calendarContainer.classList.contains('hidden');
   }
   get labelClassNames() {
