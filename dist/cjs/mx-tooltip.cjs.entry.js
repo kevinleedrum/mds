@@ -30,7 +30,7 @@ const MxTooltip = class {
   componentDidLoad() {
     let anchorEl = this.element.firstElementChild;
     // For custom elements that wrap buttons, inputs, attach event listeners to the native element
-    anchorEl = this.element.firstElementChild.querySelector('button, input, [role="button"]') || anchorEl;
+    anchorEl = this.element.querySelector('a, button, input, [role="button"]') || anchorEl;
     anchorEl.setAttribute('aria-describedby', this.uuid);
     anchorEl.addEventListener('mouseenter', this.show.bind(this));
     anchorEl.addEventListener('mouseleave', this.hide.bind(this));

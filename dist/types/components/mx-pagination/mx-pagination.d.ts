@@ -32,6 +32,9 @@ export declare class MxPagination {
   componentWillRender(): void;
   componentDidLoad(): void;
   updateResponsiveElements(): void;
+  get isPreviousPageDisabled(): boolean;
+  get isNextPageDisabled(): boolean;
+  get isLastPageDisabled(): boolean;
   onClickFirstPage(): void;
   onClickPreviousPage(): void;
   onClickNextPage(): void;

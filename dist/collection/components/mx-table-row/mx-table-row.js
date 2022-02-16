@@ -390,7 +390,7 @@ export class MxTableRow {
         h("slot", null),
         !this.checkable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-2 w-0" }),
         !this.isDraggable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-3 w-0" }),
-        !this.minWidths.sm && !this.subheader && this.columnCount > 1 && (h("button", { class: "flex border-0 items-center justify-end px-12 row-start-1", "aria-hidden": "true", onClick: this.accordion.bind(this), onMouseDown: e => e.preventDefault() /* Do not focus on click */ },
+        !this.minWidths.sm && !this.subheader && this.columnCount > 1 && (h("button", { type: "button", class: "flex border-0 items-center justify-end px-12 row-start-1", "aria-label": "Toggle visibility of more column data", onClick: this.accordion.bind(this), onMouseDown: e => e.preventDefault() /* Do not focus on click */ },
           h("i", { class: 'mobile-row-chevron mds-chevron-down text-icon transform' +
               (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : '') }))),
         this.actions.length === 1 && (h("div", { class: "action-cell flex items-center p-16 sm:p-0 justify-end col-start-2 col-span-4 sm:col-span-1" },

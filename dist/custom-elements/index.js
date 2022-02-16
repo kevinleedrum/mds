@@ -18428,7 +18428,6 @@ const MxDatePicker$1 = class extends HTMLElement {
     this.floatLabel = false;
     this.isFocused = false;
     this.isInputDirty = false;
-    this.componentWillRender = propagateDataAttributes;
   }
   onValueChange() {
     if (this.value && !yyyymmdd.test(this.value))
@@ -18460,37 +18459,47 @@ const MxDatePicker$1 = class extends HTMLElement {
       throw new Error('The date picker value must be in YYYY-MM-DD format.');
     }
   }
+  componentWillRender() {
+    if (!this.datepicker)
+      this.componentDidLoad();
+    propagateDataAttributes.call(this);
+  }
   componentDidLoad() {
     if (!this.inputEl)
       return;
     this.isDateInputSupported = this.inputEl.type === 'date';
-    this.datepicker = datepicker(this.inputEl, {
-      alwaysShow: true,
-      customDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-      overlayButton: 'Confirm',
-      overlayPlaceholder: 'Year (YYYY)',
-      minDate: this.minDate,
-      maxDate: this.maxDate,
-      dateSelected: this.value ? new Date(this.value + 'T00:00:00') : undefined,
-      formatter: (input, date) => {
-        if (this.inputEl.contains(document.activeElement))
-          return; // Do not reformat while typing in date
-        input.value = date.toISOString().split('T')[0];
-        this.value = input.value;
-        input.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
-        if (!this.isDateInputSupported)
-          input.value = date.toLocaleDateString();
-      },
-      onSelect: () => {
-        this.error = false;
-        this.closeCalendar();
-      },
-    });
-    this.datepicker.calendarContainer.classList.add('hidden');
-    // HACK: Fix js-datepicker moving the calendar when interacting with the year/month selection.
-    this.datepicker.calendarContainer.addEventListener('click', this.repositionCalendar.bind(this));
-    this.datepicker.calendarContainer.addEventListener('focusin', this.repositionCalendar.bind(this));
-    this.datepicker.calendarContainer.addEventListener('mousedown', this.repositionCalendar.bind(this));
+    try {
+      this.datepicker = datepicker(this.inputEl, {
+        alwaysShow: true,
+        customDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        overlayButton: 'Confirm',
+        overlayPlaceholder: 'Year (YYYY)',
+        minDate: this.minDate,
+        maxDate: this.maxDate,
+        dateSelected: this.value ? new Date(this.value + 'T00:00:00') : undefined,
+        formatter: (input, date) => {
+          if (this.inputEl.contains(document.activeElement))
+            return; // Do not reformat while typing in date
+          input.value = date.toISOString().split('T')[0];
+          this.value = input.value;
+          input.dispatchEvent(new Event('input', { cancelable: true, bubbles: true }));
+          if (!this.isDateInputSupported)
+            input.value = date.toLocaleDateString();
+        },
+        onSelect: () => {
+          this.error = false;
+          this.closeCalendar();
+        },
+      });
+      this.datepicker.calendarContainer.classList.add('hidden');
+      // HACK: Fix js-datepicker moving the calendar when interacting with the year/month selection.
+      this.datepicker.calendarContainer.addEventListener('click', this.repositionCalendar.bind(this));
+      this.datepicker.calendarContainer.addEventListener('focusin', this.repositionCalendar.bind(this));
+      this.datepicker.calendarContainer.addEventListener('mousedown', this.repositionCalendar.bind(this));
+    }
+    catch (err) {
+      // Ignore js-datepicker exceptions (e.g. inputEl is hidden)
+    }
   }
   onBlur() {
     if (!this.isCalendarOpen) {
@@ -18552,6 +18561,8 @@ const MxDatePicker$1 = class extends HTMLElement {
     this.inputEl.focus();
   }
   async openCalendar() {
+    if (!this.datepicker)
+      return;
     this.isFocused = true;
     this.datepicker.navigate(this.datepicker.dateSelected || new Date());
     this.datepicker.calendarContainer.classList.remove('hidden');
@@ -18565,6 +18576,8 @@ const MxDatePicker$1 = class extends HTMLElement {
     requestAnimationFrame(this.popoverInstance.forceUpdate);
   }
   async closeCalendar() {
+    if (!this.datepicker)
+      return;
     await fadeOut(this.datepicker.calendarContainer);
     this.datepicker.calendarContainer.classList.add('hidden');
     if (!this.inputEl.contains(document.activeElement))
@@ -18596,6 +18609,8 @@ const MxDatePicker$1 = class extends HTMLElement {
     return this.maxDate ? this.maxDate.toISOString().split('T')[0] : null;
   }
   get isCalendarOpen() {
+    if (!this.datepicker)
+      return false;
     return !this.datepicker.calendarContainer.classList.contains('hidden');
   }
   get labelClassNames() {
@@ -20637,16 +20652,33 @@ const MxPagination$1 = class extends HTMLElement {
     this.isXSmallMinWidth = this.element.offsetWidth >= 320;
     this.isSmallMinWidth = this.element.offsetWidth >= 640;
   }
+  get isPreviousPageDisabled() {
+    return this.page === 1 || this.disabled;
+  }
+  get isNextPageDisabled() {
+    return this.page === this.lastPage || this.disabled || this.disableNextPage;
+  }
+  get isLastPageDisabled() {
+    return this.page === this.lastPage || this.disabled;
+  }
   onClickFirstPage() {
+    if (this.isPreviousPageDisabled)
+      return;
     this.mxPageChange.emit({ page: 1, rowsPerPage: this.rowsPerPage });
   }
   onClickPreviousPage() {
+    if (this.isPreviousPageDisabled)
+      return;
     this.mxPageChange.emit({ page: this.page - 1, rowsPerPage: this.rowsPerPage });
   }
   onClickNextPage() {
+    if (this.isNextPageDisabled)
+      return;
     this.mxPageChange.emit({ page: this.page + 1, rowsPerPage: this.rowsPerPage });
   }
   onClickLastPage() {
+    if (this.isLastPageDisabled)
+      return;
     this.mxPageChange.emit({ page: this.lastPage, rowsPerPage: this.rowsPerPage });
   }
   onChangeRowsPerPage(rowsPerPage) {
@@ -20688,7 +20720,7 @@ const MxPagination$1 = class extends HTMLElement {
     // Simple pagination
     h("div", { class: "simple flex items-center justify-center h-48" }, h("mx-icon-button", { "el-aria-label": "Previous page", "chevron-left": true, disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), this.lastPage !== null ? this.page + ' of ' + this.lastPage : '', h("mx-icon-button", { "el-aria-label": "Next page", "chevron-right": true, disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }))) : (
     // Standard pagination
-    h("div", { ref: el => (this.paginationWrapper = el), class: this.paginationWrapperClass }, this.hasStatus && (h("div", { "data-testid": "status", class: "px-24 py-10 flex relative items-center justify-self-start" }, h("slot", { name: "status" }))), h("div", { class: 'flex flex-grow-0 items-center justify-end h-56 pr-4' + (this.hideRowsPerPage ? ' relative' : '') }, this.rowsPerPageOptions && this.rowsPerPageOptions.length > 1 && (h("div", { ref: el => (this.rowsPerPageWrapper = el), "aria-hidden": this.hideRowsPerPage, class: 'flex items-center px-24' + (this.hideRowsPerPage ? ' absolute opacity-0 pointer-events-none' : '') }, "Rows per page: \u00A0", h("div", { "data-testid": "rows-per-page", ref: el => (this.rowsMenuAnchor = el), class: "flex items-center cursor-pointer" }, this.rowsPerPage, h("i", { class: "mds-arrow-triangle-down ml-12 text-icon" })), h("mx-menu", { ref: el => (this.rowsMenu = el), onMxClose: e => e.stopPropagation() }, this.rowsPerPageOptions.map(option => (h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))), this.totalRows > 0 && (h("div", { "data-testid": "row-range", class: this.rowRangeClass }, this.currentRange, " of ", this.totalRows)), h("div", { class: "flex items-center sm:space-x-8" }, h("mx-icon-button", { "el-aria-label": "First page", icon: "mds-page-first", disabled: this.page === 1 || this.disabled, onClick: this.onClickFirstPage.bind(this) }), h("mx-icon-button", { "el-aria-label": "Previous page", icon: "mds-chevron-left", disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }), h("mx-icon-button", { "el-aria-label": "Next page", icon: "mds-chevron-right", disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }), this.lastPage !== null && (h("mx-icon-button", { "el-aria-label": "Last page", icon: "mds-page-last", disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
+    h("div", { ref: el => (this.paginationWrapper = el), class: this.paginationWrapperClass }, this.hasStatus && (h("div", { "data-testid": "status", class: "px-24 py-10 flex relative items-center justify-self-start" }, h("slot", { name: "status" }))), h("div", { class: 'flex flex-grow-0 items-center justify-end h-56 pr-4' + (this.hideRowsPerPage ? ' relative' : '') }, this.rowsPerPageOptions && this.rowsPerPageOptions.length > 1 && (h("div", { ref: el => (this.rowsPerPageWrapper = el), "aria-hidden": this.hideRowsPerPage, class: 'flex items-center px-24' + (this.hideRowsPerPage ? ' absolute opacity-0 pointer-events-none' : '') }, "Rows per page: \u00A0", h("div", { "data-testid": "rows-per-page", ref: el => (this.rowsMenuAnchor = el), class: "flex items-center cursor-pointer" }, this.rowsPerPage, h("i", { class: "mds-arrow-triangle-down ml-12 text-icon" })), h("mx-menu", { ref: el => (this.rowsMenu = el), onMxClose: e => e.stopPropagation() }, this.rowsPerPageOptions.map(option => (h("mx-menu-item", { disabled: this.disabled, onClick: this.onChangeRowsPerPage.bind(this, option) }, option)))))), this.totalRows > 0 && (h("div", { "data-testid": "row-range", class: this.rowRangeClass }, this.currentRange, " of ", this.totalRows)), h("div", { class: "flex items-center sm:space-x-8" }, h("mx-icon-button", { "el-aria-label": "First page", icon: "mds-page-first", disabled: this.isPreviousPageDisabled, onClick: this.onClickFirstPage.bind(this) }), h("mx-icon-button", { "el-aria-label": "Previous page", icon: "mds-chevron-left", disabled: this.isPreviousPageDisabled, onClick: this.onClickPreviousPage.bind(this) }), h("mx-icon-button", { "el-aria-label": "Next page", icon: "mds-chevron-right", disabled: this.isNextPageDisabled, onClick: this.onClickNextPage.bind(this) }), this.lastPage !== null && (h("mx-icon-button", { "el-aria-label": "Last page", icon: "mds-page-last", disabled: this.isLastPageDisabled, onClick: this.onClickLastPage.bind(this) }))))))));
   }
   get element() { return this; }
 };
@@ -22078,7 +22110,7 @@ const MxTableRow$1 = class extends HTMLElement {
   }
   render() {
     return (h(Host, { class: "mx-table-row contents" }, h("div", { role: "row", class: this.rowClass, style: this.rowStyle, onClick: this.onClick.bind(this), onTransitionEnd: this.onTransitionEnd.bind(this), onMouseOver: this.onMouseOver.bind(this), onMouseOut: this.onMouseOut.bind(this) }, h("div", { ref: el => (this.firstColumnWrapper = el), class: 'first-column-wrapper contents sm:flex sm:items-center min-w-0 overflow-hidden' +
-        (this.subheader ? ' sm:col-span-full' : '') }, h("div", { class: this.indentClass, style: this.indentStyle, "data-testid": 'indent-' + this.indentLevel }), this.checkable && (h("div", { class: "flex items-center pr-4 col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto", onClick: this.accordion.bind(this) }, h("mx-checkbox", { ref: el => (this.checkbox = el), checked: this.checked, onInput: this.onCheckboxInput.bind(this), onClick: e => e.stopPropagation(), "label-name": "Select row", "hide-label": true }))), this.isDraggable && (h("div", { class: "drag-handle flex items-center col-start-3 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move", "data-testid": "drag-handle", onMouseDown: this.startDragging.bind(this), onTouchStart: this.startDragging.bind(this) }, h("i", { "aria-label": "Press Space or Enter to move this row", ref: el => (this.keyboardDragHandle = el), role: "button", tabindex: "0", class: 'mds-drag-dots text-icon pointer-events-none' + (this.checkable ? ' mx-8' : ''), onKeyDown: this.onKeyboardHandleKeyDown.bind(this) }), this.isDragging && (h("p", { class: "sr-only", role: "alert" }, "Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to cancel."))))), h("slot", null), !this.checkable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-2 w-0" }), !this.isDraggable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-3 w-0" }), !this.minWidths.sm && !this.subheader && this.columnCount > 1 && (h("button", { class: "flex border-0 items-center justify-end px-12 row-start-1", "aria-hidden": "true", onClick: this.accordion.bind(this), onMouseDown: e => e.preventDefault() /* Do not focus on click */ }, h("i", { class: 'mobile-row-chevron mds-chevron-down text-icon transform' +
+        (this.subheader ? ' sm:col-span-full' : '') }, h("div", { class: this.indentClass, style: this.indentStyle, "data-testid": 'indent-' + this.indentLevel }), this.checkable && (h("div", { class: "flex items-center pr-4 col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto", onClick: this.accordion.bind(this) }, h("mx-checkbox", { ref: el => (this.checkbox = el), checked: this.checked, onInput: this.onCheckboxInput.bind(this), onClick: e => e.stopPropagation(), "label-name": "Select row", "hide-label": true }))), this.isDraggable && (h("div", { class: "drag-handle flex items-center col-start-3 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move", "data-testid": "drag-handle", onMouseDown: this.startDragging.bind(this), onTouchStart: this.startDragging.bind(this) }, h("i", { "aria-label": "Press Space or Enter to move this row", ref: el => (this.keyboardDragHandle = el), role: "button", tabindex: "0", class: 'mds-drag-dots text-icon pointer-events-none' + (this.checkable ? ' mx-8' : ''), onKeyDown: this.onKeyboardHandleKeyDown.bind(this) }), this.isDragging && (h("p", { class: "sr-only", role: "alert" }, "Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to cancel."))))), h("slot", null), !this.checkable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-2 w-0" }), !this.isDraggable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-3 w-0" }), !this.minWidths.sm && !this.subheader && this.columnCount > 1 && (h("button", { type: "button", class: "flex border-0 items-center justify-end px-12 row-start-1", "aria-label": "Toggle visibility of more column data", onClick: this.accordion.bind(this), onMouseDown: e => e.preventDefault() /* Do not focus on click */ }, h("i", { class: 'mobile-row-chevron mds-chevron-down text-icon transform' +
         (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : '') }))), this.actions.length === 1 && (h("div", { class: "action-cell flex items-center p-16 sm:p-0 justify-end col-start-2 col-span-4 sm:col-span-1" }, h("mx-button", Object.assign({ "data-testid": "action-button", "btn-type": "text" }, this.actions[0]), this.actions[0].value))), this.actions.length > 1 && (h("div", { class: "action-cell flex items-center p-0 justify-end col-start-2 col-span-4 sm:col-span-1" }, h("mx-icon-button", { ref: el => (this.actionMenuButton = el), "el-aria-label": "Row Actions", icon: "mds-dots-vertical" }), h("mx-menu", { "data-testid": "action-menu", ref: el => (this.actionMenu = el), onMxClose: e => e.stopPropagation() }, this.actions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))))), h("div", { ref: el => (this.childRowWrapper = el), class: "contents" })));
   }
   get element() { return this; }
@@ -22424,7 +22456,7 @@ const MxTooltip$1 = class extends HTMLElement {
   componentDidLoad() {
     let anchorEl = this.element.firstElementChild;
     // For custom elements that wrap buttons, inputs, attach event listeners to the native element
-    anchorEl = this.element.firstElementChild.querySelector('button, input, [role="button"]') || anchorEl;
+    anchorEl = this.element.querySelector('a, button, input, [role="button"]') || anchorEl;
     anchorEl.setAttribute('aria-describedby', this.uuid);
     anchorEl.addEventListener('mouseenter', this.show.bind(this));
     anchorEl.addEventListener('mouseleave', this.hide.bind(this));

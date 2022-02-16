@@ -1,5 +1,4 @@
 import { PopoverInstance } from '../../utils/popover';
-import { propagateDataAttributes } from '../../utils/utils';
 export declare class MxDatePicker {
   uuid: string;
   dataAttributes: {};
@@ -39,7 +38,7 @@ export declare class MxDatePicker {
    * placement is buggy. */
   onClick(e: MouseEvent): void;
   connectedCallback(): void;
-  componentWillRender: typeof propagateDataAttributes;
+  componentWillRender(): void;
   componentDidLoad(): void;
   onBlur(): void;
   onFocus(e: FocusEvent): void;
