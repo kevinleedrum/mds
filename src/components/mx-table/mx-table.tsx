@@ -250,6 +250,7 @@ export class MxTable {
     if (this.rows && this.mutateOnDrag) await new Promise(requestAnimationFrame);
     this.mxRowMove.emit({
       rowId: this.dragRowEl.rowId,
+      parentRowId: (this.dragRowEl.parentElement.closest('mx-table-row') || {}).rowId,
       oldIndex: this.dragRowEl.rowIndex == null ? this.dragRowElIndex : this.dragRowEl.rowIndex,
       newIndex: this.dragOverRowEl.rowIndex == null ? this.dragOverRowElIndex : this.dragOverRowEl.rowIndex,
     });
