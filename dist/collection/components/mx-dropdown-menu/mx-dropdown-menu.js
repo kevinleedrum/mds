@@ -1,6 +1,8 @@
 import { Component, Host, h, Prop, State, Watch, Listen } from '@stencil/core';
 export class MxDropdownMenu {
   constructor() {
+    this.disabled = false;
+    this.readonly = false;
     this.dense = false;
     /** Style as a filter dropdown with a 1dp elevation */
     this.elevated = false;
@@ -20,10 +22,16 @@ export class MxDropdownMenu {
   }
   componentDidLoad() {
     this.updateInputValue();
-    this.menu.anchorEl = this.dropdownWrapper;
+    this.attachMenu();
   }
   onValueChange() {
     this.updateInputValue();
+  }
+  attachMenu() {
+    if (!this.disabled && !this.readonly)
+      this.menu.anchorEl = this.dropdownWrapper;
+    else
+      this.menu.anchorEl = undefined;
   }
   onBlur() {
     if (this.menu && this.menu.isOpen)
@@ -49,6 +57,8 @@ export class MxDropdownMenu {
     if (this.flat)
       str += ' flat';
     str += this.isFocused ? ' focused border-2' : ' border';
+    if (this.disabled || this.readonly)
+      str += ' disabled';
     if (this.dropdownClass)
       str += ' ' + this.dropdownClass;
     return str;
@@ -68,7 +78,7 @@ export class MxDropdownMenu {
   render() {
     return (h(Host, { class: "mx-dropdown-menu block" },
       h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass },
-        h("input", { "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, readonly: true, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }),
+        h("input", { "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, disabled: this.disabled, readonly: !this.disabled, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }),
         h("span", { class: this.suffixClass },
           this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix),
           h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" }))),
@@ -93,6 +103,42 @@ export class MxDropdownMenu {
       },
       "attribute": "el-aria-label",
       "reflect": false
+    },
+    "disabled": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "disabled",
+      "reflect": false,
+      "defaultValue": "false"
+    },
+    "readonly": {
+      "type": "boolean",
+      "mutable": false,
+      "complexType": {
+        "original": "boolean",
+        "resolved": "boolean",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "readonly",
+      "reflect": false,
+      "defaultValue": "false"
     },
     "dense": {
       "type": "boolean",
@@ -257,6 +303,12 @@ export class MxDropdownMenu {
   static get watchers() { return [{
       "propName": "value",
       "methodName": "onValueChange"
+    }, {
+      "propName": "disabled",
+      "methodName": "attachMenu"
+    }, {
+      "propName": "readonly",
+      "methodName": "attachMenu"
     }]; }
   static get listeners() { return [{
       "name": "click",

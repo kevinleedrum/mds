@@ -125,6 +125,8 @@ const config = {
     borderRadius: ({ after }) => after(['first-of-type', 'last-of-type']),
     extend: {
       borderWidth: ['focus'],
+      cursor: ['disabled'],
+      pointerEvents: ['disabled'],
     },
   },
   plugins: [

@@ -44,16 +44,33 @@ export class MxPagination {
     this.isXSmallMinWidth = this.element.offsetWidth >= 320;
     this.isSmallMinWidth = this.element.offsetWidth >= 640;
   }
+  get isPreviousPageDisabled() {
+    return this.page === 1 || this.disabled;
+  }
+  get isNextPageDisabled() {
+    return this.page === this.lastPage || this.disabled || this.disableNextPage;
+  }
+  get isLastPageDisabled() {
+    return this.page === this.lastPage || this.disabled;
+  }
   onClickFirstPage() {
+    if (this.isPreviousPageDisabled)
+      return;
     this.mxPageChange.emit({ page: 1, rowsPerPage: this.rowsPerPage });
   }
   onClickPreviousPage() {
+    if (this.isPreviousPageDisabled)
+      return;
     this.mxPageChange.emit({ page: this.page - 1, rowsPerPage: this.rowsPerPage });
   }
   onClickNextPage() {
+    if (this.isNextPageDisabled)
+      return;
     this.mxPageChange.emit({ page: this.page + 1, rowsPerPage: this.rowsPerPage });
   }
   onClickLastPage() {
+    if (this.isLastPageDisabled)
+      return;
     this.mxPageChange.emit({ page: this.lastPage, rowsPerPage: this.rowsPerPage });
   }
   onChangeRowsPerPage(rowsPerPage) {
@@ -115,10 +132,10 @@ export class MxPagination {
             " of ",
             this.totalRows)),
           h("div", { class: "flex items-center sm:space-x-8" },
-            h("mx-icon-button", { "el-aria-label": "First page", icon: "mds-page-first", disabled: this.page === 1 || this.disabled, onClick: this.onClickFirstPage.bind(this) }),
-            h("mx-icon-button", { "el-aria-label": "Previous page", icon: "mds-chevron-left", disabled: this.page === 1 || this.disabled, onClick: this.onClickPreviousPage.bind(this) }),
-            h("mx-icon-button", { "el-aria-label": "Next page", icon: "mds-chevron-right", disabled: this.page === this.lastPage || this.disabled || this.disableNextPage, onClick: this.onClickNextPage.bind(this) }),
-            this.lastPage !== null && (h("mx-icon-button", { "el-aria-label": "Last page", icon: "mds-page-last", disabled: this.page === this.lastPage || this.disabled, onClick: this.onClickLastPage.bind(this) }))))))));
+            h("mx-icon-button", { "el-aria-label": "First page", icon: "mds-page-first", disabled: this.isPreviousPageDisabled, onClick: this.onClickFirstPage.bind(this) }),
+            h("mx-icon-button", { "el-aria-label": "Previous page", icon: "mds-chevron-left", disabled: this.isPreviousPageDisabled, onClick: this.onClickPreviousPage.bind(this) }),
+            h("mx-icon-button", { "el-aria-label": "Next page", icon: "mds-chevron-right", disabled: this.isNextPageDisabled, onClick: this.onClickNextPage.bind(this) }),
+            this.lastPage !== null && (h("mx-icon-button", { "el-aria-label": "Last page", icon: "mds-page-last", disabled: this.isLastPageDisabled, onClick: this.onClickLastPage.bind(this) }))))))));
   }
   static get is() { return "mx-pagination"; }
   static get properties() { return {

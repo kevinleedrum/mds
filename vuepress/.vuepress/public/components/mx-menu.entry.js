@@ -163,7 +163,7 @@ const MxMenu = class {
   }
   componentWillUpdate() {
     this.setInputEl();
-    if (this.inputEl)
+    if (this.inputEl && this.anchorEl)
       this.element.style.width = this.anchorEl.getBoundingClientRect().width + 'px';
     // If any menu item has an icon, ensure that all menu items at least have a null icon.
     // This will ensure the inner text of all the menu items is aligned.
