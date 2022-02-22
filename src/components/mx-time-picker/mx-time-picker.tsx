@@ -227,6 +227,7 @@ export class MxTimePicker {
           />
           {this.label && this.floatLabel && labelJsx}
           <button
+            type="button"
             aria-label="Open time menu"
             ref={el => (this.menuButton = el)}
             class={this.menuButtonClass}

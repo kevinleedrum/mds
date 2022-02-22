@@ -122,6 +122,7 @@ export class MxInput implements IMxInputProps {
   getIconJsx(icon: MxInputIcon) {
     return icon.onClick ? (
       <button
+        type="button"
         class="inline-flex items-center justify-center cursor-pointer"
         aria-label={icon.ariaLabel}
         onClick={icon.onClick}
