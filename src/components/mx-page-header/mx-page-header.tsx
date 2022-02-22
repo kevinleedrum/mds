@@ -57,7 +57,11 @@ export class MxPageHeader {
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
     this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
-    this.hasModalHeaderRight = !!this.element.querySelector('[slot="modal-header-right"]');
+    const modalHeaderRight = this.element.querySelector('[slot="modal-header-right"]');
+    this.hasModalHeaderRight =
+      modalHeaderRight &&
+      modalHeaderRight.firstElementChild &&
+      !!(modalHeaderRight.firstElementChild as HTMLElement).offsetParent; // Slot wrapper is not hidden
     this.updateSlottedButtonSize();
   }
 
