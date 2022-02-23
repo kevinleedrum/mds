@@ -229,7 +229,7 @@ export class MxMenu {
         <div ref={el => (this.menuElem = el)} class="flex flex-col shadow-9 rounded-lg">
           <div
             ref={el => (this.scrollElem = el)}
-            class="scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain"
+            class="scroll-wrapper overflow-y-auto overflow-x-hidden overscroll-contain"
           >
             <slot></slot>
           </div>
