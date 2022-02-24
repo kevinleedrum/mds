@@ -3465,9 +3465,6 @@ video {
 .mds .h-screen{
   height: 100vh;
 }
-.mds .max-h-216{
-  max-height: 13.5rem;
-}
 .mds .max-h-480{
   max-height: 30rem;
 }
@@ -8970,6 +8967,9 @@ video {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+.mx-menu > div .scroll-wrapper:not(:empty) {
+    max-height: 21rem;
+  }
 .mx-menu > div ::-webkit-scrollbar {
     width: 12px;
     background: #fafafa;
