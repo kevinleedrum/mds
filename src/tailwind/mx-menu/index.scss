@@ -3,6 +3,7 @@
 
   .scroll-wrapper:not(:empty) {
     @apply py-8;
+    max-height: 21rem;
   }
 
   ::-webkit-scrollbar {

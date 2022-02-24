@@ -34,6 +34,7 @@ export class MxToggleButton {
       last-of-type:rounded-tr last-of-type:rounded-br"
       >
         <button
+          type="button"
           class={
             'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer disabled:cursor-auto disabled:pointer-events-none' +
             (this.selected ? ' selected' : '')

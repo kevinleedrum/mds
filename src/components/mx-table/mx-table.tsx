@@ -94,8 +94,8 @@ export class MxTable {
   /** Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or
    * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
   @Prop() checkable: boolean = false;
-  /** Set to `false` to prevent checking rows by clicking on them (outside the checkboxes). */
-  @Prop() checkOnRowClick: boolean = true;
+  /** Set to `true` to allow checking rows by clicking on any dead space inside the row. */
+  @Prop() checkOnRowClick: boolean = false;
   /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
   @Prop() showCheckAll: boolean = true;
   /** Enables reordering of rows via drag and drop. */
