@@ -55,7 +55,7 @@ const MxInput = class {
     this.value = e.target.value;
   }
   getIconJsx(icon) {
-    return icon.onClick ? (index.h("button", { class: "inline-flex items-center justify-center cursor-pointer", "aria-label": icon.ariaLabel, onClick: icon.onClick }, index.h("i", { class: icon.icon }))) : (index.h("i", { class: icon.icon + ' pointer-events-none' }));
+    return icon.onClick ? (index.h("button", { type: "button", class: "inline-flex items-center justify-center cursor-pointer", "aria-label": icon.ariaLabel, onClick: icon.onClick }, index.h("i", { class: icon.icon }))) : (index.h("i", { class: icon.icon + ' pointer-events-none' }));
   }
   get workingElem() {
     return this.textarea ? this.textArea : this.textInput;

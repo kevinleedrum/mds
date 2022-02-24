@@ -71,7 +71,7 @@ export declare class MxTable {
   /** Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or
    * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
   checkable: boolean;
-  /** Set to `false` to prevent checking rows by clicking on them (outside the checkboxes). */
+  /** Set to `true` to allow checking rows by clicking on any dead space inside the row. */
   checkOnRowClick: boolean;
   /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
   showCheckAll: boolean;

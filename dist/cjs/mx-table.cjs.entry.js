@@ -26,8 +26,8 @@ const MxTable = class {
     /** Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or
      * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
     this.checkable = false;
-    /** Set to `false` to prevent checking rows by clicking on them (outside the checkboxes). */
-    this.checkOnRowClick = true;
+    /** Set to `true` to allow checking rows by clicking on any dead space inside the row. */
+    this.checkOnRowClick = false;
     /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
     this.showCheckAll = true;
     /** Enables reordering of rows via drag and drop. */

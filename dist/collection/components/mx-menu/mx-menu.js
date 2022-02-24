@@ -200,7 +200,7 @@ export class MxMenu {
   render() {
     return (h(Host, { class: this.hostClass },
       h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" },
-        h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain" },
+        h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden overscroll-contain" },
           h("slot", null)))));
   }
   static get is() { return "mx-menu"; }

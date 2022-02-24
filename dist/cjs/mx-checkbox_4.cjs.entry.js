@@ -286,7 +286,7 @@ const MxMenu = class {
     return str;
   }
   render() {
-    return (index.h(index.Host, { class: this.hostClass }, index.h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, index.h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain" }, index.h("slot", null)))));
+    return (index.h(index.Host, { class: this.hostClass }, index.h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, index.h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden overscroll-contain" }, index.h("slot", null)))));
   }
   get element() { return index.getElement(this); }
 };

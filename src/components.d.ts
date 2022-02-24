@@ -804,7 +804,7 @@ export namespace Components {
         "checkAll": () => Promise<void>;
         "checkNone": () => Promise<void>;
         /**
-          * Set to `false` to prevent checking rows by clicking on them (outside the checkboxes).
+          * Set to `true` to allow checking rows by clicking on any dead space inside the row.
          */
         "checkOnRowClick": boolean;
         /**
@@ -2104,7 +2104,7 @@ declare namespace LocalJSX {
          */
         "autoWidth"?: boolean;
         /**
-          * Set to `false` to prevent checking rows by clicking on them (outside the checkboxes).
+          * Set to `true` to allow checking rows by clicking on any dead space inside the row.
          */
         "checkOnRowClick"?: boolean;
         /**
