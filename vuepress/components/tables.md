@@ -697,12 +697,15 @@ Adding the `subheader` prop to a row styles it as a subheader. Only one `mx-tabl
 ## Advanced usage
 
 The following example combines checkable, slotted table rows with pagination, row actions, multi-row actions, searching, and filtering.
+It also uses an alternate mobile layout for the operations bar where the `search` slot is on the first row and the `filter` slot is on
+the second row (via the `mobileSearchOnTop` prop).
 
 <section class="mds">
   <div class="mt-20"></div>
     <!-- #region advanced -->
     <mx-table
       checkable
+      mobile-search-on-top
       :rows.prop="filteredAlbums2"
       :columns.prop="[
         { property: 'entertainer', heading: 'Artist', sortable: false },
@@ -788,6 +791,7 @@ The following example combines checkable, slotted table rows with pagination, ro
 | `getRowId`            | --                      | A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). | `(row: Object) => string`               | `undefined` |
 | `groupBy`             | `group-by`              | The row property to use for grouping rows. The `rows` prop must be provided as well.                                                                                                    | `string`                                | `null`      |
 | `hoverable`           | `hoverable`             |                                                                                                                                                                                         | `boolean`                               | `true`      |
+| `mobileSearchOnTop`   | `mobile-search-on-top`  | Set to `true` to use an alternate mobile layout for the operations bar where the filter slot is next to the (un)check-all checkbox and the search slot is in a row above.               | `boolean`                               | `false`     |
 | `mutateOnDrag`        | `mutate-on-drag`        | Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.                                                                                                 | `boolean`                               | `true`      |
 | `operationsBarClass`  | `operations-bar-class`  | Additional class names for the operation bar grid                                                                                                                                       | `string`                                | `''`        |
 | `page`                | `page`                  | The page to display                                                                                                                                                                     | `number`                                | `1`         |

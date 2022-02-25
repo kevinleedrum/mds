@@ -18348,6 +18348,7 @@ async function createPopover(anchorEl, popoverEl, placement, offset) {
   const instance = createPopper(anchorEl, popoverEl, {
     placement,
     modifiers: getModifiers(placement, offset),
+    strategy: 'fixed',
   });
   return new Promise(resolve => {
     // Wait a frame for the element's width and height to be accurate and then update
@@ -21068,46 +21069,49 @@ const MxTable$1 = class extends HTMLElement {
     this.hasFilter = false;
     this.hasFooter = false;
     this.showOperationsBar = false;
-    /** An array of objects that defines the table's dataset. */
-    this.rows = [];
-    /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
-    this.columns = [];
+    /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
+    this.autoWidth = false;
     /** Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or
      * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
     this.checkable = false;
     /** Set to `true` to allow checking rows by clicking on any dead space inside the row. */
     this.checkOnRowClick = false;
-    /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
-    this.showCheckAll = true;
+    /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
+    this.columns = [];
+    /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
+    this.disableNextPage = false;
+    /** Disable the pagination buttons (i.e. while loading results) */
+    this.disablePagination = false;
     /** Enables reordering of rows via drag and drop. */
     this.draggableRows = false;
-    /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
-    this.mutateOnDrag = true;
     /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
     this.groupBy = null;
     this.hoverable = true;
-    /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
-    this.autoWidth = false;
-    this.sortAscending = true;
-    /** Show the pagination component.  Setting this to `false` will show all rows. */
-    this.paginate = true;
-    /** The page to display */
-    this.page = 1;
-    this.rowsPerPage = 10;
-    /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
-    this.disableNextPage = false;
-    /** Do not sort or paginate client-side. Use events to send server requests instead. */
-    this.serverPaginate = false;
-    /** Show a progress bar below the header row */
-    this.showProgressBar = false;
-    /** Disable the pagination buttons (i.e. while loading results) */
-    this.disablePagination = false;
-    /** The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed. */
-    this.progressValue = null;
-    /** Delay the appearance of the progress bar for this many milliseconds */
-    this.progressAppearDelay = 0;
+    /** Set to `true` to use an alternate mobile layout for the operations bar where the filter slot
+     * is next to the (un)check-all checkbox and the search slot is in a row above. */
+    this.mobileSearchOnTop = false;
+    /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
+    this.mutateOnDrag = true;
     /** Additional class names for the operation bar grid */
     this.operationsBarClass = '';
+    /** The page to display */
+    this.page = 1;
+    /** Show the pagination component.  Setting this to `false` will show all rows. */
+    this.paginate = true;
+    /** Delay the appearance of the progress bar for this many milliseconds */
+    this.progressAppearDelay = 0;
+    /** The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed. */
+    this.progressValue = null;
+    /** An array of objects that defines the table's dataset. */
+    this.rows = [];
+    this.rowsPerPage = 10;
+    /** Do not sort or paginate client-side. Use events to send server requests instead. */
+    this.serverPaginate = false;
+    /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
+    this.showCheckAll = true;
+    /** Show a progress bar below the header row */
+    this.showProgressBar = false;
+    this.sortAscending = true;
     this.minWidths = new MinWidths();
     this.checkedRowIds = [];
     this.exposedMobileColumnIndex = 0;
@@ -21471,14 +21475,27 @@ const MxTable$1 = class extends HTMLElement {
       // On larger screens, place in last column of first grid row
       return { minWidth: '240px', gridColumnStart: '-1' };
     }
-    else if (!(this.checkable && this.showCheckAll)) {
-      // If no checkbox on mobile, span the entire first grid row
-      return { width: '100%', gridColumnStart: '1' };
+    else if (!(this.checkable && this.showCheckAll) || this.mobileSearchOnTop) {
+      // If no checkbox on mobile OR using search-on-top layout, span the entire first grid row
+      return { width: '100%', gridColumnStart: '1', gridColumnEnd: '-1' };
     }
     else {
       // If checkbox on mobile, span remaining space in first grid row
       return { width: '100%', gridColumnStart: '2' };
     }
+  }
+  get checkAllClass() {
+    let str = 'col-start-1 flex items-center min-h-36 space-x-16';
+    // Move to second row for search-on-top layout
+    if (this.mobileSearchOnTop && this.hasSearch)
+      str += ' row-start-2 sm:row-start-auto';
+    return str;
+  }
+  get filterClass() {
+    let str = 'flex items-center flex-wrap row-start-2 sm:row-start-auto sm:col-span-1 ';
+    // Move to second column if using search-on-top layout and check-all checkbox is in first column
+    str += this.mobileSearchOnTop && this.checkable && this.showCheckAll ? 'col-start-2' : 'col-span-full';
+    return str;
   }
   get gridStyle() {
     if (!this.minWidths.sm)
@@ -21644,7 +21661,7 @@ const MxTable$1 = class extends HTMLElement {
         // Multi-Row Action Menu
         h("span", { class: !this.checkedRowIds.length ? 'invisible' : null, "aria-hidden": this.checkedRowIds.length === 0 ? 'true' : null }, h("mx-button", { ref: el => (this.actionMenuButton = el), "btn-type": "text", dropdown: true }, h("span", { class: "h-full flex items-center px-2" }, h("i", { class: "mds-gear text-icon" }), h("span", { class: "sr-only" }, "Action Menu"))), h("mx-menu", { "data-testid": "multi-action-menu", ref: el => (this.actionMenu = el), onMxClose: e => e.stopPropagation() }, this.multiRowActions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))));
     }
-    const operationsBar = (h("div", { class: ['grid gap-x-16 gap-y-12 pb-12', this.operationsBarClass].join(' '), style: this.operationsBarStyle }, this.checkable && this.showCheckAll && (h("div", { class: "col-start-1 flex items-center min-h-36 space-x-16" }, checkAllCheckbox, multiRowActionUI)), this.hasFilter && (h("div", { class: "flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1" }, h("slot", { name: "filter" }))), this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle }, h("slot", { name: "search" })))));
+    const operationsBar = (h("div", { class: ['grid gap-x-16 gap-y-12 pb-12', this.operationsBarClass].join(' '), style: this.operationsBarStyle }, this.checkable && this.showCheckAll && (h("div", { class: this.checkAllClass, "data-testid": "check-all-grid-item" }, checkAllCheckbox, multiRowActionUI)), this.hasFilter && (h("div", { class: this.filterClass, "data-testid": "filter-grid-item" }, h("slot", { name: "filter" }))), this.hasSearch && (h("div", { class: "justify-self-end", style: this.searchStyle, "data-testid": "search-grid-item" }, h("slot", { name: "search" })))));
     let generatedRows = [];
     if (!this.hasDefaultSlot && !this.groupBy && this.groupedRows.length) {
       generatedRows = this.visibleRows.map(row => {
@@ -22546,7 +22563,7 @@ const MxSnackbar = /*@__PURE__*/proxyCustomElement(MxSnackbar$1, [4,"mx-snackbar
 const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelClass":[1,"label-class"],"labelName":[1,"label-name"],"checked":[1028],"disabled":[4]}]);
 const MxTab = /*@__PURE__*/proxyCustomElement(MxTab$1, [0,"mx-tab",{"label":[1],"elAriaLabel":[1,"el-aria-label"],"icon":[1],"selected":[516],"badge":[4],"badgeClass":[1,"badge-class"]}]);
 const MxTabContent = /*@__PURE__*/proxyCustomElement(MxTabContent$1, [4,"mx-tab-content",{"index":[2],"value":[2]}]);
-const MxTable = /*@__PURE__*/proxyCustomElement(MxTable$1, [4,"mx-table",{"rows":[1040],"columns":[16],"getRowId":[16],"checkable":[4],"checkOnRowClick":[4,"check-on-row-click"],"showCheckAll":[4,"show-check-all"],"draggableRows":[4,"draggable-rows"],"mutateOnDrag":[4,"mutate-on-drag"],"groupBy":[1,"group-by"],"getGroupByHeading":[16],"hoverable":[4],"autoWidth":[4,"auto-width"],"sortBy":[1025,"sort-by"],"sortAscending":[1028,"sort-ascending"],"paginate":[4],"page":[1026],"rowsPerPage":[1026,"rows-per-page"],"totalRows":[2,"total-rows"],"disableNextPage":[4,"disable-next-page"],"rowsPerPageOptions":[16],"serverPaginate":[4,"server-paginate"],"getRowActions":[16],"getMultiRowActions":[16],"showProgressBar":[4,"show-progress-bar"],"disablePagination":[4,"disable-pagination"],"progressValue":[2,"progress-value"],"progressAppearDelay":[2,"progress-appear-delay"],"operationsBarClass":[1,"operations-bar-class"],"minWidths":[32],"checkedRowIds":[32],"exposedMobileColumnIndex":[32],"hasActionsColumnFromSlot":[32]},[[0,"mxCheck","onMxCheck"],[0,"mxRowDragStart","onMxRowDragStart"],[0,"mxDragKeyDown","onDragKeyDown"],[0,"mxRowDragEnd","onMxRowDragEnd"]]]);
+const MxTable = /*@__PURE__*/proxyCustomElement(MxTable$1, [4,"mx-table",{"autoWidth":[4,"auto-width"],"checkable":[4],"checkOnRowClick":[4,"check-on-row-click"],"columns":[16],"disableNextPage":[4,"disable-next-page"],"disablePagination":[4,"disable-pagination"],"draggableRows":[4,"draggable-rows"],"getGroupByHeading":[16],"getMultiRowActions":[16],"getRowActions":[16],"getRowId":[16],"groupBy":[1,"group-by"],"hoverable":[4],"mobileSearchOnTop":[4,"mobile-search-on-top"],"mutateOnDrag":[4,"mutate-on-drag"],"operationsBarClass":[1,"operations-bar-class"],"page":[1026],"paginate":[4],"progressAppearDelay":[2,"progress-appear-delay"],"progressValue":[2,"progress-value"],"rows":[1040],"rowsPerPage":[1026,"rows-per-page"],"rowsPerPageOptions":[16],"serverPaginate":[4,"server-paginate"],"showCheckAll":[4,"show-check-all"],"showProgressBar":[4,"show-progress-bar"],"sortAscending":[1028,"sort-ascending"],"sortBy":[1025,"sort-by"],"totalRows":[2,"total-rows"],"minWidths":[32],"checkedRowIds":[32],"exposedMobileColumnIndex":[32],"hasActionsColumnFromSlot":[32]},[[0,"mxCheck","onMxCheck"],[0,"mxRowDragStart","onMxRowDragStart"],[0,"mxDragKeyDown","onDragKeyDown"],[0,"mxRowDragEnd","onMxRowDragEnd"]]]);
 const MxTableCell = /*@__PURE__*/proxyCustomElement(MxTableCell$1, [4,"mx-table-cell",{"isExposedMobileColumn":[516,"is-exposed-mobile-column"],"columnIndex":[514,"column-index"],"heading":[1],"minWidths":[32]}]);
 const MxTableRow = /*@__PURE__*/proxyCustomElement(MxTableRow$1, [4,"mx-table-row",{"rowId":[1,"row-id"],"actions":[16],"doNotCollapse":[516,"do-not-collapse"],"doNotDrag":[4,"do-not-drag"],"rowIndex":[2,"row-index"],"checked":[1028],"collapseNestedRows":[516,"collapse-nested-rows"],"subheader":[4],"minWidths":[32],"checkable":[32],"checkOnRowClick":[32],"isDraggable":[32],"isDragging":[32],"isMobileExpanded":[32],"isMobileCollapsing":[32]}]);
 const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [0,"mx-tabs",{"fill":[4],"value":[2],"tabs":[16],"minWidths":[32]},[[0,"click","onClick"]]]);

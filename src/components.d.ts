@@ -844,6 +844,10 @@ export namespace Components {
         "groupBy": string;
         "hoverable": boolean;
         /**
+          * Set to `true` to use an alternate mobile layout for the operations bar where the filter slot is next to the (un)check-all checkbox and the search slot is in a row above.
+         */
+        "mobileSearchOnTop": boolean;
+        /**
           * Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.
          */
         "mutateOnDrag": boolean;
@@ -2142,6 +2146,10 @@ declare namespace LocalJSX {
          */
         "groupBy"?: string;
         "hoverable"?: boolean;
+        /**
+          * Set to `true` to use an alternate mobile layout for the operations bar where the filter slot is next to the (un)check-all checkbox and the search slot is in a row above.
+         */
+        "mobileSearchOnTop"?: boolean;
         /**
           * Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.
          */

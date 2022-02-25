@@ -1,5 +1,5 @@
 import { r as registerInstance, h, H as Host, g as getElement } from './index-d3b6906c.js';
-import { c as createPopover } from './popover-56a66892.js';
+import { c as createPopover } from './popover-7691744d.js';
 import { f as fadeIn, b as fadeOut } from './transitions-4a0eb798.js';
 import { u as uuidv4 } from './utils-f31b72fe.js';
 
