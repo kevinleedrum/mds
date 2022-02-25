@@ -61,60 +61,63 @@ export declare class MxTable {
   dragOverRowElIndex: number;
   dragRowElHeight: number;
   dragMoveHandler: (e: MouseEvent) => any;
-  /** An array of objects that defines the table's dataset. */
-  rows: Object[];
-  /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
-  columns: ITableColumn[];
-  /** A function that returns the `rowId` prop for each generated `mx-table-row`.
-   * This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). */
-  getRowId: (row: Object) => string;
+  /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
+  autoWidth: boolean;
   /** Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or
    * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
   checkable: boolean;
   /** Set to `true` to allow checking rows by clicking on any dead space inside the row. */
   checkOnRowClick: boolean;
-  /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
-  showCheckAll: boolean;
+  /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
+  columns: ITableColumn[];
+  /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
+  disableNextPage: boolean;
+  /** Disable the pagination buttons (i.e. while loading results) */
+  disablePagination: boolean;
   /** Enables reordering of rows via drag and drop. */
   draggableRows: boolean;
-  /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
-  mutateOnDrag: boolean;
-  /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
-  groupBy: string;
   /** A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows. */
   getGroupByHeading: (row: Object) => string;
+  getMultiRowActions: (rows: string[]) => ITableRowAction[];
+  getRowActions: (row: Object) => ITableRowAction[];
+  /** A function that returns the `rowId` prop for each generated `mx-table-row`.
+   * This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). */
+  getRowId: (row: Object) => string;
+  /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
+  groupBy: string;
   hoverable: boolean;
-  /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
-  autoWidth: boolean;
-  /** The property on the row objects that will be used for sorting */
-  sortBy: string;
-  sortAscending: boolean;
-  /** Show the pagination component.  Setting this to `false` will show all rows. */
-  paginate: boolean;
+  /** Set to `true` to use an alternate mobile layout for the operations bar where the filter slot
+   * is next to the (un)check-all checkbox and the search slot is in a row above. */
+  mobileSearchOnTop: boolean;
+  /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
+  mutateOnDrag: boolean;
+  /** Additional class names for the operation bar grid */
+  operationsBarClass: string;
   /** The page to display */
   page: number;
+  /** Show the pagination component.  Setting this to `false` will show all rows. */
+  paginate: boolean;
+  /** Delay the appearance of the progress bar for this many milliseconds */
+  progressAppearDelay: number;
+  /** The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed. */
+  progressValue: number;
+  /** An array of objects that defines the table's dataset. */
+  rows: Object[];
   rowsPerPage: number;
+  rowsPerPageOptions: number[];
+  /** Do not sort or paginate client-side. Use events to send server requests instead. */
+  serverPaginate: boolean;
+  /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
+  showCheckAll: boolean;
+  /** Show a progress bar below the header row */
+  showProgressBar: boolean;
+  sortAscending: boolean;
+  /** The property on the row objects that will be used for sorting */
+  sortBy: string;
   /** The total number of unpaginated rows.  This is ignored for client-side pagination.
    * For server-side pagination, omitting this prop will remove the last-page button.
    */
   totalRows: number;
-  /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
-  disableNextPage: boolean;
-  rowsPerPageOptions: number[];
-  /** Do not sort or paginate client-side. Use events to send server requests instead. */
-  serverPaginate: boolean;
-  getRowActions: (row: Object) => ITableRowAction[];
-  getMultiRowActions: (rows: string[]) => ITableRowAction[];
-  /** Show a progress bar below the header row */
-  showProgressBar: boolean;
-  /** Disable the pagination buttons (i.e. while loading results) */
-  disablePagination: boolean;
-  /** The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed. */
-  progressValue: number;
-  /** Delay the appearance of the progress bar for this many milliseconds */
-  progressAppearDelay: number;
-  /** Additional class names for the operation bar grid */
-  operationsBarClass: string;
   minWidths: MinWidths;
   checkedRowIds: string[];
   exposedMobileColumnIndex: number;
@@ -170,6 +173,8 @@ export declare class MxTable {
   get hasActionsColumn(): boolean;
   get operationsBarStyle(): any;
   get searchStyle(): any;
+  get checkAllClass(): string;
+  get filterClass(): string;
   get gridStyle(): any;
   get emptyStateClass(): string;
   get navigableColumnIndexes(): number[];
