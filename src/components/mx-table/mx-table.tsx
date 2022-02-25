@@ -84,60 +84,63 @@ export class MxTable {
   dragRowElHeight: number;
   dragMoveHandler: (e: MouseEvent) => any;
 
-  /** An array of objects that defines the table's dataset. */
-  @Prop({ mutable: true }) rows: Object[] = [];
-  /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
-  @Prop() columns: ITableColumn[] = [];
-  /** A function that returns the `rowId` prop for each generated `mx-table-row`.
-   * This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). */
-  @Prop() getRowId: (row: Object) => string;
+  /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
+  @Prop() autoWidth: boolean = false;
   /** Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or
    * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
   @Prop() checkable: boolean = false;
   /** Set to `true` to allow checking rows by clicking on any dead space inside the row. */
   @Prop() checkOnRowClick: boolean = false;
-  /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
-  @Prop() showCheckAll: boolean = true;
+  /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
+  @Prop() columns: ITableColumn[] = [];
+  /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
+  @Prop() disableNextPage: boolean = false;
+  /** Disable the pagination buttons (i.e. while loading results) */
+  @Prop() disablePagination: boolean = false;
   /** Enables reordering of rows via drag and drop. */
   @Prop() draggableRows: boolean = false;
-  /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
-  @Prop() mutateOnDrag: boolean = true;
-  /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
-  @Prop() groupBy: string = null;
   /** A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows. */
   @Prop() getGroupByHeading: (row: Object) => string;
+  @Prop() getMultiRowActions: (rows: string[]) => ITableRowAction[];
+  @Prop() getRowActions: (row: Object) => ITableRowAction[];
+  /** A function that returns the `rowId` prop for each generated `mx-table-row`.
+   * This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). */
+  @Prop() getRowId: (row: Object) => string;
+  /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
+  @Prop() groupBy: string = null;
   @Prop() hoverable: boolean = true;
-  /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
-  @Prop() autoWidth: boolean = false;
-  /** The property on the row objects that will be used for sorting */
-  @Prop({ mutable: true }) sortBy: string;
-  @Prop({ mutable: true }) sortAscending: boolean = true;
-  /** Show the pagination component.  Setting this to `false` will show all rows. */
-  @Prop() paginate: boolean = true;
+  /** Set to `true` to use an alternate mobile layout for the operations bar where the filter slot
+   * is next to the (un)check-all checkbox and the search slot is in a row above. */
+  @Prop() mobileSearchOnTop: boolean = false;
+  /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
+  @Prop() mutateOnDrag: boolean = true;
+  /** Additional class names for the operation bar grid */
+  @Prop() operationsBarClass: string = '';
   /** The page to display */
   @Prop({ mutable: true }) page: number = 1;
+  /** Show the pagination component.  Setting this to `false` will show all rows. */
+  @Prop() paginate: boolean = true;
+  /** Delay the appearance of the progress bar for this many milliseconds */
+  @Prop() progressAppearDelay: number = 0;
+  /** The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed. */
+  @Prop() progressValue: number = null;
+  /** An array of objects that defines the table's dataset. */
+  @Prop({ mutable: true }) rows: Object[] = [];
   @Prop({ mutable: true }) rowsPerPage: number = 10;
+  @Prop() rowsPerPageOptions: number[];
+  /** Do not sort or paginate client-side. Use events to send server requests instead. */
+  @Prop() serverPaginate: boolean = false;
+  /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
+  @Prop() showCheckAll: boolean = true;
+  /** Show a progress bar below the header row */
+  @Prop() showProgressBar: boolean = false;
+  @Prop({ mutable: true }) sortAscending: boolean = true;
+  /** The property on the row objects that will be used for sorting */
+  @Prop({ mutable: true }) sortBy: string;
   /** The total number of unpaginated rows.  This is ignored for client-side pagination.
    * For server-side pagination, omitting this prop will remove the last-page button.
    */
   @Prop() totalRows: number;
-  /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
-  @Prop() disableNextPage: boolean = false;
-  @Prop() rowsPerPageOptions: number[];
-  /** Do not sort or paginate client-side. Use events to send server requests instead. */
-  @Prop() serverPaginate: boolean = false;
-  @Prop() getRowActions: (row: Object) => ITableRowAction[];
-  @Prop() getMultiRowActions: (rows: string[]) => ITableRowAction[];
-  /** Show a progress bar below the header row */
-  @Prop() showProgressBar: boolean = false;
-  /** Disable the pagination buttons (i.e. while loading results) */
-  @Prop() disablePagination: boolean = false;
-  /** The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed. */
-  @Prop() progressValue: number = null;
-  /** Delay the appearance of the progress bar for this many milliseconds */
-  @Prop() progressAppearDelay: number = 0;
-  /** Additional class names for the operation bar grid */
-  @Prop() operationsBarClass: string = '';
 
   @State() minWidths = new MinWidths();
   @State() checkedRowIds: string[] = [];
@@ -541,13 +544,27 @@ export class MxTable {
     if (this.minWidths.sm) {
       // On larger screens, place in last column of first grid row
       return { minWidth: '240px', gridColumnStart: '-1' };
-    } else if (!(this.checkable && this.showCheckAll)) {
-      // If no checkbox on mobile, span the entire first grid row
-      return { width: '100%', gridColumnStart: '1' };
+    } else if (!(this.checkable && this.showCheckAll) || this.mobileSearchOnTop) {
+      // If no checkbox on mobile OR using search-on-top layout, span the entire first grid row
+      return { width: '100%', gridColumnStart: '1', gridColumnEnd: '-1' };
     } else {
       // If checkbox on mobile, span remaining space in first grid row
       return { width: '100%', gridColumnStart: '2' };
     }
+  }
+
+  get checkAllClass(): string {
+    let str = 'col-start-1 flex items-center min-h-36 space-x-16';
+    // Move to second row for search-on-top layout
+    if (this.mobileSearchOnTop && this.hasSearch) str += ' row-start-2 sm:row-start-auto';
+    return str;
+  }
+
+  get filterClass(): string {
+    let str = 'flex items-center flex-wrap row-start-2 sm:row-start-auto sm:col-span-1 ';
+    // Move to second column if using search-on-top layout and check-all checkbox is in first column
+    str += this.mobileSearchOnTop && this.checkable && this.showCheckAll ? 'col-start-2' : 'col-span-full';
+    return str;
   }
 
   get gridStyle(): any {
@@ -756,18 +773,18 @@ export class MxTable {
     const operationsBar = (
       <div class={['grid gap-x-16 gap-y-12 pb-12', this.operationsBarClass].join(' ')} style={this.operationsBarStyle}>
         {this.checkable && this.showCheckAll && (
-          <div class="col-start-1 flex items-center min-h-36 space-x-16">
+          <div class={this.checkAllClass} data-testid="check-all-grid-item">
             {checkAllCheckbox}
             {multiRowActionUI}
           </div>
         )}
         {this.hasFilter && (
-          <div class="flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1">
+          <div class={this.filterClass} data-testid="filter-grid-item">
             <slot name="filter"></slot>
           </div>
         )}
         {this.hasSearch && (
-          <div class="justify-self-end" style={this.searchStyle}>
+          <div class="justify-self-end" style={this.searchStyle} data-testid="search-grid-item">
             <slot name="search"></slot>
           </div>
         )}
