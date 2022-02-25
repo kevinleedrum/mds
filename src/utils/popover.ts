@@ -20,6 +20,7 @@ export async function createPopover(
   const instance = createPopper(anchorEl, popoverEl, {
     placement,
     modifiers: getModifiers(placement, offset),
+    strategy: 'fixed',
   });
   return new Promise(resolve => {
     // Wait a frame for the element's width and height to be accurate and then update
