@@ -12,10 +12,16 @@ describe('mx-table (mobile)', () => {
     page = await newSpecPage({
       components: [MxTable, MxTableRow, MxTableCell, MxCheckbox],
       html: `
-      <mx-table />
+      <mx-table checkable>
+        <input type="text" slot="search">
+        <div slot="filter">
+          <button>Filters</button>
+        </div>
+      </mx-table>
       `,
     });
     root = page.root as HTMLMxTableElement;
+    root.getRowId = (row: any) => row.id;
     root.rows = [
       { id: 0, name: 'Alvin', age: 4 },
       { id: 1, name: 'Simon', age: 3 },
@@ -78,5 +84,20 @@ describe('mx-table (mobile)', () => {
     await page.waitForChanges();
     const actionMenus = root.querySelectorAll('[data-testid="action-menu"]');
     expect(actionMenus.length).toBe(3);
+  });
+
+  it('changes the operations bar grid layout if mobileSearchOnTop is set', async () => {
+    const search = root.querySelector('[data-testid="search-grid-item"]') as HTMLElement;
+    const filter = root.querySelector('[data-testid="filter-grid-item"]') as HTMLElement;
+    const checkAll = root.querySelector('[data-testid="check-all-grid-item"]') as HTMLElement;
+    expect(search.style.gridColumnStart).toBe('2');
+    expect(filter.classList.contains('col-span-full')).toBe(true);
+    expect(checkAll.classList.contains('row-start-2')).toBe(false);
+    root.mobileSearchOnTop = true;
+    await page.waitForChanges();
+    expect(search.style.gridColumnStart).toBe('1');
+    expect(search.style.gridColumnEnd).toBe('-1');
+    expect(filter.classList.contains('col-start-2')).toBe(true);
+    expect(checkAll.classList.contains('row-start-2')).toBe(true);
   });
 });

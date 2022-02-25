@@ -109,6 +109,9 @@ export class MxTable {
   /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
   @Prop() groupBy: string = null;
   @Prop() hoverable: boolean = true;
+  /** Set to `true` to use an alternate mobile layout for the operations bar where the filter slot
+   * is next to the (un)check-all checkbox and the search slot is in a row above. */
+  @Prop() mobileSearchOnTop: boolean = false;
   /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
   @Prop() mutateOnDrag: boolean = true;
   /** Additional class names for the operation bar grid */
@@ -541,13 +544,27 @@ export class MxTable {
     if (this.minWidths.sm) {
       // On larger screens, place in last column of first grid row
       return { minWidth: '240px', gridColumnStart: '-1' };
-    } else if (!(this.checkable && this.showCheckAll)) {
-      // If no checkbox on mobile, span the entire first grid row
-      return { width: '100%', gridColumnStart: '1' };
+    } else if (!(this.checkable && this.showCheckAll) || this.mobileSearchOnTop) {
+      // If no checkbox on mobile OR using search-on-top layout, span the entire first grid row
+      return { width: '100%', gridColumnStart: '1', gridColumnEnd: '-1' };
     } else {
       // If checkbox on mobile, span remaining space in first grid row
       return { width: '100%', gridColumnStart: '2' };
     }
+  }
+
+  get checkAllClass(): string {
+    let str = 'col-start-1 flex items-center min-h-36 space-x-16';
+    // Move to second row for search-on-top layout
+    if (this.mobileSearchOnTop && this.hasSearch) str += ' row-start-2 sm:row-start-auto';
+    return str;
+  }
+
+  get filterClass(): string {
+    let str = 'flex items-center flex-wrap row-start-2 sm:row-start-auto sm:col-span-1 ';
+    // Move to second column if using search-on-top layout and check-all checkbox is in first column
+    str += this.mobileSearchOnTop && this.checkable && this.showCheckAll ? 'col-start-2' : 'col-span-full';
+    return str;
   }
 
   get gridStyle(): any {
@@ -756,18 +773,18 @@ export class MxTable {
     const operationsBar = (
       <div class={['grid gap-x-16 gap-y-12 pb-12', this.operationsBarClass].join(' ')} style={this.operationsBarStyle}>
         {this.checkable && this.showCheckAll && (
-          <div class="col-start-1 flex items-center min-h-36 space-x-16">
+          <div class={this.checkAllClass} data-testid="check-all-grid-item">
             {checkAllCheckbox}
             {multiRowActionUI}
           </div>
         )}
         {this.hasFilter && (
-          <div class="flex items-center flex-wrap row-start-2 col-span-full sm:row-start-auto sm:col-span-1">
+          <div class={this.filterClass} data-testid="filter-grid-item">
             <slot name="filter"></slot>
           </div>
         )}
         {this.hasSearch && (
-          <div class="justify-self-end" style={this.searchStyle}>
+          <div class="justify-self-end" style={this.searchStyle} data-testid="search-grid-item">
             <slot name="search"></slot>
           </div>
         )}
