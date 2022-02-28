@@ -169,7 +169,7 @@ describe('mx-button as an anchor tag', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxButton],
-      html: `<mx-button href="https://google./com" target="_blank" btn-type="text" value="foo">button</mx-button>`,
+      html: `<mx-button href="https://google./com" target="_blank" btn-type="text" value="foo" data-admin--a--b-c="test">button</mx-button>`,
     });
     root = page.root;
   });
@@ -178,5 +178,10 @@ describe('mx-button as an anchor tag', () => {
     const btn = root.querySelector('a');
     expect(btn).not.toBeNull();
     expect(btn.getAttribute('target')).toBeDefined();
+  });
+
+  it('applies any data attributes to the <a> element', async () => {
+    const btn = root.querySelector('a');
+    expect(btn.getAttribute('data-admin--a--b-c')).toBe('test');
   });
 });
