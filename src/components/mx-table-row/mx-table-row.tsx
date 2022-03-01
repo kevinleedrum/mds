@@ -412,7 +412,7 @@ export class MxTableRow {
   }
 
   get indentClass(): string {
-    let str = 'table-row-indent h-full';
+    let str = 'table-row-indent';
     if (this.minWidths.sm) return str;
     str += ' col-start-1 row-start-1';
     return (str += ' row-span-' + this.columnCount);
