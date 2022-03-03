@@ -156,6 +156,7 @@ describe('mx-menu-item (with submenu)', () => {
     root.dispatchEvent(enter);
     await page.waitForChanges();
     expect(submenu.isOpen).toBe(true);
+    expect(menuItem.getAttribute('aria-expanded')).toBe('true');
   });
 });
 
