@@ -147,10 +147,36 @@ describe('mx-menu-item (with submenu)', () => {
     expect(submenu.isOpen).toBe(false);
   });
 
+  it('has an aria-haspopup attribute', () => {
+    expect(menuItem.getAttribute('aria-haspopup')).toBe('true');
+  });
+
   it('opens the submenu on Enter', async () => {
     const enter = new KeyboardEvent('keydown', { key: 'Enter' });
     root.dispatchEvent(enter);
     await page.waitForChanges();
     expect(submenu.isOpen).toBe(true);
+  });
+});
+
+describe('mx-menu-item (wrapped in link)', () => {
+  let page: SpecPage;
+  let root: HTMLMxMenuItemElement;
+  let menuItem: HTMLElement;
+  let doc: Document;
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [MxMenuItem],
+      html: `<a href="#"><mx-menu-item>Open</mx-menu-item></a>`,
+    });
+    doc = page.doc as Document;
+    root = page.root as HTMLMxMenuItemElement;
+    menuItem = root.querySelector('div');
+  });
+
+  it('applies a role of menuitem to the parent <a>', () => {
+    const link = doc.querySelector('a');
+    expect(link.getAttribute('role')).toBe('menuitem');
+    expect(menuItem.getAttribute('role')).toBeNull();
   });
 });

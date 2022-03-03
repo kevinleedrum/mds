@@ -171,14 +171,11 @@ export class MxMenu {
     return true;
   }
 
-  connectedCallback() {
-    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
-    this.element.setAttribute('role', role);
-    this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
-  }
-
   componentDidLoad() {
     this.setInputEl();
+    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+    this.scrollElem.setAttribute('role', role);
+    this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
   }
 
   componentWillUpdate() {

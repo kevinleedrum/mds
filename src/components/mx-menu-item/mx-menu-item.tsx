@@ -81,7 +81,12 @@ export class MxMenuItem implements IMxMenuItemProps {
   }
 
   connectedCallback() {
-    this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
+    const parentLink = this.element.closest('a');
+    if (!!parentLink) {
+      parentLink.setAttribute('role', 'menuitem');
+    } else {
+      this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
+    }
     minWidthSync.subscribeComponent(this);
   }
 
@@ -172,12 +177,13 @@ export class MxMenuItem implements IMxMenuItemProps {
 
   render() {
     return (
-      <Host class={'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '')}>
+      <Host role="none" class={'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '')}>
         <div
           ref={el => (this.menuItemElem = el)}
           role={this.role}
-          aria-checked={this.role === 'menuitem' ? null : this.checked ? 'true' : 'false'}
+          aria-checked={this.role === 'option' ? (this.checked ? 'true' : 'false') : null}
           aria-disabled={this.disabled ? 'true' : null}
+          aria-haspopup={!!this.submenu ? 'true' : null}
           aria-selected={this.selected ? 'true' : null}
           tabindex={this.disabled || this.multiSelect ? '-1' : '0'}
           class="block w-full cursor-pointer select-none text-4 outline-none"
