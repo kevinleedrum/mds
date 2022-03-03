@@ -153,16 +153,17 @@ const MxMenu = class {
     this.popoverInstance = null;
     return true;
   }
-  connectedCallback() {
-    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
-    this.element.setAttribute('role', role);
-    this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
-  }
   componentDidLoad() {
     this.setInputEl();
+    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+    this.scrollElem.setAttribute('role', role);
+    this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
   }
   componentWillUpdate() {
     this.setInputEl();
+    this.anchorEl &&
+      this.anchorEl.getAttribute('role') === 'menuitem' &&
+      this.anchorEl.setAttribute('aria-expanded', this.isOpen ? 'true' : 'false');
     if (this.inputEl && this.anchorEl)
       this.element.style.width = this.anchorEl.getBoundingClientRect().width + 'px';
     // If any menu item has an icon, ensure that all menu items at least have a null icon.

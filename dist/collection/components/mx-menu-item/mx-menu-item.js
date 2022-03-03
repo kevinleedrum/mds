@@ -45,7 +45,13 @@ export class MxMenuItem {
     this.submenu = this.element.querySelector('[slot="submenu"]');
   }
   connectedCallback() {
-    this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
+    const parentLink = this.element.closest('a');
+    if (!!parentLink) {
+      parentLink.setAttribute('role', 'menuitem');
+    }
+    else {
+      this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
+    }
     minWidthSync.subscribeComponent(this);
   }
   disconnectedCallback() {
@@ -105,7 +111,7 @@ export class MxMenuItem {
   openSubMenu() {
     if (this.submenu) {
       this.submenu.placement = 'right-start';
-      this.submenu.anchorEl = this.element;
+      this.submenu.anchorEl = this.menuItemElem;
       return this.submenu.openMenu();
     }
   }
@@ -124,8 +130,8 @@ export class MxMenuItem {
     return (this.slotWrapper || this.element).innerText;
   }
   render() {
-    return (h(Host, { class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') },
-      h("div", { ref: el => (this.menuItemElem = el), role: this.role, "aria-checked": this.role === 'menuitem' ? null : this.checked ? 'true' : 'false', "aria-disabled": this.disabled ? 'true' : null, "aria-selected": this.selected ? 'true' : null, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) },
+    return (h(Host, { role: "none", class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') },
+      h("div", { ref: el => (this.menuItemElem = el), role: this.role, "aria-checked": this.role === 'option' ? (this.checked ? 'true' : 'false') : null, "aria-disabled": this.disabled ? 'true' : null, "aria-haspopup": !!this.submenu ? 'true' : null, "aria-selected": this.selected ? 'true' : null, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) },
         this.label && (h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" },
           h("span", { class: "block -mb-4" }, this.label))),
         h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +

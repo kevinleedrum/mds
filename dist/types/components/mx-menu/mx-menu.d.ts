@@ -32,7 +32,6 @@ export declare class MxMenu {
   openMenu(): Promise<boolean>;
   /** Close the menu.  Returns a promise that resolves to false if the menu was already closed. */
   closeMenu(): Promise<boolean>;
-  connectedCallback(): void;
   componentDidLoad(): void;
   componentWillUpdate(): void;
   setInputEl(): void;
