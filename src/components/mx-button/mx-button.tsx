@@ -127,6 +127,7 @@ export class MxButton implements IMxButtonProps {
             class={this.buttonClass}
             ref={el => (this.anchorElem = el as HTMLAnchorElement)}
             onClick={this.onClick.bind(this)}
+            {...this.dataAttributes}
           >
             {buttonContent}
           </a>

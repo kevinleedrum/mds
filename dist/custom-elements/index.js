@@ -472,7 +472,7 @@ const MxButton$1 = class extends HTMLElement {
   }
   render() {
     const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
-    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, "aria-disabled": this.disabled ? 'true' : null, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, form: this.form, formaction: this.formaction, value: this.value, disabled: this.disabled, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent))));
+    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", Object.assign({ href: this.href, target: this.target, "aria-disabled": this.disabled ? 'true' : null, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, this.dataAttributes), buttonContent)) : (h("button", Object.assign({ type: this.type, form: this.form, formaction: this.formaction, value: this.value, disabled: this.disabled, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent))));
   }
   get element() { return this; }
 };
@@ -19590,16 +19590,17 @@ const MxMenu$1 = class extends HTMLElement {
     this.popoverInstance = null;
     return true;
   }
-  connectedCallback() {
-    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
-    this.element.setAttribute('role', role);
-    this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
-  }
   componentDidLoad() {
     this.setInputEl();
+    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+    this.scrollElem.setAttribute('role', role);
+    this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
   }
   componentWillUpdate() {
     this.setInputEl();
+    this.anchorEl &&
+      this.anchorEl.getAttribute('role') === 'menuitem' &&
+      this.anchorEl.setAttribute('aria-expanded', this.isOpen ? 'true' : 'false');
     if (this.inputEl && this.anchorEl)
       this.element.style.width = this.anchorEl.getBoundingClientRect().width + 'px';
     // If any menu item has an icon, ensure that all menu items at least have a null icon.
@@ -19693,7 +19694,13 @@ const MxMenuItem$1 = class extends HTMLElement {
     this.submenu = this.element.querySelector('[slot="submenu"]');
   }
   connectedCallback() {
-    this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
+    const parentLink = this.element.closest('a');
+    if (!!parentLink) {
+      parentLink.setAttribute('role', 'menuitem');
+    }
+    else {
+      this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
+    }
     minWidthSync.subscribeComponent(this);
   }
   disconnectedCallback() {
@@ -19753,7 +19760,7 @@ const MxMenuItem$1 = class extends HTMLElement {
   openSubMenu() {
     if (this.submenu) {
       this.submenu.placement = 'right-start';
-      this.submenu.anchorEl = this.element;
+      this.submenu.anchorEl = this.menuItemElem;
       return this.submenu.openMenu();
     }
   }
@@ -19772,7 +19779,7 @@ const MxMenuItem$1 = class extends HTMLElement {
     return (this.slotWrapper || this.element).innerText;
   }
   render() {
-    return (h(Host, { class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') }, h("div", { ref: el => (this.menuItemElem = el), role: this.role, "aria-checked": this.role === 'menuitem' ? null : this.checked ? 'true' : 'false', "aria-disabled": this.disabled ? 'true' : null, "aria-selected": this.selected ? 'true' : null, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) }, this.label && (h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" }, h("span", { class: "block -mb-4" }, this.label))), h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +
+    return (h(Host, { role: "none", class: 'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '') }, h("div", { ref: el => (this.menuItemElem = el), role: this.role, "aria-checked": this.role === 'option' ? (this.checked ? 'true' : 'false') : null, "aria-disabled": this.disabled ? 'true' : null, "aria-haspopup": !!this.submenu ? 'true' : null, "aria-selected": this.selected ? 'true' : null, tabindex: this.disabled || this.multiSelect ? '-1' : '0', class: "block w-full cursor-pointer select-none text-4 outline-none", onClick: this.onClick.bind(this) }, this.label && (h("p", { class: "item-label flex items-end py-0 px-12 my-0 h-18 uppercase subtitle5" }, h("span", { class: "block -mb-4" }, this.label))), h("div", { class: 'flex items-center w-full justify-between px-12 h-48 sm:h-32 whitespace-nowrap' +
         (this.multiSelect ? ' hidden' : '') }, h("div", { class: "flex items-center w-full h-full" }, this.icon !== undefined && (h("i", { class: 'inline-flex items-center justify-center text-1 w-20 mr-8 ' + this.icon })), h("span", { ref: el => (this.slotWrapper = el), class: "truncate" }, h("slot", null))), this.checked && !this.multiSelect && h("i", { class: "check mds-check text-icon ml-12", "data-testid": "check" }), !!this.submenu && (h("i", { class: "mds-arrow-triangle-down text-icon transform -rotate-90", "data-testid": "arrow" }))), this.subtitle && (h("p", { class: "item-subtitle flex items-start py-0 px-12 my-0 h-16 caption2" }, h("span", { class: "block -mt-4 truncate" }, this.subtitle))), this.multiSelect && (h("mx-checkbox", { class: "flex items-stretch w-full overflow-hidden h-48 sm:h-32", "label-class": "pl-12 pr-16", checked: this.checked, "label-name": this.checkboxLabel, "label-left": !this.minWidths.sm }))), h("slot", { name: "submenu" })));
   }
   get element() { return this; }

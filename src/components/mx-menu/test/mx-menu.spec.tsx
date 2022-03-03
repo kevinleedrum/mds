@@ -33,7 +33,7 @@ describe('mx-menu', () => {
   });
 
   it('has a role of menu', () => {
-    expect(root.getAttribute('role')).toBe('menu');
+    expect(root.querySelector('[role="menu"]')).not.toBeNull();
   });
 
   it('opens when the anchorEl is clicked', async () => {
