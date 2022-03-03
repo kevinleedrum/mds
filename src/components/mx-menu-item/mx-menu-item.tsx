@@ -155,7 +155,7 @@ export class MxMenuItem implements IMxMenuItemProps {
   openSubMenu() {
     if (this.submenu) {
       this.submenu.placement = 'right-start';
-      this.submenu.anchorEl = this.element;
+      this.submenu.anchorEl = this.menuItemElem;
       return this.submenu.openMenu();
     }
   }
