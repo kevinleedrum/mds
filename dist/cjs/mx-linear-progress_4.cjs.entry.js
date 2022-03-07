@@ -587,7 +587,7 @@ const MxTableRow = class {
     };
   }
   get indentClass() {
-    let str = 'table-row-indent';
+    let str = 'table-row-indent sm:h-full';
     if (this.minWidths.sm)
       return str;
     str += ' col-start-1 row-start-1';
