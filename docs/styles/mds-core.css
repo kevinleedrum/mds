@@ -10621,6 +10621,9 @@ span.ripple {
   .mds .sm\:h-32{
     height: 2rem;
   }
+  .mds .sm\:h-full{
+    height: 100%;
+  }
   .mds .sm\:w-auto{
     width: auto;
   }
