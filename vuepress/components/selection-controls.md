@@ -10,7 +10,7 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-checkbox name="foo" label-name="Premier" checked /></div>
     <div><mx-checkbox name="foo" label-name="W Collection" /></div>
     <div><mx-checkbox name="foo" label-name="Equestrian" /></div>
-    <div><mx-checkbox name="foo" label-name="Warlock" /></div>
+    <div><mx-checkbox name="foo" label-name="Darkness falls across the land, The midnight hour is close at hand" /></div>
     <div><mx-checkbox name="foo" disabled label-name="Disabled" /></div>
     <div><mx-checkbox name="foo" checked disabled label-name="Disabled" /></div>
     <div><mx-checkbox name="foo" indeterminate label-name="Indeterminate" /></div>
@@ -21,19 +21,20 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 
 <<< @/vuepress/components/selection-controls.md#checkboxes
 
-### Properties
+### Checkbox Properties
 
-| Property        | Attribute       | Description                                                                   | Type      | Default |
-| --------------- | --------------- | ----------------------------------------------------------------------------- | --------- | ------- |
-| `checked`       | `checked`       |                                                                               | `boolean` | `false` |
-| `disabled`      | `disabled`      |                                                                               | `boolean` | `false` |
-| `hideLabel`     | `hide-label`    | Hide the label text visually, but still make it accessible for screen readers | `boolean` | `false` |
-| `indeterminate` | `indeterminate` |                                                                               | `boolean` | `false` |
-| `labelClass`    | `label-class`   |                                                                               | `string`  | `''`    |
-| `labelLeft`     | `label-left`    |                                                                               | `boolean` | `false` |
-| `labelName`     | `label-name`    |                                                                               | `string`  | `''`    |
-| `name`          | `name`          |                                                                               | `string`  | `''`    |
-| `value`         | `value`         |                                                                               | `string`  | `''`    |
+| Property        | Attribute       | Description                                                                   | Type      | Default     |
+| --------------- | --------------- | ----------------------------------------------------------------------------- | --------- | ----------- |
+| `checked`       | `checked`       |                                                                               | `boolean` | `false`     |
+| `disabled`      | `disabled`      |                                                                               | `boolean` | `false`     |
+| `elAriaLabel`   | `el-aria-label` | The aria-label attribute for the inner input element.                         | `string`  | `undefined` |
+| `hideLabel`     | `hide-label`    | Hide the label text visually, but still make it accessible for screen readers | `boolean` | `false`     |
+| `indeterminate` | `indeterminate` |                                                                               | `boolean` | `false`     |
+| `labelClass`    | `label-class`   |                                                                               | `string`  | `''`        |
+| `labelLeft`     | `label-left`    |                                                                               | `boolean` | `false`     |
+| `labelName`     | `label-name`    |                                                                               | `string`  | `''`        |
+| `name`          | `name`          |                                                                               | `string`  | `''`        |
+| `value`         | `value`         |                                                                               | `string`  | `''`        |
 
 ## Radio Buttons
 
@@ -43,21 +44,25 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-radio name="foo" label-name="Premier" /></div>
     <div><mx-radio name="foo" label-name="W Collection" /></div>
     <div><mx-radio name="foo" label-name="Equestrian" /></div>
-    <div><mx-radio name="foo" label-name="Warlock" /></div>
+    <div><mx-radio name="foo" label-name="Darkness falls across the land, The midnight hour is close at hand" /></div>
+    <div><mx-radio name="foo" disabled label-name="Disabled" /></div>
+    <div><mx-radio name="foo" disabled checked label-name="Disabled" /></div>
   </div>
 </div>
 <!-- #endregion radio-buttons -->
 
 <<< @/vuepress/components/selection-controls.md#radio-buttons
 
-### Properties
+### Radio Button Properties
 
-| Property    | Attribute    | Description | Type      | Default |
-| ----------- | ------------ | ----------- | --------- | ------- |
-| `checked`   | `checked`    |             | `boolean` | `false` |
-| `labelName` | `label-name` |             | `string`  | `''`    |
-| `name`      | `name`       |             | `string`  | `''`    |
-| `value`     | `value`      |             | `string`  | `''`    |
+| Property     | Attribute     | Description | Type      | Default |
+| ------------ | ------------- | ----------- | --------- | ------- |
+| `checked`    | `checked`     |             | `boolean` | `false` |
+| `disabled`   | `disabled`    |             | `boolean` | `false` |
+| `labelClass` | `label-class` |             | `string`  | `''`    |
+| `labelName`  | `label-name`  |             | `string`  | `''`    |
+| `name`       | `name`        |             | `string`  | `''`    |
+| `value`      | `value`       |             | `string`  | `''`    |
 
 ## Switches
 
@@ -67,21 +72,25 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-switch name="foo" label-name="Premier" /></div>
     <div><mx-switch name="foo" label-name="W Collection" /></div>
     <div><mx-switch name="foo" label-name="Equestrian" /></div>
-    <div><mx-switch name="foo" label-name="Warlock" /></div>
+    <div><mx-switch name="foo" label-name="Darkness falls across the land, The midnight hour is close at hand" /></div>
+    <div><mx-switch name="foo" disabled label-name="Disabled" /></div>
+    <div><mx-switch name="foo" disabled checked label-name="Disabled" /></div>
   </div>
 </div>
 <!-- #endregion switches -->
 
 <<< @/vuepress/components/selection-controls.md#switches
 
-### Properties
+### Switch Properties
 
-| Property    | Attribute    | Description | Type      | Default |
-| ----------- | ------------ | ----------- | --------- | ------- |
-| `checked`   | `checked`    |             | `boolean` | `false` |
-| `labelName` | `label-name` |             | `string`  | `''`    |
-| `name`      | `name`       |             | `string`  | `''`    |
-| `value`     | `value`      |             | `string`  | `''`    |
+| Property     | Attribute     | Description | Type      | Default |
+| ------------ | ------------- | ----------- | --------- | ------- |
+| `checked`    | `checked`     |             | `boolean` | `false` |
+| `disabled`   | `disabled`    |             | `boolean` | `false` |
+| `labelClass` | `label-class` |             | `string`  | `''`    |
+| `labelName`  | `label-name`  |             | `string`  | `''`    |
+| `name`       | `name`        |             | `string`  | `''`    |
+| `value`      | `value`       |             | `string`  | `''`    |
 
 ## CSS Variables
 

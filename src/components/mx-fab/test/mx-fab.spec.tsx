@@ -9,7 +9,7 @@ describe('mx-fab', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxFab],
-      html: `<mx-fab icon="ph-heart" value="liked" aria-label="Like" />`,
+      html: `<mx-fab icon="ph-heart" value="liked" el-aria-label="Like" />`,
     });
     root = page.root;
     button = root.querySelector('button');

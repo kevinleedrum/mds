@@ -4,8 +4,8 @@
 
 <!-- #region standard-buttons -->
 <section class="mds">
-  <div class="flex flex-row flex-nowrap justify-between mt-10">
-    <div style="width: 47%;">
+  <div class="grid grid-cols-1 lg:grid-cols-2">
+    <div>
       <strong>Contained</strong>
       <div class="my-20">
         <mx-button>button</mx-button>
@@ -22,8 +22,11 @@
        <div class="my-20">
         <mx-button href="https://google.com" target="_blank">Button as Link</mx-button>
       </div>
+       <div class="my-20">
+        <mx-button disabled href="https://google.com" target="_blank">Button as Link Disabled</mx-button>
+      </div>
     </div>
-    <div style="width: 47%;">
+    <div>
       <strong>Outline</strong>
       <div class="my-20">
         <mx-button btn-type="outlined">Outlined button</mx-button>
@@ -39,6 +42,9 @@
       </div>
       <div class="my-20">
         <mx-button btn-type="outlined" href="https://google.com" target="_blank">Button as Link</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button disabled btn-type="outlined" href="https://google.com" target="_blank">Button as Link Disabled</mx-button>
       </div>
     </div>
   </div>
@@ -62,29 +68,29 @@
 
 <<< @/vuepress/components/buttons.md#standard-buttons
 
-## Action Buttons
+## Simple Buttons
 
-<!-- #region action-buttons -->
+<!-- #region simple-buttons -->
 <section class="mds">
   <div class="my-20">
-    <mx-button btn-type="action">Button</mx-button>
+    <mx-button btn-type="simple">Button</mx-button>
   </div>
   <div class="my-20">
-    <mx-button btn-type="action" icon="ph-apple-logo">Button with Icon</mx-button>
+    <mx-button btn-type="simple" icon="ph-apple-logo">Button with Icon</mx-button>
   </div>
   <div class="my-20">
-    <mx-button btn-type="action" disabled>Disabled</mx-button>
+    <mx-button btn-type="simple" disabled>Disabled</mx-button>
   </div>
   <div class="my-20">
-    <mx-button btn-type="action" dropdown>Dropdown</mx-button>
+    <mx-button btn-type="simple" dropdown>Dropdown</mx-button>
   </div>
   <div class="my-20">
-    <mx-button btn-type="action" dropdown disabled>Disabled</mx-button>
+    <mx-button btn-type="simple" dropdown disabled>Disabled</mx-button>
   </div>
 </section>
-<!-- #endregion action-buttons -->
+<!-- #endregion simple-buttons -->
 
-<<< @/vuepress/components/buttons.md#action-buttons
+<<< @/vuepress/components/buttons.md#simple-buttons
 
 ## Text Buttons
 
@@ -112,18 +118,21 @@
 
 ### Button Properties
 
-| Property   | Attribute  | Description                                 | Type                                           | Default       |
-| ---------- | ---------- | ------------------------------------------- | ---------------------------------------------- | ------------- |
-| `btnType`  | `btn-type` |                                             | `"action" | "contained" | "outlined" | "text"` | `'contained'` |
-| `disabled` | `disabled` |                                             | `boolean`                                      | `false`       |
-| `dropdown` | `dropdown` | Show chevron icon                           | `boolean`                                      | `false`       |
-| `full`     | `full`     | Sets display to flex instead of inline-flex | `boolean`                                      | `false`       |
-| `href`     | `href`     | Create button as link                       | `string`                                       | `undefined`   |
-| `icon`     | `icon`     | Class name of icon                          | `string`                                       | `undefined`   |
-| `target`   | `target`   | Only for link buttons                       | `string`                                       | `undefined`   |
-| `type`     | `type`     |                                             | `"button" | "reset" | "submit"`                | `'button'`    |
-| `value`    | `value`    |                                             | `string`                                       | `undefined`   |
-| `xl`       | `xl`       |                                             | `boolean`                                      | `false`       |
+| Property      | Attribute       | Description                                            | Type                                                          | Default       |
+| ------------- | --------------- | ------------------------------------------------------ | ------------------------------------------------------------- | ------------- |
+| `btnType`     | `btn-type`      |                                                        | `"action" \| "contained" \| "outlined" \| "simple" \| "text"` | `'contained'` |
+| `disabled`    | `disabled`      |                                                        | `boolean`                                                     | `false`       |
+| `dropdown`    | `dropdown`      | Show chevron icon                                      | `boolean`                                                     | `false`       |
+| `elAriaLabel` | `el-aria-label` | The aria-label attribute for the inner button element. | `string`                                                      | `undefined`   |
+| `form`        | `form`          |                                                        | `string`                                                      | `undefined`   |
+| `formaction`  | `formaction`    |                                                        | `string`                                                      | `undefined`   |
+| `full`        | `full`          | Sets display to flex instead of inline-flex            | `boolean`                                                     | `false`       |
+| `href`        | `href`          | Create button as link                                  | `string`                                                      | `undefined`   |
+| `icon`        | `icon`          | Class name of icon                                     | `string`                                                      | `undefined`   |
+| `target`      | `target`        | Only for link buttons                                  | `string`                                                      | `undefined`   |
+| `type`        | `type`          |                                                        | `"button" \| "reset" \| "submit"`                             | `'button'`    |
+| `value`       | `value`         |                                                        | `string`                                                      | `undefined`   |
+| `xl`          | `xl`            |                                                        | `boolean`                                                     | `false`       |
 
 ## Icon Buttons
 
@@ -138,29 +147,31 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
   <div class="mt-5">
     <div>
       <div class="flex my-20 items-center">
-        <mx-icon-button icon="ph-thumbs-up"></mx-icon-button>
-        <mx-icon-button icon="ph-heart"></mx-icon-button>
-        <mx-icon-button icon="ph-x"></mx-icon-button>
-        <mx-icon-button>
+        <mx-icon-button icon="ph-thumbs-up" el-aria-label="Like" />
+        <mx-icon-button icon="ph-heart" el-aria-label="Fave" />
+        <mx-icon-button icon="mds-x" el-aria-label="Close" />
+        <mx-icon-button el-aria-label="OK">
           <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1 7l4.5 4.5L14 3" stroke="currentColor" stroke-linecap="square"></path></svg>
         </mx-icon-button>
-        <mx-icon-button chevron-down></mx-icon-button>
-        <mx-icon-button chevron-left></mx-icon-button>
-        <mx-icon-button chevron-right></mx-icon-button>
+        <mx-icon-button chevron-down el-aria-label="Down" />
+        <mx-icon-button chevron-left el-aria-label="Left" />
+        <mx-icon-button chevron-right el-aria-label="Right" />
+        <mx-icon-button icon="ph-link" href="/" el-aria-label="Link" />
       </div>
     </div>
     <div>
       <strong>Disabled</strong>
       <div class="flex my-20 items-center">
-        <mx-icon-button icon="ph-thumbs-up" disabled></mx-icon-button>
-        <mx-icon-button icon="ph-heart" disabled></mx-icon-button>
-        <mx-icon-button icon="ph-x" disabled></mx-icon-button>
-        <mx-icon-button disabled>
+        <mx-icon-button icon="ph-thumbs-up" disabled el-aria-label="Like" />
+        <mx-icon-button icon="ph-heart" disabled el-aria-label="Fave" />
+        <mx-icon-button icon="mds-x" disabled el-aria-label="Close" />
+        <mx-icon-button disabled el-aria-label="OK">
           <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1 7l4.5 4.5L14 3" stroke="currentColor" stroke-linecap="square"></path></svg>
         </mx-icon-button>
-        <mx-icon-button chevron-down disabled></mx-icon-button>
-        <mx-icon-button chevron-left disabled></mx-icon-button>
-        <mx-icon-button chevron-right disabled></mx-icon-button>
+        <mx-icon-button chevron-down disabled el-aria-label="Down" />
+        <mx-icon-button chevron-left disabled el-aria-label="Left" />
+        <mx-icon-button chevron-right disabled el-aria-label="Right" />
+        <mx-icon-button icon="ph-link" href="/" disabled el-aria-label="Link" />
       </div>
     </div>
   </div>
@@ -171,16 +182,19 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
 
 ### Icon Button Properties
 
-| Property       | Attribute       | Description                         | Type                            | Default     |
-| -------------- | --------------- | ----------------------------------- | ------------------------------- | ----------- |
-| `ariaLabel`    | `aria-label`    | An aria-label is highly recommended | `string`                        | `undefined` |
-| `chevronDown`  | `chevron-down`  | Show downward chevron icon          | `boolean`                       | `false`     |
-| `chevronLeft`  | `chevron-left`  | Show left-pointing chevron icon     | `boolean`                       | `false`     |
-| `chevronRight` | `chevron-right` | Show right-pointing chevron icon    | `boolean`                       | `false`     |
-| `disabled`     | `disabled`      |                                     | `boolean`                       | `false`     |
-| `icon`         | `icon`          | Class name of icon (for icon font)  | `string`                        | `undefined` |
-| `type`         | `type`          |                                     | `"button" | "reset" | "submit"` | `'button'`  |
-| `value`        | `value`         |                                     | `string`                        | `undefined` |
+| Property       | Attribute       | Description                                            | Type                              | Default     |
+| -------------- | --------------- | ------------------------------------------------------ | --------------------------------- | ----------- |
+| `chevronDown`  | `chevron-down`  | Show downward chevron icon                             | `boolean`                         | `false`     |
+| `chevronLeft`  | `chevron-left`  | Show left-pointing chevron icon                        | `boolean`                         | `false`     |
+| `chevronRight` | `chevron-right` | Show right-pointing chevron icon                       | `boolean`                         | `false`     |
+| `disabled`     | `disabled`      |                                                        | `boolean`                         | `false`     |
+| `elAriaLabel`  | `el-aria-label` | The aria-label attribute for the inner button element. | `string`                          | `undefined` |
+| `form`         | `form`          |                                                        | `string`                          | `undefined` |
+| `formaction`   | `formaction`    |                                                        | `string`                          | `undefined` |
+| `href`         | `href`          | Create button as link                                  | `string`                          | `undefined` |
+| `icon`         | `icon`          | Class name of icon (for icon font)                     | `string`                          | `undefined` |
+| `type`         | `type`          |                                                        | `"button" \| "reset" \| "submit"` | `'button'`  |
+| `value`        | `value`         |                                                        | `string`                          | `undefined` |
 
 ## Toggle Buttons
 
@@ -194,21 +208,21 @@ appear as a group. They can act as radio buttons when given a <code>value</code>
     <div>
       <strong>Single Button</strong>
       <div class="my-20">
-        <mx-toggle-button  icon="ph-microphone-slash" :selected="isMuted" @click="isMuted = !isMuted" />
+        <mx-toggle-button  icon="ph-microphone-slash" :selected="isMuted" el-aria-label="Mute" @click="isMuted = !isMuted" />
       </div>
     </div>
     <div>
       <strong>Disabled</strong>
       <div class="my-20">
-        <mx-toggle-button  icon="ph-heart" disabled />
+        <mx-toggle-button icon="ph-heart" disabled el-aria-label="Fave" />
       </div>
     </div>
     <div>
       <strong>Multiple Buttons</strong>
       <div class="flex my-20">
-        <mx-toggle-button icon="ph-text-bolder" :selected="hasStyle('bold')" @click="toggleStyle('bold')" />
-        <mx-toggle-button icon="ph-text-italic" :selected="hasStyle('italic')" @click="toggleStyle('italic')" />
-        <mx-toggle-button icon="ph-text-underline" :selected="hasStyle('underline')" @click="toggleStyle('underline')" />
+        <mx-toggle-button icon="ph-text-bolder" :selected="hasStyle('bold')" @click="toggleStyle('bold')" el-aria-label="Bold" />
+        <mx-toggle-button icon="ph-text-italic" :selected="hasStyle('italic')" @click="toggleStyle('italic')" el-aria-label="Italic" />
+        <mx-toggle-button icon="ph-text-underline" :selected="hasStyle('underline')" @click="toggleStyle('underline')" el-aria-label="Underline" />
       </div>
       <p class="my-20">Selected: <code>{{ JSON.stringify(textStyles) }}</code></p>
     </div>
@@ -221,13 +235,13 @@ appear as a group. They can act as radio buttons when given a <code>value</code>
 
 ### Toggle Button Properties
 
-| Property    | Attribute    | Description                            | Type      | Default     |
-| ----------- | ------------ | -------------------------------------- | --------- | ----------- |
-| `ariaLabel` | `aria-label` |                                        | `string`  | `undefined` |
-| `disabled`  | `disabled`   |                                        | `boolean` | `false`     |
-| `icon`      | `icon`       |                                        | `string`  | `undefined` |
-| `selected`  | `selected`   |                                        | `boolean` | `false`     |
-| `value`     | `value`      | Only used inside a toggle button group | `any`     | `undefined` |
+| Property      | Attribute       | Description                                            | Type      | Default     |
+| ------------- | --------------- | ------------------------------------------------------ | --------- | ----------- |
+| `disabled`    | `disabled`      |                                                        | `boolean` | `false`     |
+| `elAriaLabel` | `el-aria-label` | The aria-label attribute for the inner button element. | `string`  | `undefined` |
+| `icon`        | `icon`          |                                                        | `string`  | `undefined` |
+| `selected`    | `selected`      |                                                        | `boolean` | `false`     |
+| `value`       | `value`         | Only used inside a toggle button group                 | `any`     | `undefined` |
 
 ## Toggle Button Groups
 
@@ -242,9 +256,9 @@ emitted via a custom <code>mxInput</code> event.
       <strong>Enabled</strong>
       <div class="my-20">
         <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
-          <mx-toggle-button icon="ph-text-align-left" value="left" />
-          <mx-toggle-button icon="ph-text-align-center" value="center" />
-          <mx-toggle-button icon="ph-text-align-right" value="right" />
+          <mx-toggle-button icon="ph-text-align-left" el-aria-label="Align left" value="left" />
+          <mx-toggle-button icon="ph-text-align-center" el-aria-label="Align center" value="center" />
+          <mx-toggle-button icon="ph-text-align-right" el-aria-label="Align right" value="right" />
         </mx-toggle-button-group>
       </div>
       <p class="my-20">Selected: <code>{{ JSON.stringify(textAlign) }}</code></p>
@@ -253,9 +267,9 @@ emitted via a custom <code>mxInput</code> event.
       <strong>Disabled</strong>
       <div class="my-20">
         <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
-          <mx-toggle-button icon="ph-text-align-left" value="left" disabled />
-          <mx-toggle-button icon="ph-text-align-center" value="center" disabled />
-          <mx-toggle-button icon="ph-text-align-right" value="right" disabled />
+          <mx-toggle-button icon="ph-text-align-left" value="left" el-aria-label="Align left" disabled />
+          <mx-toggle-button icon="ph-text-align-center" value="center" el-aria-label="Align center" disabled />
+          <mx-toggle-button icon="ph-text-align-right" value="right" el-aria-label="Align right" disabled />
         </mx-toggle-button-group>
       </div>
     </div>
@@ -268,9 +282,10 @@ emitted via a custom <code>mxInput</code> event.
 
 ### Toggle Button Group Properties
 
-| Property | Attribute | Description | Type  | Default     |
-| -------- | --------- | ----------- | ----- | ----------- |
-| `value`  | `value`   |             | `any` | `undefined` |
+| Property   | Attribute  | Description                                                          | Type      | Default     |
+| ---------- | ---------- | -------------------------------------------------------------------- | --------- | ----------- |
+| `required` | `required` | Set to `true` to prevent deselecting once a selection has been made. | `boolean` | `false`     |
+| `value`    | `value`    |                                                                      | `any`     | `undefined` |
 
 ### Toggle Button Group Events
 

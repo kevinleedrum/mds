@@ -1,4 +1,4 @@
-import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-b9cec9f1.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
 
 const MxChipGroup = class {
   constructor(hostRef) {
@@ -13,7 +13,7 @@ const MxChipGroup = class {
   }
   onChipClick(e) {
     const chip = e.target.closest('mx-chip');
-    if (!chip)
+    if (!chip || chip.disabled)
       return;
     this.toggleValue(chip.value);
     this.mxInput.emit(this.value);
@@ -33,7 +33,7 @@ const MxChipGroup = class {
     });
   }
   render() {
-    return (h(Host, { class: "inline-flex", role: "radio-group" }, h("slot", null)));
+    return (h(Host, { class: "inline-flex", role: "radiogroup" }, h("slot", null)));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

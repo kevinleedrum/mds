@@ -1,5 +1,5 @@
 export declare class MxBadge {
-  childElement: HTMLElement;
+  isStandalone: boolean;
   private element;
   /** The value to display inside the badge */
   value: any;
@@ -17,9 +17,9 @@ export declare class MxBadge {
   bottom: boolean;
   /** Anchor the badge to the left of the wrapped content */
   left: boolean;
-  get indicatorSvg(): string;
-  get isStandalone(): boolean;
+  componentWillLoad(): void;
   get isIconOnly(): boolean;
+  get indicatorIcon(): string;
   get badgeClassNames(): string;
   render(): any;
 }

@@ -1,16 +1,21 @@
 :root {
-  /* Global Utility Variables */
-
+  /* Global Colors */
+  --mds-bg-error: #fbd6de;
+  --mds-bg-gray-inverted: #e8e8e8;
+  --mds-bg-gray: #fafafa;
   --mds-bg-primary-inverted: #0457af;
   --mds-bg-primary: #e1f5ff;
   --mds-bg-secondary-inverted: #edfffc;
   --mds-bg-secondary: #00696b;
-  --mds-bg-gray-inverted: #e8e8e8;
-  --mds-bg-gray: #fafafa;
-
-  --mds-text-primary: #111827;
-  --mds-text-primary-inverted: #fff;
+  --mds-text-disabled-inverted: rgba(255, 255, 255, 0.5);
+  --mds-text-disabled: rgba(51, 51, 51, 0.38);
+  --mds-text-error: #ff0c3e;
+  --mds-text-inactive-inverted: rgba(255, 255, 255, 0.54);
+  --mds-text-inactive: rgba(0, 0, 0, 0.64);
   --mds-text-link: #0457af;
+  --mds-text-medium-emphasis: rgba(51, 51, 51, 0.87);
+  --mds-text-primary-inverted: #fff;
+  --mds-text-primary: #333;
 
   /* #region patterns */
   /* Patterns */
@@ -43,17 +48,17 @@
   --mds-text-btn-outlined-disabled: #a7a7a7;
   --mds-text-btn-outlined: #2d2d2d;
 
-  /* Action Buttons */
-  --mds-bg-btn-action-active: #fff;
-  --mds-bg-btn-action-disabled: #fcfcfc;
-  --mds-bg-btn-action-focus: #d7d7d7;
-  --mds-bg-btn-action-hover: #eeeeee;
-  --mds-bg-btn-action: #fff;
-  --mds-border-btn-action-disabled: #f2f2f2;
-  --mds-border-btn-action: #e7e7e7;
-  --mds-ripple-btn-action: rgba(0, 0, 0, 0.12);
-  --mds-text-btn-action-disabled: #909090;
-  --mds-text-btn-action: #2d2d2d;
+  /* Simple Buttons */
+  --mds-bg-btn-simple-active: #fff;
+  --mds-bg-btn-simple-disabled: #fcfcfc;
+  --mds-bg-btn-simple-focus: #d7d7d7;
+  --mds-bg-btn-simple-hover: #eeeeee;
+  --mds-bg-btn-simple: #fff;
+  --mds-border-btn-simple-disabled: #f2f2f2;
+  --mds-border-btn-simple: #e7e7e7;
+  --mds-ripple-btn-simple: rgba(0, 0, 0, 0.12);
+  --mds-text-btn-simple-disabled: #909090;
+  --mds-text-btn-simple: #2d2d2d;
 
   /* Text Buttons */
   --mds-bg-btn-text-active: transparent;
@@ -149,11 +154,13 @@
   /* #region inputs */
   /* Text Inputs & Textareas */
   --mds-bg-input-readonly: #f5f5f5;
+  --mds-bg-input-scroll-thumb: #d4d4d4;
   --mds-bg-input: #fff;
   --mds-border-input-error: #ff0c3e;
   --mds-border-input-focus: #0457af;
   --mds-border-input-hover: #2d2d2d;
   --mds-border-input: #a9a9a9;
+  --mds-caret-input: #0457af;
   --mds-text-input-assistive: #787878;
   --mds-text-input-disabled: #a9a9a9;
   --mds-text-input-error: #ff0c3e;
@@ -174,6 +181,8 @@
   --mds-border-dropdown-focus: #0457af;
   --mds-border-dropdown-hover: #2d2d2d;
   --mds-border-dropdown: #a9a9a9;
+  --mds-text-dropdown-arrow: #5c5c5c;
+  --mds-text-dropdown-disabled: #a9a9a9;
   --mds-text-dropdown-label: #7a7a7a;
   --mds-text-dropdown: #454545;
 
@@ -185,6 +194,7 @@
   --mds-border-select-focus: #0457af;
   --mds-border-select-hover: #2d2d2d;
   --mds-border-select: #a9a9a9;
+  --mds-text-select-arrow: #5c5c5c;
   --mds-text-select-assistive: #787878;
   --mds-text-select-disabled: #a9a9a9;
   --mds-text-select-error: #ff0c3e;
@@ -192,12 +202,33 @@
   --mds-text-select: #454545;
   /* #endregion dropdowns */
 
+  /* #region pickers */
+  /* Pickers */
+  --mds-bg-picker: #fff;
+  --mds-bg-picker-calendar-active: #0457af;
+  --mds-bg-picker-calendar-hover: #eeeeee;
+  --mds-border-picker-error: #ff0c3e;
+  --mds-border-picker-focus: #0457af;
+  --mds-border-picker-hover: #2d2d2d;
+  --mds-border-picker: #a9a9a9;
+  --mds-text-picker-calendar-active: #fff;
+  --mds-text-picker-calendar-label: #a9a9a9;
+  --mds-text-picker-calendar-month-hover: #0457af;
+  --mds-text-picker-disabled: #a9a9a9;
+  --mds-text-picker-error: #ff0c3e;
+  --mds-text-picker-focus: #454545;
+  --mds-text-picker-icon: #454545;
+  --mds-text-picker-label: #7a7a7a;
+  --mds-text-picker: #454545;
+  /* #endregion pickers */
+
   /* #region search */
   /* Search */
   --mds-border-search: transparent;
   --mds-border-search-flat: #eaeaea;
   --mds-bg-search: #fff;
   --mds-text-search: #333;
+  --mds-text-search-clear: #0457af;
   --mds-text-search-placeholder: rgba(51, 51, 51, 0.6);
   --mds-border-search-hover: #333;
   --mds-border-search-focus: #0457af;
@@ -206,6 +237,7 @@
   /* #region selection-controls */
   /* Radio Buttons */
   --mds-bg-radio-checked: #0457af;
+  --mds-bg-radio-disabled: #a4a4a4;
   --mds-bg-radio-overlay-active: rgba(0, 0, 0, 0.12);
   --mds-bg-radio-overlay-checked-active: rgba(4, 87, 175, 0.32);
   --mds-bg-radio-overlay-checked-focus: rgba(4, 87, 175, 0.24);
@@ -213,6 +245,10 @@
   --mds-bg-radio-overlay-focus: rgba(0, 0, 0, 0.12);
   --mds-bg-radio-overlay-hover: rgba(0, 0, 0, 0.04);
   --mds-border-radio: #505050;
+  --mds-border-radio-checked: #0457af;
+  --mds-border-radio-disabled: #a4a4a4;
+  --mds-text-radio-disabled: #a4a4a4;
+  --mds-text-radio: #2d2d2d;
 
   /* Switches */
   --mds-bg-switch-overlay-active: rgba(0, 0, 0, 0.12);
@@ -221,10 +257,16 @@
   --mds-bg-switch-overlay-checked-hover: rgba(4, 87, 175, 0.08);
   --mds-bg-switch-overlay-focus: rgba(0, 0, 0, 0.12);
   --mds-bg-switch-overlay-hover: rgba(0, 0, 0, 0.04);
+  --mds-bg-switch-thumb-checked-disabled: #abc6e2;
   --mds-bg-switch-thumb-checked: #0457af;
+  --mds-bg-switch-thumb-disabled: #fcfcfc;
   --mds-bg-switch-thumb: #fff;
+  --mds-bg-switch-track-checked-disabled: #d4e2f1;
   --mds-bg-switch-track-checked: #abc6e2;
+  --mds-bg-switch-track-disabled: #ddd;
   --mds-bg-switch-track: #b9b9b9;
+  --mds-text-switch-disabled: #a4a4a4;
+  --mds-text-switch: #2d2d2d;
 
   /* Checkboxes */
   --mds-bg-checkbox-checked: #0457af;
@@ -241,6 +283,14 @@
   --mds-text-checkbox-disabled: #a4a4a4;
   --mds-text-checkbox: #2d2d2d;
   /* #endregion selection-controls */
+
+  /* #region tooltips */
+  /* Tooltips */
+  --mds-bg-tooltip-inverted: #fafafa;
+  --mds-bg-tooltip: #5a5a5a;
+  --mds-text-tooltip-inverted: #333;
+  --mds-text-tooltip: #fff;
+  /* #endregion tooltips */
 
   /* #region progress */
   /* Progress Indicators */
@@ -280,6 +330,7 @@
   --mds-text-menu-item-check: #0457af;
   --mds-text-menu-item-disabled: #909090;
   --mds-text-menu-item-label: #828282;
+  --mds-text-menu-item-subtitle: #5a5a5a;
   --mds-text-menu-item: #333;
   --mds-text-menu-section-label: #0457af;
   /* #endregion menus */
@@ -289,4 +340,69 @@
   --mds-bg-page-header: #fff;
   --mds-text-page-header: #4e4e4e;
   /* #endregion page-headers */
+
+  /* #region tables */
+  /* Data Tables */
+  --mds-bg-table-focus: #e0e0e0;
+  --mds-bg-table-hover: #f5f5f5;
+  --mds-bg-table-indent: #e3e3e3;
+  --mds-bg-table-header: #fefefe;
+  --mds-bg-table-subheader: #dde8f4;
+  --mds-bg-table: #fff;
+  --mds-border-table-header: #eaeaea;
+  --mds-border-table-cell: #e8e8e8;
+  --mds-text-table: #333;
+  --mds-text-table-mobile-row-chevron: #0457af;
+  --mds-text-table-drag-handle: #c5c5c5;
+  --mds-text-table-subheader: #0457af;
+  /* #endregion tables */
+
+  /* #region banners */
+  /* Banners */
+  --mds-bg-banner-error: #f5d7de;
+  --mds-bg-banner: #e1f5ff;
+  --mds-text-banner-error: #ff0c3e;
+  --mds-text-banner: #333;
+  /* #endregion banners */
+
+  /* #region dialogs */
+  /* Dialogs */
+  --mds-bg-dialog-backdrop: rgba(0, 0, 0, 0.5);
+  --mds-bg-dialog-scroll-thumb: #d4d4d4;
+  --mds-bg-dialog: #f8f8f8;
+  --mds-text-dialog: #333;
+  /* #endregion dialogs */
+
+  /* #region modals */
+  /* Modals */
+  --mds-bg-modal-backdrop: rgba(0, 0, 0, 0.5);
+  --mds-bg-modal-card: #fff;
+  --mds-bg-modal-footer: #fefefe;
+  --mds-bg-modal-header: #fefefe;
+  --mds-bg-modal: #f8f8f8;
+  --mds-text-modal: #333;
+  /* #endregion modals */
+
+  /* #region pagination */
+  /* Pagination */
+  --mds-bg-pagination-simple: #f5f5f5;
+  --mds-bg-pagination: #fff;
+  --mds-text-pagination: #333;
+  /* #endregion pagination */
+
+  /* #region snackbars */
+  /* Snackbars */
+  --mds-bg-snackbar: #202020;
+  --mds-text-snackbar: #fff;
+  /* #endregion snackbars */
+
+  /* #region uploads */
+  /* Image Uploads */
+  --mds-bg-image-upload-hover: #ebf2f9;
+  --mds-bg-image-upload: #fefefe;
+  --mds-border-image-upload: #333;
+  --mds-text-image-upload-error: #ff0c3e;
+  --mds-text-image-upload-success: #2ad062;
+  --mds-text-image-upload: #333;
+  /* #endregion uploads */
 }

@@ -20,9 +20,9 @@ The options in the menu are represented by [Menu Items](/components/menus.html).
           @input="animal = $event.target.value"
         >
           <mx-menu-item></mx-menu-item>
-          <mx-menu-item>Cat</mx-menu-item>
-          <mx-menu-item>Dog</mx-menu-item>
-          <mx-menu-item>Walrus</mx-menu-item>
+          <mx-menu-item subtitle="Felis catus">Cat</mx-menu-item>
+          <mx-menu-item subtitle="Canis familiaris">Dog</mx-menu-item>
+          <mx-menu-item subtitle="Odobenus rosmarus">Walrus</mx-menu-item>
         </mx-dropdown-menu>
       </div>
     </div>
@@ -145,6 +145,36 @@ The options in the menu are represented by [Menu Items](/components/menus.html).
         </mx-dropdown-menu>
       </div>
     </div>
+    <div>
+      <strong>Disabled</strong>
+      <div class="my-20">
+        <mx-dropdown-menu
+          label="Favorite Animal"
+          value="Cat"
+          disabled
+        >
+          <mx-menu-item></mx-menu-item>
+          <mx-menu-item subtitle="Felis catus">Cat</mx-menu-item>
+          <mx-menu-item subtitle="Canis familiaris">Dog</mx-menu-item>
+          <mx-menu-item subtitle="Odobenus rosmarus">Walrus</mx-menu-item>
+        </mx-dropdown-menu>
+      </div>
+    </div>
+    <div>
+      <strong>Readonly</strong>
+      <div class="my-20">
+        <mx-dropdown-menu
+          label="Favorite Animal"
+          value="Cat"
+          readonly
+        >
+          <mx-menu-item></mx-menu-item>
+          <mx-menu-item subtitle="Felis catus">Cat</mx-menu-item>
+          <mx-menu-item subtitle="Canis familiaris">Dog</mx-menu-item>
+          <mx-menu-item subtitle="Odobenus rosmarus">Walrus</mx-menu-item>
+        </mx-dropdown-menu>
+      </div>
+    </div>
   </div>
 </section>
 <!-- #endregion dropdown-menus -->
@@ -153,17 +183,20 @@ The options in the menu are represented by [Menu Items](/components/menus.html).
 
 ### Dropdown Menu Properties
 
-| Property     | Attribute     | Description                                           | Type      | Default     |
-| ------------ | ------------- | ----------------------------------------------------- | --------- | ----------- |
-| `ariaLabel`  | `aria-label`  |                                                       | `string`  | `undefined` |
-| `dense`      | `dense`       |                                                       | `boolean` | `false`     |
-| `dropdownId` | `dropdown-id` | The `id` attribute for the internal input element     | `string`  | `undefined` |
-| `elevated`   | `elevated`    | Style as a filter dropdown with a 1dp elevation       | `boolean` | `false`     |
-| `flat`       | `flat`        | Style as a filter dropdown with a "flat" border color | `boolean` | `false`     |
-| `label`      | `label`       |                                                       | `string`  | `undefined` |
-| `name`       | `name`        |                                                       | `string`  | `undefined` |
-| `suffix`     | `suffix`      | Text shown to the left of the arrow                   | `string`  | `undefined` |
-| `value`      | `value`       |                                                       | `any`     | `undefined` |
+| Property        | Attribute        | Description                                                                                      | Type      | Default     |
+| --------------- | ---------------- | ------------------------------------------------------------------------------------------------ | --------- | ----------- |
+| `dense`         | `dense`          |                                                                                                  | `boolean` | `false`     |
+| `disabled`      | `disabled`       |                                                                                                  | `boolean` | `false`     |
+| `dropdownClass` | `dropdown-class` | Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`) | `string`  | `undefined` |
+| `dropdownId`    | `dropdown-id`    | The `id` attribute for the internal input element                                                | `string`  | `undefined` |
+| `elAriaLabel`   | `el-aria-label`  | The aria-label attribute for the inner input element.                                            | `string`  | `undefined` |
+| `elevated`      | `elevated`       | Style as a filter dropdown with a 1dp elevation                                                  | `boolean` | `false`     |
+| `flat`          | `flat`           | Style as a filter dropdown with a "flat" border color                                            | `boolean` | `false`     |
+| `label`         | `label`          |                                                                                                  | `string`  | `undefined` |
+| `name`          | `name`           |                                                                                                  | `string`  | `undefined` |
+| `readonly`      | `readonly`       |                                                                                                  | `boolean` | `false`     |
+| `suffix`        | `suffix`         | Text shown to the left of the arrow                                                              | `string`  | `undefined` |
+| `value`         | `value`          |                                                                                                  | `any`     | `undefined` |
 
 ## Selects
 
@@ -228,8 +261,8 @@ The `mx-select` component wraps the browser's native `select` element. It is des
           </mx-select>
         </div>
         <div class="my-20">
-          <mx-select label="Disabled Select" disabled>
-            <option></option>
+          <mx-select label="Disabled Select" disabled value="Value">
+            <option>Value</option>
           </mx-select>
         </div>
       </div>
@@ -293,8 +326,8 @@ The `mx-select` component wraps the browser's native `select` element. It is des
           </mx-select>
         </div>
         <div class="my-20">
-          <mx-select label="Disabled Select" disabled dense>
-            <option></option>
+          <mx-select label="Disabled Select" disabled dense value="Value">
+            <option>Value</option>
           </mx-select>
         </div>
       </div>
@@ -304,20 +337,20 @@ The `mx-select` component wraps the browser's native `select` element. It is des
 
 <<< @/vuepress/components/dropdowns.md#selects
 
-### Alternate Label / No Label
+### Floating Label / No Label
 
-The Select component's floating label is optional. A sibling `label` element may be used instead, or the Select could simply have an `aria-label` for screen readers.
+Add the `floatLabel` prop to create a floating label. The Select component's label is also optional; the Select could simply have an `el-aria-label` prop for screen readers.
 
 <!-- #region select-labels -->
 <section class="mds">
   <div>
-    <div class="my-20 w-192">
-      <label for="favorite-animal" class="block text-4 mb-4 font-semibold tracking-0-4">
-        Favorite Animal
-      </label>
+    <div class="my-20 w-320">
       <mx-select
-        id="favorite-animal"
+        label="Favorite Animal"
         :value="animal"
+        float-label
+        assistive-text="This select has a floating label"
+        dense
         @input="animal = $event.target.value"
       >
         <option></option>
@@ -329,7 +362,7 @@ The Select component's floating label is optional. A sibling `label` element may
   </div>
   <div>
     <div class="my-20 w-320">
-      <mx-select aria-label="Toast condiment" assistive-text="This select only has an aria-label attribute.">
+      <mx-select el-aria-label="Toast condiment" assistive-text="This select only has an aria-label attribute.">
         <option></option>
         <option>Butter</option>
         <option>Jam</option>
@@ -418,21 +451,22 @@ Like the [Dropdown Menu](#dropdown-menus), the Select component also has `flat` 
 
 ### Select Properties
 
-| Property        | Attribute        | Description                               | Type      | Default     |
-| --------------- | ---------------- | ----------------------------------------- | --------- | ----------- |
-| `ariaLabel`     | `aria-label`     |                                           | `string`  | `undefined` |
-| `assistiveText` | `assistive-text` | Helpful text to show below the select     | `string`  | `undefined` |
-| `dense`         | `dense`          |                                           | `boolean` | `false`     |
-| `disabled`      | `disabled`       |                                           | `boolean` | `false`     |
-| `elevated`      | `elevated`       | Style with a 1dp elevation                | `boolean` | `false`     |
-| `error`         | `error`          |                                           | `boolean` | `false`     |
-| `flat`          | `flat`           | Style with a "flat" border color          | `boolean` | `false`     |
-| `label`         | `label`          |                                           | `string`  | `undefined` |
-| `labelClass`    | `label-class`    | Additional classes for the label          | `string`  | `''`        |
-| `name`          | `name`           |                                           | `string`  | `undefined` |
-| `selectId`      | `select-id`      | The `id` attribute for the select element | `string`  | `undefined` |
-| `suffix`        | `suffix`         | Text shown to the left of the arrow       | `string`  | `undefined` |
-| `value`         | `value`          |                                           | `any`     | `undefined` |
+| Property        | Attribute        | Description                                                                                    | Type      | Default     |
+| --------------- | ---------------- | ---------------------------------------------------------------------------------------------- | --------- | ----------- |
+| `assistiveText` | `assistive-text` | Helpful text to show below the select                                                          | `string`  | `undefined` |
+| `dense`         | `dense`          |                                                                                                | `boolean` | `false`     |
+| `disabled`      | `disabled`       |                                                                                                | `boolean` | `false`     |
+| `elevated`      | `elevated`       | Style with a 1dp elevation                                                                     | `boolean` | `false`     |
+| `error`         | `error`          |                                                                                                | `boolean` | `false`     |
+| `flat`          | `flat`           | Style with a "flat" border color                                                               | `boolean` | `false`     |
+| `floatLabel`    | `float-label`    |                                                                                                | `boolean` | `false`     |
+| `label`         | `label`          |                                                                                                | `string`  | `undefined` |
+| `labelClass`    | `label-class`    | Additional classes for the label                                                               | `string`  | `''`        |
+| `name`          | `name`           |                                                                                                | `string`  | `undefined` |
+| `selectClass`   | `select-class`   | Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`) | `string`  | `undefined` |
+| `selectId`      | `select-id`      | The `id` attribute for the select element                                                      | `string`  | `undefined` |
+| `suffix`        | `suffix`         | Text shown to the left of the arrow                                                            | `string`  | `undefined` |
+| `value`         | `value`          |                                                                                                | `any`     | `undefined` |
 
 ### CSS Variables
 

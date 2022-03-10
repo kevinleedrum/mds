@@ -8,7 +8,7 @@ describe('mx-search', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxSearch],
-      html: `<mx-search />`,
+      html: `<mx-search data-test="test" />`,
     });
     root = page.root;
     input = root.querySelector('input[type=search]');
@@ -23,7 +23,7 @@ describe('mx-search', () => {
     root.placeholder = 'Placeholder';
     await page.waitForChanges();
     expect(input.getAttribute('aria-label')).toBe('Placeholder');
-    root.ariaLabel = 'ARIA Label';
+    root.elAriaLabel = 'ARIA Label';
     await page.waitForChanges();
     expect(input.getAttribute('aria-label')).toBe('ARIA Label');
   });
@@ -58,5 +58,43 @@ describe('mx-search', () => {
     root.value = 'Value';
     await page.waitForChanges();
     expect(input.getAttribute('value')).toBe('Value');
+  });
+
+  it('applies any data attributes to the input element', async () => {
+    expect(input.getAttribute('data-test')).toBe('test');
+  });
+
+  it('updates the value prop when the input value is changed', async () => {
+    input.value = 'bar';
+    input.dispatchEvent(new Event('input'));
+    await page.waitForChanges();
+    expect(root.value).toBe('bar');
+  });
+
+  it('shows a clear button when there is a value', async () => {
+    const button = root.querySelector('[data-testid="clear-button"]');
+    expect(button.classList.contains('hidden'));
+    root.value = 'boo';
+    await page.waitForChanges();
+    expect(button.classList.contains('hidden')).toBe(false);
+  });
+
+  it('clears the value and emits an mxClear event when the clear button is clicked', async () => {
+    root.value = 'boo';
+    const listener = jest.fn();
+    root.addEventListener('mxClear', listener);
+    await page.waitForChanges();
+    const button = root.querySelector('[data-testid="clear-button"]') as HTMLButtonElement;
+    button.click();
+    await page.waitForChanges();
+    expect(root.value).toBe('');
+    expect(listener).toHaveBeenCalled();
+  });
+
+  it('does not show a clear button when showClear is false', async () => {
+    expect(root.querySelector('[data-testid="clear-button"]')).not.toBeNull();
+    root.showClear = false;
+    await page.waitForChanges();
+    expect(root.querySelector('[data-testid="clear-button"]')).toBeNull();
   });
 });

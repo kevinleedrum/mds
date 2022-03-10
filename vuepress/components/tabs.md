@@ -18,8 +18,8 @@ The `mx-tabs` component will render as an `mx-select` when the screen width is l
         fill
         :tabs.prop="[
           { label: 'Home', icon: 'ph-house' },
-          { label: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'bg-green-600' },
-          { label: 'Search', icon: 'ph-magnifying-glass' },
+          { label: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'text-green-600' },
+          { label: 'Search', icon: 'mds-search' },
         ]"
         :value="activeTab"
         @mxChange="e => activeTab = e.detail"
@@ -30,8 +30,8 @@ The `mx-tabs` component will render as an `mx-select` when the screen width is l
       <mx-tabs
         :tabs.prop="[
           { label: 'Home', icon: 'ph-house' },
-          { label: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'bg-green-600' },
-          { label: 'Search', icon: 'ph-magnifying-glass' },
+          { label: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'text-green-600' },
+          { label: 'Search', icon: 'mds-search' },
         ]"
         :value="activeTab"
         @mxChange="e => activeTab = e.detail"
@@ -41,9 +41,9 @@ The `mx-tabs` component will render as an `mx-select` when the screen width is l
       <strong>Icons Only, Horizontal Stack</strong>
       <mx-tabs
         :tabs.prop="[
-          { ariaLabel: 'Home', icon: 'ph-house' },
-          { ariaLabel: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'bg-red-600' },
-          { ariaLabel: 'Search', icon: 'ph-magnifying-glass' },
+          { elAriaLabel: 'Home', icon: 'ph-house' },
+          { elAriaLabel: 'Favorites', icon: 'ph-heart', badge: true, badgeClass: 'text-red-600' },
+          { elAriaLabel: 'Search', icon: 'mds-search' },
         ]"
         :value="activeTab"
         @mxChange="e => activeTab = e.detail"
@@ -80,7 +80,7 @@ for the `value` prop (a variable containing the active tab index), and each `mx-
       :tabs.prop="[
         { label: 'Home', icon: 'ph-house' },
         { label: 'Favorites', icon: 'ph-heart' },
-        { label: 'Search', icon: 'ph-magnifying-glass' },
+        { label: 'Search', icon: 'mds-search' },
       ]"
       :value="activeTab"
       @mxChange="e => activeTab = e.detail"
@@ -116,14 +116,14 @@ for the `value` prop (a variable containing the active tab index), and each `mx-
 
 ### Tab Properties
 
-| Property     | Attribute     | Description                                                                                | Type      | Default |
-| ------------ | ------------- | ------------------------------------------------------------------------------------------ | --------- | ------- |
-| `ariaLabel`  | `aria-label`  | If you are not providing a `label`, this should be provided instead for accessibility      | `string`  | `''`    |
-| `badge`      | `badge`       | Display a circular badge                                                                   | `boolean` | `false` |
-| `badgeClass` | `badge-class` | Additional classes for the badge                                                           | `string`  | `''`    |
-| `icon`       | `icon`        | Class name of icon to display                                                              | `string`  | `''`    |
-| `label`      | `label`       | Label text to display                                                                      | `string`  | `''`    |
-| `selected`   | `selected`    | Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop | `boolean` | `false` |
+| Property      | Attribute       | Description                                                                                | Type      | Default |
+| ------------- | --------------- | ------------------------------------------------------------------------------------------ | --------- | ------- |
+| `badge`       | `badge`         | Display a circular badge                                                                   | `boolean` | `false` |
+| `badgeClass`  | `badge-class`   | Additional classes for the badge                                                           | `string`  | `''`    |
+| `elAriaLabel` | `el-aria-label` | If you are not providing a `label`, this should be provided instead for accessibility      | `string`  | `''`    |
+| `icon`        | `icon`          | Class name of icon to display                                                              | `string`  | `''`    |
+| `label`       | `label`         | Label text to display                                                                      | `string`  | `''`    |
+| `selected`    | `selected`      | Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop | `boolean` | `false` |
 
 ### Tab Content Properties
 

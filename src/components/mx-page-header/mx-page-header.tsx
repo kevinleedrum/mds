@@ -1,9 +1,7 @@
-import { Component, Host, h, Prop, Element, State } from '@stencil/core';
+import { Component, Host, h, Prop, Element, State, Method, Watch } from '@stencil/core';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { IMxButtonProps } from '../mx-button/mx-button';
-import dotsSvg from '../../assets/svg/dots-vertical.svg';
-import arrowSvg from '../../assets/svg/arrow-left.svg';
 
 export interface IPageHeaderButton extends IMxButtonProps {
   label: string;
@@ -16,6 +14,8 @@ export interface IPageHeaderButton extends IMxButtonProps {
 export class MxPageHeader {
   buttonRow: HTMLElement;
   hasTabs: boolean = false;
+  hasModalHeaderCenter: boolean = false;
+  hasModalHeaderRight: boolean = false;
   menuButton: HTMLMxIconButtonElement;
   resizeObserver: ResizeObserver;
   tabSlot: HTMLElement;
@@ -24,6 +24,8 @@ export class MxPageHeader {
 
   /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
   @Prop() buttons: IPageHeaderButton[] = [];
+  /** This flag is set by the Modal component to adjust the page header styling when used internally. */
+  @Prop() modal: boolean = false;
   /** The URL for the previous page link */
   @Prop() previousPageUrl: string = '';
   /** The text to display for the previous page link */
@@ -36,8 +38,31 @@ export class MxPageHeader {
 
   @Element() element: HTMLMxPageHeaderElement;
 
+  /** Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu` */
+  @Method()
+  async resetResizeObserver() {
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
+    this.resizeObserver.observe(this.element);
+    // Wait one tick for layout shifts in order to detect overflow correctly.
+    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
+  }
+
+  @Watch('minWidths')
+  updateSlottedButtonSize() {
+    const slottedButtons = this.element.querySelectorAll('[slot="buttons"] mx-button');
+    slottedButtons.forEach((button: HTMLMxButtonElement) => (button.xl = this.minWidths.lg));
+  }
+
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
+    this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
+    const modalHeaderRight = this.element.querySelector('[slot="modal-header-right"]');
+    this.hasModalHeaderRight =
+      modalHeaderRight &&
+      modalHeaderRight.firstElementChild &&
+      !!(modalHeaderRight.firstElementChild as HTMLElement).offsetParent; // Slot wrapper is not hidden
+    this.updateSlottedButtonSize();
   }
 
   connectedCallback() {
@@ -46,7 +71,6 @@ export class MxPageHeader {
 
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
-    this.resizeObserver.disconnect();
   }
 
   updateRenderTertiaryButtonAsMenu() {
@@ -69,15 +93,19 @@ export class MxPageHeader {
   }
 
   componentDidLoad() {
-    this.resizeObserver = new ResizeObserver(() => this.updateRenderTertiaryButtonAsMenu());
-    this.resizeObserver.observe(this.element);
-    // Wait one tick for layout shifts in order to detect overflow correctly.
-    requestAnimationFrame(this.updateRenderTertiaryButtonAsMenu.bind(this));
+    this.resetResizeObserver();
   }
 
   get hostClass() {
-    let str = 'mx-page-header flex flex-col px-24 lg:px-72';
+    let str = 'mx-page-header flex flex-col';
     if (this.pattern) str += ' bg-pattern';
+    if (this.minWidths.md && this.modal) {
+      str += ' px-40';
+      str += this.hasTabs ? ' min-h-128' : ' min-h-80';
+      return str;
+    } else {
+      str += ' px-24 lg:px-72';
+    }
     if (this.hasTabs) str += ' pb-12 md:pb-0';
     if (this.buttons.length && this.hasTabs) str += ' min-h-176 md:min-h-164';
     else if (this.buttons.length) str += ' min-h-128';
@@ -88,7 +116,14 @@ export class MxPageHeader {
   get headingClass() {
     let str = 'my-0 pr-20 emphasis ';
     if (!this.minWidths.md) str += this.previousPageUrl ? 'text-h6' : 'text-h5';
-    else str += this.previousPageUrl ? 'text-h5' : 'text-h3';
+    else str += this.previousPageUrl || this.modal ? 'text-h5' : 'text-h3';
+    if (this.hasModalHeaderRight) str += ' pr-80';
+    return str;
+  }
+
+  get previousPageClass(): string {
+    let str = 'flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25';
+    if (this.modal) str += ' md:hidden';
     return str;
   }
 
@@ -107,13 +142,17 @@ export class MxPageHeader {
           return (
             <div
               ref={el => isTertiary && (this.tertiaryButtonWrapper = el)}
-              class={isTertiary ? 'relative !ml-auto md:!ml-0' : ''}
+              class={isTertiary ? 'relative flex flex-1 justify-end' : ''}
             >
               {/* Tertiary menu (shown when the tertiary button does not fit in the viewport) */}
               {isTertiary && this.renderTertiaryButtonAsMenu && (
-                <div class="absolute !ml-auto -top-6">
-                  <mx-icon-button ref={el => (this.menuButton = el)} innerHTML={dotsSvg}></mx-icon-button>
-                  <mx-menu ref={el => (this.tertiaryMenu = el)} anchor-el={this.menuButton}>
+                <div class="absolute -top-6">
+                  <mx-icon-button ref={el => (this.menuButton = el)} icon="mds-dots-vertical"></mx-icon-button>
+                  <mx-menu
+                    ref={el => (this.tertiaryMenu = el)}
+                    anchor-el={this.menuButton}
+                    onMxClose={e => e.stopPropagation()}
+                  >
                     <mx-menu-item {...menuItemProps}>{button.label}</mx-menu-item>
                   </mx-menu>
                 </div>
@@ -123,7 +162,7 @@ export class MxPageHeader {
                 {...button}
                 xl={this.minWidths.lg}
                 btn-type={btnType}
-                aria-hidden={isTertiary && this.renderTertiaryButtonAsMenu}
+                aria-hidden={isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null}
                 class={isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : ''}
               >
                 {button.label}
@@ -138,22 +177,30 @@ export class MxPageHeader {
   render() {
     return (
       <Host class={this.hostClass}>
+        {/* This slot is typically used for the modal Close button */}
+        <div class="absolute top-16 md:top-20 md:mt-2 right-24 md:right-40">
+          <slot name="modal-header-right"></slot>
+        </div>
         <slot name="previous-page">
           {this.previousPageUrl && (
-            <a
-              href={this.previousPageUrl}
-              class="flex items-center pt-16 md:pt-20 uppercase caption1 font-semibold tracking-1-25"
-            >
-              <span class="mr-10" innerHTML={arrowSvg}></span>
+            <a href={this.previousPageUrl} class={this.previousPageClass}>
+              <i class="mds-arrow-left mr-10"></i>
               {this.previousPageTitle}
             </a>
           )}
         </slot>
         <div class="flex flex-col py-10 space-y-14 md:space-y-0 md:flex-row flex-grow md:items-center justify-center md:justify-between flex-wrap">
-          <h1 class={this.headingClass}>
-            <slot></slot>
-          </h1>
-          {this.buttons.length > 0 && this.buttonsJsx}
+          <div
+            class={
+              'flex-1 items-center' + (this.hasModalHeaderCenter ? ' grid grid-cols-1 sm:grid-cols-3 h-full' : ' flex') // HACK: Safari needs the `h-full` to constrain the grid to its parent
+            }
+          >
+            <h1 class={this.headingClass}>
+              <slot></slot>
+            </h1>
+            <slot name="modal-header-center"></slot>
+          </div>
+          {!(this.modal && this.minWidths.md) && this.buttons.length > 0 && this.buttonsJsx}
           <slot name="buttons"></slot>
         </div>
         <slot name="tabs"></slot>

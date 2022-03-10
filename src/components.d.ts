@@ -6,8 +6,18 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
+import { ChartJsData, ChartJsOptions } from "./components/mx-chart/mx-chart";
+import { ChartType } from "chart.js";
+import { MxInputIcon } from "./components/mx-input/mx-input";
+import { DialogOptions } from "./components/mx-dialog/mx-dialog";
+import { BtnType as BtnType1 } from "./components/mx-button/mx-button";
+import { MxInputIcon as MxInputIcon1 } from "./components/mx-input/mx-input";
 import { PopoverOffset, PopoverPlacement } from "./utils/popover";
+import { IModalButton } from "./components/mx-modal/mx-modal";
 import { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
+import { PageChangeEventDetail } from "./components/mx-pagination/mx-pagination";
+import { ITableColumn, ITableRowAction, SortChangeEventDetail } from "./components/mx-table/mx-table";
+import { ITableRowAction as ITableRowAction1 } from "./components/mx-table/mx-table";
 import { IMxTabProps } from "./components/mx-tab/mx-tab";
 export namespace Components {
     interface MxBadge {
@@ -44,6 +54,17 @@ export namespace Components {
          */
         "value": any;
     }
+    interface MxBanner {
+        "error": boolean;
+        /**
+          * Toggles the banner with a transition.
+         */
+        "isOpen": boolean;
+        /**
+          * When set, `position: sticky` will be applied to the banner.
+         */
+        "sticky": boolean;
+    }
     interface MxButton {
         "btnType": BtnType;
         "disabled": boolean;
@@ -51,6 +72,12 @@ export namespace Components {
           * Show chevron icon
          */
         "dropdown": boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel": string;
+        "form": string;
+        "formaction": string;
         /**
           * Sets display to flex instead of inline-flex
          */
@@ -71,9 +98,43 @@ export namespace Components {
         "value": string;
         "xl": boolean;
     }
+    interface MxChart {
+        /**
+          * The labels and datasets to render. See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/).
+         */
+        "data": ChartJsData;
+        /**
+          * The aria-label attribute for the inner canvas element.
+         */
+        "elAriaLabel": string;
+        /**
+          * Explicit height in pixels
+         */
+        "height": number;
+        /**
+          * See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/).
+         */
+        "options": ChartJsOptions;
+        /**
+          * The type of chart to render. For mixed charts, set the `type` in the dataset instead.
+         */
+        "type": ChartType;
+        /**
+          * Force the chart to rerender.
+         */
+        "update": () => Promise<void>;
+        /**
+          * Explicit width in pixels
+         */
+        "width": number;
+    }
     interface MxCheckbox {
         "checked": boolean;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
         /**
           * Hide the label text visually, but still make it accessible for screen readers
          */
@@ -138,13 +199,114 @@ export namespace Components {
          */
         "value": number;
     }
-    interface MxDropdownMenu {
-        "ariaLabel": string;
+    interface MxCode {
+        /**
+          * Unescaped code to format and display.  Escaped code may be placed inside the default slot instead.
+         */
+        "code": string;
+        /**
+          * The language of the code.  Add a `diff-` prefix for diff highlighting.  See [Supported languages](#supported-languages)
+         */
+        "language": string;
+        "lineNumberStart": number;
+        "showLineNumbers": boolean;
+    }
+    interface MxConfirmInput {
+        "assistiveText": string;
         "dense": boolean;
+        "disabled": boolean;
+        "elAriaLabel": string;
+        "error": boolean;
+        "floatLabel": boolean;
+        "inputId": string;
+        "label": string;
+        "labelClass": string;
+        "leftIcon": string | MxInputIcon[];
+        "maxlength": number;
+        "name": string;
+        "outerContainerClass": string;
+        "placeholder": string;
+        "readonly": boolean;
+        "rightIcon": string | MxInputIcon[];
+        "suffix": string;
+        "textarea": boolean;
+        "textareaHeight": string;
+        "type": string;
+        "value": string;
+    }
+    interface MxDatePicker {
+        /**
+          * Set to false to prevent entering a date after today
+         */
+        "allowFuture": boolean;
+        /**
+          * Set to false to prevent entering a date before today
+         */
+        "allowPast": boolean;
+        /**
+          * Helpful text to show below the picker
+         */
+        "assistiveText": string;
+        "dense": boolean;
+        "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
+        "error": boolean;
+        "floatLabel": boolean;
+        /**
+          * The `id` attribute for the internal input element
+         */
+        "inputId": string;
+        "label": string;
+        /**
+          * The latest date to accept (in YYYY-MM-DD format)
+         */
+        "max": string;
+        /**
+          * The earliest date to accept (in YYYY-MM-DD format)
+         */
+        "min": string;
+        "name": string;
+        /**
+          * The selected date in YYYY-MM-DD format
+         */
+        "value": string;
+    }
+    interface MxDialog {
+        /**
+          * A Promise-based replacement for `Window.alert()` with some additional options
+         */
+        "alert": (message: string, { confirmLabel, cancelLabel, heading }?: DialogOptions) => Promise<void>;
+        /**
+          * A Promise-based replacement for `Window.confirm()` that resolves to a boolean
+         */
+        "confirm": (message: string, { confirmLabel, cancelLabel, heading }?: DialogOptions) => Promise<boolean>;
+        /**
+          * Toggles the visibility of the dialog (when using the slots for content).
+         */
+        "isOpen": boolean;
+        /**
+          * Additional classes to apply to the inner modal element.
+         */
+        "modalClass": string;
+    }
+    interface MxDropdownMenu {
+        "dense": boolean;
+        "disabled": boolean;
+        /**
+          * Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`)
+         */
+        "dropdownClass": string;
         /**
           * The `id` attribute for the internal input element
          */
         "dropdownId": string;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
         /**
           * Style as a filter dropdown with a 1dp elevation
          */
@@ -155,6 +317,7 @@ export namespace Components {
         "flat": boolean;
         "label": string;
         "name": string;
+        "readonly": boolean;
         /**
           * Text shown to the left of the arrow
          */
@@ -162,7 +325,10 @@ export namespace Components {
         "value": any;
     }
     interface MxFab {
-        "ariaLabel": string;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel": string;
         /**
           * Class name of icon
          */
@@ -174,10 +340,6 @@ export namespace Components {
         "value": string;
     }
     interface MxIconButton {
-        /**
-          * An aria-label is highly recommended
-         */
-        "ariaLabel": string;
         /**
           * Show downward chevron icon
          */
@@ -192,33 +354,152 @@ export namespace Components {
         "chevronRight": boolean;
         "disabled": boolean;
         /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel": string;
+        "form": string;
+        "formaction": string;
+        /**
+          * Create button as link
+         */
+        "href": string;
+        /**
           * Class name of icon (for icon font)
          */
         "icon": string;
         "type": 'button' | 'submit' | 'reset';
         "value": string;
     }
+    interface MxImageUpload {
+        /**
+          * Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file.
+         */
+        "acceptImage": boolean;
+        /**
+          * Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file.
+         */
+        "acceptPdf": boolean;
+        /**
+          * Replaces the word "image" in the default dropzone text (i.e. "No image to show").
+         */
+        "assetName": string;
+        /**
+          * Assistive text to display under the dropzone. To add markup, use the `instructions` slot directly instead.
+         */
+        "assistiveText": string;
+        /**
+          * Sets the width and height to 80px and changes the icon.
+         */
+        "avatar": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
+        /**
+          * The height of the dropzone / thumbnail container (e.g. "400px" or "50%").
+         */
+        "height": string;
+        /**
+          * The class name of the icon to use instead of the default icon.
+         */
+        "icon": string;
+        /**
+          * The `id` attribute to apply to the input element.
+         */
+        "inputId": string;
+        /**
+          * Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content.
+         */
+        "isUploaded": boolean;
+        /**
+          * Set to `true` to disable the button and show the circular progress indicator.
+         */
+        "isUploading": boolean;
+        /**
+          * The `name` attribute for the `input` element.
+         */
+        "name": string;
+        /**
+          * The text to display on the Remove button
+         */
+        "removeButtonLabel": string;
+        "removeFile": () => Promise<void>;
+        "selectFile": () => Promise<void>;
+        /**
+          * Set to `false` to hide the default Upload/Remove button.
+         */
+        "showButton": boolean;
+        /**
+          * Set to `false` to hide the dropzone text.
+         */
+        "showDropzoneText": boolean;
+        /**
+          * Set to `false` to hide the dropzone icon.
+         */
+        "showIcon": boolean;
+        /**
+          * Sets the thumbnail sizing strategy relative to the container.
+         */
+        "thumbnailSize": 'cover' | 'stretch' | 'contain' | 'auto';
+        /**
+          * The URL for the thumbnail of the currently selected image.
+         */
+        "thumbnailUrl": string;
+        /**
+          * The [`btnType` prop](/components/buttons.html) for the Upload button.
+         */
+        "uploadBtnType": BtnType;
+        /**
+          * The text to display on the Upload button
+         */
+        "uploadButtonLabel": string;
+        /**
+          * The width of the dropzone / thumbnail container (e.g. "400px" or "50%").
+         */
+        "width": string;
+    }
     interface MxInput {
         "assistiveText": string;
         "dense": boolean;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
         "error": boolean;
+        "floatLabel": boolean;
         /**
           * The `id` attribute for the text input
          */
         "inputId": string;
-        "isActive": boolean;
-        "isFocused": boolean;
+        /**
+          * Text for the label element
+         */
         "label": string;
         "labelClass": string;
-        "leftIcon": string;
+        /**
+          * The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
+         */
+        "leftIcon": string | MxInputIcon[];
+        "maxlength": number;
         /**
           * The `name` attribute for the text input
          */
         "name": string;
         "outerContainerClass": string;
+        /**
+          * Placeholder text for the input.  This will be ignored if `floatLabel` is `true`.
+         */
+        "placeholder": string;
         "readonly": boolean;
-        "rightIcon": string;
+        /**
+          * The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
+         */
+        "rightIcon": string | MxInputIcon[];
+        /**
+          * Text shown to the right of the input value
+         */
+        "suffix": string;
         /**
           * Display a multi-line `textarea` instead of an `input`
          */
@@ -242,9 +523,13 @@ export namespace Components {
     }
     interface MxMenu {
         /**
-          * The element that will open the menu when clicked
+          * The element to which the menu's position will be anchored
          */
         "anchorEl": HTMLElement;
+        /**
+          * If the anchor element contains an `input`, setting this to `true` will always select the first menu item when Enter is pressed inside the input.
+         */
+        "autocompleteOnly": boolean;
         /**
           * Close the menu.  Returns a promise that resolves to false if the menu was already closed.
          */
@@ -265,6 +550,10 @@ export namespace Components {
           * The placement of the menu, relative to the `anchorEl`.
          */
         "placement": PopoverPlacement;
+        /**
+          * The element that will open the menu when clicked.  If not provided, the `anchorEl' will be used.
+         */
+        "triggerEl": HTMLElement;
     }
     interface MxMenuItem {
         /**
@@ -281,6 +570,10 @@ export namespace Components {
          */
         "focusMenuItem": () => Promise<void>;
         /**
+          * Returns the menu item inner text (excluding any label or subtitle)
+         */
+        "getValue": () => Promise<string>;
+        /**
           * The class name of the icon to display on the left. This is sometimes automatically set to `null` to add an empty icon for alignment purposes (when a sibling menu item has an icon).
          */
         "icon": string;
@@ -292,12 +585,70 @@ export namespace Components {
           * Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right.
          */
         "multiSelect": boolean;
+        /**
+          * This is automatically set by a parent Dropdown Menu.
+         */
+        "selected": boolean;
+        /**
+          * A subtitle to display below the menu item text
+         */
+        "subtitle": string;
+    }
+    interface MxModal {
+        /**
+          * An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text.
+         */
+        "buttons": IModalButton[];
+        /**
+          * If set to false, pressing Escape will not close the modal.
+         */
+        "closeOnEscape": boolean;
+        /**
+          * If set to false, clicking the backdrop will not close the modal.
+         */
+        "closeOnOutsideClick": boolean;
+        /**
+          * Additional classes for the inner scrolling container.
+         */
+        "contentClass": string;
+        /**
+          * An optional description to display above the modal content
+         */
+        "description": string;
+        /**
+          * Instead of centering, attach the modal to the left side of the window
+         */
+        "fromLeft": boolean;
+        /**
+          * Instead of centering, attach the modal to the right side of the window
+         */
+        "fromRight": boolean;
+        /**
+          * Toggle the modal
+         */
+        "isOpen": boolean;
+        /**
+          * Set to true to stretch the modal to nearly fill the width and height of the page (on desktop-sized screens).  Otherwise, the maximum dimensions are 800x600px.
+         */
+        "large": boolean;
+        /**
+          * The text to display for the previous page link
+         */
+        "previousPageTitle": string;
+        /**
+          * The URL for the previous page link
+         */
+        "previousPageUrl": string;
     }
     interface MxPageHeader {
         /**
           * An array of prop objects for each button.  Use the `label` property to specify the button's inner text.
          */
         "buttons": IPageHeaderButton[];
+        /**
+          * This flag is set by the Modal component to adjust the page header styling when used internally.
+         */
+        "modal": boolean;
         /**
           * When set to true, the Page Header will use the themed background pattern.
          */
@@ -310,32 +661,63 @@ export namespace Components {
           * The URL for the previous page link
          */
         "previousPageUrl": string;
+        /**
+          * Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu`
+         */
+        "resetResizeObserver": () => Promise<void>;
+    }
+    interface MxPagination {
+        /**
+          * Disable the next page button (i.e. when the last page was loaded from an API)
+         */
+        "disableNextPage": boolean;
+        /**
+          * Disable the page buttons (i.e. when loading results)
+         */
+        "disabled": boolean;
+        "page": number;
+        "rowsPerPage": number;
+        "rowsPerPageOptions": number[];
+        /**
+          * Reduce the UI to only a page
+         */
+        "simple": boolean;
+        "totalRows": number;
     }
     interface MxRadio {
         "checked": boolean;
+        "disabled": boolean;
+        "labelClass": string;
         "labelName": string;
         "name": string;
         "value": string;
     }
     interface MxSearch {
-        /**
-          * If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search".
-         */
-        "ariaLabel": string;
         "dense": boolean;
+        /**
+          * The `aria-label` attribute for the `<input>` element. If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search".
+         */
+        "elAriaLabel": string;
         "flat": boolean;
         "name": string;
         "placeholder": string;
+        /**
+          * Set to `false` to hide the clear button.
+         */
+        "showClear": boolean;
         "value": string;
     }
     interface MxSelect {
-        "ariaLabel": string;
         /**
           * Helpful text to show below the select
          */
         "assistiveText": string;
         "dense": boolean;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner select element.
+         */
+        "elAriaLabel": string;
         /**
           * Style with a 1dp elevation
          */
@@ -345,12 +727,17 @@ export namespace Components {
           * Style with a "flat" border color
          */
         "flat": boolean;
+        "floatLabel": boolean;
         "label": string;
         /**
           * Additional classes for the label
          */
         "labelClass": string;
         "name": string;
+        /**
+          * Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`)
+         */
+        "selectClass": string;
         /**
           * The `id` attribute for the select element
          */
@@ -361,17 +748,19 @@ export namespace Components {
         "suffix": string;
         "value": any;
     }
+    interface MxSnackbar {
+        "duration": number;
+        "isOpen": boolean;
+    }
     interface MxSwitch {
         "checked": boolean;
+        "disabled": boolean;
+        "labelClass": string;
         "labelName": string;
         "name": string;
         "value": string;
     }
     interface MxTab {
-        /**
-          * If you are not providing a `label`, this should be provided instead for accessibility
-         */
-        "ariaLabel": string;
         /**
           * Display a circular badge
          */
@@ -380,6 +769,10 @@ export namespace Components {
           * Additional classes for the badge
          */
         "badgeClass": string;
+        /**
+          * If you are not providing a `label`, this should be provided instead for accessibility
+         */
+        "elAriaLabel": string;
         /**
           * Class name of icon to display
          */
@@ -403,6 +796,178 @@ export namespace Components {
          */
         "value": number;
     }
+    interface MxTable {
+        /**
+          * Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens
+         */
+        "autoWidth": boolean;
+        "checkAll": () => Promise<void>;
+        "checkNone": () => Promise<void>;
+        /**
+          * Set to `true` to allow checking rows by clicking on any dead space inside the row.
+         */
+        "checkOnRowClick": boolean;
+        /**
+          * Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot.
+         */
+        "checkable": boolean;
+        /**
+          * An array of column definitions.  If not specified, a column will be generated for each property on the row object.
+         */
+        "columns": ITableColumn[];
+        /**
+          * Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown.
+         */
+        "disableNextPage": boolean;
+        /**
+          * Disable the pagination buttons (i.e. while loading results)
+         */
+        "disablePagination": boolean;
+        /**
+          * Enables reordering of rows via drag and drop.
+         */
+        "draggableRows": boolean;
+        "getCheckedRowIds": () => Promise<string[]>;
+        /**
+          * A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows.
+         */
+        "getGroupByHeading": (row: Object) => string;
+        "getMultiRowActions": (rows: string[]) => ITableRowAction[];
+        "getRowActions": (row: Object) => ITableRowAction[];
+        /**
+          * A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).
+         */
+        "getRowId": (row: Object) => string;
+        /**
+          * The row property to use for grouping rows.  The `rows` prop must be provided as well.
+         */
+        "groupBy": string;
+        "hoverable": boolean;
+        /**
+          * Set to `true` to use an alternate mobile layout for the operations bar where the filter slot is next to the (un)check-all checkbox and the search slot is in a row above.
+         */
+        "mobileSearchOnTop": boolean;
+        /**
+          * Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.
+         */
+        "mutateOnDrag": boolean;
+        /**
+          * Additional class names for the operation bar grid
+         */
+        "operationsBarClass": string;
+        /**
+          * The page to display
+         */
+        "page": number;
+        /**
+          * Show the pagination component.  Setting this to `false` will show all rows.
+         */
+        "paginate": boolean;
+        /**
+          * Delay the appearance of the progress bar for this many milliseconds
+         */
+        "progressAppearDelay": number;
+        /**
+          * The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed.
+         */
+        "progressValue": number;
+        /**
+          * An array of objects that defines the table's dataset.
+         */
+        "rows": Object[];
+        "rowsPerPage": number;
+        "rowsPerPageOptions": number[];
+        /**
+          * Do not sort or paginate client-side. Use events to send server requests instead.
+         */
+        "serverPaginate": boolean;
+        "setCheckedRowIds": (checkedRowIds?: string[]) => Promise<void>;
+        /**
+          * Set to `false` to hide the (un)check all checkbox at the top of the table.
+         */
+        "showCheckAll": boolean;
+        /**
+          * Show a progress bar below the header row
+         */
+        "showProgressBar": boolean;
+        "sortAscending": boolean;
+        /**
+          * The property on the row objects that will be used for sorting
+         */
+        "sortBy": string;
+        /**
+          * The total number of unpaginated rows.  This is ignored for client-side pagination. For server-side pagination, omitting this prop will remove the last-page button.
+         */
+        "totalRows": number;
+    }
+    interface MxTableCell {
+        /**
+          * This is automatically set by the parent `mx-table`.  For subheaders, this will be null.
+         */
+        "columnIndex": number;
+        /**
+          * This is automatically set by the parent `mx-table`.
+         */
+        "heading": string;
+        /**
+          * This is automatically set by the parent `mx-table`.
+         */
+        "isExposedMobileColumn": boolean;
+    }
+    interface MxTableRow {
+        /**
+          * An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text.
+         */
+        "actions": ITableRowAction[];
+        "checked": boolean;
+        "collapse": (skipTransition?: boolean) => Promise<void>;
+        /**
+          * Toggles the visibility of all nested rows (except those set to `doNotCollapse`)
+         */
+        "collapseNestedRows": boolean;
+        /**
+          * Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`.
+         */
+        "doNotCollapse": boolean;
+        /**
+          * Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`.
+         */
+        "doNotDrag": boolean;
+        "expand": () => Promise<void>;
+        "focusDragHandle": () => Promise<void>;
+        /**
+          * Returns the immediate children of the row, as well as the immediate children of all nested rows.  If a child is `display: contents` (i.e. the first column wrapper), then its children are added.
+         */
+        "getChildren": () => Promise<HTMLElement[]>;
+        /**
+          * Calculate the height of the row, including the height of nested rows
+         */
+        "getHeight": () => Promise<number>;
+        /**
+          * Get an array of row IDs for rows nested directly inside this row
+         */
+        "getNestedRowIndexes": () => Promise<number[]>;
+        /**
+          * This is required for checkable rows in order to persist the checked state through sorting and pagination.
+         */
+        "rowId": string;
+        /**
+          * This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component.
+         */
+        "rowIndex": number;
+        /**
+          * Style the row as a subheader.
+         */
+        "subheader": boolean;
+        /**
+          * Show/hide the row (with an optional accordion transition)
+         */
+        "toggle": (hideRow: boolean, skipTransition: boolean) => Promise<void>;
+        /**
+          * Apply a CSS transform to translate the row by `x` and `y` pixels
+         */
+        "translateRow": (x: number, y: number) => Promise<void>;
+    }
     interface MxTabs {
         /**
           * Stretch tabs to fill the entire width
@@ -417,9 +982,36 @@ export namespace Components {
          */
         "value": number;
     }
-    interface MxToggleButton {
-        "ariaLabel": string;
+    interface MxTimePicker {
+        /**
+          * Helpful text to show below the picker
+         */
+        "assistiveText": string;
+        "dense": boolean;
         "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
+        "error": boolean;
+        "floatLabel": boolean;
+        /**
+          * The `id` attribute for the internal input element
+         */
+        "inputId": string;
+        "label": string;
+        "name": string;
+        /**
+          * The time in 24-hour hh:mm format
+         */
+        "value": string;
+    }
+    interface MxToggleButton {
+        "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel": string;
         "icon": string;
         "selected": boolean;
         /**
@@ -428,7 +1020,45 @@ export namespace Components {
         "value": any;
     }
     interface MxToggleButtonGroup {
+        /**
+          * Set to `true` to prevent deselecting once a selection has been made.
+         */
+        "required": boolean;
         "value": any;
+    }
+    interface MxTooltip {
+        /**
+          * Delay showing the tooltip for this many milliseconds
+         */
+        "appearDelay": number;
+        /**
+          * Increase the padding, add a shadow, and make the corners less rounded (typically for multi-line text)
+         */
+        "extended": boolean;
+        /**
+          * Invert the default colors (i.e. dark text on a light background)
+         */
+        "inverted": boolean;
+        /**
+          * This is typically updated automatically based on events, but may be changed programmatically if necessary.
+         */
+        "isOpen": boolean;
+        /**
+          * The maximum width of the tooltip (e.g. '20rem')
+         */
+        "maxWidth": string;
+        /**
+          * The preferred placement of the tooltip, relative to the anchor element.
+         */
+        "placement": PopoverPlacement;
+        /**
+          * Additional classes to add to the tooltip.
+         */
+        "tooltipClass": string;
+        /**
+          * The text to show inside the tooltip.  Alternatively, use the `tooltip` slot.
+         */
+        "value": string;
     }
 }
 declare global {
@@ -438,11 +1068,23 @@ declare global {
         prototype: HTMLMxBadgeElement;
         new (): HTMLMxBadgeElement;
     };
+    interface HTMLMxBannerElement extends Components.MxBanner, HTMLStencilElement {
+    }
+    var HTMLMxBannerElement: {
+        prototype: HTMLMxBannerElement;
+        new (): HTMLMxBannerElement;
+    };
     interface HTMLMxButtonElement extends Components.MxButton, HTMLStencilElement {
     }
     var HTMLMxButtonElement: {
         prototype: HTMLMxButtonElement;
         new (): HTMLMxButtonElement;
+    };
+    interface HTMLMxChartElement extends Components.MxChart, HTMLStencilElement {
+    }
+    var HTMLMxChartElement: {
+        prototype: HTMLMxChartElement;
+        new (): HTMLMxChartElement;
     };
     interface HTMLMxCheckboxElement extends Components.MxCheckbox, HTMLStencilElement {
     }
@@ -468,6 +1110,30 @@ declare global {
         prototype: HTMLMxCircularProgressElement;
         new (): HTMLMxCircularProgressElement;
     };
+    interface HTMLMxCodeElement extends Components.MxCode, HTMLStencilElement {
+    }
+    var HTMLMxCodeElement: {
+        prototype: HTMLMxCodeElement;
+        new (): HTMLMxCodeElement;
+    };
+    interface HTMLMxConfirmInputElement extends Components.MxConfirmInput, HTMLStencilElement {
+    }
+    var HTMLMxConfirmInputElement: {
+        prototype: HTMLMxConfirmInputElement;
+        new (): HTMLMxConfirmInputElement;
+    };
+    interface HTMLMxDatePickerElement extends Components.MxDatePicker, HTMLStencilElement {
+    }
+    var HTMLMxDatePickerElement: {
+        prototype: HTMLMxDatePickerElement;
+        new (): HTMLMxDatePickerElement;
+    };
+    interface HTMLMxDialogElement extends Components.MxDialog, HTMLStencilElement {
+    }
+    var HTMLMxDialogElement: {
+        prototype: HTMLMxDialogElement;
+        new (): HTMLMxDialogElement;
+    };
     interface HTMLMxDropdownMenuElement extends Components.MxDropdownMenu, HTMLStencilElement {
     }
     var HTMLMxDropdownMenuElement: {
@@ -485,6 +1151,12 @@ declare global {
     var HTMLMxIconButtonElement: {
         prototype: HTMLMxIconButtonElement;
         new (): HTMLMxIconButtonElement;
+    };
+    interface HTMLMxImageUploadElement extends Components.MxImageUpload, HTMLStencilElement {
+    }
+    var HTMLMxImageUploadElement: {
+        prototype: HTMLMxImageUploadElement;
+        new (): HTMLMxImageUploadElement;
     };
     interface HTMLMxInputElement extends Components.MxInput, HTMLStencilElement {
     }
@@ -510,11 +1182,23 @@ declare global {
         prototype: HTMLMxMenuItemElement;
         new (): HTMLMxMenuItemElement;
     };
+    interface HTMLMxModalElement extends Components.MxModal, HTMLStencilElement {
+    }
+    var HTMLMxModalElement: {
+        prototype: HTMLMxModalElement;
+        new (): HTMLMxModalElement;
+    };
     interface HTMLMxPageHeaderElement extends Components.MxPageHeader, HTMLStencilElement {
     }
     var HTMLMxPageHeaderElement: {
         prototype: HTMLMxPageHeaderElement;
         new (): HTMLMxPageHeaderElement;
+    };
+    interface HTMLMxPaginationElement extends Components.MxPagination, HTMLStencilElement {
+    }
+    var HTMLMxPaginationElement: {
+        prototype: HTMLMxPaginationElement;
+        new (): HTMLMxPaginationElement;
     };
     interface HTMLMxRadioElement extends Components.MxRadio, HTMLStencilElement {
     }
@@ -534,6 +1218,12 @@ declare global {
         prototype: HTMLMxSelectElement;
         new (): HTMLMxSelectElement;
     };
+    interface HTMLMxSnackbarElement extends Components.MxSnackbar, HTMLStencilElement {
+    }
+    var HTMLMxSnackbarElement: {
+        prototype: HTMLMxSnackbarElement;
+        new (): HTMLMxSnackbarElement;
+    };
     interface HTMLMxSwitchElement extends Components.MxSwitch, HTMLStencilElement {
     }
     var HTMLMxSwitchElement: {
@@ -552,11 +1242,35 @@ declare global {
         prototype: HTMLMxTabContentElement;
         new (): HTMLMxTabContentElement;
     };
+    interface HTMLMxTableElement extends Components.MxTable, HTMLStencilElement {
+    }
+    var HTMLMxTableElement: {
+        prototype: HTMLMxTableElement;
+        new (): HTMLMxTableElement;
+    };
+    interface HTMLMxTableCellElement extends Components.MxTableCell, HTMLStencilElement {
+    }
+    var HTMLMxTableCellElement: {
+        prototype: HTMLMxTableCellElement;
+        new (): HTMLMxTableCellElement;
+    };
+    interface HTMLMxTableRowElement extends Components.MxTableRow, HTMLStencilElement {
+    }
+    var HTMLMxTableRowElement: {
+        prototype: HTMLMxTableRowElement;
+        new (): HTMLMxTableRowElement;
+    };
     interface HTMLMxTabsElement extends Components.MxTabs, HTMLStencilElement {
     }
     var HTMLMxTabsElement: {
         prototype: HTMLMxTabsElement;
         new (): HTMLMxTabsElement;
+    };
+    interface HTMLMxTimePickerElement extends Components.MxTimePicker, HTMLStencilElement {
+    }
+    var HTMLMxTimePickerElement: {
+        prototype: HTMLMxTimePickerElement;
+        new (): HTMLMxTimePickerElement;
     };
     interface HTMLMxToggleButtonElement extends Components.MxToggleButton, HTMLStencilElement {
     }
@@ -570,30 +1284,51 @@ declare global {
         prototype: HTMLMxToggleButtonGroupElement;
         new (): HTMLMxToggleButtonGroupElement;
     };
+    interface HTMLMxTooltipElement extends Components.MxTooltip, HTMLStencilElement {
+    }
+    var HTMLMxTooltipElement: {
+        prototype: HTMLMxTooltipElement;
+        new (): HTMLMxTooltipElement;
+    };
     interface HTMLElementTagNameMap {
         "mx-badge": HTMLMxBadgeElement;
+        "mx-banner": HTMLMxBannerElement;
         "mx-button": HTMLMxButtonElement;
+        "mx-chart": HTMLMxChartElement;
         "mx-checkbox": HTMLMxCheckboxElement;
         "mx-chip": HTMLMxChipElement;
         "mx-chip-group": HTMLMxChipGroupElement;
         "mx-circular-progress": HTMLMxCircularProgressElement;
+        "mx-code": HTMLMxCodeElement;
+        "mx-confirm-input": HTMLMxConfirmInputElement;
+        "mx-date-picker": HTMLMxDatePickerElement;
+        "mx-dialog": HTMLMxDialogElement;
         "mx-dropdown-menu": HTMLMxDropdownMenuElement;
         "mx-fab": HTMLMxFabElement;
         "mx-icon-button": HTMLMxIconButtonElement;
+        "mx-image-upload": HTMLMxImageUploadElement;
         "mx-input": HTMLMxInputElement;
         "mx-linear-progress": HTMLMxLinearProgressElement;
         "mx-menu": HTMLMxMenuElement;
         "mx-menu-item": HTMLMxMenuItemElement;
+        "mx-modal": HTMLMxModalElement;
         "mx-page-header": HTMLMxPageHeaderElement;
+        "mx-pagination": HTMLMxPaginationElement;
         "mx-radio": HTMLMxRadioElement;
         "mx-search": HTMLMxSearchElement;
         "mx-select": HTMLMxSelectElement;
+        "mx-snackbar": HTMLMxSnackbarElement;
         "mx-switch": HTMLMxSwitchElement;
         "mx-tab": HTMLMxTabElement;
         "mx-tab-content": HTMLMxTabContentElement;
+        "mx-table": HTMLMxTableElement;
+        "mx-table-cell": HTMLMxTableCellElement;
+        "mx-table-row": HTMLMxTableRowElement;
         "mx-tabs": HTMLMxTabsElement;
+        "mx-time-picker": HTMLMxTimePickerElement;
         "mx-toggle-button": HTMLMxToggleButtonElement;
         "mx-toggle-button-group": HTMLMxToggleButtonGroupElement;
+        "mx-tooltip": HTMLMxTooltipElement;
     }
 }
 declare namespace LocalJSX {
@@ -631,6 +1366,17 @@ declare namespace LocalJSX {
          */
         "value"?: any;
     }
+    interface MxBanner {
+        "error"?: boolean;
+        /**
+          * Toggles the banner with a transition.
+         */
+        "isOpen"?: boolean;
+        /**
+          * When set, `position: sticky` will be applied to the banner.
+         */
+        "sticky"?: boolean;
+    }
     interface MxButton {
         "btnType"?: BtnType;
         "disabled"?: boolean;
@@ -638,6 +1384,12 @@ declare namespace LocalJSX {
           * Show chevron icon
          */
         "dropdown"?: boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel"?: string;
+        "form"?: string;
+        "formaction"?: string;
         /**
           * Sets display to flex instead of inline-flex
          */
@@ -658,9 +1410,39 @@ declare namespace LocalJSX {
         "value"?: string;
         "xl"?: boolean;
     }
+    interface MxChart {
+        /**
+          * The labels and datasets to render. See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/).
+         */
+        "data"?: ChartJsData;
+        /**
+          * The aria-label attribute for the inner canvas element.
+         */
+        "elAriaLabel"?: string;
+        /**
+          * Explicit height in pixels
+         */
+        "height"?: number;
+        /**
+          * See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/).
+         */
+        "options"?: ChartJsOptions;
+        /**
+          * The type of chart to render. For mixed charts, set the `type` in the dataset instead.
+         */
+        "type"?: ChartType;
+        /**
+          * Explicit width in pixels
+         */
+        "width"?: number;
+    }
     interface MxCheckbox {
         "checked"?: boolean;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
         /**
           * Hide the label text visually, but still make it accessible for screen readers
          */
@@ -733,13 +1515,107 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
-    interface MxDropdownMenu {
-        "ariaLabel"?: string;
+    interface MxCode {
+        /**
+          * Unescaped code to format and display.  Escaped code may be placed inside the default slot instead.
+         */
+        "code"?: string;
+        /**
+          * The language of the code.  Add a `diff-` prefix for diff highlighting.  See [Supported languages](#supported-languages)
+         */
+        "language"?: string;
+        "lineNumberStart"?: number;
+        "showLineNumbers"?: boolean;
+    }
+    interface MxConfirmInput {
+        "assistiveText"?: string;
         "dense"?: boolean;
+        "disabled"?: boolean;
+        "elAriaLabel"?: string;
+        "error"?: boolean;
+        "floatLabel"?: boolean;
+        "inputId"?: string;
+        "label"?: string;
+        "labelClass"?: string;
+        "leftIcon"?: string | MxInputIcon[];
+        "maxlength"?: number;
+        "name"?: string;
+        "outerContainerClass"?: string;
+        "placeholder"?: string;
+        "readonly"?: boolean;
+        "rightIcon"?: string | MxInputIcon[];
+        "suffix"?: string;
+        "textarea"?: boolean;
+        "textareaHeight"?: string;
+        "type"?: string;
+        "value"?: string;
+    }
+    interface MxDatePicker {
+        /**
+          * Set to false to prevent entering a date after today
+         */
+        "allowFuture"?: boolean;
+        /**
+          * Set to false to prevent entering a date before today
+         */
+        "allowPast"?: boolean;
+        /**
+          * Helpful text to show below the picker
+         */
+        "assistiveText"?: string;
+        "dense"?: boolean;
+        "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
+        "error"?: boolean;
+        "floatLabel"?: boolean;
+        /**
+          * The `id` attribute for the internal input element
+         */
+        "inputId"?: string;
+        "label"?: string;
+        /**
+          * The latest date to accept (in YYYY-MM-DD format)
+         */
+        "max"?: string;
+        /**
+          * The earliest date to accept (in YYYY-MM-DD format)
+         */
+        "min"?: string;
+        "name"?: string;
+        /**
+          * The selected date in YYYY-MM-DD format
+         */
+        "value"?: string;
+    }
+    interface MxDialog {
+        /**
+          * Toggles the visibility of the dialog (when using the slots for content).
+         */
+        "isOpen"?: boolean;
+        /**
+          * Additional classes to apply to the inner modal element.
+         */
+        "modalClass"?: string;
+        "onMxClose"?: (event: CustomEvent<void>) => void;
+    }
+    interface MxDropdownMenu {
+        "dense"?: boolean;
+        "disabled"?: boolean;
+        /**
+          * Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`)
+         */
+        "dropdownClass"?: string;
         /**
           * The `id` attribute for the internal input element
          */
         "dropdownId"?: string;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
         /**
           * Style as a filter dropdown with a 1dp elevation
          */
@@ -750,6 +1626,7 @@ declare namespace LocalJSX {
         "flat"?: boolean;
         "label"?: string;
         "name"?: string;
+        "readonly"?: boolean;
         /**
           * Text shown to the left of the arrow
          */
@@ -757,7 +1634,10 @@ declare namespace LocalJSX {
         "value"?: any;
     }
     interface MxFab {
-        "ariaLabel"?: string;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel"?: string;
         /**
           * Class name of icon
          */
@@ -769,10 +1649,6 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface MxIconButton {
-        /**
-          * An aria-label is highly recommended
-         */
-        "ariaLabel"?: string;
         /**
           * Show downward chevron icon
          */
@@ -787,33 +1663,154 @@ declare namespace LocalJSX {
         "chevronRight"?: boolean;
         "disabled"?: boolean;
         /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel"?: string;
+        "form"?: string;
+        "formaction"?: string;
+        /**
+          * Create button as link
+         */
+        "href"?: string;
+        /**
           * Class name of icon (for icon font)
          */
         "icon"?: string;
         "type"?: 'button' | 'submit' | 'reset';
         "value"?: string;
     }
+    interface MxImageUpload {
+        /**
+          * Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file.
+         */
+        "acceptImage"?: boolean;
+        /**
+          * Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file.
+         */
+        "acceptPdf"?: boolean;
+        /**
+          * Replaces the word "image" in the default dropzone text (i.e. "No image to show").
+         */
+        "assetName"?: string;
+        /**
+          * Assistive text to display under the dropzone. To add markup, use the `instructions` slot directly instead.
+         */
+        "assistiveText"?: string;
+        /**
+          * Sets the width and height to 80px and changes the icon.
+         */
+        "avatar"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
+        /**
+          * The height of the dropzone / thumbnail container (e.g. "400px" or "50%").
+         */
+        "height"?: string;
+        /**
+          * The class name of the icon to use instead of the default icon.
+         */
+        "icon"?: string;
+        /**
+          * The `id` attribute to apply to the input element.
+         */
+        "inputId"?: string;
+        /**
+          * Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content.
+         */
+        "isUploaded"?: boolean;
+        /**
+          * Set to `true` to disable the button and show the circular progress indicator.
+         */
+        "isUploading"?: boolean;
+        /**
+          * The `name` attribute for the `input` element.
+         */
+        "name"?: string;
+        /**
+          * Emits the thumbnail url as `CustomEvent.detail` whenever it changes (i.e. after generating a data URI)
+         */
+        "onMxThumbnailChange"?: (event: CustomEvent<string>) => void;
+        /**
+          * The text to display on the Remove button
+         */
+        "removeButtonLabel"?: string;
+        /**
+          * Set to `false` to hide the default Upload/Remove button.
+         */
+        "showButton"?: boolean;
+        /**
+          * Set to `false` to hide the dropzone text.
+         */
+        "showDropzoneText"?: boolean;
+        /**
+          * Set to `false` to hide the dropzone icon.
+         */
+        "showIcon"?: boolean;
+        /**
+          * Sets the thumbnail sizing strategy relative to the container.
+         */
+        "thumbnailSize"?: 'cover' | 'stretch' | 'contain' | 'auto';
+        /**
+          * The URL for the thumbnail of the currently selected image.
+         */
+        "thumbnailUrl"?: string;
+        /**
+          * The [`btnType` prop](/components/buttons.html) for the Upload button.
+         */
+        "uploadBtnType"?: BtnType;
+        /**
+          * The text to display on the Upload button
+         */
+        "uploadButtonLabel"?: string;
+        /**
+          * The width of the dropzone / thumbnail container (e.g. "400px" or "50%").
+         */
+        "width"?: string;
+    }
     interface MxInput {
         "assistiveText"?: string;
         "dense"?: boolean;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
         "error"?: boolean;
+        "floatLabel"?: boolean;
         /**
           * The `id` attribute for the text input
          */
         "inputId"?: string;
-        "isActive"?: boolean;
-        "isFocused"?: boolean;
+        /**
+          * Text for the label element
+         */
         "label"?: string;
         "labelClass"?: string;
-        "leftIcon"?: string;
+        /**
+          * The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
+         */
+        "leftIcon"?: string | MxInputIcon[];
+        "maxlength"?: number;
         /**
           * The `name` attribute for the text input
          */
         "name"?: string;
         "outerContainerClass"?: string;
+        /**
+          * Placeholder text for the input.  This will be ignored if `floatLabel` is `true`.
+         */
+        "placeholder"?: string;
         "readonly"?: boolean;
-        "rightIcon"?: string;
+        /**
+          * The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
+         */
+        "rightIcon"?: string | MxInputIcon[];
+        /**
+          * Text shown to the right of the input value
+         */
+        "suffix"?: string;
         /**
           * Display a multi-line `textarea` instead of an `input`
          */
@@ -837,9 +1834,13 @@ declare namespace LocalJSX {
     }
     interface MxMenu {
         /**
-          * The element that will open the menu when clicked
+          * The element to which the menu's position will be anchored
          */
         "anchorEl"?: HTMLElement;
+        /**
+          * If the anchor element contains an `input`, setting this to `true` will always select the first menu item when Enter is pressed inside the input.
+         */
+        "autocompleteOnly"?: boolean;
         /**
           * This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes.
          */
@@ -853,9 +1854,17 @@ declare namespace LocalJSX {
          */
         "onMxClose"?: (event: CustomEvent<void>) => void;
         /**
+          * Emitted when the menu opens.
+         */
+        "onMxOpen"?: (event: CustomEvent<void>) => void;
+        /**
           * The placement of the menu, relative to the `anchorEl`.
          */
         "placement"?: PopoverPlacement;
+        /**
+          * The element that will open the menu when clicked.  If not provided, the `anchorEl' will be used.
+         */
+        "triggerEl"?: HTMLElement;
     }
     interface MxMenuItem {
         /**
@@ -879,12 +1888,71 @@ declare namespace LocalJSX {
           * Fired when an enabled menu item without a submenu is clicked. Used interally to close all ancestor menus.
          */
         "onMxClick"?: (event: CustomEvent<MouseEvent>) => void;
+        /**
+          * This is automatically set by a parent Dropdown Menu.
+         */
+        "selected"?: boolean;
+        /**
+          * A subtitle to display below the menu item text
+         */
+        "subtitle"?: string;
+    }
+    interface MxModal {
+        /**
+          * An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text.
+         */
+        "buttons"?: IModalButton[];
+        /**
+          * If set to false, pressing Escape will not close the modal.
+         */
+        "closeOnEscape"?: boolean;
+        /**
+          * If set to false, clicking the backdrop will not close the modal.
+         */
+        "closeOnOutsideClick"?: boolean;
+        /**
+          * Additional classes for the inner scrolling container.
+         */
+        "contentClass"?: string;
+        /**
+          * An optional description to display above the modal content
+         */
+        "description"?: string;
+        /**
+          * Instead of centering, attach the modal to the left side of the window
+         */
+        "fromLeft"?: boolean;
+        /**
+          * Instead of centering, attach the modal to the right side of the window
+         */
+        "fromRight"?: boolean;
+        /**
+          * Toggle the modal
+         */
+        "isOpen"?: boolean;
+        /**
+          * Set to true to stretch the modal to nearly fill the width and height of the page (on desktop-sized screens).  Otherwise, the maximum dimensions are 800x600px.
+         */
+        "large"?: boolean;
+        "onMxClose"?: (event: CustomEvent<any>) => void;
+        /**
+          * The text to display for the previous page link
+         */
+        "previousPageTitle"?: string;
+        /**
+          * The URL for the previous page link
+         */
+        "previousPageUrl"?: string;
     }
     interface MxPageHeader {
         /**
           * An array of prop objects for each button.  Use the `label` property to specify the button's inner text.
          */
         "buttons"?: IPageHeaderButton[];
+        /**
+          * This flag is set by the Modal component to adjust the page header styling when used internally.
+         */
+        "modal"?: boolean;
         /**
           * When set to true, the Page Header will use the themed background pattern.
          */
@@ -898,31 +1966,63 @@ declare namespace LocalJSX {
          */
         "previousPageUrl"?: string;
     }
+    interface MxPagination {
+        /**
+          * Disable the next page button (i.e. when the last page was loaded from an API)
+         */
+        "disableNextPage"?: boolean;
+        /**
+          * Disable the page buttons (i.e. when loading results)
+         */
+        "disabled"?: boolean;
+        "onMxPageChange"?: (event: CustomEvent<PageChangeEventDetail>) => void;
+        "page"?: number;
+        "rowsPerPage"?: number;
+        "rowsPerPageOptions"?: number[];
+        /**
+          * Reduce the UI to only a page
+         */
+        "simple"?: boolean;
+        "totalRows"?: number;
+    }
     interface MxRadio {
         "checked"?: boolean;
+        "disabled"?: boolean;
+        "labelClass"?: string;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
     }
     interface MxSearch {
-        /**
-          * If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search".
-         */
-        "ariaLabel"?: string;
         "dense"?: boolean;
+        /**
+          * The `aria-label` attribute for the `<input>` element. If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search".
+         */
+        "elAriaLabel"?: string;
         "flat"?: boolean;
         "name"?: string;
+        /**
+          * Emitted when the clear button is clicked.
+         */
+        "onMxClear"?: (event: CustomEvent<void>) => void;
         "placeholder"?: string;
+        /**
+          * Set to `false` to hide the clear button.
+         */
+        "showClear"?: boolean;
         "value"?: string;
     }
     interface MxSelect {
-        "ariaLabel"?: string;
         /**
           * Helpful text to show below the select
          */
         "assistiveText"?: string;
         "dense"?: boolean;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner select element.
+         */
+        "elAriaLabel"?: string;
         /**
           * Style with a 1dp elevation
          */
@@ -932,12 +2032,17 @@ declare namespace LocalJSX {
           * Style with a "flat" border color
          */
         "flat"?: boolean;
+        "floatLabel"?: boolean;
         "label"?: string;
         /**
           * Additional classes for the label
          */
         "labelClass"?: string;
         "name"?: string;
+        /**
+          * Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`)
+         */
+        "selectClass"?: string;
         /**
           * The `id` attribute for the select element
          */
@@ -948,17 +2053,20 @@ declare namespace LocalJSX {
         "suffix"?: string;
         "value"?: any;
     }
+    interface MxSnackbar {
+        "duration"?: number;
+        "isOpen"?: boolean;
+        "onMxClose"?: (event: CustomEvent<void>) => void;
+    }
     interface MxSwitch {
         "checked"?: boolean;
+        "disabled"?: boolean;
+        "labelClass"?: string;
         "labelName"?: string;
         "name"?: string;
         "value"?: string;
     }
     interface MxTab {
-        /**
-          * If you are not providing a `label`, this should be provided instead for accessibility
-         */
-        "ariaLabel"?: string;
         /**
           * Display a circular badge
          */
@@ -967,6 +2075,10 @@ declare namespace LocalJSX {
           * Additional classes for the badge
          */
         "badgeClass"?: string;
+        /**
+          * If you are not providing a `label`, this should be provided instead for accessibility
+         */
+        "elAriaLabel"?: string;
         /**
           * Class name of icon to display
          */
@@ -990,6 +2102,187 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
+    interface MxTable {
+        /**
+          * Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens
+         */
+        "autoWidth"?: boolean;
+        /**
+          * Set to `true` to allow checking rows by clicking on any dead space inside the row.
+         */
+        "checkOnRowClick"?: boolean;
+        /**
+          * Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot.
+         */
+        "checkable"?: boolean;
+        /**
+          * An array of column definitions.  If not specified, a column will be generated for each property on the row object.
+         */
+        "columns"?: ITableColumn[];
+        /**
+          * Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown.
+         */
+        "disableNextPage"?: boolean;
+        /**
+          * Disable the pagination buttons (i.e. while loading results)
+         */
+        "disablePagination"?: boolean;
+        /**
+          * Enables reordering of rows via drag and drop.
+         */
+        "draggableRows"?: boolean;
+        /**
+          * A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows.
+         */
+        "getGroupByHeading"?: (row: Object) => string;
+        "getMultiRowActions"?: (rows: string[]) => ITableRowAction[];
+        "getRowActions"?: (row: Object) => ITableRowAction[];
+        /**
+          * A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).
+         */
+        "getRowId"?: (row: Object) => string;
+        /**
+          * The row property to use for grouping rows.  The `rows` prop must be provided as well.
+         */
+        "groupBy"?: string;
+        "hoverable"?: boolean;
+        /**
+          * Set to `true` to use an alternate mobile layout for the operations bar where the filter slot is next to the (un)check-all checkbox and the search slot is in a row above.
+         */
+        "mobileSearchOnTop"?: boolean;
+        /**
+          * Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.
+         */
+        "mutateOnDrag"?: boolean;
+        /**
+          * Emitted when the (un)check-all checkbox is clicked.  The `Event.detail` will be the new `checked` value.
+         */
+        "onMxCheckAll"?: (event: CustomEvent<boolean>) => void;
+        /**
+          * Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s.
+         */
+        "onMxRowCheck"?: (event: CustomEvent<string[]>) => void;
+        /**
+          * Emitted when a row is dragged to a new position. The `Event.detail` object will contain the `rowId` (if set), `oldIndex`, and `newIndex`.
+         */
+        "onMxRowMove"?: (event: CustomEvent<any>) => void;
+        /**
+          * Emitted when a sortable column's header is clicked.
+         */
+        "onMxSortChange"?: (event: CustomEvent<SortChangeEventDetail>) => void;
+        /**
+          * Emitted when the sorting, pagination, or rows data changes. The `Event.detail` will contain the sorted, paginated array of visible rows.  This is useful for building a custom row layout via the default slot.
+         */
+        "onMxVisibleRowsChange"?: (event: CustomEvent<Object[]>) => void;
+        /**
+          * Additional class names for the operation bar grid
+         */
+        "operationsBarClass"?: string;
+        /**
+          * The page to display
+         */
+        "page"?: number;
+        /**
+          * Show the pagination component.  Setting this to `false` will show all rows.
+         */
+        "paginate"?: boolean;
+        /**
+          * Delay the appearance of the progress bar for this many milliseconds
+         */
+        "progressAppearDelay"?: number;
+        /**
+          * The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed.
+         */
+        "progressValue"?: number;
+        /**
+          * An array of objects that defines the table's dataset.
+         */
+        "rows"?: Object[];
+        "rowsPerPage"?: number;
+        "rowsPerPageOptions"?: number[];
+        /**
+          * Do not sort or paginate client-side. Use events to send server requests instead.
+         */
+        "serverPaginate"?: boolean;
+        /**
+          * Set to `false` to hide the (un)check all checkbox at the top of the table.
+         */
+        "showCheckAll"?: boolean;
+        /**
+          * Show a progress bar below the header row
+         */
+        "showProgressBar"?: boolean;
+        "sortAscending"?: boolean;
+        /**
+          * The property on the row objects that will be used for sorting
+         */
+        "sortBy"?: string;
+        /**
+          * The total number of unpaginated rows.  This is ignored for client-side pagination. For server-side pagination, omitting this prop will remove the last-page button.
+         */
+        "totalRows"?: number;
+    }
+    interface MxTableCell {
+        /**
+          * This is automatically set by the parent `mx-table`.  For subheaders, this will be null.
+         */
+        "columnIndex"?: number;
+        /**
+          * This is automatically set by the parent `mx-table`.
+         */
+        "heading"?: string;
+        /**
+          * This is automatically set by the parent `mx-table`.
+         */
+        "isExposedMobileColumn"?: boolean;
+    }
+    interface MxTableRow {
+        /**
+          * An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text.
+         */
+        "actions"?: ITableRowAction[];
+        "checked"?: boolean;
+        /**
+          * Toggles the visibility of all nested rows (except those set to `doNotCollapse`)
+         */
+        "collapseNestedRows"?: boolean;
+        /**
+          * Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`.
+         */
+        "doNotCollapse"?: boolean;
+        /**
+          * Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`.
+         */
+        "doNotDrag"?: boolean;
+        /**
+          * Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked
+         */
+        "onMxCheck"?: (event: CustomEvent<{ rowId: string; checked: boolean }>) => void;
+        /**
+          * Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table.
+         */
+        "onMxDragKeyDown"?: (event: CustomEvent<string>) => void;
+        /**
+          * Emitted when dragging ends.  Handled by the parent table.
+         */
+        "onMxRowDragEnd"?: (event: CustomEvent<{ isKeyboard: boolean; isCancel: boolean }>) => void;
+        /**
+          * Emitted when dragging starts.  Handled by the parent table.
+         */
+        "onMxRowDragStart"?: (event: CustomEvent<{ isKeyboard: boolean }>) => void;
+        /**
+          * This is required for checkable rows in order to persist the checked state through sorting and pagination.
+         */
+        "rowId"?: string;
+        /**
+          * This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component.
+         */
+        "rowIndex"?: number;
+        /**
+          * Style the row as a subheader.
+         */
+        "subheader"?: boolean;
+    }
     interface MxTabs {
         /**
           * Stretch tabs to fill the entire width
@@ -1008,9 +2301,36 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
-    interface MxToggleButton {
-        "ariaLabel"?: string;
+    interface MxTimePicker {
+        /**
+          * Helpful text to show below the picker
+         */
+        "assistiveText"?: string;
+        "dense"?: boolean;
         "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
+        "error"?: boolean;
+        "floatLabel"?: boolean;
+        /**
+          * The `id` attribute for the internal input element
+         */
+        "inputId"?: string;
+        "label"?: string;
+        "name"?: string;
+        /**
+          * The time in 24-hour hh:mm format
+         */
+        "value"?: string;
+    }
+    interface MxToggleButton {
+        "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel"?: string;
         "icon"?: string;
         "selected"?: boolean;
         /**
@@ -1023,32 +2343,85 @@ declare namespace LocalJSX {
           * Emits the updated value as event.detail
          */
         "onMxInput"?: (event: CustomEvent<any>) => void;
+        /**
+          * Set to `true` to prevent deselecting once a selection has been made.
+         */
+        "required"?: boolean;
         "value"?: any;
+    }
+    interface MxTooltip {
+        /**
+          * Delay showing the tooltip for this many milliseconds
+         */
+        "appearDelay"?: number;
+        /**
+          * Increase the padding, add a shadow, and make the corners less rounded (typically for multi-line text)
+         */
+        "extended"?: boolean;
+        /**
+          * Invert the default colors (i.e. dark text on a light background)
+         */
+        "inverted"?: boolean;
+        /**
+          * This is typically updated automatically based on events, but may be changed programmatically if necessary.
+         */
+        "isOpen"?: boolean;
+        /**
+          * The maximum width of the tooltip (e.g. '20rem')
+         */
+        "maxWidth"?: string;
+        /**
+          * The preferred placement of the tooltip, relative to the anchor element.
+         */
+        "placement"?: PopoverPlacement;
+        /**
+          * Additional classes to add to the tooltip.
+         */
+        "tooltipClass"?: string;
+        /**
+          * The text to show inside the tooltip.  Alternatively, use the `tooltip` slot.
+         */
+        "value"?: string;
     }
     interface IntrinsicElements {
         "mx-badge": MxBadge;
+        "mx-banner": MxBanner;
         "mx-button": MxButton;
+        "mx-chart": MxChart;
         "mx-checkbox": MxCheckbox;
         "mx-chip": MxChip;
         "mx-chip-group": MxChipGroup;
         "mx-circular-progress": MxCircularProgress;
+        "mx-code": MxCode;
+        "mx-confirm-input": MxConfirmInput;
+        "mx-date-picker": MxDatePicker;
+        "mx-dialog": MxDialog;
         "mx-dropdown-menu": MxDropdownMenu;
         "mx-fab": MxFab;
         "mx-icon-button": MxIconButton;
+        "mx-image-upload": MxImageUpload;
         "mx-input": MxInput;
         "mx-linear-progress": MxLinearProgress;
         "mx-menu": MxMenu;
         "mx-menu-item": MxMenuItem;
+        "mx-modal": MxModal;
         "mx-page-header": MxPageHeader;
+        "mx-pagination": MxPagination;
         "mx-radio": MxRadio;
         "mx-search": MxSearch;
         "mx-select": MxSelect;
+        "mx-snackbar": MxSnackbar;
         "mx-switch": MxSwitch;
         "mx-tab": MxTab;
         "mx-tab-content": MxTabContent;
+        "mx-table": MxTable;
+        "mx-table-cell": MxTableCell;
+        "mx-table-row": MxTableRow;
         "mx-tabs": MxTabs;
+        "mx-time-picker": MxTimePicker;
         "mx-toggle-button": MxToggleButton;
         "mx-toggle-button-group": MxToggleButtonGroup;
+        "mx-tooltip": MxTooltip;
     }
 }
 export { LocalJSX as JSX };
@@ -1056,28 +2429,43 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
+            "mx-banner": LocalJSX.MxBanner & JSXBase.HTMLAttributes<HTMLMxBannerElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;
+            "mx-chart": LocalJSX.MxChart & JSXBase.HTMLAttributes<HTMLMxChartElement>;
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
             "mx-chip": LocalJSX.MxChip & JSXBase.HTMLAttributes<HTMLMxChipElement>;
             "mx-chip-group": LocalJSX.MxChipGroup & JSXBase.HTMLAttributes<HTMLMxChipGroupElement>;
             "mx-circular-progress": LocalJSX.MxCircularProgress & JSXBase.HTMLAttributes<HTMLMxCircularProgressElement>;
+            "mx-code": LocalJSX.MxCode & JSXBase.HTMLAttributes<HTMLMxCodeElement>;
+            "mx-confirm-input": LocalJSX.MxConfirmInput & JSXBase.HTMLAttributes<HTMLMxConfirmInputElement>;
+            "mx-date-picker": LocalJSX.MxDatePicker & JSXBase.HTMLAttributes<HTMLMxDatePickerElement>;
+            "mx-dialog": LocalJSX.MxDialog & JSXBase.HTMLAttributes<HTMLMxDialogElement>;
             "mx-dropdown-menu": LocalJSX.MxDropdownMenu & JSXBase.HTMLAttributes<HTMLMxDropdownMenuElement>;
             "mx-fab": LocalJSX.MxFab & JSXBase.HTMLAttributes<HTMLMxFabElement>;
             "mx-icon-button": LocalJSX.MxIconButton & JSXBase.HTMLAttributes<HTMLMxIconButtonElement>;
+            "mx-image-upload": LocalJSX.MxImageUpload & JSXBase.HTMLAttributes<HTMLMxImageUploadElement>;
             "mx-input": LocalJSX.MxInput & JSXBase.HTMLAttributes<HTMLMxInputElement>;
             "mx-linear-progress": LocalJSX.MxLinearProgress & JSXBase.HTMLAttributes<HTMLMxLinearProgressElement>;
             "mx-menu": LocalJSX.MxMenu & JSXBase.HTMLAttributes<HTMLMxMenuElement>;
             "mx-menu-item": LocalJSX.MxMenuItem & JSXBase.HTMLAttributes<HTMLMxMenuItemElement>;
+            "mx-modal": LocalJSX.MxModal & JSXBase.HTMLAttributes<HTMLMxModalElement>;
             "mx-page-header": LocalJSX.MxPageHeader & JSXBase.HTMLAttributes<HTMLMxPageHeaderElement>;
+            "mx-pagination": LocalJSX.MxPagination & JSXBase.HTMLAttributes<HTMLMxPaginationElement>;
             "mx-radio": LocalJSX.MxRadio & JSXBase.HTMLAttributes<HTMLMxRadioElement>;
             "mx-search": LocalJSX.MxSearch & JSXBase.HTMLAttributes<HTMLMxSearchElement>;
             "mx-select": LocalJSX.MxSelect & JSXBase.HTMLAttributes<HTMLMxSelectElement>;
+            "mx-snackbar": LocalJSX.MxSnackbar & JSXBase.HTMLAttributes<HTMLMxSnackbarElement>;
             "mx-switch": LocalJSX.MxSwitch & JSXBase.HTMLAttributes<HTMLMxSwitchElement>;
             "mx-tab": LocalJSX.MxTab & JSXBase.HTMLAttributes<HTMLMxTabElement>;
             "mx-tab-content": LocalJSX.MxTabContent & JSXBase.HTMLAttributes<HTMLMxTabContentElement>;
+            "mx-table": LocalJSX.MxTable & JSXBase.HTMLAttributes<HTMLMxTableElement>;
+            "mx-table-cell": LocalJSX.MxTableCell & JSXBase.HTMLAttributes<HTMLMxTableCellElement>;
+            "mx-table-row": LocalJSX.MxTableRow & JSXBase.HTMLAttributes<HTMLMxTableRowElement>;
             "mx-tabs": LocalJSX.MxTabs & JSXBase.HTMLAttributes<HTMLMxTabsElement>;
+            "mx-time-picker": LocalJSX.MxTimePicker & JSXBase.HTMLAttributes<HTMLMxTimePickerElement>;
             "mx-toggle-button": LocalJSX.MxToggleButton & JSXBase.HTMLAttributes<HTMLMxToggleButtonElement>;
             "mx-toggle-button-group": LocalJSX.MxToggleButtonGroup & JSXBase.HTMLAttributes<HTMLMxToggleButtonGroupElement>;
+            "mx-tooltip": LocalJSX.MxTooltip & JSXBase.HTMLAttributes<HTMLMxTooltipElement>;
         }
     }
 }

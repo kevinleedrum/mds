@@ -1,9 +1,11 @@
-import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-b9cec9f1.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
 
 const MxToggleButtonGroup = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.mxInput = createEvent(this, "mxInput", 7);
+    /** Set to `true` to prevent deselecting once a selection has been made. */
+    this.required = false;
   }
   onValueChange() {
     this.updateChildButtons();
@@ -21,7 +23,7 @@ const MxToggleButtonGroup = class {
   toggleValue(value) {
     if (this.value !== value)
       this.value = value;
-    else
+    else if (!this.required)
       this.value = null;
   }
   updateChildButtons() {
@@ -29,7 +31,7 @@ const MxToggleButtonGroup = class {
     buttons.forEach(button => (button.selected = button.value === this.value));
   }
   render() {
-    return (h(Host, { class: "inline-flex", role: "radio-group" }, h("slot", null)));
+    return (h(Host, { class: "inline-flex", role: "radiogroup" }, h("slot", null)));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

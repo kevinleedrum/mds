@@ -6,7 +6,7 @@
 /***************************
 * Import Font
 ***************************/
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
 
 /***************************
 * Import Tailwind helpers
@@ -19,6 +19,7 @@
 * Import Component CSS
 ***************************/
 @import './mx-input/index.scss';
+@import './mx-confirm-input/index.scss';
 @import './mx-search/index.scss';
 @import './mx-button/index.scss';
 @import './mx-icon-button/index.scss';
@@ -28,6 +29,7 @@
 @import './mx-checkbox/index.scss';
 @import './mx-radio/index.scss';
 @import './mx-switch/index.scss';
+@import './mx-tooltip/index.scss';
 @import './mx-circular-progress/index.scss';
 @import './mx-linear-progress/index.scss';
 @import './mx-tab/index.scss';
@@ -35,7 +37,19 @@
 @import './mx-dropdown-menu/index.scss';
 @import './mx-menu/index.scss';
 @import './mx-menu-item/index.scss';
+@import './mx-date-picker/index.scss';
+@import './mx-time-picker/index.scss';
 @import './mx-page-header/index.scss';
+@import './mx-banner/index.scss';
+@import './mx-dialog/index.scss';
+@import './mx-modal/index.scss';
+@import './mx-table/index.scss';
+@import './mx-pagination/index.scss';
+@import './mx-snackbar/index.scss';
+@import './mx-image-upload/index.scss';
+@import './mx-code/index.scss';
+
+@import './icons.scss';
 @import './ripple.scss';
 
 /***************************
@@ -53,6 +67,10 @@
 
   a {
     color: var(--mds-text-link);
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
   }
 
   /***************************
@@ -86,77 +104,99 @@
       letter-spacing: -0.5px;
       font-weight: bold;
       line-height: 4.5rem;
-      @apply mb-24;
+      &:not(.my-0) {
+        @apply mb-24;
+      }
     }
     .text-h1.xl {
       font-size: 6rem;
       letter-spacing: -1.5px;
       font-weight: bold;
       line-height: 7.5rem;
-      @apply mb-24;
+      &:not(.my-0) {
+        @apply mb-24;
+      }
     }
     .text-h2 {
       font-size: 3rem;
       letter-spacing: 0;
       font-weight: 600;
       line-height: 4rem;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h3 {
       font-size: 2.5rem;
       letter-spacing: 0.25px;
       line-height: 3.5rem;
       font-weight: normal;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h3.emphasis {
       font-size: 2.5rem;
       letter-spacing: 0.25px;
       line-height: 3.5rem;
       font-weight: bold;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h4 {
       font-size: 2.25rem;
       letter-spacing: 0.25px;
       line-height: 3.5rem;
       font-weight: normal;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h4.emphasis {
       font-size: 2.25rem;
       letter-spacing: 0.25px;
       line-height: 3.5rem;
       font-weight: 600;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h5 {
       font-size: 1.5rem;
       letter-spacing: 0;
       line-height: 2.5rem;
       font-weight: normal;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h5.emphasis {
       font-size: 1.5rem;
       letter-spacing: 0;
       line-height: 2.5rem;
       font-weight: 800;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h6 {
       font-size: 1.125rem;
       letter-spacing: 0.25px;
       line-height: 1.5rem;
       font-weight: normal;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .text-h6.emphasis {
       font-size: 1.125rem;
       letter-spacing: 0.25px;
       line-height: 1.5rem;
       font-weight: bold;
-      @apply my-24;
+      &:not(.my-0) {
+        @apply my-24;
+      }
     }
     .subtitle1 {
       @apply text-3 tracking-0-15 leading-6 font-semibold;
@@ -190,74 +230,5 @@
       font-size: 0.75rem;
       @apply tracking-1-5 leading-4 font-normal uppercase;
     }
-  }
-
-  /***************************
-  * Elevations
-  ***************************/
-
-  .elevation0 {
-    background: #fafafa;
-    border-radius: 8px;
-  }
-
-  .elevation1 {
-    background: #fafafa;
-    @apply shadow-1;
-    border-radius: 8px;
-  }
-
-  .elevation2 {
-    background: #fafafa;
-    @apply shadow-2;
-    border-radius: 8px;
-  }
-
-  .elevation3 {
-    background: #fafafa;
-    @apply shadow-3;
-    border-radius: 8px;
-  }
-
-  .elevation4 {
-    background: #fafafa;
-    @apply shadow-4;
-    border-radius: 8px;
-  }
-
-  .elevation6 {
-    background: #fafafa;
-    @apply shadow-6;
-    border-radius: 8px;
-  }
-
-  .elevation8 {
-    background: #fafafa;
-    @apply shadow-8;
-    border-radius: 8px;
-  }
-
-  .elevation9 {
-    background: #fafafa;
-    @apply shadow-9;
-    border-radius: 8px;
-  }
-
-  .elevation12 {
-    background: #fafafa;
-    @apply shadow-12;
-    border-radius: 8px;
-  }
-
-  .elevation16 {
-    background: #fafafa;
-    @apply shadow-16;
-    border-radius: 8px;
-  }
-
-  .elevation24 {
-    background: #fafafa;
-    @apply shadow-24;
-    border-radius: 8px;
   }
 }

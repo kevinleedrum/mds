@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host, g as getElement } from './index-b9cec9f1.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
 import { r as ripple } from './ripple-54ef50dc.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
@@ -39,7 +39,7 @@ const MxFab = class {
     return str;
   }
   render() {
-    return (h(Host, { class: 'mx-fab inline-block min-w-max' + (this.minWidths.md ? ' w-56' : ' w-40') }, h("button", { ref: el => (this.buttonElem = el), type: "button", value: this.value, class: this.buttonClass, "aria-label": this.ariaLabel, onClick: this.onClick.bind(this) }, this.icon && h("i", { class: this.icon + ' text-1' }), h("div", { class: this.slotWrapperClass }, h("slot", null)))));
+    return (h(Host, { class: 'mx-fab inline-block min-w-max' + (this.minWidths.md ? ' w-56' : ' w-40') }, h("button", { ref: el => (this.buttonElem = el), type: "button", value: this.value, class: this.buttonClass, "aria-label": this.elAriaLabel, onClick: this.onClick.bind(this) }, this.icon && h("i", { class: this.icon + ' text-1' }), h("div", { class: this.slotWrapperClass }, h("slot", null)))));
   }
   get element() { return getElement(this); }
 };

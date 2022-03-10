@@ -1,0 +1,26 @@
+.mx-dialog {
+  color: var(--mds-text-dialog);
+
+  .modal {
+    background: var(--mds-bg-dialog);
+
+    [slot='buttons'] > * {
+      @apply m-4;
+    }
+
+    ::-webkit-scrollbar {
+      width: 12px;
+      background: var(--mds-bg-dialog);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 0.5rem;
+      border: 0.25rem solid var(--mds-bg-dialog);
+      background: var(--mds-bg-dialog-scroll-thumb);
+    }
+  }
+
+  .bg-dialog-backdrop {
+    background: var(--mds-bg-dialog-backdrop);
+  }
+}

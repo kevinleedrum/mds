@@ -1,6 +1,9 @@
+import { propagateDataAttributes } from '../../utils/utils';
 export declare class MxSelect {
   selectElem: HTMLSelectElement;
   textArea: HTMLTextAreaElement;
+  uuid: string;
+  dataAttributes: {};
   /** Helpful text to show below the select */
   assistiveText: string;
   dense: boolean;
@@ -10,7 +13,11 @@ export declare class MxSelect {
   /** Style with a "flat" border color */
   flat: boolean;
   label: string;
-  ariaLabel: string;
+  floatLabel: boolean;
+  /** The aria-label attribute for the inner select element. */
+  elAriaLabel: string;
+  /** Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`) */
+  selectClass: string;
   /** The `id` attribute for the select element */
   selectId: string;
   name: string;
@@ -21,15 +28,17 @@ export declare class MxSelect {
   labelClass: string;
   value: any;
   isFocused: boolean;
-  element: HTMLMxSelectElement;
+  element: HTMLMxInputElement;
+  componentWillRender: typeof propagateDataAttributes;
   componentDidLoad(): void;
   onValueChange(): void;
   updateSelectValue(): void;
   onFocus(): void;
   onBlur(): void;
+  onInput(e: InputEvent): void;
   get hasValue(): boolean;
   get selectWrapperClass(): string;
-  get selectClass(): string;
+  get selectElClass(): string;
   get labelClassNames(): string;
   get iconSuffixClass(): string;
   get iconEl(): any;

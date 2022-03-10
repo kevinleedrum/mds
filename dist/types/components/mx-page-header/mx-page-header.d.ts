@@ -7,6 +7,8 @@ export interface IPageHeaderButton extends IMxButtonProps {
 export declare class MxPageHeader {
   buttonRow: HTMLElement;
   hasTabs: boolean;
+  hasModalHeaderCenter: boolean;
+  hasModalHeaderRight: boolean;
   menuButton: HTMLMxIconButtonElement;
   resizeObserver: ResizeObserver;
   tabSlot: HTMLElement;
@@ -14,6 +16,8 @@ export declare class MxPageHeader {
   tertiaryMenu: HTMLMxMenuElement;
   /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
   buttons: IPageHeaderButton[];
+  /** This flag is set by the Modal component to adjust the page header styling when used internally. */
+  modal: boolean;
   /** The URL for the previous page link */
   previousPageUrl: string;
   /** The text to display for the previous page link */
@@ -23,6 +27,9 @@ export declare class MxPageHeader {
   minWidths: MinWidths;
   renderTertiaryButtonAsMenu: boolean;
   element: HTMLMxPageHeaderElement;
+  /** Attach a new ResizeObserver that calls `updateRenderTertiaryButtonAsMenu` */
+  resetResizeObserver(): Promise<void>;
+  updateSlottedButtonSize(): void;
   componentWillLoad(): void;
   connectedCallback(): void;
   disconnectedCallback(): void;
@@ -30,6 +37,7 @@ export declare class MxPageHeader {
   componentDidLoad(): void;
   get hostClass(): string;
   get headingClass(): string;
+  get previousPageClass(): string;
   get buttonsJsx(): any;
   render(): any;
 }

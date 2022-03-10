@@ -8,6 +8,10 @@
       color: var(--mds-text-menu-item-label);
     }
 
+    .item-subtitle {
+      color: var(--mds-text-menu-item-subtitle);
+    }
+
     .check {
       color: var(--mds-text-menu-item-check);
     }
@@ -17,7 +21,7 @@
       background: var(--mds-bg-menu-item-focus);
     }
 
-    &[aria-disabled] {
+    &[aria-disabled='true'] {
       color: var(--mds-text-menu-item-disabled);
     }
   }
@@ -26,4 +30,9 @@
     /* Add focused background to menu item when its submenu is focused */
     background: var(--mds-bg-menu-item-focus);
   }
+}
+
+.mx-menu.autocomplete-only:not(:focus-within) .mx-menu-item:not([aria-disabled='true']):first-child > div {
+  /* Add focused background to first enabled menu item for autocomplete-only menus */
+  background: var(--mds-bg-menu-item-focus);
 }

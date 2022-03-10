@@ -1,4 +1,6 @@
 .mx-radio {
+  color: var(--mds-text-radio);
+
   span {
     position: relative;
     z-index: 1;
@@ -53,6 +55,8 @@
   }
 
   input:checked ~ span {
+    border-color: var(--mds-border-radio-checked);
+
     &::after {
       display: block;
     }
@@ -68,6 +72,22 @@
         display: block;
         background: var(--mds-bg-radio-overlay-checked-active);
       }
+    }
+  }
+
+  input:disabled {
+    & ~ span {
+      border-color: var(--mds-border-radio-disabled);
+    }
+    & ~ span::after {
+      background: var(--mds-bg-radio-disabled);
+    }
+    & ~ span::before,
+    &:checked ~ span::before {
+      background: transparent;
+    }
+    & ~ .radio-label {
+      color: var(--mds-text-radio-disabled);
     }
   }
 }

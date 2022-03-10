@@ -1,7 +1,6 @@
-import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
-import removeSvg from '../../assets/svg/remove.svg';
-import checkSvg from '../../assets/svg/check.svg';
+import { uuidv4 } from '../../utils/utils';
 
 @Component({
   tag: 'mx-chip',
@@ -9,11 +8,12 @@ import checkSvg from '../../assets/svg/check.svg';
 })
 export class MxChip {
   chipElem: HTMLElement;
+  uuid: string = uuidv4();
 
   @Prop() outlined: boolean = false;
   @Prop() disabled: boolean = false;
   /** Display a checkmark on the left side of the chip */
-  @Prop({ reflect: true }) selected: boolean = false;
+  @Prop({ mutable: true, reflect: true }) selected: boolean = false;
   /** Use the pointer cursor and show a ripple animation.
    * This does not need to be explicitly set for `choice` or `filter` chips. */
   @Prop() clickable: boolean = false;
@@ -31,8 +31,16 @@ export class MxChip {
   /** Style as a filter chip when selected */
   @Prop() filter: boolean = false;
 
+  @Element() element: HTMLMxChipElement;
+
   /** Emitted when the remove icon is clicked */
   @Event() mxRemove: EventEmitter<MouseEvent>;
+
+  componentWillRender() {
+    const chipGroup = this.element.closest('mx-chip-group') as HTMLMxChipGroupElement;
+    if (!chipGroup) return;
+    this.selected = chipGroup.value === this.value;
+  }
 
   onClick(e: MouseEvent) {
     if (this.disabled) {
@@ -72,10 +80,17 @@ export class MxChip {
     if (this.choice) str += ' choice';
     if (this.filter) str += ' filter';
     if (this.outlined) str += ' outlined border';
-    if (this.isClickable) str += ' clickable transform cursor-pointer disabled:cursor-auto';
+    if (this.isClickable)
+      str += ' clickable transform cursor-pointer disabled:pointer-events-none disabled:cursor-auto';
     str += this.hasLeftIcon ? ' pl-6' : ' pl-12';
     if (!this.removable) str += ' pr-12';
-    else str += this.hasLeftIcon ? ' pr-2' : ' pr-8';
+    else str += this.hasLeftIcon ? ' pr-32' : ' pr-40';
+    return str;
+  }
+
+  get removeButtonClass() {
+    let str = 'remove inline-flex absolute top-4 items-center justify-center w-24 h-24 cursor-pointer';
+    str += this.hasLeftIcon ? ' right-2' : ' right-8';
     return str;
   }
 
@@ -94,14 +109,15 @@ export class MxChip {
 
   render() {
     return (
-      <Host class="mx-chip inline-block">
+      <Host class="mx-chip inline-block relative">
         <div
           ref={el => (this.chipElem = el)}
+          id={this.uuid}
           class={this.chipClass}
-          aria-checked={this.selected}
-          aria-disabled={this.disabled}
+          aria-checked={this.choice || this.filter ? (this.selected ? 'true' : 'false') : null}
+          aria-disabled={this.disabled ? 'true' : null}
           role={this.ariaRole}
-          tabindex={this.isClickable ? '0' : '-1'}
+          tabindex={this.isClickable && !this.disabled ? '0' : '-1'}
           onClick={this.onClick.bind(this)}
           onKeyDown={this.onKeyDown.bind(this)}
         >
@@ -115,7 +131,7 @@ export class MxChip {
               {this.icon && <i class={this.icon + ' text-1'}></i>}
               {this.selected && (
                 <div data-testid="check" class="check flex absolute inset-0 items-center justify-center">
-                  <span innerHTML={checkSvg}></span>
+                  <i class="mds-check"></i>
                 </div>
               )}
             </div>
@@ -123,17 +139,20 @@ export class MxChip {
           <span>
             <slot></slot>
           </span>
-          {this.removable && (
-            <button
-              type="button"
-              data-testid="remove"
-              aria-label="Remove"
-              class="remove inline-flex items-center justify-center w-24 h-24 cursor-pointer"
-              innerHTML={removeSvg}
-              onClick={this.onRemove.bind(this)}
-            ></button>
-          )}
         </div>
+        {this.removable && (
+          <button
+            type="button"
+            data-testid="remove"
+            aria-label="Remove"
+            aria-controls={this.uuid}
+            disabled={this.disabled}
+            class={this.removeButtonClass}
+            onClick={this.onRemove.bind(this)}
+          >
+            <i class="mds-remove text-3"></i>
+          </button>
+        )}
       </Host>
     );
   }

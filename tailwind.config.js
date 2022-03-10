@@ -65,6 +65,7 @@ const config = {
       112: '7rem',
       128: '8rem',
       144: '9rem',
+      152: '9.5rem',
       160: '10rem',
       164: '10.25rem',
       176: '11rem',
@@ -76,20 +77,30 @@ const config = {
       256: '16rem',
       288: '18rem',
       320: '20rem',
+      360: '22.5rem',
       384: '24rem',
+      480: '30rem',
     },
     extend: {
       backgroundColor: {
-        'primary': 'var(--mds-bg-primary)',
-        'primary-inverted': 'var(--mds-bg-primary-inverted)',
-        'secondary': 'var(--mds-bg-secondary)',
-        'secondary-inverted': 'var(--mds-bg-secondary-inverted)',
-        'gray': 'var(--mds-bg-gray)',
+        'error': 'var(--mds-bg-error)',
         'gray-inverted': 'var(--mds-bg-gray-inverted)',
+        'gray': 'var(--mds-bg-gray)',
+        'primary-inverted': 'var(--mds-bg-primary-inverted)',
+        'primary': 'var(--mds-bg-primary)',
+        'secondary-inverted': 'var(--mds-bg-secondary-inverted)',
+        'secondary': 'var(--mds-bg-secondary)',
       },
       textColor: {
-        'primary': 'var(--mds-text-primary)',
+        'disabled-inverted': 'var(--mds-text-disabled-inverted)',
+        'disabled': 'var(--mds-text-disabled)',
+        'error': 'var(--mds-text-error)',
+        'inactive-inverted': 'var(--mds-text-inactive-inverted)',
+        'inactive': 'var(--mds-text-inactive)',
+        'link': 'var(--mds-text-link)',
+        'medium-emphasis': 'var(--mds-text-medium-emphasis)',
         'primary-inverted': 'var(--mds-text-primary-inverted)',
+        'primary': 'var(--mds-text-primary)',
       },
       borderColor: {
         'primary': 'var(--mds-border-primary)',
@@ -101,6 +112,9 @@ const config = {
       minHeight: theme => ({
         ...theme('spacing'), // Extend to include spacing values (e.g. min-h-128)
       }),
+      maxHeight: theme => ({
+        ...theme('spacing'), // Extend to include spacing values (e.g. max-h-128)
+      }),
       container: {
         center: true,
       },
@@ -109,6 +123,11 @@ const config = {
   variants: {
     borderWidth: ({ after }) => after(['first-of-type', 'last-of-type']),
     borderRadius: ({ after }) => after(['first-of-type', 'last-of-type']),
+    extend: {
+      borderWidth: ['focus'],
+      cursor: ['disabled'],
+      pointerEvents: ['disabled'],
+    },
   },
   plugins: [
     plugin(function({ addVariant, e }) {
@@ -117,7 +136,7 @@ const config = {
         modifySelectors(({ className }) => {
           return `.${e(`disabled${separator}${className}`)}:disabled, .${e(
             `disabled${separator}${className}`,
-          )}[aria-disabled]`;
+          )}[aria-disabled='true']`;
         });
       });
       addVariant('first-of-type', ({ modifySelectors, separator }) => {

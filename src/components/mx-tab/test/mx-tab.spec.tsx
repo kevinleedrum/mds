@@ -22,7 +22,7 @@ describe('mx-tab (text, selected)', () => {
   });
 
   it('sets aria-selected', async () => {
-    expect(root.querySelector('[aria-selected]')).not.toBeNull();
+    expect(root.querySelector('[aria-selected="true"]')).not.toBeNull();
   });
 });
 
@@ -32,7 +32,7 @@ describe('mx-tab (icon, badge, not selected)', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxTabs, MxTab],
-      html: `<mx-tab icon="ph-house" aria-label="Home" badge />`,
+      html: `<mx-tab icon="ph-house" el-aria-label="Home" badge />`,
     });
     root = page.root;
   });
@@ -50,6 +50,6 @@ describe('mx-tab (icon, badge, not selected)', () => {
   });
 
   it('does not set aria-selected', async () => {
-    expect(root.querySelector('[aria-selected]')).toBeNull();
+    expect(root.querySelector('[aria-selected="true"]')).toBeNull();
   });
 });

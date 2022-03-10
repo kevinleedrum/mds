@@ -24,7 +24,7 @@ export class MxChipGroup {
   @Listen('click')
   onChipClick(e: MouseEvent) {
     const chip: HTMLMxChipElement = (e.target as HTMLElement).closest('mx-chip');
-    if (!chip) return;
+    if (!chip || chip.disabled) return;
     this.toggleValue(chip.value);
     this.mxInput.emit(this.value);
   }
@@ -45,7 +45,7 @@ export class MxChipGroup {
 
   render() {
     return (
-      <Host class="inline-flex" role="radio-group">
+      <Host class="inline-flex" role="radiogroup">
         <slot></slot>
       </Host>
     );

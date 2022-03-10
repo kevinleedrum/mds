@@ -1,0 +1,18 @@
+.mx-banner {
+  & > div {
+    background: var(--mds-bg-banner);
+    color: var(--mds-text-banner);
+  }
+  &.is-error > div {
+    background: var(--mds-bg-banner-error);
+    [slot='actions'] button {
+      color: var(--mds-text-banner-error);
+    }
+  }
+
+  [slot='actions'] > * {
+    & > * {
+      @apply ml-8;
+    }
+  }
+}

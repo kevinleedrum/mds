@@ -1,4 +1,4 @@
-import { r as registerInstance, h, f as Host } from './index-b9cec9f1.js';
+import { r as registerInstance, h, e as Host } from './index-f6edd80d.js';
 
 const MxTabContent = class {
   constructor(hostRef) {
@@ -8,7 +8,7 @@ const MxTabContent = class {
     return this.value >= 0 && this.index === this.value;
   }
   render() {
-    return (h(Host, { class: !this.isActiveTab ? 'hidden' : '' }, h("slot", null)));
+    return (h(Host, { class: !this.isActiveTab ? 'hidden' : '', role: "tabpanel" }, h("slot", null)));
   }
 };
 

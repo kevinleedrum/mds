@@ -4,7 +4,7 @@
   --ripple-color: var(--mds-ripple-chip);
   transform: translateZ(0); /* HACK: Fix Safari ripple extending outside border radius */
 
-  &[aria-checked] {
+  &[aria-checked='true'] {
     background: var(--mds-bg-chip-selected);
     &.choice {
       color: var(--mds-text-chip-choice-selected);
@@ -23,27 +23,27 @@
   }
 
   &.clickable {
-    &:focus:not([aria-disabled], [aria-checked]) {
+    &:focus:not([aria-disabled='true'], [aria-checked='true']) {
       background: var(--mds-bg-chip-focus);
     }
 
-    &:hover:not([aria-disabled]) {
+    &:hover:not([aria-disabled='true']) {
       background: var(--mds-bg-chip-hover);
     }
 
-    &:active:not([aria-disabled]) {
+    &:active:not([aria-disabled='true']) {
       background: var(--mds-bg-chip-active);
       @apply shadow-8 -translate-y-1;
     }
   }
 
-  &[aria-disabled] {
+  &[aria-disabled='true'] {
     background: var(--mds-bg-chip-disabled);
     color: var(--mds-text-chip-disabled);
     .left-icon,
-    .remove,
-    .remove:hover,
-    .remove:focus {
+    & + .remove,
+    & + .remove:hover,
+    & + .remove:focus {
       opacity: 0.24;
       cursor: initial;
     }
@@ -60,7 +60,7 @@
     }
   }
 
-  .remove {
+  & + .remove {
     color: var(--mds-text-chip-remove);
     opacity: 0.64;
     outline-offset: -4px;
@@ -76,7 +76,7 @@
     border-color: var(--mds-border-chip-outlined);
     --ripple-color: var(--mds-ripple-chip-outlined);
 
-    &[aria-checked] {
+    &[aria-checked='true'] {
       background: var(--mds-bg-chip-outlined-selected);
       &.choice {
         background: var(--mds-bg-chip-choice-selected);
@@ -88,20 +88,20 @@
     }
 
     &.clickable {
-      &:focus:not([aria-disabled], [aria-checked]) {
+      &:focus:not([aria-disabled='true'], [aria-checked='true']) {
         background: var(--mds-bg-chip-outlined-focus);
       }
 
-      &:hover:not([aria-disabled]) {
+      &:hover:not([aria-disabled='true']) {
         background: var(--mds-bg-chip-outlined-hover);
       }
 
-      &:active:not([aria-disabled]) {
+      &:active:not([aria-disabled='true']) {
         background: var(--mds-bg-chip-outlined-active);
       }
     }
 
-    &[aria-disabled] {
+    &[aria-disabled='true'] {
       background: var(--mds-bg-chip-outlined-disabled);
       border-color: var(--mds-border-chip-outlined-disabled);
       color: var(--mds-text-chip-outlined-disabled);

@@ -1,9 +1,10 @@
-import { r as registerInstance, h, f as Host } from './index-b9cec9f1.js';
-import { c as chevronSvg } from './chevron-down-6a7bb36b.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
+import { p as propagateDataAttributes } from './utils-f31b72fe.js';
 
 const MxIconButton = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
+    this.dataAttributes = {};
     this.type = 'button';
     this.disabled = false;
     /** Show downward chevron icon */
@@ -12,6 +13,7 @@ const MxIconButton = class {
     this.chevronLeft = false;
     /** Show right-pointing chevron icon */
     this.chevronRight = false;
+    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     if (this.disabled) {
@@ -24,9 +26,11 @@ const MxIconButton = class {
     return this.chevronDown || this.chevronLeft || this.chevronRight;
   }
   render() {
-    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-1', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center shadow-1" }, h("span", { "data-testid": "chevron", class: this.chevronLeft ? 'transform rotate-90' : this.chevronRight ? 'transform -rotate-90' : '', innerHTML: chevronSvg })))));
-    return (h(Host, { class: "mx-icon-button" }, h("button", { type: this.type, value: this.value, class: "flex items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer", ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-disabled": this.disabled, "aria-label": this.ariaLabel }, buttonContent)));
+    const Tag = this.href ? 'a' : 'button';
+    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative" }, this.icon && h("i", { class: ['text-icon', this.icon].join(' ') }), h("span", { class: "slot-content" }, h("slot", null)), this.isChevron && (h("span", { class: "chevron-wrapper inline-flex w-24 h-24 rounded-full items-center justify-center text-icon shadow-1" }, h("i", { "data-testid": "chevron", class: this.chevronLeft ? 'mds-chevron-left' : this.chevronRight ? 'mds-chevron-right' : 'mds-chevron-down' })))));
+    return (h(Host, { class: "mx-icon-button inline-block appearance-none" }, h(Tag, Object.assign({ type: this.href ? null : this.type, form: this.form, formaction: this.formaction, value: this.value, href: this.href, class: "flex text-current appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:pointer-events-none disabled:cursor-auto", ref: el => (this.btnElem = el), disabled: this.disabled, "aria-disabled": this.disabled ? 'true' : null, "aria-label": this.elAriaLabel, tabindex: this.disabled ? '-1' : '0' }, this.dataAttributes, { onClick: this.onClick.bind(this) }), buttonContent)));
   }
+  get element() { return getElement(this); }
 };
 
 export { MxIconButton as mx_icon_button };

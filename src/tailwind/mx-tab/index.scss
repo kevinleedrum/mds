@@ -1,10 +1,4 @@
 .mx-tab {
-  width: 7.5rem; /* 120px */
-
-  &.wider {
-    width: 8.313rem; /* 133px when there is both a badge and a label */
-  }
-
   .active-tab-indicator {
     background: var(--mds-bg-tab-indicator);
   }
@@ -13,11 +7,11 @@
     color: var(--mds-text-tab);
     --ripple-color: var(--mds-ripple-tab);
 
-    &[aria-selected] {
+    &[aria-selected='true'] {
       color: var(--mds-text-tab-selected);
     }
 
-    &:not([aria-selected], :active) i {
+    &:not([aria-selected='true'], :active) i:not(.mx-badge i) {
       color: var(--mds-text-tab-icon);
       &.icon-only {
         color: var(--mds-text-tab-icon-only);
@@ -27,7 +21,7 @@
     &:focus-visible {
       background: var(--mds-bg-tab-focus);
       border-bottom-color: var(--mds-border-tab-focus);
-      &[aria-selected] {
+      &[aria-selected='true'] {
         background: var(--mds-bg-tab-selected-focus);
       }
     }
@@ -35,7 +29,7 @@
     &:hover {
       background: var(--mds-bg-tab-hover);
       border-bottom-color: var(--mds-border-tab-hover);
-      &[aria-selected] {
+      &[aria-selected='true'] {
         background: var(--mds-bg-tab-selected-hover);
       }
     }

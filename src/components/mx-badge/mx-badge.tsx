@@ -1,16 +1,11 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
-import circleSvg from '../../assets/svg/badge-circle.svg';
-import hexagonSvg from '../../assets/svg/badge-hexagon.svg';
-import squareSvg from '../../assets/svg/badge-square.svg';
-import starSvg from '../../assets/svg/badge-star.svg';
-import triangleDownSvg from '../../assets/svg/badge-triangle-down.svg';
-import triangleUpSvg from '../../assets/svg/badge-triangle-up.svg';
+
 @Component({
   tag: 'mx-badge',
   shadow: false,
 })
 export class MxBadge {
-  childElement: HTMLElement;
+  isStandalone: boolean = true;
 
   @Element() private element: HTMLElement;
 
@@ -31,21 +26,18 @@ export class MxBadge {
   /** Anchor the badge to the left of the wrapped content */
   @Prop() left: boolean = false;
 
-  get indicatorSvg() {
-    if (this.indicator === 'star') return starSvg;
-    if (this.indicator === 'triangle-down') return triangleDownSvg;
-    if (this.indicator === 'hexagon') return hexagonSvg;
-    if (this.indicator === 'triangle-up') return triangleUpSvg;
-    if (this.indicator === 'square') return squareSvg;
-    return circleSvg;
-  }
-
-  get isStandalone() {
-    return !this.element.firstElementChild;
+  componentWillLoad() {
+    this.isStandalone = !this.element.firstElementChild;
   }
 
   get isIconOnly() {
     return this.icon && this.value === undefined;
+  }
+
+  get indicatorIcon(): string {
+    if ([false, undefined].includes(this.indicator as any)) return null;
+    if ((this.indicator as string).length) return this.indicator as string;
+    return 'circle';
   }
 
   get badgeClassNames() {
@@ -91,12 +83,10 @@ export class MxBadge {
     return (
       <Host class="mx-badge inline-flex relative">
         <slot></slot>
-        {this.indicator != null ? (
-          <span
-            class={this.badgeClassNames}
-            data-testid={'indicator-' + (this.indicator || 'circle')}
-            innerHTML={this.indicatorSvg}
-          ></span>
+        {this.indicatorIcon ? (
+          <span class={this.badgeClassNames} data-testid={'indicator-' + this.indicatorIcon}>
+            <i class={'mds-badge-' + this.indicatorIcon}></i>
+          </span>
         ) : (
           <span class={this.badgeClassNames}>
             {this.icon && <i class={this.icon + (this.isIconOnly ? '' : ' mr-4')}></i>}

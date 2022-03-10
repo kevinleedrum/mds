@@ -1,18 +1,41 @@
-import { Component, Host, h, Prop } from '@stencil/core';
-import searchSvg from '../../assets/svg/search.svg';
+import { Component, Host, h, Prop, Element, Event, EventEmitter } from '@stencil/core';
+import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-search',
   shadow: false,
 })
 export class MxSearch {
-  /** If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search". */
-  @Prop() ariaLabel: string;
+  dataAttributes = {};
+  inputEl: HTMLInputElement;
+
   @Prop() dense: boolean = false;
+  /** The `aria-label` attribute for the `<input>` element. If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search". */
+  @Prop() elAriaLabel: string;
   @Prop() flat: boolean = false;
   @Prop() name: string;
   @Prop() placeholder: string;
-  @Prop() value: string;
+  /** Set to `false` to hide the clear button. */
+  @Prop() showClear: boolean = true;
+  @Prop({ mutable: true }) value: string;
+
+  @Element() element: HTMLMxSearchElement;
+
+  /** Emitted when the clear button is clicked. */
+  @Event() mxClear: EventEmitter<void>;
+
+  componentWillRender = propagateDataAttributes;
+
+  onInput(e: InputEvent) {
+    this.value = (e.target as HTMLInputElement).value;
+  }
+
+  onClear() {
+    this.inputEl.value = '';
+    this.inputEl.dispatchEvent(new window.Event('input', { bubbles: true }));
+    this.mxClear.emit();
+    if (typeof jest === 'undefined') this.inputEl.focus();
+  }
 
   get inputClass() {
     let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
@@ -21,18 +44,38 @@ export class MxSearch {
     return str;
   }
 
+  get clearButtonClass() {
+    let str = 'clear-button absolute right-8 inline-flex items-center justify-center w-24 h-24 cursor-pointer';
+    if (!this.value) str += ' hidden';
+    return str;
+  }
+
   render() {
     return (
       <Host class="mx-search flex items-center relative">
         <input
+          ref={el => (this.inputEl = el)}
           type="search"
-          aria-label={this.ariaLabel || this.placeholder || 'Search'}
+          aria-label={this.elAriaLabel || this.placeholder || 'Search'}
           name={this.name}
           placeholder={this.placeholder}
           value={this.value}
           class={this.inputClass}
+          {...this.dataAttributes}
+          onInput={this.onInput.bind(this)}
         ></input>
-        <span innerHTML={searchSvg} class="absolute left-16 pointer-events-none"></span>
+        <i class="absolute mds-search text-icon left-16 pointer-events-none"></i>
+        {this.showClear && (
+          <button
+            type="button"
+            aria-label="Clear search"
+            class={this.clearButtonClass}
+            data-testid="clear-button"
+            onClick={this.onClear.bind(this)}
+          >
+            <i class="mds-x text-icon"></i>
+          </button>
+        )}
       </Host>
     );
   }

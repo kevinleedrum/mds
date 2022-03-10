@@ -1,5 +1,6 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Element } from '@stencil/core';
 import ripple from '../../utils/ripple';
+import { propagateDataAttributes } from '../../utils/utils';
 
 @Component({
   tag: 'mx-toggle-button',
@@ -7,21 +8,21 @@ import ripple from '../../utils/ripple';
 })
 export class MxToggleButton {
   btnElem: HTMLButtonElement;
+  dataAttributes = {};
 
   @Prop() icon: string;
   @Prop({ reflect: true }) selected: boolean = false;
   @Prop() disabled: boolean = false;
-  @Prop() ariaLabel: string;
+  /** The aria-label attribute for the inner button element. */
+  @Prop() elAriaLabel: string;
   /** Only used inside a toggle button group */
   @Prop() value: any;
 
-  onClick(e: MouseEvent) {
-    if (this.disabled) {
-      e.stopPropagation();
-      e.preventDefault();
-      return;
-    }
+  @Element() element: HTMLMxToggleButtonElement;
 
+  componentWillRender = propagateDataAttributes;
+
+  onClick(e: MouseEvent) {
     ripple(e, this.btnElem);
   }
 
@@ -33,16 +34,18 @@ export class MxToggleButton {
       last-of-type:rounded-tr last-of-type:rounded-br"
       >
         <button
+          type="button"
           class={
-            'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer' +
+            'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer disabled:cursor-auto disabled:pointer-events-none' +
             (this.selected ? ' selected' : '')
           }
           ref={el => (this.btnElem = el as HTMLButtonElement)}
-          aria-disabled={this.disabled}
+          disabled={this.disabled}
           role={this.value === undefined ? 'switch' : 'radio'}
-          aria-checked={this.selected}
-          aria-label={this.ariaLabel}
+          aria-checked={this.selected ? 'true' : 'false'}
+          aria-label={this.elAriaLabel}
           onClick={this.onClick.bind(this)}
+          {...this.dataAttributes}
         >
           <i class={this.icon}></i>
         </button>

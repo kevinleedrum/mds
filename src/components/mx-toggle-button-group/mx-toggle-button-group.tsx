@@ -6,6 +6,8 @@ import { Component, Host, h, Prop, Listen, Element, Event, EventEmitter, Watch }
 })
 export class MxToggleButtonGroup {
   @Prop({ mutable: true }) value: any;
+  /** Set to `true` to prevent deselecting once a selection has been made. */
+  @Prop() required: boolean = false;
 
   @Watch('value')
   onValueChange() {
@@ -31,7 +33,7 @@ export class MxToggleButtonGroup {
 
   toggleValue(value: any) {
     if (this.value !== value) this.value = value;
-    else this.value = null;
+    else if (!this.required) this.value = null;
   }
 
   updateChildButtons() {
@@ -41,7 +43,7 @@ export class MxToggleButtonGroup {
 
   render() {
     return (
-      <Host class="inline-flex" role="radio-group">
+      <Host class="inline-flex" role="radiogroup">
         <slot></slot>
       </Host>
     );

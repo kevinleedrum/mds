@@ -1,7 +1,15 @@
 import { EventEmitter } from '../../stencil-public-runtime';
 import { MinWidths } from '../../utils/minWidthSync';
-export declare class MxMenuItem {
+export interface IMxMenuItemProps {
+  checked?: boolean;
+  disabled?: boolean;
+  icon?: string;
+  label?: string;
+  multiSelect?: boolean;
+}
+export declare class MxMenuItem implements IMxMenuItemProps {
   menuItemElem: HTMLElement;
+  role: string;
   submenu: HTMLMxMenuElement;
   slotWrapper: HTMLElement;
   submenuDelayTimeout: any;
@@ -12,8 +20,12 @@ export declare class MxMenuItem {
   icon: string;
   /** A label to display above the menu item */
   label: string;
+  /** A subtitle to display below the menu item text */
+  subtitle: string;
   /** Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right. */
   multiSelect: boolean;
+  /** This is automatically set by a parent Dropdown Menu. */
+  selected: boolean;
   minWidths: MinWidths;
   element: HTMLMxMenuItemElement;
   /** Fired when an enabled menu item without a submenu is clicked. Used interally to close all ancestor menus. */
@@ -27,6 +39,8 @@ export declare class MxMenuItem {
   disconnectedCallback(): void;
   /** Close the item's submenu. */
   closeSubMenu(): Promise<boolean>;
+  /** Returns the menu item inner text (excluding any label or subtitle) */
+  getValue(): Promise<string>;
   /** Focuses the menu item. */
   focusMenuItem(): Promise<void>;
   onKeyDownSubMenu(e: KeyboardEvent): Promise<void>;

@@ -1,7 +1,11 @@
+let forcedResult = {
+  matches: false,
+};
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
-    matches: false,
+    matches: forcedResult.matches,
     media: query,
     onchange: null,
     addListener: jest.fn(), // deprecated
@@ -11,3 +15,6 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
+
+/** Change the default `matches` so all `min-width` checks evaluate to `true` */
+export const mockLargeScreen = () => (forcedResult.matches = true);

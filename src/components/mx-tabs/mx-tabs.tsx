@@ -36,14 +36,16 @@ export class MxTabs {
     const newSelectedTab = tabEls[tabIndex] as HTMLElement;
     if (!previousSelectedTab || !newSelectedTab) return;
     const distance = previousSelectedTab.offsetLeft - newSelectedTab.offsetLeft;
+    const scaleX = previousSelectedTab.offsetWidth / newSelectedTab.offsetWidth;
     const indicator = newSelectedTab.querySelector('.active-tab-indicator') as HTMLElement;
     if (!indicator) return;
     // Position clicked tab's indicator under the tab that is being deselected
-    indicator.style.transform = `translateX(${distance}px)`;
+    indicator.style.transform = `translateX(${distance}px) scale3d(${scaleX}, 1, 1)`;
+    indicator.style.transformOrigin = 'left';
     indicator.style.transition = `none`;
     // Transition the indicator back to the clicked tab
     setTimeout(() => {
-      indicator.style.transform = `translateX(0)`;
+      indicator.style.transform = `translateX(0) scale3d(1, 1, 1)`;
       indicator.style.transition = `transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)`;
     }, 0);
   }
@@ -74,7 +76,7 @@ export class MxTabs {
 
   get gridClass() {
     let str = this.fill ? 'grid' : 'inline-grid';
-    str += ' grid-flow-col auto-cols-fr';
+    str += ' grid-flow-col auto-cols-auto';
     return str;
   }
 
@@ -84,7 +86,7 @@ export class MxTabs {
         {this.renderAsSelect ? (
           <mx-select value={this.value} onInput={this.onInput.bind(this)} dense>
             {this.tabs.map((tab: IMxTabProps, index: number) => (
-              <option value={index}>{tab.label || tab.ariaLabel}</option>
+              <option value={index}>{tab.label || tab.elAriaLabel}</option>
             ))}
           </mx-select>
         ) : (

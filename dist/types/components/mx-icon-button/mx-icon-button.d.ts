@@ -1,11 +1,17 @@
+import { propagateDataAttributes } from '../../utils/utils';
 export declare class MxIconButton {
   btnElem: HTMLButtonElement;
   anchorElem: HTMLAnchorElement;
+  dataAttributes: {};
   type: 'button' | 'submit' | 'reset';
+  form: string;
+  formaction: string;
   value: string;
+  /** Create button as link */
+  href: string;
   disabled: boolean;
-  /** An aria-label is highly recommended */
-  ariaLabel: string;
+  /** The aria-label attribute for the inner button element. */
+  elAriaLabel: string;
   /** Show downward chevron icon */
   chevronDown: boolean;
   /** Show left-pointing chevron icon */
@@ -14,6 +20,8 @@ export declare class MxIconButton {
   chevronRight: boolean;
   /** Class name of icon (for icon font) */
   icon: string;
+  element: HTMLMxInputElement;
+  componentWillRender: typeof propagateDataAttributes;
   onClick(e: MouseEvent): void;
   get isChevron(): boolean;
   render(): any;

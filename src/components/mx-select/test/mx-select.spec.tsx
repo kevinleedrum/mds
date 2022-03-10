@@ -18,6 +18,7 @@ describe('mx-select', () => {
           name="test-name"
           label-class="text-blue-500"
           error
+          data-test="test"
         >
         <option></option>
         <option>A</option>
@@ -26,7 +27,7 @@ describe('mx-select', () => {
     });
     root = page.root;
     select = root.querySelector('select');
-    selectWrapper = root.firstElementChild;
+    selectWrapper = root.querySelector('[data-testid="select-wrapper"]');
   });
 
   it('renders a select', async () => {
@@ -34,7 +35,7 @@ describe('mx-select', () => {
   });
 
   it('renders the label with any additional classes from the labelClass prop', async () => {
-    const label = selectWrapper.querySelector('label');
+    const label = root.querySelector('label');
     expect(label.innerText).toBe('Test Label');
     expect(label.getAttribute('class')).toContain('text-blue-500');
   });
@@ -59,9 +60,9 @@ describe('mx-select', () => {
     expect(select.getAttribute('aria-label')).toBe('Test Label');
   });
 
-  it('uses the ariaLabel prop for the aria-label attribute', async () => {
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
     root.label = '';
-    root.ariaLabel = 'Hidden Label';
+    root.elAriaLabel = 'Hidden Label';
     await page.waitForChanges();
     expect(select.getAttribute('aria-label')).toBe('Hidden Label');
   });
@@ -78,6 +79,13 @@ describe('mx-select', () => {
     root.value = 'B';
     await page.waitForChanges();
     expect(select.value).toBe('B');
+  });
+
+  it('updates the value prop when select.value changes', async () => {
+    select.value = 'B';
+    select.dispatchEvent(new Event('input'));
+    await page.waitForChanges();
+    expect(root.value).toBe('B');
   });
 
   it('is 48px tall by default', async () => {
@@ -102,6 +110,12 @@ describe('mx-select', () => {
     expect(selectWrapper.getAttribute('class')).toContain('flat');
   });
 
+  it('appends the dropdownClass value to the dropdown wrapper class list', async () => {
+    root.selectClass = 'test-class';
+    await page.waitForChanges();
+    expect(selectWrapper.classList.contains('test-class')).toBe(true);
+  });
+
   it('disables the select when the disabled prop is set', async () => {
     root.disabled = true;
     await page.waitForChanges();
@@ -109,12 +123,25 @@ describe('mx-select', () => {
   });
 
   it('displays an error icon when the error prop is set', async () => {
-    expect(selectWrapper.querySelector('i[data-testId=error-icon]')).not.toBeNull();
+    expect(selectWrapper.querySelector('[data-testid="error-icon"]')).not.toBeNull();
   });
 
   it('displays an arrow SVG when the error prop is NOT set', async () => {
     root.error = false;
     await page.waitForChanges();
     expect(selectWrapper.querySelector('[data-testid=arrow]')).not.toBeNull();
+  });
+
+  it('renders a floating label if the float-label prop is set', async () => {
+    let label = root.querySelector('label');
+    expect(label.classList.contains('floating')).toBe(false);
+    root.floatLabel = true;
+    await page.waitForChanges();
+    label = selectWrapper.querySelector('label');
+    expect(label.classList.contains('floating')).toBe(true);
+  });
+
+  it('applies any data attributes to the select element', async () => {
+    expect(select.getAttribute('data-test')).toBe('test');
   });
 });

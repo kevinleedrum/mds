@@ -8,10 +8,22 @@ export const MxBadge: {
   new (): MxBadge;
 };
 
+interface MxBanner extends Components.MxBanner, HTMLElement {}
+export const MxBanner: {
+  prototype: MxBanner;
+  new (): MxBanner;
+};
+
 interface MxButton extends Components.MxButton, HTMLElement {}
 export const MxButton: {
   prototype: MxButton;
   new (): MxButton;
+};
+
+interface MxChart extends Components.MxChart, HTMLElement {}
+export const MxChart: {
+  prototype: MxChart;
+  new (): MxChart;
 };
 
 interface MxCheckbox extends Components.MxCheckbox, HTMLElement {}
@@ -38,6 +50,30 @@ export const MxCircularProgress: {
   new (): MxCircularProgress;
 };
 
+interface MxCode extends Components.MxCode, HTMLElement {}
+export const MxCode: {
+  prototype: MxCode;
+  new (): MxCode;
+};
+
+interface MxConfirmInput extends Components.MxConfirmInput, HTMLElement {}
+export const MxConfirmInput: {
+  prototype: MxConfirmInput;
+  new (): MxConfirmInput;
+};
+
+interface MxDatePicker extends Components.MxDatePicker, HTMLElement {}
+export const MxDatePicker: {
+  prototype: MxDatePicker;
+  new (): MxDatePicker;
+};
+
+interface MxDialog extends Components.MxDialog, HTMLElement {}
+export const MxDialog: {
+  prototype: MxDialog;
+  new (): MxDialog;
+};
+
 interface MxDropdownMenu extends Components.MxDropdownMenu, HTMLElement {}
 export const MxDropdownMenu: {
   prototype: MxDropdownMenu;
@@ -54,6 +90,12 @@ interface MxIconButton extends Components.MxIconButton, HTMLElement {}
 export const MxIconButton: {
   prototype: MxIconButton;
   new (): MxIconButton;
+};
+
+interface MxImageUpload extends Components.MxImageUpload, HTMLElement {}
+export const MxImageUpload: {
+  prototype: MxImageUpload;
+  new (): MxImageUpload;
 };
 
 interface MxInput extends Components.MxInput, HTMLElement {}
@@ -80,10 +122,22 @@ export const MxMenuItem: {
   new (): MxMenuItem;
 };
 
+interface MxModal extends Components.MxModal, HTMLElement {}
+export const MxModal: {
+  prototype: MxModal;
+  new (): MxModal;
+};
+
 interface MxPageHeader extends Components.MxPageHeader, HTMLElement {}
 export const MxPageHeader: {
   prototype: MxPageHeader;
   new (): MxPageHeader;
+};
+
+interface MxPagination extends Components.MxPagination, HTMLElement {}
+export const MxPagination: {
+  prototype: MxPagination;
+  new (): MxPagination;
 };
 
 interface MxRadio extends Components.MxRadio, HTMLElement {}
@@ -104,6 +158,12 @@ export const MxSelect: {
   new (): MxSelect;
 };
 
+interface MxSnackbar extends Components.MxSnackbar, HTMLElement {}
+export const MxSnackbar: {
+  prototype: MxSnackbar;
+  new (): MxSnackbar;
+};
+
 interface MxSwitch extends Components.MxSwitch, HTMLElement {}
 export const MxSwitch: {
   prototype: MxSwitch;
@@ -122,10 +182,34 @@ export const MxTabContent: {
   new (): MxTabContent;
 };
 
+interface MxTable extends Components.MxTable, HTMLElement {}
+export const MxTable: {
+  prototype: MxTable;
+  new (): MxTable;
+};
+
+interface MxTableCell extends Components.MxTableCell, HTMLElement {}
+export const MxTableCell: {
+  prototype: MxTableCell;
+  new (): MxTableCell;
+};
+
+interface MxTableRow extends Components.MxTableRow, HTMLElement {}
+export const MxTableRow: {
+  prototype: MxTableRow;
+  new (): MxTableRow;
+};
+
 interface MxTabs extends Components.MxTabs, HTMLElement {}
 export const MxTabs: {
   prototype: MxTabs;
   new (): MxTabs;
+};
+
+interface MxTimePicker extends Components.MxTimePicker, HTMLElement {}
+export const MxTimePicker: {
+  prototype: MxTimePicker;
+  new (): MxTimePicker;
 };
 
 interface MxToggleButton extends Components.MxToggleButton, HTMLElement {}
@@ -138,6 +222,12 @@ interface MxToggleButtonGroup extends Components.MxToggleButtonGroup, HTMLElemen
 export const MxToggleButtonGroup: {
   prototype: MxToggleButtonGroup;
   new (): MxToggleButtonGroup;
+};
+
+interface MxTooltip extends Components.MxTooltip, HTMLElement {}
+export const MxTooltip: {
+  prototype: MxTooltip;
+  new (): MxTooltip;
 };
 
 /**

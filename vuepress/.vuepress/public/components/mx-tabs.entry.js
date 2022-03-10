@@ -1,5 +1,5 @@
-import { r as registerInstance, e as createEvent, h, f as Host, g as getElement } from './index-b9cec9f1.js';
-import { q as queryPrefersReducedMotion } from './utils-43415dd2.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
+import { q as queryPrefersReducedMotion } from './utils-f31b72fe.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
 const MxTabs = class {
@@ -27,15 +27,17 @@ const MxTabs = class {
     if (!previousSelectedTab || !newSelectedTab)
       return;
     const distance = previousSelectedTab.offsetLeft - newSelectedTab.offsetLeft;
+    const scaleX = previousSelectedTab.offsetWidth / newSelectedTab.offsetWidth;
     const indicator = newSelectedTab.querySelector('.active-tab-indicator');
     if (!indicator)
       return;
     // Position clicked tab's indicator under the tab that is being deselected
-    indicator.style.transform = `translateX(${distance}px)`;
+    indicator.style.transform = `translateX(${distance}px) scale3d(${scaleX}, 1, 1)`;
+    indicator.style.transformOrigin = 'left';
     indicator.style.transition = `none`;
     // Transition the indicator back to the clicked tab
     setTimeout(() => {
-      indicator.style.transform = `translateX(0)`;
+      indicator.style.transform = `translateX(0) scale3d(1, 1, 1)`;
       indicator.style.transition = `transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)`;
     }, 0);
   }
@@ -62,11 +64,11 @@ const MxTabs = class {
   }
   get gridClass() {
     let str = this.fill ? 'grid' : 'inline-grid';
-    str += ' grid-flow-col auto-cols-fr';
+    str += ' grid-flow-col auto-cols-auto';
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-tabs relative block", role: "tablist" }, this.renderAsSelect ? (h("mx-select", { value: this.value, onInput: this.onInput.bind(this), dense: true }, this.tabs.map((tab, index) => (h("option", { value: index }, tab.label || tab.ariaLabel))))) : (this.tabs && (h("div", { class: this.gridClass }, this.tabs.map((tab, index) => (h("mx-tab", Object.assign({ selected: this.value === index }, tab)))))))));
+    return (h(Host, { class: "mx-tabs relative block", role: "tablist" }, this.renderAsSelect ? (h("mx-select", { value: this.value, onInput: this.onInput.bind(this), dense: true }, this.tabs.map((tab, index) => (h("option", { value: index }, tab.label || tab.elAriaLabel))))) : (this.tabs && (h("div", { class: this.gridClass }, this.tabs.map((tab, index) => (h("mx-tab", Object.assign({ selected: this.value === index }, tab)))))))));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

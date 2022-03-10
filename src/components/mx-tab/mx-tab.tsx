@@ -3,7 +3,7 @@ import ripple from '../../utils/ripple';
 
 export interface IMxTabProps {
   label?: string;
-  ariaLabel?: string;
+  elAriaLabel?: string;
   icon?: string;
   selected?: boolean;
   badge?: boolean;
@@ -20,7 +20,7 @@ export class MxTab implements IMxTabProps {
   /** Label text to display */
   @Prop() label: string = '';
   /** If you are not providing a `label`, this should be provided instead for accessibility */
-  @Prop() ariaLabel: string = '';
+  @Prop() elAriaLabel: string = '';
   /** Class name of icon to display */
   @Prop() icon: string = '';
   /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
@@ -31,7 +31,7 @@ export class MxTab implements IMxTabProps {
   @Prop() badgeClass: string = '';
 
   componentDidLoad() {
-    if (!this.label && !this.ariaLabel) {
+    if (!this.label && !this.elAriaLabel) {
       throw new Error('Please provide either a label or an aria-label for each tab.');
     }
   }
@@ -43,7 +43,6 @@ export class MxTab implements IMxTabProps {
   get tabClass() {
     let str = 'mx-tab relative inline-flex items-center justify-center min-w-full';
     str += this.label && this.icon ? ' h-72' : ' h-48';
-    if (this.badge && this.label) str += ' wider';
     return str;
   }
 
@@ -62,9 +61,9 @@ export class MxTab implements IMxTabProps {
           ref={el => (this.btnElem = el)}
           role="tab"
           type="button"
-          aria-selected={this.selected}
-          aria-label={this.label || this.ariaLabel}
-          class="relative overflow-hidden w-full h-full border border-transparent"
+          aria-selected={this.selected ? 'true' : null}
+          aria-label={this.elAriaLabel || this.label}
+          class="relative overflow-hidden w-full h-full border border-transparent px-44"
           onClick={this.onClick.bind(this)}
         >
           <div class="relative flex flex-col items-center justify-center space-y-6 pointer-events-none">

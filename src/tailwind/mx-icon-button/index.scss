@@ -1,3 +1,4 @@
+.mds .mx-icon-button > a,
 .mx-icon-button > button {
   color: var(--mds-text-btn-icon);
   background: var(--mds-bg-btn-icon);
@@ -6,28 +7,29 @@
     background: var(--mds-bg-btn-icon-chevron);
   }
 
-  &:focus:not([aria-disabled]) {
+  &:focus:not(:disabled, [aria-disabled='true']) {
     background: var(--mds-bg-btn-icon-focus);
     .chevron-wrapper {
       background: var(--mds-bg-btn-icon-chevron-focus);
     }
   }
 
-  &:hover:not([aria-disabled]) {
+  &:hover:not(:disabled, [aria-disabled='true']) {
     background: var(--mds-bg-btn-icon-hover);
     .chevron-wrapper {
       background: var(--mds-bg-btn-icon-chevron-hover);
     }
   }
 
-  &:active:not([aria-disabled]) {
+  &:active:not(:disabled, [aria-disabled='true']) {
     background: var(--mds-bg-btn-icon-active);
     .chevron-wrapper {
       background: var(--mds-bg-btn-icon-chevron-active);
     }
   }
 
-  &[aria-disabled] {
+  &:disabled,
+  &[aria-disabled='true'] {
     color: var(--mds-text-btn-icon-disabled);
     background: var(--mds-bg-btn-icon-disabled);
   }

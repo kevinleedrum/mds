@@ -8,7 +8,7 @@ describe('mx-icon-button', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxIconButton],
-      html: `<mx-icon-button></mx-icon-button>`,
+      html: `<mx-icon-button data-test="test"></mx-icon-button>`,
     });
     root = page.root;
     button = root.querySelector('button');
@@ -37,11 +37,11 @@ describe('mx-icon-button', () => {
     root.chevronLeft = true;
     await page.waitForChanges();
     expect(chevron).not.toBeNull();
-    expect(chevron.getAttribute('class')).toContain('rotate-90');
+    expect(chevron.getAttribute('class')).toContain('chevron-left');
     root.chevronLeft = false;
     root.chevronRight = true;
     await page.waitForChanges();
-    expect(chevron.getAttribute('class')).toContain('-rotate-90');
+    expect(chevron.getAttribute('class')).toContain('chevron-right');
   });
 
   it('does not emit a click event when disabled is true', async () => {
@@ -51,13 +51,13 @@ describe('mx-icon-button', () => {
     expect(listener).toHaveBeenCalled();
     listener.mockReset();
     root.disabled = true;
-    page.waitForChanges();
+    await page.waitForChanges();
     button.click();
     expect(listener).not.toHaveBeenCalled();
   });
 
-  it('uses the ariaLabel prop as an attribute on the button', async () => {
-    root.ariaLabel = 'Open';
+  it('uses the elAriaLabel prop for the aria-label attribute on the button', async () => {
+    root.elAriaLabel = 'Open';
     await page.waitForChanges();
     expect(button.getAttribute('aria-label')).toBe('Open');
   });
@@ -68,9 +68,42 @@ describe('mx-icon-button', () => {
     expect(button.getAttribute('value')).toBe('Open');
   });
 
+  it('uses the form and formaction props as attributes on the button', async () => {
+    root.form = 'the-form';
+    root.formaction = '/login';
+    await page.waitForChanges();
+    expect(button.getAttribute('form')).toBe('the-form');
+    expect(button.getAttribute('formaction')).toBe('/login');
+  });
+
   it('uses the type prop as an attribute on the button', async () => {
     root.type = 'submit';
     await page.waitForChanges();
     expect(button.getAttribute('type')).toBe('submit');
+  });
+
+  it('applies any data attributes to the button element', async () => {
+    expect(button.getAttribute('data-test')).toBe('test');
+  });
+});
+
+describe('mx-icon-button (as link)', () => {
+  let page;
+  let root: HTMLMxIconButtonElement;
+  let button: HTMLAnchorElement;
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [MxIconButton],
+      html: `<mx-icon-button href="/" icon="icon"></mx-icon-button>`,
+    });
+    root = page.root;
+    button = root.querySelector('a');
+  });
+
+  it('renders an <a>', async () => {
+    expect(button).not.toBeNull();
+    expect(button.getAttribute('class')).toContain('w-48');
+    expect(button.getAttribute('class')).toContain('h-48');
+    expect(button.getAttribute('class')).toContain('rounded-full');
   });
 });

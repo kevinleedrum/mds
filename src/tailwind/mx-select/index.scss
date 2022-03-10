@@ -1,8 +1,21 @@
 .mx-select {
+  label {
+    color: var(--mds-text-select-label);
+  }
+  &.disabled label {
+    color: var(--mds-text-select-disabled);
+  }
+
   .mx-select-wrapper {
     color: var(--mds-text-select);
     background: var(--mds-bg-select);
     border-color: var(--mds-border-select);
+    &:not([class*='min-w-']) {
+      min-width: 20.5rem;
+    }
+    &.no-value {
+      color: var(--mds-text-select-label);
+    }
     &.elevated {
       border-color: var(--mds-border-select-elevated);
     }
@@ -17,7 +30,6 @@
     }
 
     label {
-      color: var(--mds-text-input-label);
       background: var(--mds-bg-select);
       transform-origin: 0 0;
       transition: transform 0.1s ease-out;
@@ -26,7 +38,7 @@
         --translate-y: -16px;
       }
       &.floating {
-        transform: translate3d(-4px, var(--translate-y), 0) scale(0.8);
+        transform: translate3d(0, var(--translate-y), 0) scale(0.8);
       }
       @media (prefers-reduced-motion: reduce) {
         transition: none;
@@ -37,12 +49,12 @@
       border-color: var(--mds-border-select-error);
 
       label,
-      i {
+      .icon-suffix i {
         color: var(--mds-text-select-error);
       }
     }
 
-    &.disabled label {
+    &.disabled {
       color: var(--mds-text-select-disabled);
     }
 
@@ -50,7 +62,7 @@
       background: var(--mds-bg-select);
 
       i {
-        font-size: 24px;
+        color: var(--mds-text-select-arrow);
       }
 
       .suffix {

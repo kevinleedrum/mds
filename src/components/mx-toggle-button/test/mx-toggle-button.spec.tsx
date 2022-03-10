@@ -4,28 +4,35 @@ import { MxToggleButton } from '../mx-toggle-button';
 describe('mx-toggle-button', () => {
   let page;
   let root;
+  let btn;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxToggleButton],
-      html: `<mx-toggle-button icon="ph-apple-logo"></mx-toggle-button>`,
+      html: `<mx-toggle-button el-aria-label="aria label" icon="ph-apple-logo" data-test="test"></mx-toggle-button>`,
     });
     root = page.root;
+    btn = root.querySelector('button');
   });
 
   it('renders a toggle button', async () => {
-    const btn = root.querySelector('button');
     expect(btn).not.toBeNull();
   });
 
   it('is not selected by default', async () => {
-    const btn = root.querySelector('button');
     expect(btn.getAttribute('class')).not.toContain('selected');
-    expect(btn.getAttribute('aria-checked')).toBeNull();
+    expect(btn.getAttribute('aria-checked')).not.toBe('true');
   });
 
   it('has a switch role by default', async () => {
-    const btn = root.querySelector('button');
     expect(btn.getAttribute('role')).toBe('switch');
+  });
+
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    expect(btn.getAttribute('aria-label')).toBe('aria label');
+  });
+
+  it('applies any data attributes to the button element', async () => {
+    expect(btn.getAttribute('data-test')).toBe('test');
   });
 });
 
@@ -42,15 +49,13 @@ describe('mx-toggle-button as disabled and selected', () => {
 
   it('is disabled', async () => {
     const btn = root.querySelector('button');
-    expect(btn.getAttribute('aria-disabled')).not.toBeNull();
-    expect(btn.getAttribute('aria-disabled')).not.toBe('false');
+    expect(btn.disabled).not.toBeNull();
   });
 
   it('is selected', async () => {
     const btn = root.querySelector('button');
     expect(btn.getAttribute('class')).toContain('selected');
-    expect(btn.getAttribute('aria-checked')).not.toBeNull();
-    expect(btn.getAttribute('aria-checked')).not.toBe('false');
+    expect(btn.getAttribute('aria-checked')).toBe('true');
   });
 });
 

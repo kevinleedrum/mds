@@ -4,33 +4,44 @@ import { MxButton } from '../mx-button';
 describe('mx-button', () => {
   let page;
   let root;
+  let btn;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxButton],
-      html: `<mx-button icon="ph-apple-logo" btn-type="contained" value="foo">button</mx-button>`,
+      html: `
+      <mx-button
+        el-aria-label="aria label"
+        icon="ph-apple-logo"
+        btn-type="contained"
+        value="foo"
+        form="bar"
+        formaction="/foo"
+        data-admin--a--b-c="test"
+      >
+        button
+      </mx-button>`,
     });
     root = page.root;
+    btn = root.querySelector('button');
   });
 
   it('renders a "contained" button', async () => {
-    const btn = root.querySelector('button');
     expect(btn.getAttribute('class')).toContain('contained');
   });
 
   it('has the correct default type', async () => {
-    const btn = root.querySelector('button');
     expect(btn.getAttribute('type')).toBe('button');
   });
 
   it('has the correct inner text', async () => {
-    const btn = root.querySelector('button');
     const { innerText } = btn;
-    expect(innerText).toBe('button');
+    expect(innerText.trim()).toBe('button');
   });
 
-  it('has the correct value', async () => {
-    const btn = root.querySelector('button');
+  it('has the correct value, form, and formaction', async () => {
     expect(btn.getAttribute('value')).toBe('foo');
+    expect(btn.getAttribute('form')).toBe('bar');
+    expect(btn.getAttribute('formaction')).toBe('/foo');
   });
 
   it('has a left icon', async () => {
@@ -38,9 +49,16 @@ describe('mx-button', () => {
     expect(icon).not.toBeNull();
   });
 
-  it('has a height of 36px', async () => {
-    const btn = root.querySelector('button');
-    expect(btn.getAttribute('class')).toContain('h-36');
+  it('has a min-height of 36px', async () => {
+    expect(btn.getAttribute('class')).toContain('min-h-36');
+  });
+
+  it('uses the elAriaLabel prop for the aria-label attribute', async () => {
+    expect(btn.getAttribute('aria-label')).toBe('aria label');
+  });
+
+  it('applies any data attributes to the button element', async () => {
+    expect(btn.getAttribute('data-admin--a--b-c')).toBe('test');
   });
 });
 
@@ -57,7 +75,7 @@ describe('mx-button as disabled', () => {
 
   it('is a disabled button', async () => {
     const btn = root.querySelector('button');
-    expect(btn.getAttribute('aria-disabled')).not.toBeNull();
+    expect(btn.disabled).not.toBeNull();
   });
 });
 
@@ -72,10 +90,10 @@ describe('mx-button as XL and full', () => {
     root = page.root;
   });
 
-  it('is a flex container and is 48px in height', async () => {
+  it('is a flex container and is 48px in min-height', async () => {
     const btn = root.querySelector('button');
     expect(root.getAttribute('class')).toContain('flex');
-    expect(btn.getAttribute('class')).toContain('h-48');
+    expect(btn.getAttribute('class')).toContain('min-h-48');
   });
 });
 
@@ -96,13 +114,13 @@ describe('mx-button as outlined', () => {
   });
 });
 
-describe('mx-button as an action button', () => {
+describe('mx-button as a simple button', () => {
   let page;
   let root;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxButton],
-      html: `<mx-button btn-type="action" value="foo" dropdown>button</mx-button>`,
+      html: `<mx-button btn-type="simple" value="foo" dropdown>button</mx-button>`,
     });
     root = page.root;
   });
@@ -151,7 +169,7 @@ describe('mx-button as an anchor tag', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxButton],
-      html: `<mx-button href="https://google./com" target="_blank" btn-type="text" value="foo">button</mx-button>`,
+      html: `<mx-button href="https://google./com" target="_blank" btn-type="text" value="foo" data-admin--a--b-c="test">button</mx-button>`,
     });
     root = page.root;
   });
@@ -160,5 +178,10 @@ describe('mx-button as an anchor tag', () => {
     const btn = root.querySelector('a');
     expect(btn).not.toBeNull();
     expect(btn.getAttribute('target')).toBeDefined();
+  });
+
+  it('applies any data attributes to the <a> element', async () => {
+    const btn = root.querySelector('a');
+    expect(btn.getAttribute('data-admin--a--b-c')).toBe('test');
   });
 });
