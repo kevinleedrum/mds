@@ -216,6 +216,7 @@ export class MxDatePicker {
   get maxDate() {
     if (this.max) return new Date(this.max + 'T00:00:00');
     if (!this.allowFuture) return new Date();
+    return new Date(9999, 11, 31); // Default to Dec 31, 9999 to limit year entry to four digits
   }
 
   get minValue() {
