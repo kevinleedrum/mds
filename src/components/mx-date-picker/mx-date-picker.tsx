@@ -91,14 +91,15 @@ export class MxDatePicker {
     if (!this.inputEl) return;
     this.isDateInputSupported = this.inputEl.type === 'date';
     try {
+      const dateSelected = this.value ? new Date(this.value + 'T00:00:00') : undefined;
       this.datepicker = datepicker(this.inputEl, {
         alwaysShow: true,
         customDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
         overlayButton: 'Confirm',
         overlayPlaceholder: 'Year (YYYY)',
-        minDate: this.minDate,
-        maxDate: this.maxDate,
-        dateSelected: this.value ? new Date(this.value + 'T00:00:00') : undefined,
+        minDate: dateSelected < this.minDate ? undefined : this.minDate,
+        maxDate: dateSelected > this.maxDate ? undefined : this.maxDate,
+        dateSelected,
         formatter: (input: HTMLInputElement, date: Date) => {
           if (this.inputEl.contains(document.activeElement)) return; // Do not reformat while typing in date
           input.value = date.toISOString().split('T')[0];
