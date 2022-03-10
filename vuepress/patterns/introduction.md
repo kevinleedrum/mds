@@ -1,0 +1,3 @@
+# What are Patterns?
+
+Patterns are repeatable, standardized ways of approaching user interface problems. They are a step-above components, because they describe typical methods of how components are used to build user flows and interactions. By utilizing the following patterns you can build experiences for users that, once learned, will make similar moments recognizable and throughout our products.
