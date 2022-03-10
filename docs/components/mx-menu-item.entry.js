@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-b8b99585.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
 const MxMenuItem = class {
