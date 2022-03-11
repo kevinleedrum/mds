@@ -218,6 +218,7 @@ export namespace Components {
         "elAriaLabel": string;
         "error": boolean;
         "floatLabel": boolean;
+        "hideCharacterCount": boolean;
         "inputId": string;
         "label": string;
         "labelClass": string;
@@ -468,6 +469,10 @@ export namespace Components {
         "elAriaLabel": string;
         "error": boolean;
         "floatLabel": boolean;
+        /**
+          * Set to `true` to hide the character count when a `maxlength` is set.
+         */
+        "hideCharacterCount": boolean;
         /**
           * The `id` attribute for the text input
          */
@@ -1534,6 +1539,7 @@ declare namespace LocalJSX {
         "elAriaLabel"?: string;
         "error"?: boolean;
         "floatLabel"?: boolean;
+        "hideCharacterCount"?: boolean;
         "inputId"?: string;
         "label"?: string;
         "labelClass"?: string;
@@ -1779,6 +1785,10 @@ declare namespace LocalJSX {
         "elAriaLabel"?: string;
         "error"?: boolean;
         "floatLabel"?: boolean;
+        /**
+          * Set to `true` to hide the character count when a `maxlength` is set.
+         */
+        "hideCharacterCount"?: boolean;
         /**
           * The `id` attribute for the text input
          */

@@ -24,6 +24,7 @@ export declare class MxConfirmInput implements IMxInputProps {
   textarea: boolean;
   textareaHeight: string;
   elAriaLabel: string;
+  hideCharacterCount: boolean;
   isFocused: boolean;
   isHovered: boolean;
   onValueChange(): void;
