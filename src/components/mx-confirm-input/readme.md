@@ -15,6 +15,7 @@
 | `elAriaLabel`         | `el-aria-label`         |             | `string`                  | `undefined` |
 | `error`               | `error`                 |             | `boolean`                 | `false`     |
 | `floatLabel`          | `float-label`           |             | `boolean`                 | `false`     |
+| `hideCharacterCount`  | `hide-character-count`  |             | `boolean`                 | `false`     |
 | `inputId`             | `input-id`              |             | `string`                  | `undefined` |
 | `label`               | `label`                 |             | `string`                  | `undefined` |
 | `labelClass`          | `label-class`           |             | `string`                  | `''`        |

@@ -21,6 +21,7 @@ export interface IMxInputProps {
   textarea: boolean;
   textareaHeight: string;
   elAriaLabel: string;
+  hideCharacterCount: boolean;
 }
 export declare type MxInputIcon = {
   /** The class name of the icon */
@@ -66,6 +67,8 @@ export declare class MxInput implements IMxInputProps {
   textareaHeight: string;
   /** The aria-label attribute for the inner input element. */
   elAriaLabel: string;
+  /** Set to `true` to hide the character count when a `maxlength` is set. */
+  hideCharacterCount: boolean;
   isFocused: boolean;
   characterCount: number;
   element: HTMLMxInputElement;

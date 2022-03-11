@@ -31,6 +31,7 @@ export class MxConfirmInput implements IMxInputProps {
   @Prop() textarea: boolean = false;
   @Prop({ mutable: true }) textareaHeight: string = '250px';
   @Prop() elAriaLabel: string;
+  @Prop() hideCharacterCount: boolean = false;
 
   @State() isFocused: boolean = false;
   @State() isHovered: boolean = false;
@@ -133,6 +134,7 @@ export class MxConfirmInput implements IMxInputProps {
           floatLabel={this.floatLabel}
           rightIcon={this.rightIcons}
           elAriaLabel={this.elAriaLabel}
+          hideCharacterCount={this.hideCharacterCount}
           onFocusin={this.onFocusin.bind(this)}
           onFocusout={this.onFocusout.bind(this)}
           onInput={this.onInput.bind(this)}

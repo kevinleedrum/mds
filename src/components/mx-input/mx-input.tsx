@@ -23,6 +23,7 @@ export interface IMxInputProps {
   textarea: boolean;
   textareaHeight: string;
   elAriaLabel: string;
+  hideCharacterCount: boolean;
 }
 
 export type MxInputIcon = {
@@ -75,6 +76,8 @@ export class MxInput implements IMxInputProps {
   @Prop({ mutable: true }) textareaHeight: string = '250px';
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
+  /** Set to `true` to hide the character count when a `maxlength` is set. */
+  @Prop() hideCharacterCount: boolean = false;
 
   @State() isFocused: boolean = false;
   @State() characterCount: number = 0;
@@ -263,7 +266,7 @@ export class MxInput implements IMxInputProps {
 
           {!this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (
             <span class={this.rightContentClass}>
-              {this.maxlength && (
+              {this.maxlength && !this.hideCharacterCount && (
                 <span data-testid="character-count" class="character-count pointer-events-none">
                   {this.characterCount}/{this.maxlength}
                 </span>
@@ -281,12 +284,12 @@ export class MxInput implements IMxInputProps {
           )}
         </div>
 
-        {(this.assistiveText || (this.textarea && this.maxlength)) && (
+        {(this.assistiveText || (this.textarea && this.maxlength && !this.hideCharacterCount)) && (
           <div class="flex justify-between caption1 mt-4 ml-16 space-x-32">
             <span data-testid="assistive-text" class="assistive-text">
               {this.assistiveText}
             </span>
-            {this.textarea && this.maxlength && (
+            {this.textarea && this.maxlength && !this.hideCharacterCount && (
               <span data-testid="character-count" class="character-count">
                 {this.characterCount}/{this.maxlength}
               </span>
