@@ -7,6 +7,8 @@ import { collapse, expand } from '../../utils/transitions';
 
 const DEFAULT_MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
 
+let rowAccordionDebounce;
+
 @Component({
   tag: 'mx-table-row',
   shadow: false,
@@ -17,7 +19,7 @@ export class MxTableRow {
   checkbox: HTMLMxCheckboxElement;
   dragOrigin = { x: 0, y: 0 };
   dragShadowEl: HTMLElement;
-  firstColumnWrapper: HTMLElement;
+  firstCellTarget: HTMLElement;
   childRowWrapper: HTMLElement;
   keyboardDragHandle: HTMLElement;
   dragScroller: DragScroller;
@@ -37,7 +39,7 @@ export class MxTableRow {
   @Prop() rowIndex: number;
   @Prop({ mutable: true }) checked: boolean = false;
   /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
-  @Prop({ reflect: true }) collapseNestedRows: boolean = false;
+  @Prop({ mutable: true, reflect: true }) collapseNestedRows: boolean = false;
   /** Style the row as a subheader. */
   @Prop() subheader: boolean = false;
 
@@ -59,6 +61,8 @@ export class MxTableRow {
   @Event() mxRowDragEnd: EventEmitter<{ isKeyboard: boolean; isCancel: boolean }>;
   /** Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table. */
   @Event() mxDragKeyDown: EventEmitter<string>;
+  /** Emitted when a row is collapsed or expanded.  Handled by the parent table. */
+  @Event() mxRowAccordion: EventEmitter<void>;
 
   @Watch('collapseNestedRows')
   onCollapseNestedRowsChange() {
@@ -148,12 +152,16 @@ export class MxTableRow {
     nestedRows.forEach(async (row: HTMLMxTableRowElement) => {
       row.toggle(this.collapseNestedRows, skipTransition);
     });
+    clearTimeout(rowAccordionDebounce);
+    rowAccordionDebounce = setTimeout(this.mxRowAccordion.emit, 200);
   }
 
   /** Move first cell into same container as checkbox and drag handle. */
   wrapFirstColumn() {
     const firstCell = this.element.querySelector('mx-table-cell');
-    if (this.firstColumnWrapper && firstCell) this.firstColumnWrapper.appendChild(firstCell);
+    if (this.firstCellTarget && firstCell) {
+      this.firstCellTarget.appendChild(firstCell);
+    }
   }
 
   /** Move nested rows from the default slot to a container outside the collapsible row. */
@@ -438,10 +446,9 @@ export class MxTableRow {
           {/* On desktop, the checkbox, drag handle, and first cell need to indent as one column. */}
           {/* On mobile, display:contents allows those same elements to fall into the row grid. */}
           <div
-            ref={el => (this.firstColumnWrapper = el)}
             class={
               'first-column-wrapper contents sm:flex sm:items-center min-w-0 overflow-hidden' +
-              (this.subheader ? ' sm:col-span-full' : '')
+              (this.subheader ? ' sm:col-span-full pr-0' : '')
             }
           >
             {/* Indent */}
@@ -486,6 +493,24 @@ export class MxTableRow {
                   </p>
                 )}
               </div>
+            )}
+            <div ref={el => (this.firstCellTarget = el)} class="contents"></div>
+            {/* Subheader accordion chevron */}
+            {this.subheader && (
+              <button
+                type="button"
+                class="flex border-0 items-center h-full justify-end px-12"
+                aria-label="Toggle visibility of rows grouped under this one"
+                onClick={() => (this.collapseNestedRows = !this.collapseNestedRows)}
+                onMouseDown={e => e.preventDefault() /* Do not focus on click */}
+              >
+                <i
+                  class={
+                    'subheader-chevron mds-chevron-down text-icon transform' +
+                    (!this.collapseNestedRows ? ' rotate-180' : '')
+                  }
+                ></i>
+              </button>
             )}
           </div>
           <slot></slot>
