@@ -75,8 +75,9 @@
       .first-column-wrapper > :nth-child(2).mx-table-cell > div {
         @apply pl-24;
       }
-      .mobile-row-chevron {
-        color: var(--mds-text-table-mobile-row-chevron);
+      .mobile-row-chevron,
+      .subheader-chevron {
+        color: var(--mds-text-table-row-chevron);
         transition: transform 0.15s ease;
       }
       &.mobile-collapsed {

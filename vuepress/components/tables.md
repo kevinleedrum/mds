@@ -853,6 +853,7 @@ The `ITableColumn` interface describes the objects passed to the `columns` prop.
 | Event            | Description                                                                                      | Type                                                |
 | ---------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------- |
 | `mxCheck`        | Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked | `CustomEvent<{ rowId: string; checked: boolean; }>` |
+| `mxRowAccordion` | Emitted when a row is collapsed or expanded. Handled by the parent table.                        | `CustomEvent<void>`                                 |
 | `mxRowDragEnd`   | Emits the `rowId` when row dragging ends                                                         | `CustomEvent<string>`                               |
 | `mxRowDragStart` | Emits the `rowId` when dragging starts                                                           | `CustomEvent<string>`                               |
 

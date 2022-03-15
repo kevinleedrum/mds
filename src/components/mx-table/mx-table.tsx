@@ -709,6 +709,7 @@ export class MxTable {
     this.rowsPerPage = e.detail.rowsPerPage;
   }
 
+  @Listen('mxRowAccordion')
   setLastRowClass() {
     if (this.paginate || this.hasFooter) return;
     const rows = this.getTableRows().filter(row => row.getAttribute('aria-hidden') !== 'true');
