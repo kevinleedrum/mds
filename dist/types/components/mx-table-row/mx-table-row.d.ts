@@ -11,7 +11,7 @@ export declare class MxTableRow {
     y: number;
   };
   dragShadowEl: HTMLElement;
-  firstColumnWrapper: HTMLElement;
+  firstCellTarget: HTMLElement;
   childRowWrapper: HTMLElement;
   keyboardDragHandle: HTMLElement;
   dragScroller: DragScroller;
@@ -57,6 +57,8 @@ export declare class MxTableRow {
   }>;
   /** Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table. */
   mxDragKeyDown: EventEmitter<string>;
+  /** Emitted when a row is collapsed or expanded.  Handled by the parent table. */
+  mxRowAccordion: EventEmitter<void>;
   onCollapseNestedRowsChange(): void;
   onMinWidthsChange(): Promise<void>;
   /** Apply a CSS transform to translate the row by `x` and `y` pixels */

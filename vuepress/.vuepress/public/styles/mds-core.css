@@ -357,7 +357,7 @@
   --mds-border-table-header: #eaeaea;
   --mds-border-table-cell: #e8e8e8;
   --mds-text-table: #333;
-  --mds-text-table-mobile-row-chevron: #0457af;
+  --mds-text-table-row-chevron: #0457af;
   --mds-text-table-drag-handle: #c5c5c5;
   --mds-text-table-subheader: #0457af;
   /* #endregion tables */
@@ -6457,6 +6457,9 @@ video {
 .mds .pl-56{
   padding-left: 3.5rem;
 }
+.mds .pr-0{
+  padding-right: 0px;
+}
 .mds .pr-8{
   padding-right: 0.5rem;
 }
@@ -9977,9 +9980,10 @@ video {
 .mx-table .mx-table-row > .table-row .first-column-wrapper > :nth-child(2):not(.mx-table-cell), .mx-table .mx-table-row > .table-row .first-column-wrapper > :nth-child(2).mx-table-cell > div{
   padding-left: 1.5rem;
 }
-.mx-table .mx-table-row > .table-row .mobile-row-chevron {
+.mx-table .mx-table-row > .table-row .mobile-row-chevron,
+      .mx-table .mx-table-row > .table-row .subheader-chevron {
         color: #0457af;
-        color: var(--mds-text-table-mobile-row-chevron);
+        color: var(--mds-text-table-row-chevron);
         transition: transform 0.15s ease;
       }
 .mx-table .mx-table-row > .table-row.mobile-collapsed .mx-table-cell:not(.exposed-cell), .mx-table .mx-table-row > .table-row.mobile-collapsed .action-cell{

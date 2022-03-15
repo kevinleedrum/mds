@@ -2273,6 +2273,10 @@ declare namespace LocalJSX {
          */
         "onMxDragKeyDown"?: (event: CustomEvent<string>) => void;
         /**
+          * Emitted when a row is collapsed or expanded.  Handled by the parent table.
+         */
+        "onMxRowAccordion"?: (event: CustomEvent<void>) => void;
+        /**
           * Emitted when dragging ends.  Handled by the parent table.
          */
         "onMxRowDragEnd"?: (event: CustomEvent<{ isKeyboard: boolean; isCancel: boolean }>) => void;
