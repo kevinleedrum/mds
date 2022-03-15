@@ -349,10 +349,12 @@ export class MxTableRow {
         if (!child.offsetParent) children.push(...(Array.from(child.children) as HTMLElement[]));
         else children.push(child);
       });
-    const nestedRows = Array.from(this.childRowWrapper.children) as HTMLMxTableRowElement[];
-    await Promise.all(
-      nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))),
-    );
+    if (!this.collapseNestedRows) {
+      const nestedRows = Array.from(this.childRowWrapper.children) as HTMLMxTableRowElement[];
+      await Promise.all(
+        nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))),
+      );
+    }
     return children as HTMLElement[];
   }
 
