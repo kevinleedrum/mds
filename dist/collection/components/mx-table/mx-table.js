@@ -1424,5 +1424,11 @@ export class MxTable {
       "target": undefined,
       "capture": false,
       "passive": false
+    }, {
+      "name": "mxRowAccordion",
+      "method": "setLastRowClass",
+      "target": undefined,
+      "capture": false,
+      "passive": false
     }]; }
 }

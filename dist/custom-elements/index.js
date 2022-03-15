@@ -21764,6 +21764,7 @@ class DragScroller {
 }
 
 const DEFAULT_MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
+let rowAccordionDebounce;
 const MxTableRow$1 = class extends HTMLElement {
   constructor() {
     super();
@@ -21772,6 +21773,7 @@ const MxTableRow$1 = class extends HTMLElement {
     this.mxRowDragStart = createEvent(this, "mxRowDragStart", 7);
     this.mxRowDragEnd = createEvent(this, "mxRowDragEnd", 7);
     this.mxDragKeyDown = createEvent(this, "mxDragKeyDown", 7);
+    this.mxRowAccordion = createEvent(this, "mxRowAccordion", 7);
     this.dragOrigin = { x: 0, y: 0 };
     this.indentLevel = 0;
     this.columnCount = 1;
@@ -21873,12 +21875,15 @@ const MxTableRow$1 = class extends HTMLElement {
     nestedRows.forEach(async (row) => {
       row.toggle(this.collapseNestedRows, skipTransition);
     });
+    clearTimeout(rowAccordionDebounce);
+    rowAccordionDebounce = setTimeout(this.mxRowAccordion.emit, 200);
   }
   /** Move first cell into same container as checkbox and drag handle. */
   wrapFirstColumn() {
     const firstCell = this.element.querySelector('mx-table-cell');
-    if (this.firstColumnWrapper && firstCell)
-      this.firstColumnWrapper.appendChild(firstCell);
+    if (this.firstCellTarget && firstCell) {
+      this.firstCellTarget.appendChild(firstCell);
+    }
   }
   /** Move nested rows from the default slot to a container outside the collapsible row. */
   moveNestedRows() {
@@ -22070,8 +22075,10 @@ const MxTableRow$1 = class extends HTMLElement {
         else
           children.push(child);
       });
-    const nestedRows = Array.from(this.childRowWrapper.children);
-    await Promise.all(nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))));
+    if (!this.collapseNestedRows) {
+      const nestedRows = Array.from(this.childRowWrapper.children);
+      await Promise.all(nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))));
+    }
     return children;
   }
   /** Get an array of row IDs for rows nested directly inside this row */
@@ -22143,8 +22150,9 @@ const MxTableRow$1 = class extends HTMLElement {
     return { width: 2 * this.indentLevel + 'rem', minWidth: this.indentLevel + 'rem' };
   }
   render() {
-    return (h(Host, { class: "mx-table-row contents" }, h("div", { role: "row", class: this.rowClass, style: this.rowStyle, onClick: this.onClick.bind(this), onTransitionEnd: this.onTransitionEnd.bind(this), onMouseOver: this.onMouseOver.bind(this), onMouseOut: this.onMouseOut.bind(this) }, h("div", { ref: el => (this.firstColumnWrapper = el), class: 'first-column-wrapper contents sm:flex sm:items-center min-w-0 overflow-hidden' +
-        (this.subheader ? ' sm:col-span-full' : '') }, h("div", { class: this.indentClass, style: this.indentStyle, "data-testid": 'indent-' + this.indentLevel }), this.checkable && (h("div", { class: "flex items-center pr-4 col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto", onClick: this.accordion.bind(this) }, h("mx-checkbox", { ref: el => (this.checkbox = el), checked: this.checked, onInput: this.onCheckboxInput.bind(this), onClick: e => e.stopPropagation(), "label-name": "Select row", "hide-label": true }))), this.isDraggable && (h("div", { class: "drag-handle flex items-center col-start-3 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move", "data-testid": "drag-handle", onMouseDown: this.startDragging.bind(this), onTouchStart: this.startDragging.bind(this) }, h("i", { "aria-label": "Press Space or Enter to move this row", ref: el => (this.keyboardDragHandle = el), role: "button", tabindex: "0", class: 'mds-drag-dots text-icon pointer-events-none' + (this.checkable ? ' mx-8' : ''), onKeyDown: this.onKeyboardHandleKeyDown.bind(this) }), this.isDragging && (h("p", { class: "sr-only", role: "alert" }, "Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to cancel."))))), h("slot", null), !this.checkable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-2 w-0" }), !this.isDraggable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-3 w-0" }), !this.minWidths.sm && !this.subheader && this.columnCount > 1 && (h("button", { type: "button", class: "flex border-0 items-center justify-end px-12 row-start-1", "aria-label": "Toggle visibility of more column data", onClick: this.accordion.bind(this), onMouseDown: e => e.preventDefault() /* Do not focus on click */ }, h("i", { class: 'mobile-row-chevron mds-chevron-down text-icon transform' +
+    return (h(Host, { class: "mx-table-row contents" }, h("div", { role: "row", class: this.rowClass, style: this.rowStyle, onClick: this.onClick.bind(this), onTransitionEnd: this.onTransitionEnd.bind(this), onMouseOver: this.onMouseOver.bind(this), onMouseOut: this.onMouseOut.bind(this) }, h("div", { class: 'first-column-wrapper contents sm:flex sm:items-center min-w-0 overflow-hidden' +
+        (this.subheader ? ' sm:col-span-full pr-0' : '') }, h("div", { class: this.indentClass, style: this.indentStyle, "data-testid": 'indent-' + this.indentLevel }), this.checkable && (h("div", { class: "flex items-center pr-4 col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto", onClick: this.accordion.bind(this) }, h("mx-checkbox", { ref: el => (this.checkbox = el), checked: this.checked, onInput: this.onCheckboxInput.bind(this), onClick: e => e.stopPropagation(), "label-name": "Select row", "hide-label": true }))), this.isDraggable && (h("div", { class: "drag-handle flex items-center col-start-3 row-start-1 sm:row-start-auto sm:col-start-auto cursor-move", "data-testid": "drag-handle", onMouseDown: this.startDragging.bind(this), onTouchStart: this.startDragging.bind(this) }, h("i", { "aria-label": "Press Space or Enter to move this row", ref: el => (this.keyboardDragHandle = el), role: "button", tabindex: "0", class: 'mds-drag-dots text-icon pointer-events-none' + (this.checkable ? ' mx-8' : ''), onKeyDown: this.onKeyboardHandleKeyDown.bind(this) }), this.isDragging && (h("p", { class: "sr-only", role: "alert" }, "Use the arrow keys to move the row up and down. Press Space or Enter to accept. Press Escape to cancel.")))), h("div", { ref: el => (this.firstCellTarget = el), class: "contents" }), this.subheader && (h("button", { type: "button", class: "flex border-0 items-center h-full justify-end px-12", "aria-label": "Toggle visibility of rows grouped under this one", onClick: () => (this.collapseNestedRows = !this.collapseNestedRows), onMouseDown: e => e.preventDefault() /* Do not focus on click */ }, h("i", { class: 'subheader-chevron mds-chevron-down text-icon transform' +
+        (!this.collapseNestedRows ? ' rotate-180' : '') })))), h("slot", null), !this.checkable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-2 w-0" }), !this.isDraggable && !this.minWidths.sm && h("div", { class: "row-start-1 col-start-3 w-0" }), !this.minWidths.sm && !this.subheader && this.columnCount > 1 && (h("button", { type: "button", class: "flex border-0 items-center justify-end px-12 row-start-1", "aria-label": "Toggle visibility of more column data", onClick: this.accordion.bind(this), onMouseDown: e => e.preventDefault() /* Do not focus on click */ }, h("i", { class: 'mobile-row-chevron mds-chevron-down text-icon transform' +
         (this.isMobileExpanded && !this.isMobileCollapsing ? ' rotate-180' : '') }))), this.actions.length === 1 && (h("div", { class: "action-cell flex items-center p-16 sm:p-0 justify-end col-start-2 col-span-4 sm:col-span-1" }, h("mx-button", Object.assign({ "data-testid": "action-button", "btn-type": "text" }, this.actions[0]), this.actions[0].value))), this.actions.length > 1 && (h("div", { class: "action-cell flex items-center p-0 justify-end col-start-2 col-span-4 sm:col-span-1" }, h("mx-icon-button", { ref: el => (this.actionMenuButton = el), "el-aria-label": "Row Actions", icon: "mds-dots-vertical" }), h("mx-menu", { "data-testid": "action-menu", ref: el => (this.actionMenu = el), onMxClose: e => e.stopPropagation() }, this.actions.map(action => (h("mx-menu-item", Object.assign({}, action), action.value))))))), h("div", { ref: el => (this.childRowWrapper = el), class: "contents" })));
   }
   get element() { return this; }
@@ -22575,9 +22583,9 @@ const MxSnackbar = /*@__PURE__*/proxyCustomElement(MxSnackbar$1, [4,"mx-snackbar
 const MxSwitch = /*@__PURE__*/proxyCustomElement(MxSwitch$1, [0,"mx-switch",{"name":[1],"value":[1],"labelClass":[1,"label-class"],"labelName":[1,"label-name"],"checked":[1028],"disabled":[4]}]);
 const MxTab = /*@__PURE__*/proxyCustomElement(MxTab$1, [0,"mx-tab",{"label":[1],"elAriaLabel":[1,"el-aria-label"],"icon":[1],"selected":[516],"badge":[4],"badgeClass":[1,"badge-class"]}]);
 const MxTabContent = /*@__PURE__*/proxyCustomElement(MxTabContent$1, [4,"mx-tab-content",{"index":[2],"value":[2]}]);
-const MxTable = /*@__PURE__*/proxyCustomElement(MxTable$1, [4,"mx-table",{"autoWidth":[4,"auto-width"],"checkable":[4],"checkOnRowClick":[4,"check-on-row-click"],"columns":[16],"disableNextPage":[4,"disable-next-page"],"disablePagination":[4,"disable-pagination"],"draggableRows":[4,"draggable-rows"],"getGroupByHeading":[16],"getMultiRowActions":[16],"getRowActions":[16],"getRowId":[16],"groupBy":[1,"group-by"],"hoverable":[4],"mobileSearchOnTop":[4,"mobile-search-on-top"],"mutateOnDrag":[4,"mutate-on-drag"],"operationsBarClass":[1,"operations-bar-class"],"page":[1026],"paginate":[4],"progressAppearDelay":[2,"progress-appear-delay"],"progressValue":[2,"progress-value"],"rows":[1040],"rowsPerPage":[1026,"rows-per-page"],"rowsPerPageOptions":[16],"serverPaginate":[4,"server-paginate"],"showCheckAll":[4,"show-check-all"],"showProgressBar":[4,"show-progress-bar"],"sortAscending":[1028,"sort-ascending"],"sortBy":[1025,"sort-by"],"totalRows":[2,"total-rows"],"minWidths":[32],"checkedRowIds":[32],"exposedMobileColumnIndex":[32],"hasActionsColumnFromSlot":[32]},[[0,"mxCheck","onMxCheck"],[0,"mxRowDragStart","onMxRowDragStart"],[0,"mxDragKeyDown","onDragKeyDown"],[0,"mxRowDragEnd","onMxRowDragEnd"]]]);
+const MxTable = /*@__PURE__*/proxyCustomElement(MxTable$1, [4,"mx-table",{"autoWidth":[4,"auto-width"],"checkable":[4],"checkOnRowClick":[4,"check-on-row-click"],"columns":[16],"disableNextPage":[4,"disable-next-page"],"disablePagination":[4,"disable-pagination"],"draggableRows":[4,"draggable-rows"],"getGroupByHeading":[16],"getMultiRowActions":[16],"getRowActions":[16],"getRowId":[16],"groupBy":[1,"group-by"],"hoverable":[4],"mobileSearchOnTop":[4,"mobile-search-on-top"],"mutateOnDrag":[4,"mutate-on-drag"],"operationsBarClass":[1,"operations-bar-class"],"page":[1026],"paginate":[4],"progressAppearDelay":[2,"progress-appear-delay"],"progressValue":[2,"progress-value"],"rows":[1040],"rowsPerPage":[1026,"rows-per-page"],"rowsPerPageOptions":[16],"serverPaginate":[4,"server-paginate"],"showCheckAll":[4,"show-check-all"],"showProgressBar":[4,"show-progress-bar"],"sortAscending":[1028,"sort-ascending"],"sortBy":[1025,"sort-by"],"totalRows":[2,"total-rows"],"minWidths":[32],"checkedRowIds":[32],"exposedMobileColumnIndex":[32],"hasActionsColumnFromSlot":[32]},[[0,"mxCheck","onMxCheck"],[0,"mxRowDragStart","onMxRowDragStart"],[0,"mxDragKeyDown","onDragKeyDown"],[0,"mxRowDragEnd","onMxRowDragEnd"],[0,"mxRowAccordion","setLastRowClass"]]]);
 const MxTableCell = /*@__PURE__*/proxyCustomElement(MxTableCell$1, [4,"mx-table-cell",{"isExposedMobileColumn":[516,"is-exposed-mobile-column"],"columnIndex":[514,"column-index"],"heading":[1],"minWidths":[32]}]);
-const MxTableRow = /*@__PURE__*/proxyCustomElement(MxTableRow$1, [4,"mx-table-row",{"rowId":[1,"row-id"],"actions":[16],"doNotCollapse":[516,"do-not-collapse"],"doNotDrag":[4,"do-not-drag"],"rowIndex":[2,"row-index"],"checked":[1028],"collapseNestedRows":[516,"collapse-nested-rows"],"subheader":[4],"minWidths":[32],"checkable":[32],"checkOnRowClick":[32],"isDraggable":[32],"isDragging":[32],"isMobileExpanded":[32],"isMobileCollapsing":[32]}]);
+const MxTableRow = /*@__PURE__*/proxyCustomElement(MxTableRow$1, [4,"mx-table-row",{"rowId":[1,"row-id"],"actions":[16],"doNotCollapse":[516,"do-not-collapse"],"doNotDrag":[4,"do-not-drag"],"rowIndex":[2,"row-index"],"checked":[1028],"collapseNestedRows":[1540,"collapse-nested-rows"],"subheader":[4],"minWidths":[32],"checkable":[32],"checkOnRowClick":[32],"isDraggable":[32],"isDragging":[32],"isMobileExpanded":[32],"isMobileCollapsing":[32]}]);
 const MxTabs = /*@__PURE__*/proxyCustomElement(MxTabs$1, [0,"mx-tabs",{"fill":[4],"value":[2],"tabs":[16],"minWidths":[32]},[[0,"click","onClick"]]]);
 const MxTimePicker = /*@__PURE__*/proxyCustomElement(MxTimePicker$1, [0,"mx-time-picker",{"assistiveText":[1,"assistive-text"],"dense":[4],"disabled":[4],"elAriaLabel":[1,"el-aria-label"],"error":[1028],"floatLabel":[4,"float-label"],"inputId":[1,"input-id"],"label":[1],"name":[1],"value":[1025],"isFocused":[32],"isInputDirty":[32]},[[0,"click","onClick"]]]);
 const MxToggleButton = /*@__PURE__*/proxyCustomElement(MxToggleButton$1, [0,"mx-toggle-button",{"icon":[1],"selected":[516],"disabled":[4],"elAriaLabel":[1,"el-aria-label"],"value":[8]}]);
