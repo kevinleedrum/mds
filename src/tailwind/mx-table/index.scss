@@ -54,6 +54,7 @@
   .mx-table-row {
     & > .table-row {
       border-color: var(--mds-border-table-cell);
+      will-change: max-height; /* Makes collapse/expand smoother. */
 
       & > :last-child:not(.pr-0, .p-0) {
         @apply sm:pr-24;
