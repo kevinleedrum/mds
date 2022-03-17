@@ -144,4 +144,10 @@ describe('mx-dropdown-menu', () => {
     expect(root.querySelector('[role="listbox"]')).not.toBeNull();
     expect(Array.from(menuItems).every(m => m.children[0].getAttribute('role') === 'option')).toBe(true);
   });
+
+  it('sets an error state on the dropdown wrapper class and updates the icon', async () => {
+    root.error = true;
+    await page.waitForChanges();
+    expect(dropdownWrapper.getAttribute('class')).toContain('error');
+  });
 });
