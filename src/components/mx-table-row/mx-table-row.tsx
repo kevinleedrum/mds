@@ -158,9 +158,9 @@ export class MxTableRow {
 
   /** Move first cell into same container as checkbox and drag handle. */
   wrapFirstColumn() {
-    const firstCell = this.element.querySelector('mx-table-cell');
-    if (this.firstCellTarget && firstCell) {
-      this.firstCellTarget.appendChild(firstCell);
+    if (this.firstCellTarget && this.firstCellTarget.parentNode) {
+      const firstCell = this.element.querySelector('mx-table-cell');
+      if (firstCell) this.firstCellTarget.parentNode.replaceChild(firstCell, this.firstCellTarget);
     }
   }
 

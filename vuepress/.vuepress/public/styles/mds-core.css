@@ -976,6 +976,7 @@ video {
   position: relative;
 }
 .mds .sticky{
+  position: -webkit-sticky;
   position: sticky;
 }
 .mds .inset-0{
@@ -9955,7 +9956,9 @@ video {
 .mx-table .mx-table-row > .table-row {
       border-color: #e8e8e8;
       border-color: var(--mds-border-table-cell);
+      will-change: max-height;
     }
+/* Makes collapse/expand smoother. */
 @media (min-width: 640px){
   .mx-table .mx-table-row > .table-row > :last-child:not(.pr-0, .p-0){
     padding-right: 1.5rem;
