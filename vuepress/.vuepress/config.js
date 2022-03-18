@@ -4,7 +4,7 @@ const { description } = require('../../package');
 module.exports = {
   title: 'Moxi Design System',
   description: description,
-  base: process.env.NODE_ENV === 'development' ? '/' : '/mds/',
+  base: '/',
   head: [
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
@@ -49,10 +49,7 @@ module.exports = {
     ],
     sidebar: {
       '/getting-started.html': ['getting-started'],
-      '/patterns/': [
-        'introduction',
-        'filters',
-      ],
+      '/patterns/': ['introduction', 'filters'],
       '/examples/': ['grid', 'flex'],
       '/css-documentation/': [
         {
