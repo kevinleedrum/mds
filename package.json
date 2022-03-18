@@ -45,7 +45,8 @@
     "generate": "stencil generate",
     "copy": "sh copy-on-change.sh",
     "watch": "npm-watch",
-    "minify:css": "minify dist/styles/mds-core.css > dist/styles/mds-core.min.css"
+    "minify:css": "minify dist/styles/mds-core.css > dist/styles/mds-core.min.css",
+    "vercel": "vercel ./docs"
   },
   "dependencies": {
     "@juggle/resize-observer": "^3.3.1",
@@ -76,6 +77,7 @@
     "postcss-cli": "^8.3.1",
     "stencil-inline-svg": "^1.1.0",
     "tailwindcss": "^2.2.0-canary.9",
+    "vercel": "^24.0.0",
     "vuepress": "^1.8.2",
     "vuepress-plugin-flexsearch": "^0.1.0",
     "vuepress-plugin-fulltext-search": "^2.2.0"
