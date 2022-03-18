@@ -42,6 +42,7 @@ const MxDropdownMenu = class {
   }
   onFocus() {
     this.isFocused = true;
+    this.error = false;
   }
   onMenuClose(e) {
     e.stopPropagation();
@@ -61,6 +62,8 @@ const MxDropdownMenu = class {
     str += this.isFocused ? ' focused border-2' : ' border';
     if (this.disabled || this.readonly)
       str += ' disabled';
+    if (this.error)
+      str += ' error';
     if (this.dropdownClass)
       str += ' ' + this.dropdownClass;
     return str;
@@ -78,7 +81,7 @@ const MxDropdownMenu = class {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-dropdown-menu block" }, h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass }, h("input", { "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, disabled: this.disabled, readonly: !this.disabled, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }), h("span", { class: this.suffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" }))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) }, h("slot", null))));
+    return (h(Host, { class: "mx-dropdown-menu block" }, h("div", { ref: el => (this.dropdownWrapper = el), class: this.dropdownWrapperClass }, h("input", { "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.dropdownId, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), placeholder: this.label, disabled: this.disabled, readonly: !this.disabled, ref: el => (this.inputElem = el), tabindex: "0", type: "text" }), h("span", { class: this.suffixClass }, this.suffix && h("span", { class: "suffix flex items-center h-full px-4" }, this.suffix), this.error ? (h("i", { class: "mds-warning-circle text-icon pointer-events-none" })) : (h("i", { "data-testid": "arrow", class: "mds-arrow-triangle-down text-icon" })))), this.assistiveText && h("div", { class: "assistive-text caption1 mt-4 ml-16" }, this.assistiveText), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this) }, h("slot", null))));
   }
   static get watchers() { return {
     "value": ["onValueChange"],
