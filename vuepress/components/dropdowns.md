@@ -175,6 +175,37 @@ The options in the menu are represented by [Menu Items](/components/menus.html).
         </mx-dropdown-menu>
       </div>
     </div>
+    <div>
+      <strong>Error</strong>
+      <div class="my-20">
+        <mx-dropdown-menu
+          label="Favorite Animal"
+          value="Cat"
+          error="true"
+        >
+          <mx-menu-item></mx-menu-item>
+          <mx-menu-item subtitle="Felis catus">Cat</mx-menu-item>
+          <mx-menu-item subtitle="Canis familiaris">Dog</mx-menu-item>
+          <mx-menu-item subtitle="Odobenus rosmarus">Walrus</mx-menu-item>
+        </mx-dropdown-menu>
+      </div>
+    </div>
+    <div>
+      <strong>Error With Assistive Text</strong>
+      <div class="my-20">
+        <mx-dropdown-menu
+          label="Favorite Animal"
+          value="Cat"
+          error="true"
+          assistive-text="This is assistive text"
+        >
+          <mx-menu-item></mx-menu-item>
+          <mx-menu-item subtitle="Felis catus">Cat</mx-menu-item>
+          <mx-menu-item subtitle="Canis familiaris">Dog</mx-menu-item>
+          <mx-menu-item subtitle="Odobenus rosmarus">Walrus</mx-menu-item>
+        </mx-dropdown-menu>
+      </div>
+    </div>
   </div>
 </section>
 <!-- #endregion dropdown-menus -->
