@@ -28,6 +28,9 @@ export class MxDropdownMenu {
   @Prop() suffix: string;
   @Prop({ mutable: true }) value: any;
 
+  @Prop({ mutable: true }) error: boolean;
+  @Prop() assistiveText: string;
+
   @State() isFocused: boolean = false;
 
   @Listen('click')
@@ -64,6 +67,7 @@ export class MxDropdownMenu {
 
   onFocus() {
     this.isFocused = true;
+    this.error = false;
   }
 
   onMenuClose(e) {
@@ -82,6 +86,7 @@ export class MxDropdownMenu {
     if (this.flat) str += ' flat';
     str += this.isFocused ? ' focused border-2' : ' border';
     if (this.disabled || this.readonly) str += ' disabled';
+    if (this.error) str += ' error';
     if (this.dropdownClass) str += ' ' + this.dropdownClass;
     return str;
   }
@@ -120,9 +125,14 @@ export class MxDropdownMenu {
           />
           <span class={this.suffixClass}>
             {this.suffix && <span class="suffix flex items-center h-full px-4">{this.suffix}</span>}
-            <i data-testid="arrow" class="mds-arrow-triangle-down text-icon"></i>
+            {this.error ? (
+              <i class="mds-warning-circle text-icon pointer-events-none"></i>
+            ) : (
+              <i data-testid="arrow" class="mds-arrow-triangle-down text-icon"></i>
+            )}
           </span>
         </div>
+        {this.assistiveText && <div class="assistive-text caption1 mt-4 ml-16">{this.assistiveText}</div>}
         <mx-menu
           ref={el => (this.menu = el)}
           placement="bottom"
