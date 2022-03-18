@@ -1140,6 +1140,7 @@ declare global {
         new (): HTMLMxDialogElement;
     };
     interface HTMLMxDropdownMenuElement extends Components.MxDropdownMenu, HTMLStencilElement {
+      error: boolean;
     }
     var HTMLMxDropdownMenuElement: {
         prototype: HTMLMxDropdownMenuElement;
