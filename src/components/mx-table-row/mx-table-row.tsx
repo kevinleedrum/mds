@@ -501,7 +501,7 @@ export class MxTableRow {
             {this.subheader && (
               <button
                 type="button"
-                class="flex border-0 items-center h-full justify-end px-12"
+                class="flex border-0 items-center h-40 justify-end px-12"
                 aria-label="Toggle visibility of rows grouped under this one"
                 onClick={() => (this.collapseNestedRows = !this.collapseNestedRows)}
                 onMouseDown={e => e.preventDefault() /* Do not focus on click */}
