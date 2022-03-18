@@ -29,6 +29,7 @@ export class MxDropdownMenu {
   @Prop({ mutable: true }) value: any;
 
   @Prop({ mutable: true }) error: boolean;
+  @Prop() assistiveText: string;
 
   @State() isFocused: boolean = false;
 
@@ -131,6 +132,7 @@ export class MxDropdownMenu {
             )}
           </span>
         </div>
+        {this.assistiveText && <div class="assistive-text caption1 mt-4 ml-16">{this.assistiveText}</div>}
         <mx-menu
           ref={el => (this.menu = el)}
           placement="bottom"
