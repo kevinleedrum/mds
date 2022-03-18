@@ -294,6 +294,7 @@ export namespace Components {
         "modalClass": string;
     }
     interface MxDropdownMenu {
+        "assistiveText": string;
         "dense": boolean;
         "disabled": boolean;
         /**
@@ -312,6 +313,7 @@ export namespace Components {
           * Style as a filter dropdown with a 1dp elevation
          */
         "elevated": boolean;
+        "error": boolean;
         /**
           * Style as a filter dropdown with a "flat" border color
          */
@@ -1140,7 +1142,6 @@ declare global {
         new (): HTMLMxDialogElement;
     };
     interface HTMLMxDropdownMenuElement extends Components.MxDropdownMenu, HTMLStencilElement {
-      error: boolean;
     }
     var HTMLMxDropdownMenuElement: {
         prototype: HTMLMxDropdownMenuElement;
@@ -1609,6 +1610,7 @@ declare namespace LocalJSX {
         "onMxClose"?: (event: CustomEvent<void>) => void;
     }
     interface MxDropdownMenu {
+        "assistiveText"?: string;
         "dense"?: boolean;
         "disabled"?: boolean;
         /**
@@ -1627,6 +1629,7 @@ declare namespace LocalJSX {
           * Style as a filter dropdown with a 1dp elevation
          */
         "elevated"?: boolean;
+        "error"?: boolean;
         /**
           * Style as a filter dropdown with a "flat" border color
          */

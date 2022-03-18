@@ -8951,6 +8951,23 @@ video {
         background: #f0f0f0;
         background: var(--mds-bg-dropdown-flat-focus);
       }
+.mx-dropdown-menu > .dropdown-wrapper.error {
+    border: 2px solid #ff0c3e;
+    border: 2px solid var(--mds-border-select-error);
+  }
+.mx-dropdown-menu > .dropdown-wrapper.error label,
+    .mx-dropdown-menu > .dropdown-wrapper.error .icon-suffix i {
+      color: #ff0c3e;
+      color: var(--mds-text-select-error);
+    }
+.mx-dropdown-menu > .dropdown-wrapper.assistive-text {
+    color: #787878;
+    color: var(--mds-text-select-assistive);
+  }
+.mx-dropdown-menu > .dropdown-wrapper.error + .assistive-text {
+    color: #ff0c3e;
+    color: var(--mds-text-select-error);
+  }
 .mx-dropdown-menu > .dropdown-wrapper:hover:not(.disabled, .focused) {
     border-color: #2d2d2d;
     border-color: var(--mds-border-dropdown-hover);
