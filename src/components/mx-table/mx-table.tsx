@@ -424,7 +424,6 @@ export class MxTable {
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
-    this.setLastRowClass();
     requestAnimationFrame(this.setCellProps.bind(this));
   }
 
@@ -433,6 +432,7 @@ export class MxTable {
       this.actionMenu.anchorEl = this.actionMenuButton;
     }
     if (this.checkable) this.setRowsChecked();
+    this.setLastRowClass();
   }
 
   componentDidLoad() {
@@ -670,7 +670,7 @@ export class MxTable {
       >
         {this.cols.map((col: ITableColumn) => (
           <mx-table-cell>
-            <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
+            <span innerHTML={this.getCellValue(row, col, rowIndex)}></span>
           </mx-table-cell>
         ))}
       </mx-table-row>
