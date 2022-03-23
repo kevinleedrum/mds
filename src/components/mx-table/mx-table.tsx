@@ -670,7 +670,7 @@ export class MxTable {
       >
         {this.cols.map((col: ITableColumn) => (
           <mx-table-cell>
-            <div innerHTML={this.getCellValue(row, col, rowIndex)}></div>
+            <span innerHTML={this.getCellValue(row, col, rowIndex)}></span>
           </mx-table-cell>
         ))}
       </mx-table-row>

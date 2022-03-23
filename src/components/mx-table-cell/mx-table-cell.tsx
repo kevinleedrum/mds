@@ -42,7 +42,7 @@ export class MxTableCell {
         {/* Padding is applied to this inner div in the scss file so the <mx-table-cell> can be collapsed with max-height:0 */}
         <div class={!this.isExposedMobileColumn && !this.minWidths.sm ? 'py-0 pb-12' : 'overflow-hidden'}>
           <div
-            class="min-h-16 max-w-full break-words"
+            class="min-h-16 max-w-full overflow-hidden overflow-ellipsis whitespace-normal"
             role={this.columnIndex == null ? 'heading' : null}
             aria-level={this.columnIndex == null ? '1' : null}
           >
