@@ -305,7 +305,6 @@ const MxTable = class {
     this.showOperationsBar = !!this.getMultiRowActions || this.hasFilter || this.hasSearch;
     this.hasActionsColumnFromSlot =
       this.hasDefaultSlot && this.getTableRows().some(row => row.actions && row.actions.length);
-    this.setLastRowClass();
     requestAnimationFrame(this.setCellProps.bind(this));
   }
   componentDidRender() {
@@ -314,6 +313,7 @@ const MxTable = class {
     }
     if (this.checkable)
       this.setRowsChecked();
+    this.setLastRowClass();
   }
   componentDidLoad() {
     // Emit paginated rows right away.
@@ -550,7 +550,7 @@ const MxTable = class {
     return classes;
   }
   getRowJsx(row, rowIndex) {
-    return (h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, "row-index": rowIndex, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", null, h("div", { innerHTML: this.getCellValue(row, col, rowIndex) }))))));
+    return (h("mx-table-row", { "row-id": this.getRowId ? this.getRowId(row) : null, "row-index": rowIndex, actions: this.getRowActions ? this.getRowActions(row) : undefined }, this.cols.map((col) => (h("mx-table-cell", null, h("span", { innerHTML: this.getCellValue(row, col, rowIndex) }))))));
   }
   onHeaderClick(col) {
     if (this.draggableRows || !col || !col.sortable || !col.property)
