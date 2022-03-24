@@ -21,7 +21,7 @@ export class MxImageUpload {
   @Prop() assistiveText: string;
   /** Sets the width and height to 80px and changes the icon. */
   @Prop() avatar = false;
-  @Prop({ mutable: true }) error: boolean = false;
+  @Prop({ mutable: true, reflect: true }) error: boolean = false;
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
   /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
