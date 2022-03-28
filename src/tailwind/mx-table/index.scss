@@ -7,6 +7,13 @@
     }
   }
 
+  [slot='filter'] {
+    @apply max-w-full;
+    & > * {
+      @apply max-w-full;
+    }
+  }
+
   .table-grid > *:not(.hidden) {
     /* Only place table cell elements into the grid (not row elements). */
     @apply contents;

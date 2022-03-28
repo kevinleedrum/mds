@@ -102,9 +102,9 @@ export class MxButton implements IMxButtonProps {
 
   render() {
     const buttonContent = (
-      <div class="flex justify-center items-center content-center relative whitespace-nowrap">
+      <div class="flex justify-center items-center content-center relative overflow-hidden whitespace-nowrap">
         {this.icon && <i class={'mr-8 text-3 ' + this.icon}></i>}
-        <span class="slot-content">
+        <span class="slot-content truncate">
           <slot />
         </span>
         {this.dropdown && this.btnType === 'text' && <span class="separator inline-block w-1 ml-4 -my-4 h-24"></span>}
