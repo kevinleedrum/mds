@@ -398,6 +398,7 @@ export namespace Components {
           * The aria-label attribute for the inner input element.
          */
         "elAriaLabel": string;
+        "error": boolean;
         /**
           * The height of the dropzone / thumbnail container (e.g. "400px" or "50%").
          */
@@ -1714,6 +1715,7 @@ declare namespace LocalJSX {
           * The aria-label attribute for the inner input element.
          */
         "elAriaLabel"?: string;
+        "error"?: boolean;
         /**
           * The height of the dropzone / thumbnail container (e.g. "400px" or "50%").
          */
