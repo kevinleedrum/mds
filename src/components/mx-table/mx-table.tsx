@@ -525,7 +525,7 @@ export class MxTable {
     if (this.minWidths.sm) {
       // On larger screens, use a three-column grid
       return {
-        gridTemplateColumns: 'max-content 1fr max-content',
+        gridTemplateColumns: 'auto 1fr auto',
       };
     } else if (this.checkable && this.showCheckAll) {
       // If checkbox on mobile, use a two-column grid
