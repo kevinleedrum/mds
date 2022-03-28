@@ -21,6 +21,7 @@ export class MxImageUpload {
   @Prop() assistiveText: string;
   /** Sets the width and height to 80px and changes the icon. */
   @Prop() avatar = false;
+  @Prop({ mutable: true, reflect: true }) error: boolean = false;
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
   /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
@@ -111,6 +112,7 @@ export class MxImageUpload {
   }
 
   onInput(e: Event) {
+    this.error = false;
     this.isFileSelected = (e.target as HTMLInputElement).files && (e.target as HTMLInputElement).files.length > 0;
     if (this.isFileSelected) this.setThumnailDataUri((e.target as HTMLInputElement).files[0]);
     else this.thumbnailDataUri = null;
