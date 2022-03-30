@@ -19,6 +19,7 @@ export class MxMenuItem implements IMxMenuItemProps {
   submenu: HTMLMxMenuElement;
   slotWrapper: HTMLElement;
   submenuDelayTimeout;
+  hasParentLink = false;
 
   /** If `multiSelect` is false, this will render a checkmark on the right side of the menu item.  If both `multiSelect` and `checked` are `true`, then the rendered multi-select checkbox will be checked. */
   @Prop() checked: boolean = false;
@@ -83,6 +84,7 @@ export class MxMenuItem implements IMxMenuItemProps {
   connectedCallback() {
     const parentLink = this.element.closest('a');
     if (!!parentLink) {
+      this.hasParentLink = true;
       parentLink.setAttribute('role', 'menuitem');
     } else {
       this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
@@ -185,7 +187,7 @@ export class MxMenuItem implements IMxMenuItemProps {
           aria-disabled={this.disabled ? 'true' : null}
           aria-haspopup={!!this.submenu ? 'true' : null}
           aria-selected={this.selected ? 'true' : null}
-          tabindex={this.disabled || this.multiSelect ? '-1' : '0'}
+          tabindex={this.disabled || this.multiSelect || this.hasParentLink ? '-1' : '0'}
           class="block w-full cursor-pointer select-none text-4 outline-none"
           onClick={this.onClick.bind(this)}
         >
