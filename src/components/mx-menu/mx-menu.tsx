@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, Listen, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Listen, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import {
   createPopover,
   PopoverInstance,
@@ -7,6 +7,7 @@ import {
   PopoverOffset,
 } from '../../utils/popover';
 import { fadeScaleIn, fadeOut } from '../../utils/transitions';
+import { uuidv4 } from '../../utils/utils';
 
 @Component({
   tag: 'mx-menu',
@@ -18,6 +19,7 @@ export class MxMenu {
   scrollElem: HTMLElement;
   inputEl: HTMLInputElement;
   isClosing = false;
+  uuid = uuidv4();
 
   /** The element to which the menu's position will be anchored */
   @Prop() anchorEl: HTMLElement;
@@ -155,6 +157,14 @@ export class MxMenu {
     return true;
   }
 
+  @Watch('anchorEl')
+  @Watch('triggerEl')
+  setTriggerElAttributes() {
+    if (!this.anchorEl && !this.triggerEl) return;
+    (this.triggerEl || this.anchorEl).setAttribute('aria-haspopup', 'true');
+    (this.triggerEl || this.anchorEl).setAttribute('aria-controls', this.uuid);
+  }
+
   /** Close the menu.  Returns a promise that resolves to false if the menu was already closed. */
   @Method()
   async closeMenu(): Promise<boolean> {
@@ -175,7 +185,7 @@ export class MxMenu {
     this.setInputEl();
     const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
     this.scrollElem.setAttribute('role', role);
-    this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
+    this.setTriggerElAttributes();
   }
 
   componentWillUpdate() {
@@ -228,6 +238,7 @@ export class MxMenu {
       <Host class={this.hostClass}>
         <div ref={el => (this.menuElem = el)} class="flex flex-col shadow-9 rounded-lg">
           <div
+            id={this.uuid}
             ref={el => (this.scrollElem = el)}
             class="scroll-wrapper overflow-y-auto overflow-x-hidden overscroll-contain"
           >
