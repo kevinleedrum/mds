@@ -30,7 +30,7 @@ export class MxSelect {
   @Prop() name: string;
   /** Text shown to the left of the arrow */
   @Prop() suffix: string;
-  @Prop({ mutable: true }) error: boolean = false;
+  @Prop({ mutable: true, reflect: true }) error: boolean = false;
   /** Additional classes for the label */
   @Prop({ mutable: true }) labelClass: string = '';
   @Prop({ mutable: true }) value: any;
