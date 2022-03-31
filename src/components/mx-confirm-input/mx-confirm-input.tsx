@@ -25,7 +25,7 @@ export class MxConfirmInput implements IMxInputProps {
   @Prop() suffix: string;
   @Prop() outerContainerClass: string = '';
   @Prop({ mutable: true }) labelClass: string = '';
-  @Prop({ mutable: true }) error: boolean = false;
+  @Prop({ mutable: true, reflect: true }) error: boolean = false;
   @Prop() assistiveText: string;
   @Prop() floatLabel: boolean = false;
   @Prop() textarea: boolean = false;

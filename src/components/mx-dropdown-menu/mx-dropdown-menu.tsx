@@ -28,7 +28,7 @@ export class MxDropdownMenu {
   @Prop() suffix: string;
   @Prop({ mutable: true }) value: any;
 
-  @Prop({ mutable: true }) error: boolean;
+  @Prop({ mutable: true, reflect: true }) error: boolean;
   @Prop() assistiveText: string;
 
   @State() isFocused: boolean = false;
