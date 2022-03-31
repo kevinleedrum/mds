@@ -27,7 +27,7 @@ export class MxTimePicker {
   @Prop() disabled: boolean = false;
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
-  @Prop({ mutable: true }) error: boolean = false;
+  @Prop({ mutable: true, reflect: true }) error: boolean = false;
   @Prop() floatLabel: boolean = false;
   /** The `id` attribute for the internal input element */
   @Prop() inputId: string;
