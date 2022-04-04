@@ -73,7 +73,7 @@ export class MxTableRow {
 
   @Watch('minWidths')
   async onMinWidthsChange() {
-    this.resetResizeObserver();
+    // this.resetResizeObserver();
     if (!this.collapseNestedRows) return;
     // Ensure that collapsed, nested rows are hidden after switching to/from mobile UI
     await new Promise(requestAnimationFrame);
