@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Element, Event, EventEmitter, State, Method, Watch } from '@stencil/core';
+import { ResizeObserver } from '@juggle/resize-observer';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { ITableRowAction } from '../mx-table/mx-table';
 import { getCursorCoords, getPageRect, isScrolledOutOfView } from '../../utils/utils';
@@ -23,6 +24,7 @@ export class MxTableRow {
   childRowWrapper: HTMLElement;
   keyboardDragHandle: HTMLElement;
   dragScroller: DragScroller;
+  resizeObserver: ResizeObserver;
   indentLevel = 0;
   columnCount = 1;
   isHidden: boolean = false;
@@ -71,6 +73,7 @@ export class MxTableRow {
 
   @Watch('minWidths')
   async onMinWidthsChange() {
+    this.resetResizeObserver();
     if (!this.collapseNestedRows) return;
     // Ensure that collapsed, nested rows are hidden after switching to/from mobile UI
     await new Promise(requestAnimationFrame);
@@ -127,13 +130,24 @@ export class MxTableRow {
       this.actionMenu.anchorEl = this.actionMenuButton;
     this.wrapFirstColumn();
     this.moveNestedRows();
-    // Render collapsed mobile row
+    // Set up ResizeObserver for collapsed mobile row
+    this.resetResizeObserver();
+  }
+
+  setCollapsedHeight() {
     if (!this.minWidths.sm && !this.isMobileExpanded && !this.isHidden)
       this.rowEl.style.maxHeight = this.getCollapsedHeight();
   }
 
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+  }
+
+  async resetResizeObserver() {
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    if (this.minWidths.sm) return;
+    this.resizeObserver = new ResizeObserver(() => this.setCollapsedHeight());
+    this.resizeObserver.observe(this.element.firstElementChild);
   }
 
   setIndentLevel() {
