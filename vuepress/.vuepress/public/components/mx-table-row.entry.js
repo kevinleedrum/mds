@@ -1,4 +1,5 @@
 import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
+import { R as ResizeObserver } from './resize-observer-9111af2a.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { d as getScrollingParent, a as getCursorCoords, e as getBounds, g as getPageRect, f as isScrolledOutOfView } from './utils-f31b72fe.js';
 import { c as collapse, e as expand } from './transitions-4a0eb798.js';
@@ -63,6 +64,7 @@ const MxTableRow = class {
     this.toggleNestedRows();
   }
   async onMinWidthsChange() {
+    // this.resetResizeObserver();
     if (!this.collapseNestedRows)
       return;
     // Ensure that collapsed, nested rows are hidden after switching to/from mobile UI
@@ -116,12 +118,23 @@ const MxTableRow = class {
       this.actionMenu.anchorEl = this.actionMenuButton;
     this.wrapFirstColumn();
     this.moveNestedRows();
-    // Render collapsed mobile row
+    // Set up ResizeObserver for collapsed mobile row
+    this.resetResizeObserver();
+  }
+  setCollapsedHeight() {
     if (!this.minWidths.sm && !this.isMobileExpanded && !this.isHidden)
       this.rowEl.style.maxHeight = this.getCollapsedHeight();
   }
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+  }
+  async resetResizeObserver() {
+    if (this.resizeObserver)
+      this.resizeObserver.disconnect();
+    if (this.minWidths.sm)
+      return;
+    this.resizeObserver = new ResizeObserver(() => this.setCollapsedHeight());
+    this.resizeObserver.observe(this.element.firstElementChild);
   }
   setIndentLevel() {
     let parentRow = this.element.parentElement.closest('mx-table-row');

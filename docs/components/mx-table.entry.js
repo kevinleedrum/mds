@@ -400,7 +400,7 @@ const MxTable = class {
     if (this.minWidths.sm) {
       // On larger screens, use a three-column grid
       return {
-        gridTemplateColumns: 'max-content 1fr max-content',
+        gridTemplateColumns: 'auto 1fr auto',
       };
     }
     else if (this.checkable && this.showCheckAll) {
@@ -438,7 +438,7 @@ const MxTable = class {
     return str;
   }
   get filterClass() {
-    let str = 'flex items-center flex-wrap row-start-2 sm:row-start-auto sm:col-span-1 ';
+    let str = 'flex items-center overflow-hidden flex-wrap row-start-2 sm:row-start-auto sm:col-span-1 ';
     // Move to second column if using search-on-top layout and check-all checkbox is in first column
     str += this.mobileSearchOnTop && this.checkable && this.showCheckAll ? 'col-start-2' : 'col-span-full';
     return str;

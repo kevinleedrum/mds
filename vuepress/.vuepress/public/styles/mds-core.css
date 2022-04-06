@@ -9918,6 +9918,12 @@ video {
       min-width: 15rem
   }
     }
+.mx-table [slot='filter']{
+  max-width: 100%;
+}
+.mx-table [slot='filter'] > *{
+  max-width: 100%;
+}
 .mx-table .table-grid > *:not(.hidden) {
     /* Only place table cell elements into the grid (not row elements). */
   }
