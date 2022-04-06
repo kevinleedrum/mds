@@ -15,6 +15,7 @@ const MxImageUpload = class {
     this.assetName = 'image';
     /** Sets the width and height to 80px and changes the icon. */
     this.avatar = false;
+    this.error = false;
     /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
     this.uploadBtnType = 'contained';
     /** Sets the thumbnail sizing strategy relative to the container. */
@@ -80,6 +81,7 @@ const MxImageUpload = class {
     }
   }
   onInput(e) {
+    this.error = false;
     this.isFileSelected = e.target.files && e.target.files.length > 0;
     if (this.isFileSelected)
       this.setThumnailDataUri(e.target.files[0]);
