@@ -13,13 +13,16 @@ export class MxSnackbar {
   durationTimer: NodeJS.Timeout;
   queueItem: { resolve: Function; reject: Function };
 
+  /** The duration in milliseconds to show the snackbar before automatically closing. */
   @Prop() duration = 6000;
+  /** Toggles the visibility of the snackbar. */
   @Prop({ mutable: true, reflect: true }) isOpen = false;
 
   @State() isVisible = false;
 
   @Element() element: HTMLMxSnackbarElement;
 
+  /** Emitted after the snackbar closes (by any means). */
   @Event() mxClose: EventEmitter<void>;
 
   @Watch('isOpen')
