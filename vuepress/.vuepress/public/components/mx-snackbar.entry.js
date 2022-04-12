@@ -8,7 +8,9 @@ const MxSnackbar = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.mxClose = createEvent(this, "mxClose", 7);
+    /** The duration in milliseconds to show the snackbar before automatically closing. */
     this.duration = 6000;
+    /** Toggles the visibility of the snackbar. */
     this.isOpen = false;
     this.isVisible = false;
   }

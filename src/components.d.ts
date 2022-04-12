@@ -757,7 +757,13 @@ export namespace Components {
         "value": any;
     }
     interface MxSnackbar {
+        /**
+          * The duration in milliseconds to show the snackbar before automatically closing.
+         */
         "duration": number;
+        /**
+          * Toggles the visibility of the snackbar.
+         */
         "isOpen": boolean;
     }
     interface MxSwitch {
@@ -2070,8 +2076,17 @@ declare namespace LocalJSX {
         "value"?: any;
     }
     interface MxSnackbar {
+        /**
+          * The duration in milliseconds to show the snackbar before automatically closing.
+         */
         "duration"?: number;
+        /**
+          * Toggles the visibility of the snackbar.
+         */
         "isOpen"?: boolean;
+        /**
+          * Emitted after the snackbar closes (by any means).
+         */
         "onMxClose"?: (event: CustomEvent<void>) => void;
     }
     interface MxSwitch {
