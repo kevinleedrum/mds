@@ -176,12 +176,8 @@ Sometimes you will want to default the date and/or time picker to be the current
 <script>
   export default {
     methods: {
-      returnCurrentDate() {
-        return new Date().toLocaleDateString('en-CA'); // Gives the YYYY-MM-DD Format
-      },
-      returnCurrentTime() {
-        return new Date().toLocaleTimeString('en-CA', { hour12: false }); // 24 hour time
-      },
+      returnCurrentDate: () => new Date().toLocaleDateString('en-CA'); // Gives the YYYY-MM-DD Format,
+      returnCurrentTime: () => new Date().toLocaleTimeString('en-CA', { hour12: false }); // 24 hour time,
     },
   };
 </script>
@@ -234,12 +230,8 @@ export default {
     }
   },
   methods: {
-    returnCurrentDate() {
-      return new Date().toLocaleDateString('en-CA') // Gives the YYYY-MM-DD Format
-    },
-    returnCurrentTime() {
-      return new Date().toLocaleTimeString('en-CA', { hour12: false }); // 24 hour time
-    }
+    returnCurrentDate: () => new Date().toLocaleDateString('en-CA'), // Gives the YYYY-MM-DD Format,
+    returnCurrentTime: () => new Date().toLocaleTimeString('en-CA', { hour12: false }) // 24 hour time,
   }
 }
 </script>
