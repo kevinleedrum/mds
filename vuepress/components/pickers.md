@@ -149,6 +149,44 @@ The component emits `input` events (via the internal `input` element), so the up
 
 <<< @/vuepress/components/pickers.md#time-pickers
 
+## Default Current Date/Time Example
+
+Sometimes you will want to default the date and/or time picker to be the current date/time. Here is an example of how to accomplish this in VueJS.
+
+<!-- #start current date/time date-pickers & time-pickers -->
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+    <div class="space-y-20">
+      <strong>Regular Date with Current Date Set</strong>
+      <mx-date-picker :value="returnCurrentDate()" label="Date" assistive-text="This is assistive text" />
+    </div>
+    <div class="space-y-20">
+      <strong>Regular Time with Current Time Set</strong>
+      <mx-time-picker :value="returnCurrentTime()" label="Time" assistive-text="This is assistive text" />
+    </div>
+  </div>
+</section>
+<!-- #start current date/time date-pickers & time-pickers -->
+
+```html
+<mx-date-picker :value="returnCurrentDate()" label="Date" assistive-text="This is assistive text" />
+
+<mx-time-picker :value="returnCurrentTime()" label="Time" assistive-text="This is assistive text" />
+
+<script>
+  export default {
+    methods: {
+      returnCurrentDate() {
+        return new Date().toLocaleDateString('en-CA'); // Gives the YYYY-MM-DD Format
+      },
+      returnCurrentTime() {
+        return new Date().toLocaleTimeString('en-CA', { hour12: false }); // 24 hour time
+      },
+    },
+  };
+</script>
+```
+
 ### Date Picker Properties
 
 | Property        | Attribute        | Description                                           | Type      | Default     |
@@ -193,6 +231,14 @@ export default {
     return {
       selectedDate: '2021-12-24',
       selectedTime: '23:59'
+    }
+  },
+  methods: {
+    returnCurrentDate() {
+      return new Date().toLocaleDateString('en-CA') // Gives the YYYY-MM-DD Format
+    },
+    returnCurrentTime() {
+      return new Date().toLocaleTimeString('en-CA', { hour12: false }); // 24 hour time
     }
   }
 }
