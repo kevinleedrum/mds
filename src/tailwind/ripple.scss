@@ -1,24 +1,23 @@
-:root {
+.mds {
   --ripple-color: rgba(255, 255, 255, 0.32);
-}
-
-span.ripple {
-  position: absolute;
-  border-radius: 50%;
-  background-color: var(--ripple-color);
-  animation: ripple 1s;
-  opacity: 1;
-  transform: scale(0);
-  pointer-events: none;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
+  span.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: var(--ripple-color);
+    animation: ripple 1s;
+    opacity: 1;
+    transform: scale(0);
+    pointer-events: none;
+  
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
   }
-}
-
-@keyframes ripple {
-  to {
-    opacity: 0;
-    transform: scale(10);
+  
+  @keyframes ripple {
+    to {
+      opacity: 0;
+      transform: scale(10);
+    }
   }
 }
