@@ -3,7 +3,6 @@
 Chips are compact elements that represent an input, attribute, or action.
 
 <section class="mds">
-
 <!-- #region basic-chips -->
 <div>
   <strong>Filled</strong>
@@ -44,6 +43,7 @@ Chips are compact elements that represent an input, attribute, or action.
   </div>
 </div>
 <!-- #endregion basic-chips -->
+</section>
 
 <<< @/vuepress/components/chips.md#basic-chips
 
@@ -51,6 +51,7 @@ Chips are compact elements that represent an input, attribute, or action.
 
 Input Chips represent complex pieces of information.
 
+<section class="mds">
 <!-- #region input-chips -->
   <div class="flex flex-wrap">
     <mx-chip removable class="m-8"> Alaska </mx-chip>
@@ -112,6 +113,7 @@ Input Chips represent complex pieces of information.
     </mx-chip>
   </div>
   <!-- #endregion input-chips -->
+</section>
 
 <<< @/vuepress/components/chips.md#input-chips
 
@@ -121,6 +123,7 @@ Choice Chips are used to make a single selection from at least two options, much
 
 To simplify the creation of Choice Chips, use the `mx-chip-group` component to wrap your `mx-chip` instances. The `mx-chip-group` accepts a `value` prop and emits an `mxInput` event in order to bind to your model.
 
+<section class="mds">
 <!-- #region choice-chips -->
   <div class="flex flex-wrap m-8">
     <mx-chip-group :value="size" class="space-x-8" @mxInput="e => size = e.detail">
@@ -137,6 +140,7 @@ To simplify the creation of Choice Chips, use the `mx-chip-group` component to w
     </mx-chip-group>
   </div>
 <!-- #endregion choice-chips -->
+</section>
 
 <<< @/vuepress/components/chips.md#choice-chips
 
@@ -144,6 +148,7 @@ To simplify the creation of Choice Chips, use the `mx-chip-group` component to w
 
 Filter Chips are used to make multiple selections from a collection of filters, much like a [Checkbox Group](/components/selection-controls.html#checkboxes).
 
+<section class="mds">
 <!-- #region filter-chips -->
 <div class="flex flex-wrap">
   <mx-chip
@@ -171,6 +176,7 @@ Filter Chips are used to make multiple selections from a collection of filters, 
   </mx-chip>
 </div>
 <!-- #endregion filter-chips -->
+</section>
 
 <<< @/vuepress/components/chips.md#filter-chips
 
@@ -178,6 +184,7 @@ Filter Chips are used to make multiple selections from a collection of filters, 
 
 Action Chips trigger contextual actions much like [Buttons](/components/buttons).
 
+<section class="mds">
 <!-- #region action-chips -->
 <div class="flex flex-wrap">
   <mx-chip clickable icon="ph-alarm" class="m-8">
@@ -202,10 +209,9 @@ Action Chips trigger contextual actions much like [Buttons](/components/buttons)
   </mx-chip>
 </div>
 <!-- #endregion action-chips -->
+</section>
 
 <<< @/vuepress/components/chips.md#action-chips
-
-</section>
 
 ### Chip Properties
 
