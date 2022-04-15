@@ -11,7 +11,7 @@
 /***************************
 * Import Tailwind helpers
 ***************************/
-@import 'tailwindcss/base';
+@import './base.scss'; /* Scoped to .mds */
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
