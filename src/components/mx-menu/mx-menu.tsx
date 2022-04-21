@@ -183,8 +183,10 @@ export class MxMenu {
 
   componentDidLoad() {
     this.setInputEl();
-    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
-    this.scrollElem.setAttribute('role', role);
+    if (this.menuItems.length) {
+      const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+      this.scrollElem.setAttribute('role', role);
+    }
     this.setTriggerElAttributes();
   }
 
