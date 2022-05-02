@@ -15,9 +15,19 @@ to produce scalable, easy-to-use components and design tokens for our organizati
   </div>
 </section>
 
-## Adding The Mx Design System via Yarn or NPM
+## Installing with Yarn or NPM
 
-From your project run `yarn add @moxiworks/mds` or `npm install @moxiworks/mds` depending on your package manager. Once added to your project, you can start using the system by looking at the example below.
+From your project directory, run either of these commands depending on your package manager:
+
+```bash
+yarn add @moxiworks/mds
+```
+
+```bash
+npm install @moxiworks/mds
+```
+
+Once added to your project, you can start using the system by looking at the example below.
 
 StencilJS gives us a basic `loader` which does all of the heavy lifting/tree shaking for us. There's no need to `import` a specific component. Components only get added to your projects bundle if the tag is used in your project. In the example below, the only component added would be the `mx-button` component.
 
@@ -50,11 +60,12 @@ document.getElementById('app').innerHTML = `
 
 [![Edit moxi-design-system-import-example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/moxi-design-system-import-example-1ppbe?autoresize=1&fontsize=12&hidenavigation=1&theme=dark)
 
-## Adding the Mx Design System via Unpkg
+## Installing from a CDN
 
-If you prefer to use the system as a modern ESModule you can do so via UNPKG or JSDelivr. This example uses UNPKG.
+If you prefer to use the system as a modern ESModule you can do so via UNPKG or JSDelivr.
+The example below fetches both the JavaScript and the necessary stylesheet from UNPKG.
 
-```html
+```html{6-10}
 <!DOCTYPE html>
 <html>
   <head>

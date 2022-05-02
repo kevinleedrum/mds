@@ -6,7 +6,7 @@ module.exports = {
   description: description,
   base: '/',
   head: [
-    ['meta', { name: 'theme-color', content: '#3eaf7c' }],
+    ['meta', { name: 'theme-color', content: '#0457af' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
     ['link', { rel: 'stylesheet', href: '/styles/mds-core.css' }],
@@ -20,7 +20,7 @@ module.exports = {
     lineNumbers: true,
   },
   themeConfig: {
-    repo: '',
+    repo: 'https://github.com/moxiworks/mds',
     editLinks: false,
     docsDir: '',
     editLinkText: '',
@@ -165,6 +165,10 @@ module.exports = {
         'tooltips',
         'uploads',
       ],
+    },
+    yuu: {
+      colorThemes: [],
+      disableDarkTheme: true,
     },
   },
   plugins: [['fulltext-search']],
