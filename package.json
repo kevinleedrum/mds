@@ -46,7 +46,8 @@
     "copy": "sh copy-on-change.sh",
     "watch": "npm-watch",
     "minify:css": "minify dist/styles/mds-core.css > dist/styles/mds-core.min.css",
-    "vercel": "vercel ./docs"
+    "vercel": "vercel ./docs",
+    "vercel:prod": "vercel ./docs --prod"
   },
   "dependencies": {
     "@juggle/resize-observer": "^3.3.1",
