@@ -2,8 +2,8 @@
   <div class="flex flex-col items-center justify-center px-16">
     <p role="heading" aria-level="1" class="text-h3 sm:text-h2 text-center">Moxi Design System</p>
     <div class="grid sm:grid-cols-2 gap-12">
-      <mx-button href="/getting-started/" xl icon="ph-arrow-right">Get Started</mx-button>
-      <mx-button href="/getting-started/" btn-type="outlined" xl icon="ph-github-logo">Github</mx-button>
+      <mx-button href="/getting-started.html" xl icon="ph-arrow-right">Get Started</mx-button>
+      <mx-button href="https://github.com/moxiworks/mds" btn-type="outlined" xl icon="ph-github-logo">Github</mx-button>
     </div>
     <div class="grid md:grid-cols-2 mt-64 gap-24 sm:gap-48">
       <div class="bg-white px-40 py-32 shadow-1 rounded-lg">
