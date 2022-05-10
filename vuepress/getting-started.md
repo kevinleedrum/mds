@@ -75,11 +75,11 @@ import { MxButton } from '@moxiworks/mds/react';
 
 export default function App() {
   return (
-    <div class="mds">
-      <div class="container mt-24 p-40">
-        <h1 class="mb-24">Hello Moxi!</h1>
+    <div className="mds">
+      <div className="container mt-24 p-40">
+        <h1 className="mb-24">Hello Moxi!</h1>
         <div>This is an example of how to include the system in your React project.</div>
-        <div class="mt-24">
+        <div className="mt-24">
           <MxButton href="https://moxiworks.com" target="_blank">
             Go to Moxiworks
           </MxButton>
