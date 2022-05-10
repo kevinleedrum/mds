@@ -1,6 +1,6 @@
 {
   "name": "@moxiworks/mds",
-  "version": "0.1.42",
+  "version": "0.1.43",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
@@ -21,7 +21,7 @@
   "files": [
     "dist/",
     "loader/",
-    "react/"
+    "react/dist"
   ],
   "watch": {
     "copy": {
