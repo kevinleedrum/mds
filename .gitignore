@@ -2,6 +2,8 @@ www/
 dist/
 loader/
 react/src
+react/node_modules
+
 
 *~
 *.sw[mnpcod]
