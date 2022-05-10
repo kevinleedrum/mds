@@ -1,5 +1,6 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import { reactOutputTarget } from '@stencil/react-output-target';
 import { inlineSvg } from 'stencil-inline-svg';
 
 export const config: Config = {
@@ -9,6 +10,11 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader',
     },
+    reactOutputTarget({
+      componentCorePackage: '../..',
+      proxiesFile: './react/src/components.ts',
+      includeDefineCustomElements: true,
+    }),
     {
       type: 'dist-custom-elements-bundle',
     },
