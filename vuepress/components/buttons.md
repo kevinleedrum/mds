@@ -4,7 +4,7 @@ Buttons are used to indicate calls to actions (CTAs) that the user can take (e.g
 
 ## Primary Buttons
 
-Contained buttons using the primary brandable color as a fill. Other than FAB, they have the highest level of emphasis. Commonly used at the top of page headers, within modals, and empty states. These are usually for the main action on a page. Avoid grouping multiple primary buttons together or using them for less important actions. 
+Contained buttons using the primary brandable color as a fill. Other than FAB, they have the highest level of emphasis. Commonly used at the top of page headers, within modals, and empty states. These are usually for the main action on a page. Avoid grouping multiple primary buttons together or using them for less important actions.
 
 <!-- #region primary-buttons -->
 <section class="mds">
@@ -168,8 +168,6 @@ Pill shaped buttons that can also have a leading or trailing icon. These are low
 
 <<< @/vuepress/components/buttons.md#simple-buttons
 
-
-
 ### Button Properties
 
 | Property      | Attribute       | Description                                            | Type                                                          | Default       |
@@ -247,6 +245,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
 | `formaction`   | `formaction`    |                                                        | `string`                          | `undefined` |
 | `href`         | `href`          | Create button as link                                  | `string`                          | `undefined` |
 | `icon`         | `icon`          | Class name of icon (for icon font)                     | `string`                          | `undefined` |
+| `target`       | `target`        | Only for link buttons                                  | `string`                          | `undefined` |
 | `type`         | `type`          |                                                        | `"button" \| "reset" \| "submit"` | `'button'`  |
 | `value`        | `value`         |                                                        | `string`                          | `undefined` |
 
