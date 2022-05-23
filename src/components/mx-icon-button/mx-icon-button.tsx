@@ -16,6 +16,8 @@ export class MxIconButton {
   @Prop() value: string;
   /** Create button as link */
   @Prop() href: string;
+  /** Only for link buttons */
+  @Prop() target: string;
   @Prop({ reflect: true }) disabled: boolean = false;
   /** The aria-label attribute for the inner button element. */
   @Prop() elAriaLabel: string;
@@ -74,6 +76,7 @@ export class MxIconButton {
           formaction={this.formaction}
           value={this.value}
           href={this.href}
+          target={this.href ? this.target : null}
           class="flex text-current appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:pointer-events-none disabled:cursor-auto"
           ref={el => (this.btnElem = el as HTMLButtonElement)}
           disabled={this.disabled}
