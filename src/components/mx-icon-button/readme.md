@@ -18,6 +18,7 @@
 | `formaction`   | `formaction`    |                                                        | `string`                          | `undefined` |
 | `href`         | `href`          | Create button as link                                  | `string`                          | `undefined` |
 | `icon`         | `icon`          | Class name of icon (for icon font)                     | `string`                          | `undefined` |
+| `target`       | `target`        | Only for link buttons                                  | `string`                          | `undefined` |
 | `type`         | `type`          |                                                        | `"button" \| "reset" \| "submit"` | `'button'`  |
 | `value`        | `value`         |                                                        | `string`                          | `undefined` |
 

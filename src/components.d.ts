@@ -370,6 +370,10 @@ export namespace Components {
           * Class name of icon (for icon font)
          */
         "icon": string;
+        /**
+          * Only for link buttons
+         */
+        "target": string;
         "type": 'button' | 'submit' | 'reset';
         "value": string;
     }
@@ -1693,6 +1697,10 @@ declare namespace LocalJSX {
           * Class name of icon (for icon font)
          */
         "icon"?: string;
+        /**
+          * Only for link buttons
+         */
+        "target"?: string;
         "type"?: 'button' | 'submit' | 'reset';
         "value"?: string;
     }
