@@ -95,7 +95,7 @@ export default function App() {
 ## Installing from a CDN
 
 If you prefer to use the system as a modern ESModule you can do so via UNPKG or JSDelivr.
-The example below fetches both the JavaScript and the necessary stylesheet from UNPKG.
+The example below fetches both the JavaScript and the necessary stylesheet from JSDelivr.
 
 <<< @/vuepress/getting-started-cdn-example.html#example{6-10}
 
