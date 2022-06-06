@@ -97,34 +97,7 @@ export default function App() {
 If you prefer to use the system as a modern ESModule you can do so via UNPKG or JSDelivr.
 The example below fetches both the JavaScript and the necessary stylesheet from UNPKG.
 
-```html{6-10}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Moxi Design System as ESModule</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://unpkg.com/@moxiworks/mds/dist/styles/mds-core.css" />
-    <script type="module">
-      import { defineCustomElements } from 'https://unpkg.com/@moxiworks/mds/loader/index.es2017.js';
-      defineCustomElements();
-    </script>
-  </head>
-
-  <body class="mds">
-    <div class="container mt-24 p-40">
-      <h1 class="mb-24">Hello Moxi!</h1>
-      <div>
-        This is an example of how to include the system in your Javascript project.
-      </div>
-      <div class="mt-24">
-        <mx-button href="https://moxiworks.com" target="_blank">
-          Go to Moxiworks
-        </mx-button>
-      </div>
-    </div>
-  </body>
-</html>
-```
+<<< @/vuepress/getting-started-cdn-example.html#example{6-10}
 
 [![Edit moxi-design-system-esmodule-example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/agitated-cannon-tw60n?fontsize=14&hidenavigation=1&theme=dark)
 
