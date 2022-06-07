@@ -190,9 +190,9 @@ Pill shaped buttons that can also have a leading or trailing icon. These are low
 
 Icon buttons are round buttons that only contain an icon. The icon can be set three different ways:
 
-- &bull; the class name of an icon in the icon font library (i.e. [Phosphor Icons](/getting-started.html#phosphor-icons)) via the `icon` prop,
-- &bull; an SVG passed into the default slot,
-- &bull; or one of the built-in elevated chevron icons via the `chevron-dropdown`, `chevron-left`, and `chevron-right` props.
+- the class name of an icon in the icon font library (i.e. [Phosphor Icons](/getting-started.html#phosphor-icons)) via the `icon` prop,
+- an SVG passed into the default slot,
+- or one of the built-in elevated chevron icons via the `chevron-dropdown`, `chevron-left`, and `chevron-right` props.
 
 <!-- #region icon-buttons -->
 <section class="mds">

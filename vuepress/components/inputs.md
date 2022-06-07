@@ -118,9 +118,9 @@ Icons that are embedded in the design system are also available.
 
 The `mx-confirm-input` component wraps the `mx-input` component, and provides additional edit-in-place behaviors.
 
-- &bull; If a `value` is present, the input has no border or background color when not hovered or focused.
-- &bull; If <kbd>Escape</kbd> is pressed, or if the <i class="mds-x"></i> icon is clicked, then changes inside the input are discarded.
-- &bull; If <kbd>Enter</kbd> is pressed, or if the <i class="mds-check"></i> icon is clicked, then the `value` is updated and an `input` event is fired.
+- If a `value` is present, the input has no border or background color when not hovered or focused.
+- If <kbd>Escape</kbd> is pressed, or if the <i class="mds-x"></i> icon is clicked, then changes inside the input are discarded.
+- If <kbd>Enter</kbd> is pressed, or if the <i class="mds-check"></i> icon is clicked, then the `value` is updated and an `input` event is fired.
 
 <section class="mds">
   <div class="space-y-20 my-40">
