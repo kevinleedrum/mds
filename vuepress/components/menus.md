@@ -101,10 +101,10 @@ additional behaviors to allow the menu to function as an autocomplete or suggest
 
 These additional behaviors include:
 
-- &bull; The menu stretches the entire width of the `anchorEl`.
-- &bull; Typing into the input opens the menu.
-- &bull; Typing while a menu item is focused restores focus to the input.
-- &bull; The input's `autocomplete` attribute is set to `off` to disable the browser's native autocomplete menu.
+- The menu stretches the entire width of the `anchorEl`.
+- Typing into the input opens the menu.
+- Typing while a menu item is focused restores focus to the input.
+- The input's `autocomplete` attribute is set to `off` to disable the browser's native autocomplete menu.
 
 Setting the `autocompleteOnly` prop to `true` causes the top menu item to always be selected by default,
 and pressing <kbd>Enter</kbd> inside the input will effectively click that item. Leave this set to `false` to
