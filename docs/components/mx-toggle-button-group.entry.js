@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
 
 const MxToggleButtonGroup = class {
   constructor(hostRef) {
@@ -15,7 +15,7 @@ const MxToggleButtonGroup = class {
   }
   onToggleButtonClick(e) {
     const toggleButton = e.target.closest('mx-toggle-button');
-    if (!toggleButton)
+    if (!toggleButton || toggleButton.disabled)
       return;
     this.toggleValue(toggleButton.value);
     this.mxInput.emit(this.value);
