@@ -26,7 +26,7 @@ export class MxToggleButtonGroup {
   @Listen('click')
   onToggleButtonClick(e: MouseEvent) {
     const toggleButton: HTMLMxToggleButtonElement = (e.target as HTMLElement).closest('mx-toggle-button');
-    if (!toggleButton) return;
+    if (!toggleButton || toggleButton.disabled) return;
     this.toggleValue(toggleButton.value);
     this.mxInput.emit(this.value);
   }

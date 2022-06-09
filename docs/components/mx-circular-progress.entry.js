@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
 
 const DIAMETER = 44;
 const THICKNESS = 3.6;

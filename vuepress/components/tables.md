@@ -2,8 +2,8 @@
 
 The `mx-table` component can be used one of two ways:
 
-- &bull; by providing an array of data via the `rows` prop, allowing the table to automatically generate rows and cells
-- &bull; by templating the rows and cells manually using `mx-table-row` and `mx-table-cell` components
+- by providing an array of data via the `rows` prop, allowing the table to automatically generate rows and cells
+- by templating the rows and cells manually using `mx-table-row` and `mx-table-cell` components
 
 On smaller, mobile-sized screens, the Data Table component shows one column of data at a time for each row, though rows may be expanded to reveal the remaining data.
 
