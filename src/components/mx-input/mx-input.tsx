@@ -55,10 +55,10 @@ export class MxInput implements IMxInputProps {
   @Prop() placeholder: string;
   @Prop({ mutable: true }) value: string;
   /** The `type` attribute for the text input */
-  @Prop() type: string = 'text';
-  @Prop() dense: boolean = false;
-  @Prop() disabled: boolean = false;
-  @Prop() readonly: boolean = false;
+  @Prop() type = 'text';
+  @Prop() dense = false;
+  @Prop() disabled = false;
+  @Prop() readonly = false;
   @Prop() maxlength: number;
   /** The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler */
   @Prop() leftIcon: string | MxInputIcon[];
@@ -66,21 +66,21 @@ export class MxInput implements IMxInputProps {
   @Prop() rightIcon: string | MxInputIcon[];
   /** Text shown to the right of the input value */
   @Prop() suffix: string;
-  @Prop() outerContainerClass: string = '';
-  @Prop({ mutable: true }) labelClass: string = '';
-  @Prop({ mutable: true, reflect: true }) error: boolean = false;
+  @Prop() outerContainerClass = '';
+  @Prop({ mutable: true }) labelClass = '';
+  @Prop({ mutable: true, reflect: true }) error = false;
   @Prop() assistiveText: string;
-  @Prop() floatLabel: boolean = false;
+  @Prop() floatLabel = false;
   /** Display a multi-line `textarea` instead of an `input` */
-  @Prop() textarea: boolean = false;
-  @Prop({ mutable: true }) textareaHeight: string = '250px';
+  @Prop() textarea = false;
+  @Prop({ mutable: true }) textareaHeight = '250px';
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
   /** Set to `true` to hide the character count when a `maxlength` is set. */
-  @Prop() hideCharacterCount: boolean = false;
+  @Prop() hideCharacterCount = false;
 
-  @State() isFocused: boolean = false;
-  @State() characterCount: number = 0;
+  @State() isFocused = false;
+  @State() characterCount = 0;
 
   @Element() element: HTMLMxInputElement;
 

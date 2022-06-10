@@ -7,7 +7,7 @@ import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 })
 export class MxTableCell {
   /** This is automatically set by the parent `mx-table`. */
-  @Prop({ reflect: true }) isExposedMobileColumn: boolean = true;
+  @Prop({ reflect: true }) isExposedMobileColumn = true;
   /** This is automatically set by the parent `mx-table`.  For subheaders, this will be null. */
   @Prop({ reflect: true }) columnIndex: number;
   /** This is automatically set by the parent `mx-table`. */

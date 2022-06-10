@@ -1,4 +1,4 @@
-import { newSpecPage, SpecPage } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
 import { MxChip } from '../mx-chip';
 
 describe('mx-chip', () => {

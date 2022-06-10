@@ -10,15 +10,15 @@ export class MxChip {
   chipElem: HTMLElement;
   uuid: string = uuidv4();
 
-  @Prop() outlined: boolean = false;
-  @Prop() disabled: boolean = false;
+  @Prop() outlined = false;
+  @Prop() disabled = false;
   /** Display a checkmark on the left side of the chip */
-  @Prop({ mutable: true, reflect: true }) selected: boolean = false;
+  @Prop({ mutable: true, reflect: true }) selected = false;
   /** Use the pointer cursor and show a ripple animation.
    * This does not need to be explicitly set for `choice` or `filter` chips. */
-  @Prop() clickable: boolean = false;
+  @Prop() clickable = false;
   /** Show the remove icon on the right */
-  @Prop() removable: boolean = false;
+  @Prop() removable = false;
   /** URL of image to show on the left */
   @Prop() avatarUrl: string;
   /** Class name of icon to show on the left */
@@ -27,9 +27,9 @@ export class MxChip {
   @Prop() value: any;
   /** Style as a choice chip when selected.
    * This is set internally when the chip is wrapped with an `mx-chip-group`. */
-  @Prop() choice: boolean = false;
+  @Prop() choice = false;
   /** Style as a filter chip when selected */
-  @Prop() filter: boolean = false;
+  @Prop() filter = false;
 
   @Element() element: HTMLMxChipElement;
 

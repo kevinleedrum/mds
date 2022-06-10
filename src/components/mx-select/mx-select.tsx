@@ -13,14 +13,14 @@ export class MxSelect {
 
   /** Helpful text to show below the select */
   @Prop() assistiveText: string;
-  @Prop() dense: boolean = false;
-  @Prop() disabled: boolean = false;
+  @Prop() dense = false;
+  @Prop() disabled = false;
   /** Style with a 1dp elevation */
-  @Prop() elevated: boolean = false;
+  @Prop() elevated = false;
   /** Style with a "flat" border color */
-  @Prop() flat: boolean = false;
+  @Prop() flat = false;
   @Prop() label: string;
-  @Prop() floatLabel: boolean = false;
+  @Prop() floatLabel = false;
   /** The aria-label attribute for the inner select element. */
   @Prop() elAriaLabel: string;
   /** Additional classes for the select wrapper (e.g. `min-w-0` to override the default `min-width`) */
@@ -30,12 +30,12 @@ export class MxSelect {
   @Prop() name: string;
   /** Text shown to the left of the arrow */
   @Prop() suffix: string;
-  @Prop({ mutable: true, reflect: true }) error: boolean = false;
+  @Prop({ mutable: true, reflect: true }) error = false;
   /** Additional classes for the label */
-  @Prop({ mutable: true }) labelClass: string = '';
+  @Prop({ mutable: true }) labelClass = '';
   @Prop({ mutable: true }) value: any;
 
-  @State() isFocused: boolean = false;
+  @State() isFocused = false;
 
   @Element() element: HTMLMxInputElement;
 

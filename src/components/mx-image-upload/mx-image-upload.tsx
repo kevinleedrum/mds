@@ -21,7 +21,7 @@ export class MxImageUpload {
   @Prop() assistiveText: string;
   /** Sets the width and height to 80px and changes the icon. */
   @Prop() avatar = false;
-  @Prop({ mutable: true, reflect: true }) error: boolean = false;
+  @Prop({ mutable: true, reflect: true }) error = false;
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
   /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
@@ -138,7 +138,7 @@ export class MxImageUpload {
   }
 
   get accept() {
-    let accept = [];
+    const accept = [];
     if (this.acceptImage) accept.push('image/*');
     if (this.acceptPdf) accept.push('.pdf');
     return accept.join(',') || null;

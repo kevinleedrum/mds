@@ -120,6 +120,7 @@ function executeTransition(
   duration: number,
   transformOrigin?: string,
 ): Promise<void> {
+  // eslint-disable-next-line
   return new Promise(async resolve => {
     if (queryPrefersReducedMotion() || typeof jest !== 'undefined') return resolve();
     // Set the start value for each property
@@ -158,7 +159,7 @@ function setStyleProperty(el: HTMLElement, property, value) {
     const matchTransforms = /\w*\((-?((\d+)|(\d*\.\d+))\w*,\s*)*(-?(\d+)|(\d*\.\d+))\w*\)/gi;
     let transforms = el.style.transform.match(matchTransforms) || [];
     // Parse out the name of our new transform (e.g. 'scale')
-    let transformName = /^(\w*)\(/.exec(value)[1];
+    const transformName = /^(\w*)\(/.exec(value)[1];
     // Remove existing transforms with the same name
     transforms = transforms.filter(t => !t.startsWith(transformName));
     // Add our new transform

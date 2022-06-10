@@ -52,9 +52,9 @@ export interface ITableColumn {
    * client-side, the property does not necessarily have to exist on the row objects; it is simply a
    * unique identifier for the table's `sortBy` prop.
    */
-  getValue?: (row: Object, rowIndex?: number) => any;
+  getValue?: (row: unknown, rowIndex?: number) => any;
   /** A custom compare function for sorting by this column (if sorting client-side) */
-  sortCompare?: (rowA: Object, rowB: Object) => number;
+  sortCompare?: (rowA: unknown, rowB: unknown) => number;
   /** Additional classes to add to the header cell for this column */
   headerClass?: string;
   /** Additional classes to add to the body cells in this column */
@@ -71,11 +71,11 @@ export interface ITableColumn {
 export class MxTable {
   actionMenu: HTMLMxMenuElement;
   actionMenuButton: HTMLMxButtonElement;
-  hasDefaultSlot: boolean = false;
-  hasSearch: boolean = false;
-  hasFilter: boolean = false;
-  hasFooter: boolean = false;
-  showOperationsBar: boolean = false;
+  hasDefaultSlot = false;
+  hasSearch = false;
+  hasFilter = false;
+  hasFooter = false;
+  showOperationsBar = false;
   dragRowEl: HTMLMxTableRowElement;
   dragRowElSiblings: HTMLMxTableRowElement[];
   dragOverRowEl: HTMLMxTableRowElement;
@@ -85,56 +85,56 @@ export class MxTable {
   dragMoveHandler: (e: MouseEvent) => any;
 
   /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
-  @Prop() autoWidth: boolean = false;
+  @Prop() autoWidth = false;
   /** Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or
    * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
-  @Prop() checkable: boolean = false;
+  @Prop() checkable = false;
   /** Set to `true` to allow checking rows by clicking on any dead space inside the row. */
-  @Prop() checkOnRowClick: boolean = false;
+  @Prop() checkOnRowClick = false;
   /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
   @Prop() columns: ITableColumn[] = [];
   /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
-  @Prop() disableNextPage: boolean = false;
+  @Prop() disableNextPage = false;
   /** Disable the pagination buttons (i.e. while loading results) */
-  @Prop() disablePagination: boolean = false;
+  @Prop() disablePagination = false;
   /** Enables reordering of rows via drag and drop. */
-  @Prop() draggableRows: boolean = false;
+  @Prop() draggableRows = false;
   /** A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows. */
-  @Prop() getGroupByHeading: (row: Object) => string;
+  @Prop() getGroupByHeading: (row: unknown) => string;
   @Prop() getMultiRowActions: (rows: string[]) => ITableRowAction[];
-  @Prop() getRowActions: (row: Object) => ITableRowAction[];
+  @Prop() getRowActions: (row: unknown) => ITableRowAction[];
   /** A function that returns the `rowId` prop for each generated `mx-table-row`.
    * This is only required if the table is `checkable` and is auto-generating rows (not using the default slot). */
-  @Prop() getRowId: (row: Object) => string;
+  @Prop() getRowId: (row: unknown) => string;
   /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
   @Prop() groupBy: string = null;
-  @Prop() hoverable: boolean = true;
+  @Prop() hoverable = true;
   /** Set to `true` to use an alternate mobile layout for the operations bar where the filter slot
    * is next to the (un)check-all checkbox and the search slot is in a row above. */
-  @Prop() mobileSearchOnTop: boolean = false;
+  @Prop() mobileSearchOnTop = false;
   /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
-  @Prop() mutateOnDrag: boolean = true;
+  @Prop() mutateOnDrag = true;
   /** Additional class names for the operation bar grid */
-  @Prop() operationsBarClass: string = '';
+  @Prop() operationsBarClass = '';
   /** The page to display */
-  @Prop({ mutable: true }) page: number = 1;
+  @Prop({ mutable: true }) page = 1;
   /** Show the pagination component.  Setting this to `false` will show all rows. */
-  @Prop() paginate: boolean = true;
+  @Prop() paginate = true;
   /** Delay the appearance of the progress bar for this many milliseconds */
-  @Prop() progressAppearDelay: number = 0;
+  @Prop() progressAppearDelay = 0;
   /** The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed. */
   @Prop() progressValue: number = null;
   /** An array of objects that defines the table's dataset. */
-  @Prop({ mutable: true }) rows: Object[] = [];
-  @Prop({ mutable: true }) rowsPerPage: number = 10;
+  @Prop({ mutable: true }) rows: unknown[] = [];
+  @Prop({ mutable: true }) rowsPerPage = 10;
   @Prop() rowsPerPageOptions: number[];
   /** Do not sort or paginate client-side. Use events to send server requests instead. */
-  @Prop() serverPaginate: boolean = false;
+  @Prop() serverPaginate = false;
   /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
-  @Prop() showCheckAll: boolean = true;
+  @Prop() showCheckAll = true;
   /** Show a progress bar below the header row */
-  @Prop() showProgressBar: boolean = false;
-  @Prop({ mutable: true }) sortAscending: boolean = true;
+  @Prop() showProgressBar = false;
+  @Prop({ mutable: true }) sortAscending = true;
   /** The property on the row objects that will be used for sorting */
   @Prop({ mutable: true }) sortBy: string;
   /** The total number of unpaginated rows.  This is ignored for client-side pagination.
@@ -144,7 +144,7 @@ export class MxTable {
 
   @State() minWidths = new MinWidths();
   @State() checkedRowIds: string[] = [];
-  @State() exposedMobileColumnIndex: number = 0;
+  @State() exposedMobileColumnIndex = 0;
 
   @Element() element: HTMLMxTableElement;
 
@@ -157,7 +157,7 @@ export class MxTable {
   /** Emitted when the sorting, pagination, or rows data changes.
    * The `Event.detail` will contain the sorted, paginated array of visible rows.  This is useful
    * for building a custom row layout via the default slot. */
-  @Event() mxVisibleRowsChange: EventEmitter<Object[]>;
+  @Event() mxVisibleRowsChange: EventEmitter<unknown[]>;
   /** Emitted when a row is dragged to a new position.
    * The `Event.detail` object will contain the `rowId` (if set), `oldIndex`, and `newIndex`. */
   @Event() mxRowMove: EventEmitter<any>;
@@ -308,7 +308,7 @@ export class MxTable {
     this.checkedRowIds = [];
   }
 
-  @State() hasActionsColumnFromSlot: boolean = false;
+  @State() hasActionsColumnFromSlot = false;
 
   getTableRows(): HTMLMxTableRowElement[] {
     return Array.from(this.element.querySelectorAll('mx-table-row') as NodeListOf<HTMLMxTableRowElement>);
@@ -465,7 +465,7 @@ export class MxTable {
     return [...new Set(groups)]; // remove duplicates
   }
 
-  get groupedRows(): Object[] {
+  get groupedRows(): unknown[] {
     if (!this.groupBy) return this.rows;
     const groupedRows = [];
     // Group rows based on the order of `uniqueGroups` (the order in which the groups first appear)
@@ -479,7 +479,7 @@ export class MxTable {
     return groupedRows;
   }
 
-  get visibleRows(): Object[] {
+  get visibleRows(): unknown[] {
     if (this.serverPaginate || (!this.paginate && !this.sortBy)) return this.groupedRows;
     const offset = (this.page - 1) * this.rowsPerPage;
     let rows = this.groupedRows.slice();
@@ -594,7 +594,7 @@ export class MxTable {
     return this.navigableColumnIndexes[this.navigableColumnIndexes.length - 1] === this.exposedMobileColumnIndex;
   }
 
-  sortRows(rows: Object[]) {
+  sortRows(rows: unknown[]) {
     const sortByColumn = this.cols.find(c => c.property === this.sortBy);
     if (!sortByColumn) return;
     let sortCompare = sortByColumn.sortCompare;
@@ -610,7 +610,7 @@ export class MxTable {
     if (!this.sortAscending) rows.reverse();
   }
 
-  getCellSortableValue(row: Object, col: ITableColumn): string | number {
+  getCellSortableValue(row: unknown, col: ITableColumn): string | number {
     if (col.getValue) return col.getValue(row);
     const val = row[col.property];
     if (['date', 'dateTime'].includes(col.type) || isDateObject(val)) return -new Date(val).getTime();
@@ -618,7 +618,7 @@ export class MxTable {
     return val;
   }
 
-  getCellValue(row: Object, col: ITableColumn, rowIndex: number) {
+  getCellValue(row: unknown, col: ITableColumn, rowIndex: number) {
     if (col.getValue) return col.getValue(row, rowIndex);
     const val = row[col.property];
     if (col.type === 'date' || isDateObject(val)) return new Date(val).toLocaleDateString();
@@ -648,10 +648,10 @@ export class MxTable {
   }
 
   getAlignClasses(col: ITableColumn): string[] {
-    let classes = [];
+    const classes = [];
     // Non-action columns should always be left-aligned on mobile
     if (!col.isActionColumn) classes.push('justify-start');
-    let alignment = col.align || (col.type === 'number' ? 'right' : 'left');
+    const alignment = col.align || (col.type === 'number' ? 'right' : 'left');
     let desktopClass;
     if (alignment === 'right') desktopClass = 'justify-end';
     else if (alignment === 'center') desktopClass = 'justify-center';

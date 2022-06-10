@@ -1,4 +1,4 @@
-let forcedResult = {
+const forcedResult = {
   matches: false,
 };
 

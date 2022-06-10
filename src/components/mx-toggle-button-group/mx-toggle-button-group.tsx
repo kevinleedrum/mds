@@ -7,7 +7,7 @@ import { Component, Host, h, Prop, Listen, Element, Event, EventEmitter, Watch }
 export class MxToggleButtonGroup {
   @Prop({ mutable: true }) value: any;
   /** Set to `true` to prevent deselecting once a selection has been made. */
-  @Prop() required: boolean = false;
+  @Prop() required = false;
 
   @Watch('value')
   onValueChange() {
