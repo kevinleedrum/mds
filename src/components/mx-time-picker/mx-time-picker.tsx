@@ -71,7 +71,8 @@ export class MxTimePicker {
   normalizeValue() {
     // If HH:MM:ss.mmm value is passed, change it to just HH:MM
     if (this.value && /\d\d:\d\d:\d\d/.test(this.value)) {
-      let [hours, minutes] = this.value.split(':');
+      let [hours] = this.value.split(':');
+      const [, minutes] = this.value.split(':');
       if (this.value.toUpperCase().includes('PM')) {
         hours = (Number(hours) + 12).toString();
       }
