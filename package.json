@@ -51,7 +51,7 @@
     "build": "sh build-all.sh",
     "dev": "npm-run-all --parallel docs:dev stencil:start tailwind:dev watch",
     "format": "prettier --loglevel warn --write src/**/*",
-    "lint": "eslint src/**/*{.ts,.tsx}",
+    "lint": "eslint src/**/*{.ts,.tsx} --max-warnings=0",
     "tailwind:dev": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css -w",
     "tailwind:scss": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css",
     "tailwind:prod": "TAILWIND_MODE=build NODE_ENV=production postcss src/tailwind/styles.css -o dist/styles/mds-core.css",
