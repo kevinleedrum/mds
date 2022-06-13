@@ -22,7 +22,7 @@ export class MxTooltip {
   /** The maximum width of the tooltip (e.g. '20rem') */
   @Prop() maxWidth = '10rem';
   /** This is typically updated automatically based on events, but may be changed programmatically if necessary. */
-  @Prop({ mutable: true, reflect: true }) isOpen: boolean = false;
+  @Prop({ mutable: true, reflect: true }) isOpen = false;
   /** The preferred placement of the tooltip, relative to the anchor element. */
   @Prop() placement: PopoverPlacement = 'bottom';
   /** Additional classes to add to the tooltip. */

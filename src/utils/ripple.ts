@@ -1,9 +1,9 @@
 export default function ripple(e: MouseEvent, elem: HTMLElement) {
-  let existingRipple = elem.querySelector('.ripple');
+  const existingRipple = elem.querySelector('.ripple');
   if (existingRipple) existingRipple.remove();
 
   // Create span element
-  let ripple = document.createElement('span');
+  const ripple = document.createElement('span');
 
   // Add ripple class to span
   ripple.classList.add('ripple');

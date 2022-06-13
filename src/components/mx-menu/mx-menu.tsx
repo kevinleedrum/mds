@@ -24,7 +24,7 @@ export class MxMenu {
   /** The element to which the menu's position will be anchored */
   @Prop() anchorEl: HTMLElement;
   /** If the anchor element contains an `input`, setting this to `true` will always select the first menu item when Enter is pressed inside the input.  */
-  @Prop() autocompleteOnly: boolean = false;
+  @Prop() autocompleteOnly = false;
   /** The element that will open the menu when clicked.  If not provided, the `anchorEl' will be used. */
   @Prop() triggerEl: HTMLElement;
   /** An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`.  The second is the distance from the `anchorEl`. */
@@ -32,7 +32,7 @@ export class MxMenu {
   /** The placement of the menu, relative to the `anchorEl`. */
   @Prop() placement: PopoverPlacement = 'bottom-start';
   /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
-  @Prop({ mutable: true, reflect: true }) isOpen: boolean = false;
+  @Prop({ mutable: true, reflect: true }) isOpen = false;
 
   @Element() element: HTMLMxMenuElement;
 
@@ -184,7 +184,7 @@ export class MxMenu {
   componentDidLoad() {
     this.setInputEl();
     if (this.menuItems.length) {
-      const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+      const role = this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
       this.scrollElem.setAttribute('role', role);
     }
     this.setTriggerElAttributes();

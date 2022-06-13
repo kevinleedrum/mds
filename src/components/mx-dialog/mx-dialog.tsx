@@ -24,10 +24,10 @@ export class MxDialog {
   firstFocusElement: HTMLElement;
   lastFocusElement: HTMLElement;
   ancestorFocusedElement: HTMLElement;
-  deferredResolve: Function;
-  isSimple: boolean = true;
-  hasButtons: boolean = false;
-  hasHeading: boolean = false;
+  deferredResolve: (value: unknown) => void;
+  isSimple = true;
+  hasButtons = false;
+  hasHeading = false;
   uuid: string = uuidv4();
 
   heading: string;
@@ -36,7 +36,7 @@ export class MxDialog {
   cancelLabel: string;
 
   /** Toggles the visibility of the dialog (when using the slots for content). */
-  @Prop() isOpen: boolean = false;
+  @Prop() isOpen = false;
   /** Additional classes to apply to the inner modal element. */
   @Prop() modalClass: string;
 

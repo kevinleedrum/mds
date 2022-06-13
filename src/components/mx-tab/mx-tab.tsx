@@ -18,17 +18,17 @@ export class MxTab implements IMxTabProps {
   btnElem: HTMLButtonElement;
 
   /** Label text to display */
-  @Prop() label: string = '';
+  @Prop() label = '';
   /** If you are not providing a `label`, this should be provided instead for accessibility */
-  @Prop() elAriaLabel: string = '';
+  @Prop() elAriaLabel = '';
   /** Class name of icon to display */
-  @Prop() icon: string = '';
+  @Prop() icon = '';
   /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
-  @Prop({ reflect: true }) selected: boolean = false;
+  @Prop({ reflect: true }) selected = false;
   /** Display a circular badge */
-  @Prop() badge: boolean = false;
+  @Prop() badge = false;
   /** Additional classes for the badge */
-  @Prop() badgeClass: string = '';
+  @Prop() badgeClass = '';
 
   componentDidLoad() {
     if (!this.label && !this.elAriaLabel) {

@@ -4,7 +4,7 @@ import { createPopover, PopoverInstance } from '../../utils/popover';
 import { isDateObject, propagateDataAttributes, uuidv4 } from '../../utils/utils';
 import { fadeIn, fadeOut } from '../../utils/transitions';
 
-const yyyymmdd = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
+const yyyymmdd = /^\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$/;
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
@@ -20,20 +20,20 @@ export class MxDatePicker {
   calendarButton: HTMLElement;
   inputEl: HTMLInputElement;
   popoverInstance: PopoverInstance;
-  isDateInputSupported: boolean = false;
+  isDateInputSupported = false;
 
   /** Set to false to prevent entering a date after today */
-  @Prop() allowFuture: boolean = true;
+  @Prop() allowFuture = true;
   /** Set to false to prevent entering a date before today */
-  @Prop() allowPast: boolean = true;
+  @Prop() allowPast = true;
   /** Helpful text to show below the picker */
   @Prop() assistiveText: string;
-  @Prop() dense: boolean = false;
-  @Prop() disabled: boolean = false;
+  @Prop() dense = false;
+  @Prop() disabled = false;
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
-  @Prop({ mutable: true, reflect: true }) error: boolean = false;
-  @Prop() floatLabel: boolean = false;
+  @Prop({ mutable: true, reflect: true }) error = false;
+  @Prop() floatLabel = false;
   /** The `id` attribute for the internal input element */
   @Prop() inputId: string;
   @Prop() label: string;
@@ -45,8 +45,8 @@ export class MxDatePicker {
   /** The selected date in YYYY-MM-DD format */
   @Prop({ mutable: true }) value: string;
 
-  @State() isFocused: boolean = false;
-  @State() isInputDirty: boolean = false;
+  @State() isFocused = false;
+  @State() isInputDirty = false;
 
   @Element() element: HTMLMxDatePickerElement;
 
@@ -76,7 +76,7 @@ export class MxDatePicker {
   }
 
   connectedCallback() {
-    const validDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
+    const validDate = /^\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$/;
     if (this.value && !validDate.test(this.value)) {
       throw new Error('The date picker value must be in YYYY-MM-DD format.');
     }
@@ -183,10 +183,12 @@ export class MxDatePicker {
     this.isFocused = true;
     this.datepicker.navigate(this.datepicker.dateSelected || new Date());
     this.datepicker.calendarContainer.classList.remove('hidden');
-    this.popoverInstance = await createPopover(this.calendarButton, this.datepicker.calendarContainer, 'bottom', [
-      -4,
-      0,
-    ]);
+    this.popoverInstance = await createPopover(
+      this.calendarButton,
+      this.datepicker.calendarContainer,
+      'bottom',
+      [-4, 0],
+    );
     await fadeIn(this.datepicker.calendarContainer);
   }
 

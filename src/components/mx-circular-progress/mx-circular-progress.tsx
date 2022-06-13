@@ -15,9 +15,9 @@ export class MxCircularProgress {
   /** The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. */
   @Prop() value: number = null;
   /** The value to use for the width and height */
-  @Prop() size: string = '3rem';
+  @Prop() size = '3rem';
   /** Delay the appearance of the indicator for this many milliseconds */
-  @Prop() appearDelay: number = 0;
+  @Prop() appearDelay = 0;
 
   @Element() element: HTMLMxLinearProgressElement;
 

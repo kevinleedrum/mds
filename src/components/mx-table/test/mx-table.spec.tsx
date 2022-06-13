@@ -129,7 +129,7 @@ describe('mx-table (non-mobile)', () => {
   it('renders a progress bar if showProgressBar is true', async () => {
     root.showProgressBar = true;
     await page.waitForChanges();
-    let progress = root.querySelector('mx-linear-progress');
+    const progress = root.querySelector('mx-linear-progress');
     expect(progress).not.toBeNull();
   });
 
@@ -241,6 +241,7 @@ describe('mx-table (checkable, non-mobile)', () => {
 
   it('appends the operationsBarClass value to the operations bar classList', async () => {
     root.showCheckAll = true;
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     root.getMultiRowActions = () => [{ value: 'Delete', onClick: () => {} }];
     root.operationsBarClass = 'test-class';
     await page.waitForChanges();
@@ -288,7 +289,7 @@ describe('mx-table (checkable, non-mobile)', () => {
   describe('HTMLMxTableElement.setCheckedRowIds', () => {
     it('sets the checked row IDs', async () => {
       await root.setCheckedRowIds(['1']);
-      let checkedRowIds = await root.getCheckedRowIds();
+      const checkedRowIds = await root.getCheckedRowIds();
       expect(checkedRowIds.length).toBe(1);
       expect(checkedRowIds[0]).toBe('1');
     });

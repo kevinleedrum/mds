@@ -18,15 +18,15 @@ export class MxIconButton {
   @Prop() href: string;
   /** Only for link buttons */
   @Prop() target: string;
-  @Prop({ reflect: true }) disabled: boolean = false;
+  @Prop({ reflect: true }) disabled = false;
   /** The aria-label attribute for the inner button element. */
   @Prop() elAriaLabel: string;
   /** Show downward chevron icon */
-  @Prop() chevronDown: boolean = false;
+  @Prop() chevronDown = false;
   /** Show left-pointing chevron icon */
-  @Prop() chevronLeft: boolean = false;
+  @Prop() chevronLeft = false;
   /** Show right-pointing chevron icon */
-  @Prop() chevronRight: boolean = false;
+  @Prop() chevronRight = false;
   /** Class name of icon (for icon font) */
   @Prop() icon: string;
 

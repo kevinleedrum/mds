@@ -4,8 +4,8 @@ import { Chart, ChartType, ChartData, ChartOptions, registerables } from 'chart.
 Chart.register(...(registerables || []));
 
 // These interfaces prevent the Stencil documentation generator from expanding these type aliases (resulting in realllly long type definitions)
-export interface ChartJsData extends ChartData {}
-export interface ChartJsOptions extends ChartOptions {}
+export type ChartJsData = ChartData;
+export type ChartJsOptions = ChartOptions;
 
 @Component({
   tag: 'mx-chart',
@@ -18,7 +18,7 @@ export class MxChart {
   /** The labels and datasets to render. See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/). */
   @Prop() data: ChartJsData;
   /** The aria-label attribute for the inner canvas element. */
-  @Prop() elAriaLabel: string = 'Chart';
+  @Prop() elAriaLabel = 'Chart';
   /** Explicit height in pixels */
   @Prop() height: number;
   /** See the [Chart.js documentation](https://www.chartjs.org/docs/3.6.2/). */

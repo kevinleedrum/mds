@@ -22,6 +22,17 @@ The project uses Vuepress as a means to write documentation as you develop. When
 
 You can now access the site at [http://localhost:8080](http://localhost:8080).
 
+### Formatting and linting
+
+The project uses [prettier](https://github.com/prettier/prettier) to standardize code style. If you have
+a prettier plugin installed in your editor, then files may be formatted automatically on save. Otherwise,
+staged files will be formatted during a pre-commit hook (via [husky](https://github.com/typicode/husky)
+and [lint-staged](https://github.com/okonet/lint-staged)). See the `.prettierrc` file for rules.
+
+JavaScript and TypeScript files will also be linted prior to being committed. The commit will fail if
+there are any warnings or errors per our `.eslintrc.js` ruleset, which is based on [`eslint:recommended`](https://eslint.org/docs/rules/)
+and [@typescript-eslint/recommended](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/README.md).
+
 ## Vuepress Documentation Only Creation and Editing
 
 Because of relationship between Vuepress, TailwindCSS, and Stencil, simply running `yarn dev` will result in more changed files than you might be prepared for. To make the multiple framework environment work, they all react off of changes to one another.

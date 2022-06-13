@@ -27,33 +27,33 @@ export class MxTableRow {
   resizeObserver: ResizeObserver;
   indentLevel = 0;
   columnCount = 1;
-  isHidden: boolean = false;
+  isHidden = false;
 
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   @Prop() rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   @Prop() actions: ITableRowAction[] = [];
   /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
-  @Prop({ reflect: true }) doNotCollapse: boolean = false;
+  @Prop({ reflect: true }) doNotCollapse = false;
   /** Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`. */
-  @Prop() doNotDrag: boolean = false;
+  @Prop() doNotDrag = false;
   /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
   @Prop() rowIndex: number;
-  @Prop({ mutable: true }) checked: boolean = false;
+  @Prop({ mutable: true }) checked = false;
   /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
-  @Prop({ mutable: true, reflect: true }) collapseNestedRows: boolean = false;
+  @Prop({ mutable: true, reflect: true }) collapseNestedRows = false;
   /** Style the row as a subheader. */
-  @Prop() subheader: boolean = false;
+  @Prop() subheader = false;
 
   @Element() element: HTMLMxTableRowElement;
 
   @State() minWidths = new MinWidths();
-  @State() checkable: boolean = false;
-  @State() checkOnRowClick: boolean = false;
-  @State() isDraggable: boolean = false;
-  @State() isDragging: boolean = false;
-  @State() isMobileExpanded: boolean = false;
-  @State() isMobileCollapsing: boolean = false;
+  @State() checkable = false;
+  @State() checkOnRowClick = false;
+  @State() isDraggable = false;
+  @State() isDragging = false;
+  @State() isMobileExpanded = false;
+  @State() isMobileCollapsing = false;
 
   /** Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked */
   @Event() mxCheck: EventEmitter<{ rowId: string; checked: boolean }>;
@@ -185,7 +185,7 @@ export class MxTableRow {
   }
 
   onClick(e: MouseEvent) {
-    if (!!(e.target as HTMLElement).closest('a, button, input, mx-menu')) return; // Ignore clicks on links, buttons, etc.
+    if ((e.target as HTMLElement).closest('a, button, input, mx-menu')) return; // Ignore clicks on links, buttons, etc.
     if (!this.minWidths.sm) {
       // Collapse/expand row when the exposed column cell is clicked
       const exposedCell = this.getExposedCell();
@@ -356,7 +356,7 @@ export class MxTableRow {
    * are added. */
   @Method()
   async getChildren(): Promise<HTMLElement[]> {
-    let children: HTMLElement[] = [];
+    const children: HTMLElement[] = [];
     if (!this.minWidths.sm) children.push(this.rowEl);
     else
       (Array.from(this.rowEl.children) as HTMLElement[]).forEach(child => {

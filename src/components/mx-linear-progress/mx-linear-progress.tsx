@@ -10,7 +10,7 @@ export class MxLinearProgress {
   /** The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. */
   @Prop() value: number = null;
   /** Delay the appearance of the indicator for this many milliseconds */
-  @Prop() appearDelay: number = 0;
+  @Prop() appearDelay = 0;
 
   @Element() element: HTMLMxLinearProgressElement;
 

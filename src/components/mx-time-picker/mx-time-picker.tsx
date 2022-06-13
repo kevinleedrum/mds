@@ -18,17 +18,17 @@ export class MxTimePicker {
   menuButton: HTMLElement;
   inputElem: HTMLInputElement;
   menu: HTMLMxMenuElement;
-  isTimeInputSupported: boolean = false;
+  isTimeInputSupported = false;
   uuid: string = uuidv4();
 
   /** Helpful text to show below the picker */
   @Prop() assistiveText: string;
-  @Prop() dense: boolean = false;
-  @Prop() disabled: boolean = false;
+  @Prop() dense = false;
+  @Prop() disabled = false;
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
-  @Prop({ mutable: true, reflect: true }) error: boolean = false;
-  @Prop() floatLabel: boolean = false;
+  @Prop({ mutable: true, reflect: true }) error = false;
+  @Prop() floatLabel = false;
   /** The `id` attribute for the internal input element */
   @Prop() inputId: string;
   @Prop() label: string;
@@ -36,8 +36,8 @@ export class MxTimePicker {
   /** The time in 24-hour hh:mm format */
   @Prop({ mutable: true }) value: string;
 
-  @State() isFocused: boolean = false;
-  @State() isInputDirty: boolean = false;
+  @State() isFocused = false;
+  @State() isInputDirty = false;
 
   @Element() element: HTMLMxTimePickerElement;
 
@@ -70,8 +70,9 @@ export class MxTimePicker {
 
   normalizeValue() {
     // If HH:MM:ss.mmm value is passed, change it to just HH:MM
-    if (this.value && /\d\d\:\d\d\:\d\d/.test(this.value)) {
-      let [hours, minutes] = this.value.split(':');
+    if (this.value && /\d\d:\d\d:\d\d/.test(this.value)) {
+      let [hours] = this.value.split(':');
+      const [, minutes] = this.value.split(':');
       if (this.value.toUpperCase().includes('PM')) {
         hours = (Number(hours) + 12).toString();
       }

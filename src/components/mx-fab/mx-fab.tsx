@@ -12,13 +12,13 @@ export class MxFab {
   /** Class name of icon */
   @Prop() icon: string;
   /** Style as a secondary action */
-  @Prop() secondary: boolean = false;
+  @Prop() secondary = false;
   /** The aria-label attribute for the inner button element. */
   @Prop() elAriaLabel: string;
   @Prop() value: string;
 
   @State() minWidths = new MinWidths();
-  @State() isExtended: boolean = false;
+  @State() isExtended = false;
 
   @Element() element: HTMLMxFabElement;
 

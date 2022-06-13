@@ -13,28 +13,28 @@ export type PageChangeEventDetail = {
 export class MxPagination {
   rowsMenuAnchor: HTMLElement;
   rowsMenu: HTMLMxMenuElement;
-  hasStatus: boolean = false;
+  hasStatus = false;
   paginationWrapper: HTMLElement;
   rowsPerPageWrapper: HTMLElement;
   resizeObserver: ResizeObserver;
 
-  @Prop() page: number = 1;
+  @Prop() page = 1;
   @Prop() rowsPerPageOptions: number[] = [10, 25, 50, 100];
-  @Prop() rowsPerPage: number = 100;
+  @Prop() rowsPerPage = 100;
   /** Reduce the UI to only a page */
-  @Prop() simple: boolean = false;
+  @Prop() simple = false;
   @Prop() totalRows: number;
   /** Disable the page buttons (i.e. when loading results) */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
   /** Disable the next page button (i.e. when the last page was loaded from an API) */
-  @Prop() disableNextPage: boolean = false;
+  @Prop() disableNextPage = false;
 
-  @State() hideRowsPerPage: boolean = false;
-  @State() moveStatusToBottom: boolean = false;
+  @State() hideRowsPerPage = false;
+  @State() moveStatusToBottom = false;
   /** Whether the component width (not viewport width) is >= 320px */
-  @State() isXSmallMinWidth: boolean = false;
+  @State() isXSmallMinWidth = false;
   /** Whether the component width (not viewport width) is >= 640px */
-  @State() isSmallMinWidth: boolean = false;
+  @State() isSmallMinWidth = false;
 
   @Element() element: HTMLMxPaginationElement;
 
@@ -109,8 +109,8 @@ export class MxPagination {
   }
 
   get currentRange(): string {
-    let start = this.rowsPerPage * (this.page - 1) + 1;
-    let end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
+    const start = this.rowsPerPage * (this.page - 1) + 1;
+    const end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
     return start + '–' + end;
   }
 

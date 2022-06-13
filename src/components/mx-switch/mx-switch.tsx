@@ -8,12 +8,12 @@ import { propagateDataAttributes } from '../../utils/utils';
 export class MxSwitch {
   dataAttributes = {};
 
-  @Prop() name: string = '';
-  @Prop() value: string = '';
-  @Prop() labelClass: string = '';
-  @Prop() labelName: string = '';
-  @Prop({ mutable: true }) checked: boolean = false;
-  @Prop() disabled: boolean = false;
+  @Prop() name = '';
+  @Prop() value = '';
+  @Prop() labelClass = '';
+  @Prop() labelName = '';
+  @Prop({ mutable: true }) checked = false;
+  @Prop() disabled = false;
 
   @Element() element: HTMLMxInputElement;
 
