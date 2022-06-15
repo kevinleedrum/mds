@@ -73,7 +73,7 @@ export class MxInput implements IMxInputProps {
   @Prop() floatLabel = false;
   /** Display a multi-line `textarea` instead of an `input` */
   @Prop() textarea = false;
-  @Prop({ mutable: true }) textareaHeight = '250px';
+  @Prop({ mutable: true }) textareaHeight = '15.625rem';
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
   /** Set to `true` to hide the character count when a `maxlength` is set. */
@@ -169,7 +169,7 @@ export class MxInput implements IMxInputProps {
   }
 
   get labelClassNames() {
-    let str = 'block pointer-events-none';
+    let str = 'block whitespace-nowrap pointer-events-none';
     if (this.floatLabel) {
       str += ' absolute mt-0 px-4';
       if (this.textarea) str += ' top-12';
@@ -218,7 +218,7 @@ export class MxInput implements IMxInputProps {
       </label>
     );
     return (
-      <Host class={'mx-input block' + (this.disabled ? ' disabled' : '')}>
+      <Host class={'mx-input block text-3' + (this.disabled ? ' disabled' : '')}>
         {this.label && !this.floatLabel && labelJsx}
 
         <div class={this.containerClass} onClick={this.onContainerClick.bind(this)}>

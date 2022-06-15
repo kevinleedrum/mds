@@ -4,16 +4,16 @@
   span {
     position: relative;
     z-index: 1;
-    border: 2px solid var(--mds-border-radio);
+    border: 0.125rem solid var(--mds-border-radio);
 
     &::before {
       display: none;
       content: '';
       position: absolute;
-      top: -12.5px;
-      left: -12.5px;
-      width: 40px;
-      height: 40px;
+      top: -0.7813rem;
+      left: -0.7813rem;
+      width: 2.5rem;
+      height: 2.5rem;
       border-radius: 100%;
       z-index: 0;
     }
@@ -22,10 +22,10 @@
       content: '';
       position: absolute;
       display: none;
-      left: 3px;
-      top: 3px;
-      width: 10px;
-      height: 10px;
+      left: 0.1875rem;
+      top: 0.1875rem;
+      width: 0.625rem;
+      height: 0.625rem;
       background: var(--mds-bg-radio-checked);
       border-radius: 100%;
     }

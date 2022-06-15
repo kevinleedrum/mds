@@ -52,7 +52,7 @@ export class MxSearch {
 
   render() {
     return (
-      <Host class="mx-search flex items-center relative">
+      <Host class="mx-search flex items-center text-3 relative">
         <input
           ref={el => (this.inputEl = el)}
           type="search"
