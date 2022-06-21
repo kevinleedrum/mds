@@ -1,8 +1,8 @@
 import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
 import { R as ResizeObserver } from './resize-observer-9111af2a.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { d as getScrollingParent, a as getCursorCoords, e as getBounds, g as getPageRect, f as isScrolledOutOfView } from './utils-f31b72fe.js';
-import { c as collapse, e as expand } from './transitions-4a0eb798.js';
+import { d as getScrollingParent, a as getCursorCoords, e as getBounds, g as getPageRect, f as isScrolledOutOfView } from './utils-eee50014.js';
+import { c as collapse, e as expand } from './transitions-29f7f3e5.js';
 
 const SCROLL_PX = 5; // Scroll by 5px ...
 const SCROLL_INTERVAL_MS = 5; // ... every 5ms
@@ -167,7 +167,7 @@ const MxTableRow = class {
     nestedRows.forEach(childRow => this.childRowWrapper.appendChild(childRow));
   }
   onClick(e) {
-    if (!!e.target.closest('a, button, input, mx-menu'))
+    if (e.target.closest('a, button, input, mx-menu'))
       return; // Ignore clicks on links, buttons, etc.
     if (!this.minWidths.sm) {
       // Collapse/expand row when the exposed column cell is clicked
@@ -341,7 +341,7 @@ const MxTableRow = class {
    * rows.  If a child is `display: contents` (i.e. the first column wrapper), then its children
    * are added. */
   async getChildren() {
-    let children = [];
+    const children = [];
     if (!this.minWidths.sm)
       children.push(this.rowEl);
     else

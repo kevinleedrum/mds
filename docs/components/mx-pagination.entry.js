@@ -88,8 +88,8 @@ const MxPagination = class {
     return Math.ceil(this.totalRows / this.rowsPerPage);
   }
   get currentRange() {
-    let start = this.rowsPerPage * (this.page - 1) + 1;
-    let end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
+    const start = this.rowsPerPage * (this.page - 1) + 1;
+    const end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
     return start + '–' + end;
   }
   get rowRangeClass() {

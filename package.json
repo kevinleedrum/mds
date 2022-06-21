@@ -1,6 +1,6 @@
 {
   "name": "@moxiworks/mds",
-  "version": "0.1.45",
+  "version": "0.1.46",
   "description": "Moxiworks Custom Component System",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
@@ -39,9 +39,19 @@
       "runOnChangeOnly": true
     }
   },
+  "lint-staged": {
+    "src/**/*.+(js|jsx|css|scss|ts|tsx|md)": [
+      "yarn format"
+    ],
+    "src/**/*.+(js|jsx|ts|tsx)": [
+      "yarn lint"
+    ]
+  },
   "scripts": {
     "build": "sh build-all.sh",
     "dev": "npm-run-all --parallel docs:dev stencil:start tailwind:dev watch",
+    "format": "prettier --loglevel warn --write src/**/*",
+    "lint": "eslint src/**/*{.ts,.tsx} --max-warnings=0",
     "tailwind:dev": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css -w",
     "tailwind:scss": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css",
     "tailwind:prod": "TAILWIND_MODE=build NODE_ENV=production postcss src/tailwind/styles.css -o dist/styles/mds-core.css",
@@ -76,18 +86,25 @@
     "@stencil/react-output-target": "^0.3.1",
     "@stencil/sass": "^1.4.1",
     "@types/jest": "^26.0.22",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/parser": "^5.27.1",
     "autoprefixer": "^10.2.5",
     "copyfiles": "^2.4.1",
     "enzyme": "^3.11.0",
+    "eslint": "^8.17.0",
+    "husky": "^8.0.1",
     "jest": "26.6.3",
     "jest-cli": "26.6.3",
+    "lint-staged": "^13.0.1",
     "minify": "^7.0.2",
     "npm-run-all": "^4.1.5",
     "npm-watch": "^0.11.0",
     "postcss": "^8.2.9",
     "postcss-cli": "^8.3.1",
+    "prettier": "^2.6.2",
     "stencil-inline-svg": "^1.1.0",
     "tailwindcss": "^2.2.0-canary.9",
+    "typescript": "^4.7.3",
     "vercel": "^24.0.0",
     "vuepress": "^1.8.2",
     "vuepress-plugin-flexsearch": "^0.1.0",

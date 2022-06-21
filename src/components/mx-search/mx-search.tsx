@@ -9,14 +9,14 @@ export class MxSearch {
   dataAttributes = {};
   inputEl: HTMLInputElement;
 
-  @Prop() dense: boolean = false;
+  @Prop() dense = false;
   /** The `aria-label` attribute for the `<input>` element. If not provided, the `aria-label` will fallback to either the `placeholder` value or simply "Search". */
   @Prop() elAriaLabel: string;
-  @Prop() flat: boolean = false;
+  @Prop() flat = false;
   @Prop() name: string;
   @Prop() placeholder: string;
   /** Set to `false` to hide the clear button. */
-  @Prop() showClear: boolean = true;
+  @Prop() showClear = true;
   @Prop({ mutable: true }) value: string;
 
   @Element() element: HTMLMxSearchElement;
@@ -52,7 +52,7 @@ export class MxSearch {
 
   render() {
     return (
-      <Host class="mx-search flex items-center relative">
+      <Host class="mx-search flex items-center text-3 relative">
         <input
           ref={el => (this.inputEl = el)}
           type="search"

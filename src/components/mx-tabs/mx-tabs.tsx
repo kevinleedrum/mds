@@ -9,7 +9,7 @@ import { MinWidths, minWidthSync } from '../../utils/minWidthSync';
 })
 export class MxTabs {
   /** Stretch tabs to fill the entire width */
-  @Prop() fill: boolean = false;
+  @Prop() fill = false;
   /** The index of the selected tab */
   @Prop() value: number = null;
   /** An array of objects for each tab (see Tab Properties) */

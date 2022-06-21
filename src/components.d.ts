@@ -849,13 +849,13 @@ export namespace Components {
         /**
           * A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows.
          */
-        "getGroupByHeading": (row: Object) => string;
+        "getGroupByHeading": (row: unknown) => string;
         "getMultiRowActions": (rows: string[]) => ITableRowAction[];
-        "getRowActions": (row: Object) => ITableRowAction[];
+        "getRowActions": (row: unknown) => ITableRowAction[];
         /**
           * A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).
          */
-        "getRowId": (row: Object) => string;
+        "getRowId": (row: unknown) => string;
         /**
           * The row property to use for grouping rows.  The `rows` prop must be provided as well.
          */
@@ -892,7 +892,7 @@ export namespace Components {
         /**
           * An array of objects that defines the table's dataset.
          */
-        "rows": Object[];
+        "rows": unknown[];
         "rowsPerPage": number;
         "rowsPerPageOptions": number[];
         /**
@@ -2173,13 +2173,13 @@ declare namespace LocalJSX {
         /**
           * A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows.
          */
-        "getGroupByHeading"?: (row: Object) => string;
+        "getGroupByHeading"?: (row: unknown) => string;
         "getMultiRowActions"?: (rows: string[]) => ITableRowAction[];
-        "getRowActions"?: (row: Object) => ITableRowAction[];
+        "getRowActions"?: (row: unknown) => ITableRowAction[];
         /**
           * A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).
          */
-        "getRowId"?: (row: Object) => string;
+        "getRowId"?: (row: unknown) => string;
         /**
           * The row property to use for grouping rows.  The `rows` prop must be provided as well.
          */
@@ -2212,7 +2212,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the sorting, pagination, or rows data changes. The `Event.detail` will contain the sorted, paginated array of visible rows.  This is useful for building a custom row layout via the default slot.
          */
-        "onMxVisibleRowsChange"?: (event: CustomEvent<Object[]>) => void;
+        "onMxVisibleRowsChange"?: (event: CustomEvent<unknown[]>) => void;
         /**
           * Additional class names for the operation bar grid
          */
@@ -2236,7 +2236,7 @@ declare namespace LocalJSX {
         /**
           * An array of objects that defines the table's dataset.
          */
-        "rows"?: Object[];
+        "rows"?: unknown[];
         "rowsPerPage"?: number;
         "rowsPerPageOptions"?: number[];
         /**

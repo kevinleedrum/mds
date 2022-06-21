@@ -11,8 +11,8 @@ export class MxToggleButton {
   dataAttributes = {};
 
   @Prop() icon: string;
-  @Prop({ reflect: true }) selected: boolean = false;
-  @Prop() disabled: boolean = false;
+  @Prop({ reflect: true }) selected = false;
+  @Prop() disabled = false;
   /** The aria-label attribute for the inner button element. */
   @Prop() elAriaLabel: string;
   /** Only used inside a toggle button group */

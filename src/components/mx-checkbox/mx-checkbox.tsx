@@ -8,16 +8,16 @@ import { propagateDataAttributes } from '../../utils/utils';
 export class MxCheckbox {
   dataAttributes = {};
 
-  @Prop() name: string = '';
-  @Prop() value: string = '';
-  @Prop() labelLeft: boolean = false;
-  @Prop() labelName: string = '';
-  @Prop() labelClass: string = '';
+  @Prop() name = '';
+  @Prop() value = '';
+  @Prop() labelLeft = false;
+  @Prop() labelName = '';
+  @Prop() labelClass = '';
   /** Hide the label text visually, but still make it accessible for screen readers */
-  @Prop() hideLabel: boolean = false;
-  @Prop({ mutable: true }) checked: boolean = false;
-  @Prop() disabled: boolean = false;
-  @Prop() indeterminate: boolean = false;
+  @Prop() hideLabel = false;
+  @Prop({ mutable: true }) checked = false;
+  @Prop() disabled = false;
+  @Prop() indeterminate = false;
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
 

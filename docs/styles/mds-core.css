@@ -423,7 +423,7 @@
   Document
   ========
   */
-  
+
   /**
   Use a more readable tab size (opinionated).
   */
@@ -437,11 +437,11 @@
     box-sizing: border-box;
   }
 .mds{
-  
+
   -moz-tab-size: 4;
   -o-tab-size: 4;
      tab-size: 4;
-  
+
   -webkit-text-size-adjust: 100%;
 }
 /**
@@ -457,7 +457,7 @@
   */
 .mds abbr[title] {
     -webkit-text-decoration: underline dotted;
-            text-decoration: underline dotted;
+    text-decoration: underline dotted;
   }
 /**
   Add the correct font weight in Edge and Safari.
@@ -474,13 +474,7 @@
   .mds kbd,
   .mds samp,
   .mds pre {
-    font-family:
-      ui-monospace,
-      SFMono-Regular,
-      Consolas,
-      'Liberation Mono',
-      Menlo,
-      monospace; /* 1 */
+    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; /* 1 */
     font-size: 1em; /* 2 */
   }
 /**
@@ -540,7 +534,8 @@
   1. Remove the inheritance of text transform in Firefox.
   */
 .mds button,
-  .mds select { /* 1 */
+  .mds select {
+    /* 1 */
     text-transform: none;
   }
 /**
@@ -665,8 +660,9 @@
     padding: 0;
   }
 .mds{
-  
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   line-height: 1.5;
 }
 /**
@@ -745,7 +741,7 @@
    *    to override it to ensure consistency even when using the default theme.
    */
 .mds button,
-  .mds [role="button"] {
+  .mds [role='button'] {
     cursor: pointer;
   }
 /**
@@ -811,7 +807,7 @@
   .mds code,
   .mds kbd,
   .mds samp {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   }
 /**
    * 1. Make replaced elements `display: block` by default as that's
@@ -860,7 +856,9 @@
 /**
   Prevent adjustments of font size after orientation changes in iOS.
   */
-.mds *, .mds ::before, .mds ::after {
+.mds *,
+  .mds ::before,
+  .mds ::after {
     --tw-translate-x: 0;
     --tw-translate-y: 0;
     --tw-rotate: 0;
@@ -868,36 +866,40 @@
     --tw-skew-y: 0;
     --tw-scale-x: 1;
     --tw-scale-y: 1;
-    --tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    --tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate))
+      skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     --tw-border-opacity: 1;
     border-color: rgba(229, 231, 235, var(--tw-border-opacity));
     --tw-shadow: 0 0 #0000;
-    --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
+    --tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
     --tw-ring-offset-width: 0px;
     --tw-ring-offset-color: #fff;
     --tw-ring-color: rgba(59, 130, 246, 0.5);
     --tw-ring-offset-shadow: 0 0 #0000;
     --tw-ring-shadow: 0 0 #0000;
-    --tw-blur: var(--tw-empty,/*!*/ /*!*/);
-    --tw-brightness: var(--tw-empty,/*!*/ /*!*/);
-    --tw-contrast: var(--tw-empty,/*!*/ /*!*/);
-    --tw-grayscale: var(--tw-empty,/*!*/ /*!*/);
-    --tw-hue-rotate: var(--tw-empty,/*!*/ /*!*/);
-    --tw-invert: var(--tw-empty,/*!*/ /*!*/);
-    --tw-saturate: var(--tw-empty,/*!*/ /*!*/);
-    --tw-sepia: var(--tw-empty,/*!*/ /*!*/);
-    --tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);
-    --tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-    --tw-backdrop-blur: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-brightness: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-contrast: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-grayscale: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-hue-rotate: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-invert: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-opacity: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-saturate: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-sepia: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+    --tw-blur: var(--tw-empty, /*!*/ /*!*/);
+    --tw-brightness: var(--tw-empty, /*!*/ /*!*/);
+    --tw-contrast: var(--tw-empty, /*!*/ /*!*/);
+    --tw-grayscale: var(--tw-empty, /*!*/ /*!*/);
+    --tw-hue-rotate: var(--tw-empty, /*!*/ /*!*/);
+    --tw-invert: var(--tw-empty, /*!*/ /*!*/);
+    --tw-saturate: var(--tw-empty, /*!*/ /*!*/);
+    --tw-sepia: var(--tw-empty, /*!*/ /*!*/);
+    --tw-drop-shadow: var(--tw-empty, /*!*/ /*!*/);
+    --tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate)
+      var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+    --tw-backdrop-blur: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-brightness: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-contrast: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-grayscale: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-hue-rotate: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-invert: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-opacity: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-saturate: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-sepia: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast)
+      var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity)
+      var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
   }
 /* Scoped to .mds */
 .container{
@@ -7685,23 +7687,23 @@
       border-color: var(--mds-border-input-focus);
     }
 .mx-input .mx-input-wrapper i {
-      font-size: 24px;
+      font-size: 1.5rem;
     }
 .mx-input .mx-input-wrapper label {
       background: #fff;
       background: var(--mds-bg-input);
       transform-origin: 0 0;
       transition: transform 0.1s ease-out;
-      --translate-y: -22px;
+      --translate-y: -1.375rem;
     }
 .mx-input .mx-input-wrapper label.dense {
-        --translate-y: -16px;
+        --translate-y: -1rem;
       }
 .mx-input .mx-input-wrapper label.floating {
         transform: translate3d(0, var(--translate-y), 0) scale(0.8);
       }
 .mx-input .mx-input-wrapper label.floating.has-left-icon {
-          transform: translate3d(-36px, var(--translate-y), 0) scale(0.8);
+          transform: translate3d(-2.25rem, var(--translate-y), 0) scale(0.8);
         }
 @media (prefers-reduced-motion: reduce) {
 .mx-input .mx-input-wrapper label {
@@ -7709,7 +7711,7 @@
     }
       }
 .mx-input .mx-input-wrapper textarea::-webkit-scrollbar {
-        width: 12px;
+        width: 0.75rem;
         background: transparent;
       }
 .mx-input .mx-input-wrapper textarea::-webkit-scrollbar-thumb {
@@ -7794,7 +7796,7 @@
 .mx-search > input:focus {
       border-color: #0457af;
       border-color: var(--mds-border-search-focus);
-      padding-left: 3.438rem; /* Remove 1px of padding to offset the border increase */
+      padding-left: 3.4375rem; /* Remove 1px of padding to offset the border increase */
     }
 .mx-search > input::-webkit-search-cancel-button {
       -webkit-appearance: none;
@@ -8193,17 +8195,17 @@
 .mx-checkbox span {
     position: relative;
     z-index: 1;
-    border: 2px solid #505050;
-    border: 2px solid var(--mds-border-checkbox);
-    border-radius: 2px;
+    border: 0.125rem solid #505050;
+    border: 0.125rem solid var(--mds-border-checkbox);
+    border-radius: 0.125rem;
   }
 .mx-checkbox span::before {
       content: '';
       position: absolute;
-      top: -13.5px;
-      left: -13.5px;
-      width: 40px;
-      height: 40px;
+      top: -0.8438rem;
+      left: -0.8438rem;
+      width: 2.5rem;
+      height: 2.5rem;
       border-radius: 100%;
       z-index: 0;
     }
@@ -8211,13 +8213,13 @@
       content: '';
       position: absolute;
       display: none;
-      left: 4px;
-      top: -1px;
-      width: 6px;
-      height: 12px;
+      left: 0.25rem;
+      top: -0.0625rem;
+      width: 0.375rem;
+      height: 0.75rem;
       border: solid #fff;
       border: solid var(--mds-border-checkbox-check);
-      border-width: 0 2px 2px 0;
+      border-width: 0 0.125rem 0.125rem 0;
       transform: rotate(45deg);
     }
 .mx-checkbox span:hover::before {
@@ -8242,13 +8244,13 @@
     content: '';
     position: absolute;
     display: none;
-    left: 2px;
-    top: 6px;
-    width: 10px;
+    left: 0.125rem;
+    top: 0.375rem;
+    width: 0.625rem;
     height: 0;
     border: 0;
-    border-top: 2px solid #fff;
-    border-top: 2px solid var(--mds-border-checkbox-check);
+    border-top: 0.125rem solid #fff;
+    border-top: 0.125rem solid var(--mds-border-checkbox-check);
     transform: rotate(0deg);
   }
 .mx-checkbox input:checked ~ span,
@@ -8293,17 +8295,17 @@
 .mx-radio span {
     position: relative;
     z-index: 1;
-    border: 2px solid #505050;
-    border: 2px solid var(--mds-border-radio);
+    border: 0.125rem solid #505050;
+    border: 0.125rem solid var(--mds-border-radio);
   }
 .mx-radio span::before {
       display: none;
       content: '';
       position: absolute;
-      top: -12.5px;
-      left: -12.5px;
-      width: 40px;
-      height: 40px;
+      top: -0.7813rem;
+      left: -0.7813rem;
+      width: 2.5rem;
+      height: 2.5rem;
       border-radius: 100%;
       z-index: 0;
     }
@@ -8311,10 +8313,10 @@
       content: '';
       position: absolute;
       display: none;
-      left: 3px;
-      top: 3px;
-      width: 10px;
-      height: 10px;
+      left: 0.1875rem;
+      top: 0.1875rem;
+      width: 0.625rem;
+      height: 0.625rem;
       background: #0457af;
       background: var(--mds-bg-radio-checked);
       border-radius: 100%;
@@ -8376,7 +8378,7 @@
 .mx-switch .slider {
     background-color: #b9b9b9;
     background-color: var(--mds-bg-switch-track);
-    transition: 0.4s;
+    transition: 0.15s;
   }
 .mx-switch .slider:before{
   --tw-shadow: 0px 0px 2px rgba(0, 0, 0, 0.04), 0px 2px 2px rgba(0, 0, 0, 0.02), 0px 1px 3px rgba(0, 0, 0, 0.06);
@@ -8386,13 +8388,13 @@
 .mx-switch .slider:before {
       position: absolute;
       content: '';
-      height: 20px;
-      width: 20px;
-      left: -1px;
-      bottom: -3px;
+      height: 1.25rem;
+      width: 1.25rem;
+      left: -0.0625rem;
+      bottom: -0.1875rem;
       background-color: #fff;
       background-color: var(--mds-bg-switch-thumb);
-      transition: 0.4s;
+      transition: 0.15s;
     }
 @media (prefers-reduced-motion: reduce) {
 .mx-switch .slider:before {
@@ -8403,10 +8405,10 @@
       display: none;
       content: '';
       position: absolute;
-      top: -13px;
-      left: -11.5px;
-      width: 40px;
-      height: 40px;
+      top: -0.8125rem;
+      left: -0.7188rem;
+      width: 2.5rem;
+      height: 2.5rem;
       border-radius: 100%;
       z-index: 0;
     }
@@ -8436,12 +8438,12 @@
     background: var(--mds-bg-switch-overlay-checked-focus);
   }
 .mx-switch input:checked + .slider:before {
-    transform: translateX(20px);
+    transform: translateX(1.25rem);
     background: #0457af;
     background: var(--mds-bg-switch-thumb-checked);
   }
 .mx-switch input:checked + .slider::after {
-    transform: translateX(20px);
+    transform: translateX(1.25rem);
     background: rgba(4, 87, 175, 0.32);
     background: var(--mds-bg-switch-overlay-checked-active);
   }
@@ -8475,7 +8477,7 @@
     }
 /* Rounded sliders */
 .mx-switch .slider.round {
-    border-radius: 34px;
+    border-radius: 2.125rem;
   }
 .mx-switch .slider.round:before {
     border-radius: 50%;
@@ -8812,10 +8814,10 @@
       background: var(--mds-bg-select);
       transform-origin: 0 0;
       transition: transform 0.1s ease-out;
-      --translate-y: -22px;
+      --translate-y: -1.375rem;
     }
 .mx-select .mx-select-wrapper label.dense {
-        --translate-y: -16px;
+        --translate-y: -1rem;
       }
 .mx-select .mx-select-wrapper label.floating {
         transform: translate3d(0, var(--translate-y), 0) scale(0.8);
@@ -9127,10 +9129,10 @@
       background: var(--mds-bg-picker);
       transform-origin: 0 0;
       transition: transform 0.1s ease-out;
-      --translate-y: -22px;
+      --translate-y: -1.375rem;
     }
 .mx-date-picker > .picker-wrapper label.dense {
-        --translate-y: -16px;
+        --translate-y: -1rem;
       }
 .mx-date-picker > .picker-wrapper label.floating {
         transform: translate3d(0, var(--translate-y), 0) scale(0.8);
@@ -9322,7 +9324,7 @@
   border-width: 2px;
 }
 .mx-date-picker .qs-overlay input.qs-overlay-year:focus-within {
-        padding: 0 15px;
+        padding: 0 0.9375rem;
         border-color: #0457af;
         border-color: var(--mds-border-input-focus);
       }
@@ -9533,8 +9535,14 @@
 .mx-date-picker .qs-arrow.qs-left{
   margin-left: 1rem;
 }
+.mx-date-picker .qs-arrow.qs-left{
+  height: 1.5rem;
+}
+.mx-date-picker .qs-arrow.qs-left{
+  width: 1.5rem;
+}
 .mx-date-picker .qs-arrow.qs-left {
-      background: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 7.41L10.42 12L15 16.59L13.59 18L7.59 12L13.59 6L15 7.41Z" fill="currentColor"/></svg>');
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 7.41L10.42 12L15 16.59L13.59 18L7.59 12L13.59 6L15 7.41Z" fill="currentColor"/></svg>');
     }
 .mx-date-picker .qs-arrow.qs-right{
   order: 3;
@@ -9545,8 +9553,14 @@
 .mx-date-picker .qs-arrow.qs-right{
   margin-right: -0.5rem;
 }
+.mx-date-picker .qs-arrow.qs-right{
+  height: 1.5rem;
+}
+.mx-date-picker .qs-arrow.qs-right{
+  width: 1.5rem;
+}
 .mx-date-picker .qs-arrow.qs-right {
-      background: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.58997 16.59L13.17 12L8.58997 7.41L9.99997 6L16 12L9.99997 18L8.58997 16.59Z" fill="currentColor"/></svg>');
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.58997 16.59L13.17 12L8.58997 7.41L9.99997 6L16 12L9.99997 18L8.58997 16.59Z" fill="currentColor"/></svg>');
     }
 .mx-date-picker .qs-month-year{
   flex: 1 1 0%;
@@ -9574,7 +9588,7 @@
 }
 .mx-date-picker .qs-month-year:after {
       content: ' ';
-      background-image: url('data:image/svg+xml;utf8,<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.9654 0.757212C9.93099 0.681077 9.87273 0.616004 9.79798 0.57022C9.72323 0.524437 9.63535 0.5 9.54545 0.5H0.454547C0.364646 0.5 0.276763 0.524437 0.202012 0.570222C0.127262 0.616007 0.0690015 0.681082 0.0345985 0.757219C0.000195557 0.833357 -0.00880479 0.917136 0.00873577 0.997962C0.0262763 1.07879 0.0695701 1.15303 0.133142 1.2113L4.67859 5.37795C4.7208 5.41665 4.77091 5.44734 4.82605 5.46828C4.8812 5.48922 4.94031 5.5 5 5.5C5.05969 5.5 5.1188 5.48922 5.17394 5.46828C5.22909 5.44734 5.2792 5.41665 5.3214 5.37795L9.86686 1.2113C9.93043 1.15303 9.97372 1.07879 9.99126 0.997958C10.0088 0.917131 9.9998 0.833351 9.9654 0.757212Z" fill="currentColor"/></svg>');
+      background-image: url('data:image/svg+xml;utf8,<svg class="w-10" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.9654 0.757212C9.93099 0.681077 9.87273 0.616004 9.79798 0.57022C9.72323 0.524437 9.63535 0.5 9.54545 0.5H0.454547C0.364646 0.5 0.276763 0.524437 0.202012 0.570222C0.127262 0.616007 0.0690015 0.681082 0.0345985 0.757219C0.000195557 0.833357 -0.00880479 0.917136 0.00873577 0.997962C0.0262763 1.07879 0.0695701 1.15303 0.133142 1.2113L4.67859 5.37795C4.7208 5.41665 4.77091 5.44734 4.82605 5.46828C4.8812 5.48922 4.94031 5.5 5 5.5C5.05969 5.5 5.1188 5.48922 5.17394 5.46828C5.22909 5.44734 5.2792 5.41665 5.3214 5.37795L9.86686 1.2113C9.93043 1.15303 9.97372 1.07879 9.99126 0.997958C10.0088 0.917131 9.9998 0.833351 9.9654 0.757212Z" fill="currentColor"/></svg>');
     }
 .mx-date-picker .qs-month:after {
       content: ' ';
@@ -9725,10 +9739,10 @@
       background: var(--mds-bg-picker);
       transform-origin: 0 0;
       transition: transform 0.1s ease-out;
-      --translate-y: -22px;
+      --translate-y: -1.375rem;
     }
 .mx-time-picker > .picker-wrapper label.dense {
-        --translate-y: -16px;
+        --translate-y: -1rem;
       }
 .mx-time-picker > .picker-wrapper label.floating {
         transform: translate3d(0, var(--translate-y), 0) scale(0.8);

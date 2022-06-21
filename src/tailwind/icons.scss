@@ -2,7 +2,7 @@
   .text-icon {
     font-size: 1.5rem;
   }
-  
+
   [class^='mds-'],
   [class*=' mds-'] {
     display: inline-block;
@@ -10,14 +10,14 @@
     background: currentColor;
     mask-size: contain;
     mask-repeat: no-repeat;
-  
+
     &::before {
       content: '';
       display: block;
       padding-top: 100%;
     }
   }
-  
+
   .mds-arrow-left {
     mask-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.3327 5.33317H3.21935L6.94602 1.6065L5.99935 0.666504L0.666016 5.99984L5.99935 11.3332L6.93935 10.3932L3.21935 6.6665H11.3327V5.33317Z' fill='currentColor' /%3E%3C/svg%3E");
   }

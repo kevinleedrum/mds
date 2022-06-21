@@ -11,7 +11,7 @@ const snackbarQueue: { resolve: any; reject: any }[] = []; // Deferred promises
 export class MxSnackbar {
   alertEl: HTMLElement;
   durationTimer: NodeJS.Timeout;
-  queueItem: { resolve: Function; reject: Function };
+  queueItem: { resolve: () => void; reject: () => void };
 
   /** The duration in milliseconds to show the snackbar before automatically closing. */
   @Prop() duration = 6000;
@@ -67,7 +67,7 @@ export class MxSnackbar {
   }
 
   get alertClass(): string {
-    let str =
+    const str =
       'mx-snackbar-alert flex flex-wrap items-center justify-between rounded-lg text-4 max-w-360 sm:w-360 shadow-6 px-16 py-14';
     return str;
   }

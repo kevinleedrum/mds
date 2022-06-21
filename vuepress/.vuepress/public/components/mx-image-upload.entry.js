@@ -106,7 +106,7 @@ const MxImageUpload = class {
     this.isDraggingOver = false;
   }
   get accept() {
-    let accept = [];
+    const accept = [];
     if (this.acceptImage)
       accept.push('image/*');
     if (this.acceptPdf)

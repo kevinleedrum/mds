@@ -1,5 +1,5 @@
 import { r as registerInstance, h, e as Host } from './index-1ef0feab.js';
-import { r as ripple } from './ripple-54ef50dc.js';
+import { r as ripple } from './ripple-140c6d57.js';
 
 const MxTab = class {
   constructor(hostRef) {

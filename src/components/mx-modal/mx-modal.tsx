@@ -19,10 +19,10 @@ export class MxModal {
   focusElements: HTMLElement[];
   firstFocusElement: HTMLElement;
   lastFocusElement: HTMLElement;
-  hasCard: boolean = false;
-  hasHeader: boolean = false;
-  hasHeaderBottom: boolean = false;
-  hasHeaderCenter: boolean = false;
+  hasCard = false;
+  hasHeader = false;
+  hasHeaderBottom = false;
+  hasHeaderCenter = false;
   modal: HTMLElement;
   ancestorFocusedElement: HTMLElement;
   headerBottomSlotWrapper: HTMLElement;
@@ -32,11 +32,11 @@ export class MxModal {
   /** An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text. */
   @Prop() buttons: IModalButton[] = [];
   /** If set to false, pressing Escape will not close the modal. */
-  @Prop() closeOnEscape: boolean = true;
+  @Prop() closeOnEscape = true;
   /** If set to false, clicking the backdrop will not close the modal. */
-  @Prop() closeOnOutsideClick: boolean = true;
+  @Prop() closeOnOutsideClick = true;
   /** Additional classes for the inner scrolling container. */
-  @Prop() contentClass: string = '';
+  @Prop() contentClass = '';
   /** An optional description to display above the modal content */
   @Prop() description: string;
   /** Instead of centering, attach the modal to the left side of the window */
@@ -44,17 +44,17 @@ export class MxModal {
   /** Instead of centering, attach the modal to the right side of the window */
   @Prop() fromRight = false;
   /** Toggle the modal */
-  @Prop() isOpen: boolean = false;
+  @Prop() isOpen = false;
   /** The text to display for the previous page link */
-  @Prop() previousPageTitle: string = 'Back';
+  @Prop() previousPageTitle = 'Back';
   /** The URL for the previous page link */
-  @Prop() previousPageUrl: string = '';
+  @Prop() previousPageUrl = '';
   /** Set to true to stretch the modal to nearly fill the width and height of the page
    * (on desktop-sized screens).  Otherwise, the maximum dimensions are 800x600px. */
-  @Prop() large: boolean = false;
+  @Prop() large = false;
 
   @State() minWidths = new MinWidths();
-  @State() isVisible: boolean = false;
+  @State() isVisible = false;
 
   @Element() element: HTMLMxModalElement;
 
@@ -155,7 +155,7 @@ export class MxModal {
   }
 
   get hostClass(): string {
-    let str = 'mx-modal fixed inset-0 flex items-stretch';
+    let str = 'mx-modal fixed inset-0 flex items-stretch text-3';
     if (!this.isVisible) str += ' hidden';
     if (this.fromLeft) str += ' justify-start pr-24 sm:pr-40';
     else if (this.fromRight) str += ' justify-end pl-24 sm:pl-40';
@@ -176,15 +176,15 @@ export class MxModal {
     return str;
   }
 
-  get openTransition(): Function {
-    let transition: Function = (el: HTMLElement) => fadeScaleIn(el, 250);
+  get openTransition(): (el: HTMLElement) => Promise<void> {
+    let transition = (el: HTMLElement) => fadeScaleIn(el, 250);
     if (this.fromRight) transition = fadeSlideIn;
     else if (this.fromLeft) transition = (el: HTMLElement) => fadeSlideIn(el, undefined, Direction.left);
     return transition;
   }
 
-  get closeTransition(): Function {
-    let transition: Function = fadeOut;
+  get closeTransition(): (el: HTMLElement) => Promise<void> {
+    let transition = fadeOut;
     if (this.fromRight) transition = fadeSlideOut;
     else if (this.fromLeft) transition = (el: HTMLElement) => fadeSlideOut(el, undefined, Direction.left);
     return transition;

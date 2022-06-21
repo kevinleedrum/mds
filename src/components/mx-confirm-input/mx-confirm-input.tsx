@@ -8,33 +8,33 @@ import { IMxInputProps, MxInputIcon } from '../mx-input/mx-input';
 export class MxConfirmInput implements IMxInputProps {
   previousValue: string;
   mxInput: HTMLMxInputElement;
-  isEmittingEventAfterConfirm: boolean = false;
+  isEmittingEventAfterConfirm = false;
 
   @Prop() name: string;
   @Prop() inputId: string;
   @Prop() label: string;
   @Prop() placeholder: string;
   @Prop({ mutable: true }) value: string;
-  @Prop() type: string = 'text';
-  @Prop() dense: boolean = false;
-  @Prop() disabled: boolean = false;
-  @Prop() readonly: boolean = false;
+  @Prop() type = 'text';
+  @Prop() dense = false;
+  @Prop() disabled = false;
+  @Prop() readonly = false;
   @Prop() maxlength: number;
   @Prop() leftIcon: string | MxInputIcon[];
   @Prop({ mutable: true }) rightIcon: string | MxInputIcon[];
   @Prop() suffix: string;
-  @Prop() outerContainerClass: string = '';
-  @Prop({ mutable: true }) labelClass: string = '';
-  @Prop({ mutable: true, reflect: true }) error: boolean = false;
+  @Prop() outerContainerClass = '';
+  @Prop({ mutable: true }) labelClass = '';
+  @Prop({ mutable: true, reflect: true }) error = false;
   @Prop() assistiveText: string;
-  @Prop() floatLabel: boolean = false;
-  @Prop() textarea: boolean = false;
-  @Prop({ mutable: true }) textareaHeight: string = '250px';
+  @Prop() floatLabel = false;
+  @Prop() textarea = false;
+  @Prop({ mutable: true }) textareaHeight = '250px';
   @Prop() elAriaLabel: string;
-  @Prop() hideCharacterCount: boolean = false;
+  @Prop() hideCharacterCount = false;
 
-  @State() isFocused: boolean = false;
-  @State() isHovered: boolean = false;
+  @State() isFocused = false;
+  @State() isHovered = false;
 
   @Watch('value')
   onValueChange() {

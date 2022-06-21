@@ -1,5 +1,5 @@
 import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
-import { p as propagateDataAttributes } from './utils-f31b72fe.js';
+import { p as propagateDataAttributes } from './utils-eee50014.js';
 
 const MxSearch = class {
   constructor(hostRef) {
@@ -35,7 +35,7 @@ const MxSearch = class {
     return str;
   }
   render() {
-    return (h(Host, { class: "mx-search flex items-center relative" }, h("input", Object.assign({ ref: el => (this.inputEl = el), type: "search", "aria-label": this.elAriaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("i", { class: "absolute mds-search text-icon left-16 pointer-events-none" }), this.showClear && (h("button", { type: "button", "aria-label": "Clear search", class: this.clearButtonClass, "data-testid": "clear-button", onClick: this.onClear.bind(this) }, h("i", { class: "mds-x text-icon" })))));
+    return (h(Host, { class: "mx-search flex items-center text-3 relative" }, h("input", Object.assign({ ref: el => (this.inputEl = el), type: "search", "aria-label": this.elAriaLabel || this.placeholder || 'Search', name: this.name, placeholder: this.placeholder, value: this.value, class: this.inputClass }, this.dataAttributes, { onInput: this.onInput.bind(this) })), h("i", { class: "absolute mds-search text-icon left-16 pointer-events-none" }), this.showClear && (h("button", { type: "button", "aria-label": "Clear search", class: this.clearButtonClass, "data-testid": "clear-button", onClick: this.onClear.bind(this) }, h("i", { class: "mds-x text-icon" })))));
   }
   get element() { return getElement(this); }
 };

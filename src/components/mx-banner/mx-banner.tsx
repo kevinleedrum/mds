@@ -6,17 +6,17 @@ import { collapse, expand, slideIn, slideOut } from '../../utils/transitions';
   shadow: false,
 })
 export class MxBanner {
-  hasActions: boolean = false;
-  hasImage: boolean = false;
+  hasActions = false;
+  hasImage = false;
   bannerEl: HTMLElement;
 
-  @Prop() error: boolean = false;
+  @Prop() error = false;
   /** Toggles the banner with a transition. */
-  @Prop() isOpen: boolean = false;
+  @Prop() isOpen = false;
   /** When set, `position: sticky` will be applied to the banner. */
-  @Prop() sticky: boolean = false;
+  @Prop() sticky = false;
 
-  @State() isVisible: boolean = false;
+  @State() isVisible = false;
 
   @Element() element: HTMLMxBannerElement;
 

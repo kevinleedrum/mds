@@ -20,7 +20,7 @@
 
     &:focus {
       border-color: var(--mds-border-search-focus);
-      padding-left: 3.438rem; /* Remove 1px of padding to offset the border increase */
+      padding-left: 3.4375rem; /* Remove 1px of padding to offset the border increase */
     }
 
     &::-webkit-search-cancel-button {

@@ -1,7 +1,7 @@
 import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
 import { c as createPopover, a as convertPlacementToOrigin } from './popover-8664a111.js';
-import { d as fadeScaleIn, b as fadeOut } from './transitions-4a0eb798.js';
-import { u as uuidv4 } from './utils-f31b72fe.js';
+import { d as fadeScaleIn, b as fadeOut } from './transitions-29f7f3e5.js';
+import { u as uuidv4 } from './utils-eee50014.js';
 
 const MxMenu = class {
   constructor(hostRef) {
@@ -163,7 +163,7 @@ const MxMenu = class {
   componentDidLoad() {
     this.setInputEl();
     if (this.menuItems.length) {
-      const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+      const role = this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
       this.scrollElem.setAttribute('role', role);
     }
     this.setTriggerElAttributes();

@@ -11,13 +11,13 @@ export class MxDropdownMenu {
 
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
-  @Prop() disabled: boolean = false;
-  @Prop() readonly: boolean = false;
-  @Prop() dense: boolean = false;
+  @Prop() disabled = false;
+  @Prop() readonly = false;
+  @Prop() dense = false;
   /** Style as a filter dropdown with a 1dp elevation */
-  @Prop() elevated: boolean = false;
+  @Prop() elevated = false;
   /** Style as a filter dropdown with a "flat" border color */
-  @Prop() flat: boolean = false;
+  @Prop() flat = false;
   @Prop() label: string;
   /** Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`) */
   @Prop() dropdownClass: string;
@@ -31,7 +31,7 @@ export class MxDropdownMenu {
   @Prop({ mutable: true, reflect: true }) error: boolean;
   @Prop() assistiveText: string;
 
-  @State() isFocused: boolean = false;
+  @State() isFocused = false;
 
   @Listen('click')
   async onClick(e: MouseEvent) {
@@ -106,7 +106,7 @@ export class MxDropdownMenu {
 
   render() {
     return (
-      <Host class="mx-dropdown-menu block">
+      <Host class="mx-dropdown-menu block text-3">
         <div ref={el => (this.dropdownWrapper = el)} class={this.dropdownWrapperClass}>
           {/* The input is always either readonly or disabled since you cannot type a value in the dropdown */}
           <input
