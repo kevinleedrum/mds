@@ -1,7 +1,7 @@
 import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
-import { d as fadeScaleIn, b as fadeOut } from './transitions-4a0eb798.js';
+import { d as fadeScaleIn, b as fadeOut } from './transitions-29f7f3e5.js';
 import { m as moveToPortal } from './portal-9203402a.js';
-import './utils-f31b72fe.js';
+import './utils-eee50014.js';
 
 const snackbarQueue = []; // Deferred promises
 const MxSnackbar = class {
@@ -57,7 +57,7 @@ const MxSnackbar = class {
     this.isOpen = false;
   }
   get alertClass() {
-    let str = 'mx-snackbar-alert flex flex-wrap items-center justify-between rounded-lg text-4 max-w-360 sm:w-360 shadow-6 px-16 py-14';
+    const str = 'mx-snackbar-alert flex flex-wrap items-center justify-between rounded-lg text-4 max-w-360 sm:w-360 shadow-6 px-16 py-14';
     return str;
   }
   render() {

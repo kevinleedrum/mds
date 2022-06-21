@@ -1,5 +1,5 @@
 import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
-import { r as ripple } from './ripple-54ef50dc.js';
+import { r as ripple } from './ripple-140c6d57.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
 const MxFab = class {
