@@ -3,20 +3,20 @@
 
   .slider {
     background-color: var(--mds-bg-switch-track);
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+    -webkit-transition: 0.15s;
+    transition: 0.15s;
 
     &:before {
       @apply shadow-1;
       position: absolute;
       content: '';
-      height: 20px;
-      width: 20px;
-      left: -1px;
-      bottom: -3px;
+      height: 1.25rem;
+      width: 1.25rem;
+      left: -0.0625rem;
+      bottom: -0.1875rem;
       background-color: var(--mds-bg-switch-thumb);
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
+      -webkit-transition: 0.15s;
+      transition: 0.15s;
 
       @media (prefers-reduced-motion: reduce) {
         transition: none;
@@ -27,10 +27,10 @@
       display: none;
       content: '';
       position: absolute;
-      top: -13px;
-      left: -11.5px;
-      width: 40px;
-      height: 40px;
+      top: -0.8125rem;
+      left: -0.7188rem;
+      width: 2.5rem;
+      height: 2.5rem;
       border-radius: 100%;
       z-index: 0;
     }
@@ -60,16 +60,16 @@
   }
 
   input:checked + .slider:before {
-    -webkit-transform: translateX(20px);
-    -ms-transform: translateX(20px);
-    transform: translateX(20px);
+    -webkit-transform: translateX(1.25rem);
+    -ms-transform: translateX(1.25rem);
+    transform: translateX(1.25rem);
     background: var(--mds-bg-switch-thumb-checked);
   }
 
   input:checked + .slider::after {
-    -webkit-transform: translateX(20px);
-    -ms-transform: translateX(20px);
-    transform: translateX(20px);
+    -webkit-transform: translateX(1.25rem);
+    -ms-transform: translateX(1.25rem);
+    transform: translateX(1.25rem);
     background: var(--mds-bg-switch-overlay-checked-active);
   }
 
@@ -103,7 +103,7 @@
 
   /* Rounded sliders */
   .slider.round {
-    border-radius: 34px;
+    border-radius: 2.125rem;
   }
 
   .slider.round:before {

@@ -155,7 +155,7 @@ export class MxModal {
   }
 
   get hostClass(): string {
-    let str = 'mx-modal fixed inset-0 flex items-stretch';
+    let str = 'mx-modal fixed inset-0 flex items-stretch text-3';
     if (!this.isVisible) str += ' hidden';
     if (this.fromLeft) str += ' justify-start pr-24 sm:pr-40';
     else if (this.fromRight) str += ' justify-end pl-24 sm:pl-40';

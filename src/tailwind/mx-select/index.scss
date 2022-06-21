@@ -33,9 +33,9 @@
       background: var(--mds-bg-select);
       transform-origin: 0 0;
       transition: transform 0.1s ease-out;
-      --translate-y: -22px;
+      --translate-y: -1.375rem;
       &.dense {
-        --translate-y: -16px;
+        --translate-y: -1rem;
       }
       &.floating {
         transform: translate3d(0, var(--translate-y), 0) scale(0.8);

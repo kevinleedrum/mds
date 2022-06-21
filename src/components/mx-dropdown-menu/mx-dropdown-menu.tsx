@@ -106,7 +106,7 @@ export class MxDropdownMenu {
 
   render() {
     return (
-      <Host class="mx-dropdown-menu block">
+      <Host class="mx-dropdown-menu block text-3">
         <div ref={el => (this.dropdownWrapper = el)} class={this.dropdownWrapperClass}>
           {/* The input is always either readonly or disabled since you cannot type a value in the dropdown */}
           <input

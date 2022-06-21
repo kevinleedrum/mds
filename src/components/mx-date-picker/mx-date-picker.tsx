@@ -290,7 +290,7 @@ export class MxDatePicker {
     );
 
     return (
-      <Host class={'mx-date-picker block' + (this.error ? ' error' : '')}>
+      <Host class={'mx-date-picker block text-3' + (this.error ? ' error' : '')}>
         {this.label && !this.floatLabel && labelJsx}
 
         <div ref={el => (this.pickerWrapper = el)} class={this.pickerWrapperClass}>
