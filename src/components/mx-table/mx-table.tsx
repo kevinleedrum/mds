@@ -391,9 +391,15 @@ export class MxTable {
       cells.forEach((cell: HTMLMxTableCellElement) => {
         cell.columnIndex = colIndex;
         cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
-        cell.heading = this.cols[colIndex].heading;
-        cell.classList.add(...this.getAlignClasses(this.cols[colIndex]));
-        if (this.cols[colIndex].cellClass) cell.classList.add(this.cols[colIndex].cellClass);
+        if (this.cols[colIndex]) {
+          cell.heading = this.cols[colIndex].heading;
+          cell.classList.add(...this.getAlignClasses(this.cols[colIndex]));
+          if (this.cols[colIndex].cellClass) cell.classList.add(this.cols[colIndex].cellClass);
+        } else {
+          console.warn(
+            `Column definition not found for column index ${colIndex}.  The "columns" prop only has ${this.columns.length} columns defined.`,
+          );
+        }
         if (colIndex === this.cols.length - 1) colIndex = 0;
         else colIndex++;
       });
@@ -438,6 +444,7 @@ export class MxTable {
   componentDidLoad() {
     // Emit paginated rows right away.
     this.onVisibleRowsChange();
+    if (!this.columns.length) console.warn('No "columns" prop was provided.');
   }
 
   disconnectedCallback() {
@@ -446,8 +453,14 @@ export class MxTable {
 
   get cols(): ITableColumn[] {
     // If `columns` prop is not provided, create a column for each row object property
-    if (!this.columns.length && this.rows.length) {
+    if (!this.columns.length && this.rows.length && !this.hasDefaultSlot) {
       return Object.keys(this.rows[0]).map(property => ({ property, heading: capitalize(property), sortable: true }));
+    } else if (!this.columns.length && this.hasDefaultSlot) {
+      const rows = this.getTableRows();
+      if (rows.length) {
+        const cellCount = rows[0].querySelectorAll('mx-table-cell').length;
+        return new Array(cellCount).fill({});
+      }
     }
     return this.columns.map(col => ({
       ...col,
