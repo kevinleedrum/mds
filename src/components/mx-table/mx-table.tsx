@@ -445,7 +445,7 @@ export class MxTable {
     // Emit paginated rows right away.
     this.onVisibleRowsChange();
     if (!this.columns.length) console.warn('No "columns" prop was provided.');
-    if (this.columns.length !== this.cols.length)
+    else if (this.columns.length !== this.cols.length)
       console.warn(`The number of columns in the "columns" prop does not match the number of columns in the table.`);
   }
 
