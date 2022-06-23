@@ -460,7 +460,7 @@ export class MxTable {
       return Object.keys(this.rows[0]).map(property => ({ property, heading: capitalize(property), sortable: true }));
     } else if (this.hasDefaultSlot) {
       // If `columns` prop is missing or does not have enough defintions for all columns, add default columns
-      const rows = this.getTableRows();
+      const rows = this.getTableRows().filter(row => !row.subheader);
       if (rows.length) {
         const cellCount = rows[0].querySelectorAll('mx-table-cell').length;
         if (cellCount !== cols.length) {
