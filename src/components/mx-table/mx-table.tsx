@@ -391,9 +391,15 @@ export class MxTable {
       cells.forEach((cell: HTMLMxTableCellElement) => {
         cell.columnIndex = colIndex;
         cell.isExposedMobileColumn = colIndex === this.exposedMobileColumnIndex;
-        cell.heading = this.cols[colIndex].heading;
-        cell.classList.add(...this.getAlignClasses(this.cols[colIndex]));
-        if (this.cols[colIndex].cellClass) cell.classList.add(this.cols[colIndex].cellClass);
+        if (this.cols[colIndex]) {
+          cell.heading = this.cols[colIndex].heading;
+          cell.classList.add(...this.getAlignClasses(this.cols[colIndex]));
+          if (this.cols[colIndex].cellClass) cell.classList.add(this.cols[colIndex].cellClass);
+        } else {
+          console.error(
+            `Column definition not found for column index ${colIndex}. Check that all rows have the same number of columns.`,
+          );
+        }
         if (colIndex === this.cols.length - 1) colIndex = 0;
         else colIndex++;
       });
@@ -438,6 +444,9 @@ export class MxTable {
   componentDidLoad() {
     // Emit paginated rows right away.
     this.onVisibleRowsChange();
+    if (!this.columns.length) console.warn('No "columns" prop was provided.');
+    else if (this.columns.length !== this.cols.length)
+      console.warn(`The number of columns in the "columns" prop does not match the number of columns in the table.`);
   }
 
   disconnectedCallback() {
@@ -445,11 +454,21 @@ export class MxTable {
   }
 
   get cols(): ITableColumn[] {
-    // If `columns` prop is not provided, create a column for each row object property
-    if (!this.columns.length && this.rows.length) {
+    // If `columns` prop is not provided, but `rows` prop is provided, create a column for each row object property
+    let cols = this.columns;
+    if (!cols.length && this.rows.length && !this.hasDefaultSlot) {
       return Object.keys(this.rows[0]).map(property => ({ property, heading: capitalize(property), sortable: true }));
+    } else if (this.hasDefaultSlot) {
+      // If `columns` prop is missing or does not have enough defintions for all columns, add default columns
+      const rows = this.getTableRows().filter(row => !row.subheader);
+      if (rows.length) {
+        const cellCount = rows[0].querySelectorAll('mx-table-cell').length;
+        if (cellCount !== cols.length) {
+          cols = cols.concat(new Array(cellCount).fill({})).slice(0, cellCount);
+        }
+      }
     }
-    return this.columns.map(col => ({
+    return cols.map(col => ({
       ...col,
       sortable: col.sortable === false ? false : true, // Default sortable to true if not specified
     }));
