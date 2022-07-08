@@ -27,6 +27,8 @@ export class MxIconButton {
   @Prop() chevronLeft = false;
   /** Show right-pointing chevron icon */
   @Prop() chevronRight = false;
+  /** Show upward chevron icon */
+  @Prop() chevronUp = false;
   /** Class name of icon (for icon font) */
   @Prop() icon: string;
 
@@ -43,7 +45,7 @@ export class MxIconButton {
   }
 
   get isChevron() {
-    return this.chevronDown || this.chevronLeft || this.chevronRight;
+    return this.chevronDown || this.chevronLeft || this.chevronRight || this.chevronUp;
   }
 
   render() {
@@ -60,7 +62,13 @@ export class MxIconButton {
             <i
               data-testid="chevron"
               class={
-                this.chevronLeft ? 'mds-chevron-left' : this.chevronRight ? 'mds-chevron-right' : 'mds-chevron-down'
+                this.chevronLeft
+                  ? 'mds-chevron-left'
+                  : this.chevronRight
+                  ? 'mds-chevron-right'
+                  : this.chevronUp
+                  ? 'mds-chevron-up'
+                  : 'mds-chevron-down'
               }
             ></i>
           </span>
