@@ -208,6 +208,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
         <mx-icon-button chevron-down el-aria-label="Down" />
         <mx-icon-button chevron-left el-aria-label="Left" />
         <mx-icon-button chevron-right el-aria-label="Right" />
+        <mx-icon-button chevron-up el-aria-label="Up" />
         <mx-icon-button icon="ph-link" href="/" el-aria-label="Link" />
       </div>
     </div>
@@ -223,6 +224,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
         <mx-icon-button chevron-down disabled el-aria-label="Down" />
         <mx-icon-button chevron-left disabled el-aria-label="Left" />
         <mx-icon-button chevron-right disabled el-aria-label="Right" />
+        <mx-icon-button chevron-up disabled el-aria-label="Up" />
         <mx-icon-button icon="ph-link" href="/" disabled el-aria-label="Link" />
       </div>
     </div>
@@ -239,6 +241,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
 | `chevronDown`  | `chevron-down`  | Show downward chevron icon                             | `boolean`                         | `false`     |
 | `chevronLeft`  | `chevron-left`  | Show left-pointing chevron icon                        | `boolean`                         | `false`     |
 | `chevronRight` | `chevron-right` | Show right-pointing chevron icon                       | `boolean`                         | `false`     |
+| `chevronUp`    | `chevron-up`    | Show upward chevron icon                               | `boolean`                         | `false`     |
 | `disabled`     | `disabled`      |                                                        | `boolean`                         | `false`     |
 | `elAriaLabel`  | `el-aria-label` | The aria-label attribute for the inner button element. | `string`                          | `undefined` |
 | `form`         | `form`          |                                                        | `string`                          | `undefined` |
