@@ -355,6 +355,10 @@ export namespace Components {
           * Show right-pointing chevron icon
          */
         "chevronRight": boolean;
+        /**
+          * Show upward chevron icon
+         */
+        "chevronUp": boolean;
         "disabled": boolean;
         /**
           * The aria-label attribute for the inner button element.
@@ -1682,6 +1686,10 @@ declare namespace LocalJSX {
           * Show right-pointing chevron icon
          */
         "chevronRight"?: boolean;
+        /**
+          * Show upward chevron icon
+         */
+        "chevronUp"?: boolean;
         "disabled"?: boolean;
         /**
           * The aria-label attribute for the inner button element.
