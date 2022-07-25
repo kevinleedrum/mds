@@ -174,7 +174,7 @@ If `fromLeft` or `fromRight` are set, then the modal will appear fixed to one si
 </section>
 <!-- #endregion modals-4 -->
 
-<<< @/vuepress/components/modals.md#modals-5
+<<< @/vuepress/components/modals.md#modals-4
 
 ### Modal that opens from the right on larger screens
 
