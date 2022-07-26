@@ -29,6 +29,7 @@ export class MxCircularProgress {
     clearInterval(this.simulateProgressInterval);
     if (!this.simulateProgressDuration) return;
     this.simulateProgressInterval = setInterval(() => {
+      if (this.value === 100) return;
       this.value = Math.min((this.value || 0) + 1, 99);
     }, this.simulateProgressDuration / 100);
   }
