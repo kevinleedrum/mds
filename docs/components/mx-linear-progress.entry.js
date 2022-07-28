@@ -5,10 +5,23 @@ const MxLinearProgress = class {
     registerInstance(this, hostRef);
     /** The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. */
     this.value = null;
+    /** If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds). */
+    this.simulateProgressDuration = null;
     /** Delay the appearance of the indicator for this many milliseconds */
     this.appearDelay = 0;
   }
+  simulateProgress() {
+    clearInterval(this.simulateProgressInterval);
+    if (!this.simulateProgressDuration)
+      return;
+    this.simulateProgressInterval = setInterval(() => {
+      if (this.value === 100)
+        return;
+      this.value = Math.min((this.value || 0) + 1, 99);
+    }, this.simulateProgressDuration / 100);
+  }
   connectedCallback() {
+    this.simulateProgress();
     if (!this.appearDelay)
       return;
     // Hide indicator until appearDelay duration has passed
@@ -39,6 +52,9 @@ const MxLinearProgress = class {
     ]))));
   }
   get element() { return getElement(this); }
+  static get watchers() { return {
+    "simulateProgressDuration": ["simulateProgress"]
+  }; }
 };
 
 export { MxLinearProgress as mx_linear_progress };
