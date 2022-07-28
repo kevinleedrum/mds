@@ -1,5 +1,7 @@
 # Progress Indicators
 
+Two types of progress indicators are provided: circular and linear. They may be given a percentage `value` to display; otherwise, they will animate to indicate indeterminate progress. Additionally, a `simulateProgressDuration` may be provided in order to "fake" determinate progress over the specified time.
+
 ## Circular
 
 <section class="mds">
@@ -17,6 +19,10 @@
         <mx-circular-progress aria-label="Progress" value="100" />
         <mx-circular-progress aria-label="Progress" :value="progress" />
       </div>
+    </div>
+    <div class="flex flex-col space-y-20">
+      <strong>Simulated Progress (reaches 99% in 10 seconds)</strong>
+      <mx-circular-progress aria-label="Progress" simulate-progress-duration="10000" />
     </div>
     <div class="flex flex-col space-y-20">
       <strong>Custom Sizes</strong>
@@ -51,6 +57,10 @@
         <mx-linear-progress aria-label="Progress" :value="progress" />
       </div>
     </div>
+    <div class="flex flex-col space-y-20">
+      <strong>Simulated Progress (reaches 99% in 10 seconds)</strong>
+      <mx-linear-progress aria-label="Progress" simulate-progress-duration="10000" />
+    </div>
   </div>
 <!-- #endregion linear-progress -->
 </section>
@@ -78,18 +88,20 @@ If you only want to show a progress indicator when a task is taking longer to fi
 
 ### Circular Progress Properties
 
-| Property      | Attribute      | Description                                                                                                                       | Type     | Default  |
-| ------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------- | -------- |
-| `appearDelay` | `appear-delay` | Delay the appearance of the indicator for this many milliseconds                                                                  | `number` | `0`      |
-| `size`        | `size`         | The value to use for the width and height                                                                                         | `string` | `'3rem'` |
-| `value`       | `value`        | The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. | `number` | `null`   |
+| Property                   | Attribute                    | Description                                                                                                                       | Type     | Default  |
+| -------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------- | -------- |
+| `appearDelay`              | `appear-delay`               | Delay the appearance of the indicator for this many milliseconds                                                                  | `number` | `0`      |
+| `simulateProgressDuration` | `simulate-progress-duration` | If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).                              | `number` | `null`   |
+| `size`                     | `size`                       | The value to use for the width and height                                                                                         | `string` | `'3rem'` |
+| `value`                    | `value`                      | The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. | `number` | `null`   |
 
 ### Linear Progress Properties
 
-| Property      | Attribute      | Description                                                                                                                       | Type     | Default |
-| ------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- |
-| `appearDelay` | `appear-delay` | Delay the appearance of the indicator for this many milliseconds                                                                  | `number` | `0`     |
-| `value`       | `value`        | The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. | `number` | `null`  |
+| Property                   | Attribute                    | Description                                                                                                                       | Type     | Default |
+| -------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- |
+| `appearDelay`              | `appear-delay`               | Delay the appearance of the indicator for this many milliseconds                                                                  | `number` | `0`     |
+| `simulateProgressDuration` | `simulate-progress-duration` | If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).                              | `number` | `null`  |
+| `value`                    | `value`                      | The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. | `number` | `null`  |
 
 ### CSS Variables
 
