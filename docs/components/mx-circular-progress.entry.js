@@ -11,10 +11,23 @@ const MxCircularProgress = class {
     this.value = null;
     /** The value to use for the width and height */
     this.size = '3rem';
+    /** If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds). */
+    this.simulateProgressDuration = null;
     /** Delay the appearance of the indicator for this many milliseconds */
     this.appearDelay = 0;
   }
+  simulateProgress() {
+    clearInterval(this.simulateProgressInterval);
+    if (!this.simulateProgressDuration)
+      return;
+    this.simulateProgressInterval = setInterval(() => {
+      if (this.value === 100)
+        return;
+      this.value = Math.min((this.value || 0) + 1, 99);
+    }, this.simulateProgressDuration / 100);
+  }
   connectedCallback() {
+    this.simulateProgress();
     if (!this.appearDelay)
       return;
     // Hide indicator until appearDelay duration has passed
@@ -58,6 +71,9 @@ const MxCircularProgress = class {
     return (h(Host, { style: this.hostStyle, class: "mx-circular-progress inline-block pointer-events-none", role: "progressbar", "aria-valuenow": this.value != null ? Math.round(this.value) : null, "aria-valuemin": this.value != null ? 0 : null, "aria-valuemax": this.value != null ? 100 : null }, h("div", { class: "flex items-center justify-center relative h-full p-2" }, h("svg", { class: "absolute", viewBox: [DIAMETER / 2, DIAMETER / 2, DIAMETER, DIAMETER].join(' ') }, h("circle", { style: this.circleStyle, cx: DIAMETER, cy: DIAMETER, r: RADIUS, "stroke-width": THICKNESS, fill: "none" })))));
   }
   get element() { return getElement(this); }
+  static get watchers() { return {
+    "simulateProgressDuration": ["simulateProgress"]
+  }; }
 };
 
 export { MxCircularProgress as mx_circular_progress };
