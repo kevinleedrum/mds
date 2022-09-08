@@ -8029,6 +8029,9 @@
       background: #dde8f4;
       background: var(--mds-bg-btn-toggle-selected);
     }
+.mx-toggle-button .btn-toggle .mx-toggle-btn-str {
+      font-size: 12px;
+    }
 .mx-chip > div {
   color: #333;
   color: var(--mds-text-chip);

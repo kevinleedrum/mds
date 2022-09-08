@@ -312,7 +312,7 @@ emitted via a custom <code>mxInput</code> event.
       <strong>Enabled</strong>
       <div class="my-20">
         <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
-          <mx-toggle-button icon="ph-text-align-left" el-aria-label="Align left" value="left" />
+          <mx-toggle-button text-str="huh" el-aria-label="Align left" value="left" />
           <mx-toggle-button icon="ph-text-align-center" el-aria-label="Align center" value="center" />
           <mx-toggle-button icon="ph-text-align-right" el-aria-label="Align right" value="right" />
         </mx-toggle-button-group>
