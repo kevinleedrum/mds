@@ -75,3 +75,20 @@ describe('mx-toggle-button as radio button', () => {
     expect(btn.getAttribute('role')).toBe('radio');
   });
 });
+
+describe('mx-toggle-button with string value', () => {
+  let page;
+  let root;
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [MxToggleButton],
+      html: `<mx-toggle-button text-str="Test" value="foo"></mx-toggle-button>`,
+    });
+    root = page.root;
+  });
+
+  it('has string value of "Test"', async () => {
+    const btn = root.querySelector('.mx-toggle-btn-str');
+    expect(btn.innerText).toBe('Test');
+  });
+});

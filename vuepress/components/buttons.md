@@ -307,12 +307,12 @@ emitted via a custom <code>mxInput</code> event.
 
 <!-- #region toggle-button-groups -->
 <section class="mds">
-  <div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
+  <div class="mt-5 grid grid-cols-1 lg:grid-cols-3">
     <div>
       <strong>Enabled</strong>
       <div class="my-20">
         <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
-          <mx-toggle-button text-str="huh" el-aria-label="Align left" value="left" />
+          <mx-toggle-button icon="ph-text-align-left" el-aria-label="Align left" value="left" />
           <mx-toggle-button icon="ph-text-align-center" el-aria-label="Align center" value="center" />
           <mx-toggle-button icon="ph-text-align-right" el-aria-label="Align right" value="right" />
         </mx-toggle-button-group>
@@ -329,7 +329,16 @@ emitted via a custom <code>mxInput</code> event.
         </mx-toggle-button-group>
       </div>
     </div>
-  </div>
+    <div>
+      <strong>Text</strong>
+      <div class="my-20">
+        <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
+          <mx-toggle-button text-str="Left" value="left" el-aria-label="Align left" />
+          <mx-toggle-button text-str="Center" value="center" el-aria-label="Align center" />
+          <mx-toggle-button text-str="Right" value="right" el-aria-label="Align right" />
+        </mx-toggle-button-group>
+      </div>
+    </div>
   </div>
 </section>
 <!-- #endregion toggle-button-groups -->
