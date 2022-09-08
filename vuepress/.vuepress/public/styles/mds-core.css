@@ -8029,9 +8029,6 @@
       background: #dde8f4;
       background: var(--mds-bg-btn-toggle-selected);
     }
-.mx-toggle-button .btn-toggle .mx-toggle-btn-str {
-      font-size: 12px;
-    }
 .mx-chip > div {
   color: #333;
   color: var(--mds-text-chip);
@@ -10985,14 +10982,14 @@ pre > code.diff-highlight .token.inserted:not(.prefix) {
   .mds .lg\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .mds .lg\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .mds .lg\:grid-cols-4{
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .mds .lg\:grid-cols-1{
     grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .mds .lg\:grid-cols-3{
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .mds .lg\:grid-cols-5{
     grid-template-columns: repeat(5, minmax(0, 1fr));

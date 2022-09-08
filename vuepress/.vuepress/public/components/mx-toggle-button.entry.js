@@ -15,7 +15,7 @@ const MxToggleButton = class {
   }
   render() {
     return (h(Host, { class: "mx-toggle-button inline-flex overflow-hidden border-l\n      first-of-type:border-l-0 first-of-type:rounded-tl first-of-type:rounded-bl\n      last-of-type:rounded-tr last-of-type:rounded-br" }, h("button", Object.assign({ type: "button", class: 'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer disabled:cursor-auto disabled:pointer-events-none' +
-        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), disabled: this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected ? 'true' : 'false', "aria-label": this.elAriaLabel, onClick: this.onClick.bind(this) }, this.dataAttributes), this.textStr ? h("div", { class: "mx-toggle-btn-str" }, this.textStr) : h("i", { class: this.icon }))));
+        (this.selected ? ' selected' : ''), ref: el => (this.btnElem = el), disabled: this.disabled, role: this.value === undefined ? 'switch' : 'radio', "aria-checked": this.selected ? 'true' : 'false', "aria-label": this.elAriaLabel, onClick: this.onClick.bind(this) }, this.dataAttributes), h("slot", null), h("i", { class: this.icon }))));
   }
   get element() { return getElement(this); }
 };

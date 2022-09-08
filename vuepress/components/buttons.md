@@ -296,7 +296,6 @@ appear as a group. They can act as radio buttons when given a <code>value</code>
 | `disabled`    | `disabled`      |                                                        | `boolean` | `false`     |
 | `elAriaLabel` | `el-aria-label` | The aria-label attribute for the inner button element. | `string`  | `undefined` |
 | `icon`        | `icon`          |                                                        | `string`  | `undefined` |
-| `textStr`     | `text-str`      | Use a string instead of an icon.                       | `string`  | `undefined` |
 | `selected`    | `selected`      |                                                        | `boolean` | `false`     |
 | `value`       | `value`         | Only used inside a toggle button group                 | `any`     | `undefined` |
 
@@ -305,6 +304,8 @@ appear as a group. They can act as radio buttons when given a <code>value</code>
 A Toggle Button Group provides a convenient way to bind a group of toggle buttons to a single value, much like a radio button group.
 However, unlike radio buttons, Toggle Buttons can be deselected. When a Toggle Button is clicked, the resulting value is
 emitted via a custom <code>mxInput</code> event.
+
+There is a `slot` available for SVG images or plain text as well. See Example.
 
 <!-- #region toggle-button-groups -->
 <section class="mds">
@@ -331,12 +332,18 @@ emitted via a custom <code>mxInput</code> event.
       </div>
     </div>
     <div>
-      <strong>Text</strong>
+      <strong>Text Using Default Slot</strong>
       <div class="my-20">
         <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
-          <mx-toggle-button text-str="Left" value="left" el-aria-label="Align left" />
-          <mx-toggle-button text-str="Center" value="center" el-aria-label="Align center" />
-          <mx-toggle-button text-str="Right" value="right" el-aria-label="Align right" />
+          <mx-toggle-button value="left" el-aria-label="Align left">
+            <div class="caption1">Left</div>
+          </mx-toggle-button>
+          <mx-toggle-button value="center" el-aria-label="Align center">
+            <div class="caption1">Center</div>
+          </mx-toggle-button>
+          <mx-toggle-button value="right" el-aria-label="Align right">
+            <div class="caption1">Right</div>
+          </mx-toggle-button>
         </mx-toggle-button-group>
       </div>
     </div>

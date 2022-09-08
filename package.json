@@ -70,7 +70,7 @@
     "docs:build": "sh build-docs.sh",
     "stencil:build": "stencil build --docs",
     "stencil:start": "stencil build --dev --watch",
-    "test": "stencil test --spec",
+    "test": "stencil test --spec src/components/mx-toggle-button/test/mx-toggle-button.spec.tsx",
     "test:watch": "stencil test --spec --watchAll",
     "generate": "stencil generate",
     "copy": "sh copy-on-change.sh",

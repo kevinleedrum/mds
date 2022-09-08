@@ -11,7 +11,6 @@ export class MxToggleButton {
   dataAttributes = {};
 
   @Prop() icon: string;
-  @Prop() textStr: string;
   @Prop({ reflect: true }) selected = false;
   @Prop() disabled = false;
   /** The aria-label attribute for the inner button element. */
@@ -48,7 +47,8 @@ export class MxToggleButton {
           onClick={this.onClick.bind(this)}
           {...this.dataAttributes}
         >
-          {this.textStr ? <div class="mx-toggle-btn-str">{this.textStr}</div> : <i class={this.icon}></i>}
+          <slot />
+          <i class={this.icon}></i>
         </button>
       </Host>
     );

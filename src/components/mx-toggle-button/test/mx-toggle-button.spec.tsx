@@ -82,13 +82,13 @@ describe('mx-toggle-button with string value', () => {
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxToggleButton],
-      html: `<mx-toggle-button text-str="Test" value="foo"></mx-toggle-button>`,
+      html: `<mx-toggle-button value="foo"><div>Test</div></mx-toggle-button>`,
     });
     root = page.root;
   });
 
   it('has string value of "Test"', async () => {
-    const btn = root.querySelector('.mx-toggle-btn-str');
+    const btn = root.querySelector('div');
     expect(btn.innerText).toBe('Test');
   });
 });

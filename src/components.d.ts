@@ -1044,7 +1044,6 @@ export namespace Components {
         "elAriaLabel": string;
         "icon": string;
         "selected": boolean;
-        "textStr": string;
         /**
           * Only used inside a toggle button group
          */
@@ -2401,7 +2400,6 @@ declare namespace LocalJSX {
         "elAriaLabel"?: string;
         "icon"?: string;
         "selected"?: boolean;
-        "textStr"?: string;
         /**
           * Only used inside a toggle button group
          */
