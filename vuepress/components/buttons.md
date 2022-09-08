@@ -296,6 +296,7 @@ appear as a group. They can act as radio buttons when given a <code>value</code>
 | `disabled`    | `disabled`      |                                                        | `boolean` | `false`     |
 | `elAriaLabel` | `el-aria-label` | The aria-label attribute for the inner button element. | `string`  | `undefined` |
 | `icon`        | `icon`          |                                                        | `string`  | `undefined` |
+| `textStr`     | `text-str`      | Use a string instead of an icon.                       | `string`  | `undefined` |
 | `selected`    | `selected`      |                                                        | `boolean` | `false`     |
 | `value`       | `value`         | Only used inside a toggle button group                 | `any`     | `undefined` |
 
