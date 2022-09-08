@@ -47,6 +47,7 @@ export class MxToggleButton {
           onClick={this.onClick.bind(this)}
           {...this.dataAttributes}
         >
+          <slot />
           <i class={this.icon}></i>
         </button>
       </Host>

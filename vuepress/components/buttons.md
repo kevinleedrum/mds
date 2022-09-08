@@ -305,9 +305,11 @@ A Toggle Button Group provides a convenient way to bind a group of toggle button
 However, unlike radio buttons, Toggle Buttons can be deselected. When a Toggle Button is clicked, the resulting value is
 emitted via a custom <code>mxInput</code> event.
 
+There is a `slot` available for SVG images or plain text as well. See Example.
+
 <!-- #region toggle-button-groups -->
 <section class="mds">
-  <div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
+  <div class="mt-5 grid grid-cols-1 lg:grid-cols-3">
     <div>
       <strong>Enabled</strong>
       <div class="my-20">
@@ -329,7 +331,22 @@ emitted via a custom <code>mxInput</code> event.
         </mx-toggle-button-group>
       </div>
     </div>
-  </div>
+    <div>
+      <strong>Text Using Default Slot</strong>
+      <div class="my-20">
+        <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
+          <mx-toggle-button value="left" el-aria-label="Align left">
+            <div class="caption1">Left</div>
+          </mx-toggle-button>
+          <mx-toggle-button value="center" el-aria-label="Align center">
+            <div class="caption1">Center</div>
+          </mx-toggle-button>
+          <mx-toggle-button value="right" el-aria-label="Align right">
+            <div class="caption1">Right</div>
+          </mx-toggle-button>
+        </mx-toggle-button-group>
+      </div>
+    </div>
   </div>
 </section>
 <!-- #endregion toggle-button-groups -->
