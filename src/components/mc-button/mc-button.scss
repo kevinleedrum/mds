@@ -76,6 +76,7 @@ mc-button > a {
     &[aria-disabled='true'] {
       background-color: var(--mc-bg-btn-transparent-disabled);
       color: var(--mc-text-btn-transparent-disabled);
+      opacity: 0.5;
     }
   }
 
@@ -94,6 +95,7 @@ mc-button > a {
     &[aria-disabled='true'] {
       background-color: var(--mc-bg-btn-action-disabled);
       color: var(--mc-text-btn-action-disabled);
+      opacity: 0.5;
     }
   }
 
