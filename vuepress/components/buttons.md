@@ -2,6 +2,22 @@
 
 Buttons are used to indicate calls to actions (CTAs) that the user can take (e.g. save, delete, add, create). There are a variety of button types to create the desired level of emphasis and hierarchy when multiple actions can be taken.
 
+## mc-button WIP
+
+<!-- TODO -->
+
+<section class="mds">
+  <div class="flex items-start justify-start flex-col gap-10">
+    <mc-button>Button</mc-button>
+    <mc-button small>Button</mc-button>
+    <mc-button btn-type="ghost">Button</mc-button>
+    <mc-button btn-type="transparent">Button</mc-button>
+    <mc-button btn-type="action">Button</mc-button>
+    <mc-button btn-type="error">Button</mc-button>
+    <mc-button btn-type="warning">Button</mc-button>
+  </div>
+</section>
+
 ## Primary Buttons
 
 Contained buttons using the primary brandable color as a fill. Other than FAB, they have the highest level of emphasis. Commonly used at the top of page headers, within modals, and empty states. These are usually for the main action on a page. Avoid grouping multiple primary buttons together or using them for less important actions.

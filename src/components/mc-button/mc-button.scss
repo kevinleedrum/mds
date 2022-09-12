@@ -1,0 +1,117 @@
+/* TODO: "Alt Small" button class/vars once we know whether the alt colors can be applied to
+regular size buttons. https://github.com/moxiworks/mds/issues/208#issuecomment-1242143965 */
+
+mc-button > button,
+mc-button > a {
+  &.normal-button {
+    background-color: var(--mc-bg-btn-normal);
+    color: var(--mc-text-btn-normal);
+    &:hover {
+      background-color: var(--mc-bg-btn-normal-hover);
+      color: var(--mc-text-btn-normal-hover);
+    }
+    &:active {
+      background-color: var(--mc-bg-btn-normal-active);
+      color: var(--mc-text-btn-normal-active);
+    }
+    &:disabled,
+    &[aria-disabled='true'] { /* Buttons that are actually links are set to aria-disabled=true */
+      background-color: var(--mc-bg-btn-normal-disabled);
+      color: var(--mc-text-btn-normal-disabled);
+    }
+  }
+
+  &.ghost-button {
+    background-color: var(--mc-bg-btn-ghost);
+    border-color: var(--mc-border-btn-ghost);
+    color: var(--mc-text-btn-ghost);
+    &:hover {
+      background-color: var(--mc-bg-btn-ghost-hover);
+      border-color: var(--mc-bg-btn-ghost-hover);
+      color: var(--mc-text-btn-ghost-hover);
+    }
+    &:active {
+      background-color: var(--mc-bg-btn-ghost-active);
+      border-color: var(--mc-bg-btn-ghost-active);
+      color: var(--mc-text-btn-ghost-active);
+    }
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: var(--mc-bg-btn-ghost-disabled);
+      border-color: var(--mc-border-btn-ghost-disabled);
+      color: var(--mc-text-btn-ghost-disabled);
+    }
+  }
+
+  &.transparent-button {
+    background-color: var(--mc-bg-btn-transparent);
+    color: var(--mc-text-btn-transparent);
+    &:hover {
+      background-color: var(--mc-bg-btn-transparent-hover);
+      color: var(--mc-text-btn-transparent-hover);
+    }
+    &:active {
+      background-color: var(--mc-bg-btn-transparent-active);
+      color: var(--mc-text-btn-transparent-active);
+    }
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: var(--mc-bg-btn-transparent-disabled);
+      color: var(--mc-text-btn-transparent-disabled);
+    }
+  }
+
+  &.action-button {
+    background-color: var(--mc-bg-btn-action);
+    color: var(--mc-text-btn-action);
+    &:hover {
+      background-color: var(--mc-bg-btn-action-hover);
+      color: var(--mc-text-btn-action-hover);
+    }
+    &:active {
+      background-color: var(--mc-bg-btn-action-active);
+      color: var(--mc-text-btn-action-active);
+    }
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: var(--mc-bg-btn-action-disabled);
+      color: var(--mc-text-btn-action-disabled);
+    }
+  }
+
+  &.error-button {
+    background-color: var(--mc-bg-btn-error);
+    color: var(--mc-text-btn-error);
+    &:hover {
+      background-color: var(--mc-bg-btn-error-hover);
+      color: var(--mc-text-btn-error-hover);
+    }
+    &:active {
+      background-color: var(--mc-bg-btn-error-active);
+      color: var(--mc-text-btn-error-active);
+    }
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: var(--mc-bg-btn-error-disabled);
+      color: var(--mc-text-btn-error-disabled);
+    }
+  }
+
+  &.warning-button {
+    background-color: var(--mc-bg-btn-warning);
+    color: var(--mc-text-btn-warning);
+    &:hover {
+      background-color: var(--mc-bg-btn-warning-hover);
+      color: var(--mc-text-btn-warning-hover);
+    }
+    &:active {
+      background-color: var(--mc-bg-btn-warning-active);
+      color: var(--mc-text-btn-warning-active);
+    }
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: var(--mc-bg-btn-warning-disabled);
+      color: var(--mc-text-btn-warning-disabled);
+    }
+  }
+}
