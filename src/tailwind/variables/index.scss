@@ -17,21 +17,21 @@
   --mds-text-primary-inverted: #fff;
   --mds-text-primary: #333;
 
-  --mc-primary-dark: #003B76;
-  --mc-primary-hover:#4096EC;
-  --mc-primary: #0073E6;
-  --mc-secondary-light: #CED8DC;
-  --mc-secondary-medium: #9BB2C9;
-  --mc-secondary-ultra-light: #F3F5F6;
+  --mc-primary-dark: #003b76;
+  --mc-primary-hover: #4096ec;
+  --mc-primary: #0073e6;
+  --mc-secondary-light: #ced8dc;
+  --mc-secondary-medium: #9bb2c9;
+  --mc-secondary-ultra-light: #f3f5f6;
   --mc-secondary: #597897;
-  --mc-status-error-active: #CB303F;
-  --mc-status-error-hover: #FF7A70;
-  --mc-status-error: #FF4330;
-  --mc-status-success: #19A388;
-  --mc-status-warning-active: #E14C00;
-  --mc-status-warning-hover: #FF9246;
-  --mc-status-warning: #FE6300;
-  --mc-tertiary: #9C5AF2;
+  --mc-status-error-active: #cb303f;
+  --mc-status-error-hover: #ff7a70;
+  --mc-status-error: #ff4330;
+  --mc-status-success: #19a388;
+  --mc-status-warning-active: #e14c00;
+  --mc-status-warning-hover: #ff9246;
+  --mc-status-warning: #fe6300;
+  --mc-tertiary: #9c5af2;
   --mc-white: #fff;
 
   /* #region patterns */
@@ -59,9 +59,9 @@
   --mc-bg-btn-ghost: var(--mc-white);
   --mc-border-btn-ghost-disabled: var(--mc-secondary-light);
   --mc-border-btn-ghost: var(--mc-primary);
-  --mc-text-btn-ghost-active: var(--mc-white);;
+  --mc-text-btn-ghost-active: var(--mc-white);
   --mc-text-btn-ghost-disabled: var(--mc-secondary);
-  --mc-text-btn-ghost-hover: var(--mc-white);;
+  --mc-text-btn-ghost-hover: var(--mc-white);
   --mc-text-btn-ghost: var(--mc-primary);
   /* Transparent Button */
   --mc-bg-btn-transparent-active: var(--mc-primary-dark);

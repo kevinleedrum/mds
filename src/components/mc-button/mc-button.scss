@@ -15,7 +15,7 @@ mc-button > a {
       color: var(--mc-text-btn-normal-active);
     }
     &:disabled,
-    &[aria-disabled='true'] { /* Buttons that are actually links are set to aria-disabled=true */
+    &[aria-disabled='true'] {
       background-color: var(--mc-bg-btn-normal-disabled);
       color: var(--mc-text-btn-normal-disabled);
     }

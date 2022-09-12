@@ -8,19 +8,19 @@ export type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
 
 export interface IMcButtonProps {
   btnType?: McBtnType;
-  type?: ButtonTypeAttribute;
-  value?: string;
+  disabled?: boolean;
+  dropdown?: boolean;
+  elAriaLabel?: string;
   form?: string;
   formaction?: string;
-  disabled?: boolean;
-  small?: boolean; // TODO: Remove if "small" ends up being a unique type.
-  href?: string;
-  target?: string;
   full?: boolean;
-  dropdown?: boolean;
+  href?: string;
   iconLeft?: string;
   iconRight?: string;
-  elAriaLabel?: string;
+  small?: boolean; // TODO: Remove if "small" ends up being a unique type.
+  target?: string;
+  type?: ButtonTypeAttribute;
+  value?: string;
 }
 
 @Component({
