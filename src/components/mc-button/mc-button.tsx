@@ -103,7 +103,7 @@ export class McButton implements IMcButtonProps {
   }
 
   get gridTemplateColumns() {
-    return this.hasLeftOrRightContent ? `${this.showLeft ? '1fr' : ''} auto ${this.showRight ? '1fr' : ''}` : null;
+    return `${this.showLeft ? '1fr' : ''} auto ${this.showRight ? '1fr' : ''}`;
   }
 
   render() {
