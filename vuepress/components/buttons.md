@@ -2,21 +2,109 @@
 
 Buttons are used to indicate calls to actions (CTAs) that the user can take (e.g. save, delete, add, create). There are a variety of button types to create the desired level of emphasis and hierarchy when multiple actions can be taken.
 
-## mc-button WIP
-
 <!-- TODO -->
 
 <section class="mds">
-  <div class="flex items-start justify-start flex-col gap-10">
-    <mc-button>Button</mc-button>
-    <mc-button small>Button</mc-button>
-    <mc-button btn-type="ghost">Button</mc-button>
-    <mc-button btn-type="transparent">Button</mc-button>
-    <mc-button btn-type="action">Button</mc-button>
-    <mc-button btn-type="error">Button</mc-button>
-    <mc-button btn-type="warning">Button</mc-button>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-64 mb-64">
+    <div>
+      <h2 class="text-h5">Normal</h2>
+      <div class="flex space-x-10">
+        <mc-button>Enabled</mc-button>
+        <mc-button disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Small</h2>
+      <div class="flex space-x-10">
+        <mc-button small>Enabled</mc-button>
+        <mc-button small disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Alt Small</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="alt" small>Enabled</mc-button>
+        <mc-button btn-type="alt" small disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Ghost</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="ghost">Enabled</mc-button>
+        <mc-button btn-type="ghost" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Transparent</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="transparent">Enabled</mc-button>
+        <mc-button btn-type="transparent" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Action</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="action">Enabled</mc-button>
+        <mc-button btn-type="action" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Error</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="error">Enabled</mc-button>
+        <mc-button btn-type="error" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Warning</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="warning">Enabled</mc-button>
+        <mc-button btn-type="warning" disabled>Disabled</mc-button>
+      </div>
+    </div>
   </div>
 </section>
+
+<section class="mds">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-64 mb-64">
+    <div>
+      <h2 class="text-h5">Button as Link</h2>
+      <div class="flex space-x-10">
+        <mc-button href="#">Enabled</mc-button>
+        <mc-button href="#" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Dropdown</h2>
+      <div class="flex space-x-10">
+        <mc-button dropdown>Enabled</mc-button>
+        <mc-button dropdown disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Icons</h2>
+      <div class="flex space-x-10">
+        <mc-button icon-left="ph-star-fill">Left</mc-button>
+        <mc-button icon-right="ph-star-fill">Right</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Slots</h2>
+      <div class="flex space-x-10">
+        <mc-button>
+          <svg slot="left" viewBox="0 0 16 16" width="16" height="16"><circle r="7" cx="8" cy="8" fill="currentColor"></circle></svg>
+          Left
+        </mc-button>
+        <mc-button>
+          Right
+          <svg slot="right" viewBox="0 0 16 16" width="16" height="16"><circle r="7" cx="8" cy="8" fill="currentColor"></circle></svg>
+        </mc-button>
+      </div>
+    </div>
+  </div>
+</section>
+
+# Deprecated Buttons
 
 ## Primary Buttons
 

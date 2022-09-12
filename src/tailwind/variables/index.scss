@@ -32,6 +32,8 @@
   --mc-status-warning-hover: #ff9246;
   --mc-status-warning: #fe6300;
   --mc-tertiary: #9c5af2;
+  --mc-tertiary-hover: #b07bf5;
+  --mc-tertiary-dark: #5e3691;
   --mc-white: #fff;
 
   /* #region patterns */
@@ -52,6 +54,15 @@
   --mc-text-btn-normal-disabled: var(--mc-secondary);
   --mc-text-btn-normal-hover: var(--mc-white);
   --mc-text-btn-normal: var(--mc-white);
+  /* Alt Button */
+  --mc-bg-btn-alt-active: var(--mc-tertiary-dark);
+  --mc-bg-btn-alt-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-btn-alt-hover: var(--mc-tertiary-hover);
+  --mc-bg-btn-alt: var(--mc-tertiary);
+  --mc-text-btn-alt-active: var(--mc-white);
+  --mc-text-btn-alt-disabled: var(--mc-secondary);
+  --mc-text-btn-alt-hover: var(--mc-white);
+  --mc-text-btn-alt: var(--mc-white);
   /* Ghost Button */
   --mc-bg-btn-ghost-active: var(--mc-primary-dark);
   --mc-bg-btn-ghost-disabled: var(--mc-white);

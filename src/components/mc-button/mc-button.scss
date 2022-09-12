@@ -21,6 +21,24 @@ mc-button > a {
     }
   }
 
+  &.alt-button {
+    background-color: var(--mc-bg-btn-alt);
+    color: var(--mc-text-btn-alt);
+    &:hover {
+      background-color: var(--mc-bg-btn-alt-hover);
+      color: var(--mc-text-btn-alt-hover);
+    }
+    &:active {
+      background-color: var(--mc-bg-btn-alt-active);
+      color: var(--mc-text-btn-alt-active);
+    }
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: var(--mc-bg-btn-alt-disabled);
+      color: var(--mc-text-btn-alt-disabled);
+    }
+  }
+
   &.ghost-button {
     background-color: var(--mc-bg-btn-ghost);
     border-color: var(--mc-border-btn-ghost);

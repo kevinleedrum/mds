@@ -3,7 +3,7 @@ import { propagateDataAttributes } from '../../utils/utils';
 
 // TODO: Should "Alt Small" and "Small" be exclusive types?
 // https://github.com/moxiworks/mds/issues/208#issuecomment-1242143965
-export type McBtnType = 'normal' | 'ghost' | 'transparent' | 'action' | 'error' | 'warning';
+export type McBtnType = 'normal' | 'alt' | 'ghost' | 'transparent' | 'action' | 'error' | 'warning';
 export type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
 
 export interface IMcButtonProps {
@@ -34,7 +34,7 @@ export class McButton implements IMcButtonProps {
 
   @Prop({ mutable: true }) btnType: McBtnType = 'normal';
   @Prop() disabled = false;
-  /** Show dropdown icon on right (shorthand for `icon-right="mds-arrow-triangle-down"`) */
+  /** Show dropdown icon on right (shorthand for `icon-right="mc-caret-down-fill"`) */
   @Prop() dropdown = false;
   /** The aria-label attribute for the inner button element. */
   @Prop() elAriaLabel: string;
@@ -84,33 +84,38 @@ export class McButton implements IMcButtonProps {
   }
 
   render() {
+    const hasLeftOrRightContent =
+      this.hasLeftSlot || this.hasRightSlot || this.iconLeft || this.iconRight || this.dropdown;
     const buttonContent = (
-      <div class="flex justify-center items-center content-center relative overflow-hidden whitespace-nowrap">
-        {this.hasLeftSlot && (
-          <span class="mr-10">
+      <div
+        class="grid w-full justify-center items-center relative overflow-hidden whitespace-nowrap"
+        style={{ gridTemplateColumns: hasLeftOrRightContent && '1fr auto 1fr' }}
+      >
+        {hasLeftOrRightContent && (
+          <span class="flex items-center justify-self-start mr-10">
             <slot name="left" />
+            {this.iconLeft && <i class={'text-3 ' + this.iconLeft}></i>}
           </span>
         )}
-        {this.iconLeft && <i class={'mr-10 text-3 ' + this.iconLeft}></i>}
         <span class="slot-content truncate">
           <slot />
         </span>
-        {this.hasRightSlot && (
-          <span class="ml-10">
+        {hasLeftOrRightContent && (
+          <span class="flex items-center justify-self-end ml-10">
+            {(this.iconRight || this.dropdown) && (
+              <i
+                data-testid="dropdown-icon"
+                class={`text-3 ${this.dropdown ? 'mc-caret-down-fill' : this.iconRight}`}
+              ></i>
+            )}
             <slot name="right" />
           </span>
-        )}
-        {(this.iconRight || this.dropdown) && (
-          <i
-            data-testid="dropdown-icon"
-            class={`ml-10 text-3 ${this.dropdown ? 'mds-arrow-triangle-down' : this.iconRight}`}
-          ></i>
         )}
       </div>
     );
 
     return (
-      <Host class={`mc-button ${this.small ? 'min-w-100' : 'min-w-150'} ${this.full ? 'flex' : 'inline-flex'}`}>
+      <Host class={`${this.small ? 'min-w-100' : 'min-w-150'} ${this.full ? 'flex' : 'inline-flex'}`}>
         {this.href ? (
           <a
             href={this.href}
