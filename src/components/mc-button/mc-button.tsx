@@ -73,6 +73,10 @@ export class McButton implements IMcButtonProps {
     }
   }
 
+  get hasLeftOrRightContent() {
+    return this.hasLeftSlot || this.hasRightSlot || this.iconLeft || this.iconRight || this.dropdown;
+  }
+
   get buttonClass() {
     let str = this.btnType + '-button'; // Sets color vars
     str += ' flex items-center justify-center relative overflow-hidden appearance-none select-none';
@@ -81,8 +85,8 @@ export class McButton implements IMcButtonProps {
     if (this.btnType === 'ghost') str += ' border';
     // TODO: Update below lines if "small" ends up being a unique type.
     str += this.small ? ' min-h-30' : ' min-h-40';
-    str += this.small || this.hasRightSlot || this.iconRight || this.dropdown ? ' pr-15' : ' pr-20';
-    str += this.small || this.hasLeftSlot || this.iconLeft ? ' pl-15' : ' pl-20';
+    str += this.small || this.hasLeftOrRightContent ? ' pr-15' : ' pr-20';
+    str += this.small || this.hasLeftOrRightContent ? ' pl-15' : ' pl-20';
     return str;
   }
 
@@ -90,20 +94,25 @@ export class McButton implements IMcButtonProps {
     return this.hug ? null : this.small ? 'min-w-100' : 'min-w-150';
   }
 
-  render() {
-    const hasLeftOrRightContent =
-      this.hasLeftSlot || this.hasRightSlot || this.iconLeft || this.iconRight || this.dropdown;
-    const showLeft = this.hasLeftSlot || this.iconLeft || (hasLeftOrRightContent && !this.hug);
-    const showRight = this.hasRightSlot || this.iconRight || this.dropdown || (hasLeftOrRightContent && !this.hug);
+  get showLeft() {
+    return this.hasLeftSlot || this.iconLeft || (this.hasLeftOrRightContent && !this.hug);
+  }
 
+  get showRight() {
+    return this.hasRightSlot || this.iconRight || this.dropdown || (this.hasLeftOrRightContent && !this.hug);
+  }
+
+  get gridTemplateColumns() {
+    return this.hasLeftOrRightContent ? `${this.showLeft ? '1fr' : ''} auto ${this.showRight ? '1fr' : ''}` : null;
+  }
+
+  render() {
     const buttonContent = (
       <div
         class="grid w-full justify-center items-center relative overflow-hidden whitespace-nowrap"
-        style={{
-          gridTemplateColumns: hasLeftOrRightContent && `${showLeft ? '1fr' : ''} auto ${showRight ? '1fr' : ''}`,
-        }}
+        style={{ gridTemplateColumns: this.gridTemplateColumns }}
       >
-        {showLeft && (
+        {this.showLeft && (
           <span class="flex items-center justify-self-start mr-10">
             <slot name="left" />
             {this.iconLeft && <i class={'text-3 ' + this.iconLeft}></i>}
@@ -112,7 +121,7 @@ export class McButton implements IMcButtonProps {
         <span class="slot-content truncate">
           <slot />
         </span>
-        {showRight && (
+        {this.showRight && (
           <span class="flex items-center justify-self-end ml-10">
             {(this.iconRight || this.dropdown) && (
               <i
