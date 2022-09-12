@@ -32,7 +32,7 @@
 
 ## Variables
 
-The colors for the above classes, as well as all component colors, can be overridden via the following variables.
+The above colors, as well as all component colors, can be overridden via the following variables.
 
 <<< @/src/tailwind/variables/index.scss
 
