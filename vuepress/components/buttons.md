@@ -101,6 +101,15 @@ Buttons are used to indicate calls to actions (CTAs) that the user can take (e.g
         </mc-button>
       </div>
     </div>
+    <div>
+      <h2 class="text-h5">Hug</h2>
+      <div class="flex space-x-10 items-center">
+        <mc-button hug>Hug</mc-button>
+        <mc-button hug small>Hug</mc-button>
+        <mc-button hug btn-type="ghost" dropdown>Hug</mc-button>
+        <mc-button hug icon-left="ph-star-fill">Hug</mc-button>
+      </div>
+    </div>
   </div>
 </section>
 

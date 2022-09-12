@@ -15,6 +15,7 @@ export interface IMcButtonProps {
   formaction?: string;
   full?: boolean;
   href?: string;
+  hug?: boolean;
   iconLeft?: string;
   iconRight?: string;
   small?: boolean; // TODO: Remove if "small" ends up being a unique type.
@@ -44,6 +45,8 @@ export class McButton implements IMcButtonProps {
   @Prop() full = false;
   /** Create button as link */
   @Prop() href: string;
+  /** Sets the min-width to 0.  When combined with a single icon/slot, the text is not centered in the button. */
+  @Prop() hug = false;
   /** Class name of left icon */
   @Prop() iconLeft: string;
   /** Class name of right icon */
@@ -83,15 +86,24 @@ export class McButton implements IMcButtonProps {
     return str;
   }
 
+  get minWidthClass() {
+    return this.hug ? null : this.small ? 'min-w-100' : 'min-w-150';
+  }
+
   render() {
     const hasLeftOrRightContent =
       this.hasLeftSlot || this.hasRightSlot || this.iconLeft || this.iconRight || this.dropdown;
+    const showLeft = this.hasLeftSlot || this.iconLeft || (hasLeftOrRightContent && !this.hug);
+    const showRight = this.hasRightSlot || this.iconRight || this.dropdown || (hasLeftOrRightContent && !this.hug);
+
     const buttonContent = (
       <div
         class="grid w-full justify-center items-center relative overflow-hidden whitespace-nowrap"
-        style={{ gridTemplateColumns: hasLeftOrRightContent && '1fr auto 1fr' }}
+        style={{
+          gridTemplateColumns: hasLeftOrRightContent && `${showLeft ? '1fr' : ''} auto ${showRight ? '1fr' : ''}`,
+        }}
       >
-        {hasLeftOrRightContent && (
+        {showLeft && (
           <span class="flex items-center justify-self-start mr-10">
             <slot name="left" />
             {this.iconLeft && <i class={'text-3 ' + this.iconLeft}></i>}
@@ -100,7 +112,7 @@ export class McButton implements IMcButtonProps {
         <span class="slot-content truncate">
           <slot />
         </span>
-        {hasLeftOrRightContent && (
+        {showRight && (
           <span class="flex items-center justify-self-end ml-10">
             {(this.iconRight || this.dropdown) && (
               <i
@@ -115,7 +127,7 @@ export class McButton implements IMcButtonProps {
     );
 
     return (
-      <Host class={`${this.small ? 'min-w-100' : 'min-w-150'} ${this.full ? 'flex' : 'inline-flex'}`}>
+      <Host class={`${this.minWidthClass} ${this.full ? 'flex' : 'inline-flex'}`}>
         {this.href ? (
           <a
             href={this.href}
