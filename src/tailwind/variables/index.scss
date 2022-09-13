@@ -17,21 +17,23 @@
   --mds-text-primary-inverted: #fff;
   --mds-text-primary: #333;
 
-  --mc-primary-dark: #003B76;
-  --mc-primary-hover:#4096EC;
-  --mc-primary: #0073E6;
-  --mc-secondary-light: #CED8DC;
-  --mc-secondary-medium: #9BB2C9;
-  --mc-secondary-ultra-light: #F3F5F6;
+  --mc-primary-dark: #003b76;
+  --mc-primary-hover: #4096ec;
+  --mc-primary: #0073e6;
+  --mc-secondary-light: #ced8dc;
+  --mc-secondary-medium: #9bb2c9;
+  --mc-secondary-ultra-light: #f3f5f6;
   --mc-secondary: #597897;
-  --mc-status-error-active: #CB303F;
-  --mc-status-error-hover: #FF7A70;
-  --mc-status-error: #FF4330;
-  --mc-status-success: #19A388;
-  --mc-status-warning-active: #E14C00;
-  --mc-status-warning-hover: #FF9246;
-  --mc-status-warning: #FE6300;
-  --mc-tertiary: #9C5AF2;
+  --mc-status-error-active: #cb303f;
+  --mc-status-error-hover: #ff7a70;
+  --mc-status-error: #ff4330;
+  --mc-status-success: #19a388;
+  --mc-status-warning-active: #e14c00;
+  --mc-status-warning-hover: #ff9246;
+  --mc-status-warning: #fe6300;
+  --mc-tertiary: #9c5af2;
+  --mc-tertiary-light: #b07bf5;
+  --mc-tertiary-dark: #5e3691;
   --mc-white: #fff;
 
   /* #region patterns */
@@ -41,6 +43,74 @@
   /* #endregion patterns */
 
   /* Component Variables */
+
+  /* #region mc-button */
+  /* Normal Button */
+  --mc-bg-btn-normal-active: var(--mc-primary-dark);
+  --mc-bg-btn-normal-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-btn-normal-hover: var(--mc-primary-hover);
+  --mc-bg-btn-normal: var(--mc-primary);
+  --mc-text-btn-normal-active: var(--mc-white);
+  --mc-text-btn-normal-disabled: var(--mc-secondary);
+  --mc-text-btn-normal-hover: var(--mc-white);
+  --mc-text-btn-normal: var(--mc-white);
+  /* Alt Button */
+  --mc-bg-btn-alt-active: var(--mc-tertiary-dark);
+  --mc-bg-btn-alt-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-btn-alt-hover: var(--mc-tertiary-light);
+  --mc-bg-btn-alt: var(--mc-tertiary);
+  --mc-text-btn-alt-active: var(--mc-white);
+  --mc-text-btn-alt-disabled: var(--mc-secondary);
+  --mc-text-btn-alt-hover: var(--mc-white);
+  --mc-text-btn-alt: var(--mc-white);
+  /* Ghost Button */
+  --mc-bg-btn-ghost-active: var(--mc-primary-dark);
+  --mc-bg-btn-ghost-disabled: var(--mc-white);
+  --mc-bg-btn-ghost-hover: var(--mc-primary);
+  --mc-bg-btn-ghost: var(--mc-white);
+  --mc-border-btn-ghost-disabled: var(--mc-secondary-light);
+  --mc-border-btn-ghost: var(--mc-primary);
+  --mc-text-btn-ghost-active: var(--mc-white);
+  --mc-text-btn-ghost-disabled: var(--mc-secondary);
+  --mc-text-btn-ghost-hover: var(--mc-white);
+  --mc-text-btn-ghost: var(--mc-primary);
+  /* Transparent Button */
+  --mc-bg-btn-transparent-active: var(--mc-primary-dark);
+  --mc-bg-btn-transparent-disabled: transparent;
+  --mc-bg-btn-transparent-hover: var(--mc-secondary-ultra-light);
+  --mc-bg-btn-transparent: transparent;
+  --mc-text-btn-transparent-active: var(--mc-white);
+  --mc-text-btn-transparent-disabled: var(--mc-secondary);
+  --mc-text-btn-transparent-hover: var(--mc-primary-dark);
+  --mc-text-btn-transparent: var(--mc-primary-dark);
+  /* Action Button */
+  --mc-bg-btn-action-active: var(--mc-primary-dark);
+  --mc-bg-btn-action-disabled: transparent;
+  --mc-bg-btn-action-hover: var(--mc-secondary-ultra-light);
+  --mc-bg-btn-action: transparent;
+  --mc-text-btn-action-active: var(--mc-white);
+  --mc-text-btn-action-disabled: var(--mc-secondary);
+  --mc-text-btn-action-hover: var(--mc-primary);
+  --mc-text-btn-action: var(--mc-primary);
+  /* Error Button */
+  --mc-bg-btn-error-active: var(--mc-status-error-active);
+  --mc-bg-btn-error-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-btn-error-hover: var(--mc-status-error-hover);
+  --mc-bg-btn-error: var(--mc-status-error);
+  --mc-text-btn-error-active: var(--mc-white);
+  --mc-text-btn-error-disabled: var(--mc-secondary);
+  --mc-text-btn-error-hover: var(--mc-white);
+  --mc-text-btn-error: var(--mc-white);
+  /* Warning Button */
+  --mc-bg-btn-warning-active: var(--mc-status-warning-active);
+  --mc-bg-btn-warning-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-btn-warning-hover: var(--mc-status-warning-hover);
+  --mc-bg-btn-warning: var(--mc-status-warning);
+  --mc-text-btn-warning-active: var(--mc-white);
+  --mc-text-btn-warning-disabled: var(--mc-secondary);
+  --mc-text-btn-warning-hover: var(--mc-white);
+  --mc-text-btn-warning: var(--mc-white);
+  /* #endregion mc-button */
 
   /* #region buttons */
   /* Contained Buttons */

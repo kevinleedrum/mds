@@ -98,7 +98,7 @@ const config = {
         'status-warning-hover': 'var(--mc-status-warning-hover)',
         'status-warning': 'var(--mc-status-warning)',
         'tertiary': 'var(--mc-tertiary)',
-        'tertiary-hover': 'var(--mc-tertiary-hover)',
+        'tertiary-light': 'var(--mc-tertiary-light)',
         'tertiary-dark': 'var(--mc-tertiary-dark)',
         'white': 'var(--mc-white)',
       },
