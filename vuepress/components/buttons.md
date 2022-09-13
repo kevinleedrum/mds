@@ -7,7 +7,7 @@ Buttons are used to indicate calls to actions (CTAs) that the user can take (e.g
 The `btnType` prop can be used to change the button type, and the `small` prop can be used to make the button smaller.
 
 <section class="mds">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-64 mb-64">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-64 mb-64">
     <!-- #region mc-button-types -->
     <div>
       <h2 class="text-h5">Normal</h2>
@@ -85,7 +85,7 @@ An `mc-button` has a minimum width by default, but this can be disabled by setti
 This will ensure the button takes up the minimum space needed to display its content.
 
 <section class="mds">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-64 mb-64">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-64 mb-64">
     <!-- #region mc-button-props -->
     <div>
       <h2 class="text-h5">Button as Link</h2>
