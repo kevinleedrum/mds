@@ -2,10 +2,13 @@
 
 Buttons are used to indicate calls to actions (CTAs) that the user can take (e.g. save, delete, add, create). There are a variety of button types to create the desired level of emphasis and hierarchy when multiple actions can be taken.
 
-<!-- TODO -->
+## `mc-button`
+
+The `btnType` prop can be used to change the button type, and the `small` prop can be used to make the button smaller.
 
 <section class="mds">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-64 mb-64">
+    <!-- #region mc-button-types -->
     <div>
       <h2 class="text-h5">Normal</h2>
       <div class="flex space-x-10">
@@ -62,11 +65,28 @@ Buttons are used to indicate calls to actions (CTAs) that the user can take (e.g
         <mc-button btn-type="warning" disabled>Disabled</mc-button>
       </div>
     </div>
+    <!-- #endregion mc-button-types -->
   </div>
 </section>
 
+<<< @/vuepress/components/buttons.md#mc-button-types
+
+### Additional `mc-button` props
+
+The `mc-button` component renders as a `<button>` element by default, but it will render an `<a>` element if the **`href`** prop is provided.
+
+There are several ways to add an icon to a button:
+
+- Provide an [icon class name](/components/icons.html) as the **`iconLeft`** or **`iconRight`** prop,
+- Set the **`dropdown`** prop to render a dropdown icon on the right side of the button,
+- Or use the **`left`** or **`right`** slot to render custom content, such as an inline SVG.
+
+An `mc-button` has a minimum width by default, but this can be disabled by setting the **`hug`** prop.
+This will ensure the button takes up the minimum space needed to display its content.
+
 <section class="mds">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-64 mb-64">
+    <!-- #region mc-button-props -->
     <div>
       <h2 class="text-h5">Button as Link</h2>
       <div class="flex space-x-10">
@@ -110,8 +130,11 @@ Buttons are used to indicate calls to actions (CTAs) that the user can take (e.g
         <mc-button hug icon-left="ph-star-fill">Hug</mc-button>
       </div>
     </div>
+    <!-- #endregion mc-button-props -->
   </div>
 </section>
+
+<<< @/vuepress/components/buttons.md#mc-button-props
 
 # Deprecated Buttons
 
