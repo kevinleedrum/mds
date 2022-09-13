@@ -35,7 +35,7 @@ export class McButton implements IMcButtonProps {
 
   @Prop({ mutable: true }) btnType: McBtnType = 'normal';
   @Prop() disabled = false;
-  /** Show dropdown icon on right (shorthand for `icon-right="mc-caret-down-fill"`) */
+  /** Show dropdown icon on right (shorthand for `icon-right="mds-caret-down-fill"`) */
   @Prop() dropdown = false;
   /** The aria-label attribute for the inner button element. */
   @Prop() elAriaLabel: string;
@@ -126,7 +126,7 @@ export class McButton implements IMcButtonProps {
             {(this.iconRight || this.dropdown) && (
               <i
                 data-testid="dropdown-icon"
-                class={`text-3 ${this.dropdown ? 'mc-caret-down-fill' : this.iconRight}`}
+                class={`text-3 ${this.dropdown ? 'mds-caret-down-fill' : this.iconRight}`}
               ></i>
             )}
             <slot name="right" />
