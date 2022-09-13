@@ -32,7 +32,7 @@
   --mc-status-warning-hover: #ff9246;
   --mc-status-warning: #fe6300;
   --mc-tertiary: #9c5af2;
-  --mc-tertiary-hover: #b07bf5;
+  --mc-tertiary-light: #b07bf5;
   --mc-tertiary-dark: #5e3691;
   --mc-white: #fff;
 
@@ -57,7 +57,7 @@
   /* Alt Button */
   --mc-bg-btn-alt-active: var(--mc-tertiary-dark);
   --mc-bg-btn-alt-disabled: var(--mc-secondary-ultra-light);
-  --mc-bg-btn-alt-hover: var(--mc-tertiary-hover);
+  --mc-bg-btn-alt-hover: var(--mc-tertiary-light);
   --mc-bg-btn-alt: var(--mc-tertiary);
   --mc-text-btn-alt-active: var(--mc-white);
   --mc-text-btn-alt-disabled: var(--mc-secondary);
