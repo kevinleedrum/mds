@@ -2,6 +2,11 @@
 
 ## Global Colors
 
+These are the global colors used throughout the design system. They can used as both CSS variables
+and as utility classes.
+
+<!-- When adding new colors, be sure to add them to both variables/index.scss and tailwind.config.js. -->
+
 <section class="mds">
   <table >
     <thead>
@@ -46,6 +51,8 @@ The above colors, as well as all component colors, can be overridden via the fol
     mounted() {
       [...document.styleSheets].forEach(stylesheet => {
         try {
+          // The global colors are pulled from the document stylesheet.  Only `--mc-` variables with
+          // raw hex values are included (so component-specific variables are excluded).
           [...stylesheet.cssRules].forEach(rule => {
             if (!rule || !rule.selectorText || rule.selectorText !== ':root') return
             const vars = [...rule.style].filter(name => name.startsWith("--mc-"))
