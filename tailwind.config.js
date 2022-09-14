@@ -1,6 +1,6 @@
 const plugin = require('tailwindcss/plugin');
 
-const { NODE_ENV } = process.env;
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const config = {
   important: '.mds',
@@ -126,7 +126,7 @@ const config = {
     },
   },
   plugins: [
-    plugin(function({ addVariant, e }) {
+    plugin(function ({ addVariant, e }) {
       // Make "disabled:" variant work for aria-disabled as well
       addVariant('disabled', ({ modifySelectors, separator }) => {
         modifySelectors(({ className }) => {
