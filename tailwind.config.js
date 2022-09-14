@@ -47,13 +47,13 @@ const config = {
       10: '0.625rem',
       12: '0.75rem',
       14: '0.875rem',
-      15: '0.9375rem',
+      15: '0.9375rem', // Added for mc-button
       16: '1rem',
       18: '1.125rem',
       20: '1.25rem',
       24: '1.5rem',
       28: '1.75rem',
-      30: '1.875rem',
+      30: '1.875rem', // Added for mc-button
       32: '2rem',
       36: '2.25rem',
       40: '2.5rem',
@@ -85,6 +85,7 @@ const config = {
     },
     extend: {
       colors: {
+        // Global Mercury colors
         'primary-dark': 'var(--mc-primary-dark)',
         'primary-hover': 'var(--mc-primary-hover)',
         'primary': 'var(--mc-primary)',
@@ -111,14 +112,14 @@ const config = {
         ...theme('spacing'), // Extend to include spacing values (e.g. min-h-128)
       }),
       minWidth: {
-        100: '6.25rem',
-        150: '9.375rem',
+        100: '6.25rem', // Added for mc-button
+        150: '9.375rem', // Added for mc-button
       },
       maxHeight: theme => ({
         ...theme('spacing'), // Extend to include spacing values (e.g. max-h-128)
       }),
       borderRadius: {
-        DEFAULT: '0.1875rem',
+        DEFAULT: '0.1875rem', // Change `rounded` class to 3px border radius for Mercury buttons and inputs
       },
       container: {
         center: true,
