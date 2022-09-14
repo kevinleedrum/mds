@@ -16,7 +16,7 @@ export const config: Config = {
       includeDefineCustomElements: true,
     }),
     {
-      type: 'dist-custom-elements-bundle',
+      type: 'dist-custom-elements',
     },
     {
       type: 'docs-readme',

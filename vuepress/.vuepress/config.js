@@ -53,6 +53,9 @@ module.exports = {
       '/patterns/': ['introduction', 'filters'],
       '/examples/': ['grid', 'flex'],
       '/css-documentation/': [
+        'colors',
+        'typography',
+        'elevations',
         {
           title: 'Layout',
           collapsable: false,
@@ -131,10 +134,7 @@ module.exports = {
             'sizing/max-height',
           ],
         },
-        'colors',
-        'typography',
         'backgrounds',
-        'elevations',
         'borders',
         'effects',
         'filters',
