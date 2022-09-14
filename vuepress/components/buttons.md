@@ -136,6 +136,8 @@ This will ensure the button takes up the minimum space needed to display its con
 
 <<< @/vuepress/components/buttons.md#mc-button-props
 
+<ComponentReadme component="mc-button" />
+
 # Deprecated Buttons
 
 ## Primary Buttons
