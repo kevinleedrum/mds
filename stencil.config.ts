@@ -20,6 +20,8 @@ export const config: Config = {
     },
     {
       type: 'docs-readme',
+      footer: '',
+      dir: 'vuepress',
     },
     {
       type: 'www',
