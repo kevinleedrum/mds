@@ -69,7 +69,7 @@
     "docs:dev": "vuepress dev vuepress",
     "docs:build": "sh build-docs.sh",
     "stencil:build": "stencil build --docs",
-    "stencil:start": "stencil build --dev --watch",
+    "stencil:start": "stencil build --dev --docs --watch",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
     "generate": "stencil generate",
