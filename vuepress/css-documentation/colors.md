@@ -42,6 +42,7 @@ The above colors, as well as all component colors, can be overridden via the fol
 <<< @/src/tailwind/variables/index.scss
 
 <script>
+  import * as tailwindConfig from '../../tailwind.config.js'
   export default {
     data() {
       return {
@@ -49,10 +50,11 @@ The above colors, as well as all component colors, can be overridden via the fol
       }
     },
     mounted() {
+      const tailwindThemeColors = Object.keys(tailwindConfig.theme.extend.colors);
       [...document.styleSheets].forEach(stylesheet => {
         try {
-          // The global colors are pulled from the document stylesheet.  Only `--mc-` variables with
-          // raw hex values are included (so component-specific variables are excluded).
+          // The global colors are pulled from the document stylesheet.  Only `--mc-` variables that
+          // match a key in the tailwind config are included (to exclude component-specific vars).
           [...stylesheet.cssRules].forEach(rule => {
             if (!rule || !rule.selectorText || rule.selectorText !== ':root') return
             const vars = [...rule.style].filter(name => name.startsWith("--mc-"))
@@ -60,7 +62,7 @@ The above colors, as well as all component colors, can be overridden via the fol
               friendlyName: name.replace('--mc-', '').replace(/-/g, ' '),
               name: name.replace('--mc-', ''),
               value: rule.style.getPropertyValue(name).trim(),
-            })).filter(({ value }) => value.startsWith("#"))
+            })).filter(({ name }) => tailwindThemeColors.includes(name))
           })
         } catch (err) {
           // Ignore "cannot access rules" exceptions
