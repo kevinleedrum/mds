@@ -1,8 +1,6 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
 import { propagateDataAttributes } from '../../utils/utils';
 
-// TODO: Should "Alt Small" and "Small" be exclusive types?
-// https://github.com/moxiworks/mds/issues/208#issuecomment-1242143965
 export type McBtnType = 'normal' | 'alt' | 'ghost' | 'transparent' | 'action' | 'error' | 'warning';
 export type ButtonTypeAttribute = 'button' | 'submit' | 'reset';
 
@@ -25,7 +23,7 @@ export interface IMcButtonProps {
   iconLeft?: string;
   /** Class name of right icon */
   iconRight?: string;
-  small?: boolean; // TODO: Remove if "small" ends up being a unique type.
+  small?: boolean;
   /** Only for link buttons */
   target?: string;
   type?: ButtonTypeAttribute;
@@ -52,7 +50,7 @@ export class McButton implements IMcButtonProps {
   @Prop() hug = false;
   @Prop() iconLeft: string;
   @Prop() iconRight: string;
-  @Prop() small = false; // TODO: Remove if "small" ends up being a unique type.
+  @Prop() small = false;
   @Prop() target: string;
   @Prop() type: ButtonTypeAttribute = 'button';
   @Prop() value: string;
@@ -83,7 +81,6 @@ export class McButton implements IMcButtonProps {
     str += ' cursor-pointer disabled:pointer-events-none disabled:cursor-auto hover:no-underline';
     str += ' w-full rounded font-bold caption1 uppercase'; // TODO: Replace caption1 class if necesary
     if (this.btnType === 'ghost') str += ' border';
-    // TODO: Update below lines if "small" ends up being a unique type.
     str += this.small ? ' min-h-30' : ' min-h-40';
     str += this.small || this.hasLeftOrRightContent ? ' pr-15' : ' pr-20';
     str += this.small || this.hasLeftOrRightContent ? ' pl-15' : ' pl-20';
