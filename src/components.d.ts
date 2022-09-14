@@ -191,6 +191,10 @@ export namespace Components {
          */
         "appearDelay": number;
         /**
+          * If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).
+         */
+        "simulateProgressDuration": number;
+        /**
           * The value to use for the width and height
          */
         "size": string;
@@ -355,6 +359,10 @@ export namespace Components {
           * Show right-pointing chevron icon
          */
         "chevronRight": boolean;
+        /**
+          * Show upward chevron icon
+         */
+        "chevronUp": boolean;
         "disabled": boolean;
         /**
           * The aria-label attribute for the inner button element.
@@ -528,6 +536,10 @@ export namespace Components {
           * Delay the appearance of the indicator for this many milliseconds
          */
         "appearDelay": number;
+        /**
+          * If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).
+         */
+        "simulateProgressDuration": number;
         /**
           * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
          */
@@ -1525,6 +1537,10 @@ declare namespace LocalJSX {
          */
         "appearDelay"?: number;
         /**
+          * If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).
+         */
+        "simulateProgressDuration"?: number;
+        /**
           * The value to use for the width and height
          */
         "size"?: string;
@@ -1682,6 +1698,10 @@ declare namespace LocalJSX {
           * Show right-pointing chevron icon
          */
         "chevronRight"?: boolean;
+        /**
+          * Show upward chevron icon
+         */
+        "chevronUp"?: boolean;
         "disabled"?: boolean;
         /**
           * The aria-label attribute for the inner button element.
@@ -1857,6 +1877,10 @@ declare namespace LocalJSX {
           * Delay the appearance of the indicator for this many milliseconds
          */
         "appearDelay"?: number;
+        /**
+          * If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).
+         */
+        "simulateProgressDuration"?: number;
         /**
           * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
          */

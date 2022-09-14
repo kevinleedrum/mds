@@ -208,6 +208,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
         <mx-icon-button chevron-down el-aria-label="Down" />
         <mx-icon-button chevron-left el-aria-label="Left" />
         <mx-icon-button chevron-right el-aria-label="Right" />
+        <mx-icon-button chevron-up el-aria-label="Up" />
         <mx-icon-button icon="ph-link" href="/" el-aria-label="Link" />
       </div>
     </div>
@@ -223,6 +224,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
         <mx-icon-button chevron-down disabled el-aria-label="Down" />
         <mx-icon-button chevron-left disabled el-aria-label="Left" />
         <mx-icon-button chevron-right disabled el-aria-label="Right" />
+        <mx-icon-button chevron-up disabled el-aria-label="Up" />
         <mx-icon-button icon="ph-link" href="/" disabled el-aria-label="Link" />
       </div>
     </div>
@@ -239,6 +241,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
 | `chevronDown`  | `chevron-down`  | Show downward chevron icon                             | `boolean`                         | `false`     |
 | `chevronLeft`  | `chevron-left`  | Show left-pointing chevron icon                        | `boolean`                         | `false`     |
 | `chevronRight` | `chevron-right` | Show right-pointing chevron icon                       | `boolean`                         | `false`     |
+| `chevronUp`    | `chevron-up`    | Show upward chevron icon                               | `boolean`                         | `false`     |
 | `disabled`     | `disabled`      |                                                        | `boolean`                         | `false`     |
 | `elAriaLabel`  | `el-aria-label` | The aria-label attribute for the inner button element. | `string`                          | `undefined` |
 | `form`         | `form`          |                                                        | `string`                          | `undefined` |
@@ -302,9 +305,11 @@ A Toggle Button Group provides a convenient way to bind a group of toggle button
 However, unlike radio buttons, Toggle Buttons can be deselected. When a Toggle Button is clicked, the resulting value is
 emitted via a custom <code>mxInput</code> event.
 
+There is a `slot` available for SVG images or plain text as well. See Example.
+
 <!-- #region toggle-button-groups -->
 <section class="mds">
-  <div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
+  <div class="mt-5 grid grid-cols-1 lg:grid-cols-3">
     <div>
       <strong>Enabled</strong>
       <div class="my-20">
@@ -326,7 +331,22 @@ emitted via a custom <code>mxInput</code> event.
         </mx-toggle-button-group>
       </div>
     </div>
-  </div>
+    <div>
+      <strong>Text Using Default Slot</strong>
+      <div class="my-20">
+        <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
+          <mx-toggle-button value="left" el-aria-label="Align left">
+            <div class="caption1">Left</div>
+          </mx-toggle-button>
+          <mx-toggle-button value="center" el-aria-label="Align center">
+            <div class="caption1">Center</div>
+          </mx-toggle-button>
+          <mx-toggle-button value="right" el-aria-label="Align right">
+            <div class="caption1">Right</div>
+          </mx-toggle-button>
+        </mx-toggle-button-group>
+      </div>
+    </div>
   </div>
 </section>
 <!-- #endregion toggle-button-groups -->
