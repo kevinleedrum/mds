@@ -16,6 +16,11 @@
 @import 'tailwindcss/utilities';
 
 /***************************
+* Mercury components
+***************************/
+@import '../components/mc-button/mc-button.scss';
+
+/***************************
 * Import Component CSS
 ***************************/
 @import './mx-input/index.scss';

@@ -2,6 +2,144 @@
 
 Buttons are used to indicate calls to actions (CTAs) that the user can take (e.g. save, delete, add, create). There are a variety of button types to create the desired level of emphasis and hierarchy when multiple actions can be taken.
 
+## `mc-button`
+
+The `btnType` prop can be used to change the button type, and the `small` prop can be used to make the button smaller.
+
+<section class="mds">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-64 mb-64">
+    <!-- #region mc-button-types -->
+    <div>
+      <h2 class="text-h5">Normal</h2>
+      <div class="flex space-x-10">
+        <mc-button>Enabled</mc-button>
+        <mc-button disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Small</h2>
+      <div class="flex space-x-10">
+        <mc-button small>Enabled</mc-button>
+        <mc-button small disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Alt Small</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="alt" small>Enabled</mc-button>
+        <mc-button btn-type="alt" small disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Ghost</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="ghost">Enabled</mc-button>
+        <mc-button btn-type="ghost" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Transparent</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="transparent">Enabled</mc-button>
+        <mc-button btn-type="transparent" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Action</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="action">Enabled</mc-button>
+        <mc-button btn-type="action" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Error</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="error">Enabled</mc-button>
+        <mc-button btn-type="error" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Warning</h2>
+      <div class="flex space-x-10">
+        <mc-button btn-type="warning">Enabled</mc-button>
+        <mc-button btn-type="warning" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <!-- #endregion mc-button-types -->
+  </div>
+</section>
+
+<<< @/vuepress/components/buttons.md#mc-button-types
+
+### Additional `mc-button` props
+
+The `mc-button` component renders as a `<button>` element by default, but it will render an `<a>` element if the **`href`** prop is provided.
+
+There are several ways to add an icon to a button:
+
+- Provide an [icon class name](/components/icons.html) as the **`iconLeft`** or **`iconRight`** prop,
+- Set the **`dropdown`** prop to render a dropdown icon on the right side of the button,
+- Or use the **`left`** or **`right`** slot to render custom content, such as an inline SVG.
+
+An `mc-button` has a minimum width by default, but this can be disabled by setting the **`hug`** prop.
+This will ensure the button takes up the minimum space needed to display its content.
+
+<section class="mds">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-64 mb-64">
+    <!-- #region mc-button-props -->
+    <div>
+      <h2 class="text-h5">Button as Link</h2>
+      <div class="flex space-x-10">
+        <mc-button href="#">Enabled</mc-button>
+        <mc-button href="#" disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Dropdown</h2>
+      <div class="flex space-x-10">
+        <mc-button dropdown>Enabled</mc-button>
+        <mc-button dropdown disabled>Disabled</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Icons</h2>
+      <div class="flex space-x-10">
+        <mc-button icon-left="ph-star-fill">Left</mc-button>
+        <mc-button icon-right="ph-star-fill">Right</mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Slots</h2>
+      <div class="flex space-x-10">
+        <mc-button>
+          <svg slot="left" viewBox="0 0 16 16" width="16" height="16"><circle r="7" cx="8" cy="8" fill="currentColor"></circle></svg>
+          Left
+        </mc-button>
+        <mc-button>
+          Right
+          <svg slot="right" viewBox="0 0 16 16" width="16" height="16"><circle r="7" cx="8" cy="8" fill="currentColor"></circle></svg>
+        </mc-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-h5">Hug</h2>
+      <div class="flex space-x-10 items-center">
+        <mc-button hug>Hug</mc-button>
+        <mc-button hug small>Hug</mc-button>
+        <mc-button hug btn-type="ghost" dropdown>Hug</mc-button>
+        <mc-button hug icon-left="ph-star-fill">Hug</mc-button>
+      </div>
+    </div>
+    <!-- #endregion mc-button-props -->
+  </div>
+</section>
+
+<<< @/vuepress/components/buttons.md#mc-button-props
+
+<ComponentReadme component="mc-button" />
+
+# Deprecated Buttons
+
 ## Primary Buttons
 
 Contained buttons using the primary brandable color as a fill. Other than FAB, they have the highest level of emphasis. Commonly used at the top of page headers, within modals, and empty states. These are usually for the main action on a page. Avoid grouping multiple primary buttons together or using them for less important actions.
