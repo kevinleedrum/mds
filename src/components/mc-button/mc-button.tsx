@@ -82,8 +82,7 @@ export class McButton implements IMcButtonProps {
     str += ' w-full rounded font-bold caption1 uppercase'; // TODO: Replace caption1 class if necesary
     if (this.btnType === 'ghost') str += ' border';
     str += this.small ? ' min-h-30' : ' min-h-40';
-    str += this.small || this.hasLeftOrRightContent ? ' pr-15' : ' pr-20';
-    str += this.small || this.hasLeftOrRightContent ? ' pl-15' : ' pl-20';
+    str += this.small || this.hasLeftOrRightContent ? ' px-15' : ' px-20';
     return str;
   }
 
@@ -110,7 +109,7 @@ export class McButton implements IMcButtonProps {
         style={{ gridTemplateColumns: this.gridTemplateColumns }}
       >
         {this.showLeft && (
-          <span class="flex items-center justify-self-start mr-10">
+          <span class="flex items-center justify-self-start mr-10" data-testid="left-content">
             <slot name="left" />
             {this.iconLeft && <i class={'text-3 ' + this.iconLeft}></i>}
           </span>
@@ -119,7 +118,7 @@ export class McButton implements IMcButtonProps {
           <slot />
         </span>
         {this.showRight && (
-          <span class="flex items-center justify-self-end ml-10">
+          <span class="flex items-center justify-self-end ml-10" data-testid="right-content">
             {(this.iconRight || this.dropdown) && (
               <i
                 data-testid="dropdown-icon"
