@@ -93,6 +93,7 @@ export class McInput implements IMcInputProps {
   }
 
   triggerFileSelection() {
+    if (this.disabled) return false;
     this.elemFileInput.click();
   }
 
@@ -134,9 +135,10 @@ export class McInput implements IMcInputProps {
             <div class="w-full">
               <input
                 type="text"
-                class={`w-full cursor-pointer ${this.makeInputClasses}`}
+                class={`w-full ${this.makeInputClasses}`}
                 onClick={this.triggerFileSelection.bind(this)}
                 ref={el => (this.elemFileUploadNameHolder = el as HTMLInputElement)}
+                disabled={this.disabled ? true : false}
                 readonly
               />
               <input
@@ -154,7 +156,7 @@ export class McInput implements IMcInputProps {
             </mc-button>
           )}
           {this.type === 'file' && (
-            <mc-button onClick={this.triggerFileSelection.bind(this)} small>
+            <mc-button onClick={this.triggerFileSelection.bind(this)} disabled={this.disabled ? true : false} small>
               Choose File
             </mc-button>
           )}
