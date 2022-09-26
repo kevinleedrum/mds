@@ -17,6 +17,7 @@
 | `inputId`            | `input-id`             |             | `string`                                                                                 | `undefined` |
 | `instructions`       | `instructions`         |             | `string`                                                                                 | `''`        |
 | `label`              | `label`                |             | `string`                                                                                 | `''`        |
+| `leftIcon`           | `left-icon`            |             | `string`                                                                                 | `undefined` |
 | `maxlength`          | `maxlength`            |             | `number`                                                                                 | `undefined` |
 | `name`               | `name`                 |             | `string`                                                                                 | `''`        |
 | `placeholder`        | `placeholder`          |             | `string`                                                                                 | `''`        |

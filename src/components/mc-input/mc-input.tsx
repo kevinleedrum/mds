@@ -20,6 +20,7 @@ export interface IMcInputProps {
   hideCharacterCount?: boolean;
   required?: boolean;
   searchLabel?: string;
+  leftIcon?: string;
 }
 
 @Component({
@@ -46,9 +47,14 @@ export class McInput implements IMcInputProps {
   @Prop() hideCharacterCount: boolean;
   @Prop() required: boolean = false;
   @Prop() searchLabel: string = 'Search';
+  @Prop() leftIcon: string;
 
   componentWillRender() {
     this.inputId = this.inputId || nanoid(10);
+
+    if (this.type === 'search') {
+      this.leftIcon = 'ph-magnifying-glass';
+    }
   }
 
   get makeInputClasses() {
@@ -65,6 +71,7 @@ export class McInput implements IMcInputProps {
 
     if (this.type === 'search') {
       classArr.push('pr-112');
+      classArr.push('pl-36');
     }
 
     return classArr.join(' ');
@@ -90,6 +97,7 @@ export class McInput implements IMcInputProps {
           </label>
         )}
         <div class="flex items-center relative">
+          {this.leftIcon && <i class={`leftIcon ${this.leftIcon}`} />}
           <input
             id={this.inputId}
             class={this.makeInputClasses}

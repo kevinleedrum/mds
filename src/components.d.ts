@@ -72,6 +72,7 @@ export namespace Components {
         "inputId": string;
         "instructions": string;
         "label": string;
+        "leftIcon": string;
         "maxlength": number;
         "name": string;
         "placeholder": string;
@@ -1543,6 +1544,7 @@ declare namespace LocalJSX {
         "inputId"?: string;
         "instructions"?: string;
         "label"?: string;
+        "leftIcon"?: string;
         "maxlength"?: number;
         "name"?: string;
         "placeholder"?: string;
