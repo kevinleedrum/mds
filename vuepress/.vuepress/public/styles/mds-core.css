@@ -3000,6 +3000,10 @@
   margin-top: 0.625rem;
   margin-bottom: 0.625rem;
 }
+.mds .my-2{
+  margin-top: 0.125rem;
+  margin-bottom: 0.125rem;
+}
 .mds .-mx-32{
   margin-left: -2rem;
   margin-right: -2rem;
@@ -3023,10 +3027,6 @@
 .mds .my-4{
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
-}
-.mds .my-2{
-  margin-top: 0.125rem;
-  margin-bottom: 0.125rem;
 }
 .mds .my-24{
   margin-top: 1.5rem;
@@ -7923,10 +7923,6 @@ mc-input input.border-status-error {
       box-shadow: 0 0 3px var(--mc-status-error);
       outline: none;
     }
-mc-input .instructions {
-    color: #597897 !important;
-    color: var(--mc-secondary) !important;
-  }
 /***************************
 * Import Component CSS
 ***************************/

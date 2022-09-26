@@ -65,7 +65,7 @@ const McInput = class {
     return classArr.join(' ');
   }
   render() {
-    return (h(Host, null, this.label && (h("label", { htmlFor: this.inputId, class: "block text-secondary font-bold subtitle4 mb-10 uppercase" }, this.label, this.required && h("span", { class: "text-status-error" }, "*"))), h("input", { id: this.inputId, class: this.makeInputClasses, type: this.type, name: this.name, value: this.value, placeholder: this.placeholder, disabled: this.disabled ? true : false, readonly: this.readonly ? true : false }), this.instructions && !this.error && h("section", { class: "instructions caption1 mt-10" }, this.instructions), this.error && this.errorMsg && (h("section", { class: "flex caption1 mt-10 text-status-error items-center gap-6" }, h("i", { class: "ph-warning" }), this.errorMsg))));
+    return (h(Host, null, this.label && (h("label", { htmlFor: this.inputId, class: "block text-secondary font-bold subtitle4 mb-10 uppercase" }, this.label, this.required && h("span", { class: "text-status-error" }, "*"))), h("input", { id: this.inputId, class: this.makeInputClasses, type: this.type, name: this.name, value: this.value, placeholder: this.placeholder, disabled: this.disabled ? true : false, readonly: this.readonly ? true : false }), this.instructions && !this.error && (h("section", { class: "text-secondary caption1 mt-10" }, this.instructions)), this.error && this.errorMsg && (h("section", { class: "flex caption1 mt-10 text-status-error items-center gap-6" }, h("i", { class: "ph-warning" }), this.errorMsg))));
   }
 };
 

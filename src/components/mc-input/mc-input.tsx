@@ -80,7 +80,9 @@ export class McInput implements IMcInputProps {
           disabled={this.disabled ? true : false}
           readonly={this.readonly ? true : false}
         />
-        {this.instructions && !this.error && <section class="instructions caption1 mt-10">{this.instructions}</section>}
+        {this.instructions && !this.error && (
+          <section class="text-secondary caption1 mt-10">{this.instructions}</section>
+        )}
         {this.error && this.errorMsg && (
           <section class="flex caption1 mt-10 text-status-error items-center gap-6">
             <i class="ph-warning"></i>
