@@ -79,6 +79,7 @@ export class McInput implements IMcInputProps {
           placeholder={this.placeholder}
           disabled={this.disabled ? true : false}
           readonly={this.readonly ? true : false}
+          aria-label={this.elAriaLabel}
         />
         {this.instructions && !this.error && (
           <section class="text-secondary caption1 mt-10">{this.instructions}</section>
