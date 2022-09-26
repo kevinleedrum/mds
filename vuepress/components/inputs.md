@@ -47,11 +47,11 @@ Hooray, this is the new input.
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
     <div class="my-2">
       <h6 class="emphasis mb-10">Regular</h6>
-      <mc-input type="search" label="Label" placeholder="Placeholder" instructions="Please use the input above to search." search></mc-input>
+      <mc-input type="search" label="Label" placeholder="Search for..." instructions="Please use the input above to search." search></mc-input>
     </div>
     <div class="my-2">
       <h6 class="emphasis mb-10">Disabled</h6> 
-      <mc-input type="search" label="Label" placeholder="Placeholder" instructions="Please use the input above to search." search disabled></mc-input>
+      <mc-input type="search" label="Label" placeholder="Search for..." instructions="Please use the input above to search." search disabled></mc-input>
     </div>
   </div>
 </section>
@@ -62,15 +62,15 @@ Hooray, this is the new input.
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
     <div class="my-2">
       <h6 class="emphasis mb-10">Regular</h6>
-      <mc-input type="file" label="Label" placeholder="Placeholder" instructions="Please use the input above to search."></mc-input>
+      <mc-input type="file" label="Label" placeholder="Choose File" instructions="Please use the input above to search."></mc-input>
     </div>
     <div class="my-2">
       <h6 class="emphasis mb-10">Disabled</h6>
-      <mc-input type="file" label="Label" placeholder="Placeholder" instructions="Please use the input above to search." disabled></mc-input>
+      <mc-input type="file" label="Label" placeholder="Choose File" instructions="Please use the input above to search." disabled></mc-input>
     </div>
     <div class="my-2">
       <h6 class="emphasis mb-10">Error State</h6>
-      <mc-input type="file" label="Label" placeholder="Placeholder" instructions="Please use the input above to search." error error-msg="Your file input haz error'd, my friend."></mc-input>
+      <mc-input type="file" label="Label" placeholder="Choose File" instructions="Please use the input above to search." error error-msg="Your file input haz error'd, my friend."></mc-input>
     </div>
   </div>
 </section>

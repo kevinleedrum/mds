@@ -103,6 +103,7 @@ export class McInput implements IMcInputProps {
     } else {
       this.elemFileUploadNameHolder.value = '';
     }
+    this.error = false;
   }
 
   render() {
@@ -138,6 +139,7 @@ export class McInput implements IMcInputProps {
                 class={`w-full ${this.makeInputClasses}`}
                 onClick={this.triggerFileSelection.bind(this)}
                 ref={el => (this.elemFileUploadNameHolder = el as HTMLInputElement)}
+                placeholder={this.placeholder}
                 disabled={this.disabled ? true : false}
                 readonly
               />
