@@ -1,6 +1,6 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-23d59bdf.js';
 import { c as createCommonjsModule, g as getDefaultExportFromCjs } from './_commonjsHelpers-8fe71198.js';
-import { c as createPopover } from './popover-8664a111.js';
+import { c as createPopover } from './popover-a2a2acc7.js';
 import { u as uuidv4, p as propagateDataAttributes, i as isDateObject } from './utils-eee50014.js';
 import { f as fadeIn, b as fadeOut } from './transitions-29f7f3e5.js';
 

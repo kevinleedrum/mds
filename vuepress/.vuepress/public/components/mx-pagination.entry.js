@@ -1,5 +1,5 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
-import { R as ResizeObserver } from './resize-observer-9111af2a.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-23d59bdf.js';
+import { R as ResizeObserver } from './resize-observer-731c02df.js';
 
 const MxPagination = class {
   constructor(hostRef) {

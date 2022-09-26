@@ -74,11 +74,11 @@ var isHidden = function (target) {
     return !(offsetWidth || offsetHeight || target.getClientRects().length);
 };
 var isElement = function (obj) {
-    var _a, _b;
+    var _a;
     if (obj instanceof Element) {
         return true;
     }
-    var scope = (_b = (_a = obj) === null || _a === void 0 ? void 0 : _a.ownerDocument) === null || _b === void 0 ? void 0 : _b.defaultView;
+    var scope = (_a = obj === null || obj === void 0 ? void 0 : obj.ownerDocument) === null || _a === void 0 ? void 0 : _a.defaultView;
     return !!(scope && obj instanceof scope.Element);
 };
 var isReplacedElement = function (target) {
@@ -267,7 +267,7 @@ var queueMicroTask = function (callback) {
         var el_1 = document.createTextNode('');
         var config = { characterData: true };
         new MutationObserver(function () { return notify(); }).observe(el_1, config);
-        trigger = function () { el_1.textContent = "" + (toggle_1 ? toggle_1-- : toggle_1++); };
+        trigger = function () { el_1.textContent = "".concat(toggle_1 ? toggle_1-- : toggle_1++); };
     }
     callbacks.push(callback);
     trigger();

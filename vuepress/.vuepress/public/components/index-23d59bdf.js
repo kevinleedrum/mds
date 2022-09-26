@@ -1,5 +1,5 @@
 const NAMESPACE = 'mds-components';
-const BUILD = /* mds-components */ { allRenderFn: true, appendChildSlotFix: false, asyncLoading: true, asyncQueue: false, attachStyles: true, cloneNodeFix: false, cmpDidLoad: true, cmpDidRender: true, cmpDidUnload: false, cmpDidUpdate: false, cmpShouldUpdate: false, cmpWillLoad: true, cmpWillRender: true, cmpWillUpdate: true, connectedCallback: true, constructableCSS: false, cssAnnotations: true, cssVarShim: false, devTools: true, disconnectedCallback: true, dynamicImportShim: false, element: false, event: true, hasRenderFn: true, hostListener: true, hostListenerTarget: true, hostListenerTargetBody: true, hostListenerTargetDocument: true, hostListenerTargetParent: false, hostListenerTargetWindow: false, hotModuleReplacement: true, hydrateClientSide: false, hydrateServerSide: false, hydratedAttribute: false, hydratedClass: true, initializeNextTick: false, invisiblePrehydration: true, isDebug: false, isDev: true, isTesting: false, lazyLoad: true, lifecycle: true, lifecycleDOMEvents: false, member: true, method: true, mode: false, observeAttribute: true, profile: true, prop: true, propBoolean: true, propMutable: true, propNumber: true, propString: true, reflect: true, safari10: false, scoped: false, scopedSlotTextContentFix: false, scriptDataOpts: false, shadowDelegatesFocus: false, shadowDom: false, shadowDomShim: false, slot: true, slotChildNodesFix: false, slotRelocation: true, state: true, style: false, svg: true, taskQueue: true, transformTagName: false, updatable: true, vdomAttribute: true, vdomClass: true, vdomFunctional: true, vdomKey: true, vdomListener: true, vdomPropOrAttr: true, vdomRef: true, vdomRender: true, vdomStyle: true, vdomText: true, vdomXlink: true, watchCallback: true };
+const BUILD = /* mds-components */ { allRenderFn: true, appendChildSlotFix: false, asyncLoading: true, asyncQueue: false, attachStyles: true, cloneNodeFix: false, cmpDidLoad: true, cmpDidRender: true, cmpDidUnload: false, cmpDidUpdate: false, cmpShouldUpdate: false, cmpWillLoad: true, cmpWillRender: true, cmpWillUpdate: true, connectedCallback: true, constructableCSS: false, cssAnnotations: true, cssVarShim: false, devTools: true, disconnectedCallback: true, dynamicImportShim: false, element: false, event: true, hasRenderFn: true, hostListener: true, hostListenerTarget: true, hostListenerTargetBody: true, hostListenerTargetDocument: true, hostListenerTargetParent: false, hostListenerTargetWindow: false, hotModuleReplacement: true, hydrateClientSide: false, hydrateServerSide: false, hydratedAttribute: false, hydratedClass: true, initializeNextTick: false, invisiblePrehydration: true, isDebug: false, isDev: true, isTesting: false, lazyLoad: true, lifecycle: true, lifecycleDOMEvents: false, member: true, method: true, mode: false, observeAttribute: true, profile: true, prop: true, propBoolean: true, propMutable: true, propNumber: true, propString: true, reflect: true, safari10: false, scoped: false, scopedSlotTextContentFix: false, scriptDataOpts: false, shadowDelegatesFocus: false, shadowDom: true, shadowDomShim: false, slot: true, slotChildNodesFix: false, slotRelocation: true, state: true, style: true, svg: true, taskQueue: true, transformTagName: false, updatable: true, vdomAttribute: true, vdomClass: true, vdomFunctional: true, vdomKey: true, vdomListener: true, vdomPropOrAttr: true, vdomRef: true, vdomRender: true, vdomStyle: true, vdomText: true, vdomXlink: true, watchCallback: true };
 const Env = /* mds-components */ {};
 
 let scopeId;
@@ -47,11 +47,11 @@ const supportsListenerOptions = /*@__PURE__*/ (() => {
     return supportsListenerOptions;
 })();
 const promiseResolve = (v) => Promise.resolve(v);
-const supportsConstructibleStylesheets = BUILD.constructableCSS
+const supportsConstructableStylesheets = BUILD.constructableCSS
     ? /*@__PURE__*/ (() => {
         try {
             new CSSStyleSheet();
-            return typeof new CSSStyleSheet().replace === 'function';
+            return typeof new CSSStyleSheet().replaceSync === 'function';
         }
         catch (e) { }
         return false;
@@ -70,13 +70,13 @@ const addHostEventListeners = (elm, hostRef, listeners, attachParentListeners) =
                 // this is being ran from within the connectedCallback
                 // which is important so that we know the host element actually has a parent element
                 // filter out the listeners to only have the ones that ARE being attached to the parent
-                listeners = listeners.filter(([flags]) => flags & 32 /* TargetParent */);
+                listeners = listeners.filter(([flags]) => flags & 32 /* LISTENER_FLAGS.TargetParent */);
             }
             else {
                 // this is being ran from within the component constructor
                 // everything BUT the parent element listeners should be attached at this time
                 // filter out the listeners that are NOT being attached to the parent
-                listeners = listeners.filter(([flags]) => !(flags & 32 /* TargetParent */));
+                listeners = listeners.filter(([flags]) => !(flags & 32 /* LISTENER_FLAGS.TargetParent */));
             }
         }
         listeners.map(([flags, name, method]) => {
@@ -91,7 +91,7 @@ const addHostEventListeners = (elm, hostRef, listeners, attachParentListeners) =
 const hostListenerProxy = (hostRef, methodName) => (ev) => {
     try {
         if (BUILD.lazyLoad) {
-            if (hostRef.$flags$ & 256 /* isListenReady */) {
+            if (hostRef.$flags$ & 256 /* HOST_FLAGS.isListenReady */) {
                 // instance is ready, let's call it's member method for this event
                 hostRef.$lazyInstance$[methodName](ev);
             }
@@ -108,23 +108,23 @@ const hostListenerProxy = (hostRef, methodName) => (ev) => {
     }
 };
 const getHostListenerTarget = (elm, flags) => {
-    if (BUILD.hostListenerTargetDocument && flags & 4 /* TargetDocument */)
+    if (BUILD.hostListenerTargetDocument && flags & 4 /* LISTENER_FLAGS.TargetDocument */)
         return doc;
-    if (BUILD.hostListenerTargetWindow && flags & 8 /* TargetWindow */)
+    if (BUILD.hostListenerTargetWindow && flags & 8 /* LISTENER_FLAGS.TargetWindow */)
         return win;
-    if (BUILD.hostListenerTargetBody && flags & 16 /* TargetBody */)
+    if (BUILD.hostListenerTargetBody && flags & 16 /* LISTENER_FLAGS.TargetBody */)
         return doc.body;
-    if (BUILD.hostListenerTargetParent && flags & 32 /* TargetParent */)
+    if (BUILD.hostListenerTargetParent && flags & 32 /* LISTENER_FLAGS.TargetParent */)
         return elm.parentElement;
     return elm;
 };
 // prettier-ignore
 const hostListenerOpts = (flags) => supportsListenerOptions
     ? ({
-        passive: (flags & 1 /* Passive */) !== 0,
-        capture: (flags & 2 /* Capture */) !== 0,
+        passive: (flags & 1 /* LISTENER_FLAGS.Passive */) !== 0,
+        capture: (flags & 2 /* LISTENER_FLAGS.Capture */) !== 0,
     })
-    : (flags & 2 /* Capture */) !== 0;
+    : (flags & 2 /* LISTENER_FLAGS.Capture */) !== 0;
 const CONTENT_REF_ID = 'r';
 const ORG_LOCATION_ID = 'o';
 const SLOT_NODE_ID = 's';
@@ -175,16 +175,16 @@ const inspect = (ref) => {
     return {
         renderCount: hostRef.$renderCount$,
         flags: {
-            hasRendered: !!(flags & 2 /* hasRendered */),
-            hasConnected: !!(flags & 1 /* hasConnected */),
-            isWaitingForChildren: !!(flags & 4 /* isWaitingForChildren */),
-            isConstructingInstance: !!(flags & 8 /* isConstructingInstance */),
-            isQueuedForUpdate: !!(flags & 16 /* isQueuedForUpdate */),
-            hasInitializedComponent: !!(flags & 32 /* hasInitializedComponent */),
-            hasLoadedComponent: !!(flags & 64 /* hasLoadedComponent */),
-            isWatchReady: !!(flags & 128 /* isWatchReady */),
-            isListenReady: !!(flags & 256 /* isListenReady */),
-            needsRerender: !!(flags & 512 /* needsRerender */),
+            hasRendered: !!(flags & 2 /* HOST_FLAGS.hasRendered */),
+            hasConnected: !!(flags & 1 /* HOST_FLAGS.hasConnected */),
+            isWaitingForChildren: !!(flags & 4 /* HOST_FLAGS.isWaitingForChildren */),
+            isConstructingInstance: !!(flags & 8 /* HOST_FLAGS.isConstructingInstance */),
+            isQueuedForUpdate: !!(flags & 16 /* HOST_FLAGS.isQueuedForUpdate */),
+            hasInitializedComponent: !!(flags & 32 /* HOST_FLAGS.hasInitializedComponent */),
+            hasLoadedComponent: !!(flags & 64 /* HOST_FLAGS.hasLoadedComponent */),
+            isWatchReady: !!(flags & 128 /* HOST_FLAGS.isWatchReady */),
+            isListenReady: !!(flags & 256 /* HOST_FLAGS.isListenReady */),
+            needsRerender: !!(flags & 512 /* HOST_FLAGS.needsRerender */),
         },
         instanceValues: hostRef.$instanceValues$,
         ancestorComponent: hostRef.$ancestorComponent$,
@@ -220,12 +220,17 @@ const installDevTools = () => {
         };
     }
 };
-const rootAppliedStyles = new WeakMap();
+const rootAppliedStyles = /*@__PURE__*/ new WeakMap();
 const registerStyle = (scopeId, cssText, allowCS) => {
     let style = styles.get(scopeId);
-    if (supportsConstructibleStylesheets && allowCS) {
+    if (supportsConstructableStylesheets && allowCS) {
         style = (style || new CSSStyleSheet());
-        style.replace(cssText);
+        if (typeof style === 'string') {
+            style = cssText;
+        }
+        else {
+            style.replaceSync(cssText);
+        }
     }
     else {
         style = cssText;
@@ -234,13 +239,13 @@ const registerStyle = (scopeId, cssText, allowCS) => {
 };
 const addStyle = (styleContainerNode, cmpMeta, mode, hostElm) => {
     let scopeId = getScopeId(cmpMeta, mode);
-    let style = styles.get(scopeId);
+    const style = styles.get(scopeId);
     if (!BUILD.attachStyles) {
         return scopeId;
     }
     // if an element is NOT connected then getRootNode() will return the wrong root node
     // so the fallback is to always use the document for the root node in those cases
-    styleContainerNode = styleContainerNode.nodeType === 11 /* DocumentFragment */ ? styleContainerNode : doc;
+    styleContainerNode = styleContainerNode.nodeType === 11 /* NODE_TYPE.DocumentFragment */ ? styleContainerNode : doc;
     if (style) {
         if (typeof style === 'string') {
             styleContainerNode = styleContainerNode.head || styleContainerNode;
@@ -258,7 +263,7 @@ const addStyle = (styleContainerNode, cmpMeta, mode, hostElm) => {
                 }
                 else {
                     if (BUILD.cssVarShim && plt.$cssShim$) {
-                        styleElm = plt.$cssShim$.createHostStyle(hostElm, scopeId, style, !!(cmpMeta.$flags$ & 10 /* needsScopedEncapsulation */));
+                        styleElm = plt.$cssShim$.createHostStyle(hostElm, scopeId, style, !!(cmpMeta.$flags$ & 10 /* CMP_FLAGS.needsScopedEncapsulation */));
                         const newScopeId = styleElm['s-sc'];
                         if (newScopeId) {
                             scopeId = newScopeId;
@@ -294,7 +299,7 @@ const attachStyles = (hostRef) => {
     const flags = cmpMeta.$flags$;
     const endAttachStyles = createTime('attachStyles', cmpMeta.$tagName$);
     const scopeId = addStyle(BUILD.shadowDom && supportsShadow && elm.shadowRoot ? elm.shadowRoot : elm.getRootNode(), cmpMeta, hostRef.$modeName$, elm);
-    if ((BUILD.shadowDom || BUILD.scoped) && BUILD.cssAnnotations && flags & 10 /* needsScopedEncapsulation */) {
+    if ((BUILD.shadowDom || BUILD.scoped) && BUILD.cssAnnotations && flags & 10 /* CMP_FLAGS.needsScopedEncapsulation */) {
         // only required when we're NOT using native shadow dom (slot)
         // or this browser doesn't support native shadow dom
         // and this host element was NOT created with SSR
@@ -304,13 +309,13 @@ const attachStyles = (hostRef) => {
         // DOM WRITE!!
         elm['s-sc'] = scopeId;
         elm.classList.add(scopeId + '-h');
-        if (BUILD.scoped && flags & 2 /* scopedCssEncapsulation */) {
+        if (BUILD.scoped && flags & 2 /* CMP_FLAGS.scopedCssEncapsulation */) {
             elm.classList.add(scopeId + '-s');
         }
     }
     endAttachStyles();
 };
-const getScopeId = (cmp, mode) => 'sc-' + (BUILD.mode && mode && cmp.$flags$ & 32 /* hasMode */ ? cmp.$tagName$ + '-' + mode : cmp.$tagName$);
+const getScopeId = (cmp, mode) => 'sc-' + (BUILD.mode && mode && cmp.$flags$ & 32 /* CMP_FLAGS.hasMode */ ? cmp.$tagName$ + '-' + mode : cmp.$tagName$);
 const convertScopedToShadow = (css) => css.replace(/\/\*!@([^\/]+)\*\/[^\{]+\{/g, '$1{');
 // Private
 const computeMode = (elm) => modeResolutionChain.map((h) => h(elm)).find((m) => !!m);
@@ -353,7 +358,7 @@ const h = (nodeName, vnodeData, ...children) => {
     let slotName = null;
     let simple = false;
     let lastSimple = false;
-    let vNodeChildren = [];
+    const vNodeChildren = [];
     const walk = (c) => {
         for (let i = 0; i < c.length; i++) {
             child = c[i];
@@ -594,7 +599,7 @@ const setAccessor = (elm, memberName, oldValue, newValue, isSvg, flags) => {
             if ((isProp || (isComplex && newValue !== null)) && !isSvg) {
                 try {
                     if (!elm.tagName.includes('-')) {
-                        let n = newValue == null ? '' : newValue;
+                        const n = newValue == null ? '' : newValue;
                         // Workaround for Safari, moving the <input> caret when re-assigning the same valued
                         if (memberName === 'list') {
                             isProp = false;
@@ -633,7 +638,7 @@ const setAccessor = (elm, memberName, oldValue, newValue, isSvg, flags) => {
                     }
                 }
             }
-            else if ((!isProp || flags & 4 /* isHost */ || isSvg) && !isComplex) {
+            else if ((!isProp || flags & 4 /* VNODE_FLAGS.isHost */ || isSvg) && !isComplex) {
                 newValue = newValue === true ? '' : newValue;
                 if (BUILD.vdomXlink && xlink) {
                     elm.setAttributeNS(XLINK_NS, memberName, newValue);
@@ -651,7 +656,7 @@ const updateElement = (oldVnode, newVnode, isSvgMode, memberName) => {
     // if the element passed in is a shadow root, which is a document fragment
     // then we want to be adding attrs/props to the shadow root's "host" element
     // if it's not a shadow root, then we add attrs/props to the same element
-    const elm = newVnode.$elm$.nodeType === 11 /* DocumentFragment */ && newVnode.$elm$.host
+    const elm = newVnode.$elm$.nodeType === 11 /* NODE_TYPE.DocumentFragment */ && newVnode.$elm$.host
         ? newVnode.$elm$.host
         : newVnode.$elm$;
     const oldVnodeAttrs = (oldVnode && oldVnode.$attrs$) || EMPTY_OBJ;
@@ -669,9 +674,19 @@ const updateElement = (oldVnode, newVnode, isSvgMode, memberName) => {
         setAccessor(elm, memberName, oldVnodeAttrs[memberName], newVnodeAttrs[memberName], isSvgMode, newVnode.$flags$);
     }
 };
+/**
+ * Create a DOM Node corresponding to one of the children of a given VNode.
+ *
+ * @param oldParentVNode the parent VNode from the previous render
+ * @param newParentVNode the parent VNode from the current render
+ * @param childIndex the index of the VNode, in the _new_ parent node's
+ * children, for which we will create a new DOM node
+ * @param parentElm the parent DOM node which our new node will be a child of
+ * @returns the newly created node
+ */
 const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
     // tslint:disable-next-line: prefer-const
-    let newVNode = newParentVNode.$children$[childIndex];
+    const newVNode = newParentVNode.$children$[childIndex];
     let i = 0;
     let elm;
     let childNode;
@@ -686,9 +701,9 @@ const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
             }
             newVNode.$flags$ |= newVNode.$children$
                 ? // slot element has fallback content
-                    2 /* isSlotFallback */
+                    2 /* VNODE_FLAGS.isSlotFallback */
                 : // slot element does not have fallback content
-                    1 /* isSlotReference */;
+                    1 /* VNODE_FLAGS.isSlotReference */;
         }
     }
     if (BUILD.isDev && newVNode.$elm$) {
@@ -698,7 +713,7 @@ const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
         // create text node
         elm = newVNode.$elm$ = doc.createTextNode(newVNode.$text$);
     }
-    else if (BUILD.slotRelocation && newVNode.$flags$ & 1 /* isSlotReference */) {
+    else if (BUILD.slotRelocation && newVNode.$flags$ & 1 /* VNODE_FLAGS.isSlotReference */) {
         // create a slot reference node
         elm = newVNode.$elm$ =
             BUILD.isDebug || BUILD.hydrateServerSide ? slotReferenceDebugNode(newVNode) : doc.createTextNode('');
@@ -709,10 +724,10 @@ const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
         }
         // create element
         elm = newVNode.$elm$ = (BUILD.svg
-            ? doc.createElementNS(isSvgMode ? SVG_NS : HTML_NS, BUILD.slotRelocation && newVNode.$flags$ & 2 /* isSlotFallback */
+            ? doc.createElementNS(isSvgMode ? SVG_NS : HTML_NS, BUILD.slotRelocation && newVNode.$flags$ & 2 /* VNODE_FLAGS.isSlotFallback */
                 ? 'slot-fb'
                 : newVNode.$tag$)
-            : doc.createElement(BUILD.slotRelocation && newVNode.$flags$ & 2 /* isSlotFallback */
+            : doc.createElement(BUILD.slotRelocation && newVNode.$flags$ & 2 /* VNODE_FLAGS.isSlotFallback */
                 ? 'slot-fb'
                 : newVNode.$tag$));
         if (BUILD.svg && isSvgMode && newVNode.$tag$ === 'foreignObject') {
@@ -751,7 +766,7 @@ const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
     }
     if (BUILD.slotRelocation) {
         elm['s-hn'] = hostTagName;
-        if (newVNode.$flags$ & (2 /* isSlotFallback */ | 1 /* isSlotReference */)) {
+        if (newVNode.$flags$ & (2 /* VNODE_FLAGS.isSlotFallback */ | 1 /* VNODE_FLAGS.isSlotReference */)) {
             // remember the content reference comment
             elm['s-sr'] = true;
             // remember the content reference comment
@@ -770,7 +785,7 @@ const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
     return elm;
 };
 const putBackInOriginalLocation = (parentElm, recursive) => {
-    plt.$flags$ |= 1 /* isTmpDisconnected */;
+    plt.$flags$ |= 1 /* PLATFORM_FLAGS.isTmpDisconnected */;
     const oldSlotChildNodes = parentElm.childNodes;
     for (let i = oldSlotChildNodes.length - 1; i >= 0; i--) {
         const childNode = oldSlotChildNodes[i];
@@ -791,7 +806,7 @@ const putBackInOriginalLocation = (parentElm, recursive) => {
             putBackInOriginalLocation(childNode, recursive);
         }
     }
-    plt.$flags$ &= ~1 /* isTmpDisconnected */;
+    plt.$flags$ &= ~1 /* PLATFORM_FLAGS.isTmpDisconnected */;
 };
 const addVnodes = (parentElm, before, parentVNode, vnodes, startIdx, endIdx) => {
     let containerElm = ((BUILD.slotRelocation && parentElm['s-cr'] && parentElm['s-cr'].parentNode) || parentElm);
@@ -833,6 +848,74 @@ const removeVnodes = (vnodes, startIdx, endIdx, vnode, elm) => {
         }
     }
 };
+/**
+ * Reconcile the children of a new VNode with the children of an old VNode by
+ * traversing the two collections of children, identifying nodes that are
+ * conserved or changed, calling out to `patch` to make any necessary
+ * updates to the DOM, and rearranging DOM nodes as needed.
+ *
+ * The algorithm for reconciling children works by analyzing two 'windows' onto
+ * the two arrays of children (`oldCh` and `newCh`). We keep track of the
+ * 'windows' by storing start and end indices and references to the
+ * corresponding array entries. Initially the two 'windows' are basically equal
+ * to the entire array, but we progressively narrow the windows until there are
+ * no children left to update by doing the following:
+ *
+ * 1. Skip any `null` entries at the beginning or end of the two arrays, so
+ *    that if we have an initial array like the following we'll end up dealing
+ *    only with a window bounded by the highlighted elements:
+ *
+ *    [null, null, VNode1 , ... , VNode2, null, null]
+ *                 ^^^^^^         ^^^^^^
+ *
+ * 2. Check to see if the elements at the head and tail positions are equal
+ *    across the windows. This will basically detect elements which haven't
+ *    been added, removed, or changed position, i.e. if you had the following
+ *    VNode elements (represented as HTML):
+ *
+ *    oldVNode: `<div><p><span>HEY</span></p></div>`
+ *    newVNode: `<div><p><span>THERE</span></p></div>`
+ *
+ *    Then when comparing the children of the `<div>` tag we check the equality
+ *    of the VNodes corresponding to the `<p>` tags and, since they are the
+ *    same tag in the same position, we'd be able to avoid completely
+ *    re-rendering the subtree under them with a new DOM element and would just
+ *    call out to `patch` to handle reconciling their children and so on.
+ *
+ * 3. Check, for both windows, to see if the element at the beginning of the
+ *    window corresponds to the element at the end of the other window. This is
+ *    a heuristic which will let us identify _some_ situations in which
+ *    elements have changed position, for instance it _should_ detect that the
+ *    children nodes themselves have not changed but merely moved in the
+ *    following example:
+ *
+ *    oldVNode: `<div><element-one /><element-two /></div>`
+ *    newVNode: `<div><element-two /><element-one /></div>`
+ *
+ *    If we find cases like this then we also need to move the concrete DOM
+ *    elements corresponding to the moved children to write the re-order to the
+ *    DOM.
+ *
+ * 4. Finally, if VNodes have the `key` attribute set on them we check for any
+ *    nodes in the old children which have the same key as the first element in
+ *    our window on the new children. If we find such a node we handle calling
+ *    out to `patch`, moving relevant DOM nodes, and so on, in accordance with
+ *    what we find.
+ *
+ * Finally, once we've narrowed our 'windows' to the point that either of them
+ * collapse (i.e. they have length 0) we then handle any remaining VNode
+ * insertion or deletion that needs to happen to get a DOM state that correctly
+ * reflects the new child VNodes. If, for instance, after our window on the old
+ * children has collapsed we still have more nodes on the new children that
+ * we haven't dealt with yet then we need to add them, or if the new children
+ * collapse but we still have unhandled _old_ children then we need to make
+ * sure the corresponding DOM nodes are removed.
+ *
+ * @param parentElm the node into which the parent VNode is rendered
+ * @param oldCh the old children of the parent node
+ * @param newVNode the new VNode which will replace the parent
+ * @param newCh the new children of the parent node
+ */
 const updateChildren = (parentElm, oldCh, newVNode, newCh) => {
     let oldStartIdx = 0;
     let newStartIdx = 0;
@@ -848,7 +931,7 @@ const updateChildren = (parentElm, oldCh, newVNode, newCh) => {
     let elmToMove;
     while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
         if (oldStartVnode == null) {
-            // Vnode might have been moved left
+            // VNode might have been moved left
             oldStartVnode = oldCh[++oldStartIdx];
         }
         else if (oldEndVnode == null) {
@@ -861,37 +944,100 @@ const updateChildren = (parentElm, oldCh, newVNode, newCh) => {
             newEndVnode = newCh[--newEndIdx];
         }
         else if (isSameVnode(oldStartVnode, newStartVnode)) {
+            // if the start nodes are the same then we should patch the new VNode
+            // onto the old one, and increment our `newStartIdx` and `oldStartIdx`
+            // indices to reflect that. We don't need to move any DOM Nodes around
+            // since things are matched up in order.
             patch(oldStartVnode, newStartVnode);
             oldStartVnode = oldCh[++oldStartIdx];
             newStartVnode = newCh[++newStartIdx];
         }
         else if (isSameVnode(oldEndVnode, newEndVnode)) {
+            // likewise, if the end nodes are the same we patch new onto old and
+            // decrement our end indices, and also likewise in this case we don't
+            // need to move any DOM Nodes.
             patch(oldEndVnode, newEndVnode);
             oldEndVnode = oldCh[--oldEndIdx];
             newEndVnode = newCh[--newEndIdx];
         }
         else if (isSameVnode(oldStartVnode, newEndVnode)) {
-            // Vnode moved right
+            // case: "Vnode moved right"
+            //
+            // We've found that the last node in our window on the new children is
+            // the same VNode as the _first_ node in our window on the old children
+            // we're dealing with now. Visually, this is the layout of these two
+            // nodes:
+            //
+            // newCh: [..., newStartVnode , ... , newEndVnode , ...]
+            //                                    ^^^^^^^^^^^
+            // oldCh: [..., oldStartVnode , ... , oldEndVnode , ...]
+            //              ^^^^^^^^^^^^^
+            //
+            // In this situation we need to patch `newEndVnode` onto `oldStartVnode`
+            // and move the DOM element for `oldStartVnode`.
             if (BUILD.slotRelocation && (oldStartVnode.$tag$ === 'slot' || newEndVnode.$tag$ === 'slot')) {
                 putBackInOriginalLocation(oldStartVnode.$elm$.parentNode, false);
             }
             patch(oldStartVnode, newEndVnode);
+            // We need to move the element for `oldStartVnode` into a position which
+            // will be appropriate for `newEndVnode`. For this we can use
+            // `.insertBefore` and `oldEndVnode.$elm$.nextSibling`. If there is a
+            // sibling for `oldEndVnode.$elm$` then we want to move the DOM node for
+            // `oldStartVnode` between `oldEndVnode` and it's sibling, like so:
+            //
+            // <old-start-node />
+            // <some-intervening-node />
+            // <old-end-node />
+            // <!-- ->              <-- `oldStartVnode.$elm$` should be inserted here
+            // <next-sibling />
+            //
+            // If instead `oldEndVnode.$elm$` has no sibling then we just want to put
+            // the node for `oldStartVnode` at the end of the children of
+            // `parentElm`. Luckily, `Node.nextSibling` will return `null` if there
+            // aren't any siblings, and passing `null` to `Node.insertBefore` will
+            // append it to the children of the parent element.
             parentElm.insertBefore(oldStartVnode.$elm$, oldEndVnode.$elm$.nextSibling);
             oldStartVnode = oldCh[++oldStartIdx];
             newEndVnode = newCh[--newEndIdx];
         }
         else if (isSameVnode(oldEndVnode, newStartVnode)) {
-            // Vnode moved left
+            // case: "Vnode moved left"
+            //
+            // We've found that the first node in our window on the new children is
+            // the same VNode as the _last_ node in our window on the old children.
+            // Visually, this is the layout of these two nodes:
+            //
+            // newCh: [..., newStartVnode , ... , newEndVnode , ...]
+            //              ^^^^^^^^^^^^^
+            // oldCh: [..., oldStartVnode , ... , oldEndVnode , ...]
+            //                                    ^^^^^^^^^^^
+            //
+            // In this situation we need to patch `newStartVnode` onto `oldEndVnode`
+            // (which will handle updating any changed attributes, reconciling their
+            // children etc) but we also need to move the DOM node to which
+            // `oldEndVnode` corresponds.
             if (BUILD.slotRelocation && (oldStartVnode.$tag$ === 'slot' || newEndVnode.$tag$ === 'slot')) {
                 putBackInOriginalLocation(oldEndVnode.$elm$.parentNode, false);
             }
             patch(oldEndVnode, newStartVnode);
+            // We've already checked above if `oldStartVnode` and `newStartVnode` are
+            // the same node, so since we're here we know that they are not. Thus we
+            // can move the element for `oldEndVnode` _before_ the element for
+            // `oldStartVnode`, leaving `oldStartVnode` to be reconciled in the
+            // future.
             parentElm.insertBefore(oldEndVnode.$elm$, oldStartVnode.$elm$);
             oldEndVnode = oldCh[--oldEndIdx];
             newStartVnode = newCh[++newStartIdx];
         }
         else {
-            // createKeyToOldIdx
+            // Here we do some checks to match up old and new nodes based on the
+            // `$key$` attribute, which is set by putting a `key="my-key"` attribute
+            // in the JSX for a DOM element in the implementation of a Stencil
+            // component.
+            //
+            // First we check to see if there are any nodes in the array of old
+            // children which have the same key as the first node in the new
+            // children.
             idxInOld = -1;
             if (BUILD.vdomKey) {
                 for (i = oldStartIdx; i <= oldEndIdx; ++i) {
@@ -902,23 +1048,32 @@ const updateChildren = (parentElm, oldCh, newVNode, newCh) => {
                 }
             }
             if (BUILD.vdomKey && idxInOld >= 0) {
+                // We found a node in the old children which matches up with the first
+                // node in the new children! So let's deal with that
                 elmToMove = oldCh[idxInOld];
                 if (elmToMove.$tag$ !== newStartVnode.$tag$) {
+                    // the tag doesn't match so we'll need a new DOM element
                     node = createElm(oldCh && oldCh[newStartIdx], newVNode, idxInOld, parentElm);
                 }
                 else {
                     patch(elmToMove, newStartVnode);
+                    // invalidate the matching old node so that we won't try to update it
+                    // again later on
                     oldCh[idxInOld] = undefined;
                     node = elmToMove.$elm$;
                 }
                 newStartVnode = newCh[++newStartIdx];
             }
             else {
-                // new element
+                // We either didn't find an element in the old children that matches
+                // the key of the first new child OR the build is not using `key`
+                // attributes at all. In either case we need to create a new element
+                // for the new node.
                 node = createElm(oldCh && oldCh[newStartIdx], newVNode, newStartIdx, parentElm);
                 newStartVnode = newCh[++newStartIdx];
             }
             if (node) {
+                // if we created a new node then handle inserting it to the DOM
                 if (BUILD.slotRelocation) {
                     parentReferenceNode(oldStartVnode.$elm$).insertBefore(node, referenceNode(oldStartVnode.$elm$));
                 }
@@ -929,21 +1084,43 @@ const updateChildren = (parentElm, oldCh, newVNode, newCh) => {
         }
     }
     if (oldStartIdx > oldEndIdx) {
+        // we have some more new nodes to add which don't match up with old nodes
         addVnodes(parentElm, newCh[newEndIdx + 1] == null ? null : newCh[newEndIdx + 1].$elm$, newVNode, newCh, newStartIdx, newEndIdx);
     }
     else if (BUILD.updatable && newStartIdx > newEndIdx) {
+        // there are nodes in the `oldCh` array which no longer correspond to nodes
+        // in the new array, so lets remove them (which entails cleaning up the
+        // relevant DOM nodes)
         removeVnodes(oldCh, oldStartIdx, oldEndIdx);
     }
 };
-const isSameVnode = (vnode1, vnode2) => {
+/**
+ * Compare two VNodes to determine if they are the same
+ *
+ * **NB**: This function is an equality _heuristic_ based on the available
+ * information set on the two VNodes and can be misleading under certain
+ * circumstances. In particular, if the two nodes do not have `key` attrs
+ * (available under `$key$` on VNodes) then the function falls back on merely
+ * checking that they have the same tag.
+ *
+ * So, in other words, if `key` attrs are not set on VNodes which may be
+ * changing order within a `children` array or something along those lines then
+ * we could obtain a false positive and then have to do needless re-rendering.
+ *
+ * @param leftVNode the first VNode to check
+ * @param rightVNode the second VNode to check
+ * @returns whether they're equal or not
+ */
+const isSameVnode = (leftVNode, rightVNode) => {
     // compare if two vnode to see if they're "technically" the same
     // need to have the same element tag, and same key to be the same
-    if (vnode1.$tag$ === vnode2.$tag$) {
-        if (BUILD.slotRelocation && vnode1.$tag$ === 'slot') {
-            return vnode1.$name$ === vnode2.$name$;
+    if (leftVNode.$tag$ === rightVNode.$tag$) {
+        if (BUILD.slotRelocation && leftVNode.$tag$ === 'slot') {
+            return leftVNode.$name$ === rightVNode.$name$;
         }
+        // this will be set if components in the build have `key` attrs set on them
         if (BUILD.vdomKey) {
-            return vnode1.$key$ === vnode2.$key$;
+            return leftVNode.$key$ === rightVNode.$key$;
         }
         return true;
     }
@@ -957,6 +1134,14 @@ const referenceNode = (node) => {
     return (node && node['s-ol']) || node;
 };
 const parentReferenceNode = (node) => (node['s-ol'] ? node['s-ol'] : node).parentNode;
+/**
+ * Handle reconciling an outdated VNode with a new one which corresponds to
+ * it. This function handles flushing updates to the DOM and reconciling the
+ * children of the two nodes (if any).
+ *
+ * @param oldVNode an old VNode whose DOM element and children we want to update
+ * @param newVNode a new VNode representing an updated version of the old one
+ */
 const patch = (oldVNode, newVNode) => {
     const elm = (newVNode.$elm$ = oldVNode.$elm$);
     const oldChildren = oldVNode.$children$;
@@ -970,7 +1155,6 @@ const patch = (oldVNode, newVNode) => {
             // only add this to the when the compiler sees we're using an svg somewhere
             isSvgMode = tag === 'svg' ? true : tag === 'foreignObject' ? false : isSvgMode;
         }
-        // element node
         if (BUILD.vdomAttribute || BUILD.reflect) {
             if (BUILD.slot && tag === 'slot')
                 ;
@@ -983,6 +1167,7 @@ const patch = (oldVNode, newVNode) => {
         }
         if (BUILD.updatable && oldChildren !== null && newChildren !== null) {
             // looks like there's child vnodes for both the old and new vnodes
+            // so we need to call `updateChildren` to reconcile them
             updateChildren(elm, oldChildren, newVNode, newChildren);
         }
         else if (newChildren !== null) {
@@ -1014,7 +1199,7 @@ const patch = (oldVNode, newVNode) => {
 };
 const updateFallbackSlotVisibility = (elm) => {
     // tslint:disable-next-line: prefer-const
-    let childNodes = elm.childNodes;
+    const childNodes = elm.childNodes;
     let childNode;
     let i;
     let ilen;
@@ -1023,7 +1208,7 @@ const updateFallbackSlotVisibility = (elm) => {
     let nodeType;
     for (i = 0, ilen = childNodes.length; i < ilen; i++) {
         childNode = childNodes[i];
-        if (childNode.nodeType === 1 /* ElementNode */) {
+        if (childNode.nodeType === 1 /* NODE_TYPE.ElementNode */) {
             if (childNode['s-sr']) {
                 // this is a slot fallback node
                 // get the slot name for this slot reference node
@@ -1035,7 +1220,7 @@ const updateFallbackSlotVisibility = (elm) => {
                     nodeType = childNodes[j].nodeType;
                     if (childNodes[j]['s-hn'] !== childNode['s-hn'] || slotNameAttr !== '') {
                         // this sibling node is from a different component OR is a named fallback slot node
-                        if (nodeType === 1 /* ElementNode */ && slotNameAttr === childNodes[j].getAttribute('slot')) {
+                        if (nodeType === 1 /* NODE_TYPE.ElementNode */ && slotNameAttr === childNodes[j].getAttribute('slot')) {
                             childNode.hidden = true;
                             break;
                         }
@@ -1044,8 +1229,8 @@ const updateFallbackSlotVisibility = (elm) => {
                         // this is a default fallback slot node
                         // any element or text node (with content)
                         // should hide the default fallback slot node
-                        if (nodeType === 1 /* ElementNode */ ||
-                            (nodeType === 3 /* TextNode */ && childNodes[j].textContent.trim() !== '')) {
+                        if (nodeType === 1 /* NODE_TYPE.ElementNode */ ||
+                            (nodeType === 3 /* NODE_TYPE.TextNode */ && childNodes[j].textContent.trim() !== '')) {
                             childNode.hidden = true;
                             break;
                         }
@@ -1067,8 +1252,8 @@ const relocateSlotContent = (elm) => {
     let relocateNodeData;
     let j;
     let i = 0;
-    let childNodes = elm.childNodes;
-    let ilen = childNodes.length;
+    const childNodes = elm.childNodes;
+    const ilen = childNodes.length;
     for (; i < ilen; i++) {
         childNode = childNodes[i];
         if (childNode['s-sr'] && (node = childNode['s-cr']) && node.parentNode) {
@@ -1123,13 +1308,13 @@ const relocateSlotContent = (elm) => {
                 }
             }
         }
-        if (childNode.nodeType === 1 /* ElementNode */) {
+        if (childNode.nodeType === 1 /* NODE_TYPE.ElementNode */) {
             relocateSlotContent(childNode);
         }
     }
 };
 const isNodeLocatedInSlot = (nodeToRelocate, slotNameAttr) => {
-    if (nodeToRelocate.nodeType === 1 /* ElementNode */) {
+    if (nodeToRelocate.nodeType === 1 /* NODE_TYPE.ElementNode */) {
         if (nodeToRelocate.getAttribute('slot') === null && slotNameAttr === '') {
             return true;
         }
@@ -1175,7 +1360,7 @@ render() {
         cmpMeta.$attrsToReflect$.map(([propName, attribute]) => (rootVnode.$attrs$[attribute] = hostElm[propName]));
     }
     rootVnode.$tag$ = null;
-    rootVnode.$flags$ |= 4 /* isHost */;
+    rootVnode.$flags$ |= 4 /* VNODE_FLAGS.isHost */;
     hostRef.$vnode$ = rootVnode;
     rootVnode.$elm$ = oldVNode.$elm$ = (BUILD.shadowDom ? hostElm.shadowRoot || hostElm : hostElm);
     if (BUILD.scoped || BUILD.shadowDom) {
@@ -1183,7 +1368,7 @@ render() {
     }
     if (BUILD.slotRelocation) {
         contentRef = hostElm['s-cr'];
-        useNativeShadowDom = supportsShadow && (cmpMeta.$flags$ & 1 /* shadowDomEncapsulation */) !== 0;
+        useNativeShadowDom = supportsShadow && (cmpMeta.$flags$ & 1 /* CMP_FLAGS.shadowDomEncapsulation */) !== 0;
         // always reset
         checkSlotFallbackVisibility = false;
     }
@@ -1192,7 +1377,7 @@ render() {
     if (BUILD.slotRelocation) {
         // while we're moving nodes around existing nodes, temporarily disable
         // the disconnectCallback from working
-        plt.$flags$ |= 1 /* isTmpDisconnected */;
+        plt.$flags$ |= 1 /* PLATFORM_FLAGS.isTmpDisconnected */;
         if (checkSlotRelocate) {
             relocateSlotContent(rootVnode.$elm$);
             let relocateData;
@@ -1252,7 +1437,7 @@ render() {
                 }
                 else {
                     // this node doesn't have a slot home to go to, so let's hide it
-                    if (nodeToRelocate.nodeType === 1 /* ElementNode */) {
+                    if (nodeToRelocate.nodeType === 1 /* NODE_TYPE.ElementNode */) {
                         nodeToRelocate.hidden = true;
                     }
                 }
@@ -1263,7 +1448,7 @@ render() {
         }
         // done moving nodes around
         // allow the disconnect callback to work again
-        plt.$flags$ &= ~1 /* isTmpDisconnected */;
+        plt.$flags$ &= ~1 /* PLATFORM_FLAGS.isTmpDisconnected */;
         // always reset
         relocateNodes.length = 0;
     }
@@ -1284,9 +1469,9 @@ const createEvent = (ref, name, flags) => {
                 consoleDevWarn(`The "${name}" event was emitted, but the dispatcher node is no longer connected to the dom.`);
             }
             return emitEvent(elm, name, {
-                bubbles: !!(flags & 4 /* Bubbles */),
-                composed: !!(flags & 2 /* Composed */),
-                cancelable: !!(flags & 1 /* Cancellable */),
+                bubbles: !!(flags & 4 /* EVENT_FLAGS.Bubbles */),
+                composed: !!(flags & 2 /* EVENT_FLAGS.Composed */),
+                cancelable: !!(flags & 1 /* EVENT_FLAGS.Cancellable */),
                 detail,
             });
         },
@@ -1311,10 +1496,10 @@ const attachToAncestor = (hostRef, ancestorComponent) => {
 };
 const scheduleUpdate = (hostRef, isInitialLoad) => {
     if (BUILD.taskQueue && BUILD.updatable) {
-        hostRef.$flags$ |= 16 /* isQueuedForUpdate */;
+        hostRef.$flags$ |= 16 /* HOST_FLAGS.isQueuedForUpdate */;
     }
-    if (BUILD.asyncLoading && hostRef.$flags$ & 4 /* isWaitingForChildren */) {
-        hostRef.$flags$ |= 512 /* needsRerender */;
+    if (BUILD.asyncLoading && hostRef.$flags$ & 4 /* HOST_FLAGS.isWaitingForChildren */) {
+        hostRef.$flags$ |= 512 /* HOST_FLAGS.needsRerender */;
         return;
     }
     attachToAncestor(hostRef, hostRef.$ancestorComponent$);
@@ -1331,7 +1516,7 @@ const dispatchHooks = (hostRef, isInitialLoad) => {
     let promise;
     if (isInitialLoad) {
         if (BUILD.lazyLoad && BUILD.hostListener) {
-            hostRef.$flags$ |= 256 /* isListenReady */;
+            hostRef.$flags$ |= 256 /* HOST_FLAGS.isListenReady */;
             if (hostRef.$queuedListeners$) {
                 hostRef.$queuedListeners$.map(([methodName, event]) => safeCall(instance, methodName, event));
                 hostRef.$queuedListeners$ = null;
@@ -1366,7 +1551,7 @@ const updateComponent = async (hostRef, instance, isInitialLoad) => {
     }
     const endRender = createTime('render', hostRef.$cmpMeta$.$tagName$);
     if (BUILD.isDev) {
-        hostRef.$flags$ |= 1024 /* devOnRender */;
+        hostRef.$flags$ |= 1024 /* HOST_FLAGS.devOnRender */;
     }
     if (BUILD.hydrateServerSide) {
         await callRender(hostRef, instance, elm);
@@ -1379,7 +1564,7 @@ const updateComponent = async (hostRef, instance, isInitialLoad) => {
     }
     if (BUILD.isDev) {
         hostRef.$renderCount$++;
-        hostRef.$flags$ &= ~1024 /* devOnRender */;
+        hostRef.$flags$ &= ~1024 /* HOST_FLAGS.devOnRender */;
     }
     if (BUILD.hydrateServerSide) {
         try {
@@ -1387,10 +1572,10 @@ const updateComponent = async (hostRef, instance, isInitialLoad) => {
             serverSideConnected(elm);
             if (isInitialLoad) {
                 // using only during server-side hydrate
-                if (hostRef.$cmpMeta$.$flags$ & 1 /* shadowDomEncapsulation */) {
+                if (hostRef.$cmpMeta$.$flags$ & 1 /* CMP_FLAGS.shadowDomEncapsulation */) {
                     elm['s-en'] = '';
                 }
-                else if (hostRef.$cmpMeta$.$flags$ & 2 /* scopedCssEncapsulation */) {
+                else if (hostRef.$cmpMeta$.$flags$ & 2 /* CMP_FLAGS.scopedCssEncapsulation */) {
                     elm['s-en'] = 'c';
                 }
             }
@@ -1416,7 +1601,7 @@ const updateComponent = async (hostRef, instance, isInitialLoad) => {
         }
         else {
             Promise.all(childrenPromises).then(postUpdate);
-            hostRef.$flags$ |= 4 /* isWaitingForChildren */;
+            hostRef.$flags$ |= 4 /* HOST_FLAGS.isWaitingForChildren */;
             childrenPromises.length = 0;
         }
     }
@@ -1436,10 +1621,10 @@ const callRender = (hostRef, instance, elm) => {
         renderingRef = instance;
         instance = allRenderFn ? instance.render() : instance.render && instance.render();
         if (updatable && taskQueue) {
-            hostRef.$flags$ &= ~16 /* isQueuedForUpdate */;
+            hostRef.$flags$ &= ~16 /* HOST_FLAGS.isQueuedForUpdate */;
         }
         if (updatable || lazyLoad) {
-            hostRef.$flags$ |= 2 /* hasRendered */;
+            hostRef.$flags$ |= 2 /* HOST_FLAGS.hasRendered */;
         }
         if (BUILD.hasRenderFn || BUILD.reflect) {
             if (BUILD.vdomRender || BUILD.reflect) {
@@ -1473,27 +1658,27 @@ const postUpdateComponent = (hostRef) => {
     const ancestorComponent = hostRef.$ancestorComponent$;
     if (BUILD.cmpDidRender) {
         if (BUILD.isDev) {
-            hostRef.$flags$ |= 1024 /* devOnRender */;
+            hostRef.$flags$ |= 1024 /* HOST_FLAGS.devOnRender */;
         }
         safeCall(instance, 'componentDidRender');
         if (BUILD.isDev) {
-            hostRef.$flags$ &= ~1024 /* devOnRender */;
+            hostRef.$flags$ &= ~1024 /* HOST_FLAGS.devOnRender */;
         }
     }
     emitLifecycleEvent(elm, 'componentDidRender');
-    if (!(hostRef.$flags$ & 64 /* hasLoadedComponent */)) {
-        hostRef.$flags$ |= 64 /* hasLoadedComponent */;
+    if (!(hostRef.$flags$ & 64 /* HOST_FLAGS.hasLoadedComponent */)) {
+        hostRef.$flags$ |= 64 /* HOST_FLAGS.hasLoadedComponent */;
         if (BUILD.asyncLoading && BUILD.cssAnnotations) {
             // DOM WRITE!
             addHydratedFlag(elm);
         }
         if (BUILD.cmpDidLoad) {
             if (BUILD.isDev) {
-                hostRef.$flags$ |= 2048 /* devOnDidLoad */;
+                hostRef.$flags$ |= 2048 /* HOST_FLAGS.devOnDidLoad */;
             }
             safeCall(instance, 'componentDidLoad');
             if (BUILD.isDev) {
-                hostRef.$flags$ &= ~2048 /* devOnDidLoad */;
+                hostRef.$flags$ &= ~2048 /* HOST_FLAGS.devOnDidLoad */;
             }
         }
         emitLifecycleEvent(elm, 'componentDidLoad');
@@ -1512,11 +1697,11 @@ const postUpdateComponent = (hostRef) => {
             // componentDidUpdate runs AFTER render() has been called
             // and all child components have finished updating
             if (BUILD.isDev) {
-                hostRef.$flags$ |= 1024 /* devOnRender */;
+                hostRef.$flags$ |= 1024 /* HOST_FLAGS.devOnRender */;
             }
             safeCall(instance, 'componentDidUpdate');
             if (BUILD.isDev) {
-                hostRef.$flags$ &= ~1024 /* devOnRender */;
+                hostRef.$flags$ &= ~1024 /* HOST_FLAGS.devOnRender */;
             }
         }
         emitLifecycleEvent(elm, 'componentDidUpdate');
@@ -1535,10 +1720,10 @@ const postUpdateComponent = (hostRef) => {
             hostRef.$onRenderResolve$();
             hostRef.$onRenderResolve$ = undefined;
         }
-        if (hostRef.$flags$ & 512 /* needsRerender */) {
+        if (hostRef.$flags$ & 512 /* HOST_FLAGS.needsRerender */) {
             nextTick(() => scheduleUpdate(hostRef, false));
         }
-        hostRef.$flags$ &= ~(4 /* isWaitingForChildren */ | 512 /* needsRerender */);
+        hostRef.$flags$ &= ~(4 /* HOST_FLAGS.isWaitingForChildren */ | 512 /* HOST_FLAGS.needsRerender */);
     }
     // ( •_•)
     // ( •_•)>⌐■-■
@@ -1549,7 +1734,7 @@ const forceUpdate = (ref) => {
         const hostRef = getHostRef(ref);
         const isConnected = hostRef.$hostElement$.isConnected;
         if (isConnected &&
-            (hostRef.$flags$ & (2 /* hasRendered */ | 16 /* isQueuedForUpdate */)) === 2 /* hasRendered */) {
+            (hostRef.$flags$ & (2 /* HOST_FLAGS.hasRendered */ | 16 /* HOST_FLAGS.isQueuedForUpdate */)) === 2 /* HOST_FLAGS.hasRendered */) {
             scheduleUpdate(hostRef, false);
         }
         // Returns "true" when the forced update was successfully scheduled
@@ -1564,7 +1749,7 @@ const appDidLoad = (who) => {
         addHydratedFlag(doc.documentElement);
     }
     if (BUILD.asyncQueue) {
-        plt.$flags$ |= 2 /* appLoaded */;
+        plt.$flags$ |= 2 /* PLATFORM_FLAGS.appLoaded */;
     }
     nextTick(() => emitEvent(win, 'appload', { detail: { namespace: NAMESPACE } }));
     if (BUILD.profile && performance.measure) {
@@ -1656,7 +1841,7 @@ const clientHydrate = (parentVNode, childRenderNodes, slotNodes, shadowRootNodes
     let childIdSplt;
     let childVNode;
     let i;
-    if (node.nodeType === 1 /* ElementNode */) {
+    if (node.nodeType === 1 /* NODE_TYPE.ElementNode */) {
         childNodeType = node.getAttribute(HYDRATE_CHILD_ID);
         if (childNodeType) {
             // got the node data from the element's attribute
@@ -1704,7 +1889,7 @@ const clientHydrate = (parentVNode, childRenderNodes, slotNodes, shadowRootNodes
             }
         }
     }
-    else if (node.nodeType === 8 /* CommentNode */) {
+    else if (node.nodeType === 8 /* NODE_TYPE.CommentNode */) {
         // `${COMMENT_TYPE}.${hostId}.${nodeId}.${depth}.${index}`
         childIdSplt = node.nodeValue.split('.');
         if (childIdSplt[1] === hostId || childIdSplt[1] === '0') {
@@ -1726,7 +1911,7 @@ const clientHydrate = (parentVNode, childRenderNodes, slotNodes, shadowRootNodes
             };
             if (childNodeType === TEXT_NODE_ID) {
                 childVNode.$elm$ = node.nextSibling;
-                if (childVNode.$elm$ && childVNode.$elm$.nodeType === 3 /* TextNode */) {
+                if (childVNode.$elm$ && childVNode.$elm$.nodeType === 3 /* NODE_TYPE.TextNode */) {
                     childVNode.$text$ = childVNode.$elm$.textContent;
                     childRenderNodes.push(childVNode);
                     // remove the text comment since it's no longer needed
@@ -1796,7 +1981,7 @@ const clientHydrate = (parentVNode, childRenderNodes, slotNodes, shadowRootNodes
     }
 };
 const initializeDocumentHydrate = (node, orgLocNodes) => {
-    if (node.nodeType === 1 /* ElementNode */) {
+    if (node.nodeType === 1 /* NODE_TYPE.ElementNode */) {
         let i = 0;
         for (; i < node.childNodes.length; i++) {
             initializeDocumentHydrate(node.childNodes[i], orgLocNodes);
@@ -1807,7 +1992,7 @@ const initializeDocumentHydrate = (node, orgLocNodes) => {
             }
         }
     }
-    else if (node.nodeType === 8 /* CommentNode */) {
+    else if (node.nodeType === 8 /* NODE_TYPE.CommentNode */) {
         const childIdSplt = node.nodeValue.split('.');
         if (childIdSplt[0] === ORG_LOCATION_ID) {
             orgLocNodes.set(childIdSplt[1] + '.' + childIdSplt[2], node);
@@ -1844,16 +2029,16 @@ const initializeDocumentHydrate = (node, orgLocNodes) => {
 const parsePropertyValue = (propValue, propType) => {
     // ensure this value is of the correct prop type
     if (propValue != null && !isComplexType(propValue)) {
-        if (BUILD.propBoolean && propType & 4 /* Boolean */) {
+        if (BUILD.propBoolean && propType & 4 /* MEMBER_FLAGS.Boolean */) {
             // per the HTML spec, any string value means it is a boolean true value
             // but we'll cheat here and say that the string "false" is the boolean false
             return propValue === 'false' ? false : propValue === '' || !!propValue;
         }
-        if (BUILD.propNumber && propType & 2 /* Number */) {
+        if (BUILD.propNumber && propType & 2 /* MEMBER_FLAGS.Number */) {
             // force it to be a number
             return parseFloat(propValue);
         }
-        if (BUILD.propString && propType & 1 /* String */) {
+        if (BUILD.propString && propType & 1 /* MEMBER_FLAGS.String */) {
             // could have been passed as a number or boolean
             // but we still want it as a string
             return String(propValue);
@@ -1877,21 +2062,21 @@ const setValue = (ref, propName, newVal, cmpMeta) => {
     // explicitly check for NaN on both sides, as `NaN === NaN` is always false
     const areBothNaN = Number.isNaN(oldVal) && Number.isNaN(newVal);
     const didValueChange = newVal !== oldVal && !areBothNaN;
-    if ((!BUILD.lazyLoad || !(flags & 8 /* isConstructingInstance */) || oldVal === undefined) && didValueChange) {
+    if ((!BUILD.lazyLoad || !(flags & 8 /* HOST_FLAGS.isConstructingInstance */) || oldVal === undefined) && didValueChange) {
         // gadzooks! the property's value has changed!!
         // set our new value!
         hostRef.$instanceValues$.set(propName, newVal);
         if (BUILD.isDev) {
-            if (hostRef.$flags$ & 1024 /* devOnRender */) {
+            if (hostRef.$flags$ & 1024 /* HOST_FLAGS.devOnRender */) {
                 consoleDevWarn(`The state/prop "${propName}" changed during rendering. This can potentially lead to infinite-loops and other bugs.`, '\nElement', elm, '\nNew value', newVal, '\nOld value', oldVal);
             }
-            else if (hostRef.$flags$ & 2048 /* devOnDidLoad */) {
+            else if (hostRef.$flags$ & 2048 /* HOST_FLAGS.devOnDidLoad */) {
                 consoleDevWarn(`The state/prop "${propName}" changed during "componentDidLoad()", this triggers extra re-renders, try to setup on "componentWillLoad()"`, '\nElement', elm, '\nNew value', newVal, '\nOld value', oldVal);
             }
         }
         if (!BUILD.lazyLoad || instance) {
             // get an array of method names of watch functions to call
-            if (BUILD.watchCallback && cmpMeta.$watchers$ && flags & 128 /* isWatchReady */) {
+            if (BUILD.watchCallback && cmpMeta.$watchers$ && flags & 128 /* HOST_FLAGS.isWatchReady */) {
                 const watchMethods = cmpMeta.$watchers$[propName];
                 if (watchMethods) {
                     // this instance is watching for when this property changed
@@ -1907,7 +2092,7 @@ const setValue = (ref, propName, newVal, cmpMeta) => {
                 }
             }
             if (BUILD.updatable &&
-                (flags & (2 /* hasRendered */ | 16 /* isQueuedForUpdate */)) === 2 /* hasRendered */) {
+                (flags & (2 /* HOST_FLAGS.hasRendered */ | 16 /* HOST_FLAGS.isQueuedForUpdate */)) === 2 /* HOST_FLAGS.hasRendered */) {
                 if (BUILD.cmpShouldUpdate && instance.componentShouldUpdate) {
                     if (instance.componentShouldUpdate(newVal, oldVal, propName) === false) {
                         return;
@@ -1932,8 +2117,8 @@ const proxyComponent = (Cstr, cmpMeta, flags) => {
         const prototype = Cstr.prototype;
         members.map(([memberName, [memberFlags]]) => {
             if ((BUILD.prop || BUILD.state) &&
-                (memberFlags & 31 /* Prop */ ||
-                    ((!BUILD.lazyLoad || flags & 2 /* proxyState */) && memberFlags & 32 /* State */))) {
+                (memberFlags & 31 /* MEMBER_FLAGS.Prop */ ||
+                    ((!BUILD.lazyLoad || flags & 2 /* PROXY_FLAGS.proxyState */) && memberFlags & 32 /* MEMBER_FLAGS.State */))) {
                 // proxyComponent - prop
                 Object.defineProperty(prototype, memberName, {
                     get() {
@@ -1946,13 +2131,13 @@ const proxyComponent = (Cstr, cmpMeta, flags) => {
                             const ref = getHostRef(this);
                             if (
                             // we are proxying the instance (not element)
-                            (flags & 1 /* isElementConstructor */) === 0 &&
+                            (flags & 1 /* PROXY_FLAGS.isElementConstructor */) === 0 &&
                                 // the element is not constructing
-                                (ref.$flags$ & 8 /* isConstructingInstance */) === 0 &&
+                                (ref.$flags$ & 8 /* HOST_FLAGS.isConstructingInstance */) === 0 &&
                                 // the member is a prop
-                                (memberFlags & 31 /* Prop */) !== 0 &&
+                                (memberFlags & 31 /* MEMBER_FLAGS.Prop */) !== 0 &&
                                 // the member is not mutable
-                                (memberFlags & 1024 /* Mutable */) === 0) {
+                                (memberFlags & 1024 /* MEMBER_FLAGS.Mutable */) === 0) {
                                 consoleDevWarn(`@Prop() "${memberName}" on <${cmpMeta.$tagName$}> is immutable but was modified from within the component.\nMore information: https://stenciljs.com/docs/properties#prop-mutability`);
                             }
                         }
@@ -1965,8 +2150,8 @@ const proxyComponent = (Cstr, cmpMeta, flags) => {
             }
             else if (BUILD.lazyLoad &&
                 BUILD.method &&
-                flags & 1 /* isElementConstructor */ &&
-                memberFlags & 64 /* Method */) {
+                flags & 1 /* PROXY_FLAGS.isElementConstructor */ &&
+                memberFlags & 64 /* MEMBER_FLAGS.Method */) {
                 // proxyComponent - method
                 Object.defineProperty(prototype, memberName, {
                     value(...args) {
@@ -1976,7 +2161,7 @@ const proxyComponent = (Cstr, cmpMeta, flags) => {
                 });
             }
         });
-        if (BUILD.observeAttribute && (!BUILD.lazyLoad || flags & 1 /* isElementConstructor */)) {
+        if (BUILD.observeAttribute && (!BUILD.lazyLoad || flags & 1 /* PROXY_FLAGS.isElementConstructor */)) {
             const attrNameToPropName = new Map();
             prototype.attributeChangedCallback = function (attrName, _oldValue, newValue) {
                 plt.jmp(() => {
@@ -2032,11 +2217,11 @@ const proxyComponent = (Cstr, cmpMeta, flags) => {
             // create an array of attributes to observe
             // and also create a map of html attribute name to js property name
             Cstr.observedAttributes = members
-                .filter(([_, m]) => m[0] & 15 /* HasAttribute */) // filter to only keep props that should match attributes
+                .filter(([_, m]) => m[0] & 15 /* MEMBER_FLAGS.HasAttribute */) // filter to only keep props that should match attributes
                 .map(([propName, m]) => {
                 const attrName = m[1] || propName;
                 attrNameToPropName.set(attrName, propName);
-                if (BUILD.reflect && m[0] & 512 /* ReflectAttr */) {
+                if (BUILD.reflect && m[0] & 512 /* MEMBER_FLAGS.ReflectAttr */) {
                     cmpMeta.$attrsToReflect$.push([propName, attrName]);
                 }
                 return attrName;
@@ -2048,10 +2233,10 @@ const proxyComponent = (Cstr, cmpMeta, flags) => {
 const initializeComponent = async (elm, hostRef, cmpMeta, hmrVersionId, Cstr) => {
     // initializeComponent
     if ((BUILD.lazyLoad || BUILD.hydrateServerSide || BUILD.style) &&
-        (hostRef.$flags$ & 32 /* hasInitializedComponent */) === 0) {
+        (hostRef.$flags$ & 32 /* HOST_FLAGS.hasInitializedComponent */) === 0) {
         if (BUILD.lazyLoad || BUILD.hydrateClientSide) {
             // we haven't initialized this element yet
-            hostRef.$flags$ |= 32 /* hasInitializedComponent */;
+            hostRef.$flags$ |= 32 /* HOST_FLAGS.hasInitializedComponent */;
             // lazy loaded components
             // request the component's implementation to be
             // wired up with the host element
@@ -2072,7 +2257,7 @@ const initializeComponent = async (elm, hostRef, cmpMeta, hmrVersionId, Cstr) =>
                 if (BUILD.watchCallback) {
                     cmpMeta.$watchers$ = Cstr.watchers;
                 }
-                proxyComponent(Cstr, cmpMeta, 2 /* proxyState */);
+                proxyComponent(Cstr, cmpMeta, 2 /* PROXY_FLAGS.proxyState */);
                 Cstr.isProxied = true;
             }
             const endNewInstance = createTime('createInstance', cmpMeta.$tagName$);
@@ -2080,7 +2265,7 @@ const initializeComponent = async (elm, hostRef, cmpMeta, hmrVersionId, Cstr) =>
             // but let's keep track of when we start and stop
             // so that the getters/setters don't incorrectly step on data
             if (BUILD.member) {
-                hostRef.$flags$ |= 8 /* isConstructingInstance */;
+                hostRef.$flags$ |= 8 /* HOST_FLAGS.isConstructingInstance */;
             }
             // construct the lazy-loaded component implementation
             // passing the hostRef is very important during
@@ -2093,10 +2278,10 @@ const initializeComponent = async (elm, hostRef, cmpMeta, hmrVersionId, Cstr) =>
                 consoleError(e);
             }
             if (BUILD.member) {
-                hostRef.$flags$ &= ~8 /* isConstructingInstance */;
+                hostRef.$flags$ &= ~8 /* HOST_FLAGS.isConstructingInstance */;
             }
             if (BUILD.watchCallback) {
-                hostRef.$flags$ |= 128 /* isWatchReady */;
+                hostRef.$flags$ |= 128 /* HOST_FLAGS.isWatchReady */;
             }
             endNewInstance();
             fireConnectedCallback(hostRef.$lazyInstance$);
@@ -2104,11 +2289,11 @@ const initializeComponent = async (elm, hostRef, cmpMeta, hmrVersionId, Cstr) =>
         else {
             // sync constructor component
             Cstr = elm.constructor;
-            hostRef.$flags$ |= 32 /* hasInitializedComponent */;
+            hostRef.$flags$ |= 32 /* HOST_FLAGS.hasInitializedComponent */;
             // wait for the CustomElementRegistry to mark the component as ready before setting `isWatchReady`. Otherwise,
             // watchers may fire prematurely if `customElements.get()`/`customElements.whenDefined()` resolves _before_
             // Stencil has completed instantiating the component.
-            customElements.whenDefined(cmpMeta.$tagName$).then(() => (hostRef.$flags$ |= 128 /* isWatchReady */));
+            customElements.whenDefined(cmpMeta.$tagName$).then(() => (hostRef.$flags$ |= 128 /* HOST_FLAGS.isWatchReady */));
         }
         if (BUILD.style && Cstr.style) {
             // this component has styles but we haven't registered them yet
@@ -2125,10 +2310,10 @@ const initializeComponent = async (elm, hostRef, cmpMeta, hmrVersionId, Cstr) =>
                 if (!BUILD.hydrateServerSide &&
                     BUILD.shadowDom &&
                     BUILD.shadowDomShim &&
-                    cmpMeta.$flags$ & 8 /* needsShadowDomShim */) {
-                    style = await import('./shadow-css-dfa0587f.js').then((m) => m.scopeCss(style, scopeId, false));
+                    cmpMeta.$flags$ & 8 /* CMP_FLAGS.needsShadowDomShim */) {
+                    style = await import('./shadow-css-4261c637.js').then((m) => m.scopeCss(style, scopeId, false));
                 }
-                registerStyle(scopeId, style, !!(cmpMeta.$flags$ & 1 /* shadowDomEncapsulation */));
+                registerStyle(scopeId, style, !!(cmpMeta.$flags$ & 1 /* CMP_FLAGS.shadowDomEncapsulation */));
                 endRegisterStyles();
             }
         }
@@ -2155,7 +2340,7 @@ const fireConnectedCallback = (instance) => {
     }
 };
 const connectedCallback = (elm) => {
-    if ((plt.$flags$ & 1 /* isTmpDisconnected */) === 0) {
+    if ((plt.$flags$ & 1 /* PLATFORM_FLAGS.isTmpDisconnected */) === 0) {
         const hostRef = getHostRef(elm);
         const cmpMeta = hostRef.$cmpMeta$;
         const endConnected = createTime('connectedCallback', cmpMeta.$tagName$);
@@ -2163,14 +2348,14 @@ const connectedCallback = (elm) => {
             // only run if we have listeners being attached to a parent
             addHostEventListeners(elm, hostRef, cmpMeta.$listeners$, true);
         }
-        if (!(hostRef.$flags$ & 1 /* hasConnected */)) {
+        if (!(hostRef.$flags$ & 1 /* HOST_FLAGS.hasConnected */)) {
             // first time this component has connected
-            hostRef.$flags$ |= 1 /* hasConnected */;
+            hostRef.$flags$ |= 1 /* HOST_FLAGS.hasConnected */;
             let hostId;
             if (BUILD.hydrateClientSide) {
                 hostId = elm.getAttribute(HYDRATE_ID);
                 if (hostId) {
-                    if (BUILD.shadowDom && supportsShadow && cmpMeta.$flags$ & 1 /* shadowDomEncapsulation */) {
+                    if (BUILD.shadowDom && supportsShadow && cmpMeta.$flags$ & 1 /* CMP_FLAGS.shadowDomEncapsulation */) {
                         const scopeId = BUILD.mode
                             ? addStyle(elm.shadowRoot, cmpMeta, elm.getAttribute('s-mode'))
                             : addStyle(elm.shadowRoot, cmpMeta);
@@ -2186,7 +2371,7 @@ const connectedCallback = (elm) => {
                 // host element has been connected to the DOM
                 if (BUILD.hydrateServerSide ||
                     ((BUILD.slot || BUILD.shadowDom) &&
-                        cmpMeta.$flags$ & (4 /* hasSlotRelocation */ | 8 /* needsShadowDomShim */))) {
+                        cmpMeta.$flags$ & (4 /* CMP_FLAGS.hasSlotRelocation */ | 8 /* CMP_FLAGS.needsShadowDomShim */))) {
                     setContentReference(elm);
                 }
             }
@@ -2198,7 +2383,7 @@ const connectedCallback = (elm) => {
                     // climb up the ancestors looking for the first
                     // component that hasn't finished its lifecycle update yet
                     if ((BUILD.hydrateClientSide &&
-                        ancestorComponent.nodeType === 1 /* ElementNode */ &&
+                        ancestorComponent.nodeType === 1 /* NODE_TYPE.ElementNode */ &&
                         ancestorComponent.hasAttribute('s-id') &&
                         ancestorComponent['s-p']) ||
                         ancestorComponent['s-p']) {
@@ -2213,7 +2398,7 @@ const connectedCallback = (elm) => {
             // https://developers.google.com/web/fundamentals/web-components/best-practices#lazy-properties
             if (BUILD.prop && !BUILD.hydrateServerSide && cmpMeta.$members$) {
                 Object.entries(cmpMeta.$members$).map(([memberName, [memberFlags]]) => {
-                    if (memberFlags & 31 /* Prop */ && elm.hasOwnProperty(memberName)) {
+                    if (memberFlags & 31 /* MEMBER_FLAGS.Prop */ && elm.hasOwnProperty(memberName)) {
                         const value = elm[memberName];
                         delete elm[memberName];
                         elm[memberName] = value;
@@ -2254,7 +2439,7 @@ const setContentReference = (elm) => {
     elm.insertBefore(contentRefElm, elm.firstChild);
 };
 const disconnectedCallback = (elm) => {
-    if ((plt.$flags$ & 1 /* isTmpDisconnected */) === 0) {
+    if ((plt.$flags$ & 1 /* PLATFORM_FLAGS.isTmpDisconnected */) === 0) {
         const hostRef = getHostRef(elm);
         const instance = BUILD.lazyLoad ? hostRef.$lazyInstance$ : elm;
         if (BUILD.hostListener) {
@@ -2295,8 +2480,8 @@ const proxyCustomElement = (Cstr, compactMeta) => {
     if (BUILD.reflect) {
         cmpMeta.$attrsToReflect$ = [];
     }
-    if (BUILD.shadowDom && !supportsShadow && cmpMeta.$flags$ & 1 /* shadowDomEncapsulation */) {
-        cmpMeta.$flags$ |= 8 /* needsShadowDomShim */;
+    if (BUILD.shadowDom && !supportsShadow && cmpMeta.$flags$ & 1 /* CMP_FLAGS.shadowDomEncapsulation */) {
+        cmpMeta.$flags$ |= 8 /* CMP_FLAGS.needsShadowDomShim */;
     }
     const originalConnectedCallback = Cstr.prototype.connectedCallback;
     const originalDisconnectedCallback = Cstr.prototype.disconnectedCallback;
@@ -2321,7 +2506,7 @@ const proxyCustomElement = (Cstr, compactMeta) => {
                 if (BUILD.shadowDelegatesFocus) {
                     this.attachShadow({
                         mode: 'open',
-                        delegatesFocus: !!(cmpMeta.$flags$ & 16 /* shadowDelegatesFocus */),
+                        delegatesFocus: !!(cmpMeta.$flags$ & 16 /* CMP_FLAGS.shadowDelegatesFocus */),
                     });
                 }
                 else {
@@ -2334,7 +2519,7 @@ const proxyCustomElement = (Cstr, compactMeta) => {
         },
     });
     Cstr.is = cmpMeta.$tagName$;
-    return proxyComponent(Cstr, cmpMeta, 1 /* isElementConstructor */ | 2 /* proxyState */);
+    return proxyComponent(Cstr, cmpMeta, 1 /* PROXY_FLAGS.isElementConstructor */ | 2 /* PROXY_FLAGS.proxyState */);
 };
 const forceModeUpdate = (elm) => {
     if (BUILD.style && BUILD.mode && !BUILD.lazyLoad) {
@@ -2348,7 +2533,7 @@ const forceModeUpdate = (elm) => {
             const flags = cmpMeta.$flags$;
             if (style) {
                 if (!styles.has(scopeId)) {
-                    registerStyle(scopeId, style, !!(flags & 1 /* shadowDomEncapsulation */));
+                    registerStyle(scopeId, style, !!(flags & 1 /* CMP_FLAGS.shadowDomEncapsulation */));
                 }
                 hostRef.$modeName$ = mode;
                 elm.classList.remove(oldScopeId + '-h', oldScopeId + '-s');
@@ -2362,7 +2547,7 @@ const hmrStart = (elm, cmpMeta, hmrVersionId) => {
     // ¯\_(ツ)_/¯
     const hostRef = getHostRef(elm);
     // reset state flags to only have been connected
-    hostRef.$flags$ = 1 /* hasConnected */;
+    hostRef.$flags$ = 1 /* HOST_FLAGS.hasConnected */;
     // TODO
     // detatch any event listeners that may have been added
     // because we're not passing an exact event name it'll
@@ -2384,7 +2569,7 @@ const patchCloneNode = (HostElementPrototype) => {
         if (BUILD.slot && !isShadowDom && deep) {
             let i = 0;
             let slotted, nonStencilNode;
-            let stencilPrivates = [
+            const stencilPrivates = [
                 's-id',
                 's-cr',
                 's-lr',
@@ -2437,7 +2622,7 @@ const patchSlotAppendChild = (HostElementPrototype) => {
  * @param cmpMeta component runtime metadata used to determine if the component should be patched or not
  */
 const patchTextContent = (hostElementPrototype, cmpMeta) => {
-    if (BUILD.scoped && cmpMeta.$flags$ & 2 /* scopedCssEncapsulation */) {
+    if (BUILD.scoped && cmpMeta.$flags$ & 2 /* CMP_FLAGS.scopedCssEncapsulation */) {
         const descriptor = Object.getOwnPropertyDescriptor(Node.prototype, 'textContent');
         Object.defineProperty(hostElementPrototype, '__textContent', descriptor);
         Object.defineProperty(hostElementPrototype, 'textContent', {
@@ -2448,7 +2633,7 @@ const patchTextContent = (hostElementPrototype, cmpMeta) => {
                 const slotNode = getHostSlotNode(this.childNodes, '');
                 // when a slot node is found, the textContent _may_ be found in the next sibling (text) node, depending on how
                 // nodes were reordered during the vdom render. first try to get the text content from the sibling.
-                if (((_a = slotNode === null || slotNode === void 0 ? void 0 : slotNode.nextSibling) === null || _a === void 0 ? void 0 : _a.nodeType) === 3 /* TEXT_NODE */) {
+                if (((_a = slotNode === null || slotNode === void 0 ? void 0 : slotNode.nextSibling) === null || _a === void 0 ? void 0 : _a.nodeType) === 3 /* NODE_TYPES.TEXT_NODE */) {
                     return slotNode.nextSibling.textContent;
                 }
                 else if (slotNode) {
@@ -2467,7 +2652,7 @@ const patchTextContent = (hostElementPrototype, cmpMeta) => {
                 // when a slot node is found, the textContent _may_ need to be placed in the next sibling (text) node,
                 // depending on how nodes were reordered during the vdom render. first try to set the text content on the
                 // sibling.
-                if (((_a = slotNode === null || slotNode === void 0 ? void 0 : slotNode.nextSibling) === null || _a === void 0 ? void 0 : _a.nodeType) === 3 /* TEXT_NODE */) {
+                if (((_a = slotNode === null || slotNode === void 0 ? void 0 : slotNode.nextSibling) === null || _a === void 0 ? void 0 : _a.nodeType) === 3 /* NODE_TYPES.TEXT_NODE */) {
                     slotNode.nextSibling.textContent = value;
                 }
                 else if (slotNode) {
@@ -2493,7 +2678,7 @@ const patchChildSlotNodes = (elm, cmpMeta) => {
             return this[n];
         }
     }
-    if (cmpMeta.$flags$ & 8 /* needsShadowDomShim */) {
+    if (cmpMeta.$flags$ & 8 /* CMP_FLAGS.needsShadowDomShim */) {
         const childNodesFn = elm.__lookupGetter__('childNodes');
         Object.defineProperty(elm, 'children', {
             get() {
@@ -2508,8 +2693,8 @@ const patchChildSlotNodes = (elm, cmpMeta) => {
         Object.defineProperty(elm, 'childNodes', {
             get() {
                 const childNodes = childNodesFn.call(this);
-                if ((plt.$flags$ & 1 /* isTmpDisconnected */) === 0 &&
-                    getHostRef(this).$flags$ & 2 /* hasRendered */) {
+                if ((plt.$flags$ & 1 /* PLATFORM_FLAGS.isTmpDisconnected */) === 0 &&
+                    getHostRef(this).$flags$ & 2 /* HOST_FLAGS.hasRendered */) {
                     const result = new FakeNodeList();
                     for (let i = 0; i < childNodes.length; i++) {
                         const slot = childNodes[i]['s-nr'];
@@ -2574,13 +2759,13 @@ const bootstrapLazy = (lazyBundles, options = {}) => {
     plt.$resourcesUrl$ = new URL(options.resourcesUrl || './', doc.baseURI).href;
     if (BUILD.asyncQueue) {
         if (options.syncQueue) {
-            plt.$flags$ |= 4 /* queueSync */;
+            plt.$flags$ |= 4 /* PLATFORM_FLAGS.queueSync */;
         }
     }
     if (BUILD.hydrateClientSide) {
         // If the app is already hydrated there is not point to disable the
         // async queue. This will improve the first input delay
-        plt.$flags$ |= 2 /* appLoaded */;
+        plt.$flags$ |= 2 /* PLATFORM_FLAGS.appLoaded */;
     }
     if (BUILD.hydrateClientSide && BUILD.shadowDom) {
         for (; i < styles.length; i++) {
@@ -2607,8 +2792,8 @@ const bootstrapLazy = (lazyBundles, options = {}) => {
             if (BUILD.watchCallback) {
                 cmpMeta.$watchers$ = {};
             }
-            if (BUILD.shadowDom && !supportsShadow && cmpMeta.$flags$ & 1 /* shadowDomEncapsulation */) {
-                cmpMeta.$flags$ |= 8 /* needsShadowDomShim */;
+            if (BUILD.shadowDom && !supportsShadow && cmpMeta.$flags$ & 1 /* CMP_FLAGS.shadowDomEncapsulation */) {
+                cmpMeta.$flags$ |= 8 /* CMP_FLAGS.needsShadowDomShim */;
             }
             const tagName = BUILD.transformTagName && options.transformTagName
                 ? options.transformTagName(cmpMeta.$tagName$)
@@ -2620,7 +2805,7 @@ const bootstrapLazy = (lazyBundles, options = {}) => {
                     super(self);
                     self = this;
                     registerHost(self, cmpMeta);
-                    if (BUILD.shadowDom && cmpMeta.$flags$ & 1 /* shadowDomEncapsulation */) {
+                    if (BUILD.shadowDom && cmpMeta.$flags$ & 1 /* CMP_FLAGS.shadowDomEncapsulation */) {
                         // this component is using shadow dom
                         // and this browser supports shadow dom
                         // add the read-only property "shadowRoot" to the host element
@@ -2629,7 +2814,7 @@ const bootstrapLazy = (lazyBundles, options = {}) => {
                             if (BUILD.shadowDelegatesFocus) {
                                 self.attachShadow({
                                     mode: 'open',
-                                    delegatesFocus: !!(cmpMeta.$flags$ & 16 /* shadowDelegatesFocus */),
+                                    delegatesFocus: !!(cmpMeta.$flags$ & 16 /* CMP_FLAGS.shadowDelegatesFocus */),
                                 });
                             }
                             else {
@@ -2681,7 +2866,7 @@ const bootstrapLazy = (lazyBundles, options = {}) => {
             cmpMeta.$lazyBundleId$ = lazyBundle[0];
             if (!exclude.includes(tagName) && !customElements.get(tagName)) {
                 cmpTags.push(tagName);
-                customElements.define(tagName, proxyComponent(HostElement, cmpMeta, 1 /* isElementConstructor */));
+                customElements.define(tagName, proxyComponent(HostElement, cmpMeta, 1 /* PROXY_FLAGS.isElementConstructor */));
             }
         });
     });
@@ -2780,10 +2965,10 @@ const insertVdomAnnotations = (doc, staticComponents) => {
                     docData.rootLevelIds++;
                     nodeId = docData.rootLevelIds;
                     childId = `${hostId}.${nodeId}`;
-                    if (nodeRef.nodeType === 1 /* ElementNode */) {
+                    if (nodeRef.nodeType === 1 /* NODE_TYPE.ElementNode */) {
                         nodeRef.setAttribute(HYDRATE_CHILD_ID, childId);
                     }
-                    else if (nodeRef.nodeType === 3 /* TextNode */) {
+                    else if (nodeRef.nodeType === 3 /* NODE_TYPE.TextNode */) {
                         if (hostId === 0) {
                             const textContent = nodeRef.nodeValue.trim();
                             if (textContent === '') {
@@ -2825,7 +3010,7 @@ const parseVNodeAnnotations = (doc, node, docData, orgLocationNodes) => {
     if (node['s-nr'] != null) {
         orgLocationNodes.push(node);
     }
-    if (node.nodeType === 1 /* ElementNode */) {
+    if (node.nodeType === 1 /* NODE_TYPE.ElementNode */) {
         node.childNodes.forEach((childNode) => {
             const hostRef = getHostRef(childNode);
             if (hostRef != null && !docData.staticComponents.has(childNode.nodeName.toLowerCase())) {
@@ -2855,7 +3040,7 @@ const insertVNodeAnnotations = (doc, hostElm, vnode, docData, cmpData) => {
             const parent = hostElm.parentElement;
             if (parent && parent.childNodes) {
                 const parentChildNodes = Array.from(parent.childNodes);
-                const comment = parentChildNodes.find((node) => node.nodeType === 8 /* CommentNode */ && node['s-sr']);
+                const comment = parentChildNodes.find((node) => node.nodeType === 8 /* NODE_TYPE.CommentNode */ && node['s-sr']);
                 if (comment) {
                     const index = parentChildNodes.indexOf(hostElm) - 1;
                     vnode.$elm$.setAttribute(HYDRATE_CHILD_ID, `${comment['s-host-id']}.${comment['s-node-id']}.0.${index}`);
@@ -2873,10 +3058,10 @@ const insertChildVNodeAnnotations = (doc, vnodeChild, cmpData, hostId, depth, in
     const childId = `${hostId}.${nodeId}.${depth}.${index}`;
     childElm['s-host-id'] = hostId;
     childElm['s-node-id'] = nodeId;
-    if (childElm.nodeType === 1 /* ElementNode */) {
+    if (childElm.nodeType === 1 /* NODE_TYPE.ElementNode */) {
         childElm.setAttribute(HYDRATE_CHILD_ID, childId);
     }
-    else if (childElm.nodeType === 3 /* TextNode */) {
+    else if (childElm.nodeType === 3 /* NODE_TYPE.TextNode */) {
         const parentNode = childElm.parentNode;
         const nodeName = parentNode.nodeName;
         if (nodeName !== 'STYLE' && nodeName !== 'SCRIPT') {
@@ -2885,7 +3070,7 @@ const insertChildVNodeAnnotations = (doc, vnodeChild, cmpData, hostId, depth, in
             parentNode.insertBefore(commentBeforeTextNode, childElm);
         }
     }
-    else if (childElm.nodeType === 8 /* CommentNode */) {
+    else if (childElm.nodeType === 8 /* NODE_TYPE.CommentNode */) {
         if (childElm['s-sr']) {
             const slotName = childElm['s-sn'] || '';
             const slotNodeId = `${SLOT_NODE_ID}.${childId}.${slotName}`;
@@ -2901,7 +3086,7 @@ const insertChildVNodeAnnotations = (doc, vnodeChild, cmpData, hostId, depth, in
 };
 const setPlatformOptions = (opts) => Object.assign(plt, opts);
 const Fragment = (_, children) => children;
-const hostRefs = new WeakMap();
+const hostRefs = /*@__PURE__*/ new WeakMap();
 const getHostRef = (ref) => hostRefs.get(ref);
 const registerInstance = (lazyInstance, hostRef) => hostRefs.set((hostRef.$lazyInstance$ = lazyInstance), hostRef);
 const registerHost = (elm, cmpMeta) => {
@@ -2950,7 +3135,9 @@ const loadModule = (cmpMeta, hostRef, hmrVersionId) => {
     if (module) {
         return module[exportName];
     }
+    /*!__STENCIL_STATIC_IMPORT_SWITCH__*/
     return import(
+    /* @vite-ignore */
     /* webpackInclude: /\.entry\.js$/ */
     /* webpackExclude: /\.system\.entry\.js$/ */
     /* webpackMode: "lazy" */
@@ -2961,7 +3148,7 @@ const loadModule = (cmpMeta, hostRef, hmrVersionId) => {
         return importedModule[exportName];
     }, consoleError);
 };
-const styles = new Map();
+const styles = /*@__PURE__*/ new Map();
 const modeResolutionChain = [];
 const queueDomReads = [];
 const queueDomWrites = [];
@@ -2970,7 +3157,7 @@ const queueTask = (queue, write) => (cb) => {
     queue.push(cb);
     if (!queuePending) {
         queuePending = true;
-        if (write && plt.$flags$ & 4 /* queueSync */) {
+        if (write && plt.$flags$ & 4 /* PLATFORM_FLAGS.queueSync */) {
             nextTick(flush);
         }
         else {
@@ -3017,7 +3204,7 @@ const flush = () => {
     consume(queueDomReads);
     // DOM WRITES!!!
     if (BUILD.asyncQueue) {
-        const timeout = (plt.$flags$ & 6 /* queueMask */) === 2 /* appLoaded */
+        const timeout = (plt.$flags$ & 6 /* PLATFORM_FLAGS.queueMask */) === 2 /* PLATFORM_FLAGS.appLoaded */
             ? performance.now() + 14 * Math.ceil(queueCongestion * (1.0 / 10.0))
             : Infinity;
         consumeTimeout(queueDomWrites, timeout);

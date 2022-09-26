@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-23d59bdf.js';
 import { c as collapse, s as slideOut, e as expand, a as slideIn } from './transitions-29f7f3e5.js';
 import './utils-eee50014.js';
 

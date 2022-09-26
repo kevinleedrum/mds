@@ -1,5 +1,5 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
-import { R as ResizeObserver } from './resize-observer-9111af2a.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-23d59bdf.js';
+import { R as ResizeObserver } from './resize-observer-731c02df.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { d as getScrollingParent, a as getCursorCoords, e as getBounds, g as getPageRect, f as isScrolledOutOfView } from './utils-eee50014.js';
 import { c as collapse, e as expand } from './transitions-29f7f3e5.js';

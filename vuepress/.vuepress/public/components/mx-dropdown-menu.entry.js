@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host } from './index-23d59bdf.js';
 
 const MxDropdownMenu = class {
   constructor(hostRef) {
