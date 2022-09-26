@@ -42,7 +42,7 @@ export class McInput implements IMcInputProps {
   render() {
     return (
       <Host>
-        {this.label && <label class="font-bold subtitle4 mb-10 uppercase">{this.label}</label>}
+        {this.label && <label class="block text-secondary font-bold subtitle4 mb-10 uppercase">{this.label}</label>}
         <input
           class="border text-4 px-15 py-12 rounded"
           type={this.type}
@@ -50,6 +50,8 @@ export class McInput implements IMcInputProps {
           value={this.value}
           placeholder={this.placeholder}
         />
+        {this.instructions && !this.error && <section class="instructions caption1 mt-10">{this.instructions}</section>}
+        {this.instructions && !this.error && <section class="instructions caption1 mt-10">{this.instructions}</section>}
       </Host>
     );
   }

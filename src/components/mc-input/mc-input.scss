@@ -1,21 +1,20 @@
 mc-input {
-  label {
-    display: block;
-    color: var(--mc-secondary);
-  }
-
   input {
     border-color: var(--mc-secondary) !important;
 
     &:focus,
     &:focus-visible {
       border-color: var(--mc-primary) !important;
-      box-shadow: 0 0 2px var(--mc-primary);
+      box-shadow: 0 0 3px var(--mc-primary);
       outline: none;
     }
 
     &::placeholder {
       color: var(--mc-placeholder);
     }
+  }
+
+  .instructions {
+    color: var(--mc-secondary) !important;
   }
 }
