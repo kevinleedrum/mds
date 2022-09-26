@@ -6,6 +6,21 @@ include icons, assistive text, and a label.
 The icons for Moxi Design System are from [https://phosphoricons.com/](https://phosphoricons.com/).
 Icons that are embedded in the design system are also available.
 
+## `mc-input`
+
+Hooray, this is the new input.
+
+<section class="mds">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-64 mb-64">
+    <div>
+      <h2 class="text-h5">Normal</h2>
+      <div class="flex space-x-10">
+        <mc-input></mc-input>
+      </div>
+    </div>
+  </div>
+</section>
+
 ## Standard Input
 
 <br />

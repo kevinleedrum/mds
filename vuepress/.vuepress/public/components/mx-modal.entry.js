@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-23d59bdf.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-a1e2f5c6.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { m as moveToPortal } from './portal-9203402a.js';
 import { f as fadeIn, b as fadeOut, d as fadeScaleIn, g as fadeSlideIn, D as Direction, h as fadeSlideOut } from './transitions-29f7f3e5.js';

@@ -1,6 +1,9 @@
 # mx-button
 
+
+
 <!-- Auto Generated Below -->
+
 
 ## Properties
 
@@ -20,19 +23,19 @@
 | `value`       | `value`         |                                                        | `string`                                                      | `undefined`   |
 | `xl`          | `xl`            |                                                        | `boolean`                                                     | `false`       |
 
+
 ## Dependencies
 
 ### Used by
 
-- [mx-dialog](../mx-dialog)
-- [mx-image-upload](../mx-image-upload)
-- [mx-modal](../mx-modal)
-- [mx-page-header](../mx-page-header)
-- [mx-table](../mx-table)
-- [mx-table-row](../mx-table-row)
+ - [mx-dialog](../mx-dialog)
+ - [mx-image-upload](../mx-image-upload)
+ - [mx-modal](../mx-modal)
+ - [mx-page-header](../mx-page-header)
+ - [mx-table](../mx-table)
+ - [mx-table-row](../mx-table-row)
 
 ### Graph
-
 ```mermaid
 graph TD;
   mx-dialog --> mx-button
@@ -44,4 +47,6 @@ graph TD;
   style mx-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
+
+

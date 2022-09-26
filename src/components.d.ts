@@ -63,6 +63,20 @@ export namespace Components {
         "value": string;
     }
     interface McInput {
+        "disabled": boolean;
+        "elAriaLabel": string;
+        "error": boolean;
+        "errorMsg": string;
+        "hideCharacterCount": boolean;
+        "inputId": string;
+        "instructions": string;
+        "label": string;
+        "maxlength": number;
+        "name": string;
+        "placeholder": string;
+        "readonly": boolean;
+        "type": string;
+        "value": string;
     }
     interface MxBadge {
         /**
@@ -1518,6 +1532,20 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface McInput {
+        "disabled"?: boolean;
+        "elAriaLabel"?: string;
+        "error"?: boolean;
+        "errorMsg"?: string;
+        "hideCharacterCount"?: boolean;
+        "inputId"?: string;
+        "instructions"?: string;
+        "label"?: string;
+        "maxlength"?: number;
+        "name"?: string;
+        "placeholder"?: string;
+        "readonly"?: boolean;
+        "type"?: string;
+        "value"?: string;
     }
     interface MxBadge {
         /**

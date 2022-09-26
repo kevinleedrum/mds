@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-23d59bdf.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-a1e2f5c6.js';
 import { p as propagateDataAttributes } from './utils-eee50014.js';
 
 const McButton = class {

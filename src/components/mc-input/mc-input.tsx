@@ -1,18 +1,43 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
+
+export interface IMcInputProps {
+  type?: string;
+  name?: string;
+  value: string;
+  disabled: boolean;
+  readonly: boolean;
+  maxlength: number;
+  inputId: string;
+  label?: string;
+  placeholder?: string;
+  instructions?: string;
+  error?: boolean;
+  errorMsg?: string;
+  elAriaLabel: string;
+  hideCharacterCount: boolean;
+}
 
 @Component({
   tag: 'mc-input',
-  styleUrl: 'mc-input.css',
-  shadow: true,
+  shadow: false,
 })
-export class McInput {
+export class McInput implements IMcInputProps {
+  @Prop() type = 'text';
+  @Prop() name = '';
+  @Prop() value = '';
+  @Prop() disabled = false;
+  @Prop() readonly = false;
+  @Prop() maxlength: number;
+  @Prop() inputId: string;
+  @Prop() label = '';
+  @Prop() placeholder = '';
+  @Prop() instructions = '';
+  @Prop() error = false;
+  @Prop() errorMsg = '';
+  @Prop() elAriaLabel: string;
+  @Prop() hideCharacterCount: boolean;
 
   render() {
-    return (
-      <Host>
-        <slot></slot>
-      </Host>
-    );
+    return <Host></Host>;
   }
-
 }

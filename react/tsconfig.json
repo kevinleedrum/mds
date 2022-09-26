@@ -17,6 +17,7 @@
     "removeComments": false,
     "sourceMap": true,
     "jsx": "react",
+    "jsxFactory": "h",
     "target": "es2015"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
