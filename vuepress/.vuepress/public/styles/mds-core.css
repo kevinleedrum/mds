@@ -6473,6 +6473,9 @@
   padding-left: 5rem;
   padding-right: 5rem;
 }
+.mds .pr-112{
+  padding-right: 7rem;
+}
 .mds .pl-6{
   padding-left: 0.375rem;
 }
@@ -7900,6 +7903,7 @@ mc-button > button.warning-button:disabled,
       color: var(--mc-text-btn-warning-disabled);
     }
 mc-input input {
+    max-height: 40px;
     width: 100%;
   }
 mc-input input:focus,
@@ -7923,6 +7927,11 @@ mc-input input.border-status-error {
       box-shadow: 0 0 3px var(--mc-status-error);
       outline: none;
     }
+mc-input mc-button {
+    position: absolute;
+    right: 5px;
+    display: none;
+  }
 /***************************
 * Import Component CSS
 ***************************/

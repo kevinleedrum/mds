@@ -1,5 +1,6 @@
 mc-input {
   input {
+    max-height: 40px;
     width: 100%;
 
     &:focus,
@@ -17,5 +18,10 @@ mc-input {
       box-shadow: 0 0 3px var(--mc-status-error);
       outline: none;
     }
+  }
+  mc-button {
+    position: absolute;
+    right: 5px;
+    display: none;
   }
 }

@@ -19,6 +19,8 @@ export interface IMcInputProps {
   elAriaLabel?: string;
   hideCharacterCount?: boolean;
   required?: boolean;
+  search?: boolean;
+  searchLabel?: string;
 }
 
 @Component({
@@ -41,6 +43,8 @@ export class McInput implements IMcInputProps {
   @Prop() elAriaLabel: string;
   @Prop() hideCharacterCount: boolean;
   @Prop() required: boolean = false;
+  @Prop() search: boolean = false;
+  @Prop() searchLabel: string = 'Search';
 
   componentWillRender() {
     this.inputId = this.inputId || nanoid(10);
@@ -58,6 +62,10 @@ export class McInput implements IMcInputProps {
       classArr.push('bg-secondary-ultra-light');
     }
 
+    if (this.search) {
+      classArr.push('pr-112');
+    }
+
     return classArr.join(' ');
   }
 
@@ -70,17 +78,20 @@ export class McInput implements IMcInputProps {
             {this.required && <span class="text-status-error">*</span>}
           </label>
         )}
-        <input
-          id={this.inputId}
-          class={this.makeInputClasses}
-          type={this.type}
-          name={this.name}
-          value={this.value}
-          placeholder={this.placeholder}
-          disabled={this.disabled ? true : false}
-          readonly={this.readonly ? true : false}
-          aria-label={this.elAriaLabel}
-        />
+        <div class="flex items-center relative">
+          <input
+            id={this.inputId}
+            class={this.makeInputClasses}
+            type={this.type}
+            name={this.name}
+            value={this.value}
+            placeholder={this.placeholder}
+            disabled={this.disabled ? true : false}
+            readonly={this.readonly ? true : false}
+            aria-label={this.elAriaLabel}
+          />
+          {this.search && <mc-button small>{this.searchLabel}</mc-button>}
+        </div>
         {this.instructions && !this.error && (
           <section class="text-secondary caption1 mt-10">{this.instructions}</section>
         )}

@@ -22,9 +22,24 @@
 | `placeholder`        | `placeholder`          |             | `string`                                                                                 | `''`        |
 | `readonly`           | `readonly`             |             | `boolean`                                                                                | `false`     |
 | `required`           | `required`             |             | `boolean`                                                                                | `false`     |
+| `search`             | `search`               |             | `boolean`                                                                                | `false`     |
+| `searchLabel`        | `search-label`         |             | `string`                                                                                 | `'Search'`  |
 | `type`               | `type`                 |             | `"email" \| "file" \| "hidden" \| "number" \| "password" \| "search" \| "tel" \| "text"` | `undefined` |
 | `value`              | `value`                |             | `string`                                                                                 | `''`        |
 
+
+## Dependencies
+
+### Depends on
+
+- [mc-button](../mc-button)
+
+### Graph
+```mermaid
+graph TD;
+  mc-input --> mc-button
+  style mc-input fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

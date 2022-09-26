@@ -10,8 +10,10 @@ Icons that are embedded in the design system are also available.
 
 Hooray, this is the new input.
 
+## Inputs
+
 <section class="mds">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
     <div class="my-2">
       <h6 class="emphasis mb-10">Regular</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder"></mc-input>
@@ -39,7 +41,19 @@ Hooray, this is the new input.
   </div>
 </section>
 
-## Standard Input
+## Search Input
+
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
+    <div class="my-2">
+      <mc-input type="text" label="Label" placeholder="Placeholder" instructions="Please use the input above to search." search></mc-input>
+    </div>
+  </div>
+</section>
+
+## Deprecated MDS Inputs & TextAreas
+
+### Standard Input
 
 <br />
 <section class="mds">
@@ -136,7 +150,7 @@ Hooray, this is the new input.
 
 <<< @/vuepress/components/inputs.md#text-inputs
 
-## Text Area
+### Text Area
 
 <br />
 <section class="mds">
@@ -147,7 +161,7 @@ Hooray, this is the new input.
   <!-- #endregion textareas -->
 </section>
 
-## Click-to-edit inputs with confirmation
+### Click-to-edit inputs with confirmation
 
 The `mx-confirm-input` component wraps the `mx-input` component, and provides additional edit-in-place behaviors.
 
