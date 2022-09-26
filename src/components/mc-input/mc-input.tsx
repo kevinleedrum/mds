@@ -19,7 +19,6 @@ export interface IMcInputProps {
   elAriaLabel?: string;
   hideCharacterCount?: boolean;
   required?: boolean;
-  search?: boolean;
   searchLabel?: string;
 }
 
@@ -43,7 +42,6 @@ export class McInput implements IMcInputProps {
   @Prop() elAriaLabel: string;
   @Prop() hideCharacterCount: boolean;
   @Prop() required: boolean = false;
-  @Prop() search: boolean = false;
   @Prop() searchLabel: string = 'Search';
 
   componentWillRender() {
@@ -62,12 +60,14 @@ export class McInput implements IMcInputProps {
       classArr.push('bg-secondary-ultra-light');
     }
 
-    if (this.search) {
+    if (this.type === 'search') {
       classArr.push('pr-112');
     }
 
     return classArr.join(' ');
   }
+
+  handleInputFocus() {}
 
   render() {
     return (
@@ -89,8 +89,13 @@ export class McInput implements IMcInputProps {
             disabled={this.disabled ? true : false}
             readonly={this.readonly ? true : false}
             aria-label={this.elAriaLabel}
+            onFocus={this.handleInputFocus.bind(this)}
           />
-          {this.search && <mc-button small>{this.searchLabel}</mc-button>}
+          {this.type === 'search' && (
+            <mc-button class="hidden" small>
+              {this.searchLabel}
+            </mc-button>
+          )}
         </div>
         {this.instructions && !this.error && (
           <section class="text-secondary caption1 mt-10">{this.instructions}</section>

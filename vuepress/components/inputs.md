@@ -46,7 +46,7 @@ Hooray, this is the new input.
 <section class="mds">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
     <div class="my-2">
-      <mc-input type="text" label="Label" placeholder="Placeholder" instructions="Please use the input above to search." search></mc-input>
+      <mc-input type="search" label="Label" placeholder="Placeholder" instructions="Please use the input above to search." search></mc-input>
     </div>
   </div>
 </section>

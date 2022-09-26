@@ -7902,6 +7902,9 @@ mc-button > button.warning-button:disabled,
       color: #597897;
       color: var(--mc-text-btn-warning-disabled);
     }
+mc-input {
+  width: 100%;
+}
 mc-input input {
     max-height: 40px;
     width: 100%;
@@ -7930,7 +7933,6 @@ mc-input input.border-status-error {
 mc-input mc-button {
     position: absolute;
     right: 5px;
-    display: none;
   }
 /***************************
 * Import Component CSS
