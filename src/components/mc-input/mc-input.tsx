@@ -130,10 +130,12 @@ export class McInput implements IMcInputProps {
               ref={el => (this.elemInput = el as HTMLInputElement)}
             />
           ) : (
-            <div class={`w-full pl-36 h-40 pointer ${this.makeInputClasses}`}>
+            <div
+              class={`w-full pl-36 h-40 cursor-pointer ${this.makeInputClasses}`}
+              onClick={this.triggerFileSelection.bind(this)}
+            >
               <div
                 class="shadowFileUploadNameHolder"
-                onClick={this.triggerFileSelection.bind(this)}
                 ref={el => (this.elemFileUploadNameHolder = el as HTMLDivElement)}
               ></div>
               <input
