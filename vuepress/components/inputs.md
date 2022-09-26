@@ -19,8 +19,15 @@ Hooray, this is the new input.
       <mc-input type="text" label="Label" placeholder="Placeholder" instructions="These are instructions..."></mc-input>
     </div>
     <div class="my-10">
-      <mc-input type="text" label="Label" placeholder="Placeholder" instructions="These are instructions..." error error-msg="This is an error..."></mc-input>
+      <mc-input type="text" label="Label" placeholder="Placeholder" instructions="This is a required field." required></mc-input>
     </div>
+    <div class="my-10">
+      <mc-input type="text" label="Label" placeholder="Placeholder" error error-msg="This is an error..."></mc-input>
+    </div>
+    <div class="my-10">
+      <mc-input type="text" label="Label" placeholder="Placeholder" disabled></mc-input>
+    </div>
+
   </div>
 </section>
 

@@ -76,6 +76,7 @@ export namespace Components {
         "name": string;
         "placeholder": string;
         "readonly": boolean;
+        "required": boolean;
         "type": McInputType;
         "value": string;
     }
@@ -1545,6 +1546,7 @@ declare namespace LocalJSX {
         "name"?: string;
         "placeholder"?: string;
         "readonly"?: boolean;
+        "required"?: boolean;
         "type"?: McInputType;
         "value"?: string;
     }

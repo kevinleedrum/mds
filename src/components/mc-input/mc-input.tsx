@@ -17,6 +17,7 @@ export interface IMcInputProps {
   errorMsg?: string;
   elAriaLabel?: string;
   hideCharacterCount?: boolean;
+  required?: boolean;
 }
 
 @Component({
@@ -38,6 +39,7 @@ export class McInput implements IMcInputProps {
   @Prop() errorMsg = '';
   @Prop() elAriaLabel: string;
   @Prop() hideCharacterCount: boolean;
+  @Prop() required: boolean = false;
 
   get makeInputClasses() {
     const classArr = ['border', 'text-4', 'px-15', 'py-12', 'rounded', 'border', 'border-secondary'];
@@ -47,19 +49,29 @@ export class McInput implements IMcInputProps {
       classArr[index] = 'border-status-error';
     }
 
+    if (this.disabled) {
+      classArr.push('bg-secondary-ultra-light');
+    }
+
     return classArr.join(' ');
   }
 
   render() {
     return (
       <Host>
-        {this.label && <label class="block text-secondary font-bold subtitle4 mb-10 uppercase">{this.label}</label>}
+        {this.label && (
+          <label class="block text-secondary font-bold subtitle4 mb-10 uppercase">
+            {this.label}
+            {this.required && <span class="text-status-error">*</span>}
+          </label>
+        )}
         <input
           class={this.makeInputClasses}
           type={this.type}
           name={this.name}
           value={this.value}
           placeholder={this.placeholder}
+          disabled={this.disabled ? true : false}
         />
         {this.instructions && !this.error && <section class="instructions caption1 mt-10">{this.instructions}</section>}
         {this.error && this.errorMsg && (

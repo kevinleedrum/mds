@@ -6015,6 +6015,10 @@
 .mds .border-opacity-100{
   --tw-border-opacity: 1;
 }
+.mds .bg-secondary-ultra-light{
+  background-color: #f3f5f6;
+  background-color: var(--mc-secondary-ultra-light);
+}
 .mds .bg-transparent{
   background-color: transparent;
 }
