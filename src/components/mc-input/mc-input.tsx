@@ -27,6 +27,9 @@ export interface IMcInputProps {
   shadow: false,
 })
 export class McInput implements IMcInputProps {
+  elemInput!: HTMLInputElement;
+  btnSearch!: HTMLMcButtonElement;
+
   @Prop() type: McInputType;
   @Prop() name = '';
   @Prop() value = '';
@@ -67,7 +70,15 @@ export class McInput implements IMcInputProps {
     return classArr.join(' ');
   }
 
-  handleInputFocus() {}
+  handleInputFocus() {
+    this.btnSearch.classList.remove('hidden');
+  }
+
+  handleInputBlur() {
+    if (this.elemInput.value === '') {
+      this.btnSearch.classList.add('hidden');
+    }
+  }
 
   render() {
     return (
@@ -90,9 +101,11 @@ export class McInput implements IMcInputProps {
             readonly={this.readonly ? true : false}
             aria-label={this.elAriaLabel}
             onFocus={this.handleInputFocus.bind(this)}
+            onBlur={this.handleInputBlur.bind(this)}
+            ref={el => (this.elemInput = el as HTMLInputElement)}
           />
           {this.type === 'search' && (
-            <mc-button class="hidden" small>
+            <mc-button ref={el => (this.btnSearch = el as HTMLMcButtonElement)} class="hidden" small>
               {this.searchLabel}
             </mc-button>
           )}
