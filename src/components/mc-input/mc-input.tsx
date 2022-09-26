@@ -30,6 +30,8 @@ export interface IMcInputProps {
 export class McInput implements IMcInputProps {
   elemInput!: HTMLInputElement;
   btnSearch!: HTMLMcButtonElement;
+  elemFileUploadNameHolder!: HTMLDivElement;
+  elemFileInput!: HTMLInputElement;
 
   @Prop() type: McInputType;
   @Prop() name = '';
@@ -54,6 +56,8 @@ export class McInput implements IMcInputProps {
 
     if (this.type === 'search') {
       this.leftIcon = 'ph-magnifying-glass';
+    } else if (this.type === 'file') {
+      this.leftIcon = 'ph-file';
     }
   }
 
@@ -87,6 +91,18 @@ export class McInput implements IMcInputProps {
     }
   }
 
+  triggerFileSelection() {
+    this.elemFileInput.click();
+  }
+
+  handleFileUploadChange() {
+    if (this.elemFileInput.files.length > 0) {
+      this.elemFileUploadNameHolder.innerText = this.elemFileInput.files[0].name;
+    } else {
+      this.elemFileUploadNameHolder.innerText = '';
+    }
+  }
+
   render() {
     return (
       <Host>
@@ -98,23 +114,45 @@ export class McInput implements IMcInputProps {
         )}
         <div class="flex items-center relative">
           {this.leftIcon && <i class={`leftIcon ${this.leftIcon}`} />}
-          <input
-            id={this.inputId}
-            class={this.makeInputClasses}
-            type={this.type}
-            name={this.name}
-            value={this.value}
-            placeholder={this.placeholder}
-            disabled={this.disabled ? true : false}
-            readonly={this.readonly ? true : false}
-            aria-label={this.elAriaLabel}
-            onFocus={this.handleInputFocus.bind(this)}
-            onBlur={this.handleInputBlur.bind(this)}
-            ref={el => (this.elemInput = el as HTMLInputElement)}
-          />
+          {this.type !== 'file' ? (
+            <input
+              id={this.inputId}
+              class={this.makeInputClasses}
+              type={this.type}
+              name={this.name}
+              value={this.value}
+              placeholder={this.placeholder}
+              disabled={this.disabled ? true : false}
+              readonly={this.readonly ? true : false}
+              aria-label={this.elAriaLabel}
+              onFocus={this.handleInputFocus.bind(this)}
+              onBlur={this.handleInputBlur.bind(this)}
+              ref={el => (this.elemInput = el as HTMLInputElement)}
+            />
+          ) : (
+            <div class={`w-full pl-36 h-40 pointer ${this.makeInputClasses}`}>
+              <div
+                class="shadowFileUploadNameHolder"
+                onClick={this.triggerFileSelection.bind(this)}
+                ref={el => (this.elemFileUploadNameHolder = el as HTMLDivElement)}
+              ></div>
+              <input
+                type="file"
+                ref={el => (this.elemFileInput = el as HTMLInputElement)}
+                onChange={this.handleFileUploadChange.bind(this)}
+                name={this.name}
+              />
+            </div>
+          )}
+
           {this.type === 'search' && (
             <mc-button ref={el => (this.btnSearch = el as HTMLMcButtonElement)} class="hidden" small>
               {this.searchLabel}
+            </mc-button>
+          )}
+          {this.type === 'file' && (
+            <mc-button onClick={this.triggerFileSelection.bind(this)} small>
+              Choose File
             </mc-button>
           )}
         </div>

@@ -28,6 +28,17 @@ mc-input {
       outline: none;
     }
   }
+
+  .shadowFileUploadNameHolder {
+    margin-top: -3px;
+  }
+
+  input[type='file'] {
+    position: absolute;
+    left: -9000px;
+    display: none;
+  }
+
   mc-button {
     position: absolute;
     right: 5px;

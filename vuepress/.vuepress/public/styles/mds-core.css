@@ -3381,6 +3381,9 @@
 .mds .hidden{
   display: none;
 }
+.mds .h-40{
+  height: 2.5rem;
+}
 .mds .h-12{
   height: 0.75rem;
 }
@@ -3410,9 +3413,6 @@
 }
 .mds .h-56{
   height: 3.5rem;
-}
-.mds .h-40{
-  height: 2.5rem;
 }
 .mds .h-4{
   height: 0.25rem;
@@ -7939,6 +7939,14 @@ mc-input input.border-status-error {
       box-shadow: 0 0 3px var(--mc-status-error);
       outline: none;
     }
+mc-input .shadowFileUploadNameHolder {
+    margin-top: -3px;
+  }
+mc-input input[type='file'] {
+    position: absolute;
+    left: -9000px;
+    display: none;
+  }
 mc-input mc-button {
     position: absolute;
     right: 5px;

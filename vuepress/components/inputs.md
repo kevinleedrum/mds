@@ -51,6 +51,16 @@ Hooray, this is the new input.
   </div>
 </section>
 
+## File Upload
+
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
+    <div class="my-2">
+      <mc-input type="file" label="Label" placeholder="Placeholder" instructions="Please use the input above to search." search></mc-input>
+    </div>
+  </div>
+</section>
+
 ## Deprecated MDS Inputs & TextAreas
 
 ### Standard Input
