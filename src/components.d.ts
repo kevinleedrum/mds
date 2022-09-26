@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonTypeAttribute, McBtnType } from "./components/mc-button/mc-button";
+import { McInputType } from "./components/mc-input/mc-input";
 import { BtnType, ButtonTypeAttribute as ButtonTypeAttribute1 } from "./components/mx-button/mx-button";
 import { ChartJsData, ChartJsOptions } from "./components/mx-chart/mx-chart";
 import { ChartType } from "chart.js";
@@ -75,7 +76,7 @@ export namespace Components {
         "name": string;
         "placeholder": string;
         "readonly": boolean;
-        "type": string;
+        "type": McInputType;
         "value": string;
     }
     interface MxBadge {
@@ -1544,7 +1545,7 @@ declare namespace LocalJSX {
         "name"?: string;
         "placeholder"?: string;
         "readonly"?: boolean;
-        "type"?: string;
+        "type"?: McInputType;
         "value"?: string;
     }
     interface MxBadge {

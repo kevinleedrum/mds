@@ -1,20 +1,22 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 
+export type McInputType = 'text' | 'email' | 'file' | 'hidden' | 'number' | 'password' | 'search' | 'tel';
+
 export interface IMcInputProps {
   type?: string;
   name?: string;
-  value: string;
-  disabled: boolean;
-  readonly: boolean;
-  maxlength: number;
-  inputId: string;
+  value?: string;
+  disabled?: boolean;
+  readonly?: boolean;
+  maxlength?: number;
+  inputId?: string;
   label?: string;
   placeholder?: string;
   instructions?: string;
   error?: boolean;
   errorMsg?: string;
-  elAriaLabel: string;
-  hideCharacterCount: boolean;
+  elAriaLabel?: string;
+  hideCharacterCount?: boolean;
 }
 
 @Component({
@@ -22,7 +24,7 @@ export interface IMcInputProps {
   shadow: false,
 })
 export class McInput implements IMcInputProps {
-  @Prop() type = 'text';
+  @Prop() type: McInputType;
   @Prop() name = '';
   @Prop() value = '';
   @Prop() disabled = false;
