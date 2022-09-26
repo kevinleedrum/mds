@@ -11,7 +11,7 @@ Icons that are embedded in the design system are also available.
 Hooray, this is the new input.
 
 <section class="mds">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-40">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
     <div class="my-2">
       <h6 class="emphasis mb-10">Regular</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder"></mc-input>
