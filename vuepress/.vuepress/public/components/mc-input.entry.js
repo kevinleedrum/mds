@@ -14,7 +14,7 @@ const McInput = class {
     this.errorMsg = '';
   }
   render() {
-    return h(Host, null);
+    return (h(Host, null, this.label && h("label", { class: "font-bold subtitle4 mb-10 uppercase" }, this.label), h("input", { class: "border text-4 px-15 py-12 rounded", type: this.type, name: this.name, value: this.value, placeholder: this.placeholder })));
   }
 };
 

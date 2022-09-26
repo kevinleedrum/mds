@@ -15,7 +15,7 @@ Hooray, this is the new input.
     <div>
       <h2 class="text-h5">Normal</h2>
       <div class="flex space-x-10">
-        <mc-input></mc-input>
+        <mc-input type="text" label="First Name" placeholder="Placeholder"></mc-input>
       </div>
     </div>
   </div>

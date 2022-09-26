@@ -40,6 +40,17 @@ export class McInput implements IMcInputProps {
   @Prop() hideCharacterCount: boolean;
 
   render() {
-    return <Host></Host>;
+    return (
+      <Host>
+        {this.label && <label class="font-bold subtitle4 mb-10 uppercase">{this.label}</label>}
+        <input
+          class="border text-4 px-15 py-12 rounded"
+          type={this.type}
+          name={this.name}
+          value={this.value}
+          placeholder={this.placeholder}
+        />
+      </Host>
+    );
   }
 }

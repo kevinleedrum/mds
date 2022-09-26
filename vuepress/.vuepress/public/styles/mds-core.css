@@ -24,6 +24,7 @@
   --mc-tertiary-light: #b07bf5;
   --mc-tertiary-dark: #5e3691;
   --mc-white: #fff;
+  --mc-placeholder: rgba(118, 142, 175, 0.66);
 
   /* Old colors */
   --mds-bg-error: #fbd6de;
@@ -3112,6 +3113,9 @@
 }
 .mds .ml-10{
   margin-left: 0.625rem;
+}
+.mds .mb-10{
+  margin-bottom: 0.625rem;
 }
 .mds .mr-4{
   margin-right: 0.25rem;
@@ -6321,6 +6325,10 @@
   padding-left: 1.25rem;
   padding-right: 1.25rem;
 }
+.mds .py-12{
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
 .mds .px-8{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -6380,10 +6388,6 @@
 .mds .px-40{
   padding-left: 2.5rem;
   padding-right: 2.5rem;
-}
-.mds .py-12{
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
 }
 .mds .py-14{
   padding-top: 0.875rem;
@@ -7874,6 +7878,31 @@ mc-button > button.warning-button:disabled,
       background-color: var(--mc-bg-btn-warning-disabled);
       color: #597897;
       color: var(--mc-text-btn-warning-disabled);
+    }
+mc-input label {
+    display: block;
+    color: #597897;
+    color: var(--mc-secondary);
+  }
+mc-input input {
+    border-color: #597897 !important;
+    border-color: var(--mc-secondary) !important;
+  }
+mc-input input:focus,
+    mc-input input:focus-visible {
+      border-color: #0073e6 !important;
+      border-color: var(--mc-primary) !important;
+      box-shadow: 0 0 2px #0073e6;
+      box-shadow: 0 0 2px var(--mc-primary);
+      outline: none;
+    }
+mc-input input::-moz-placeholder {
+      color: rgba(118, 142, 175, 0.66);
+      color: var(--mc-placeholder);
+    }
+mc-input input::placeholder {
+      color: rgba(118, 142, 175, 0.66);
+      color: var(--mc-placeholder);
     }
 /***************************
 * Import Component CSS
