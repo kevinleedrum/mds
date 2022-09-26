@@ -1,4 +1,5 @@
 import { Component, Host, Prop, h } from '@stencil/core';
+import { nanoid } from 'nanoid';
 
 export type McInputType = 'text' | 'email' | 'file' | 'hidden' | 'number' | 'password' | 'search' | 'tel';
 
@@ -41,6 +42,10 @@ export class McInput implements IMcInputProps {
   @Prop() hideCharacterCount: boolean;
   @Prop() required: boolean = false;
 
+  componentWillRender() {
+    this.inputId = this.inputId || nanoid(10);
+  }
+
   get makeInputClasses() {
     const classArr = ['border', 'text-4', 'px-15', 'py-12', 'rounded', 'border', 'border-secondary'];
 
@@ -49,7 +54,7 @@ export class McInput implements IMcInputProps {
       classArr[index] = 'border-status-error';
     }
 
-    if (this.disabled) {
+    if (this.disabled || this.readonly) {
       classArr.push('bg-secondary-ultra-light');
     }
 
@@ -60,18 +65,20 @@ export class McInput implements IMcInputProps {
     return (
       <Host>
         {this.label && (
-          <label class="block text-secondary font-bold subtitle4 mb-10 uppercase">
+          <label htmlFor={this.inputId} class="block text-secondary font-bold subtitle4 mb-10 uppercase">
             {this.label}
             {this.required && <span class="text-status-error">*</span>}
           </label>
         )}
         <input
+          id={this.inputId}
           class={this.makeInputClasses}
           type={this.type}
           name={this.name}
           value={this.value}
           placeholder={this.placeholder}
           disabled={this.disabled ? true : false}
+          readonly={this.readonly ? true : false}
         />
         {this.instructions && !this.error && <section class="instructions caption1 mt-10">{this.instructions}</section>}
         {this.error && this.errorMsg && (

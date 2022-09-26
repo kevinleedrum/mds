@@ -12,22 +12,30 @@ Hooray, this is the new input.
 
 <section class="mds">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-40">
-    <div class="my-10">
+    <div class="my-2">
+      <h6 class="emphasis mb-10">Regular</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder"></mc-input>
     </div>
-    <div class="my-10">
+    <div class="my-2">
+      <h6 class="emphasis mb-10">With Instructions</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder" instructions="These are instructions..."></mc-input>
     </div>
-    <div class="my-10">
+    <div class="my-2">
+      <h6 class="emphasis mb-10">Required</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder" instructions="This is a required field." required></mc-input>
     </div>
-    <div class="my-10">
+    <div class="my-2">
+      <h6 class="emphasis mb-10">Error State</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder" error error-msg="This is an error..."></mc-input>
     </div>
-    <div class="my-10">
+    <div class="my-2">
+      <h6 class="emphasis mb-10">Disabled</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder" disabled></mc-input>
     </div>
-
+    <div class="my-2">
+      <h6 class="emphasis mb-10">Read Only</h6>
+      <mc-input type="text" label="Label" placeholder="Placeholder" value="Read Only" readonly></mc-input>
+    </div>
   </div>
 </section>
 
