@@ -30,7 +30,7 @@ export interface IMcInputProps {
 export class McInput implements IMcInputProps {
   elemInput!: HTMLInputElement;
   btnSearch!: HTMLMcButtonElement;
-  elemFileUploadNameHolder!: HTMLDivElement;
+  elemFileUploadNameHolder!: HTMLInputElement;
   elemFileInput!: HTMLInputElement;
 
   @Prop() type: McInputType;
@@ -73,8 +73,9 @@ export class McInput implements IMcInputProps {
       classArr.push('bg-secondary-ultra-light');
     }
 
-    if (this.type === 'search') {
-      classArr.push('pr-112');
+    if (this.type === 'search' || this.type === 'file') {
+      const rightPad = this.type === 'search' ? 'pr-112' : 'pr-120';
+      classArr.push(rightPad);
       classArr.push('pl-36');
     }
 
@@ -97,9 +98,9 @@ export class McInput implements IMcInputProps {
 
   handleFileUploadChange() {
     if (this.elemFileInput.files.length > 0) {
-      this.elemFileUploadNameHolder.innerText = this.elemFileInput.files[0].name;
+      this.elemFileUploadNameHolder.value = this.elemFileInput.files[0].name;
     } else {
-      this.elemFileUploadNameHolder.innerText = '';
+      this.elemFileUploadNameHolder.value = '';
     }
   }
 
@@ -130,14 +131,14 @@ export class McInput implements IMcInputProps {
               ref={el => (this.elemInput = el as HTMLInputElement)}
             />
           ) : (
-            <div
-              class={`w-full pl-36 h-40 cursor-pointer ${this.makeInputClasses}`}
-              onClick={this.triggerFileSelection.bind(this)}
-            >
-              <div
-                class="shadowFileUploadNameHolder"
-                ref={el => (this.elemFileUploadNameHolder = el as HTMLDivElement)}
-              ></div>
+            <div class="w-full">
+              <input
+                type="text"
+                class={`w-full cursor-pointer ${this.makeInputClasses}`}
+                onClick={this.triggerFileSelection.bind(this)}
+                ref={el => (this.elemFileUploadNameHolder = el as HTMLInputElement)}
+                readonly
+              />
               <input
                 type="file"
                 ref={el => (this.elemFileInput = el as HTMLInputElement)}

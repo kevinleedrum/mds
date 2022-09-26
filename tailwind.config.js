@@ -65,6 +65,7 @@ const config = {
       80: '5rem',
       96: '6rem',
       112: '7rem',
+      120: '7.5rem', // Added for mc-input
       128: '8rem',
       144: '9rem',
       152: '9.5rem',
