@@ -1,6 +1,6 @@
 mc-input {
   input {
-    border-color: var(--mc-secondary) !important;
+    width: 100%;
 
     &:focus,
     &:focus-visible {
@@ -11,6 +11,11 @@ mc-input {
 
     &::placeholder {
       color: var(--mc-placeholder);
+    }
+
+    &.border-status-error {
+      box-shadow: 0 0 3px var(--mc-status-error);
+      outline: none;
     }
   }
 

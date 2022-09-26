@@ -11,18 +11,15 @@ Icons that are embedded in the design system are also available.
 Hooray, this is the new input.
 
 <section class="mds">
-  <div class="grid grid-cols-1 xl:grid-cols-2 gap-64 mb-64">
-    <div>
-      <h2 class="text-h5">Normal</h2>
-      <div class="flex space-x-10">
-        <mc-input type="text" label="Label" placeholder="Placeholder"></mc-input>
-      </div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-40">
+    <div class="my-10">
+      <mc-input type="text" label="Label" placeholder="Placeholder"></mc-input>
     </div>
-    <div>
-      <h2 class="text-h5">Instructions</h2>
-      <div class="flex space-x-10">
-        <mc-input type="text" label="Label" placeholder="Placeholder" instructions="Instructions here..."></mc-input>
-      </div>
+    <div class="my-10">
+      <mc-input type="text" label="Label" placeholder="Placeholder" instructions="These are instructions..."></mc-input>
+    </div>
+    <div class="my-10">
+      <mc-input type="text" label="Label" placeholder="Placeholder" instructions="These are instructions..." error error-msg="This is an error..."></mc-input>
     </div>
   </div>
 </section>

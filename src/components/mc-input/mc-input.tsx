@@ -39,19 +39,35 @@ export class McInput implements IMcInputProps {
   @Prop() elAriaLabel: string;
   @Prop() hideCharacterCount: boolean;
 
+  get makeInputClasses() {
+    const classArr = ['border', 'text-4', 'px-15', 'py-12', 'rounded', 'border', 'border-secondary'];
+
+    if (this.error) {
+      const index = classArr.indexOf('border-secondary');
+      classArr[index] = 'border-status-error';
+    }
+
+    return classArr.join(' ');
+  }
+
   render() {
     return (
       <Host>
         {this.label && <label class="block text-secondary font-bold subtitle4 mb-10 uppercase">{this.label}</label>}
         <input
-          class="border text-4 px-15 py-12 rounded"
+          class={this.makeInputClasses}
           type={this.type}
           name={this.name}
           value={this.value}
           placeholder={this.placeholder}
         />
         {this.instructions && !this.error && <section class="instructions caption1 mt-10">{this.instructions}</section>}
-        {this.instructions && !this.error && <section class="instructions caption1 mt-10">{this.instructions}</section>}
+        {this.error && this.errorMsg && (
+          <section class="flex caption1 mt-10 text-status-error items-center gap-6">
+            <i class="ph-warning"></i>
+            {this.errorMsg}
+          </section>
+        )}
       </Host>
     );
   }
