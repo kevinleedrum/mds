@@ -1,7 +1,7 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { nanoid } from 'nanoid';
 
-export type McInputType = 'text' | 'email' | 'file' | 'hidden' | 'number' | 'password' | 'search' | 'tel';
+export type McInputType = 'text' | 'textarea' | 'email' | 'file' | 'hidden' | 'number' | 'password' | 'search' | 'tel';
 
 export interface IMcInputProps {
   type?: string;
@@ -28,7 +28,7 @@ export interface IMcInputProps {
   shadow: false,
 })
 export class McInput implements IMcInputProps {
-  elemInput!: HTMLInputElement;
+  elemInput!: HTMLInputElement | HTMLTextAreaElement;
   btnSearch!: HTMLMcButtonElement;
   elemFileUploadNameHolder!: HTMLInputElement;
   elemFileInput!: HTMLInputElement;
@@ -79,6 +79,10 @@ export class McInput implements IMcInputProps {
       classArr.push('pl-36');
     }
 
+    if (this.type === 'textarea') {
+      classArr.push('h-144 w-full');
+    }
+
     return classArr.join(' ');
   }
 
@@ -115,54 +119,70 @@ export class McInput implements IMcInputProps {
             {this.required && <span class="text-status-error">*</span>}
           </label>
         )}
-        <div class="flex items-center relative">
-          {this.leftIcon && <i class={`leftIcon ${this.leftIcon}`} />}
-          {this.type !== 'file' ? (
-            <input
-              id={this.inputId}
-              class={this.makeInputClasses}
-              type={this.type}
-              name={this.name}
-              value={this.value}
-              placeholder={this.placeholder}
-              disabled={this.disabled ? true : false}
-              readonly={this.readonly ? true : false}
-              aria-label={this.elAriaLabel}
-              onFocus={this.handleInputFocus.bind(this)}
-              onBlur={this.handleInputBlur.bind(this)}
-              ref={el => (this.elemInput = el as HTMLInputElement)}
-            />
-          ) : (
-            <div class="w-full">
+        {this.type !== 'textarea' ? (
+          <div class="flex items-center relative">
+            {this.leftIcon && <i class={`leftIcon ${this.leftIcon}`} />}
+            {this.type !== 'file' ? (
               <input
-                type="text"
-                class={`w-full ${this.makeInputClasses}`}
-                onClick={this.triggerFileSelection.bind(this)}
-                ref={el => (this.elemFileUploadNameHolder = el as HTMLInputElement)}
+                id={this.inputId}
+                class={this.makeInputClasses}
+                type={this.type}
+                name={this.name}
+                value={this.value}
                 placeholder={this.placeholder}
                 disabled={this.disabled ? true : false}
-                readonly
+                readonly={this.readonly ? true : false}
+                aria-label={this.elAriaLabel}
+                onFocus={this.handleInputFocus.bind(this)}
+                onBlur={this.handleInputBlur.bind(this)}
+                ref={el => (this.elemInput = el as HTMLInputElement)}
               />
-              <input
-                type="file"
-                ref={el => (this.elemFileInput = el as HTMLInputElement)}
-                onChange={this.handleFileUploadChange.bind(this)}
-                name={this.name}
-              />
-            </div>
-          )}
+            ) : (
+              <div class="w-full">
+                <input
+                  type="text"
+                  class={`w-full ${this.makeInputClasses}`}
+                  onClick={this.triggerFileSelection.bind(this)}
+                  ref={el => (this.elemFileUploadNameHolder = el as HTMLInputElement)}
+                  placeholder={this.placeholder}
+                  disabled={this.disabled ? true : false}
+                  readonly
+                />
+                <input
+                  type="file"
+                  ref={el => (this.elemFileInput = el as HTMLInputElement)}
+                  onChange={this.handleFileUploadChange.bind(this)}
+                  name={this.name}
+                />
+              </div>
+            )}
 
-          {this.type === 'search' && (
-            <mc-button ref={el => (this.btnSearch = el as HTMLMcButtonElement)} class="hidden" small>
-              {this.searchLabel}
-            </mc-button>
-          )}
-          {this.type === 'file' && (
-            <mc-button onClick={this.triggerFileSelection.bind(this)} disabled={this.disabled ? true : false} small>
-              Choose File
-            </mc-button>
-          )}
-        </div>
+            {this.type === 'search' && (
+              <mc-button ref={el => (this.btnSearch = el as HTMLMcButtonElement)} class="hidden" small>
+                {this.searchLabel}
+              </mc-button>
+            )}
+            {this.type === 'file' && (
+              <mc-button onClick={this.triggerFileSelection.bind(this)} disabled={this.disabled ? true : false} small>
+                Choose File
+              </mc-button>
+            )}
+          </div>
+        ) : (
+          <textarea
+            id={this.inputId}
+            class={this.makeInputClasses}
+            name={this.name}
+            value={this.value}
+            placeholder={this.placeholder}
+            disabled={this.disabled ? true : false}
+            readonly={this.readonly ? true : false}
+            aria-label={this.elAriaLabel}
+            onFocus={this.handleInputFocus.bind(this)}
+            onBlur={this.handleInputBlur.bind(this)}
+            ref={el => (this.elemInput = el as HTMLTextAreaElement)}
+          ></textarea>
+        )}
         {this.instructions && !this.error && (
           <section class="text-secondary caption1 mt-10">{this.instructions}</section>
         )}

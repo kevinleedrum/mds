@@ -8,8 +8,8 @@ mc-input {
     left: 15px;
   }
 
-  input {
-    max-height: 40px;
+  input,
+  textarea {
     width: 100%;
 
     &:focus,
@@ -27,6 +27,10 @@ mc-input {
       box-shadow: 0 0 3px var(--mc-status-error);
       outline: none;
     }
+  }
+
+  input {
+    max-height: 40px;
   }
 
   .shadowFileUploadNameHolder {

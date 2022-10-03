@@ -75,6 +75,22 @@ Hooray, this is the new input.
   </div>
 </section>
 
+## Textarea
+
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
+    <div class="my-2">
+      <mc-input type="textarea" label="Normal Textarea" placeholder="Enter content" instructions="Enter your article content."></mc-input>
+    </div>
+    <div class="my-2">
+      <mc-input type="textarea" label="Disabled Textarea" placeholder="Enter content" disabled></mc-input>
+    </div>
+    <div class="my-2">
+      <mc-input type="textarea" label="Disabled Textarea" placeholder="Enter content" error error-msg="There was an error."></mc-input>
+    </div>
+  </div>
+</section>
+
 ## Deprecated MDS Inputs & TextAreas
 
 ### Standard Input
