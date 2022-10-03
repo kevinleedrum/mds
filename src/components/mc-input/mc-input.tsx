@@ -80,7 +80,7 @@ export class McInput implements IMcInputProps {
     }
 
     if (this.type === 'textarea') {
-      classArr.push('h-144 w-full');
+      classArr.push('h-144 w-full align-top');
     }
 
     return classArr.join(' ');
@@ -173,13 +173,14 @@ export class McInput implements IMcInputProps {
             id={this.inputId}
             class={this.makeInputClasses}
             name={this.name}
-            value={this.value}
             placeholder={this.placeholder}
             disabled={this.disabled ? true : false}
             readonly={this.readonly ? true : false}
             aria-label={this.elAriaLabel}
             ref={el => (this.elemInput = el as HTMLTextAreaElement)}
-          ></textarea>
+          >
+            {this.value}
+          </textarea>
         )}
         {this.instructions && !this.error && (
           <section class="text-secondary caption1 mt-10">{this.instructions}</section>
