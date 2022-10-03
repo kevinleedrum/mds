@@ -43,7 +43,7 @@ export class McInput implements IMcInputProps {
   @Prop() label = '';
   @Prop() placeholder = '';
   @Prop() instructions = '';
-  @Prop() error = false;
+  @Prop({ mutable: true, reflect: true }) error = false;
   @Prop() errorMsg = '';
   @Prop() elAriaLabel: string;
   @Prop() hideCharacterCount: boolean;
@@ -178,8 +178,6 @@ export class McInput implements IMcInputProps {
             disabled={this.disabled ? true : false}
             readonly={this.readonly ? true : false}
             aria-label={this.elAriaLabel}
-            onFocus={this.handleInputFocus.bind(this)}
-            onBlur={this.handleInputBlur.bind(this)}
             ref={el => (this.elemInput = el as HTMLTextAreaElement)}
           ></textarea>
         )}
