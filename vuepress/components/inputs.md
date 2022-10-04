@@ -13,29 +13,29 @@ Hooray, this is the new input.
 ## Inputs
 
 <section class="mds">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
     <div class="my-2">
-      <h6 class="emphasis mb-10">Regular</h6>
+      <h6 class="emphasis mb-24">Regular</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder"></mc-input>
     </div>
     <div class="my-2">
-      <h6 class="emphasis mb-10">With Instructions</h6>
+      <h6 class="emphasis mb-24">With Instructions</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder" instructions="These are instructions..."></mc-input>
     </div>
     <div class="my-2">
-      <h6 class="emphasis mb-10">Required</h6>
+      <h6 class="emphasis mb-24">Required</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder" instructions="This is a required field." required></mc-input>
     </div>
     <div class="my-2">
-      <h6 class="emphasis mb-10">Error State</h6>
+      <h6 class="emphasis mb-24">Error State</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder" error error-msg="This is an error..."></mc-input>
     </div>
     <div class="my-2">
-      <h6 class="emphasis mb-10">Disabled</h6>
+      <h6 class="emphasis mb-24">Disabled</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder" disabled></mc-input>
     </div>
     <div class="my-2">
-      <h6 class="emphasis mb-10">Read Only</h6>
+      <h6 class="emphasis mb-24">Read Only</h6>
       <mc-input type="text" label="Label" placeholder="Placeholder" value="Read Only" readonly></mc-input>
     </div>
   </div>
@@ -44,10 +44,10 @@ Hooray, this is the new input.
 ## Search Input
 
 <section class="mds">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
     <div class="my-2">
       <h6 class="emphasis mb-10">Regular</h6>
-      <mc-input type="file" label="Label" placeholder="Search for..." instructions="Please use the input above to search." search></mc-input>
+      <mc-input type="search" label="Label" placeholder="Search for..." instructions="Please use the input above to search." search></mc-input>
     </div>
     <div class="my-2">
       <h6 class="emphasis mb-10">Disabled</h6> 
@@ -59,7 +59,7 @@ Hooray, this is the new input.
 ## File Upload
 
 <section class="mds">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
     <div class="my-2">
       <h6 class="emphasis mb-10">Regular</h6>
       <mc-input type="file" label="Label" placeholder="Choose File" instructions="Please use the input above to search."></mc-input>
@@ -78,7 +78,7 @@ Hooray, this is the new input.
 ## Textarea
 
 <section class="mds">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
     <div class="my-2">
       <mc-input type="textarea" label="Normal Textarea" placeholder="Enter content" instructions="Enter your article content."></mc-input>
     </div>

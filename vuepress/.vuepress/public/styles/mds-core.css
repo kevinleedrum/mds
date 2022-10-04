@@ -7908,6 +7908,9 @@ mc-button > button.warning-button:disabled,
       color: #597897;
       color: var(--mc-text-btn-warning-disabled);
     }
+mc-input {
+  width: 100%;
+}
 mc-input i.leftIcon {
     width: 16px;
     height: 16px;

@@ -75,7 +75,8 @@ const McInput = class {
       classArr.push('pl-36');
     }
     if (this.type === 'textarea') {
-      classArr.push('h-144 w-full align-top');
+      classArr.push('h-144');
+      classArr.push('align-top');
     }
     return classArr.join(' ');
   }

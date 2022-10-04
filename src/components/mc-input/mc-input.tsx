@@ -80,7 +80,8 @@ export class McInput implements IMcInputProps {
     }
 
     if (this.type === 'textarea') {
-      classArr.push('h-144 w-full align-top');
+      classArr.push('h-144');
+      classArr.push('align-top');
     }
 
     return classArr.join(' ');
