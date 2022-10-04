@@ -1,6 +1,6 @@
 # Inputs & Textareas
 
-The `mx-input` component serves as both a single-line and multi-line text field. Optional elements
+The `mc-input` component serves as both a single-line and multi-line text field. Optional elements
 include icons, assistive text, and a label.
 
 The icons for Moxi Design System are from [https://phosphoricons.com/](https://phosphoricons.com/).
@@ -47,7 +47,7 @@ Hooray, this is the new input.
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-10">
     <div class="my-2">
       <h6 class="emphasis mb-10">Regular</h6>
-      <mc-input type="search" label="Label" placeholder="Search for..." instructions="Please use the input above to search." search></mc-input>
+      <mc-input type="file" label="Label" placeholder="Search for..." instructions="Please use the input above to search." search></mc-input>
     </div>
     <div class="my-2">
       <h6 class="emphasis mb-10">Disabled</h6> 

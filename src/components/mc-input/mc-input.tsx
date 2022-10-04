@@ -62,7 +62,7 @@ export class McInput implements IMcInputProps {
   }
 
   get makeInputClasses() {
-    const classArr = ['border', 'text-4', 'px-15', 'py-12', 'rounded', 'border', 'border-secondary'];
+    const classArr = ['w-full', 'border', 'text-4', 'px-15', 'py-12', 'rounded', 'border', 'border-secondary'];
 
     if (this.error) {
       const index = classArr.indexOf('border-secondary');

@@ -1,6 +1,4 @@
 mc-input {
-  width: 100%;
-
   i.leftIcon {
     width: 16px;
     height: 16px;
@@ -10,8 +8,6 @@ mc-input {
 
   input,
   textarea {
-    width: 100%;
-
     &:focus,
     &:focus-visible {
       border-color: var(--mc-primary) !important;
