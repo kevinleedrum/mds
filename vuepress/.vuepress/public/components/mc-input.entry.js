@@ -89,7 +89,7 @@ const McInput = class {
     }
   }
   triggerFileSelection(event) {
-    if (this.disabled || (event.type !== 'click' && event.key !== 'Enter'))
+    if (this.disabled || (event.type !== 'click' && 'key' in event && event.key !== 'Enter'))
       return false;
     this.elemFileInput.click();
   }

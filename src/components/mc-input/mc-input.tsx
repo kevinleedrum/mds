@@ -95,8 +95,8 @@ export class McInput implements IMcInputProps {
     }
   }
 
-  triggerFileSelection(event: any) {
-    if (this.disabled || (event.type !== 'click' && event.key !== 'Enter')) return false;
+  triggerFileSelection(event: MouseEvent | KeyboardEvent) {
+    if (this.disabled || (event.type !== 'click' && 'key' in event && event.key !== 'Enter')) return false;
     this.elemFileInput.click();
   }
 
