@@ -21,6 +21,7 @@ export interface IMcInputProps {
   required?: boolean;
   searchLabel?: string;
   leftIcon?: string;
+  showCancelIcon?: boolean;
 }
 
 @Component({
@@ -50,6 +51,7 @@ export class McInput implements IMcInputProps {
   @Prop() required: boolean = false;
   @Prop() searchLabel: string = 'Search';
   @Prop() leftIcon: string;
+  @Prop() showCancelIcon: boolean = false;
 
   componentWillRender() {
     this.inputId = this.inputId || nanoid(10);
@@ -103,10 +105,23 @@ export class McInput implements IMcInputProps {
   handleFileUploadChange() {
     if (this.elemFileInput.files.length > 0) {
       this.elemFileUploadNameHolder.value = this.elemFileInput.files[0].name;
+      this.elemFileUploadNameHolder.focus();
+      this.elemFileUploadNameHolder.dispatchEvent(new Event('input', { bubbles: true }));
     } else {
       this.elemFileUploadNameHolder.value = '';
     }
     this.error = false;
+  }
+
+  evaluateFakeFileInput() {
+    if (this.elemFileUploadNameHolder.value !== '') {
+      this.showCancelIcon = true;
+    }
+  }
+
+  removeFileInputValue() {
+    this.elemFileUploadNameHolder.value = '';
+    this.elemFileInput.value = '';
   }
 
   render() {
@@ -138,11 +153,19 @@ export class McInput implements IMcInputProps {
               />
             ) : (
               <div class="w-full">
+                {this.showCancelIcon && (
+                  <i
+                    onClick={this.removeFileInputValue.bind(this)}
+                    class="ph-x absolute cursor-pointer"
+                    style={{ top: '11px', right: '117px' }}
+                  ></i>
+                )}
                 <input
                   type="text"
                   class={`w-full ${this.makeInputClasses}`}
                   onClick={this.triggerFileSelection.bind(this)}
                   onKeyUp={this.triggerFileSelection.bind(this)}
+                  onInput={this.evaluateFakeFileInput.bind(this)}
                   ref={el => (this.elemFileUploadNameHolder = el as HTMLInputElement)}
                   placeholder={this.placeholder}
                   disabled={this.disabled ? true : false}

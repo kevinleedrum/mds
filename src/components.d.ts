@@ -79,6 +79,7 @@ export namespace Components {
         "readonly": boolean;
         "required": boolean;
         "searchLabel": string;
+        "showCancelIcon": boolean;
         "type": McInputType;
         "value": string;
     }
@@ -1551,6 +1552,7 @@ declare namespace LocalJSX {
         "readonly"?: boolean;
         "required"?: boolean;
         "searchLabel"?: string;
+        "showCancelIcon"?: boolean;
         "type"?: McInputType;
         "value"?: string;
     }

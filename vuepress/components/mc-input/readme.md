@@ -24,6 +24,7 @@
 | `readonly`           | `readonly`             |             | `boolean`                                                                                              | `false`     |
 | `required`           | `required`             |             | `boolean`                                                                                              | `false`     |
 | `searchLabel`        | `search-label`         |             | `string`                                                                                               | `'Search'`  |
+| `showCancelIcon`     | `show-cancel-icon`     |             | `boolean`                                                                                              | `false`     |
 | `type`               | `type`                 |             | `"email" \| "file" \| "hidden" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "textarea"` | `undefined` |
 | `value`              | `value`                |             | `string`                                                                                               | `''`        |
 
