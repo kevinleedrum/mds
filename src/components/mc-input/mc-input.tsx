@@ -88,11 +88,9 @@ export class McInput implements IMcInputProps {
   }
 
   handleInputFocus() {
-    this.btnSearch.classList.remove('hidden');
-  }
-
-  handleInputBlur() {
-    if (this.elemInput.value === '') {
+    if (this.btnSearch && this.elemInput.value !== '') {
+      this.btnSearch.classList.remove('hidden');
+    } else if (this.btnSearch && this.elemInput.value == '') {
       this.btnSearch.classList.add('hidden');
     }
   }
@@ -134,8 +132,8 @@ export class McInput implements IMcInputProps {
                 disabled={this.disabled ? true : false}
                 readonly={this.readonly ? true : false}
                 aria-label={this.elAriaLabel}
-                onFocus={this.handleInputFocus.bind(this)}
-                onBlur={this.handleInputBlur.bind(this)}
+                onKeyUp={this.handleInputFocus.bind(this)}
+                onChange={this.handleInputFocus.bind(this)}
                 ref={el => (this.elemInput = el as HTMLInputElement)}
               />
             ) : (
