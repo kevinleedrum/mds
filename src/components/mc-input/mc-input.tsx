@@ -162,8 +162,8 @@ export class McInput implements IMcInputProps {
                 {this.searchLabel}
               </mc-button>
             )}
-            {this.type === 'file' && (
-              <mc-button onClick={this.triggerFileSelection.bind(this)} disabled={this.disabled ? true : false} small>
+            {this.type === 'file' && !this.disabled && (
+              <mc-button onClick={this.triggerFileSelection.bind(this)} small>
                 Choose File
               </mc-button>
             )}
