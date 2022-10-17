@@ -95,8 +95,9 @@ export class McInput implements IMcInputProps {
     }
   }
 
-  triggerFileSelection() {
-    if (this.disabled) return false;
+  triggerFileSelection(event: any) {
+    console.log(event);
+    if (this.disabled || (event.type !== 'click' && event.key !== 'Enter')) return false;
     this.elemFileInput.click();
   }
 
@@ -142,6 +143,7 @@ export class McInput implements IMcInputProps {
                   type="text"
                   class={`w-full ${this.makeInputClasses}`}
                   onClick={this.triggerFileSelection.bind(this)}
+                  onKeyUp={this.triggerFileSelection.bind(this)}
                   ref={el => (this.elemFileUploadNameHolder = el as HTMLInputElement)}
                   placeholder={this.placeholder}
                   disabled={this.disabled ? true : false}
