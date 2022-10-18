@@ -91,6 +91,19 @@ Hooray, this is the new input.
   </div>
 </section>
 
+## Date / Time Pickers
+
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
+    <div class="my-2">
+      <mc-input type="date" label="Choose a Date" instructions="Choose a date wisely."></mc-input>
+    </div>
+    <div class="my-2">
+      <mc-input type="time" label="Choose a Time"></mc-input>
+    </div>
+  </div>
+</section>
+
 ## Deprecated MDS Inputs & TextAreas
 
 ### Standard Input

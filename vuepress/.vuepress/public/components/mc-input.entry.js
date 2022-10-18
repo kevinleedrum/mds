@@ -107,6 +107,8 @@ const McInput = class {
     this.error = false;
   }
   evaluateInputCancelIcon() {
+    if (this.type === 'time' || this.type === 'date')
+      return;
     const elem = this.elemInput || this.elemFileUploadNameHolder;
     if (elem.value !== '') {
       this.showCancelIcon = true;

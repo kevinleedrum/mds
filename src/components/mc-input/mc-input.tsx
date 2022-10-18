@@ -1,7 +1,18 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import { nanoid } from 'nanoid';
 
-export type McInputType = 'text' | 'textarea' | 'email' | 'file' | 'hidden' | 'number' | 'password' | 'search' | 'tel';
+export type McInputType =
+  | 'text'
+  | 'textarea'
+  | 'email'
+  | 'file'
+  | 'hidden'
+  | 'number'
+  | 'password'
+  | 'search'
+  | 'tel'
+  | 'date'
+  | 'time';
 
 export interface IMcInputProps {
   type?: string;
@@ -115,6 +126,7 @@ export class McInput implements IMcInputProps {
   }
 
   evaluateInputCancelIcon() {
+    if (this.type === 'time' || this.type === 'date') return;
     const elem = this.elemInput || this.elemFileUploadNameHolder;
     if (elem.value !== '') {
       this.showCancelIcon = true;
