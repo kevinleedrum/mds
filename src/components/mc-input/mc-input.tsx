@@ -122,6 +122,7 @@ export class McInput implements IMcInputProps {
   removeFileInputValue() {
     this.elemFileUploadNameHolder.value = '';
     this.elemFileInput.value = '';
+    this.showCancelIcon = false;
   }
 
   render() {
