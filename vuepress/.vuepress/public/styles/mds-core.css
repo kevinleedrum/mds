@@ -7951,6 +7951,20 @@ mc-input input[type='file'] {
     left: -9000px;
     display: none;
   }
+/* Remove input clear button on search inputs. */
+mc-input input[type='search']::-webkit-search-cancel-button {
+    display: none;
+  }
+mc-input .cancelBtn {
+    top: 12px;
+    right: 12px;
+  }
+mc-input .cancelBtn.search {
+      right: 112px;
+    }
+mc-input .cancelBtn.file {
+      right: 117px;
+    }
 mc-input mc-button {
     position: absolute;
     right: 5px;

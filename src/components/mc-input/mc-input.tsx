@@ -94,6 +94,7 @@ export class McInput implements IMcInputProps {
       this.btnSearch.classList.remove('hidden');
     } else if (this.btnSearch && this.elemInput.value == '') {
       this.btnSearch.classList.add('hidden');
+      this.showCancelIcon = false;
     }
   }
 
@@ -113,16 +114,25 @@ export class McInput implements IMcInputProps {
     this.error = false;
   }
 
-  evaluateFakeFileInput() {
-    if (this.elemFileUploadNameHolder.value !== '') {
+  evaluateInputCancelIcon() {
+    const elem = this.elemInput || this.elemFileUploadNameHolder;
+    if (elem.value !== '') {
       this.showCancelIcon = true;
     }
   }
 
   removeFileInputValue() {
-    this.elemFileUploadNameHolder.value = '';
-    this.elemFileInput.value = '';
+    const elem = this.elemInput || this.elemFileUploadNameHolder;
+    elem.value = '';
+    if (this.elemFileInput) this.elemFileInput.value = '';
+    if (this.btnSearch) this.btnSearch.classList.add('hidden');
     this.showCancelIcon = false;
+  }
+
+  get makeCloseIconClasses() {
+    const classArr = ['ph-x', 'absolute', 'cursor-pointer', 'cancelBtn', this.type];
+
+    return classArr.join(' ');
   }
 
   render() {
@@ -137,6 +147,9 @@ export class McInput implements IMcInputProps {
         {this.type !== 'textarea' ? (
           <div class="flex items-center relative">
             {this.leftIcon && <i class={`leftIcon ${this.leftIcon}`} />}
+            {this.showCancelIcon && (
+              <i onClick={this.removeFileInputValue.bind(this)} class={this.makeCloseIconClasses}></i>
+            )}
             {this.type !== 'file' ? (
               <input
                 id={this.inputId}
@@ -150,23 +163,17 @@ export class McInput implements IMcInputProps {
                 aria-label={this.elAriaLabel}
                 onKeyUp={this.handleInputFocus.bind(this)}
                 onChange={this.handleInputFocus.bind(this)}
+                onInput={this.evaluateInputCancelIcon.bind(this)}
                 ref={el => (this.elemInput = el as HTMLInputElement)}
               />
             ) : (
               <div class="w-full">
-                {this.showCancelIcon && (
-                  <i
-                    onClick={this.removeFileInputValue.bind(this)}
-                    class="ph-x absolute cursor-pointer"
-                    style={{ top: '11px', right: '117px' }}
-                  ></i>
-                )}
                 <input
                   type="text"
                   class={`w-full ${this.makeInputClasses}`}
                   onClick={this.triggerFileSelection.bind(this)}
                   onKeyUp={this.triggerFileSelection.bind(this)}
-                  onInput={this.evaluateFakeFileInput.bind(this)}
+                  onInput={this.evaluateInputCancelIcon.bind(this)}
                   ref={el => (this.elemFileUploadNameHolder = el as HTMLInputElement)}
                   placeholder={this.placeholder}
                   disabled={this.disabled ? true : false}

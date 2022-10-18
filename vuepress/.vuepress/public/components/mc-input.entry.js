@@ -87,6 +87,7 @@ const McInput = class {
     }
     else if (this.btnSearch && this.elemInput.value == '') {
       this.btnSearch.classList.add('hidden');
+      this.showCancelIcon = false;
     }
   }
   triggerFileSelection(event) {
@@ -105,18 +106,27 @@ const McInput = class {
     }
     this.error = false;
   }
-  evaluateFakeFileInput() {
-    if (this.elemFileUploadNameHolder.value !== '') {
+  evaluateInputCancelIcon() {
+    const elem = this.elemInput || this.elemFileUploadNameHolder;
+    if (elem.value !== '') {
       this.showCancelIcon = true;
     }
   }
   removeFileInputValue() {
-    this.elemFileUploadNameHolder.value = '';
-    this.elemFileInput.value = '';
+    const elem = this.elemInput || this.elemFileUploadNameHolder;
+    elem.value = '';
+    if (this.elemFileInput)
+      this.elemFileInput.value = '';
+    if (this.btnSearch)
+      this.btnSearch.classList.add('hidden');
     this.showCancelIcon = false;
   }
+  get makeCloseIconClasses() {
+    const classArr = ['ph-x', 'absolute', 'cursor-pointer', 'cancelBtn', this.type];
+    return classArr.join(' ');
+  }
   render() {
-    return (h(Host, null, this.label && (h("label", { htmlFor: this.inputId, class: "block text-secondary font-bold subtitle4 mb-10 uppercase" }, this.label, this.required && h("span", { class: "text-status-error" }, "*"))), this.type !== 'textarea' ? (h("div", { class: "flex items-center relative" }, this.leftIcon && h("i", { class: `leftIcon ${this.leftIcon}` }), this.type !== 'file' ? (h("input", { id: this.inputId, class: this.makeInputClasses, type: this.type, name: this.name, value: this.value, placeholder: this.placeholder, disabled: this.disabled ? true : false, readonly: this.readonly ? true : false, "aria-label": this.elAriaLabel, onKeyUp: this.handleInputFocus.bind(this), onChange: this.handleInputFocus.bind(this), ref: el => (this.elemInput = el) })) : (h("div", { class: "w-full" }, this.showCancelIcon && (h("i", { onClick: this.removeFileInputValue.bind(this), class: "ph-x absolute cursor-pointer", style: { top: '11px', right: '117px' } })), h("input", { type: "text", class: `w-full ${this.makeInputClasses}`, onClick: this.triggerFileSelection.bind(this), onKeyUp: this.triggerFileSelection.bind(this), onInput: this.evaluateFakeFileInput.bind(this), ref: el => (this.elemFileUploadNameHolder = el), placeholder: this.placeholder, disabled: this.disabled ? true : false, readonly: true }), h("input", { type: "file", ref: el => (this.elemFileInput = el), onChange: this.handleFileUploadChange.bind(this), name: this.name }))), this.type === 'search' && (h("mc-button", { ref: el => (this.btnSearch = el), class: "hidden", small: true }, this.searchLabel)), this.type === 'file' && !this.disabled && (h("mc-button", { onClick: this.triggerFileSelection.bind(this), small: true }, "Choose File")))) : (h("textarea", { id: this.inputId, class: this.makeInputClasses, name: this.name, placeholder: this.placeholder, disabled: this.disabled ? true : false, readonly: this.readonly ? true : false, "aria-label": this.elAriaLabel, ref: el => (this.elemInput = el) }, this.value)), this.instructions && !this.error && (h("section", { class: "text-secondary caption1 mt-10" }, this.instructions)), this.error && this.errorMsg && (h("section", { class: "flex caption1 mt-10 text-status-error items-center gap-6" }, h("i", { class: "ph-warning" }), this.errorMsg))));
+    return (h(Host, null, this.label && (h("label", { htmlFor: this.inputId, class: "block text-secondary font-bold subtitle4 mb-10 uppercase" }, this.label, this.required && h("span", { class: "text-status-error" }, "*"))), this.type !== 'textarea' ? (h("div", { class: "flex items-center relative" }, this.leftIcon && h("i", { class: `leftIcon ${this.leftIcon}` }), this.showCancelIcon && (h("i", { onClick: this.removeFileInputValue.bind(this), class: this.makeCloseIconClasses })), this.type !== 'file' ? (h("input", { id: this.inputId, class: this.makeInputClasses, type: this.type, name: this.name, value: this.value, placeholder: this.placeholder, disabled: this.disabled ? true : false, readonly: this.readonly ? true : false, "aria-label": this.elAriaLabel, onKeyUp: this.handleInputFocus.bind(this), onChange: this.handleInputFocus.bind(this), onInput: this.evaluateInputCancelIcon.bind(this), ref: el => (this.elemInput = el) })) : (h("div", { class: "w-full" }, h("input", { type: "text", class: `w-full ${this.makeInputClasses}`, onClick: this.triggerFileSelection.bind(this), onKeyUp: this.triggerFileSelection.bind(this), onInput: this.evaluateInputCancelIcon.bind(this), ref: el => (this.elemFileUploadNameHolder = el), placeholder: this.placeholder, disabled: this.disabled ? true : false, readonly: true }), h("input", { type: "file", ref: el => (this.elemFileInput = el), onChange: this.handleFileUploadChange.bind(this), name: this.name }))), this.type === 'search' && (h("mc-button", { ref: el => (this.btnSearch = el), class: "hidden", small: true }, this.searchLabel)), this.type === 'file' && !this.disabled && (h("mc-button", { onClick: this.triggerFileSelection.bind(this), small: true }, "Choose File")))) : (h("textarea", { id: this.inputId, class: this.makeInputClasses, name: this.name, placeholder: this.placeholder, disabled: this.disabled ? true : false, readonly: this.readonly ? true : false, "aria-label": this.elAriaLabel, ref: el => (this.elemInput = el) }, this.value)), this.instructions && !this.error && (h("section", { class: "text-secondary caption1 mt-10" }, this.instructions)), this.error && this.errorMsg && (h("section", { class: "flex caption1 mt-10 text-status-error items-center gap-6" }, h("i", { class: "ph-warning" }), this.errorMsg))));
   }
 };
 
