@@ -80,7 +80,7 @@ Hooray, this is the new input.
 <section class="mds">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
     <div class="my-2">
-      <mc-input type="textarea" label="Normal Textarea" placeholder="Enter content" instructions="Enter your article content."></mc-input>
+      <mc-input type="textarea" label="Normal Textarea" placeholder="Enter content" instructions="Enter your article content." value="Default Value"></mc-input>
     </div>
     <div class="my-2">
       <mc-input type="textarea" label="Disabled Textarea" placeholder="Enter content" disabled></mc-input>

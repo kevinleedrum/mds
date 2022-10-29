@@ -82,3 +82,50 @@ describe('mc-input', () => {
     expect(input.getAttribute('aria-label')).toBe('Input for Something');
   });
 });
+
+describe('mc-input as textarea', () => {
+  let page;
+  let root: HTMLMcInputElement;
+  let tarea: HTMLTextAreaElement;
+
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [McInput],
+      html: `
+        <mc-input
+          type="textarea"
+          name="foo"
+          value="bar"
+          input-id="bloop"
+          label="Enter Something"
+          placeholder="Enter Something"
+          instructions="Enter something into the input, ya heard?"
+          el-aria-label="Textarea for Something"
+          maxlength="100"
+        />
+      `,
+    });
+    root = page.root;
+    tarea = root.querySelector('textarea');
+    await page.waitForChanges();
+  });
+
+  it('renders', async () => {
+    expect(tarea).not.toBeNull();
+  });
+
+  it('has the right attributes', async () => {
+    expect(tarea.getAttribute('name')).toBe('foo');
+    expect(tarea.getAttribute('id')).toBe('bloop');
+    expect(tarea.getAttribute('aria-label')).toBe('Textarea for Something');
+  });
+
+  it('sets the maxlength attribute on the textarea', async () => {
+    expect(tarea.getAttribute('maxlength')).toBe('100');
+  });
+
+  it('should have proper instruction text', async () => {
+    const instructions = root.querySelector('[data-test-id="instructions"]');
+    expect(instructions.textContent).toBe('Enter something into the input, ya heard?');
+  });
+});
