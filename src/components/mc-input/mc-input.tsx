@@ -50,7 +50,7 @@ export class McInput implements IMcInputProps {
   @Prop({ mutable: true }) value: string = '';
   @Prop() disabled = false;
   @Prop() readonly = false;
-  @Prop() maxlength: number;
+  @Prop({ mutable: true }) maxlength: number;
   @Prop({ mutable: true }) inputId: string;
   @Prop() label = '';
   @Prop() placeholder = '';
@@ -151,7 +151,11 @@ export class McInput implements IMcInputProps {
     return (
       <Host>
         {this.label && (
-          <label htmlFor={this.inputId} class="block text-secondary font-bold subtitle4 mb-10 uppercase">
+          <label
+            data-test-id="label"
+            htmlFor={this.inputId}
+            class="block text-secondary font-bold subtitle4 mb-10 uppercase"
+          >
             {this.label}
             {this.required && <span class="text-status-error">*</span>}
           </label>
@@ -173,6 +177,7 @@ export class McInput implements IMcInputProps {
                 disabled={this.disabled ? true : false}
                 readonly={this.readonly ? true : false}
                 aria-label={this.elAriaLabel}
+                maxlength={this.maxlength}
                 onKeyUp={this.handleInputFocus.bind(this)}
                 onChange={this.handleInputFocus.bind(this)}
                 onInput={this.evaluateInputCancelIcon.bind(this)}
@@ -181,6 +186,7 @@ export class McInput implements IMcInputProps {
             ) : (
               <div class="w-full">
                 <input
+                  tabIndex={-1}
                   type="text"
                   class={`w-full ${this.makeInputClasses}`}
                   onClick={this.triggerFileSelection.bind(this)}
@@ -193,6 +199,7 @@ export class McInput implements IMcInputProps {
                 />
                 <input
                   type="file"
+                  aria-label={this.elAriaLabel}
                   ref={el => (this.elemFileInput = el as HTMLInputElement)}
                   onChange={this.handleFileUploadChange.bind(this)}
                   name={this.name}
@@ -220,13 +227,16 @@ export class McInput implements IMcInputProps {
             disabled={this.disabled ? true : false}
             readonly={this.readonly ? true : false}
             aria-label={this.elAriaLabel}
+            maxlength={this.maxlength}
             ref={el => (this.elemInput = el as HTMLTextAreaElement)}
           >
             {this.value}
           </textarea>
         )}
         {this.instructions && !this.error && (
-          <section class="text-secondary caption1 mt-10">{this.instructions}</section>
+          <section data-test-id="instructions" class="text-secondary caption1 mt-10">
+            {this.instructions}
+          </section>
         )}
         {this.error && this.errorMsg && (
           <section class="flex caption1 mt-10 text-status-error items-center gap-6">

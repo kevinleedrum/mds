@@ -16,7 +16,7 @@ Hooray, this is the new input.
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
     <div class="my-2">
       <h6 class="emphasis mb-24">Regular</h6>
-      <mc-input type="text" label="Label" placeholder="Placeholder" value="plop"></mc-input>
+      <mc-input type="text" label="Label" placeholder="Placeholder" data-foo="bar"></mc-input>
     </div>
     <div class="my-2">
       <h6 class="emphasis mb-24">With Instructions</h6>
