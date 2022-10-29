@@ -47,11 +47,11 @@ export class McInput implements IMcInputProps {
 
   @Prop() type: McInputType;
   @Prop() name = '';
-  @Prop() value = '';
+  @Prop({ mutable: true }) value: string = '';
   @Prop() disabled = false;
   @Prop() readonly = false;
   @Prop() maxlength: number;
-  @Prop() inputId: string;
+  @Prop({ mutable: true }) inputId: string;
   @Prop() label = '';
   @Prop() placeholder = '';
   @Prop() instructions = '';
@@ -62,7 +62,7 @@ export class McInput implements IMcInputProps {
   @Prop() required: boolean = false;
   @Prop() searchLabel: string = 'Search';
   @Prop() leftIcon: string;
-  @Prop() showCancelIcon: boolean = false;
+  @Prop({ mutable: true }) showCancelIcon: boolean = false;
 
   componentWillRender() {
     this.inputId = this.inputId || nanoid(10);
