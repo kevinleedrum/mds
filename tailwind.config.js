@@ -105,7 +105,7 @@ const config = {
         'tertiary-light': 'var(--mc-tertiary-light)',
         'tertiary-dark': 'var(--mc-tertiary-dark)',
         'white': 'var(--mc-white)',
-        'regal-blue': '#243c5a',
+        'regal-blue': 'var(--mc-primary-dark-alt)',
       },
       backgroundImage: {
         pattern: 'var(--mds-bg-pattern)',
