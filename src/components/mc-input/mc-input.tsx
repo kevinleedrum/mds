@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { nanoid } from 'nanoid';
+import { uuidv4 } from '../../utils/utils';
 
 export type McInputType =
   | 'text'
@@ -65,7 +65,7 @@ export class McInput implements IMcInputProps {
   @Prop({ mutable: true }) showCancelIcon: boolean = false;
 
   componentWillRender() {
-    this.inputId = this.inputId || nanoid(10);
+    this.inputId = this.inputId || uuidv4();
 
     if (this.type === 'search') {
       this.leftIcon = 'ph-magnifying-glass';
