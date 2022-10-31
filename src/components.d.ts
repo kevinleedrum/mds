@@ -68,7 +68,6 @@ export namespace Components {
         "elAriaLabel": string;
         "error": boolean;
         "errorMsg": string;
-        "hideCharacterCount": boolean;
         "inputId": string;
         "instructions": string;
         "label": string;
@@ -1541,7 +1540,6 @@ declare namespace LocalJSX {
         "elAriaLabel"?: string;
         "error"?: boolean;
         "errorMsg"?: string;
-        "hideCharacterCount"?: boolean;
         "inputId"?: string;
         "instructions"?: string;
         "label"?: string;

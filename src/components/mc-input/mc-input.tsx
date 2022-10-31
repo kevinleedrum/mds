@@ -28,7 +28,6 @@ export interface IMcInputProps {
   error?: boolean;
   errorMsg?: string;
   elAriaLabel?: string;
-  hideCharacterCount?: boolean;
   required?: boolean;
   searchLabel?: string;
   leftIcon?: string;
@@ -58,7 +57,6 @@ export class McInput implements IMcInputProps {
   @Prop({ mutable: true, reflect: true }) error = false;
   @Prop() errorMsg = '';
   @Prop() elAriaLabel: string;
-  @Prop() hideCharacterCount: boolean;
   @Prop() required: boolean = false;
   @Prop() searchLabel: string = 'Search';
   @Prop() leftIcon: string;
