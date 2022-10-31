@@ -54,7 +54,7 @@ export class McInput implements IMcInputProps {
   @Prop({ mutable: true }) inputId: string;
   @Prop() label = '';
   @Prop() placeholder = '';
-  @Prop() instructions = '';
+  @Prop({ mutable: true }) instructions = '';
   @Prop({ mutable: true, reflect: true }) error = false;
   @Prop() errorMsg = '';
   @Prop() elAriaLabel: string;
