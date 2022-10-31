@@ -8,10 +8,6 @@ Icons that are embedded in the design system are also available.
 
 ## `mc-input`
 
-Hooray, this is the new input.
-
-## Inputs
-
 <section class="mds">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
     <div class="my-2">
