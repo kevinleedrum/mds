@@ -136,11 +136,13 @@ This will ensure the button takes up the minimum space needed to display its con
 
 <<< @/vuepress/components/buttons.md#mc-button-props
 
+## mc-button Properties
+
 <ComponentReadme component="mc-button" />
 
-# Deprecated Buttons
+## Deprecated Buttons
 
-## Primary Buttons
+### Primary Buttons
 
 Contained buttons using the primary brandable color as a fill. Other than FAB, they have the highest level of emphasis. Commonly used at the top of page headers, within modals, and empty states. These are usually for the main action on a page. Avoid grouping multiple primary buttons together or using them for less important actions.
 
@@ -186,7 +188,7 @@ Contained buttons using the primary brandable color as a fill. Other than FAB, t
 
 <<< @/vuepress/components/buttons.md#primary-buttons
 
-## Secondary Buttons
+### Secondary Buttons
 
 Outlined buttons without a fill. These are less emphasized than primary contained buttons but more so than a text button. Often grouped with primary buttons in page headers and modals. Use in place of a primary button whenever an action with less emphasis is appropriate.
 
@@ -232,7 +234,7 @@ Outlined buttons without a fill. These are less emphasized than primary containe
 
 <<< @/vuepress/components/buttons.md#secondary-buttons
 
-## Text/Tertiary Buttons
+### Text/Tertiary Buttons
 
 Text buttons in the primary brandable color without a stroke or fill. These are lower emphasis and multiple can be grouped together or appear in the same container (e.g. tables, simple dialog).
 
@@ -269,7 +271,7 @@ Text buttons in the primary brandable color without a stroke or fill. These are 
 
 <<< @/vuepress/components/buttons.md#text-buttons
 
-## Simple Buttons
+### Simple Buttons
 
 Pill shaped buttons that can also have a leading or trailing icon. These are lower emphasis buttons for less commonly used actions. They are often used for filters or appear within cards.
 
@@ -324,7 +326,7 @@ Pill shaped buttons that can also have a leading or trailing icon. These are low
 | `value`       | `value`         |                                                        | `string`                                                      | `undefined`   |
 | `xl`          | `xl`            |                                                        | `boolean`                                                     | `false`       |
 
-## Icon Buttons
+### Icon Buttons
 
 Icon buttons are round buttons that only contain an icon. The icon can be set three different ways:
 
@@ -390,7 +392,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
 | `type`         | `type`          |                                                        | `"button" \| "reset" \| "submit"` | `'button'`  |
 | `value`        | `value`         |                                                        | `string`                          | `undefined` |
 
-## Toggle Buttons
+### Toggle Buttons
 
 Unlike other buttons, Toggle Buttons also have a selected or "on" state, which is set using the <code>selected</code> prop.
 When multiple Toggle Buttons are adjacent siblings, the <code>border-radius</code> is adjusted automatically to make them
@@ -437,7 +439,7 @@ appear as a group. They can act as radio buttons when given a <code>value</code>
 | `selected`    | `selected`      |                                                        | `boolean` | `false`     |
 | `value`       | `value`         | Only used inside a toggle button group                 | `any`     | `undefined` |
 
-## Toggle Button Groups
+### Toggle Button Groups
 
 A Toggle Button Group provides a convenient way to bind a group of toggle buttons to a single value, much like a radio button group.
 However, unlike radio buttons, Toggle Buttons can be deselected. When a Toggle Button is clicked, the resulting value is
@@ -504,7 +506,7 @@ There is a `slot` available for SVG images or plain text as well. See Example.
 | --------- | --------------------------------------- | ------------------ |
 | `mxInput` | Emits the updated value as event.detail | `CustomEvent<any>` |
 
-## CSS Variables
+### CSS Variables
 
 <<< @/src/tailwind/variables/index.scss#buttons
 

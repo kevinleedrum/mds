@@ -19,6 +19,7 @@
 * Mercury components
 ***************************/
 @import '../components/mc-button/mc-button.scss';
+@import '../components/mc-input/mc-input.scss';
 
 /***************************
 * Import Component CSS

@@ -26,6 +26,19 @@
 | `value`       | `value`         |                                                                                                          | `string`                                                                            | `undefined` |
 
 
+## Dependencies
+
+### Used by
+
+ - [mc-input](../mc-input)
+
+### Graph
+```mermaid
+graph TD;
+  mc-input --> mc-button
+  style mc-button fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 

@@ -65,6 +65,7 @@ const config = {
       80: '5rem',
       96: '6rem',
       112: '7rem',
+      120: '7.5rem', // Added for mc-input
       128: '8rem',
       144: '9rem',
       152: '9.5rem',
@@ -104,6 +105,7 @@ const config = {
         'tertiary-light': 'var(--mc-tertiary-light)',
         'tertiary-dark': 'var(--mc-tertiary-dark)',
         'white': 'var(--mc-white)',
+        'regal-blue': 'var(--mc-primary-dark-alt)',
       },
       backgroundImage: {
         pattern: 'var(--mds-bg-pattern)',
@@ -156,6 +158,11 @@ const config = {
         });
       });
     }),
+  ],
+  safelist: [
+    {
+      pattern: /(bg|text|border)/,
+    },
   ],
 };
 

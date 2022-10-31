@@ -1,12 +1,112 @@
 # Inputs & Textareas
 
-The `mx-input` component serves as both a single-line and multi-line text field. Optional elements
+The `mc-input` component serves as both a single-line and multi-line text field. Optional elements
 include icons, assistive text, and a label.
 
 The icons for Moxi Design System are from [https://phosphoricons.com/](https://phosphoricons.com/).
 Icons that are embedded in the design system are also available.
 
-## Standard Input
+## `mc-input`
+
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
+    <div class="my-2">
+      <h6 class="emphasis mb-24">Regular</h6>
+      <mc-input type="text" label="Label" placeholder="Placeholder" data-foo="bar"></mc-input>
+    </div>
+    <div class="my-2">
+      <h6 class="emphasis mb-24">With Instructions</h6>
+      <mc-input type="text" label="Label" placeholder="Placeholder" instructions="These are instructions..."></mc-input>
+    </div>
+    <div class="my-2">
+      <h6 class="emphasis mb-24">Required</h6>
+      <mc-input type="text" label="Label" placeholder="Placeholder" instructions="This is a required field." required></mc-input>
+    </div>
+    <div class="my-2">
+      <h6 class="emphasis mb-24">Error State</h6>
+      <mc-input type="text" label="Label" placeholder="Placeholder" error error-msg="This is an error..."></mc-input>
+    </div>
+    <div class="my-2">
+      <h6 class="emphasis mb-24">Disabled</h6>
+      <mc-input type="text" label="Label" placeholder="Placeholder" disabled></mc-input>
+    </div>
+    <div class="my-2">
+      <h6 class="emphasis mb-24">Read Only</h6>
+      <mc-input type="text" label="Label" placeholder="Placeholder" value="Read Only" readonly></mc-input>
+    </div>
+  </div>
+</section>
+
+## Search Input
+
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
+    <div class="my-2">
+      <h6 class="emphasis mb-10">Regular</h6>
+      <mc-input type="search" label="Label" placeholder="Search for..." instructions="Please use the input above to search." search></mc-input>
+    </div>
+    <div class="my-2">
+      <h6 class="emphasis mb-10">Disabled</h6> 
+      <mc-input type="search" label="Label" placeholder="Search for..." instructions="Please use the input above to search." search disabled></mc-input>
+    </div>
+  </div>
+</section>
+
+## File Upload
+
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
+    <div class="my-2">
+      <h6 class="emphasis mb-10">Regular</h6>
+      <mc-input type="file" label="Label" placeholder="Choose File" instructions="Please use the input above to search."></mc-input>
+    </div>
+    <div class="my-2">
+      <h6 class="emphasis mb-10">Disabled</h6>
+      <mc-input type="file" label="Label" placeholder="Choose File" instructions="Please use the input above to search." disabled></mc-input>
+    </div>
+    <div class="my-2">
+      <h6 class="emphasis mb-10">Error State</h6>
+      <mc-input type="file" label="Label" placeholder="Choose File" instructions="Please use the input above to search." error error-msg="Your file input haz error'd, my friend."></mc-input>
+    </div>
+  </div>
+</section>
+
+## Textarea
+
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
+    <div class="my-2">
+      <mc-input type="textarea" label="Normal Textarea" placeholder="Enter content" instructions="Enter your article content." value="Default Value"></mc-input>
+    </div>
+    <div class="my-2">
+      <mc-input type="textarea" label="Disabled Textarea" placeholder="Enter content" disabled></mc-input>
+    </div>
+    <div class="my-2">
+      <mc-input type="textarea" label="Disabled Textarea" placeholder="Enter content" error error-msg="There was an error."></mc-input>
+    </div>
+  </div>
+</section>
+
+## Date / Time Pickers
+
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-24">
+    <div class="my-2">
+      <mc-input type="date" label="Choose a Date" instructions="Choose a date wisely."></mc-input>
+    </div>
+    <div class="my-2">
+      <mc-input type="time" label="Choose a Time"></mc-input>
+    </div>
+  </div>
+</section>
+
+## mc-input Properties
+
+<ComponentReadme component="mc-input" />
+
+## Deprecated MDS Inputs & TextAreas
+
+### Standard Input
 
 <br />
 <section class="mds">
@@ -103,7 +203,7 @@ Icons that are embedded in the design system are also available.
 
 <<< @/vuepress/components/inputs.md#text-inputs
 
-## Text Area
+### Text Area
 
 <br />
 <section class="mds">
@@ -114,7 +214,7 @@ Icons that are embedded in the design system are also available.
   <!-- #endregion textareas -->
 </section>
 
-## Click-to-edit inputs with confirmation
+### Click-to-edit inputs with confirmation
 
 The `mx-confirm-input` component wraps the `mx-input` component, and provides additional edit-in-place behaviors.
 

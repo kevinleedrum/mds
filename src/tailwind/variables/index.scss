@@ -1,6 +1,7 @@
 :root {
   /* Global Colors */
   /* These are the new Mercury colors.  They are also in the tailwind.config.js in order to generate the utility classes. */
+  --mc-primary-dark-alt: #243c5a;
   --mc-primary-dark: #003b76;
   --mc-primary-hover: #4096ec;
   --mc-primary: #0073e6;
@@ -19,6 +20,7 @@
   --mc-tertiary-light: #b07bf5;
   --mc-tertiary-dark: #5e3691;
   --mc-white: #fff;
+  --mc-placeholder: rgba(118, 142, 175, 0.66);
 
   /* Old colors */
   --mds-bg-error: #fbd6de;
