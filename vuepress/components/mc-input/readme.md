@@ -25,7 +25,7 @@
 | `required`           | `required`             |             | `boolean`                                                                                                                  | `false`     |
 | `searchLabel`        | `search-label`         |             | `string`                                                                                                                   | `'Search'`  |
 | `showCancelIcon`     | `show-cancel-icon`     |             | `boolean`                                                                                                                  | `false`     |
-| `type`               | `type`                 |             | `"date" \| "email" \| "file" \| "hidden" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "textarea" \| "time"` | `undefined` |
+| `type`               | `type`                 |             | `"date" \| "email" \| "file" \| "hidden" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "textarea" \| "time"` | `'text'`    |
 | `value`              | `value`                |             | `string`                                                                                                                   | `''`        |
 
 

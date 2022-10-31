@@ -39,6 +39,7 @@ let nanoid = (size = 21) =>
 const McInput = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
+    this.type = 'text';
     this.name = '';
     this.value = '';
     this.disabled = false;

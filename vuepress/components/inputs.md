@@ -104,6 +104,10 @@ Hooray, this is the new input.
   </div>
 </section>
 
+## mc-input Properties
+
+<ComponentReadme component="mc-input" />
+
 ## Deprecated MDS Inputs & TextAreas
 
 ### Standard Input

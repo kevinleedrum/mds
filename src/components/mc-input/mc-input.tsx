@@ -45,7 +45,7 @@ export class McInput implements IMcInputProps {
   elemFileUploadNameHolder!: HTMLInputElement;
   elemFileInput!: HTMLInputElement;
 
-  @Prop() type: McInputType;
+  @Prop() type: McInputType = 'text';
   @Prop() name = '';
   @Prop({ mutable: true }) value: string = '';
   @Prop() disabled = false;
