@@ -464,7 +464,7 @@ export namespace Components {
         /**
           * The [`btnType` prop](/components/buttons.html) for the Upload button.
          */
-        "uploadBtnType": BtnType;
+        "uploadBtnType": BtnType1;
         /**
           * The text to display on the Upload button
          */
@@ -948,7 +948,7 @@ export namespace Components {
         /**
           * An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text.
          */
-        "actions": ITableRowAction[];
+        "actions": ITableRowAction1[];
         "checked": boolean;
         "collapse": (skipTransition?: boolean) => Promise<void>;
         /**
@@ -1090,6 +1090,62 @@ export namespace Components {
          */
         "value": string;
     }
+}
+export interface MxChipCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxChipElement;
+}
+export interface MxChipGroupCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxChipGroupElement;
+}
+export interface MxDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxDialogElement;
+}
+export interface MxImageUploadCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxImageUploadElement;
+}
+export interface MxMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxMenuElement;
+}
+export interface MxMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxMenuItemElement;
+}
+export interface MxModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxModalElement;
+}
+export interface MxPaginationCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxPaginationElement;
+}
+export interface MxSearchCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxSearchElement;
+}
+export interface MxSnackbarCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxSnackbarElement;
+}
+export interface MxTableCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxTableElement;
+}
+export interface MxTableRowCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxTableRowElement;
+}
+export interface MxTabsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxTabsElement;
+}
+export interface MxToggleButtonGroupCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxToggleButtonGroupElement;
 }
 declare global {
     interface HTMLMxBadgeElement extends Components.MxBadge, HTMLStencilElement {
@@ -1509,7 +1565,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the remove icon is clicked
          */
-        "onMxRemove"?: (event: CustomEvent<MouseEvent>) => void;
+        "onMxRemove"?: (event: MxChipCustomEvent<MouseEvent>) => void;
         "outlined"?: boolean;
         /**
           * Show the remove icon on the right
@@ -1528,7 +1584,7 @@ declare namespace LocalJSX {
         /**
           * Emits the updated value as event.detail
          */
-        "onMxInput"?: (event: CustomEvent<any>) => void;
+        "onMxInput"?: (event: MxChipGroupCustomEvent<any>) => void;
         "value"?: any;
     }
     interface MxCircularProgress {
@@ -1634,7 +1690,7 @@ declare namespace LocalJSX {
           * Additional classes to apply to the inner modal element.
          */
         "modalClass"?: string;
-        "onMxClose"?: (event: CustomEvent<void>) => void;
+        "onMxClose"?: (event: MxDialogCustomEvent<void>) => void;
     }
     interface MxDropdownMenu {
         "assistiveText"?: string;
@@ -1777,7 +1833,7 @@ declare namespace LocalJSX {
         /**
           * Emits the thumbnail url as `CustomEvent.detail` whenever it changes (i.e. after generating a data URI)
          */
-        "onMxThumbnailChange"?: (event: CustomEvent<string>) => void;
+        "onMxThumbnailChange"?: (event: MxImageUploadCustomEvent<string>) => void;
         /**
           * The text to display on the Remove button
          */
@@ -1805,7 +1861,7 @@ declare namespace LocalJSX {
         /**
           * The [`btnType` prop](/components/buttons.html) for the Upload button.
          */
-        "uploadBtnType"?: BtnType;
+        "uploadBtnType"?: BtnType1;
         /**
           * The text to display on the Upload button
          */
@@ -1906,11 +1962,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the menu closes.
          */
-        "onMxClose"?: (event: CustomEvent<void>) => void;
+        "onMxClose"?: (event: MxMenuCustomEvent<void>) => void;
         /**
           * Emitted when the menu opens.
          */
-        "onMxOpen"?: (event: CustomEvent<void>) => void;
+        "onMxOpen"?: (event: MxMenuCustomEvent<void>) => void;
         /**
           * The placement of the menu, relative to the `anchorEl`.
          */
@@ -1941,7 +1997,7 @@ declare namespace LocalJSX {
         /**
           * Fired when an enabled menu item without a submenu is clicked. Used interally to close all ancestor menus.
          */
-        "onMxClick"?: (event: CustomEvent<MouseEvent>) => void;
+        "onMxClick"?: (event: MxMenuItemCustomEvent<MouseEvent>) => void;
         /**
           * This is automatically set by a parent Dropdown Menu.
          */
@@ -1988,7 +2044,7 @@ declare namespace LocalJSX {
           * Set to true to stretch the modal to nearly fill the width and height of the page (on desktop-sized screens).  Otherwise, the maximum dimensions are 800x600px.
          */
         "large"?: boolean;
-        "onMxClose"?: (event: CustomEvent<any>) => void;
+        "onMxClose"?: (event: MxModalCustomEvent<any>) => void;
         /**
           * The text to display for the previous page link
          */
@@ -2029,7 +2085,7 @@ declare namespace LocalJSX {
           * Disable the page buttons (i.e. when loading results)
          */
         "disabled"?: boolean;
-        "onMxPageChange"?: (event: CustomEvent<PageChangeEventDetail>) => void;
+        "onMxPageChange"?: (event: MxPaginationCustomEvent<PageChangeEventDetail>) => void;
         "page"?: number;
         "rowsPerPage"?: number;
         "rowsPerPageOptions"?: number[];
@@ -2058,7 +2114,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the clear button is clicked.
          */
-        "onMxClear"?: (event: CustomEvent<void>) => void;
+        "onMxClear"?: (event: MxSearchCustomEvent<void>) => void;
         "placeholder"?: string;
         /**
           * Set to `false` to hide the clear button.
@@ -2119,7 +2175,7 @@ declare namespace LocalJSX {
         /**
           * Emitted after the snackbar closes (by any means).
          */
-        "onMxClose"?: (event: CustomEvent<void>) => void;
+        "onMxClose"?: (event: MxSnackbarCustomEvent<void>) => void;
     }
     interface MxSwitch {
         "checked"?: boolean;
@@ -2220,23 +2276,23 @@ declare namespace LocalJSX {
         /**
           * Emitted when the (un)check-all checkbox is clicked.  The `Event.detail` will be the new `checked` value.
          */
-        "onMxCheckAll"?: (event: CustomEvent<boolean>) => void;
+        "onMxCheckAll"?: (event: MxTableCustomEvent<boolean>) => void;
         /**
           * Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s.
          */
-        "onMxRowCheck"?: (event: CustomEvent<string[]>) => void;
+        "onMxRowCheck"?: (event: MxTableCustomEvent<string[]>) => void;
         /**
           * Emitted when a row is dragged to a new position. The `Event.detail` object will contain the `rowId` (if set), `oldIndex`, and `newIndex`.
          */
-        "onMxRowMove"?: (event: CustomEvent<any>) => void;
+        "onMxRowMove"?: (event: MxTableCustomEvent<any>) => void;
         /**
           * Emitted when a sortable column's header is clicked.
          */
-        "onMxSortChange"?: (event: CustomEvent<SortChangeEventDetail>) => void;
+        "onMxSortChange"?: (event: MxTableCustomEvent<SortChangeEventDetail>) => void;
         /**
           * Emitted when the sorting, pagination, or rows data changes. The `Event.detail` will contain the sorted, paginated array of visible rows.  This is useful for building a custom row layout via the default slot.
          */
-        "onMxVisibleRowsChange"?: (event: CustomEvent<unknown[]>) => void;
+        "onMxVisibleRowsChange"?: (event: MxTableCustomEvent<unknown[]>) => void;
         /**
           * Additional class names for the operation bar grid
          */
@@ -2303,7 +2359,7 @@ declare namespace LocalJSX {
         /**
           * An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text.
          */
-        "actions"?: ITableRowAction[];
+        "actions"?: ITableRowAction1[];
         "checked"?: boolean;
         /**
           * Toggles the visibility of all nested rows (except those set to `doNotCollapse`)
@@ -2320,23 +2376,23 @@ declare namespace LocalJSX {
         /**
           * Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked
          */
-        "onMxCheck"?: (event: CustomEvent<{ rowId: string; checked: boolean }>) => void;
+        "onMxCheck"?: (event: MxTableRowCustomEvent<{ rowId: string; checked: boolean }>) => void;
         /**
           * Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table.
          */
-        "onMxDragKeyDown"?: (event: CustomEvent<string>) => void;
+        "onMxDragKeyDown"?: (event: MxTableRowCustomEvent<string>) => void;
         /**
           * Emitted when a row is collapsed or expanded.  Handled by the parent table.
          */
-        "onMxRowAccordion"?: (event: CustomEvent<void>) => void;
+        "onMxRowAccordion"?: (event: MxTableRowCustomEvent<void>) => void;
         /**
           * Emitted when dragging ends.  Handled by the parent table.
          */
-        "onMxRowDragEnd"?: (event: CustomEvent<{ isKeyboard: boolean; isCancel: boolean }>) => void;
+        "onMxRowDragEnd"?: (event: MxTableRowCustomEvent<{ isKeyboard: boolean; isCancel: boolean }>) => void;
         /**
           * Emitted when dragging starts.  Handled by the parent table.
          */
-        "onMxRowDragStart"?: (event: CustomEvent<{ isKeyboard: boolean }>) => void;
+        "onMxRowDragStart"?: (event: MxTableRowCustomEvent<{ isKeyboard: boolean }>) => void;
         /**
           * This is required for checkable rows in order to persist the checked state through sorting and pagination.
          */
@@ -2358,7 +2414,7 @@ declare namespace LocalJSX {
         /**
           * Emits the newly selected tab's index as `Event.detail`
          */
-        "onMxChange"?: (event: CustomEvent<number>) => void;
+        "onMxChange"?: (event: MxTabsCustomEvent<number>) => void;
         /**
           * An array of objects for each tab (see Tab Properties)
          */
@@ -2409,7 +2465,7 @@ declare namespace LocalJSX {
         /**
           * Emits the updated value as event.detail
          */
-        "onMxInput"?: (event: CustomEvent<any>) => void;
+        "onMxInput"?: (event: MxToggleButtonGroupCustomEvent<any>) => void;
         /**
           * Set to `true` to prevent deselecting once a selection has been made.
          */
