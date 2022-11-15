@@ -35,11 +35,7 @@ and [@typescript-eslint/recommended](https://github.com/typescript-eslint/typesc
 
 ## Vuepress Documentation Only Creation and Editing
 
-Because of relationship between Vuepress, TailwindCSS, and Stencil, simply running `yarn dev` will result in more changed files than you might be prepared for. To make the multiple framework environment work, they all react off of changes to one another.
-
-If your only goal is to add or edit documentation, please do the following:
-
-In your terminal run `yarn docs:dev`. This will ensure that only Vuepress is listening to changes resulting in the changes only being documentation and not dynamic Javascript files or TailwindCSS alterations.
+This has been updated to where you can simply run `yarn:dev` to update documentation without the worry of unintended dynamic file c
 
 ### Where Things Live
 

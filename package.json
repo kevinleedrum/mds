@@ -27,12 +27,14 @@
     "./loader": "./loader/index.cjs.js",
     "./loader/index.es2017.js": "./loader/index.es2017.js",
     "./react": "./react/dist/components.js",
-    "./dist/custom-elements/index.js": "./dist/custom-elements/index.js"
+    "./dist/custom-elements/index.js": "./dist/custom-elements/index.js",
+    "./hydrate": "./hydrate/index.js"
   },
   "files": [
     "dist/",
     "loader/",
-    "react/dist"
+    "react/dist",
+    "hydrate"
   ],
   "watch": {
     "copy": {
