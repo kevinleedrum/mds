@@ -83,158 +83,85 @@
   * Typography
   ***************************/
   h1 {
-    @apply text-h1;
+    @apply text-h1 font-light;
   }
   h2 {
-    @apply text-h2;
+    @apply text-h2 font-normal;
   }
   h3 {
-    @apply text-h3;
+    @apply text-h3; /* DEPRECATED */
   }
   h4 {
-    @apply text-h4;
+    @apply text-h4; /* DEPRECATED */
   }
   h5 {
-    @apply text-h5;
+    @apply text-h5; /* DEPRECATED */
   }
   h6 {
-    @apply text-h6;
+    @apply text-h6; /* DEPRECATED */
   }
   p {
-    @apply my-24;
+    @apply my-24; /* TODO: Verify <p> default margin (if any) for Mercury */
   }
 
+  /* DEPRECATED - These utilities are only needed to build the old components */
   @layer utilities {
-    .text-h1 {
-      font-size: 3.5rem;
-      letter-spacing: -0.5px;
-      font-weight: bold;
-      line-height: 4.5rem;
-      &:not(.my-0) {
-        @apply mb-24;
-      }
+    .text-1,
+    .text-2 {
+      @apply text-subtitle;
     }
-    .text-h1.xl {
-      font-size: 6rem;
-      letter-spacing: -1.5px;
-      font-weight: bold;
-      line-height: 7.5rem;
-      &:not(.my-0) {
-        @apply mb-24;
-      }
-    }
-    .text-h2 {
-      font-size: 3rem;
-      letter-spacing: 0;
-      font-weight: 600;
-      line-height: 4rem;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+    .text-3,
+    .text-4 {
+      @apply text-body1;
     }
     .text-h3 {
-      font-size: 2.5rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: normal;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      @apply text-h1 font-normal;
     }
     .text-h3.emphasis {
-      font-size: 2.5rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: bold;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      @apply text-h1 font-bold;
     }
     .text-h4 {
-      font-size: 2.25rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: normal;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      @apply text-h1 font-normal;
     }
     .text-h4.emphasis {
-      font-size: 2.25rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: 600;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      @apply text-h1 font-bold;
     }
     .text-h5 {
-      font-size: 1.5rem;
-      letter-spacing: 0;
-      line-height: 2.5rem;
-      font-weight: normal;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      @apply text-h2 font-normal;
     }
     .text-h5.emphasis {
-      font-size: 1.5rem;
-      letter-spacing: 0;
-      line-height: 2.5rem;
-      font-weight: 800;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      @apply text-h2 font-bold;
     }
     .text-h6 {
-      font-size: 1.125rem;
-      letter-spacing: 0.25px;
-      line-height: 1.5rem;
-      font-weight: normal;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      @apply text-subtitle;
     }
     .text-h6.emphasis {
-      font-size: 1.125rem;
-      letter-spacing: 0.25px;
-      line-height: 1.5rem;
-      font-weight: bold;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      @apply text-subtitle font-bold;
     }
     .subtitle1 {
-      @apply text-3 tracking-0-15 leading-6 font-semibold;
+      @apply text-body3;
     }
     .subtitle2 {
-      @apply text-4 tracking-0-4 leading-5 font-semibold;
+      @apply text-label;
     }
     .subtitle3 {
-      @apply text-4 tracking-0-4 leading-5 font-extrabold;
+      @apply text-body1 font-bold;
     }
     .subtitle4 {
-      font-size: 0.75rem;
-      @apply tracking-0-4 leading-4 font-semibold;
+      @apply text-body2;
     }
     .subtitle5 {
-      font-size: 0.625rem;
-      @apply tracking-0-3 leading-4 font-bold;
+      @apply text-body3;
     }
     .caption1 {
-      font-size: 0.75rem;
-      @apply tracking-0-3 leading-4;
+      @apply text-body2;
     }
     .caption2 {
-      font-size: 0.625rem;
-      @apply tracking-0-3 leading-4;
+      @apply text-body3;
     }
-    .overline1 {
-      @apply text-2 tracking-1-5 leading-6 font-semibold uppercase;
-    }
+    .overline1,
     .overline2 {
-      font-size: 0.75rem;
-      @apply tracking-1-5 leading-4 font-normal uppercase;
+      @apply text-nav;
     }
   }
 }
