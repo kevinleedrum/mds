@@ -104,8 +104,80 @@
     @apply my-24; /* TODO: Verify <p> default margin (if any) for Mercury */
   }
 
-  /* DEPRECATED - These utilities are only needed to build the old components */
   @layer utilities {
+    .text-h1 {
+      font-size: 2.5rem; /* 40px */
+      line-height: 3rem; /* 48px */
+    }
+    .text-h2 {
+      font-size: 1.5rem; /* 24px */
+      line-height: 1.75rem; /* 28px */
+    }
+    .text-subtitle {
+      font-size: 1rem; /* 16px */
+      line-height: 1.25rem; /* 20px */
+      &:not(.font-bold, .font-semibold, .font-normal, .font-light) {
+        /* Default to medium unless overridden */
+        font-weight: 500;
+      }
+    }
+    .text-body1 {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.5rem; /* 24px */
+    }
+    .text-body2 {
+      font-size: 0.75rem; /* 12px */
+      line-height: 0.875rem; /* 14px */
+    }
+    .text-body3 {
+      font-size: 0.6875rem; /* 11px */
+      line-height: 1.0625rem; /* 17px */
+      letter-spacing: 0.00625rem; /* 0.1px */
+      &:not(.font-medium, .font-semibold, .font-normal, .font-light) {
+        /* Default to bold unless overridden */
+        font-weight: 700;
+      }
+    }
+    .text-nav {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.375rem; /* 22px */
+      letter-spacing: 0.02125rem; /* 0.34px */
+      &:not(.font-medium, .font-semibold, .font-normal, .font-light) {
+        /* Default to bold unless overridden */
+        font-weight: 700;
+      }
+    }
+    .text-label {
+      font-size: 0.75rem; /* 12px */
+      line-height: 0.875rem; /* 14px */
+      letter-spacing: 0.02125rem; /* 0.34px */
+      &:not(.font-medium, .font-semibold, .font-normal, .font-light) {
+        /* Default to bold unless overridden */
+        font-weight: 700;
+      }
+    }
+    .text-placeholder {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1rem; /* 16px */
+      letter-spacing: 0.025rem; /* 0.4px */
+    }
+    .text-button {
+      font-size: 0.75rem; /* 12px */
+      line-height: 0.875rem; /* 14px */
+      &:not(.font-medium, .font-semibold, .font-normal, .font-light) {
+        /* Default to bold unless overridden */
+        font-weight: 700;
+      }
+    }
+    .text-link {
+      font-size: 0.75rem; /* 12px */
+      line-height: 0.875rem; /* 14px */
+      &:not(.font-medium, .font-semibold, .font-normal, .font-light) {
+        /* Default to bold unless overridden */
+        font-weight: 700;
+      }
+    }
+    /* DEPRECATED - The rest of the utilities are only for the old components */
     .text-1,
     .text-2 {
       @apply text-subtitle;

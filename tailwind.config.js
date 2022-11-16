@@ -19,19 +19,6 @@ const config = {
       16: '0px 16px 24px rgba(0, 0, 0, 0.04), 0px 6px 30px rgba(0, 0, 0, 0.02), 0px 8px 10px rgba(0, 0, 0, 0.06)',
       24: '0px 24px 38px rgba(0, 0, 0, 0.04), 0px 9px 46px rgba(0, 0, 0, 0.02), 0px 11px 15px rgba(0, 0, 0, 0.06)',
     },
-    fontSize: {
-      h1: ['2.5rem', { lineHeight: '3rem' }], // 40 / 48px
-      h2: ['1.5rem'], // 24px
-      subtitle: ['1rem', { lineHeight: '1.25rem' }], // 16 / 20px
-      body1: ['0.875rem', { lineHeight: '1.5rem' }], // 14 / 24px
-      body2: ['0.75rem'], // 12px
-      body3: ['0.6875rem', { lineHeight: '1.0625rem', letterSpacing: '.00625rem' }], // 11 / 17 / 1px
-      nav: ['0.875rem', { lineHeight: '1.375rem', letterSpacing: '.02125rem' }], // 14 / 22 / 0.34px
-      label: ['0.75rem', { lineHeight: '0.875rem', letterSpacing: '.02125rem' }], // 12 / 14 / 0.34px
-      placeholder: ['0.875rem', { letterSpacing: '.025rem', fontWeight: '400' }], // 14 / 16 / 0.4px
-      button: ['0.75rem'], // 12 / 14px
-      link: ['0.75rem'], // 12 / 14px
-    },
     letterSpacing: {
       '0': '0rem',
       '0-1': '0.006rem',
