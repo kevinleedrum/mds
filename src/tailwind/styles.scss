@@ -101,7 +101,7 @@
     @apply text-h6; /* DEPRECATED */
   }
   p {
-    @apply my-24; /* TODO: Verify <p> default margin (if any) for Mercury */
+    @apply my-24;
   }
 
   @layer utilities {
