@@ -164,6 +164,7 @@
       font-weight: 700;
     }
     /* DEPRECATED - The rest of the utilities are only for the old components */
+    /* The --deprecated custom property excludes them from generated docs */
     .text-1,
     .text-2 {
       --deprecated: 1;
