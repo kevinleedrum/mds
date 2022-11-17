@@ -83,10 +83,10 @@
   * Typography
   ***************************/
   h1 {
-    @apply text-h1 font-light;
+    @apply text-h1;
   }
   h2 {
-    @apply text-h2 font-normal;
+    @apply text-h2;
   }
   h3 {
     @apply text-h3; /* DEPRECATED */
@@ -108,6 +108,7 @@
     .text-h1 {
       font-size: 2.5rem; /* 40px */
       line-height: 3rem; /* 48px */
+      font-weight: 300;
     }
     .text-h2 {
       font-size: 1.5rem; /* 24px */
@@ -116,10 +117,10 @@
     .text-subtitle {
       font-size: 1rem; /* 16px */
       line-height: 1.25rem; /* 20px */
-      &:not(.font-bold, .font-semibold, .font-normal, .font-light) {
-        /* Default to medium unless overridden */
-        font-weight: 500;
-      }
+      font-weight: 500;
+    }
+    .text-subtitle.font-bold {
+      font-weight: 700;
     }
     .text-body1 {
       font-size: 0.875rem; /* 14px */
@@ -133,28 +134,19 @@
       font-size: 0.6875rem; /* 11px */
       line-height: 1.0625rem; /* 17px */
       letter-spacing: 0.00625rem; /* 0.1px */
-      &:not(.font-medium, .font-semibold, .font-normal, .font-light) {
-        /* Default to bold unless overridden */
-        font-weight: 700;
-      }
+      font-weight: 700;
     }
     .text-nav {
       font-size: 0.875rem; /* 14px */
       line-height: 1.375rem; /* 22px */
       letter-spacing: 0.02125rem; /* 0.34px */
-      &:not(.font-medium, .font-semibold, .font-normal, .font-light) {
-        /* Default to bold unless overridden */
-        font-weight: 700;
-      }
+      font-weight: 700;
     }
     .text-label {
       font-size: 0.75rem; /* 12px */
       line-height: 0.875rem; /* 14px */
       letter-spacing: 0.02125rem; /* 0.34px */
-      &:not(.font-medium, .font-semibold, .font-normal, .font-light) {
-        /* Default to bold unless overridden */
-        font-weight: 700;
-      }
+      font-weight: 700;
     }
     .text-placeholder {
       font-size: 0.875rem; /* 14px */
@@ -164,75 +156,88 @@
     .text-button {
       font-size: 0.75rem; /* 12px */
       line-height: 0.875rem; /* 14px */
-      &:not(.font-medium, .font-semibold, .font-normal, .font-light) {
-        /* Default to bold unless overridden */
-        font-weight: 700;
-      }
+      font-weight: 700;
     }
     .text-link {
+      --deprecated: 1;
       font-size: 0.75rem; /* 12px */
       line-height: 0.875rem; /* 14px */
-      &:not(.font-medium, .font-semibold, .font-normal, .font-light) {
-        /* Default to bold unless overridden */
-        font-weight: 700;
-      }
+      font-weight: 700;
     }
     /* DEPRECATED - The rest of the utilities are only for the old components */
     .text-1,
     .text-2 {
+      --deprecated: 1;
       @apply text-subtitle;
     }
     .text-3,
     .text-4 {
+      --deprecated: 1;
       @apply text-body1;
     }
     .text-h3 {
+      --deprecated: 1;
       @apply text-h1 font-normal;
     }
     .text-h3.emphasis {
+      --deprecated: 1;
       @apply text-h1 font-bold;
     }
     .text-h4 {
+      --deprecated: 1;
       @apply text-h1 font-normal;
     }
     .text-h4.emphasis {
+      --deprecated: 1;
       @apply text-h1 font-bold;
     }
     .text-h5 {
+      --deprecated: 1;
       @apply text-h2 font-normal;
     }
     .text-h5.emphasis {
+      --deprecated: 1;
       @apply text-h2 font-bold;
     }
     .text-h6 {
+      --deprecated: 1;
       @apply text-subtitle;
     }
     .text-h6.emphasis {
+      --deprecated: 1;
       @apply text-subtitle font-bold;
     }
     .subtitle1 {
+      --deprecated: 1;
       @apply text-body3;
     }
     .subtitle2 {
+      --deprecated: 1;
       @apply text-label;
     }
     .subtitle3 {
+      --deprecated: 1;
       @apply text-body1 font-bold;
     }
     .subtitle4 {
+      --deprecated: 1;
       @apply text-body2;
     }
     .subtitle5 {
+      --deprecated: 1;
       @apply text-body3;
     }
     .caption1 {
+      --deprecated: 1;
       @apply text-body2;
     }
     .caption2 {
+      --deprecated: 1;
       @apply text-body3;
     }
     .overline1,
     .overline2 {
+      --deprecated: 1;
       @apply text-nav;
     }
   }

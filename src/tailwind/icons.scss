@@ -1,6 +1,7 @@
 .mds {
   .text-icon {
-    font-size: 1.5rem;
+    --deprecated: 1;
+    font-size: 1.5rem; /* DEPRECATED */
   }
 
   [class^='mds-'],
