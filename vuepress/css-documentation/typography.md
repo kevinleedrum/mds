@@ -222,6 +222,9 @@ headings, subtitles, body text, and more.
 
 ## Deprecated classes ⚠️
 
+The following classes are deprecated (with the exception of `.text-h1` and `.text-h2` which have been
+restyled). These classes now map to one of the new classes (using `@apply`).
+
 ### Headings
 
 The headings in the MoxiWorks Design System comprise the `h1` through `h6` elements, as well as utility classes `text-h1` through `text-h6`. The `h1` can become extra large with an `xl` utility class, and `h3` through `h6` can be given extra weight with an `emphasis` class.
