@@ -220,9 +220,9 @@ headings, subtitles, body text, and more.
 | `break-words`  | `overflow-wrap: break-word;`                 |
 | `break-all`    | `word-break: break-all;`                     |
 
-## Deprecated classes
+## Deprecated classes ⚠️
 
-## Headings
+### Headings
 
 The headings in the MoxiWorks Design System comprise the `h1` through `h6` elements, as well as utility classes `text-h1` through `text-h6`. The `h1` can become extra large with an `xl` utility class, and `h3` through `h6` can be given extra weight with an `emphasis` class.
 
@@ -240,7 +240,7 @@ The headings in the MoxiWorks Design System comprise the `h1` through `h6` eleme
 | `h6.emphasis` / `.text-h6.emphasis` | 18px (1.125rem) | 0.25px         | 24px (1.5rem) | Bold      |
 | `h6` / `.text-h6`                   | 18px (1.125rem) | 0.25px         | 24px (1.5rem) | Regular   |
 
-### Examples
+#### Examples
 
 <div class="mds">
   <h1 class="xl">This is XL H1.</h1>
@@ -333,7 +333,7 @@ The headings in the MoxiWorks Design System comprise the `h1` through `h6` eleme
 
 </div>
 
-## Body Fonts & Font Size
+### Body Fonts & Font Size
 
 In the Moxi Design System, the default body font size is **16px**. To achieve the base font simply add the `mds` class to your body tag or a containing div you desire the implementation.
 
@@ -351,7 +351,7 @@ There are five utility classes for setting the body font size.
 | `text-4`        | 14px (0.875rem) | 20px (1.25rem) | 0.25px         |
 | `text-icon`     | 24px (1.5rem)   | inherit        | inherit        |
 
-### Examples
+#### Examples
 
 <!-- #region font-size -->
 <div class="mds">
@@ -366,7 +366,7 @@ There are five utility classes for setting the body font size.
 
 <<<@/vuepress/css-documentation/typography.md#font-size
 
-## Subtitles
+### Subtitles
 
 There are currently 5 subtitle variants available via special classes.
 
@@ -378,7 +378,7 @@ There are currently 5 subtitle variants available via special classes.
 | `subtitle4` | 12px (0.75rem)  | SemiBold  | 16px (1rem)    | 0.4px          |
 | `subtitle5` | 10px (0.625rem) | Bold      | 16px (1rem)    | 0.3px          |
 
-### Examples
+#### Examples
 
 <!-- #region subtitles -->
 <div class="mds">
@@ -394,14 +394,14 @@ There are currently 5 subtitle variants available via special classes.
 
 <<<@/vuepress/css-documentation/typography.md#subtitles
 
-## Captions
+### Captions
 
 | Class      | Size            | Line-Height | Letter-Spacing |
 | ---------- | --------------- | ----------- | -------------- |
 | `caption1` | 12px (0.75rem)  | 16px (1rem) | 0.3px          |
 | `caption2` | 10px (0.625rem) | 16px (1rem) | 0.3px          |
 
-### Examples
+#### Examples
 
 <!-- #region captions -->
 <div class="mds">
@@ -414,14 +414,14 @@ There are currently 5 subtitle variants available via special classes.
 
 <<<@/vuepress/css-documentation/typography.md#captions
 
-## Overlines
+### Overlines
 
 | Class       | Size            | Weight              | Line-Height   | Letter-Spacing |
 | ----------- | --------------- | ------------------- | ------------- | -------------- |
 | `overline1` | 18px (1.125rem) | SemiBold, Uppercase | 24px (1.5rem) | 1.5px          |
 | `overline2` | 12px (0.75rem)  | Regular, Uppercase  | 16px (1rem)   | 1.5px          |
 
-### Examples
+#### Examples
 
 <!-- #region overlines -->
 <div class="mds">
