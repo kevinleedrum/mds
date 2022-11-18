@@ -63,6 +63,24 @@ export namespace Components {
         "type": ButtonTypeAttribute;
         "value": string;
     }
+    interface McCheckbox {
+        "checked": boolean;
+        "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
+        /**
+          * Hide the label text visually, but still make it accessible for screen readers
+         */
+        "hideLabel": boolean;
+        "indeterminate": boolean;
+        "labelClass": string;
+        "labelLeft": boolean;
+        "labelName": string;
+        "name": string;
+        "value": string;
+    }
     interface McInput {
         "disabled": boolean;
         "elAriaLabel": string;
@@ -1216,6 +1234,12 @@ declare global {
         prototype: HTMLMcButtonElement;
         new (): HTMLMcButtonElement;
     };
+    interface HTMLMcCheckboxElement extends Components.McCheckbox, HTMLStencilElement {
+    }
+    var HTMLMcCheckboxElement: {
+        prototype: HTMLMcCheckboxElement;
+        new (): HTMLMcCheckboxElement;
+    };
     interface HTMLMcInputElement extends Components.McInput, HTMLStencilElement {
     }
     var HTMLMcInputElement: {
@@ -1452,6 +1476,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "mc-button": HTMLMcButtonElement;
+        "mc-checkbox": HTMLMcCheckboxElement;
         "mc-input": HTMLMcInputElement;
         "mx-badge": HTMLMxBadgeElement;
         "mx-banner": HTMLMxBannerElement;
@@ -1533,6 +1558,24 @@ declare namespace LocalJSX {
          */
         "target"?: string;
         "type"?: ButtonTypeAttribute;
+        "value"?: string;
+    }
+    interface McCheckbox {
+        "checked"?: boolean;
+        "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
+        /**
+          * Hide the label text visually, but still make it accessible for screen readers
+         */
+        "hideLabel"?: boolean;
+        "indeterminate"?: boolean;
+        "labelClass"?: string;
+        "labelLeft"?: boolean;
+        "labelName"?: string;
+        "name"?: string;
         "value"?: string;
     }
     interface McInput {
@@ -2644,6 +2687,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "mc-button": McButton;
+        "mc-checkbox": McCheckbox;
         "mc-input": McInput;
         "mx-badge": MxBadge;
         "mx-banner": MxBanner;
@@ -2690,6 +2734,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "mc-button": LocalJSX.McButton & JSXBase.HTMLAttributes<HTMLMcButtonElement>;
+            "mc-checkbox": LocalJSX.McCheckbox & JSXBase.HTMLAttributes<HTMLMcCheckboxElement>;
             "mc-input": LocalJSX.McInput & JSXBase.HTMLAttributes<HTMLMcInputElement>;
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
             "mx-banner": LocalJSX.MxBanner & JSXBase.HTMLAttributes<HTMLMxBannerElement>;

@@ -1,10 +1,34 @@
 # Selection Controls
 
-Selection controls consist of checkboxes, radios, and switches. Also see [Toggle Buttons](/components/buttons.html#toggle-buttons) and [Toggle Button Groups](/components/buttons.html#toggle-button-groups).
+Selection controls consist of checkboxes, radios, toggles, and range selectors.
 
 ## Checkboxes
 
-<!-- #region checkboxes -->
+<section class="mds">
+  <div class="max-w-sm my-12 grid grid-flow-row grid-cols-2 gap-12">
+    <!-- #region checkboxes -->
+    <mc-checkbox label-name="Label" checked />
+    <mc-checkbox label-name="Label" />
+    <mc-checkbox label-name="Disabled" disabled />
+    <mc-checkbox label-name="Disabled" checked disabled />
+    <mc-checkbox label-name="Indeterminate" indeterminate />
+    <mc-checkbox label-name="Indeterminate" indeterminate disabled />
+    <mc-checkbox label-name="Text label that wraps multiple lines" />
+    <!-- #endregion checkboxes -->
+  </div>
+</section>
+
+<<<@/vuepress/components/selection-controls.md#checkboxes
+
+## mc-checkbox Properties
+
+<ComponentReadme component="mc-checkbox" />
+
+## Deprecated components ⚠️
+
+### Checkboxes
+
+<!-- #region checkboxes-dep -->
 <div class="mds">
   <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
     <div><mx-checkbox name="foo" label-name="Premier" checked /></div>
@@ -17,11 +41,11 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-checkbox name="foo" indeterminate disabled label-name="Indeterminate" /></div>
   </div>
 </div>
-<!-- #endregion checkboxes -->
+<!-- #endregion checkboxes-dep -->
 
 <<< @/vuepress/components/selection-controls.md#checkboxes
 
-### Checkbox Properties
+#### Checkbox Properties
 
 | Property        | Attribute       | Description                                                                   | Type      | Default     |
 | --------------- | --------------- | ----------------------------------------------------------------------------- | --------- | ----------- |
@@ -36,9 +60,9 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 | `name`          | `name`          |                                                                               | `string`  | `''`        |
 | `value`         | `value`         |                                                                               | `string`  | `''`        |
 
-## Radio Buttons
+### Radio Buttons
 
-<!-- #region radio-buttons -->
+<!-- #region radio-buttons-dep -->
 <div class="mds">
   <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
     <div><mx-radio name="foo" label-name="Premier" /></div>
@@ -49,11 +73,11 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-radio name="foo" disabled checked label-name="Disabled" /></div>
   </div>
 </div>
-<!-- #endregion radio-buttons -->
+<!-- #endregion radio-buttons-dep -->
 
 <<< @/vuepress/components/selection-controls.md#radio-buttons
 
-### Radio Button Properties
+#### Radio Button Properties
 
 | Property     | Attribute     | Description | Type      | Default |
 | ------------ | ------------- | ----------- | --------- | ------- |
@@ -64,9 +88,9 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
 | `name`       | `name`        |             | `string`  | `''`    |
 | `value`      | `value`       |             | `string`  | `''`    |
 
-## Switches
+### Switches
 
-<!-- #region switches -->
+<!-- #region switches-dep -->
 <div class="mds">
   <div class="my-12 grid grid-flow-row grid-cols-2 gap-4">
     <div><mx-switch name="foo" label-name="Premier" /></div>
@@ -77,11 +101,11 @@ Selection controls consist of checkboxes, radios, and switches. Also see [Toggle
     <div><mx-switch name="foo" disabled checked label-name="Disabled" /></div>
   </div>
 </div>
-<!-- #endregion switches -->
+<!-- #endregion switches-dep -->
 
 <<< @/vuepress/components/selection-controls.md#switches
 
-### Switch Properties
+#### Switch Properties
 
 | Property     | Attribute     | Description | Type      | Default |
 | ------------ | ------------- | ----------- | --------- | ------- |

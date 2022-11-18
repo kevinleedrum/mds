@@ -19,6 +19,9 @@ const config = {
       16: '0px 16px 24px rgba(0, 0, 0, 0.04), 0px 6px 30px rgba(0, 0, 0, 0.02), 0px 8px 10px rgba(0, 0, 0, 0.06)',
       24: '0px 24px 38px rgba(0, 0, 0, 0.04), 0px 9px 46px rgba(0, 0, 0, 0.02), 0px 11px 15px rgba(0, 0, 0, 0.06)',
     },
+    fontSize: {
+      14: '0.875rem',
+    },
     letterSpacing: {
       '0': '0rem',
       '0-1': '0.006rem',

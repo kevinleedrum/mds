@@ -4,6 +4,7 @@
   --mc-primary-dark-alt: #243c5a;
   --mc-primary-dark: #003b76;
   --mc-primary-hover: #4096ec;
+  --mc-primary-shadow: rgba(0, 115, 230, 0.5);
   --mc-primary: #0073e6;
   --mc-secondary-light: #ced8dc;
   --mc-secondary-medium: #9bb2c9;
@@ -115,6 +116,20 @@
   --mc-text-btn-warning-hover: var(--mc-white);
   --mc-text-btn-warning: var(--mc-white);
   /* #endregion mc-button */
+
+  /* #region mc-checkbox */
+  --mc-bg-checkbox-checked: var(--mc-primary);
+  --mc-bg-checkbox-disabled-checked: var(--mc-secondary-light);
+  --mc-bg-checkbox-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-checkbox-tick: var(--mc-white);
+  --mc-bg-checkbox: var(--mc-white);
+  --mc-border-checkbox-disabled-checked: var(--mc-secondary-light);
+  --mc-border-checkbox-disabled: var(--mc-secondary);
+  --mc-border-checkbox-checked: var(--mc-primary);
+  --mc-border-checkbox: var(--mc-secondary);
+  --mc-shadow-checkbox: var(--mc-primary-shadow);
+  --mc-text-checkbox: var(--mc-secondary);
+  /* #endregion mc-checkbox */
 
   /* #region buttons */
   /* Contained Buttons */
