@@ -24,6 +24,26 @@ Selection controls consist of checkboxes, radios, toggles, and range selectors.
 
 <ComponentReadme component="mc-checkbox" />
 
+## Radio Buttons
+
+<section class="mds">
+  <div class="max-w-sm my-12 grid grid-flow-row grid-cols-2 gap-12">
+    <!-- #region radio-buttons -->
+    <mc-radio name="rad" label-name="Label" checked />
+    <mc-radio name="rad" label-name="Label" />
+    <mc-radio label-name="Disabled" disabled />
+    <mc-radio label-name="Disabled" checked disabled />
+    <mc-radio name="rad" label-name="Text label that wraps multiple lines" />
+    <!-- #endregion radio-buttons -->
+  </div>
+</section>
+
+<<<@/vuepress/components/selection-controls.md#radio-buttons
+
+## mc-radio Properties
+
+<ComponentReadme component="mc-radio" />
+
 ## Deprecated components ⚠️
 
 ### Checkboxes

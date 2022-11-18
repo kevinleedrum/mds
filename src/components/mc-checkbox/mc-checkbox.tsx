@@ -37,7 +37,7 @@ export class McCheckbox {
   }
 
   get checkLabelClass(): string {
-    let str = 'inline-block';
+    let str = 'inline-block mt-2';
     if (this.hideLabel) str += ' sr-only';
     str += this.labelLeft ? ' order-1 flex-1' : ' order-2';
     if (!this.labelLeft && !this.hideLabel) str += ' ml-10';
@@ -70,7 +70,7 @@ export class McCheckbox {
             {...this.dataAttributes}
             onInput={this.onInput.bind(this)}
           />
-          <div class={this.checkLabelClass} style={{ marginTop: '0.125rem' }} data-testid="labelName">
+          <div class={this.checkLabelClass} data-testid="labelName">
             {this.labelName}
           </div>
         </label>

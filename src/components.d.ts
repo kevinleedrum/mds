@@ -100,6 +100,14 @@ export namespace Components {
         "type": McInputType;
         "value": string;
     }
+    interface McRadio {
+        "checked": boolean;
+        "disabled": boolean;
+        "labelClass": string;
+        "labelName": string;
+        "name": string;
+        "value": string;
+    }
     interface MxBadge {
         /**
           * Additional classes to add to the badge itself
@@ -1246,6 +1254,12 @@ declare global {
         prototype: HTMLMcInputElement;
         new (): HTMLMcInputElement;
     };
+    interface HTMLMcRadioElement extends Components.McRadio, HTMLStencilElement {
+    }
+    var HTMLMcRadioElement: {
+        prototype: HTMLMcRadioElement;
+        new (): HTMLMcRadioElement;
+    };
     interface HTMLMxBadgeElement extends Components.MxBadge, HTMLStencilElement {
     }
     var HTMLMxBadgeElement: {
@@ -1478,6 +1492,7 @@ declare global {
         "mc-button": HTMLMcButtonElement;
         "mc-checkbox": HTMLMcCheckboxElement;
         "mc-input": HTMLMcInputElement;
+        "mc-radio": HTMLMcRadioElement;
         "mx-badge": HTMLMxBadgeElement;
         "mx-banner": HTMLMxBannerElement;
         "mx-button": HTMLMxButtonElement;
@@ -1595,6 +1610,14 @@ declare namespace LocalJSX {
         "searchLabel"?: string;
         "showCancelIcon"?: boolean;
         "type"?: McInputType;
+        "value"?: string;
+    }
+    interface McRadio {
+        "checked"?: boolean;
+        "disabled"?: boolean;
+        "labelClass"?: string;
+        "labelName"?: string;
+        "name"?: string;
         "value"?: string;
     }
     interface MxBadge {
@@ -2689,6 +2712,7 @@ declare namespace LocalJSX {
         "mc-button": McButton;
         "mc-checkbox": McCheckbox;
         "mc-input": McInput;
+        "mc-radio": McRadio;
         "mx-badge": MxBadge;
         "mx-banner": MxBanner;
         "mx-button": MxButton;
@@ -2736,6 +2760,7 @@ declare module "@stencil/core" {
             "mc-button": LocalJSX.McButton & JSXBase.HTMLAttributes<HTMLMcButtonElement>;
             "mc-checkbox": LocalJSX.McCheckbox & JSXBase.HTMLAttributes<HTMLMcCheckboxElement>;
             "mc-input": LocalJSX.McInput & JSXBase.HTMLAttributes<HTMLMcInputElement>;
+            "mc-radio": LocalJSX.McRadio & JSXBase.HTMLAttributes<HTMLMcRadioElement>;
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
             "mx-banner": LocalJSX.MxBanner & JSXBase.HTMLAttributes<HTMLMxBannerElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;

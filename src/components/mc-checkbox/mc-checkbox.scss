@@ -3,6 +3,7 @@ mc-checkbox {
   input[type='checkbox'] {
     background-color: var(--mc-bg-checkbox);
     border-color: var(--mc-border-checkbox);
+    cursor: inherit;
     &:disabled {
       background-color: var(--mc-bg-checkbox-disabled);
       border-color: var(--mc-border-checkbox-disabled);

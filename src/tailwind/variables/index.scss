@@ -131,6 +131,20 @@
   --mc-text-checkbox: var(--mc-secondary);
   /* #endregion mc-checkbox */
 
+  /* #region mc-radio */
+  --mc-bg-radio-checked: var(--mc-primary);
+  --mc-bg-radio-disabled-checked: var(--mc-secondary-light);
+  --mc-bg-radio-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-radio-tick: var(--mc-white);
+  --mc-bg-radio: var(--mc-white);
+  --mc-border-radio-disabled-checked: var(--mc-secondary-light);
+  --mc-border-radio-disabled: var(--mc-secondary);
+  --mc-border-radio-checked: var(--mc-primary);
+  --mc-border-radio: var(--mc-secondary);
+  --mc-shadow-radio: var(--mc-primary-shadow);
+  --mc-text-radio: var(--mc-secondary);
+  /* #endregion mc-radio */
+
   /* #region buttons */
   /* Contained Buttons */
   --mds-bg-btn-contained-active: #0457af;

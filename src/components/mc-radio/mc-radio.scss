@@ -1,0 +1,29 @@
+mc-radio {
+  color: var(--mc-text-radio);
+  input[type='radio'] {
+    background-color: var(--mc-bg-radio);
+    border-color: var(--mc-border-radio);
+    cursor: inherit;
+    &:disabled {
+      background-color: var(--mc-bg-radio-disabled);
+      border-color: var(--mc-border-radio-disabled);
+    }
+    &:focus {
+      filter: drop-shadow(0px 0px 0.3125rem var(--mc-shadow-radio));
+    }
+    &:checked {
+      background-color: var(--mc-bg-radio-checked);
+      border-color: var(--mc-border-radio-checked);
+      &:disabled {
+        background-color: var(--mc-bg-radio-disabled-checked);
+        border-color: var(--mc-border-radio-disabled-checked);
+      }
+      &::after {
+        @apply absolute -top-1 -left-1 w-20 h-20;
+        content: '';
+        background-color: var(--mc-bg-radio-tick);
+        mask-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='100%' height='100%' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle fill-rule='evenodd' clip-rule='evenodd' cx='10' cy='10' r='7.5' stroke-width='2.5' stroke='%23fff' /%3e%3c/svg%3e");
+      }
+    }
+  }
+}
