@@ -123,9 +123,10 @@
   --mc-bg-checkbox-disabled: var(--mc-secondary-ultra-light);
   --mc-bg-checkbox-tick: var(--mc-white);
   --mc-bg-checkbox: var(--mc-white);
+  --mc-border-checkbox-checked: var(--mc-primary);
   --mc-border-checkbox-disabled-checked: var(--mc-secondary-light);
   --mc-border-checkbox-disabled: var(--mc-secondary);
-  --mc-border-checkbox-checked: var(--mc-primary);
+  --mc-border-checkbox-focus: var(--mc-primary);
   --mc-border-checkbox: var(--mc-secondary);
   --mc-shadow-checkbox: var(--mc-primary-shadow);
   --mc-text-checkbox: var(--mc-secondary);
@@ -137,13 +138,32 @@
   --mc-bg-radio-disabled: var(--mc-secondary-ultra-light);
   --mc-bg-radio-tick: var(--mc-white);
   --mc-bg-radio: var(--mc-white);
+  --mc-border-radio-checked: var(--mc-primary);
   --mc-border-radio-disabled-checked: var(--mc-secondary-light);
   --mc-border-radio-disabled: var(--mc-secondary);
-  --mc-border-radio-checked: var(--mc-primary);
+  --mc-border-radio-focus: var(--mc-primary);
   --mc-border-radio: var(--mc-secondary);
   --mc-shadow-radio: var(--mc-primary-shadow);
   --mc-text-radio: var(--mc-secondary);
   /* #endregion mc-radio */
+
+  /* #region mc-toggle */
+  --mc-bg-toggle-checked: var(--mc-primary);
+  --mc-bg-toggle-disabled-checked: var(--mc-secondary-light);
+  --mc-bg-toggle-disabled: var(--mc-white);
+  --mc-bg-toggle-handle-checked: var(--mc-white);
+  --mc-bg-toggle-handle-disabled: var(--mc-secondary-light);
+  --mc-bg-toggle-handle-focus: var(--mc-primary);
+  --mc-bg-toggle-handle: var(--mc-secondary);
+  --mc-bg-toggle: var(--mc-white);
+  --mc-border-toggle-checked: var(--mc-primary);
+  --mc-border-toggle-disabled-checked: var(--mc-secondary-light);
+  --mc-border-toggle-disabled: var(--mc-secondary);
+  --mc-border-toggle-focus: var(--mc-primary);
+  --mc-border-toggle: var(--mc-secondary);
+  --mc-shadow-toggle: var(--mc-primary-shadow);
+  --mc-text-toggle: var(--mc-secondary);
+  /* #endregion mc-toggle */
 
   /* #region buttons */
   /* Contained Buttons */
