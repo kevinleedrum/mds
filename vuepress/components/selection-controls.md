@@ -67,7 +67,7 @@ Selection controls consist of checkboxes, radios, toggles, and range selectors.
 ## Range Selectors
 
 <section class="mds">
-  <div class="my-12 grid grid-flow-row grid-cols-2 gap-32">
+  <div class="my-12 grid grid-flow-row grid-cols-1 sm:grid-cols-2 gap-32">
     <!-- #region range-selectors -->
     <mc-range label="Label" value="50" />
     <mc-range label="Label" value="50" disabled />
