@@ -165,6 +165,18 @@
   --mc-text-toggle: var(--mc-secondary);
   /* #endregion mc-toggle */
 
+  /* #region mc-range */
+  --mc-bg-range-fill-disabled: var(--mc-secondary-light);
+  --mc-bg-range-fill: var(--mc-primary);
+  --mc-bg-range-thumb-active: var(--mc-tertiary);
+  --mc-bg-range-thumb-disabled: var(--mc-secondary-light);
+  --mc-bg-range-thumb: var(--mc-primary);
+  --mc-bg-range-track-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-range-track: var(--mc-secondary-light);
+  --mc-border-range-thumb: var(--mc-white);
+  --mc-text-range: var(--mc-secondary);
+  /* #endregion mc-range */
+
   /* #region buttons */
   /* Contained Buttons */
   --mds-bg-btn-contained-active: #0457af;
