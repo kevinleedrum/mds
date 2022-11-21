@@ -106,7 +106,7 @@ Selection controls consist of checkboxes, radios, toggles, and range selectors.
 </div>
 <!-- #endregion checkboxes-dep -->
 
-<<< @/vuepress/components/selection-controls.md#checkboxes
+<<< @/vuepress/components/selection-controls.md#checkboxes-dep
 
 #### Checkbox Properties
 
@@ -138,7 +138,7 @@ Selection controls consist of checkboxes, radios, toggles, and range selectors.
 </div>
 <!-- #endregion radio-buttons-dep -->
 
-<<< @/vuepress/components/selection-controls.md#radio-buttons
+<<< @/vuepress/components/selection-controls.md#radio-buttons-dep
 
 #### Radio Button Properties
 
@@ -166,7 +166,7 @@ Selection controls consist of checkboxes, radios, toggles, and range selectors.
 </div>
 <!-- #endregion switches-dep -->
 
-<<< @/vuepress/components/selection-controls.md#switches
+<<< @/vuepress/components/selection-controls.md#switches-dep
 
 #### Switch Properties
 
