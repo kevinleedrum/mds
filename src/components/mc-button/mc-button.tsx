@@ -111,7 +111,7 @@ export class McButton implements IMcButtonProps {
         {this.showLeft && (
           <span class="flex items-center justify-self-start mr-10" data-testid="left-content">
             <slot name="left" />
-            {this.iconLeft && <i class={'text-subtitle ' + this.iconLeft}></i>}
+            {this.iconLeft && <i class={'text-16 ' + this.iconLeft}></i>}
           </span>
         )}
         <span class="slot-content truncate">
@@ -122,7 +122,7 @@ export class McButton implements IMcButtonProps {
             {(this.iconRight || this.dropdown) && (
               <i
                 data-testid="dropdown-icon"
-                class={`text-subtitle ${this.dropdown ? 'mds-caret-down-fill' : this.iconRight}`}
+                class={`text-16 ${this.dropdown ? 'mds-caret-down-fill' : this.iconRight}`}
               ></i>
             )}
             <slot name="right" />

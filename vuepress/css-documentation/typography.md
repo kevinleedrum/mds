@@ -54,6 +54,15 @@ headings, subtitles, body text, and more.
   </table>
 </section>
 
+## Font Size
+
+These classes should only be used when the font size needs to be applied without the additional properties of the above type scale classes.
+
+| Class     | Properties             |
+| --------- | ---------------------- |
+| `text-14` | `font-size: 0.875rem;` |
+| `text-16` | `font-size: 1rem;`     |
+
 ## Font Style
 
 | Class        | Properties            |
@@ -451,6 +460,7 @@ There are currently 5 subtitle variants available via special classes.
           [...stylesheet.cssRules].forEach(rule => {
             if (!rule || !rule.selectorText || !rule.selectorText.startsWith('.mds .text-')) return
             if (!rule.style.fontSize || rule.style[0] === '--deprecated') return
+            if (/text\-[0-9]+$/g.test(rule.selectorText)) return // Exclude text-16, etc.
             const getPxAndRem = val => val ? `${parseFloat(val) * 16}px / ${val}` : ''
             const utility = {
               className: rule.selectorText.replace('.mds ', ''),

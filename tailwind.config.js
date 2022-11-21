@@ -21,6 +21,7 @@ const config = {
     },
     fontSize: {
       14: '0.875rem',
+      16: '1rem',
     },
     letterSpacing: {
       '0': '0rem',
