@@ -5,7 +5,7 @@ import { propagateDataAttributes } from '../../utils/utils';
   tag: 'mc-toggle',
   shadow: false,
 })
-export class McRadio {
+export class McToggle {
   dataAttributes = {};
 
   @Prop() name = '';

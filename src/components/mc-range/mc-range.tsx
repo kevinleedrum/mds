@@ -6,7 +6,7 @@ import { uuidv4 } from '../../utils/utils';
   tag: 'mc-range',
   shadow: false,
 })
-export class McRadio {
+export class McRange {
   inputEl!: HTMLInputElement;
   dataAttributes = {};
 
