@@ -1,5 +1,13 @@
 mc-toggle {
   color: var(--mc-text-toggle);
+  label:active input:not(:disabled),
+  label:focus-within input {
+    filter: drop-shadow(0px 0px 0.3125rem var(--mc-shadow-toggle));
+    border-color: var(--mc-border-toggle-focus);
+    &:not(:checked)::after {
+      background-color: var(--mc-bg-toggle-handle-focus);
+    }
+  }
   input[type='checkbox'] {
     background-color: var(--mc-bg-toggle);
     border-color: var(--mc-border-toggle);
@@ -15,13 +23,6 @@ mc-toggle {
       border-color: var(--mc-border-toggle-disabled);
       &::after {
         background-color: var(--mc-bg-toggle-handle-disabled);
-      }
-    }
-    &:focus {
-      filter: drop-shadow(0px 0px 0.3125rem var(--mc-shadow-toggle));
-      border-color: var(--mc-border-toggle-focus);
-      &::after {
-        background-color: var(--mc-bg-toggle-handle-focus);
       }
     }
     &:checked {

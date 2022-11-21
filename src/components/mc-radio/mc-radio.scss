@@ -1,5 +1,10 @@
 mc-radio {
   color: var(--mc-text-radio);
+  label:active input:not(:disabled),
+  label:focus-within input {
+    filter: drop-shadow(0px 0px 0.3125rem var(--mc-shadow-radio));
+    border-color: var(--mc-border-radio-focus);
+  }
   input[type='radio'] {
     background-color: var(--mc-bg-radio);
     border-color: var(--mc-border-radio);
@@ -7,10 +12,6 @@ mc-radio {
     &:disabled {
       background-color: var(--mc-bg-radio-disabled);
       border-color: var(--mc-border-radio-disabled);
-    }
-    &:focus {
-      filter: drop-shadow(0px 0px 0.3125rem var(--mc-shadow-radio));
-      border-color: var(--mc-border-radio-focus);
     }
     &:checked {
       background-color: var(--mc-bg-radio-checked);
