@@ -54,7 +54,7 @@ export class McCheckbox {
       <Host class="inline-flex">
         <label
           class={[
-            'flex-1 inline-flex flex-nowrap text-14 leading-4' + (this.disabled ? '' : ' cursor-pointer'),
+            'inline-flex flex-nowrap text-14 leading-4' + (this.disabled ? '' : ' cursor-pointer'),
             this.labelClass,
           ].join(' ')}
         >
