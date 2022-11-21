@@ -89,16 +89,16 @@
     @apply text-h2;
   }
   h3 {
-    @apply text-h3;
+    @apply text-h3; /* DEPRECATED */
   }
   h4 {
-    @apply text-h4;
+    @apply text-h4; /* DEPRECATED */
   }
   h5 {
-    @apply text-h5;
+    @apply text-h5; /* DEPRECATED */
   }
   h6 {
-    @apply text-h6;
+    @apply text-h6; /* DEPRECATED */
   }
   p {
     @apply my-24;
@@ -106,135 +106,139 @@
 
   @layer utilities {
     .text-h1 {
-      font-size: 3.5rem;
-      letter-spacing: -0.5px;
-      font-weight: bold;
-      line-height: 4.5rem;
-      &:not(.my-0) {
-        @apply mb-24;
-      }
-    }
-    .text-h1.xl {
-      font-size: 6rem;
-      letter-spacing: -1.5px;
-      font-weight: bold;
-      line-height: 7.5rem;
-      &:not(.my-0) {
-        @apply mb-24;
-      }
+      font-size: 2.5rem; /* 40px */
+      line-height: 3rem; /* 48px */
+      font-weight: 300;
     }
     .text-h2 {
-      font-size: 3rem;
-      letter-spacing: 0;
-      font-weight: 600;
-      line-height: 4rem;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      font-size: 1.5rem; /* 24px */
+      line-height: 1.75rem; /* 28px */
+    }
+    .text-subtitle {
+      font-size: 1rem; /* 16px */
+      line-height: 1.25rem; /* 20px */
+      font-weight: 500;
+    }
+    .text-subtitle.font-bold {
+      font-weight: 700;
+    }
+    .text-body1 {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.5rem; /* 24px */
+    }
+    .text-body2 {
+      font-size: 0.75rem; /* 12px */
+      line-height: 0.875rem; /* 14px */
+    }
+    .text-body3 {
+      font-size: 0.6875rem; /* 11px */
+      line-height: 1.0625rem; /* 17px */
+      letter-spacing: 0.00625rem; /* 0.1px */
+      font-weight: 700;
+    }
+    .text-nav {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.375rem; /* 22px */
+      letter-spacing: 0.02125rem; /* 0.34px */
+      font-weight: 700;
+    }
+    .text-label {
+      font-size: 0.75rem; /* 12px */
+      line-height: 0.875rem; /* 14px */
+      letter-spacing: 0.02125rem; /* 0.34px */
+      font-weight: 700;
+    }
+    .text-placeholder {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1rem; /* 16px */
+      letter-spacing: 0.025rem; /* 0.4px */
+    }
+    .text-button {
+      font-size: 0.75rem; /* 12px */
+      line-height: 0.875rem; /* 14px */
+      font-weight: 700;
+    }
+    .text-link {
+      font-size: 0.75rem; /* 12px */
+      line-height: 0.875rem; /* 14px */
+      font-weight: 700;
+    }
+    /* DEPRECATED - The rest of the utilities are only for the old components */
+    /* The --deprecated custom property excludes them from generated docs */
+    .text-1,
+    .text-2 {
+      --deprecated: 1;
+      @apply text-subtitle;
+    }
+    .text-3,
+    .text-4 {
+      --deprecated: 1;
+      @apply text-body1;
     }
     .text-h3 {
-      font-size: 2.5rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: normal;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      --deprecated: 1;
+      @apply text-h1 font-normal;
     }
     .text-h3.emphasis {
-      font-size: 2.5rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: bold;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      --deprecated: 1;
+      @apply text-h1 font-bold;
     }
     .text-h4 {
-      font-size: 2.25rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: normal;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      --deprecated: 1;
+      @apply text-h1 font-normal;
     }
     .text-h4.emphasis {
-      font-size: 2.25rem;
-      letter-spacing: 0.25px;
-      line-height: 3.5rem;
-      font-weight: 600;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      --deprecated: 1;
+      @apply text-h1 font-bold;
     }
     .text-h5 {
-      font-size: 1.5rem;
-      letter-spacing: 0;
-      line-height: 2.5rem;
-      font-weight: normal;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      --deprecated: 1;
+      @apply text-h2 font-normal;
     }
     .text-h5.emphasis {
-      font-size: 1.5rem;
-      letter-spacing: 0;
-      line-height: 2.5rem;
-      font-weight: 800;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      --deprecated: 1;
+      @apply text-h2 font-bold;
     }
     .text-h6 {
-      font-size: 1.125rem;
-      letter-spacing: 0.25px;
-      line-height: 1.5rem;
-      font-weight: normal;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      --deprecated: 1;
+      @apply text-subtitle;
     }
     .text-h6.emphasis {
-      font-size: 1.125rem;
-      letter-spacing: 0.25px;
-      line-height: 1.5rem;
-      font-weight: bold;
-      &:not(.my-0) {
-        @apply my-24;
-      }
+      --deprecated: 1;
+      @apply text-subtitle font-bold;
     }
     .subtitle1 {
-      @apply text-3 tracking-0-15 leading-6 font-semibold;
+      --deprecated: 1;
+      @apply text-body3;
     }
     .subtitle2 {
-      @apply text-4 tracking-0-4 leading-5 font-semibold;
+      --deprecated: 1;
+      @apply text-label;
     }
     .subtitle3 {
-      @apply text-4 tracking-0-4 leading-5 font-extrabold;
+      --deprecated: 1;
+      @apply text-body1 font-bold;
     }
     .subtitle4 {
-      font-size: 0.75rem;
-      @apply tracking-0-4 leading-4 font-semibold;
+      --deprecated: 1;
+      @apply text-body2;
     }
     .subtitle5 {
-      font-size: 0.625rem;
-      @apply tracking-0-3 leading-4 font-bold;
+      --deprecated: 1;
+      @apply text-body3;
     }
     .caption1 {
-      font-size: 0.75rem;
-      @apply tracking-0-3 leading-4;
+      --deprecated: 1;
+      @apply text-body2;
     }
     .caption2 {
-      font-size: 0.625rem;
-      @apply tracking-0-3 leading-4;
+      --deprecated: 1;
+      @apply text-body3;
     }
-    .overline1 {
-      @apply text-2 tracking-1-5 leading-6 font-semibold uppercase;
-    }
+    .overline1,
     .overline2 {
-      font-size: 0.75rem;
-      @apply tracking-1-5 leading-4 font-normal uppercase;
+      --deprecated: 1;
+      @apply text-nav;
     }
   }
 }

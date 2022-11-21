@@ -79,7 +79,7 @@ export class McButton implements IMcButtonProps {
     let str = this.btnType + '-button'; // Sets color vars
     str += ' flex items-center justify-center relative overflow-hidden appearance-none select-none';
     str += ' cursor-pointer disabled:pointer-events-none disabled:cursor-auto hover:no-underline';
-    str += ' w-full rounded font-bold caption1 uppercase'; // TODO: Replace caption1 class if necesary
+    str += ' w-full rounded font-bold text-button uppercase';
     if (this.btnType === 'ghost') str += ' border';
     str += this.small ? ' min-h-30' : ' min-h-40';
     str += this.small || this.hasLeftOrRightContent ? ' px-15' : ' px-20';
@@ -111,7 +111,7 @@ export class McButton implements IMcButtonProps {
         {this.showLeft && (
           <span class="flex items-center justify-self-start mr-10" data-testid="left-content">
             <slot name="left" />
-            {this.iconLeft && <i class={'text-3 ' + this.iconLeft}></i>}
+            {this.iconLeft && <i class={'text-subtitle ' + this.iconLeft}></i>}
           </span>
         )}
         <span class="slot-content truncate">
@@ -122,7 +122,7 @@ export class McButton implements IMcButtonProps {
             {(this.iconRight || this.dropdown) && (
               <i
                 data-testid="dropdown-icon"
-                class={`text-3 ${this.dropdown ? 'mds-caret-down-fill' : this.iconRight}`}
+                class={`text-subtitle ${this.dropdown ? 'mds-caret-down-fill' : this.iconRight}`}
               ></i>
             )}
             <slot name="right" />

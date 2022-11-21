@@ -19,13 +19,6 @@ const config = {
       16: '0px 16px 24px rgba(0, 0, 0, 0.04), 0px 6px 30px rgba(0, 0, 0, 0.02), 0px 8px 10px rgba(0, 0, 0, 0.06)',
       24: '0px 24px 38px rgba(0, 0, 0, 0.04), 0px 9px 46px rgba(0, 0, 0, 0.02), 0px 11px 15px rgba(0, 0, 0, 0.06)',
     },
-    fontSize: {
-      // Font size, line-height, and letter-spacing
-      1: ['1.25rem', { lineHeight: '1.5rem', letterSpacing: '0.031rem' }], // 20px / 24px / 0.5px
-      2: ['1.125rem', { lineHeight: '1.5rem', letterSpacing: '0.031rem' }], // 18px / 24px / 0.5px
-      3: ['1rem', { lineHeight: '1.5rem', letterSpacing: '0.009rem' }], // 16px / 24px / 0.15px
-      4: ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.016rem' }], // 14px / 20px / 0.25px
-    },
     letterSpacing: {
       '0': '0rem',
       '0-1': '0.006rem',

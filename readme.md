@@ -65,7 +65,7 @@ We are not using the Shadow DOM for the Stencil components and are not using the
 
 There's no reason to write and maintain this CSS in two places so the TailwindCSS implementation will be the source of truth for our component styling.
 
-Under `src/tailwind` you'll see directories like `mx-input` and `mx-button`. Those `SASS` directories and files are included in the `styles.css` file. SCSS is transpiled to CSS immediately thanks to PostCSS.
+Under `src/tailwind` you'll see directories like `mx-input` and `mx-button`. Those `SASS` directories and files are included in the `styles.scss` file. SCSS is transpiled to CSS immediately thanks to PostCSS.
 
 ## Using In A Project
 

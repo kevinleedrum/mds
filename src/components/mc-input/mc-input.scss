@@ -18,6 +18,7 @@ mc-input {
     }
 
     &::placeholder {
+      @apply text-placeholder;
       color: var(--mc-placeholder);
     }
 

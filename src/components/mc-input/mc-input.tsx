@@ -46,7 +46,7 @@ export class McInput implements IMcInputProps {
 
   @Prop() type: McInputType = 'text';
   @Prop() name = '';
-  @Prop({ mutable: true }) value: string = '';
+  @Prop({ mutable: true }) value = '';
   @Prop() disabled = false;
   @Prop() readonly = false;
   @Prop({ mutable: true }) maxlength: number;
@@ -57,10 +57,10 @@ export class McInput implements IMcInputProps {
   @Prop({ mutable: true, reflect: true }) error = false;
   @Prop() errorMsg = '';
   @Prop() elAriaLabel: string;
-  @Prop() required: boolean = false;
-  @Prop() searchLabel: string = 'Search';
+  @Prop() required = false;
+  @Prop() searchLabel = 'Search';
   @Prop() leftIcon: string;
-  @Prop({ mutable: true }) showCancelIcon: boolean = false;
+  @Prop({ mutable: true }) showCancelIcon = false;
 
   componentWillRender() {
     this.inputId = this.inputId || uuidv4();
@@ -73,7 +73,7 @@ export class McInput implements IMcInputProps {
   }
 
   get makeInputClasses() {
-    const classArr = ['w-full', 'border', 'text-4', 'px-15', 'py-12', 'rounded', 'border', 'border-secondary'];
+    const classArr = ['w-full', 'border', 'text-body1', 'px-15', 'py-12', 'rounded', 'border', 'border-secondary'];
 
     if (this.error) {
       const index = classArr.indexOf('border-secondary');
@@ -147,13 +147,9 @@ export class McInput implements IMcInputProps {
 
   render() {
     return (
-      <Host>
+      <Host class="text-secondary">
         {this.label && (
-          <label
-            data-test-id="label"
-            htmlFor={this.inputId}
-            class="block text-secondary font-bold subtitle4 mb-10 uppercase"
-          >
+          <label data-test-id="label" htmlFor={this.inputId} class="block text-label font-bold mb-10 uppercase">
             {this.label}
             {this.required && <span class="text-status-error">*</span>}
           </label>
@@ -232,12 +228,12 @@ export class McInput implements IMcInputProps {
           </textarea>
         )}
         {this.instructions && !this.error && (
-          <section data-test-id="instructions" class="text-secondary caption1 mt-10">
+          <section data-test-id="instructions" class="text-secondary text-body2 mt-10">
             {this.instructions}
           </section>
         )}
         {this.error && this.errorMsg && (
-          <section class="flex caption1 mt-10 text-status-error items-center gap-6">
+          <section class="flex text-body2 mt-10 text-status-error items-center gap-6">
             <i class="ph-warning"></i>
             {this.errorMsg}
           </section>
