@@ -10,56 +10,56 @@ The `btnType` prop can be used to change the button type, and the `small` prop c
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-64 mb-64">
     <!-- #region mc-button-types -->
     <div>
-      <h2 class="text-h5">Normal</h2>
+      <h2 class="text-subtitle">Normal</h2>
       <div class="flex space-x-10">
         <mc-button>Enabled</mc-button>
         <mc-button disabled>Disabled</mc-button>
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Small</h2>
+      <h2 class="text-subtitle">Small</h2>
       <div class="flex space-x-10">
         <mc-button small>Enabled</mc-button>
         <mc-button small disabled>Disabled</mc-button>
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Alt Small</h2>
+      <h2 class="text-subtitle">Alt Small</h2>
       <div class="flex space-x-10">
         <mc-button btn-type="alt" small>Enabled</mc-button>
         <mc-button btn-type="alt" small disabled>Disabled</mc-button>
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Ghost</h2>
+      <h2 class="text-subtitle">Ghost</h2>
       <div class="flex space-x-10">
         <mc-button btn-type="ghost">Enabled</mc-button>
         <mc-button btn-type="ghost" disabled>Disabled</mc-button>
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Transparent</h2>
+      <h2 class="text-subtitle">Transparent</h2>
       <div class="flex space-x-10">
         <mc-button btn-type="transparent">Enabled</mc-button>
         <mc-button btn-type="transparent" disabled>Disabled</mc-button>
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Action</h2>
+      <h2 class="text-subtitle">Action</h2>
       <div class="flex space-x-10">
         <mc-button btn-type="action">Enabled</mc-button>
         <mc-button btn-type="action" disabled>Disabled</mc-button>
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Error</h2>
+      <h2 class="text-subtitle">Error</h2>
       <div class="flex space-x-10">
         <mc-button btn-type="error">Enabled</mc-button>
         <mc-button btn-type="error" disabled>Disabled</mc-button>
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Warning</h2>
+      <h2 class="text-subtitle">Warning</h2>
       <div class="flex space-x-10">
         <mc-button btn-type="warning">Enabled</mc-button>
         <mc-button btn-type="warning" disabled>Disabled</mc-button>
@@ -88,28 +88,28 @@ This will ensure the button takes up the minimum space needed to display its con
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-64 mb-64">
     <!-- #region mc-button-props -->
     <div>
-      <h2 class="text-h5">Button as Link</h2>
+      <h2 class="text-subtitle">Button as Link</h2>
       <div class="flex space-x-10">
         <mc-button href="#">Enabled</mc-button>
         <mc-button href="#" disabled>Disabled</mc-button>
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Dropdown</h2>
+      <h2 class="text-subtitle">Dropdown</h2>
       <div class="flex space-x-10">
         <mc-button dropdown>Enabled</mc-button>
         <mc-button dropdown disabled>Disabled</mc-button>
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Icons</h2>
+      <h2 class="text-subtitle">Icons</h2>
       <div class="flex space-x-10">
         <mc-button icon-left="ph-star-fill">Left</mc-button>
         <mc-button icon-right="ph-star-fill">Right</mc-button>
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Slots</h2>
+      <h2 class="text-subtitle">Slots</h2>
       <div class="flex space-x-10">
         <mc-button>
           <svg slot="left" viewBox="0 0 16 16" width="16" height="16"><circle r="7" cx="8" cy="8" fill="currentColor"></circle></svg>
@@ -122,7 +122,7 @@ This will ensure the button takes up the minimum space needed to display its con
       </div>
     </div>
     <div>
-      <h2 class="text-h5">Hug</h2>
+      <h2 class="text-subtitle">Hug</h2>
       <div class="flex space-x-10 items-center">
         <mc-button hug>Hug</mc-button>
         <mc-button hug small>Hug</mc-button>
@@ -139,6 +139,59 @@ This will ensure the button takes up the minimum space needed to display its con
 ## mc-button Properties
 
 <ComponentReadme component="mc-button" />
+
+## `mc-icon-button`
+
+The `mc-icon-button` component is a button that only displays an icon.
+
+The icon may be set using the `icon` prop, which accepts a class name for an `<i>` element. Alternatively, the default slot can be used to render custom content, such as an inline SVG.
+
+The `btnType` can be set to `"normal"` (the default), `"small"`, or `"close"`. The `"small"` type affects both the size and colors. The `"close"` type is a small button with a close icon.
+
+<section class="mds">
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-32 mb-32">
+    <!-- #region mc-icon-button -->
+    <div>
+      <h2 class="text-subtitle">Normal</h2>
+      <div class="flex space-x-10">
+        <mc-icon-button icon="ph-dots-three-outline-fill" />
+        <mc-icon-button icon="ph-dots-three-outline-fill" disabled />
+        <mc-icon-button>
+          <svg viewBox="0 0 16 16" width="16" height="16"><rect x="0" y="0" width="16" height="16" fill="currentColor"></rect></svg>
+        </mc-icon-button>
+        <mc-icon-button disabled>
+          <svg viewBox="0 0 16 16" width="16" height="16"><rect x="0" y="0" width="16" height="16" fill="currentColor"></rect></svg>
+        </mc-icon-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-subtitle">Small</h2>
+      <div class="flex space-x-10">
+        <mc-icon-button btn-type="small" icon="ph-dots-three-outline-fill" />
+        <mc-icon-button btn-type="small" icon="ph-dots-three-outline-fill" disabled />
+        <mc-icon-button btn-type="small">
+          <svg viewBox="0 0 16 16" width="16" height="16"><rect x="0" y="0" width="16" height="16" fill="currentColor"></rect></svg>
+        </mc-icon-button>
+        <mc-icon-button btn-type="small" disabled>
+          <svg viewBox="0 0 16 16" width="16" height="16"><rect x="0" y="0" width="16" height="16" fill="currentColor"></rect></svg>
+        </mc-icon-button>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-subtitle">Close</h2>
+      <div class="flex space-x-10">
+        <mc-icon-button btn-type="close" />
+      </div>
+    </div>
+    <!-- #endregion mc-icon-button -->
+  </div>
+</section>
+
+<<< @/vuepress/components/buttons.md#mc-icon-button
+
+## mc-icon-button Properties
+
+<ComponentReadme component="mc-icon-button" />
 
 ## Deprecated Buttons
 

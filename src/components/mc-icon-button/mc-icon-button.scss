@@ -1,0 +1,35 @@
+mc-icon-button {
+  color: var(--mc-text-icon-btn);
+  & > button,
+  & > a {
+    background-color: var(--mc-bg-icon-btn);
+    &.close-button {
+      background-color: var(--mc-bg-icon-btn-close);
+    }
+    &:hover {
+      background-color: var(--mc-bg-icon-btn-hover);
+      color: var(--mc-text-icon-btn-hover);
+      &.small-button {
+        color: var(--mc-text-icon-btn-small-hover);
+      }
+      &.close-button {
+        background-color: var(--mc-bg-icon-btn-close-hover);
+      }
+    }
+    &:active,
+    &:active.small-button,
+    &:active.close-button {
+      background-color: var(--mc-bg-icon-btn-active);
+      color: var(--mc-text-icon-btn-active);
+    }
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: var(--mc-bg-icon-btn-disabled);
+      color: var(--mc-text-icon-btn-disabled);
+      &.small-button {
+        background-color: var(--mc-bg-icon-btn-small-disabled);
+        color: var(--mc-text-icon-btn-small-disabled);
+      }
+    }
+  }
+}

@@ -116,6 +116,22 @@
   --mc-text-btn-warning: var(--mc-white);
   /* #endregion mc-button */
 
+  /* #region mc-icon-button */
+  --mc-bg-icon-btn-active: var(--mc-primary);
+  --mc-bg-icon-btn-close: var(--mc-secondary-ultra-light);
+  --mc-bg-icon-btn-disabled: transparent;
+  --mc-bg-icon-btn-hover: var(--mc-secondary-ultra-light);
+  --mc-bg-icon-btn-close-hover: var(--mc-secondary-light);
+  --mc-bg-icon-btn-small-disabled: var(--mc-secondary-light);
+  --mc-bg-icon-btn: transparent;
+  --mc-text-icon-btn-active: var(--mc-white);
+  --mc-text-icon-btn-disabled: var(--mc-secondary-medium);
+  --mc-text-icon-btn-hover: var(--mc-secondary);
+  --mc-text-icon-btn-small-disabled: var(--mc-secondary);
+  --mc-text-icon-btn-small-hover: var(--mc-secondary-medium);
+  --mc-text-icon-btn: var(--mc-secondary);
+  /* #endregion mc-icon-button */
+
   /* #region buttons */
   /* Contained Buttons */
   --mds-bg-btn-contained-active: #0457af;
