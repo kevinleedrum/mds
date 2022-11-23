@@ -63,6 +63,24 @@ export namespace Components {
         "type": ButtonTypeAttribute;
         "value": string;
     }
+    interface McCheckbox {
+        "checked": boolean;
+        "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel": string;
+        /**
+          * Hide the label text visually, but still make it accessible for screen readers
+         */
+        "hideLabel": boolean;
+        "indeterminate": boolean;
+        "labelClass": string;
+        "labelLeft": boolean;
+        "labelName": string;
+        "name": string;
+        "value": string;
+    }
     interface McInput {
         "disabled": boolean;
         "elAriaLabel": string;
@@ -80,6 +98,60 @@ export namespace Components {
         "searchLabel": string;
         "showCancelIcon": boolean;
         "type": McInputType;
+        "value": string;
+    }
+    interface McRadio {
+        "checked": boolean;
+        "disabled": boolean;
+        "labelClass": string;
+        "labelName": string;
+        "name": string;
+        "value": string;
+    }
+    interface McRange {
+        "disabled": boolean;
+        /**
+          * Set to `true` to prevent the value from being shown to the right of the slider
+         */
+        "hideValue": boolean;
+        /**
+          * The `id` attribute for the `input` element
+         */
+        "inputId": string;
+        "label": string;
+        /**
+          * The maximum value for the slider
+         */
+        "max": number;
+        /**
+          * The minimum value for the slider
+         */
+        "min": number;
+        "name": string;
+        /**
+          * The increment by which the value is changed when adjusting the slider
+         */
+        "step": number;
+        "value": number;
+        /**
+          * Additional CSS classes to apply to the value text
+         */
+        "valueClass": string;
+        /**
+          * A prefix for the displayed value (e.g. "$")
+         */
+        "valuePrefix": string;
+        /**
+          * A suffix for the displayed value (e.g. "%")
+         */
+        "valueSuffix": string;
+    }
+    interface McToggle {
+        "checked": boolean;
+        "disabled": boolean;
+        "labelClass": string;
+        "labelName": string;
+        "name": string;
         "value": string;
     }
     interface MxBadge {
@@ -1216,11 +1288,35 @@ declare global {
         prototype: HTMLMcButtonElement;
         new (): HTMLMcButtonElement;
     };
+    interface HTMLMcCheckboxElement extends Components.McCheckbox, HTMLStencilElement {
+    }
+    var HTMLMcCheckboxElement: {
+        prototype: HTMLMcCheckboxElement;
+        new (): HTMLMcCheckboxElement;
+    };
     interface HTMLMcInputElement extends Components.McInput, HTMLStencilElement {
     }
     var HTMLMcInputElement: {
         prototype: HTMLMcInputElement;
         new (): HTMLMcInputElement;
+    };
+    interface HTMLMcRadioElement extends Components.McRadio, HTMLStencilElement {
+    }
+    var HTMLMcRadioElement: {
+        prototype: HTMLMcRadioElement;
+        new (): HTMLMcRadioElement;
+    };
+    interface HTMLMcRangeElement extends Components.McRange, HTMLStencilElement {
+    }
+    var HTMLMcRangeElement: {
+        prototype: HTMLMcRangeElement;
+        new (): HTMLMcRangeElement;
+    };
+    interface HTMLMcToggleElement extends Components.McToggle, HTMLStencilElement {
+    }
+    var HTMLMcToggleElement: {
+        prototype: HTMLMcToggleElement;
+        new (): HTMLMcToggleElement;
     };
     interface HTMLMxBadgeElement extends Components.MxBadge, HTMLStencilElement {
     }
@@ -1452,7 +1548,11 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "mc-button": HTMLMcButtonElement;
+        "mc-checkbox": HTMLMcCheckboxElement;
         "mc-input": HTMLMcInputElement;
+        "mc-radio": HTMLMcRadioElement;
+        "mc-range": HTMLMcRangeElement;
+        "mc-toggle": HTMLMcToggleElement;
         "mx-badge": HTMLMxBadgeElement;
         "mx-banner": HTMLMxBannerElement;
         "mx-button": HTMLMxButtonElement;
@@ -1535,6 +1635,24 @@ declare namespace LocalJSX {
         "type"?: ButtonTypeAttribute;
         "value"?: string;
     }
+    interface McCheckbox {
+        "checked"?: boolean;
+        "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner input element.
+         */
+        "elAriaLabel"?: string;
+        /**
+          * Hide the label text visually, but still make it accessible for screen readers
+         */
+        "hideLabel"?: boolean;
+        "indeterminate"?: boolean;
+        "labelClass"?: string;
+        "labelLeft"?: boolean;
+        "labelName"?: string;
+        "name"?: string;
+        "value"?: string;
+    }
     interface McInput {
         "disabled"?: boolean;
         "elAriaLabel"?: string;
@@ -1552,6 +1670,60 @@ declare namespace LocalJSX {
         "searchLabel"?: string;
         "showCancelIcon"?: boolean;
         "type"?: McInputType;
+        "value"?: string;
+    }
+    interface McRadio {
+        "checked"?: boolean;
+        "disabled"?: boolean;
+        "labelClass"?: string;
+        "labelName"?: string;
+        "name"?: string;
+        "value"?: string;
+    }
+    interface McRange {
+        "disabled"?: boolean;
+        /**
+          * Set to `true` to prevent the value from being shown to the right of the slider
+         */
+        "hideValue"?: boolean;
+        /**
+          * The `id` attribute for the `input` element
+         */
+        "inputId"?: string;
+        "label"?: string;
+        /**
+          * The maximum value for the slider
+         */
+        "max"?: number;
+        /**
+          * The minimum value for the slider
+         */
+        "min"?: number;
+        "name"?: string;
+        /**
+          * The increment by which the value is changed when adjusting the slider
+         */
+        "step"?: number;
+        "value"?: number;
+        /**
+          * Additional CSS classes to apply to the value text
+         */
+        "valueClass"?: string;
+        /**
+          * A prefix for the displayed value (e.g. "$")
+         */
+        "valuePrefix"?: string;
+        /**
+          * A suffix for the displayed value (e.g. "%")
+         */
+        "valueSuffix"?: string;
+    }
+    interface McToggle {
+        "checked"?: boolean;
+        "disabled"?: boolean;
+        "labelClass"?: string;
+        "labelName"?: string;
+        "name"?: string;
         "value"?: string;
     }
     interface MxBadge {
@@ -2644,7 +2816,11 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "mc-button": McButton;
+        "mc-checkbox": McCheckbox;
         "mc-input": McInput;
+        "mc-radio": McRadio;
+        "mc-range": McRange;
+        "mc-toggle": McToggle;
         "mx-badge": MxBadge;
         "mx-banner": MxBanner;
         "mx-button": MxButton;
@@ -2690,7 +2866,11 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "mc-button": LocalJSX.McButton & JSXBase.HTMLAttributes<HTMLMcButtonElement>;
+            "mc-checkbox": LocalJSX.McCheckbox & JSXBase.HTMLAttributes<HTMLMcCheckboxElement>;
             "mc-input": LocalJSX.McInput & JSXBase.HTMLAttributes<HTMLMcInputElement>;
+            "mc-radio": LocalJSX.McRadio & JSXBase.HTMLAttributes<HTMLMcRadioElement>;
+            "mc-range": LocalJSX.McRange & JSXBase.HTMLAttributes<HTMLMcRangeElement>;
+            "mc-toggle": LocalJSX.McToggle & JSXBase.HTMLAttributes<HTMLMcToggleElement>;
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
             "mx-banner": LocalJSX.MxBanner & JSXBase.HTMLAttributes<HTMLMxBannerElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;

@@ -4,6 +4,7 @@
   --mc-primary-dark-alt: #243c5a;
   --mc-primary-dark: #003b76;
   --mc-primary-hover: #4096ec;
+  --mc-primary-shadow: rgba(0, 115, 230, 0.5);
   --mc-primary: #0073e6;
   --mc-secondary-light: #ced8dc;
   --mc-secondary-medium: #9bb2c9;
@@ -131,6 +132,66 @@
   --mc-text-icon-btn-small-hover: var(--mc-secondary-medium);
   --mc-text-icon-btn: var(--mc-secondary);
   /* #endregion mc-icon-button */
+
+  /* #region mc-checkbox */
+  --mc-bg-checkbox-checked: var(--mc-primary);
+  --mc-bg-checkbox-disabled-checked: var(--mc-secondary-light);
+  --mc-bg-checkbox-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-checkbox-tick: var(--mc-white);
+  --mc-bg-checkbox: var(--mc-white);
+  --mc-border-checkbox-checked: var(--mc-primary);
+  --mc-border-checkbox-disabled-checked: var(--mc-secondary-light);
+  --mc-border-checkbox-disabled: var(--mc-secondary);
+  --mc-border-checkbox-focus: var(--mc-primary);
+  --mc-border-checkbox: var(--mc-secondary);
+  --mc-shadow-checkbox: var(--mc-primary-shadow);
+  --mc-text-checkbox: var(--mc-secondary);
+  /* #endregion mc-checkbox */
+
+  /* #region mc-radio */
+  --mc-bg-radio-checked: var(--mc-primary);
+  --mc-bg-radio-disabled-checked: var(--mc-secondary-light);
+  --mc-bg-radio-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-radio-tick: var(--mc-white);
+  --mc-bg-radio: var(--mc-white);
+  --mc-border-radio-checked: var(--mc-primary);
+  --mc-border-radio-disabled-checked: var(--mc-secondary-light);
+  --mc-border-radio-disabled: var(--mc-secondary);
+  --mc-border-radio-focus: var(--mc-primary);
+  --mc-border-radio: var(--mc-secondary);
+  --mc-shadow-radio: var(--mc-primary-shadow);
+  --mc-text-radio: var(--mc-secondary);
+  /* #endregion mc-radio */
+
+  /* #region mc-toggle */
+  --mc-bg-toggle-checked: var(--mc-primary);
+  --mc-bg-toggle-disabled-checked: var(--mc-secondary-light);
+  --mc-bg-toggle-disabled: var(--mc-white);
+  --mc-bg-toggle-handle-checked: var(--mc-white);
+  --mc-bg-toggle-handle-disabled: var(--mc-secondary-light);
+  --mc-bg-toggle-handle-focus: var(--mc-primary);
+  --mc-bg-toggle-handle: var(--mc-secondary);
+  --mc-bg-toggle: var(--mc-white);
+  --mc-border-toggle-checked: var(--mc-primary);
+  --mc-border-toggle-disabled-checked: var(--mc-secondary-light);
+  --mc-border-toggle-disabled: var(--mc-secondary);
+  --mc-border-toggle-focus: var(--mc-primary);
+  --mc-border-toggle: var(--mc-secondary);
+  --mc-shadow-toggle: var(--mc-primary-shadow);
+  --mc-text-toggle: var(--mc-secondary);
+  /* #endregion mc-toggle */
+
+  /* #region mc-range */
+  --mc-bg-range-fill-disabled: var(--mc-secondary-light);
+  --mc-bg-range-fill: var(--mc-primary);
+  --mc-bg-range-thumb-active: var(--mc-tertiary);
+  --mc-bg-range-thumb-disabled: var(--mc-secondary-light);
+  --mc-bg-range-thumb: var(--mc-primary);
+  --mc-bg-range-track-disabled: var(--mc-secondary-ultra-light);
+  --mc-bg-range-track: var(--mc-secondary-light);
+  --mc-border-range-thumb: var(--mc-white);
+  --mc-text-range: var(--mc-secondary);
+  /* #endregion mc-range */
 
   /* #region buttons */
   /* Contained Buttons */

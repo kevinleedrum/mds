@@ -17,7 +17,8 @@ export default {
 </script>
 
 <style>
-.component-readme h1 {
+.component-readme h1,
+.component-readme h2:first-of-type {
   display: none; /* Hide the element heading that Stencil adds to its readme files. */
 }
 </style>

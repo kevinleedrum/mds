@@ -1,0 +1,41 @@
+mc-toggle {
+  color: var(--mc-text-toggle);
+  label:active input:not(:disabled),
+  label:focus-within input {
+    filter: drop-shadow(0px 0px 0.3125rem var(--mc-shadow-toggle));
+    border-color: var(--mc-border-toggle-focus);
+    &:not(:checked)::after {
+      background-color: var(--mc-bg-toggle-handle-focus);
+    }
+  }
+  input[type='checkbox'] {
+    background-color: var(--mc-bg-toggle);
+    border-color: var(--mc-border-toggle);
+    cursor: inherit;
+    &::after {
+      @apply absolute -top-1 left-0 w-40 h-20 transform -translate-x-20 transition-all duration-200;
+      content: '';
+      background-color: var(--mc-bg-toggle-handle);
+      mask-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='100%' height='100%' viewBox='0 0 40 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M14 8.45 12.719 7l-3.625 4.1L7.28 9.05 6 10.5 9.094 14 14 8.45ZM30 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z' fill='%23fff'/%3e%3c/svg%3e");
+    }
+    &:disabled {
+      background-color: var(--mc-bg-toggle-disabled);
+      border-color: var(--mc-border-toggle-disabled);
+      &::after {
+        background-color: var(--mc-bg-toggle-handle-disabled);
+      }
+    }
+    &:checked {
+      background-color: var(--mc-bg-toggle-checked);
+      border-color: var(--mc-border-toggle-checked);
+      &:disabled {
+        background-color: var(--mc-bg-toggle-disabled-checked);
+        border-color: var(--mc-border-toggle-disabled-checked);
+      }
+      &::after {
+        @apply transform -translate-x-1;
+        background-color: var(--mc-bg-toggle-handle-checked);
+      }
+    }
+  }
+}
