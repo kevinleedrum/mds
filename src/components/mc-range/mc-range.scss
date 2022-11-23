@@ -1,0 +1,53 @@
+mc-range {
+  --mc-min-w-range-value: 1.875rem; /* Default value text's min-width to 30px, which is the width of "100%". */
+  color: var(--mc-text-range);
+  input {
+    /** --mc-bg-range will be changed to a linear gradient via JS in the component. */
+    --mc-bg-range: var(--mc-bg-range-track);
+    --mc-bg-range-1: var(--mc-bg-range-fill);
+    --mc-bg-range-2: var(--mc-bg-range-track);
+    --mc-h-range-track: 0.3125rem; /* 5px */
+    --mc-h-range-thumb: 0.875rem; /* 14px */
+    --mc-mt-range-thumb: -0.28125rem; /* -4.5px = (track height / 2) - (thumb height - 2) */
+    --mc-shadow-range-thumb: 0 0 0 0.25rem var(--mc-border-range-thumb); /* Thumb does not always support border, so we use a shadow instead. */
+    outline-offset: 0.25rem; /* 4px */
+    &:disabled {
+      --mc-bg-range-1: var(--mc-bg-range-fill-disabled);
+      --mc-bg-range-2: var(--mc-bg-range-track-disabled);
+      --mc-bg-range-thumb: var(--mc-bg-range-thumb-disabled);
+      --mc-bg-range-thumb-active: var(--mc-bg-range-thumb-disabled);
+    }
+    &:active {
+      --mc-bg-range-thumb: var(--mc-bg-range-thumb-active);
+    }
+    &::-webkit-slider-runnable-track {
+      @apply rounded-full;
+      background: var(--mc-bg-range);
+      height: var(--mc-h-range-track);
+    }
+    &::-moz-range-track {
+      @apply rounded-full;
+      background: var(--mc-bg-range);
+      height: var(--mc-h-range-track);
+    }
+    &::-webkit-slider-thumb {
+      @apply appearance-none rounded-full;
+      background-color: var(--mc-bg-range-thumb);
+      box-shadow: var(--mc-shadow-range-thumb);
+      height: var(--mc-h-range-thumb);
+      width: var(--mc-h-range-thumb);
+      margin-top: var(--mc-mt-range-thumb);
+    }
+    &::-moz-range-thumb {
+      @apply appearance-none border-0 rounded-full;
+      background-color: var(--mc-bg-range-thumb);
+      box-shadow: var(--mc-shadow-range-thumb);
+      height: var(--mc-h-range-thumb);
+      width: var(--mc-h-range-thumb);
+      margin-top: var(--mc-mt-range-thumb);
+    }
+  }
+  input + span {
+    min-width: var(--mc-min-w-range-value);
+  }
+}
