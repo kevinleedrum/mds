@@ -203,13 +203,13 @@
   --mc-text-modal: var(--mc-secondary);
   /* #endregion mc-modal */
 
-  /* #region mc-modal-menu */
-  --mc-bg-modal-menu: var(--mc-secondary-ultra-light);
-  --mc-bg-modal-menu-item-active: var(--mc-primary);
-  --mc-text-modal-menu-header: var(--mc-white);
-  --mc-text-modal-menu-item-active: var(--mc-white);
-  --mc-text-modal-menu-item: var(--mc-secondary);
-  /* #endregion mc-modal-menu */
+  /* #region mc-modal-nav */
+  --mc-bg-modal-nav: var(--mc-secondary-ultra-light);
+  --mc-bg-modal-nav-item-active: var(--mc-primary);
+  --mc-text-modal-nav-header: var(--mc-white);
+  --mc-text-modal-nav-item-active: var(--mc-white);
+  --mc-text-modal-nav-item: var(--mc-secondary);
+  /* #endregion mc-modal-nav */
 
   /* #region buttons */
   /* Contained Buttons */

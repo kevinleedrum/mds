@@ -77,7 +77,18 @@ Modals are a type of dialog that prevents interaction with any other UI elements
       <mc-button @click="isNavModalOpen = false">OK</mc-button>
       <mc-button btn-type="transparent" @click="isNavModalOpen = false">Cancel</mc-button>
     </div>
-    <div slot="nav"></div>
+    <div slot="nav">
+      <li><a>Item One</a></li>
+      <li><a>Item Two</a></li>
+      <li><a class="active">Item Three</a></li>
+      <li><a>Item Four</a></li>
+      <li><a>Item Five</a></li>
+      <li><a>Item Six</a></li>
+      <li><a>Item Seven</a></li>
+      <li><a>Item Eight</a></li>
+      <li><a>Item Nine</a></li>
+      <li><a>Item Ten</a></li>
+    </div>
   </mc-modal>
 </section>
 <!-- #endregion mc-modal-nav -->

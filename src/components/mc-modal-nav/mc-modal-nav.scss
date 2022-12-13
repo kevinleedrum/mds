@@ -1,0 +1,15 @@
+mc-modal-nav nav {
+  background-color: var(--mc-bg-modal-nav);
+  header {
+    color: var(--mc-text-modal-nav-header);
+  }
+  li a {
+    @apply flex items-center py-12 pr-10 pl-6 rounded cursor-pointer;
+    color: var(--mc-text-modal-nav-item) !important;
+    &.active {
+      @apply font-bold;
+      background-color: var(--mc-bg-modal-nav-item-active);     
+      color: var(--mc-text-modal-nav-item-active) !important;
+    }
+  }
+}

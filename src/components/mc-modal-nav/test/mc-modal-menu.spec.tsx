@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { McModalMenu } from '../mc-modal-menu';
+import { McModalNav } from '../mc-modal-nav';
 
-describe('mc-modal-menu', () => {
+describe('mc-modal-nav', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [McModalMenu],
-      html: `<mc-modal-menu></mc-modal-menu>`,
+      components: [McModalNav],
+      html: `<mc-modal-nav></mc-modal-nav>`,
     });
     expect(page.root).toEqualHtml(`
-      <mc-modal-menu>
+      <mc-modal-nav>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </mc-modal-menu>
+      </mc-modal-nav>
     `);
   });
 });

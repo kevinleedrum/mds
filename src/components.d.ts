@@ -134,7 +134,7 @@ export namespace Components {
          */
         "navHeading": string;
     }
-    interface McModalMenu {
+    interface McModalNav {
         "heading": string;
     }
     interface MxBadge {
@@ -1293,11 +1293,11 @@ declare global {
         prototype: HTMLMcModalElement;
         new (): HTMLMcModalElement;
     };
-    interface HTMLMcModalMenuElement extends Components.McModalMenu, HTMLStencilElement {
+    interface HTMLMcModalNavElement extends Components.McModalNav, HTMLStencilElement {
     }
-    var HTMLMcModalMenuElement: {
-        prototype: HTMLMcModalMenuElement;
-        new (): HTMLMcModalMenuElement;
+    var HTMLMcModalNavElement: {
+        prototype: HTMLMcModalNavElement;
+        new (): HTMLMcModalNavElement;
     };
     interface HTMLMxBadgeElement extends Components.MxBadge, HTMLStencilElement {
     }
@@ -1532,7 +1532,7 @@ declare global {
         "mc-icon-button": HTMLMcIconButtonElement;
         "mc-input": HTMLMcInputElement;
         "mc-modal": HTMLMcModalElement;
-        "mc-modal-menu": HTMLMcModalMenuElement;
+        "mc-modal-nav": HTMLMcModalNavElement;
         "mx-badge": HTMLMxBadgeElement;
         "mx-banner": HTMLMxBannerElement;
         "mx-button": HTMLMxButtonElement;
@@ -1686,7 +1686,7 @@ declare namespace LocalJSX {
         "navHeading"?: string;
         "onMcClose"?: (event: McModalCustomEvent<any>) => void;
     }
-    interface McModalMenu {
+    interface McModalNav {
         "heading"?: string;
     }
     interface MxBadge {
@@ -2782,7 +2782,7 @@ declare namespace LocalJSX {
         "mc-icon-button": McIconButton;
         "mc-input": McInput;
         "mc-modal": McModal;
-        "mc-modal-menu": McModalMenu;
+        "mc-modal-nav": McModalNav;
         "mx-badge": MxBadge;
         "mx-banner": MxBanner;
         "mx-button": MxButton;
@@ -2831,7 +2831,7 @@ declare module "@stencil/core" {
             "mc-icon-button": LocalJSX.McIconButton & JSXBase.HTMLAttributes<HTMLMcIconButtonElement>;
             "mc-input": LocalJSX.McInput & JSXBase.HTMLAttributes<HTMLMcInputElement>;
             "mc-modal": LocalJSX.McModal & JSXBase.HTMLAttributes<HTMLMcModalElement>;
-            "mc-modal-menu": LocalJSX.McModalMenu & JSXBase.HTMLAttributes<HTMLMcModalMenuElement>;
+            "mc-modal-nav": LocalJSX.McModalNav & JSXBase.HTMLAttributes<HTMLMcModalNavElement>;
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
             "mx-banner": LocalJSX.MxBanner & JSXBase.HTMLAttributes<HTMLMxBannerElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;

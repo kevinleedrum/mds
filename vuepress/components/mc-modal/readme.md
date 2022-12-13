@@ -29,13 +29,13 @@
 
 ### Depends on
 
-- [mc-modal-menu](../mc-modal-menu)
+- [mc-modal-nav](../mc-modal-nav)
 - [mc-icon-button](../mc-icon-button)
 
 ### Graph
 ```mermaid
 graph TD;
-  mc-modal --> mc-modal-menu
+  mc-modal --> mc-modal-nav
   mc-modal --> mc-icon-button
   style mc-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```

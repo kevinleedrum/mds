@@ -149,9 +149,9 @@ export class McModal {
           style={{ width: this.hasNav ? '50rem' : '36.25rem' }}
         >
           {this.hasNav && (
-            <mc-modal-menu heading={this.navHeading}>
+            <mc-modal-nav heading={this.navHeading}>
               <slot name="nav"></slot>
-            </mc-modal-menu>
+            </mc-modal-nav>
           )}
           <div class="flex flex-col pb-20 sm:pb-40 text-body1 max-w-full">
             <div class="mt-20 px-20 sm:mt-40 sm:px-40 flex-1 overflow-auto" tabindex="0" data-testid="modal-content">

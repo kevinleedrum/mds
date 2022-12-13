@@ -1,4 +1,4 @@
-# mc-modal-menu
+# mc-modal-nav
 
 
 
@@ -21,8 +21,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  mc-modal --> mc-modal-menu
-  style mc-modal-menu fill:#f9f,stroke:#333,stroke-width:4px
+  mc-modal --> mc-modal-nav
+  style mc-modal-nav fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
