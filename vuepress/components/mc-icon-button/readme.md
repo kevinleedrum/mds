@@ -21,6 +21,19 @@
 | `value`       | `value`         |                                                        | `string`                          | `undefined` |
 
 
+## Dependencies
+
+### Used by
+
+ - [mc-modal](../mc-modal)
+
+### Graph
+```mermaid
+graph TD;
+  mc-modal --> mc-icon-button
+  style mc-icon-button fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 

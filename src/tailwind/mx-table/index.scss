@@ -2,7 +2,7 @@
   color: var(--mds-text-table);
 
   [slot='search'] {
-    @media (min-width: 640px) {
+    @media (min-width: 620px) {
       min-width: 15rem;
     }
   }

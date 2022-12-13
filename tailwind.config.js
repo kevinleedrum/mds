@@ -6,6 +6,14 @@ const config = {
   important: '.mds',
   darkMode: false, // or 'media' or 'class'
   theme: {
+    screens: {
+      'xs': '370px',
+      'sm': '620px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     boxShadow: {
       0: '0 0 #0000;',
       1: '0px 0px 2px rgba(0, 0, 0, 0.04), 0px 2px 2px rgba(0, 0, 0, 0.02), 0px 1px 3px rgba(0, 0, 0, 0.06)',
@@ -76,6 +84,7 @@ const config = {
       360: '22.5rem',
       384: '24rem',
       480: '30rem',
+      600: '37.5rem',
     },
     extend: {
       colors: {

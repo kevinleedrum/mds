@@ -1,5 +1,95 @@
 # Modals
 
+Modals are a type of dialog that prevents interaction with any other UI elements on a page. They help users focus on performing specific tasks within.
+
+<!-- #region mc-modal -->
+<section class="mds">
+  <mc-button class="mt-20" @click="isModalOpen = true">Open Modal</mc-button>
+  <mc-modal
+    :is-open="isModalOpen"
+    heading="Modal Heading"
+    description="Supporting text if needed"
+    @mcClose="isModalOpen = false"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    <div slot="footer">
+      <mc-button @click="isModalOpen = false">OK</mc-button>
+      <mc-button btn-type="transparent" @click="isModalOpen = false">Cancel</mc-button>
+    </div>
+  </mc-modal>
+</section>
+<!-- #endregion mc-modal -->
+
+<<< @/vuepress/components/modals.md#mc-modal
+
+<!-- #region mc-modal-nav -->
+<section class="mds">
+  <mc-button class="mt-20" @click="isNavModalOpen = true">Open Modal with Side Nav</mc-button>
+  <mc-modal
+    :is-open="isNavModalOpen"
+    heading="Modal heading that is long enough to wrap multiple lines"
+    description="Supporting text if needed"
+    nav-heading="Title"
+    @mcClose="isNavModalOpen = false"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel
+    tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.
+    Donec euismod, nisl vel tincidunt lacinia, nisl nisl aliquet nisl, eget aliquet.
+    <div slot="footer">
+      <mc-button @click="isNavModalOpen = false">OK</mc-button>
+      <mc-button btn-type="transparent" @click="isNavModalOpen = false">Cancel</mc-button>
+    </div>
+    <div slot="nav"></div>
+  </mc-modal>
+</section>
+<!-- #endregion mc-modal-nav -->
+
+<<< @/vuepress/components/modals.md#mc-modal-nav
+
+## mc-modal Properties
+
+<ComponentReadme component="mc-modal" />
+
+## Deprecated modals ⚠️
+
 Modals appear in front of app content and remain on screen until the user takes action to close the modal. A Modal may be used when a [Dialog](/components/dialogs.html) will not suffice.
 
 To open or close a modal, set its `isOpen` prop to `true` or `false`. The modal will emit an `mxClose` event when the user clicks the Close button, presses <kbd>Esc</kbd>, or clicks outside the modal (unless that behavior is disabled via props).
@@ -225,6 +315,8 @@ If `fromLeft` or `fromRight` are set, then the modal will appear fixed to one si
 export default {
   data() {
     return {
+      isModalOpen: false,
+      isNavModalOpen: false,
       isALarge: false,
       isOpenA: false,
       isOpenB: false,

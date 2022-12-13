@@ -6,8 +6,9 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonTypeAttribute, McBtnType } from "./components/mc-button/mc-button";
+import { ButtonTypeAttribute as ButtonTypeAttribute1, McIconBtnType } from "./components/mc-icon-button/mc-icon-button";
 import { McInputType } from "./components/mc-input/mc-input";
-import { BtnType, ButtonTypeAttribute as ButtonTypeAttribute1 } from "./components/mx-button/mx-button";
+import { BtnType, ButtonTypeAttribute as ButtonTypeAttribute2 } from "./components/mx-button/mx-button";
 import { ChartJsData, ChartJsOptions } from "./components/mx-chart/mx-chart";
 import { ChartType } from "chart.js";
 import { MxInputIcon } from "./components/mx-input/mx-input";
@@ -63,6 +64,30 @@ export namespace Components {
         "type": ButtonTypeAttribute;
         "value": string;
     }
+    interface McIconButton {
+        "btnType": McIconBtnType;
+        "disabled": boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel": string;
+        "form": string;
+        "formaction": string;
+        /**
+          * Create button as link
+         */
+        "href": string;
+        /**
+          * Class name of icon
+         */
+        "icon": string;
+        /**
+          * Only for link buttons
+         */
+        "target": string;
+        "type": ButtonTypeAttribute;
+        "value": string;
+    }
     interface McInput {
         "disabled": boolean;
         "elAriaLabel": string;
@@ -81,6 +106,36 @@ export namespace Components {
         "showCancelIcon": boolean;
         "type": McInputType;
         "value": string;
+    }
+    interface McModal {
+        /**
+          * If set to false, pressing Escape will not close the modal.
+         */
+        "closeOnEscape": boolean;
+        /**
+          * If set to false, clicking the backdrop will not close the modal.
+         */
+        "closeOnOutsideClick": boolean;
+        /**
+          * An optional description to display above the modal content
+         */
+        "description": string;
+        /**
+          * Heading text. Use the `heading` slot instead if markup is needed.
+         */
+        "heading": string;
+        "hideCloseButton": boolean;
+        /**
+          * Toggle the modal
+         */
+        "isOpen": boolean;
+        /**
+          * The nav menu heading (if using the nav slot)
+         */
+        "navHeading": string;
+    }
+    interface McModalMenu {
+        "heading": string;
     }
     interface MxBadge {
         /**
@@ -1153,6 +1208,10 @@ export namespace Components {
         "value": string;
     }
 }
+export interface McModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMcModalElement;
+}
 export interface MxChipCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMxChipElement;
@@ -1216,11 +1275,29 @@ declare global {
         prototype: HTMLMcButtonElement;
         new (): HTMLMcButtonElement;
     };
+    interface HTMLMcIconButtonElement extends Components.McIconButton, HTMLStencilElement {
+    }
+    var HTMLMcIconButtonElement: {
+        prototype: HTMLMcIconButtonElement;
+        new (): HTMLMcIconButtonElement;
+    };
     interface HTMLMcInputElement extends Components.McInput, HTMLStencilElement {
     }
     var HTMLMcInputElement: {
         prototype: HTMLMcInputElement;
         new (): HTMLMcInputElement;
+    };
+    interface HTMLMcModalElement extends Components.McModal, HTMLStencilElement {
+    }
+    var HTMLMcModalElement: {
+        prototype: HTMLMcModalElement;
+        new (): HTMLMcModalElement;
+    };
+    interface HTMLMcModalMenuElement extends Components.McModalMenu, HTMLStencilElement {
+    }
+    var HTMLMcModalMenuElement: {
+        prototype: HTMLMcModalMenuElement;
+        new (): HTMLMcModalMenuElement;
     };
     interface HTMLMxBadgeElement extends Components.MxBadge, HTMLStencilElement {
     }
@@ -1452,7 +1529,10 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "mc-button": HTMLMcButtonElement;
+        "mc-icon-button": HTMLMcIconButtonElement;
         "mc-input": HTMLMcInputElement;
+        "mc-modal": HTMLMcModalElement;
+        "mc-modal-menu": HTMLMcModalMenuElement;
         "mx-badge": HTMLMxBadgeElement;
         "mx-banner": HTMLMxBannerElement;
         "mx-button": HTMLMxButtonElement;
@@ -1535,6 +1615,30 @@ declare namespace LocalJSX {
         "type"?: ButtonTypeAttribute;
         "value"?: string;
     }
+    interface McIconButton {
+        "btnType"?: McIconBtnType;
+        "disabled"?: boolean;
+        /**
+          * The aria-label attribute for the inner button element.
+         */
+        "elAriaLabel"?: string;
+        "form"?: string;
+        "formaction"?: string;
+        /**
+          * Create button as link
+         */
+        "href"?: string;
+        /**
+          * Class name of icon
+         */
+        "icon"?: string;
+        /**
+          * Only for link buttons
+         */
+        "target"?: string;
+        "type"?: ButtonTypeAttribute;
+        "value"?: string;
+    }
     interface McInput {
         "disabled"?: boolean;
         "elAriaLabel"?: string;
@@ -1553,6 +1657,37 @@ declare namespace LocalJSX {
         "showCancelIcon"?: boolean;
         "type"?: McInputType;
         "value"?: string;
+    }
+    interface McModal {
+        /**
+          * If set to false, pressing Escape will not close the modal.
+         */
+        "closeOnEscape"?: boolean;
+        /**
+          * If set to false, clicking the backdrop will not close the modal.
+         */
+        "closeOnOutsideClick"?: boolean;
+        /**
+          * An optional description to display above the modal content
+         */
+        "description"?: string;
+        /**
+          * Heading text. Use the `heading` slot instead if markup is needed.
+         */
+        "heading"?: string;
+        "hideCloseButton"?: boolean;
+        /**
+          * Toggle the modal
+         */
+        "isOpen"?: boolean;
+        /**
+          * The nav menu heading (if using the nav slot)
+         */
+        "navHeading"?: string;
+        "onMcClose"?: (event: McModalCustomEvent<any>) => void;
+    }
+    interface McModalMenu {
+        "heading"?: string;
     }
     interface MxBadge {
         /**
@@ -2644,7 +2779,10 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "mc-button": McButton;
+        "mc-icon-button": McIconButton;
         "mc-input": McInput;
+        "mc-modal": McModal;
+        "mc-modal-menu": McModalMenu;
         "mx-badge": MxBadge;
         "mx-banner": MxBanner;
         "mx-button": MxButton;
@@ -2690,7 +2828,10 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "mc-button": LocalJSX.McButton & JSXBase.HTMLAttributes<HTMLMcButtonElement>;
+            "mc-icon-button": LocalJSX.McIconButton & JSXBase.HTMLAttributes<HTMLMcIconButtonElement>;
             "mc-input": LocalJSX.McInput & JSXBase.HTMLAttributes<HTMLMcInputElement>;
+            "mc-modal": LocalJSX.McModal & JSXBase.HTMLAttributes<HTMLMcModalElement>;
+            "mc-modal-menu": LocalJSX.McModalMenu & JSXBase.HTMLAttributes<HTMLMcModalMenuElement>;
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
             "mx-banner": LocalJSX.MxBanner & JSXBase.HTMLAttributes<HTMLMxBannerElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;

@@ -31,8 +31,8 @@ const FADE_OUT: TransitionOptions = {
 
 const SCALE_IN: TransitionOptions = {
   property: 'transform',
-  startValue: 'scale(0.8)',
-  endValue: 'scale(1)',
+  startValue: 'scale3d(0.8, 0.8, 0.8)',
+  endValue: 'scale3d(1, 1, 1)',
   timing: 'cubic-bezier(0.4, 0, 0.2, 1)',
 };
 

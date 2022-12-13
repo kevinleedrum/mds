@@ -6,7 +6,7 @@ There are five breakpoints by default, inspired by common device resolutions:
 
 | Breakpoint prefix | Minimum width | CSS                                  |
 | ----------------- | ------------- | ------------------------------------ |
-| `sm`              | 640px         | `@media (min-width: 640px) { ... }`  |
+| `sm`              | 620px         | `@media (min-width: 620px) { ... }`  |
 | `md`              | 768px         | `@media (min-width: 768px) { ... }`  |
 | `lg`              | 1024px        | `@media (min-width: 1024px) { ... }` |
 | `xl`              | 1280px        | `@media (min-width: 1280px) { ... }` |
@@ -34,14 +34,14 @@ Where this approach surprises people most often is that to style something for m
 Don't use <code className="text-4 font-bold text-gray-800">sm:</code> to target mobile devices
 
 ```html
-<!-- This will only center text on screens 640px and wider, not on small screens -->
+<!-- This will only center text on screens 620px and wider, not on small screens -->
 <div class="sm:text-center"></div>
 ```
 
 Use unprefixed utilities to target mobile, and override them at larger breakpoints
 
 ```html
-<!-- This will center text on mobile, and left align it on screens 640px and wider -->
+<!-- This will center text on mobile, and left align it on screens 620px and wider -->
 <div class="text-center sm:text-left"></div>
 ```
 

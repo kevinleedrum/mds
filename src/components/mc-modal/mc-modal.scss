@@ -1,0 +1,22 @@
+mc-modal {
+  .modal-overlay {
+    background-color: var(--mc-bg-modal-overlay);
+  }
+  .modal {
+    background-color: var(--mc-bg-modal);
+    box-shadow: 0px 0px 10px var(--mc-shadow-modal);
+    color: var(--mc-text-modal);
+  }
+  [slot='footer'] {
+    @apply flex flex-col xs:flex-row-reverse flex-1 gap-10;
+  }
+  ::-webkit-scrollbar {
+    @apply w-20;
+    background: var(--mc-bg-modal);
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full;
+    border: 0.5rem solid var(--mc-bg-modal);
+    background: var(--mc-secondary-light); /* TODO */
+  }
+}
