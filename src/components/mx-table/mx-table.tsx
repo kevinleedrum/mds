@@ -386,7 +386,7 @@ export class MxTable {
     const rows = this.getTableRows();
     rows.forEach((row: HTMLMxTableRowElement) => {
       if (row.subheader) return;
-      const cells = row.querySelectorAll('mx-table-cell');
+      const cells = row.querySelectorAll('mx-table-cell:not(mx-table-row mx-table-row mx-table-cell)');
       let colIndex = 0;
       cells.forEach((cell: HTMLMxTableCellElement) => {
         cell.columnIndex = colIndex;
@@ -462,7 +462,7 @@ export class MxTable {
       // If `columns` prop is missing or does not have enough defintions for all columns, add default columns
       const rows = this.getTableRows().filter(row => !row.subheader);
       if (rows.length) {
-        const cellCount = rows[0].querySelectorAll('mx-table-cell').length;
+        const cellCount = rows[0].querySelectorAll('mx-table-cell:not(mx-table-row mx-table-row mx-table-cell)').length;
         if (cellCount !== cols.length) {
           cols = cols.concat(new Array(cellCount).fill({})).slice(0, cellCount);
         }
