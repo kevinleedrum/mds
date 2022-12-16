@@ -414,8 +414,8 @@ export class MxTableRow {
   }
 
   get rowClass(): string {
-    let str = 'table-row overflow-hidden';
-    str += this.minWidths.sm ? ' contents' : ' grid';
+    let str = 'table-row';
+    str += this.minWidths.sm ? ' contents' : ' grid overflow-hidden';
     if (this.checkable) str += ' checkable-row';
     if (this.checkable && this.checkOnRowClick) str += ' cursor-pointer';
     if (!this.minWidths.sm && !this.isMobileExpanded) str += ' mobile-collapsed';
