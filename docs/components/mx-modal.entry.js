@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { m as moveToPortal } from './portal-9203402a.js';
 import { f as fadeIn, b as fadeOut, d as fadeScaleIn, g as fadeSlideIn, D as Direction, h as fadeSlideOut } from './transitions-29f7f3e5.js';
@@ -14,26 +14,16 @@ const MxModal = class {
     this.hasHeaderBottom = false;
     this.hasHeaderCenter = false;
     this.uuid = uuidv4();
-    /** An array of prop objects for buttons to display in the button tray.  Use the `label` property to specify the button's inner text. */
     this.buttons = [];
-    /** If set to false, pressing Escape will not close the modal. */
     this.closeOnEscape = true;
-    /** If set to false, clicking the backdrop will not close the modal. */
     this.closeOnOutsideClick = true;
-    /** Additional classes for the inner scrolling container. */
     this.contentClass = '';
-    /** Instead of centering, attach the modal to the left side of the window */
+    this.description = undefined;
     this.fromLeft = false;
-    /** Instead of centering, attach the modal to the right side of the window */
     this.fromRight = false;
-    /** Toggle the modal */
     this.isOpen = false;
-    /** The text to display for the previous page link */
     this.previousPageTitle = 'Back';
-    /** The URL for the previous page link */
     this.previousPageUrl = '';
-    /** Set to true to stretch the modal to nearly fill the width and height of the page
-     * (on desktop-sized screens).  Otherwise, the maximum dimensions are 800x600px. */
     this.large = false;
     this.minWidths = new MinWidths();
     this.isVisible = false;

@@ -1,20 +1,14 @@
-import { r as registerInstance, h, e as Host } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host } from './index-7d7e62d7.js';
 import { r as ripple } from './ripple-140c6d57.js';
 
 const MxTab = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
-    /** Label text to display */
     this.label = '';
-    /** If you are not providing a `label`, this should be provided instead for accessibility */
     this.elAriaLabel = '';
-    /** Class name of icon to display */
     this.icon = '';
-    /** Do not set this manually. It will be set automatically based on the `mx-tabs` `value` prop */
     this.selected = false;
-    /** Display a circular badge */
     this.badge = false;
-    /** Additional classes for the badge */
     this.badgeClass = '';
   }
   componentDidLoad() {

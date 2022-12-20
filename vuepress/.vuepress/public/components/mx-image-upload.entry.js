@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 
 const MxImageUpload = class {
   constructor(hostRef) {
@@ -7,35 +7,31 @@ const MxImageUpload = class {
     this.hasInstructions = false;
     this.hasSuccess = false;
     this.hasError = false;
-    /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
     this.acceptImage = true;
-    /** Set `acceptImage` to `false` and `acceptPdf` to `true` to only accept PDF files.  Set both to `false` to accept any file. */
     this.acceptPdf = false;
-    /** Replaces the word "image" in the default dropzone text (i.e. "No image to show"). */
     this.assetName = 'image';
-    /** Sets the width and height to 80px and changes the icon. */
+    this.assistiveText = undefined;
     this.avatar = false;
     this.error = false;
-    /** The [`btnType` prop](/components/buttons.html) for the Upload button. */
+    this.elAriaLabel = undefined;
     this.uploadBtnType = 'contained';
-    /** Sets the thumbnail sizing strategy relative to the container. */
     this.thumbnailSize = 'cover';
-    /** Set to `true` to show the Remove button, thumbnail, and `uploaded` slot content. */
+    this.height = undefined;
+    this.icon = undefined;
+    this.inputId = undefined;
     this.isUploaded = false;
-    /** Set to `true` to disable the button and show the circular progress indicator. */
     this.isUploading = false;
-    /** The text to display on the Remove button */
+    this.name = undefined;
     this.removeButtonLabel = 'Remove';
-    /** Set to `false` to hide the default Upload/Remove button. */
     this.showButton = true;
-    /** Set to `false` to hide the dropzone icon. */
     this.showIcon = true;
-    /** Set to `false` to hide the dropzone text. */
     this.showDropzoneText = true;
-    /** The text to display on the Upload button */
+    this.thumbnailUrl = undefined;
     this.uploadButtonLabel = 'Upload';
+    this.width = undefined;
     this.isDraggingOver = false;
     this.isFileSelected = false;
+    this.thumbnailDataUri = undefined;
   }
   onThumbnailUrlChange() {
     if (this.thumbnailUrl)

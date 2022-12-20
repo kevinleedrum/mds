@@ -1,6 +1,6 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { R as ResizeObserver } from './resize-observer-9111af2a.js';
+import { R as ResizeObserver } from './resize-observer-731c02df.js';
 
 var __rest = (undefined && undefined.__rest) || function (s, e) {
   var t = {};
@@ -20,15 +20,10 @@ const MxPageHeader = class {
     this.hasTabs = false;
     this.hasModalHeaderCenter = false;
     this.hasModalHeaderRight = false;
-    /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
     this.buttons = [];
-    /** This flag is set by the Modal component to adjust the page header styling when used internally. */
     this.modal = false;
-    /** The URL for the previous page link */
     this.previousPageUrl = '';
-    /** The text to display for the previous page link */
     this.previousPageTitle = 'Back';
-    /** When set to true, the Page Header will use the themed background pattern. */
     this.pattern = false;
     this.minWidths = new MinWidths();
     this.renderTertiaryButtonAsMenu = false;

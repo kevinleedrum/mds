@@ -1,11 +1,12 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
 const MxTableCell = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
-    /** This is automatically set by the parent `mx-table`. */
     this.isExposedMobileColumn = true;
+    this.columnIndex = undefined;
+    this.heading = undefined;
     this.minWidths = new MinWidths();
   }
   connectedCallback() {

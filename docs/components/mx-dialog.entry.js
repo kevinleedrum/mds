@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { u as unlockBodyScroll, l as lockBodyScroll } from './bodyScroll-166c2095.js';
 import { m as moveToPortal } from './portal-9203402a.js';
 import { f as fadeIn, d as fadeScaleIn, b as fadeOut } from './transitions-29f7f3e5.js';
@@ -12,8 +12,8 @@ const MxDialog = class {
     this.hasButtons = false;
     this.hasHeading = false;
     this.uuid = uuidv4();
-    /** Toggles the visibility of the dialog (when using the slots for content). */
     this.isOpen = false;
+    this.modalClass = undefined;
     this.isVisible = false;
   }
   onIsOpenChange() {

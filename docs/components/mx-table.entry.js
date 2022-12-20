@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, i as forceUpdate, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, i as forceUpdate, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { g as getPageRect, a as getCursorCoords, c as capitalize, i as isDateObject } from './utils-eee50014.js';
 
@@ -15,49 +15,35 @@ const MxTable = class {
     this.hasFilter = false;
     this.hasFooter = false;
     this.showOperationsBar = false;
-    /** Set to `true` to allow smaller tables to shrink to less than 100% width on larger screens */
     this.autoWidth = false;
-    /** Make rows checkable.  You must either provide a `getRowId` getter (for generated rows), or
-     * provide a `rowId` for every `mx-table-row` if creating the rows manually in the table's slot. */
     this.checkable = false;
-    /** Set to `true` to allow checking rows by clicking on any dead space inside the row. */
     this.checkOnRowClick = false;
-    /** An array of column definitions.  If not specified, a column will be generated for each property on the row object. */
     this.columns = [];
-    /** Disable the next-page button.  Useful when using server-side pagination and the total number of rows is unknown. */
     this.disableNextPage = false;
-    /** Disable the pagination buttons (i.e. while loading results) */
     this.disablePagination = false;
-    /** Enables reordering of rows via drag and drop. */
     this.draggableRows = false;
-    /** The row property to use for grouping rows.  The `rows` prop must be provided as well. */
+    this.getGroupByHeading = undefined;
+    this.getMultiRowActions = undefined;
+    this.getRowActions = undefined;
+    this.getRowId = undefined;
     this.groupBy = null;
     this.hoverable = true;
-    /** Set to `true` to use an alternate mobile layout for the operations bar where the filter slot
-     * is next to the (un)check-all checkbox and the search slot is in a row above. */
     this.mobileSearchOnTop = false;
-    /** Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop. */
     this.mutateOnDrag = true;
-    /** Additional class names for the operation bar grid */
     this.operationsBarClass = '';
-    /** The page to display */
     this.page = 1;
-    /** Show the pagination component.  Setting this to `false` will show all rows. */
     this.paginate = true;
-    /** Delay the appearance of the progress bar for this many milliseconds */
     this.progressAppearDelay = 0;
-    /** The progress bar percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress bar will be displayed. */
     this.progressValue = null;
-    /** An array of objects that defines the table's dataset. */
     this.rows = [];
     this.rowsPerPage = 10;
-    /** Do not sort or paginate client-side. Use events to send server requests instead. */
+    this.rowsPerPageOptions = undefined;
     this.serverPaginate = false;
-    /** Set to `false` to hide the (un)check all checkbox at the top of the table. */
     this.showCheckAll = true;
-    /** Show a progress bar below the header row */
     this.showProgressBar = false;
     this.sortAscending = true;
+    this.sortBy = undefined;
+    this.totalRows = undefined;
     this.minWidths = new MinWidths();
     this.checkedRowIds = [];
     this.exposedMobileColumnIndex = 0;
@@ -268,7 +254,7 @@ const MxTable = class {
     rows.forEach((row) => {
       if (row.subheader)
         return;
-      const cells = row.querySelectorAll('mx-table-cell');
+      const cells = row.querySelectorAll('mx-table-cell:not(mx-table-row mx-table-row mx-table-cell)');
       let colIndex = 0;
       cells.forEach((cell) => {
         cell.columnIndex = colIndex;
@@ -341,7 +327,7 @@ const MxTable = class {
       // If `columns` prop is missing or does not have enough defintions for all columns, add default columns
       const rows = this.getTableRows().filter(row => !row.subheader);
       if (rows.length) {
-        const cellCount = rows[0].querySelectorAll('mx-table-cell').length;
+        const cellCount = rows[0].querySelectorAll('mx-table-cell:not(mx-table-row mx-table-row mx-table-cell)').length;
         if (cellCount !== cols.length) {
           cols = cols.concat(new Array(cellCount).fill({})).slice(0, cellCount);
         }

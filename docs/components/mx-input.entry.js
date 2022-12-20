@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { u as uuidv4, p as propagateDataAttributes } from './utils-eee50014.js';
 
 const MxInput = class {
@@ -6,23 +6,31 @@ const MxInput = class {
     registerInstance(this, hostRef);
     this.dataAttributes = {};
     this.uuid = uuidv4();
-    /** The `type` attribute for the text input */
+    this.componentWillRender = propagateDataAttributes;
+    this.name = undefined;
+    this.inputId = undefined;
+    this.label = undefined;
+    this.placeholder = undefined;
+    this.value = undefined;
     this.type = 'text';
     this.dense = false;
     this.disabled = false;
     this.readonly = false;
+    this.maxlength = undefined;
+    this.leftIcon = undefined;
+    this.rightIcon = undefined;
+    this.suffix = undefined;
     this.outerContainerClass = '';
     this.labelClass = '';
     this.error = false;
+    this.assistiveText = undefined;
     this.floatLabel = false;
-    /** Display a multi-line `textarea` instead of an `input` */
     this.textarea = false;
     this.textareaHeight = '15.625rem';
-    /** Set to `true` to hide the character count when a `maxlength` is set. */
+    this.elAriaLabel = undefined;
     this.hideCharacterCount = false;
     this.isFocused = false;
     this.characterCount = 0;
-    this.componentWillRender = propagateDataAttributes;
   }
   connectedCallback() {
     this.characterCount = this.hasValue ? this.value.length : 0;

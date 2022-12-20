@@ -1,5 +1,5 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
-import { c as createPopover } from './popover-8664a111.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { c as createPopover } from './popover-a2a2acc7.js';
 import { f as fadeIn, b as fadeOut } from './transitions-29f7f3e5.js';
 import { u as uuidv4 } from './utils-eee50014.js';
 
@@ -7,18 +7,14 @@ const MxTooltip = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.uuid = uuidv4();
-    /** Delay showing the tooltip for this many milliseconds */
     this.appearDelay = 0;
-    /** Increase the padding, add a shadow, and make the corners less rounded (typically for multi-line text) */
     this.extended = false;
-    /** Invert the default colors (i.e. dark text on a light background) */
     this.inverted = false;
-    /** The maximum width of the tooltip (e.g. '20rem') */
     this.maxWidth = '10rem';
-    /** This is typically updated automatically based on events, but may be changed programmatically if necessary. */
     this.isOpen = false;
-    /** The preferred placement of the tooltip, relative to the anchor element. */
     this.placement = 'bottom';
+    this.tooltipClass = undefined;
+    this.value = undefined;
   }
   onIsOpenChange() {
     this.isOpen ? this.show() : this.hide();

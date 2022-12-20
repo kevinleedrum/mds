@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { c as collapse, s as slideOut, e as expand, a as slideIn } from './transitions-29f7f3e5.js';
 import './utils-eee50014.js';
 
@@ -8,9 +8,7 @@ const MxBanner = class {
     this.hasActions = false;
     this.hasImage = false;
     this.error = false;
-    /** Toggles the banner with a transition. */
     this.isOpen = false;
-    /** When set, `position: sticky` will be applied to the banner. */
     this.sticky = false;
     this.isVisible = false;
   }

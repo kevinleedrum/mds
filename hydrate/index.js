@@ -28296,7 +28296,7 @@ class MxTable {
     rows.forEach((row) => {
       if (row.subheader)
         return;
-      const cells = row.querySelectorAll('mx-table-cell');
+      const cells = row.querySelectorAll('mx-table-cell:not(mx-table-row mx-table-row mx-table-cell)');
       let colIndex = 0;
       cells.forEach((cell) => {
         cell.columnIndex = colIndex;
@@ -28369,7 +28369,7 @@ class MxTable {
       // If `columns` prop is missing or does not have enough defintions for all columns, add default columns
       const rows = this.getTableRows().filter(row => !row.subheader);
       if (rows.length) {
-        const cellCount = rows[0].querySelectorAll('mx-table-cell').length;
+        const cellCount = rows[0].querySelectorAll('mx-table-cell:not(mx-table-row mx-table-row mx-table-cell)').length;
         if (cellCount !== cols.length) {
           cols = cols.concat(new Array(cellCount).fill({})).slice(0, cellCount);
         }
@@ -29165,8 +29165,8 @@ class MxTableRow {
     return this.element.firstElementChild;
   }
   get rowClass() {
-    let str = 'table-row overflow-hidden';
-    str += this.minWidths.sm ? ' contents' : ' grid';
+    let str = 'table-row';
+    str += this.minWidths.sm ? ' contents' : ' grid overflow-hidden';
     if (this.checkable)
       str += ' checkable-row';
     if (this.checkable && this.checkOnRowClick)

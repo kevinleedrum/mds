@@ -1,17 +1,17 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { p as propagateDataAttributes } from './utils-eee50014.js';
 
 const MxSwitch = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.dataAttributes = {};
+    this.componentWillRender = propagateDataAttributes;
     this.name = '';
     this.value = '';
     this.labelClass = '';
     this.labelName = '';
     this.checked = false;
     this.disabled = false;
-    this.componentWillRender = propagateDataAttributes;
   }
   /** Keep checked prop in sync with input element attribute */
   onInput(e) {

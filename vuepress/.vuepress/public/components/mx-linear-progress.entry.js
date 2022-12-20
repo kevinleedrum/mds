@@ -1,13 +1,10 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 
 const MxLinearProgress = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
-    /** The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. */
     this.value = null;
-    /** If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds). */
     this.simulateProgressDuration = null;
-    /** Delay the appearance of the indicator for this many milliseconds */
     this.appearDelay = 0;
   }
   simulateProgress() {
