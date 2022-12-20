@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { p as propagateDataAttributes } from './utils-eee50014.js';
 
 const MxSearch = class {
@@ -6,11 +6,14 @@ const MxSearch = class {
     registerInstance(this, hostRef);
     this.mxClear = createEvent(this, "mxClear", 7);
     this.dataAttributes = {};
-    this.dense = false;
-    this.flat = false;
-    /** Set to `false` to hide the clear button. */
-    this.showClear = true;
     this.componentWillRender = propagateDataAttributes;
+    this.dense = false;
+    this.elAriaLabel = undefined;
+    this.flat = false;
+    this.name = undefined;
+    this.placeholder = undefined;
+    this.showClear = true;
+    this.value = undefined;
   }
   onInput(e) {
     this.value = e.target.value;

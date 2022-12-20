@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { u as uuidv4, p as propagateDataAttributes, b as parseTimeString } from './utils-eee50014.js';
 
 const timeOptions = [];
@@ -12,13 +12,19 @@ const MxTimePicker = class {
     this.dataAttributes = {};
     this.isTimeInputSupported = false;
     this.uuid = uuidv4();
+    this.componentWillRender = propagateDataAttributes;
+    this.assistiveText = undefined;
     this.dense = false;
     this.disabled = false;
+    this.elAriaLabel = undefined;
     this.error = false;
     this.floatLabel = false;
+    this.inputId = undefined;
+    this.label = undefined;
+    this.name = undefined;
+    this.value = undefined;
     this.isFocused = false;
     this.isInputDirty = false;
-    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     e.stopPropagation();

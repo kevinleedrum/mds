@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { r as ripple } from './ripple-140c6d57.js';
 import { p as propagateDataAttributes } from './utils-eee50014.js';
 
@@ -6,9 +6,12 @@ const MxToggleButton = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.dataAttributes = {};
+    this.componentWillRender = propagateDataAttributes;
+    this.icon = undefined;
     this.selected = false;
     this.disabled = false;
-    this.componentWillRender = propagateDataAttributes;
+    this.elAriaLabel = undefined;
+    this.value = undefined;
   }
   onClick(e) {
     ripple(e, this.btnElem);

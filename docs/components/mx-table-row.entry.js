@@ -1,5 +1,5 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
-import { R as ResizeObserver } from './resize-observer-9111af2a.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { R as ResizeObserver } from './resize-observer-731c02df.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 import { d as getScrollingParent, a as getCursorCoords, e as getBounds, g as getPageRect, f as isScrolledOutOfView } from './utils-eee50014.js';
 import { c as collapse, e as expand } from './transitions-29f7f3e5.js';
@@ -41,16 +41,13 @@ const MxTableRow = class {
     this.indentLevel = 0;
     this.columnCount = 1;
     this.isHidden = false;
-    /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
+    this.rowId = undefined;
     this.actions = [];
-    /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
     this.doNotCollapse = false;
-    /** Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`. */
     this.doNotDrag = false;
+    this.rowIndex = undefined;
     this.checked = false;
-    /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
     this.collapseNestedRows = false;
-    /** Style the row as a subheader. */
     this.subheader = false;
     this.minWidths = new MinWidths();
     this.checkable = false;
@@ -391,8 +388,8 @@ const MxTableRow = class {
     return this.element.firstElementChild;
   }
   get rowClass() {
-    let str = 'table-row overflow-hidden';
-    str += this.minWidths.sm ? ' contents' : ' grid';
+    let str = 'table-row';
+    str += this.minWidths.sm ? ' contents' : ' grid overflow-hidden';
     if (this.checkable)
       str += ' checkable-row';
     if (this.checkable && this.checkOnRowClick)

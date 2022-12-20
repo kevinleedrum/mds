@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { u as uuidv4, p as propagateDataAttributes } from './utils-eee50014.js';
 
 const MxSelect = class {
@@ -6,18 +6,23 @@ const MxSelect = class {
     registerInstance(this, hostRef);
     this.uuid = uuidv4();
     this.dataAttributes = {};
+    this.componentWillRender = propagateDataAttributes;
+    this.assistiveText = undefined;
     this.dense = false;
     this.disabled = false;
-    /** Style with a 1dp elevation */
     this.elevated = false;
-    /** Style with a "flat" border color */
     this.flat = false;
+    this.label = undefined;
     this.floatLabel = false;
+    this.elAriaLabel = undefined;
+    this.selectClass = undefined;
+    this.selectId = undefined;
+    this.name = undefined;
+    this.suffix = undefined;
     this.error = false;
-    /** Additional classes for the label */
     this.labelClass = '';
+    this.value = undefined;
     this.isFocused = false;
-    this.componentWillRender = propagateDataAttributes;
   }
   componentDidLoad() {
     this.updateSelectValue();

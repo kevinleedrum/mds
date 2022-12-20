@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { c as createCommonjsModule, a as commonjsGlobal } from './_commonjsHelpers-8fe71198.js';
 
 var prism = createCommonjsModule(function (module) {
@@ -1328,7 +1328,10 @@ Prism.languages.markup = {
 							pattern: /^=/,
 							alias: 'attr-equals'
 						},
-						/"|'/
+						{
+							pattern: /^(\s*)["']|["']$/,
+							lookbehind: true
+						}
 					]
 				}
 			},
@@ -1471,7 +1474,7 @@ Prism.languages.rss = Prism.languages.xml;
 	Prism.languages.css = {
 		'comment': /\/\*[\s\S]*?\*\//,
 		'atrule': {
-			pattern: /@[\w-](?:[^;{\s]|\s+(?![\s{]))*(?:;|(?=\s*\{))/,
+			pattern: RegExp('@[\\w-](?:' + /[^;{\s"']|\s+(?!\s)/.source + '|' + string.source + ')*?' + /(?:;|(?=\s*\{))/.source),
 			inside: {
 				'rule': /^@[\w-]+/,
 				'selector-function-argument': {
@@ -2612,6 +2615,18 @@ var prismNormalizeWhitespace = createCommonjsModule(function (module) {
 		return str.length + res;
 	}
 
+	var settingsConfig = {
+		'remove-trailing': 'boolean',
+		'remove-indent': 'boolean',
+		'left-trim': 'boolean',
+		'right-trim': 'boolean',
+		'break-lines': 'number',
+		'indent': 'number',
+		'remove-initial-line-feed': 'boolean',
+		'tabs-to-spaces': 'number',
+		'spaces-to-tabs': 'number',
+	};
+
 	NormalizeWhitespace.prototype = {
 		setDefaults: function (defaults) {
 			this.defaults = assign(this.defaults, defaults);
@@ -2738,6 +2753,25 @@ var prismNormalizeWhitespace = createCommonjsModule(function (module) {
 		var pre = env.element.parentNode;
 		if (!env.code || !pre || pre.nodeName.toLowerCase() !== 'pre') {
 			return;
+		}
+
+		if (env.settings == null) { env.settings = {}; }
+
+		// Read settings from 'data-' attributes
+		for (var key in settingsConfig) {
+			if (Object.hasOwnProperty.call(settingsConfig, key)) {
+				var settingType = settingsConfig[key];
+				if (pre.hasAttribute('data-' + key)) {
+					try {
+						var value = JSON.parse(pre.getAttribute('data-' + key) || 'true');
+						if (typeof value === settingType) {
+							env.settings[key] = value;
+						}
+					} catch (_error) {
+						// ignore error
+					}
+				}
+			}
 		}
 
 		var children = pre.childNodes;
@@ -2872,7 +2906,7 @@ prism.manual = true;
 const MxCode = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
-    /** The language of the code.  Add a `diff-` prefix for diff highlighting.  See [Supported languages](#supported-languages) */
+    this.code = undefined;
     this.language = 'none';
     this.lineNumberStart = 1;
     this.showLineNumbers = false;

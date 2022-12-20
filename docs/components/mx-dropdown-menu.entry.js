@@ -1,15 +1,22 @@
-import { r as registerInstance, h, e as Host } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host } from './index-7d7e62d7.js';
 
 const MxDropdownMenu = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
+    this.elAriaLabel = undefined;
     this.disabled = false;
     this.readonly = false;
     this.dense = false;
-    /** Style as a filter dropdown with a 1dp elevation */
     this.elevated = false;
-    /** Style as a filter dropdown with a "flat" border color */
     this.flat = false;
+    this.label = undefined;
+    this.dropdownClass = undefined;
+    this.dropdownId = undefined;
+    this.name = undefined;
+    this.suffix = undefined;
+    this.value = undefined;
+    this.error = undefined;
+    this.assistiveText = undefined;
     this.isFocused = false;
   }
   async onClick(e) {

@@ -1,21 +1,24 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { p as propagateDataAttributes } from './utils-eee50014.js';
 
 const MxIconButton = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.dataAttributes = {};
-    this.type = 'button';
-    this.disabled = false;
-    /** Show downward chevron icon */
-    this.chevronDown = false;
-    /** Show left-pointing chevron icon */
-    this.chevronLeft = false;
-    /** Show right-pointing chevron icon */
-    this.chevronRight = false;
-    /** Show upward chevron icon */
-    this.chevronUp = false;
     this.componentWillRender = propagateDataAttributes;
+    this.type = 'button';
+    this.form = undefined;
+    this.formaction = undefined;
+    this.value = undefined;
+    this.href = undefined;
+    this.target = undefined;
+    this.disabled = false;
+    this.elAriaLabel = undefined;
+    this.chevronDown = false;
+    this.chevronLeft = false;
+    this.chevronRight = false;
+    this.chevronUp = false;
+    this.icon = undefined;
   }
   onClick(e) {
     if (this.disabled) {

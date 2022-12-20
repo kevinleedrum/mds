@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { r as ripple } from './ripple-140c6d57.js';
 import { p as propagateDataAttributes } from './utils-eee50014.js';
 
@@ -6,15 +6,20 @@ const MxButton = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.dataAttributes = {};
+    this.componentWillRender = propagateDataAttributes;
     this.btnType = 'contained';
+    this.elAriaLabel = undefined;
     this.type = 'button';
+    this.value = undefined;
+    this.form = undefined;
+    this.formaction = undefined;
     this.disabled = false;
     this.xl = false;
-    /** Sets display to flex instead of inline-flex */
+    this.href = undefined;
+    this.target = undefined;
     this.full = false;
-    /** Show chevron icon */
     this.dropdown = false;
-    this.componentWillRender = propagateDataAttributes;
+    this.icon = undefined;
   }
   onClick(e) {
     if (this.disabled) {

@@ -1,5 +1,5 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
-import { c as createPopover, a as convertPlacementToOrigin } from './popover-8664a111.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { c as createPopover, a as convertPlacementToOrigin } from './popover-a2a2acc7.js';
 import { d as fadeScaleIn, b as fadeOut } from './transitions-29f7f3e5.js';
 import { u as uuidv4 } from './utils-eee50014.js';
 
@@ -10,11 +10,11 @@ const MxMenu = class {
     this.mxOpen = createEvent(this, "mxOpen", 7);
     this.isClosing = false;
     this.uuid = uuidv4();
-    /** If the anchor element contains an `input`, setting this to `true` will always select the first menu item when Enter is pressed inside the input.  */
+    this.anchorEl = undefined;
     this.autocompleteOnly = false;
-    /** The placement of the menu, relative to the `anchorEl`. */
+    this.triggerEl = undefined;
+    this.offset = undefined;
     this.placement = 'bottom-start';
-    /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
     this.isOpen = false;
   }
   onMenuItemClick() {

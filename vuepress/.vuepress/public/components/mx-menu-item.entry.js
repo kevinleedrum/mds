@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
 const MxMenuItem = class {
@@ -6,12 +6,12 @@ const MxMenuItem = class {
     registerInstance(this, hostRef);
     this.mxClick = createEvent(this, "mxClick", 7);
     this.hasParentLink = false;
-    /** If `multiSelect` is false, this will render a checkmark on the right side of the menu item.  If both `multiSelect` and `checked` are `true`, then the rendered multi-select checkbox will be checked. */
     this.checked = false;
     this.disabled = false;
-    /** Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right. */
+    this.icon = undefined;
+    this.label = undefined;
+    this.subtitle = undefined;
     this.multiSelect = false;
-    /** This is automatically set by a parent Dropdown Menu. */
     this.selected = false;
     this.minWidths = new MinWidths();
   }

@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { d as fadeScaleIn, b as fadeOut } from './transitions-29f7f3e5.js';
 import { m as moveToPortal } from './portal-9203402a.js';
 import './utils-eee50014.js';
@@ -8,9 +8,7 @@ const MxSnackbar = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.mxClose = createEvent(this, "mxClose", 7);
-    /** The duration in milliseconds to show the snackbar before automatically closing. */
     this.duration = 6000;
-    /** Toggles the visibility of the snackbar. */
     this.isOpen = false;
     this.isVisible = false;
   }

@@ -1,9 +1,10 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 
 const MxChipGroup = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.mxInput = createEvent(this, "mxInput", 7);
+    this.value = undefined;
   }
   onValueChange() {
     this.updateChildChips();

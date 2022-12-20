@@ -1,19 +1,30 @@
-import { r as registerInstance, h, e as Host } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host } from './index-7d7e62d7.js';
 
 const MxConfirmInput = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.isEmittingEventAfterConfirm = false;
+    this.name = undefined;
+    this.inputId = undefined;
+    this.label = undefined;
+    this.placeholder = undefined;
+    this.value = undefined;
     this.type = 'text';
     this.dense = false;
     this.disabled = false;
     this.readonly = false;
+    this.maxlength = undefined;
+    this.leftIcon = undefined;
+    this.rightIcon = undefined;
+    this.suffix = undefined;
     this.outerContainerClass = '';
     this.labelClass = '';
     this.error = false;
+    this.assistiveText = undefined;
     this.floatLabel = false;
     this.textarea = false;
     this.textareaHeight = '250px';
+    this.elAriaLabel = undefined;
     this.hideCharacterCount = false;
     this.isFocused = false;
     this.isHovered = false;

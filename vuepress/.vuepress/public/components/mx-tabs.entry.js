@@ -1,4 +1,4 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { q as queryPrefersReducedMotion } from './utils-eee50014.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
@@ -6,10 +6,9 @@ const MxTabs = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.mxChange = createEvent(this, "mxChange", 7);
-    /** Stretch tabs to fill the entire width */
     this.fill = false;
-    /** The index of the selected tab */
     this.value = null;
+    this.tabs = undefined;
     this.minWidths = new MinWidths();
   }
   connectedCallback() {
