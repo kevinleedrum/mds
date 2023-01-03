@@ -327,7 +327,7 @@ const MxTable = class {
       // If `columns` prop is missing or does not have enough defintions for all columns, add default columns
       const rows = this.getTableRows().filter(row => !row.subheader);
       if (rows.length) {
-        const cellCount = rows[0].querySelectorAll('mx-table-cell:not(mx-table-row mx-table-row mx-table-cell)').length;
+        const cellCount = rows[0].querySelectorAll('mx-table-cell:not(mx-table-row:not([subheader]) mx-table-row mx-table-cell)').length;
         if (cellCount !== cols.length) {
           cols = cols.concat(new Array(cellCount).fill({})).slice(0, cellCount);
         }
