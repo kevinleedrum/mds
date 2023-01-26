@@ -24,6 +24,7 @@ export interface IMxInputProps {
   textareaHeight: string;
   elAriaLabel: string;
   hideCharacterCount: boolean;
+  step: string;
 }
 
 export type MxInputIcon = {
@@ -78,6 +79,7 @@ export class MxInput implements IMxInputProps {
   @Prop() elAriaLabel: string;
   /** Set to `true` to hide the character count when a `maxlength` is set. */
   @Prop() hideCharacterCount = false;
+  @Prop() step: string;
 
   @State() isFocused = false;
   @State() characterCount = 0;
@@ -238,6 +240,7 @@ export class MxInput implements IMxInputProps {
               maxlength={this.maxlength}
               disabled={this.disabled}
               readonly={this.readonly}
+              step={this.step}
               onFocus={this.onFocus.bind(this)}
               onBlur={this.onBlur.bind(this)}
               onInput={this.onInput.bind(this)}
