@@ -233,6 +233,7 @@ export namespace Components {
         "placeholder": string;
         "readonly": boolean;
         "rightIcon": string | MxInputIcon[];
+        "step": string;
         "suffix": string;
         "textarea": boolean;
         "textareaHeight": string;
@@ -516,6 +517,7 @@ export namespace Components {
           * The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
         "rightIcon": string | MxInputIcon[];
+        "step": string;
         /**
           * Text shown to the right of the input value
          */
@@ -1635,6 +1637,7 @@ declare namespace LocalJSX {
         "placeholder"?: string;
         "readonly"?: boolean;
         "rightIcon"?: string | MxInputIcon[];
+        "step"?: string;
         "suffix"?: string;
         "textarea"?: boolean;
         "textareaHeight"?: string;
@@ -1913,6 +1916,7 @@ declare namespace LocalJSX {
           * The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
         "rightIcon"?: string | MxInputIcon[];
+        "step"?: string;
         /**
           * Text shown to the right of the input value
          */

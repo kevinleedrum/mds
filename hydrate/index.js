@@ -22990,6 +22990,7 @@ class MxConfirmInput {
     this.textareaHeight = '250px';
     this.elAriaLabel = undefined;
     this.hideCharacterCount = false;
+    this.step = undefined;
     this.isFocused = false;
     this.isHovered = false;
   }
@@ -23097,6 +23098,7 @@ class MxConfirmInput {
       "textareaHeight": [1025, "textarea-height"],
       "elAriaLabel": [1, "el-aria-label"],
       "hideCharacterCount": [4, "hide-character-count"],
+      "step": [1],
       "isFocused": [32],
       "isHovered": [32]
     },
@@ -26005,6 +26007,7 @@ class MxInput {
     this.textareaHeight = '15.625rem';
     this.elAriaLabel = undefined;
     this.hideCharacterCount = false;
+    this.step = undefined;
     this.isFocused = false;
     this.characterCount = 0;
   }
@@ -26121,7 +26124,7 @@ class MxInput {
   }
   render() {
     const labelJsx = (hAsync("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames }, this.label));
-    return (hAsync(Host, { class: 'mx-input block text-3' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, hAsync("div", { class: this.containerClass, onClick: this.onContainerClick.bind(this) }, this.leftIcon && hAsync("div", { class: this.leftIconWrapperClass }, this.leftIcons.map(this.getIconJsx)), this.label && this.floatLabel && labelJsx, !this.textarea ? (hAsync("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, "aria-label": this.elAriaLabel || this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (hAsync("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (hAsync("span", { class: this.rightContentClass }, this.maxlength && !this.hideCharacterCount && (hAsync("span", { "data-testid": "character-count", class: "character-count pointer-events-none" }, this.characterCount, "/", this.maxlength)), this.suffix && (hAsync("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4 pointer-events-none" }, this.suffix)), this.error && hAsync("i", { class: "mds-warning-circle text-icon pointer-events-none" }), this.rightIcon && !this.error && (hAsync("span", { class: "flex items-center space-x-16" }, this.rightIcons.map(this.getIconJsx)))))), (this.assistiveText || (this.textarea && this.maxlength && !this.hideCharacterCount)) && (hAsync("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, hAsync("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && !this.hideCharacterCount && (hAsync("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
+    return (hAsync(Host, { class: 'mx-input block text-3' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, hAsync("div", { class: this.containerClass, onClick: this.onContainerClick.bind(this) }, this.leftIcon && hAsync("div", { class: this.leftIconWrapperClass }, this.leftIcons.map(this.getIconJsx)), this.label && this.floatLabel && labelJsx, !this.textarea ? (hAsync("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, "aria-label": this.elAriaLabel || this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, step: this.step, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (hAsync("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (hAsync("span", { class: this.rightContentClass }, this.maxlength && !this.hideCharacterCount && (hAsync("span", { "data-testid": "character-count", class: "character-count pointer-events-none" }, this.characterCount, "/", this.maxlength)), this.suffix && (hAsync("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4 pointer-events-none" }, this.suffix)), this.error && hAsync("i", { class: "mds-warning-circle text-icon pointer-events-none" }), this.rightIcon && !this.error && (hAsync("span", { class: "flex items-center space-x-16" }, this.rightIcons.map(this.getIconJsx)))))), (this.assistiveText || (this.textarea && this.maxlength && !this.hideCharacterCount)) && (hAsync("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, hAsync("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && !this.hideCharacterCount && (hAsync("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
   }
   get element() { return getElement(this); }
   static get watchers() { return {
@@ -26153,6 +26156,7 @@ class MxInput {
       "textareaHeight": [1025, "textarea-height"],
       "elAriaLabel": [1, "el-aria-label"],
       "hideCharacterCount": [4, "hide-character-count"],
+      "step": [1],
       "isFocused": [32],
       "characterCount": [32]
     },

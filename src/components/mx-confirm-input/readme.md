@@ -26,6 +26,7 @@
 | `placeholder`         | `placeholder`           |             | `string`                  | `undefined` |
 | `readonly`            | `readonly`              |             | `boolean`                 | `false`     |
 | `rightIcon`           | `right-icon`            |             | `MxInputIcon[] \| string` | `undefined` |
+| `step`                | `step`                  |             | `string`                  | `undefined` |
 | `suffix`              | `suffix`                |             | `string`                  | `undefined` |
 | `textarea`            | `textarea`              |             | `boolean`                 | `false`     |
 | `textareaHeight`      | `textarea-height`       |             | `string`                  | `'250px'`   |
