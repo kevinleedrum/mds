@@ -17,6 +17,7 @@ export function capitalize(str: string): string {
 }
 
 export function isDateObject(val: any): boolean {
+  if (val == null) return false; // null or undefined
   if (typeof val !== 'object') return false;
   return 'getTime' in val && !isNaN(val.getTime()); // "Invalid Date" objects return NaN for getTime()
 }
