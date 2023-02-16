@@ -1,5 +1,5 @@
 import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
-import { q as queryPrefersReducedMotion } from './utils-eee50014.js';
+import { q as queryPrefersReducedMotion } from './utils-a3c69dbe.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
 const MxTabs = class {
