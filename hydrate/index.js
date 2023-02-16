@@ -5819,6 +5819,8 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 function isDateObject(val) {
+  if (val == null)
+    return false; // null or undefined
   if (typeof val !== 'object')
     return false;
   return 'getTime' in val && !isNaN(val.getTime()); // "Invalid Date" objects return NaN for getTime()

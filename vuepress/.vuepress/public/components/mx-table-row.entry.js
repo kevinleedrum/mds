@@ -1,8 +1,8 @@
 import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { R as ResizeObserver } from './resize-observer-731c02df.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { d as getScrollingParent, a as getCursorCoords, e as getBounds, g as getPageRect, f as isScrolledOutOfView } from './utils-eee50014.js';
-import { c as collapse, e as expand } from './transitions-29f7f3e5.js';
+import { d as getScrollingParent, a as getCursorCoords, e as getBounds, g as getPageRect, f as isScrolledOutOfView } from './utils-a3c69dbe.js';
+import { c as collapse, e as expand } from './transitions-2b2d27da.js';
 
 const SCROLL_PX = 5; // Scroll by 5px ...
 const SCROLL_INTERVAL_MS = 5; // ... every 5ms

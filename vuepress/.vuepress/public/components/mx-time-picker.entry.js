@@ -1,5 +1,5 @@
 import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
-import { u as uuidv4, p as propagateDataAttributes, b as parseTimeString } from './utils-eee50014.js';
+import { u as uuidv4, p as propagateDataAttributes, b as parseTimeString } from './utils-a3c69dbe.js';
 
 const timeOptions = [];
 for (let i = 0; i < 24; i++) {

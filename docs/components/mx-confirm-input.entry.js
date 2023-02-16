@@ -26,6 +26,7 @@ const MxConfirmInput = class {
     this.textareaHeight = '250px';
     this.elAriaLabel = undefined;
     this.hideCharacterCount = false;
+    this.step = undefined;
     this.isFocused = false;
     this.isHovered = false;
   }
