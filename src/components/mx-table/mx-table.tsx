@@ -634,6 +634,7 @@ export class MxTable {
     const val = row[col.property];
     if (['date', 'dateTime'].includes(col.type) || isDateObject(val)) return -new Date(val).getTime();
     if (col.type === 'boolean') return val ? 1 : 0;
+    if (val == null) return '';
     return val;
   }
 
