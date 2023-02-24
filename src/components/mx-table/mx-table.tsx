@@ -624,7 +624,7 @@ export class MxTable {
         const valueA = this.getCellSortableValue(a, sortByColumn);
         const valueB = this.getCellSortableValue(b, sortByColumn);
         if (typeof valueA === 'number' && typeof valueB === 'number') return valueA - valueB;
-        return (valueA as string).localeCompare(valueB as string);
+        return valueA.toString().localeCompare(valueB.toString());
       };
     }
     rows.sort(sortCompare);
@@ -636,6 +636,7 @@ export class MxTable {
     const val = row[col.property];
     if (['date', 'dateTime'].includes(col.type) || isDateObject(val)) return -new Date(val).getTime();
     if (col.type === 'boolean') return val ? 1 : 0;
+    if (val == null) return '';
     return val;
   }
 
