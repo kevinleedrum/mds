@@ -1,21 +1,21 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { p as propagateDataAttributes } from './utils-f31b72fe.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { p as propagateDataAttributes } from './utils-a3c69dbe.js';
 
 const MxCheckbox = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.dataAttributes = {};
+    this.componentWillRender = propagateDataAttributes;
     this.name = '';
     this.value = '';
     this.labelLeft = false;
     this.labelName = '';
     this.labelClass = '';
-    /** Hide the label text visually, but still make it accessible for screen readers */
     this.hideLabel = false;
     this.checked = false;
     this.disabled = false;
     this.indeterminate = false;
-    this.componentWillRender = propagateDataAttributes;
+    this.elAriaLabel = undefined;
   }
   get checkClass() {
     let str = 'flex h-18 w-18 flex-shrink-0';

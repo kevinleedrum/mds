@@ -13,9 +13,9 @@ export interface IPageHeaderButton extends IMxButtonProps {
 })
 export class MxPageHeader {
   buttonRow: HTMLElement;
-  hasTabs: boolean = false;
-  hasModalHeaderCenter: boolean = false;
-  hasModalHeaderRight: boolean = false;
+  hasTabs = false;
+  hasModalHeaderCenter = false;
+  hasModalHeaderRight = false;
   menuButton: HTMLMxIconButtonElement;
   resizeObserver: ResizeObserver;
   tabSlot: HTMLElement;
@@ -25,16 +25,16 @@ export class MxPageHeader {
   /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
   @Prop() buttons: IPageHeaderButton[] = [];
   /** This flag is set by the Modal component to adjust the page header styling when used internally. */
-  @Prop() modal: boolean = false;
+  @Prop() modal = false;
   /** The URL for the previous page link */
-  @Prop() previousPageUrl: string = '';
+  @Prop() previousPageUrl = '';
   /** The text to display for the previous page link */
-  @Prop() previousPageTitle: string = 'Back';
+  @Prop() previousPageTitle = 'Back';
   /** When set to true, the Page Header will use the themed background pattern. */
-  @Prop() pattern: boolean = false;
+  @Prop() pattern = false;
 
   @State() minWidths = new MinWidths();
-  @State() renderTertiaryButtonAsMenu: boolean = false;
+  @State() renderTertiaryButtonAsMenu = false;
 
   @Element() element: HTMLMxPageHeaderElement;
 
@@ -57,7 +57,11 @@ export class MxPageHeader {
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
     this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
-    this.hasModalHeaderRight = !!this.element.querySelector('[slot="modal-header-right"]');
+    const modalHeaderRight = this.element.querySelector('[slot="modal-header-right"]');
+    this.hasModalHeaderRight =
+      modalHeaderRight &&
+      modalHeaderRight.firstElementChild &&
+      !!(modalHeaderRight.firstElementChild as HTMLElement).offsetParent; // Slot wrapper is not hidden
     this.updateSlottedButtonSize();
   }
 
@@ -149,7 +153,7 @@ export class MxPageHeader {
                     anchor-el={this.menuButton}
                     onMxClose={e => e.stopPropagation()}
                   >
-                    <mx-menu-item {...menuItemProps}>{button.label}</mx-menu-item>
+                    <mx-menu-item {...menuItemProps}>{label}</mx-menu-item>
                   </mx-menu>
                 </div>
               )}

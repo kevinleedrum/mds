@@ -7,7 +7,7 @@ import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 })
 export class MxTableCell {
   /** This is automatically set by the parent `mx-table`. */
-  @Prop({ reflect: true }) isExposedMobileColumn: boolean = true;
+  @Prop({ reflect: true }) isExposedMobileColumn = true;
   /** This is automatically set by the parent `mx-table`.  For subheaders, this will be null. */
   @Prop({ reflect: true }) columnIndex: number;
   /** This is automatically set by the parent `mx-table`. */
@@ -40,9 +40,9 @@ export class MxTableCell {
         class={this.cellClass}
       >
         {/* Padding is applied to this inner div in the scss file so the <mx-table-cell> can be collapsed with max-height:0 */}
-        <div class={!this.isExposedMobileColumn && !this.minWidths.sm ? 'py-0 pb-12' : ''}>
+        <div class={!this.isExposedMobileColumn && !this.minWidths.sm ? 'py-0 pb-12' : 'overflow-hidden'}>
           <div
-            class="min-h-16 max-w-full break-words"
+            class="min-h-16 max-w-full overflow-hidden overflow-ellipsis whitespace-normal"
             role={this.columnIndex == null ? 'heading' : null}
             aria-level={this.columnIndex == null ? '1' : null}
           >

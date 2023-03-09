@@ -25,6 +25,7 @@
 | ---------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `mxCheck`        | Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked           | `CustomEvent<{ rowId: string; checked: boolean; }>`        |
 | `mxDragKeyDown`  | Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table. | `CustomEvent<string>`                                      |
+| `mxRowAccordion` | Emitted when a row is collapsed or expanded.  Handled by the parent table.                                 | `CustomEvent<void>`                                        |
 | `mxRowDragEnd`   | Emitted when dragging ends.  Handled by the parent table.                                                  | `CustomEvent<{ isKeyboard: boolean; isCancel: boolean; }>` |
 | `mxRowDragStart` | Emitted when dragging starts.  Handled by the parent table.                                                | `CustomEvent<{ isKeyboard: boolean; }>`                    |
 

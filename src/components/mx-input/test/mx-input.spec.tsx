@@ -86,9 +86,12 @@ describe('mx-input', () => {
     expect(input.getAttribute('maxlength')).toBe('10');
   });
 
-  it('displays a character count and limit', async () => {
+  it('displays a character count and limit unless hideCharacterCount is true', async () => {
     const characterCount = root.querySelector('[data-testid="character-count"]');
     expect(characterCount.textContent).toBe('3/10');
+    root.hideCharacterCount = true;
+    await page.waitForChanges();
+    expect(root.querySelector('[data-testid="character-count"]')).toBeNull();
   });
 
   it('renders a floating label if the float-label prop is set', async () => {
@@ -151,9 +154,12 @@ describe('mx-input as a textarea', () => {
     expect(assitive.textContent).toBe('Enter your test input');
   });
 
-  it('displays a character count and limit', async () => {
+  it('displays a character count and limit unless hideCharacterCount is true', async () => {
     const characterCount = root.querySelector('[data-testid="character-count"]');
     expect(characterCount.textContent).toBe('3/100');
+    root.hideCharacterCount = true;
+    await page.waitForChanges();
+    expect(root.querySelector('[data-testid="character-count"]')).toBeNull();
   });
 
   it('applies any data attributes to the textarea element', async () => {

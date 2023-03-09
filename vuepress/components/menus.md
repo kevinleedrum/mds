@@ -101,10 +101,10 @@ additional behaviors to allow the menu to function as an autocomplete or suggest
 
 These additional behaviors include:
 
-- &bull; The menu stretches the entire width of the `anchorEl`.
-- &bull; Typing into the input opens the menu.
-- &bull; Typing while a menu item is focused restores focus to the input.
-- &bull; The input's `autocomplete` attribute is set to `off` to disable the browser's native autocomplete menu.
+- The menu stretches the entire width of the `anchorEl`.
+- Typing into the input opens the menu.
+- Typing while a menu item is focused restores focus to the input.
+- The input's `autocomplete` attribute is set to `off` to disable the browser's native autocomplete menu.
 
 Setting the `autocompleteOnly` prop to `true` causes the top menu item to always be selected by default,
 and pressing <kbd>Enter</kbd> inside the input will effectively click that item. Leave this set to `false` to
@@ -159,6 +159,36 @@ selected on <kbd>Enter</kbd>.
 <<< @/vuepress/components/menus.md#suggestions-computed
 <<< @/vuepress/components/menus.md#menus-anchorEl-3
 <<< @/vuepress/components/menus.md#suggestions-onclick
+
+### Grouped autocomplete menu with headings
+
+Below is an example of an autocomplete menu that uses headings to show different groups of matches.
+
+<section class="mds">
+  <div class="mt-40">
+    <!-- #region suggestions-3 -->
+    <mx-search
+      ref="search3"
+      :value="term3"
+      class="w-288"
+      placeholder="Fruit or vegetable"
+      @input="term3 = $event.target.value"
+      @keydown.enter="onClickSuggestion($event.target.value, 3)"
+    />
+    <mx-menu ref="menu3">
+      <template v-for="suggestionGroup in suggestionGroups">
+        <p :key="suggestionGroup.heading" role="heading" aria-level="2">{{ suggestionGroup.heading }}</p>
+        <mx-menu-item v-for="(suggestion, i) in suggestionGroup.suggestions" :key="suggestionGroup.heading + i" @click="onClickSuggestion(suggestion, 3)">
+          {{ suggestion }}
+        </mx-menu-item>
+      </template>
+    </mx-menu>
+    <!-- #endregion suggestions-3 -->
+  </div>
+</section>
+
+<<< @/vuepress/components/menus.md#suggestions-3
+<<< @/vuepress/components/menus.md#suggestion-groups
 
 ### Menu Properties
 
@@ -233,12 +263,23 @@ const fruits = [
   'Strawberry',
   'Tomato'
 ]
+const vegetables = [
+  'Corn',
+  'Pea',
+  'Lettuce',
+  'Carrot',
+  'Onion',
+  'Radish',
+  'Broccoli',
+  'Kale'
+]
 
 export default {
   data() {
     return {
       term1: '',
-      term2: ''
+      term2: '',
+      term3: ''
     }
   },
   computed: {
@@ -254,8 +295,20 @@ export default {
       return fruits.filter(fruit => 
         fruit.toLowerCase().includes(this.term2.toLowerCase())
       )
-    }
+    },
     // #endregion suggestions-computed
+    // #region suggestion-groups
+    suggestionGroups() {
+      if (!this.term3) return []
+      const groups = []
+      const match = item => item.toLowerCase().includes(this.term3.toLowerCase())
+      const fruitMatches = fruits.filter(match)
+      const veggieMatches = vegetables.filter(match)
+      if (fruitMatches.length) groups.push({ heading: 'Fruits', suggestions: fruitMatches })
+      if (veggieMatches.length) groups.push({ heading: 'Vegetables', suggestions: veggieMatches })
+      return groups
+    }
+    // #endregion suggestion-groups
   },
   mounted() {
     // #region menus-anchorEl
@@ -272,6 +325,7 @@ export default {
     // #region menus-anchorEl-3
     this.$refs.menu1.anchorEl = this.$refs.search1
     this.$refs.menu2.anchorEl = this.$refs.search2
+    this.$refs.menu3.anchorEl = this.$refs.search3
     // #endregion menus-anchorEl-3
   },
   methods: {
@@ -279,11 +333,11 @@ export default {
       console.log('Menu item clicked!')
     },
     // #region suggestions-onclick
-    onClickSuggestion(suggestion, oneOrTwo) {
+    onClickSuggestion(suggestion, num) {
       console.log(suggestion + ' entered!')
       // Clear the input and refocus it
-      this['term' + oneOrTwo] = ''
-      this.$nextTick(() => this.$refs['search' + oneOrTwo].querySelector('input').focus())
+      this['term' + num] = ''
+      this.$nextTick(() => this.$refs['search' + num].querySelector('input').focus())
     }
     // #endregion suggestions-onclick
   }

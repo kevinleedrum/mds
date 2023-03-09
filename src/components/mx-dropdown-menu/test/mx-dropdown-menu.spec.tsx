@@ -141,7 +141,13 @@ describe('mx-dropdown-menu', () => {
   });
 
   it('sets the mx-menu and mx-menu-item roles to "listbox" and "option"', async () => {
-    expect(root.querySelector('mx-menu').getAttribute('role')).toBe('listbox');
+    expect(root.querySelector('[role="listbox"]')).not.toBeNull();
     expect(Array.from(menuItems).every(m => m.children[0].getAttribute('role') === 'option')).toBe(true);
+  });
+
+  it('sets an error state on the dropdown wrapper class', async () => {
+    root.error = true;
+    await page.waitForChanges();
+    expect(dropdownWrapper.getAttribute('class')).toContain('error');
   });
 });

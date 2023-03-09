@@ -5,14 +5,14 @@ import { Component, Host, h, Prop, Element } from '@stencil/core';
   shadow: false,
 })
 export class MxBadge {
-  isStandalone: boolean = true;
+  isStandalone = true;
 
   @Element() private element: HTMLElement;
 
   /** The value to display inside the badge */
   @Prop() value: any;
   /** Make the corners a little more square (best for standalone text) */
-  @Prop() squared: boolean = false;
+  @Prop() squared = false;
   /** Render as a small indicator shape with no inner text.  If the prop is present, but no string value is passed, the shape will default to `circle`. */
   @Prop() indicator: boolean | 'square' | 'triangle-up' | 'hexagon' | 'triangle-down' | 'star';
   /** Additional classes to add to the badge itself */
@@ -20,11 +20,11 @@ export class MxBadge {
   /** Class name of icon */
   @Prop() icon: string;
   /** Offset badge inward by this many pixels (e.g. 10 for icon buttons) */
-  @Prop() offset: number = 0;
+  @Prop() offset = 0;
   /** Anchor the badge to the bottom of the wrapped content */
-  @Prop() bottom: boolean = false;
+  @Prop() bottom = false;
   /** Anchor the badge to the left of the wrapped content */
-  @Prop() left: boolean = false;
+  @Prop() left = false;
 
   componentWillLoad() {
     this.isStandalone = !this.element.firstElementChild;

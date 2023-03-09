@@ -17,8 +17,8 @@ export interface IMxButtonProps {
   target?: string;
   full?: boolean;
   dropdown?: boolean;
-  icon: string;
-  elAriaLabel: string;
+  icon?: string;
+  elAriaLabel?: string;
 }
 
 @Component({
@@ -37,20 +37,20 @@ export class MxButton implements IMxButtonProps {
   @Prop() value: string;
   @Prop() form: string;
   @Prop() formaction: string;
-  @Prop() disabled: boolean = false;
-  @Prop() xl: boolean = false;
+  @Prop() disabled = false;
+  @Prop() xl = false;
   /** Create button as link */
   @Prop() href: string;
   /** Only for link buttons */
   @Prop() target: string;
   /** Sets display to flex instead of inline-flex */
-  @Prop() full: boolean = false;
+  @Prop() full = false;
   /** Show chevron icon */
-  @Prop() dropdown: boolean = false;
+  @Prop() dropdown = false;
   /** Class name of icon */
   @Prop() icon: string;
 
-  @Element() element: HTMLMxInputElement;
+  @Element() element: HTMLMxButtonElement;
 
   componentWillRender = propagateDataAttributes;
 
@@ -102,9 +102,9 @@ export class MxButton implements IMxButtonProps {
 
   render() {
     const buttonContent = (
-      <div class="flex justify-center items-center content-center relative whitespace-nowrap">
+      <div class="flex justify-center items-center content-center relative overflow-hidden whitespace-nowrap">
         {this.icon && <i class={'mr-8 text-3 ' + this.icon}></i>}
-        <span class="slot-content">
+        <span class="slot-content truncate">
           <slot />
         </span>
         {this.dropdown && this.btnType === 'text' && <span class="separator inline-block w-1 ml-4 -my-4 h-24"></span>}
@@ -127,6 +127,7 @@ export class MxButton implements IMxButtonProps {
             class={this.buttonClass}
             ref={el => (this.anchorElem = el as HTMLAnchorElement)}
             onClick={this.onClick.bind(this)}
+            {...this.dataAttributes}
           >
             {buttonContent}
           </a>

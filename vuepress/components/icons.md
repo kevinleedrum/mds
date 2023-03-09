@@ -39,12 +39,13 @@ export default {
   },
   methods: {
     getIcons() {
-      document.styleSheets.forEach(stylesheet => {
+      [...document.styleSheets].forEach(stylesheet => {
         try {
-          stylesheet.rules.forEach(rule => {
+          [...stylesheet.cssRules].forEach(rule => {
             if (!rule || !rule.selectorText) return
-            if (rule.selectorText.startsWith('.mds-') && !rule.selectorText.includes('::')) {
-              this.icons.push(rule.selectorText.slice(1))
+            if (rule.selectorText.includes('.mds-') && !rule.selectorText.includes('::')) {
+              const split = rule.selectorText.split('.')
+              this.icons.push(split[split.length - 1])
             }
           })
         } catch (err) {

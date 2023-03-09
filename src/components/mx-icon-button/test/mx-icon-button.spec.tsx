@@ -106,4 +106,10 @@ describe('mx-icon-button (as link)', () => {
     expect(button.getAttribute('class')).toContain('h-48');
     expect(button.getAttribute('class')).toContain('rounded-full');
   });
+
+  it('uses the target prop as the target attribute on the link', async () => {
+    root.target = '_blank';
+    await page.waitForChanges();
+    expect(button.getAttribute('target')).toBe('_blank');
+  });
 });

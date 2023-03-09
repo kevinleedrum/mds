@@ -1,5 +1,5 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { R as ResizeObserver } from './resize-observer-9111af2a.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { R as ResizeObserver } from './resize-observer-731c02df.js';
 
 const MxPagination = class {
   constructor(hostRef) {
@@ -9,17 +9,13 @@ const MxPagination = class {
     this.page = 1;
     this.rowsPerPageOptions = [10, 25, 50, 100];
     this.rowsPerPage = 100;
-    /** Reduce the UI to only a page */
     this.simple = false;
-    /** Disable the page buttons (i.e. when loading results) */
+    this.totalRows = undefined;
     this.disabled = false;
-    /** Disable the next page button (i.e. when the last page was loaded from an API) */
     this.disableNextPage = false;
     this.hideRowsPerPage = false;
     this.moveStatusToBottom = false;
-    /** Whether the component width (not viewport width) is >= 320px */
     this.isXSmallMinWidth = false;
-    /** Whether the component width (not viewport width) is >= 640px */
     this.isSmallMinWidth = false;
   }
   componentWillRender() {
@@ -88,8 +84,8 @@ const MxPagination = class {
     return Math.ceil(this.totalRows / this.rowsPerPage);
   }
   get currentRange() {
-    let start = this.rowsPerPage * (this.page - 1) + 1;
-    let end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
+    const start = this.rowsPerPage * (this.page - 1) + 1;
+    const end = Math.min(this.totalRows, start + this.rowsPerPage - 1);
     return start + '–' + end;
   }
   get rowRangeClass() {

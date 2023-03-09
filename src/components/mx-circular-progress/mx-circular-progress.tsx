@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Watch } from '@stencil/core';
 
 const DIAMETER = 44;
 const THICKNESS = 3.6;
@@ -11,17 +11,31 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 })
 export class MxCircularProgress {
   delayTimeout;
+  simulateProgressInterval;
 
   /** The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. */
-  @Prop() value: number = null;
+  @Prop({ mutable: true }) value: number = null;
   /** The value to use for the width and height */
-  @Prop() size: string = '3rem';
+  @Prop() size = '3rem';
+  /** If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds). */
+  @Prop() simulateProgressDuration: number = null;
   /** Delay the appearance of the indicator for this many milliseconds */
-  @Prop() appearDelay: number = 0;
+  @Prop() appearDelay = 0;
 
   @Element() element: HTMLMxLinearProgressElement;
 
+  @Watch('simulateProgressDuration')
+  simulateProgress() {
+    clearInterval(this.simulateProgressInterval);
+    if (!this.simulateProgressDuration) return;
+    this.simulateProgressInterval = setInterval(() => {
+      if (this.value === 100) return;
+      this.value = Math.min((this.value || 0) + 1, 99);
+    }, this.simulateProgressDuration / 100);
+  }
+
   connectedCallback() {
+    this.simulateProgress();
     if (!this.appearDelay) return;
     // Hide indicator until appearDelay duration has passed
     this.element.classList.remove('block');

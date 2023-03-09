@@ -1,5 +1,5 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { u as uuidv4, p as propagateDataAttributes, b as parseTimeString } from './utils-f31b72fe.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { u as uuidv4, p as propagateDataAttributes, b as parseTimeString } from './utils-a3c69dbe.js';
 
 const timeOptions = [];
 for (let i = 0; i < 24; i++) {
@@ -12,13 +12,19 @@ const MxTimePicker = class {
     this.dataAttributes = {};
     this.isTimeInputSupported = false;
     this.uuid = uuidv4();
+    this.componentWillRender = propagateDataAttributes;
+    this.assistiveText = undefined;
     this.dense = false;
     this.disabled = false;
+    this.elAriaLabel = undefined;
     this.error = false;
     this.floatLabel = false;
+    this.inputId = undefined;
+    this.label = undefined;
+    this.name = undefined;
+    this.value = undefined;
     this.isFocused = false;
     this.isInputDirty = false;
-    this.componentWillRender = propagateDataAttributes;
   }
   onClick(e) {
     e.stopPropagation();
@@ -41,8 +47,9 @@ const MxTimePicker = class {
   }
   normalizeValue() {
     // If HH:MM:ss.mmm value is passed, change it to just HH:MM
-    if (this.value && /\d\d\:\d\d\:\d\d/.test(this.value)) {
-      let [hours, minutes] = this.value.split(':');
+    if (this.value && /\d\d:\d\d:\d\d/.test(this.value)) {
+      let [hours] = this.value.split(':');
+      const [, minutes] = this.value.split(':');
       if (this.value.toUpperCase().includes('PM')) {
         hours = (Number(hours) + 12).toString();
       }
@@ -170,7 +177,7 @@ const MxTimePicker = class {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames, onClick: this.onClickLabel.bind(this) }, this.label));
-    return (h(Host, { class: 'mx-time-picker block' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { "aria-label": "Open time menu", ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", disabled: this.disabled }, h("i", { class: this.error ? 'mds-warning-circle' : 'mds-clock' }))), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this), onMxOpen: this.onMenuOpen.bind(this) }, timeOptions.map(timeOption => (h("mx-menu-item", { onClick: this.setValue.bind(this, timeOption) }, this.getLocalizedTimeString(timeOption)))))));
+    return (h(Host, { class: 'mx-time-picker block text-3' + (this.error ? ' error' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { ref: el => (this.pickerWrapper = el), class: this.pickerWrapperClass }, h("input", Object.assign({ "aria-label": this.elAriaLabel || this.label, class: this.inputClass, id: this.inputId || this.uuid, name: this.name, onBlur: this.onBlur.bind(this), onFocus: this.onFocus.bind(this), onInput: this.onInput.bind(this), ref: el => (this.inputElem = el), tabindex: "0", type: "time", disabled: this.disabled }, this.dataAttributes)), this.label && this.floatLabel && labelJsx, h("button", { type: "button", "aria-label": "Open time menu", ref: el => (this.menuButton = el), class: this.menuButtonClass, "data-testid": "menu-button", disabled: this.disabled }, h("i", { class: this.error ? 'mds-warning-circle' : 'mds-clock' }))), this.assistiveText && (h("div", { class: "caption1 mt-4 ml-16" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText))), h("mx-menu", { ref: el => (this.menu = el), placement: "bottom", offset: [0, 1], onMxClose: this.onMenuClose.bind(this), onMxOpen: this.onMenuOpen.bind(this) }, timeOptions.map(timeOption => (h("mx-menu-item", { onClick: this.setValue.bind(this, timeOption) }, this.getLocalizedTimeString(timeOption)))))));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

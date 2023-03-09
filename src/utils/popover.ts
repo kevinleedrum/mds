@@ -20,6 +20,7 @@ export async function createPopover(
   const instance = createPopper(anchorEl, popoverEl, {
     placement,
     modifiers: getModifiers(placement, offset),
+    strategy: 'fixed',
   });
   return new Promise(resolve => {
     // Wait a frame for the element's width and height to be accurate and then update
@@ -32,22 +33,19 @@ export async function createPopover(
 }
 
 function getModifiers(placement: PopoverPlacement, offset: PopoverOffset) {
-  const modifiers: any[] = [
-    <FlipModifier>{
-      name: 'flip', // Change to another placement if there is no room
+  const modifiers: any[] = [<FlipModifier>(<unknown>{
+      name: 'flip',
       options: {
         fallbackPlacements: [getOppositeVariationPlacement(placement), 'auto'],
         boundary: document.body,
       },
-    },
-    <PreventOverflowModifier>{
-      name: 'preventOverflow', // Add skidding offset as needed if there is no room
+    }), <PreventOverflowModifier>(<unknown>{
+      name: 'preventOverflow',
       options: {
         padding: { top: 32, bottom: 32 },
         boundary: document.body,
       },
-    },
-  ];
+    })];
   if (offset)
     modifiers.push(<OffsetModifier>{
       name: 'offset',

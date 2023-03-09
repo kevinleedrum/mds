@@ -1,12 +1,14 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { r as ripple } from './ripple-54ef50dc.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { r as ripple } from './ripple-140c6d57.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
 
 const MxFab = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
-    /** Style as a secondary action */
+    this.icon = undefined;
     this.secondary = false;
+    this.elAriaLabel = undefined;
+    this.value = undefined;
     this.minWidths = new MinWidths();
     this.isExtended = false;
   }

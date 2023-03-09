@@ -129,7 +129,7 @@ describe('mx-table (non-mobile)', () => {
   it('renders a progress bar if showProgressBar is true', async () => {
     root.showProgressBar = true;
     await page.waitForChanges();
-    let progress = root.querySelector('mx-linear-progress');
+    const progress = root.querySelector('mx-linear-progress');
     expect(progress).not.toBeNull();
   });
 
@@ -183,7 +183,7 @@ describe('mx-table (checkable, non-mobile)', () => {
     page = await newSpecPage({
       components: [MxTable, MxTableRow, MxTableCell, MxCheckbox, MxPagination],
       html: `
-      <mx-table checkable />
+      <mx-table checkable check-on-row-click />
       `,
     });
     root = page.root as HTMLMxTableElement;
@@ -206,7 +206,7 @@ describe('mx-table (checkable, non-mobile)', () => {
     expect(checkboxes.length).toBe(4); // Check all + 3 rows
   });
 
-  it('checks the row on click by default', async () => {
+  it('checks the row on click when checkOnRowClick is true', async () => {
     const row = root.querySelector('mx-table-row');
     (row.children[0] as HTMLElement).click();
     await page.waitForChanges();
@@ -241,6 +241,7 @@ describe('mx-table (checkable, non-mobile)', () => {
 
   it('appends the operationsBarClass value to the operations bar classList', async () => {
     root.showCheckAll = true;
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     root.getMultiRowActions = () => [{ value: 'Delete', onClick: () => {} }];
     root.operationsBarClass = 'test-class';
     await page.waitForChanges();
@@ -288,7 +289,7 @@ describe('mx-table (checkable, non-mobile)', () => {
   describe('HTMLMxTableElement.setCheckedRowIds', () => {
     it('sets the checked row IDs', async () => {
       await root.setCheckedRowIds(['1']);
-      let checkedRowIds = await root.getCheckedRowIds();
+      const checkedRowIds = await root.getCheckedRowIds();
       expect(checkedRowIds.length).toBe(1);
       expect(checkedRowIds[0]).toBe('1');
     });
@@ -359,7 +360,7 @@ describe('mx-table (slotted rows and cells)', () => {
     page = await newSpecPage({
       components: [MxTable, MxTableRow, MxTableCell, MxCheckbox, MxPagination],
       html: `
-      <mx-table checkable>
+      <mx-table checkable check-on-row-click>
         <mx-table-row row-id="0">
           <mx-table-cell>Santa</mx-table-cell>
           <mx-table-cell>Claus</mx-table-cell>

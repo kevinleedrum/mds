@@ -23,6 +23,8 @@ export interface IMxInputProps {
   textarea: boolean;
   textareaHeight: string;
   elAriaLabel: string;
+  hideCharacterCount: boolean;
+  step: string;
 }
 
 export type MxInputIcon = {
@@ -54,10 +56,10 @@ export class MxInput implements IMxInputProps {
   @Prop() placeholder: string;
   @Prop({ mutable: true }) value: string;
   /** The `type` attribute for the text input */
-  @Prop() type: string = 'text';
-  @Prop() dense: boolean = false;
-  @Prop() disabled: boolean = false;
-  @Prop() readonly: boolean = false;
+  @Prop() type = 'text';
+  @Prop() dense = false;
+  @Prop() disabled = false;
+  @Prop() readonly = false;
   @Prop() maxlength: number;
   /** The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler */
   @Prop() leftIcon: string | MxInputIcon[];
@@ -65,19 +67,22 @@ export class MxInput implements IMxInputProps {
   @Prop() rightIcon: string | MxInputIcon[];
   /** Text shown to the right of the input value */
   @Prop() suffix: string;
-  @Prop() outerContainerClass: string = '';
-  @Prop({ mutable: true }) labelClass: string = '';
-  @Prop({ mutable: true }) error: boolean = false;
+  @Prop() outerContainerClass = '';
+  @Prop({ mutable: true }) labelClass = '';
+  @Prop({ mutable: true, reflect: true }) error = false;
   @Prop() assistiveText: string;
-  @Prop() floatLabel: boolean = false;
+  @Prop() floatLabel = false;
   /** Display a multi-line `textarea` instead of an `input` */
-  @Prop() textarea: boolean = false;
-  @Prop({ mutable: true }) textareaHeight: string = '250px';
+  @Prop() textarea = false;
+  @Prop({ mutable: true }) textareaHeight = '15.625rem';
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
+  /** Set to `true` to hide the character count when a `maxlength` is set. */
+  @Prop() hideCharacterCount = false;
+  @Prop() step: string;
 
-  @State() isFocused: boolean = false;
-  @State() characterCount: number = 0;
+  @State() isFocused = false;
+  @State() characterCount = 0;
 
   @Element() element: HTMLMxInputElement;
 
@@ -122,6 +127,7 @@ export class MxInput implements IMxInputProps {
   getIconJsx(icon: MxInputIcon) {
     return icon.onClick ? (
       <button
+        type="button"
         class="inline-flex items-center justify-center cursor-pointer"
         aria-label={icon.ariaLabel}
         onClick={icon.onClick}
@@ -165,7 +171,7 @@ export class MxInput implements IMxInputProps {
   }
 
   get labelClassNames() {
-    let str = 'block pointer-events-none';
+    let str = 'block whitespace-nowrap pointer-events-none';
     if (this.floatLabel) {
       str += ' absolute mt-0 px-4';
       if (this.textarea) str += ' top-12';
@@ -214,7 +220,7 @@ export class MxInput implements IMxInputProps {
       </label>
     );
     return (
-      <Host class={'mx-input block' + (this.disabled ? ' disabled' : '')}>
+      <Host class={'mx-input block text-3' + (this.disabled ? ' disabled' : '')}>
         {this.label && !this.floatLabel && labelJsx}
 
         <div class={this.containerClass} onClick={this.onContainerClick.bind(this)}>
@@ -234,6 +240,7 @@ export class MxInput implements IMxInputProps {
               maxlength={this.maxlength}
               disabled={this.disabled}
               readonly={this.readonly}
+              step={this.step}
               onFocus={this.onFocus.bind(this)}
               onBlur={this.onBlur.bind(this)}
               onInput={this.onInput.bind(this)}
@@ -262,7 +269,7 @@ export class MxInput implements IMxInputProps {
 
           {!this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (
             <span class={this.rightContentClass}>
-              {this.maxlength && (
+              {this.maxlength && !this.hideCharacterCount && (
                 <span data-testid="character-count" class="character-count pointer-events-none">
                   {this.characterCount}/{this.maxlength}
                 </span>
@@ -280,12 +287,12 @@ export class MxInput implements IMxInputProps {
           )}
         </div>
 
-        {(this.assistiveText || (this.textarea && this.maxlength)) && (
+        {(this.assistiveText || (this.textarea && this.maxlength && !this.hideCharacterCount)) && (
           <div class="flex justify-between caption1 mt-4 ml-16 space-x-32">
             <span data-testid="assistive-text" class="assistive-text">
               {this.assistiveText}
             </span>
-            {this.textarea && this.maxlength && (
+            {this.textarea && this.maxlength && !this.hideCharacterCount && (
               <span data-testid="character-count" class="character-count">
                 {this.characterCount}/{this.maxlength}
               </span>

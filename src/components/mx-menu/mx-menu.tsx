@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element, Listen, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, Element, Listen, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import {
   createPopover,
   PopoverInstance,
@@ -7,6 +7,7 @@ import {
   PopoverOffset,
 } from '../../utils/popover';
 import { fadeScaleIn, fadeOut } from '../../utils/transitions';
+import { uuidv4 } from '../../utils/utils';
 
 @Component({
   tag: 'mx-menu',
@@ -18,11 +19,12 @@ export class MxMenu {
   scrollElem: HTMLElement;
   inputEl: HTMLInputElement;
   isClosing = false;
+  uuid = uuidv4();
 
   /** The element to which the menu's position will be anchored */
   @Prop() anchorEl: HTMLElement;
   /** If the anchor element contains an `input`, setting this to `true` will always select the first menu item when Enter is pressed inside the input.  */
-  @Prop() autocompleteOnly: boolean = false;
+  @Prop() autocompleteOnly = false;
   /** The element that will open the menu when clicked.  If not provided, the `anchorEl' will be used. */
   @Prop() triggerEl: HTMLElement;
   /** An array of offsets in pixels. The first is the "skidding" along the edge of the `anchorEl`.  The second is the distance from the `anchorEl`. */
@@ -30,7 +32,7 @@ export class MxMenu {
   /** The placement of the menu, relative to the `anchorEl`. */
   @Prop() placement: PopoverPlacement = 'bottom-start';
   /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
-  @Prop({ mutable: true, reflect: true }) isOpen: boolean = false;
+  @Prop({ mutable: true, reflect: true }) isOpen = false;
 
   @Element() element: HTMLMxMenuElement;
 
@@ -155,6 +157,14 @@ export class MxMenu {
     return true;
   }
 
+  @Watch('anchorEl')
+  @Watch('triggerEl')
+  setTriggerElAttributes() {
+    if (!this.anchorEl && !this.triggerEl) return;
+    (this.triggerEl || this.anchorEl).setAttribute('aria-haspopup', 'true');
+    (this.triggerEl || this.anchorEl).setAttribute('aria-controls', this.uuid);
+  }
+
   /** Close the menu.  Returns a promise that resolves to false if the menu was already closed. */
   @Method()
   async closeMenu(): Promise<boolean> {
@@ -171,18 +181,20 @@ export class MxMenu {
     return true;
   }
 
-  connectedCallback() {
-    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
-    this.element.setAttribute('role', role);
-    this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
-  }
-
   componentDidLoad() {
     this.setInputEl();
+    if (this.menuItems.length) {
+      const role = this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+      this.scrollElem.setAttribute('role', role);
+    }
+    this.setTriggerElAttributes();
   }
 
   componentWillUpdate() {
     this.setInputEl();
+    this.anchorEl &&
+      this.anchorEl.getAttribute('role') === 'menuitem' &&
+      this.anchorEl.setAttribute('aria-expanded', this.isOpen ? 'true' : 'false');
     if (this.inputEl && this.anchorEl) this.element.style.width = this.anchorEl.getBoundingClientRect().width + 'px';
     // If any menu item has an icon, ensure that all menu items at least have a null icon.
     // This will ensure the inner text of all the menu items is aligned.
@@ -228,8 +240,9 @@ export class MxMenu {
       <Host class={this.hostClass}>
         <div ref={el => (this.menuElem = el)} class="flex flex-col shadow-9 rounded-lg">
           <div
+            id={this.uuid}
             ref={el => (this.scrollElem = el)}
-            class="scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain"
+            class="scroll-wrapper overflow-y-auto overflow-x-hidden overscroll-contain"
           >
             <slot></slot>
           </div>

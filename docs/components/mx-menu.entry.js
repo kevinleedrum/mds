@@ -1,7 +1,7 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { c as createPopover, a as convertPlacementToOrigin } from './popover-1f909484.js';
-import { d as fadeScaleIn, b as fadeOut } from './transitions-4a0eb798.js';
-import './utils-f31b72fe.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { c as createPopover, a as convertPlacementToOrigin } from './popover-a2a2acc7.js';
+import { d as fadeScaleIn, b as fadeOut } from './transitions-2b2d27da.js';
+import { u as uuidv4 } from './utils-a3c69dbe.js';
 
 const MxMenu = class {
   constructor(hostRef) {
@@ -9,11 +9,12 @@ const MxMenu = class {
     this.mxClose = createEvent(this, "mxClose", 7);
     this.mxOpen = createEvent(this, "mxOpen", 7);
     this.isClosing = false;
-    /** If the anchor element contains an `input`, setting this to `true` will always select the first menu item when Enter is pressed inside the input.  */
+    this.uuid = uuidv4();
+    this.anchorEl = undefined;
     this.autocompleteOnly = false;
-    /** The placement of the menu, relative to the `anchorEl`. */
+    this.triggerEl = undefined;
+    this.offset = undefined;
     this.placement = 'bottom-start';
-    /** This is set to true automatically when the `anchorEl` is clicked.  Dropdown menus read this prop internally for styling purposes. */
     this.isOpen = false;
   }
   onMenuItemClick() {
@@ -137,6 +138,12 @@ const MxMenu = class {
     await fadeScaleIn(this.menuElem, undefined, convertPlacementToOrigin(this.popoverInstance.state.placement));
     return true;
   }
+  setTriggerElAttributes() {
+    if (!this.anchorEl && !this.triggerEl)
+      return;
+    (this.triggerEl || this.anchorEl).setAttribute('aria-haspopup', 'true');
+    (this.triggerEl || this.anchorEl).setAttribute('aria-controls', this.uuid);
+  }
   /** Close the menu.  Returns a promise that resolves to false if the menu was already closed. */
   async closeMenu() {
     if (!this.isOpen || this.isClosing)
@@ -153,16 +160,19 @@ const MxMenu = class {
     this.popoverInstance = null;
     return true;
   }
-  connectedCallback() {
-    const role = !!this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
-    this.element.setAttribute('role', role);
-    this.anchorEl && this.anchorEl.setAttribute('aria-haspopup', 'true');
-  }
   componentDidLoad() {
     this.setInputEl();
+    if (this.menuItems.length) {
+      const role = this.element.querySelector('[role="option"]') ? 'listbox' : 'menu';
+      this.scrollElem.setAttribute('role', role);
+    }
+    this.setTriggerElAttributes();
   }
   componentWillUpdate() {
     this.setInputEl();
+    this.anchorEl &&
+      this.anchorEl.getAttribute('role') === 'menuitem' &&
+      this.anchorEl.setAttribute('aria-expanded', this.isOpen ? 'true' : 'false');
     if (this.inputEl && this.anchorEl)
       this.element.style.width = this.anchorEl.getBoundingClientRect().width + 'px';
     // If any menu item has an icon, ensure that all menu items at least have a null icon.
@@ -203,9 +213,13 @@ const MxMenu = class {
     return str;
   }
   render() {
-    return (h(Host, { class: this.hostClass }, h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, h("div", { ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden max-h-216 overscroll-contain" }, h("slot", null)))));
+    return (h(Host, { class: this.hostClass }, h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, h("div", { id: this.uuid, ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden overscroll-contain" }, h("slot", null)))));
   }
   get element() { return getElement(this); }
+  static get watchers() { return {
+    "anchorEl": ["setTriggerElAttributes"],
+    "triggerEl": ["setTriggerElAttributes"]
+  }; }
 };
 
 export { MxMenu as mx_menu };

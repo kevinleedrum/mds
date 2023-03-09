@@ -7,7 +7,7 @@ import { Component, Host, h, Prop, Listen, Element, Event, EventEmitter, Watch }
 export class MxToggleButtonGroup {
   @Prop({ mutable: true }) value: any;
   /** Set to `true` to prevent deselecting once a selection has been made. */
-  @Prop() required: boolean = false;
+  @Prop() required = false;
 
   @Watch('value')
   onValueChange() {
@@ -26,7 +26,7 @@ export class MxToggleButtonGroup {
   @Listen('click')
   onToggleButtonClick(e: MouseEvent) {
     const toggleButton: HTMLMxToggleButtonElement = (e.target as HTMLElement).closest('mx-toggle-button');
-    if (!toggleButton) return;
+    if (!toggleButton || toggleButton.disabled) return;
     this.toggleValue(toggleButton.value);
     this.mxInput.emit(this.value);
   }

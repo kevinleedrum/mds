@@ -191,6 +191,10 @@ export namespace Components {
          */
         "appearDelay": number;
         /**
+          * If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).
+         */
+        "simulateProgressDuration": number;
+        /**
           * The value to use for the width and height
          */
         "size": string;
@@ -218,6 +222,7 @@ export namespace Components {
         "elAriaLabel": string;
         "error": boolean;
         "floatLabel": boolean;
+        "hideCharacterCount": boolean;
         "inputId": string;
         "label": string;
         "labelClass": string;
@@ -228,6 +233,7 @@ export namespace Components {
         "placeholder": string;
         "readonly": boolean;
         "rightIcon": string | MxInputIcon[];
+        "step": string;
         "suffix": string;
         "textarea": boolean;
         "textareaHeight": string;
@@ -293,6 +299,7 @@ export namespace Components {
         "modalClass": string;
     }
     interface MxDropdownMenu {
+        "assistiveText": string;
         "dense": boolean;
         "disabled": boolean;
         /**
@@ -311,6 +318,7 @@ export namespace Components {
           * Style as a filter dropdown with a 1dp elevation
          */
         "elevated": boolean;
+        "error": boolean;
         /**
           * Style as a filter dropdown with a "flat" border color
          */
@@ -352,6 +360,10 @@ export namespace Components {
           * Show right-pointing chevron icon
          */
         "chevronRight": boolean;
+        /**
+          * Show upward chevron icon
+         */
+        "chevronUp": boolean;
         "disabled": boolean;
         /**
           * The aria-label attribute for the inner button element.
@@ -367,6 +379,10 @@ export namespace Components {
           * Class name of icon (for icon font)
          */
         "icon": string;
+        /**
+          * Only for link buttons
+         */
+        "target": string;
         "type": 'button' | 'submit' | 'reset';
         "value": string;
     }
@@ -395,6 +411,7 @@ export namespace Components {
           * The aria-label attribute for the inner input element.
          */
         "elAriaLabel": string;
+        "error": boolean;
         /**
           * The height of the dropzone / thumbnail container (e.g. "400px" or "50%").
          */
@@ -448,7 +465,7 @@ export namespace Components {
         /**
           * The [`btnType` prop](/components/buttons.html) for the Upload button.
          */
-        "uploadBtnType": BtnType;
+        "uploadBtnType": BtnType1;
         /**
           * The text to display on the Upload button
          */
@@ -468,6 +485,10 @@ export namespace Components {
         "elAriaLabel": string;
         "error": boolean;
         "floatLabel": boolean;
+        /**
+          * Set to `true` to hide the character count when a `maxlength` is set.
+         */
+        "hideCharacterCount": boolean;
         /**
           * The `id` attribute for the text input
          */
@@ -496,6 +517,7 @@ export namespace Components {
           * The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
         "rightIcon": string | MxInputIcon[];
+        "step": string;
         /**
           * Text shown to the right of the input value
          */
@@ -516,6 +538,10 @@ export namespace Components {
           * Delay the appearance of the indicator for this many milliseconds
          */
         "appearDelay": number;
+        /**
+          * If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).
+         */
+        "simulateProgressDuration": number;
         /**
           * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
          */
@@ -749,7 +775,13 @@ export namespace Components {
         "value": any;
     }
     interface MxSnackbar {
+        /**
+          * The duration in milliseconds to show the snackbar before automatically closing.
+         */
         "duration": number;
+        /**
+          * Toggles the visibility of the snackbar.
+         */
         "isOpen": boolean;
     }
     interface MxSwitch {
@@ -804,7 +836,7 @@ export namespace Components {
         "checkAll": () => Promise<void>;
         "checkNone": () => Promise<void>;
         /**
-          * Set to `false` to prevent checking rows by clicking on them (outside the checkboxes).
+          * Set to `true` to allow checking rows by clicking on any dead space inside the row.
          */
         "checkOnRowClick": boolean;
         /**
@@ -831,18 +863,22 @@ export namespace Components {
         /**
           * A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows.
          */
-        "getGroupByHeading": (row: Object) => string;
+        "getGroupByHeading": (row: unknown) => string;
         "getMultiRowActions": (rows: string[]) => ITableRowAction[];
-        "getRowActions": (row: Object) => ITableRowAction[];
+        "getRowActions": (row: unknown) => ITableRowAction[];
         /**
           * A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).
          */
-        "getRowId": (row: Object) => string;
+        "getRowId": (row: unknown) => string;
         /**
           * The row property to use for grouping rows.  The `rows` prop must be provided as well.
          */
         "groupBy": string;
         "hoverable": boolean;
+        /**
+          * Set to `true` to use an alternate mobile layout for the operations bar where the filter slot is next to the (un)check-all checkbox and the search slot is in a row above.
+         */
+        "mobileSearchOnTop": boolean;
         /**
           * Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.
          */
@@ -870,7 +906,7 @@ export namespace Components {
         /**
           * An array of objects that defines the table's dataset.
          */
-        "rows": Object[];
+        "rows": unknown[];
         "rowsPerPage": number;
         "rowsPerPageOptions": number[];
         /**
@@ -914,7 +950,7 @@ export namespace Components {
         /**
           * An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text.
          */
-        "actions": ITableRowAction[];
+        "actions": ITableRowAction1[];
         "checked": boolean;
         "collapse": (skipTransition?: boolean) => Promise<void>;
         /**
@@ -1056,6 +1092,62 @@ export namespace Components {
          */
         "value": string;
     }
+}
+export interface MxChipCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxChipElement;
+}
+export interface MxChipGroupCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxChipGroupElement;
+}
+export interface MxDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxDialogElement;
+}
+export interface MxImageUploadCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxImageUploadElement;
+}
+export interface MxMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxMenuElement;
+}
+export interface MxMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxMenuItemElement;
+}
+export interface MxModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxModalElement;
+}
+export interface MxPaginationCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxPaginationElement;
+}
+export interface MxSearchCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxSearchElement;
+}
+export interface MxSnackbarCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxSnackbarElement;
+}
+export interface MxTableCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxTableElement;
+}
+export interface MxTableRowCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxTableRowElement;
+}
+export interface MxTabsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxTabsElement;
+}
+export interface MxToggleButtonGroupCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMxToggleButtonGroupElement;
 }
 declare global {
     interface HTMLMxBadgeElement extends Components.MxBadge, HTMLStencilElement {
@@ -1475,7 +1567,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the remove icon is clicked
          */
-        "onMxRemove"?: (event: CustomEvent<MouseEvent>) => void;
+        "onMxRemove"?: (event: MxChipCustomEvent<MouseEvent>) => void;
         "outlined"?: boolean;
         /**
           * Show the remove icon on the right
@@ -1494,7 +1586,7 @@ declare namespace LocalJSX {
         /**
           * Emits the updated value as event.detail
          */
-        "onMxInput"?: (event: CustomEvent<any>) => void;
+        "onMxInput"?: (event: MxChipGroupCustomEvent<any>) => void;
         "value"?: any;
     }
     interface MxCircularProgress {
@@ -1502,6 +1594,10 @@ declare namespace LocalJSX {
           * Delay the appearance of the indicator for this many milliseconds
          */
         "appearDelay"?: number;
+        /**
+          * If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).
+         */
+        "simulateProgressDuration"?: number;
         /**
           * The value to use for the width and height
          */
@@ -1530,6 +1626,7 @@ declare namespace LocalJSX {
         "elAriaLabel"?: string;
         "error"?: boolean;
         "floatLabel"?: boolean;
+        "hideCharacterCount"?: boolean;
         "inputId"?: string;
         "label"?: string;
         "labelClass"?: string;
@@ -1540,6 +1637,7 @@ declare namespace LocalJSX {
         "placeholder"?: string;
         "readonly"?: boolean;
         "rightIcon"?: string | MxInputIcon[];
+        "step"?: string;
         "suffix"?: string;
         "textarea"?: boolean;
         "textareaHeight"?: string;
@@ -1595,9 +1693,10 @@ declare namespace LocalJSX {
           * Additional classes to apply to the inner modal element.
          */
         "modalClass"?: string;
-        "onMxClose"?: (event: CustomEvent<void>) => void;
+        "onMxClose"?: (event: MxDialogCustomEvent<void>) => void;
     }
     interface MxDropdownMenu {
+        "assistiveText"?: string;
         "dense"?: boolean;
         "disabled"?: boolean;
         /**
@@ -1616,6 +1715,7 @@ declare namespace LocalJSX {
           * Style as a filter dropdown with a 1dp elevation
          */
         "elevated"?: boolean;
+        "error"?: boolean;
         /**
           * Style as a filter dropdown with a "flat" border color
          */
@@ -1657,6 +1757,10 @@ declare namespace LocalJSX {
           * Show right-pointing chevron icon
          */
         "chevronRight"?: boolean;
+        /**
+          * Show upward chevron icon
+         */
+        "chevronUp"?: boolean;
         "disabled"?: boolean;
         /**
           * The aria-label attribute for the inner button element.
@@ -1672,6 +1776,10 @@ declare namespace LocalJSX {
           * Class name of icon (for icon font)
          */
         "icon"?: string;
+        /**
+          * Only for link buttons
+         */
+        "target"?: string;
         "type"?: 'button' | 'submit' | 'reset';
         "value"?: string;
     }
@@ -1700,6 +1808,7 @@ declare namespace LocalJSX {
           * The aria-label attribute for the inner input element.
          */
         "elAriaLabel"?: string;
+        "error"?: boolean;
         /**
           * The height of the dropzone / thumbnail container (e.g. "400px" or "50%").
          */
@@ -1727,7 +1836,7 @@ declare namespace LocalJSX {
         /**
           * Emits the thumbnail url as `CustomEvent.detail` whenever it changes (i.e. after generating a data URI)
          */
-        "onMxThumbnailChange"?: (event: CustomEvent<string>) => void;
+        "onMxThumbnailChange"?: (event: MxImageUploadCustomEvent<string>) => void;
         /**
           * The text to display on the Remove button
          */
@@ -1755,7 +1864,7 @@ declare namespace LocalJSX {
         /**
           * The [`btnType` prop](/components/buttons.html) for the Upload button.
          */
-        "uploadBtnType"?: BtnType;
+        "uploadBtnType"?: BtnType1;
         /**
           * The text to display on the Upload button
          */
@@ -1775,6 +1884,10 @@ declare namespace LocalJSX {
         "elAriaLabel"?: string;
         "error"?: boolean;
         "floatLabel"?: boolean;
+        /**
+          * Set to `true` to hide the character count when a `maxlength` is set.
+         */
+        "hideCharacterCount"?: boolean;
         /**
           * The `id` attribute for the text input
          */
@@ -1803,6 +1916,7 @@ declare namespace LocalJSX {
           * The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
         "rightIcon"?: string | MxInputIcon[];
+        "step"?: string;
         /**
           * Text shown to the right of the input value
          */
@@ -1823,6 +1937,10 @@ declare namespace LocalJSX {
           * Delay the appearance of the indicator for this many milliseconds
          */
         "appearDelay"?: number;
+        /**
+          * If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).
+         */
+        "simulateProgressDuration"?: number;
         /**
           * The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed.
          */
@@ -1848,11 +1966,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the menu closes.
          */
-        "onMxClose"?: (event: CustomEvent<void>) => void;
+        "onMxClose"?: (event: MxMenuCustomEvent<void>) => void;
         /**
           * Emitted when the menu opens.
          */
-        "onMxOpen"?: (event: CustomEvent<void>) => void;
+        "onMxOpen"?: (event: MxMenuCustomEvent<void>) => void;
         /**
           * The placement of the menu, relative to the `anchorEl`.
          */
@@ -1883,7 +2001,7 @@ declare namespace LocalJSX {
         /**
           * Fired when an enabled menu item without a submenu is clicked. Used interally to close all ancestor menus.
          */
-        "onMxClick"?: (event: CustomEvent<MouseEvent>) => void;
+        "onMxClick"?: (event: MxMenuItemCustomEvent<MouseEvent>) => void;
         /**
           * This is automatically set by a parent Dropdown Menu.
          */
@@ -1930,7 +2048,7 @@ declare namespace LocalJSX {
           * Set to true to stretch the modal to nearly fill the width and height of the page (on desktop-sized screens).  Otherwise, the maximum dimensions are 800x600px.
          */
         "large"?: boolean;
-        "onMxClose"?: (event: CustomEvent<any>) => void;
+        "onMxClose"?: (event: MxModalCustomEvent<any>) => void;
         /**
           * The text to display for the previous page link
          */
@@ -1971,7 +2089,7 @@ declare namespace LocalJSX {
           * Disable the page buttons (i.e. when loading results)
          */
         "disabled"?: boolean;
-        "onMxPageChange"?: (event: CustomEvent<PageChangeEventDetail>) => void;
+        "onMxPageChange"?: (event: MxPaginationCustomEvent<PageChangeEventDetail>) => void;
         "page"?: number;
         "rowsPerPage"?: number;
         "rowsPerPageOptions"?: number[];
@@ -2000,7 +2118,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the clear button is clicked.
          */
-        "onMxClear"?: (event: CustomEvent<void>) => void;
+        "onMxClear"?: (event: MxSearchCustomEvent<void>) => void;
         "placeholder"?: string;
         /**
           * Set to `false` to hide the clear button.
@@ -2050,9 +2168,18 @@ declare namespace LocalJSX {
         "value"?: any;
     }
     interface MxSnackbar {
+        /**
+          * The duration in milliseconds to show the snackbar before automatically closing.
+         */
         "duration"?: number;
+        /**
+          * Toggles the visibility of the snackbar.
+         */
         "isOpen"?: boolean;
-        "onMxClose"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted after the snackbar closes (by any means).
+         */
+        "onMxClose"?: (event: MxSnackbarCustomEvent<void>) => void;
     }
     interface MxSwitch {
         "checked"?: boolean;
@@ -2104,7 +2231,7 @@ declare namespace LocalJSX {
          */
         "autoWidth"?: boolean;
         /**
-          * Set to `false` to prevent checking rows by clicking on them (outside the checkboxes).
+          * Set to `true` to allow checking rows by clicking on any dead space inside the row.
          */
         "checkOnRowClick"?: boolean;
         /**
@@ -2130,18 +2257,22 @@ declare namespace LocalJSX {
         /**
           * A function that returns the subheader text for a `groupBy` value.  If not provided, the `row[groupBy]` value will be shown in the subheader rows.
          */
-        "getGroupByHeading"?: (row: Object) => string;
+        "getGroupByHeading"?: (row: unknown) => string;
         "getMultiRowActions"?: (rows: string[]) => ITableRowAction[];
-        "getRowActions"?: (row: Object) => ITableRowAction[];
+        "getRowActions"?: (row: unknown) => ITableRowAction[];
         /**
           * A function that returns the `rowId` prop for each generated `mx-table-row`. This is only required if the table is `checkable` and is auto-generating rows (not using the default slot).
          */
-        "getRowId"?: (row: Object) => string;
+        "getRowId"?: (row: unknown) => string;
         /**
           * The row property to use for grouping rows.  The `rows` prop must be provided as well.
          */
         "groupBy"?: string;
         "hoverable"?: boolean;
+        /**
+          * Set to `true` to use an alternate mobile layout for the operations bar where the filter slot is next to the (un)check-all checkbox and the search slot is in a row above.
+         */
+        "mobileSearchOnTop"?: boolean;
         /**
           * Set to `false` to not mutate the `rows` prop when rows are reordered via drag and drop.
          */
@@ -2149,23 +2280,23 @@ declare namespace LocalJSX {
         /**
           * Emitted when the (un)check-all checkbox is clicked.  The `Event.detail` will be the new `checked` value.
          */
-        "onMxCheckAll"?: (event: CustomEvent<boolean>) => void;
+        "onMxCheckAll"?: (event: MxTableCustomEvent<boolean>) => void;
         /**
           * Emitted when a row is (un)checked.  The `Event.detail` will be the array of checked `rowId`s.
          */
-        "onMxRowCheck"?: (event: CustomEvent<string[]>) => void;
+        "onMxRowCheck"?: (event: MxTableCustomEvent<string[]>) => void;
         /**
           * Emitted when a row is dragged to a new position. The `Event.detail` object will contain the `rowId` (if set), `oldIndex`, and `newIndex`.
          */
-        "onMxRowMove"?: (event: CustomEvent<any>) => void;
+        "onMxRowMove"?: (event: MxTableCustomEvent<any>) => void;
         /**
           * Emitted when a sortable column's header is clicked.
          */
-        "onMxSortChange"?: (event: CustomEvent<SortChangeEventDetail>) => void;
+        "onMxSortChange"?: (event: MxTableCustomEvent<SortChangeEventDetail>) => void;
         /**
           * Emitted when the sorting, pagination, or rows data changes. The `Event.detail` will contain the sorted, paginated array of visible rows.  This is useful for building a custom row layout via the default slot.
          */
-        "onMxVisibleRowsChange"?: (event: CustomEvent<Object[]>) => void;
+        "onMxVisibleRowsChange"?: (event: MxTableCustomEvent<unknown[]>) => void;
         /**
           * Additional class names for the operation bar grid
          */
@@ -2189,7 +2320,7 @@ declare namespace LocalJSX {
         /**
           * An array of objects that defines the table's dataset.
          */
-        "rows"?: Object[];
+        "rows"?: unknown[];
         "rowsPerPage"?: number;
         "rowsPerPageOptions"?: number[];
         /**
@@ -2232,7 +2363,7 @@ declare namespace LocalJSX {
         /**
           * An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text.
          */
-        "actions"?: ITableRowAction[];
+        "actions"?: ITableRowAction1[];
         "checked"?: boolean;
         /**
           * Toggles the visibility of all nested rows (except those set to `doNotCollapse`)
@@ -2249,19 +2380,23 @@ declare namespace LocalJSX {
         /**
           * Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked
          */
-        "onMxCheck"?: (event: CustomEvent<{ rowId: string; checked: boolean }>) => void;
+        "onMxCheck"?: (event: MxTableRowCustomEvent<{ rowId: string; checked: boolean }>) => void;
         /**
           * Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table.
          */
-        "onMxDragKeyDown"?: (event: CustomEvent<string>) => void;
+        "onMxDragKeyDown"?: (event: MxTableRowCustomEvent<string>) => void;
+        /**
+          * Emitted when a row is collapsed or expanded.  Handled by the parent table.
+         */
+        "onMxRowAccordion"?: (event: MxTableRowCustomEvent<void>) => void;
         /**
           * Emitted when dragging ends.  Handled by the parent table.
          */
-        "onMxRowDragEnd"?: (event: CustomEvent<{ isKeyboard: boolean; isCancel: boolean }>) => void;
+        "onMxRowDragEnd"?: (event: MxTableRowCustomEvent<{ isKeyboard: boolean; isCancel: boolean }>) => void;
         /**
           * Emitted when dragging starts.  Handled by the parent table.
          */
-        "onMxRowDragStart"?: (event: CustomEvent<{ isKeyboard: boolean }>) => void;
+        "onMxRowDragStart"?: (event: MxTableRowCustomEvent<{ isKeyboard: boolean }>) => void;
         /**
           * This is required for checkable rows in order to persist the checked state through sorting and pagination.
          */
@@ -2283,7 +2418,7 @@ declare namespace LocalJSX {
         /**
           * Emits the newly selected tab's index as `Event.detail`
          */
-        "onMxChange"?: (event: CustomEvent<number>) => void;
+        "onMxChange"?: (event: MxTabsCustomEvent<number>) => void;
         /**
           * An array of objects for each tab (see Tab Properties)
          */
@@ -2334,7 +2469,7 @@ declare namespace LocalJSX {
         /**
           * Emits the updated value as event.detail
          */
-        "onMxInput"?: (event: CustomEvent<any>) => void;
+        "onMxInput"?: (event: MxToggleButtonGroupCustomEvent<any>) => void;
         /**
           * Set to `true` to prevent deselecting once a selection has been made.
          */

@@ -21,21 +21,21 @@
     }
 
     i {
-      font-size: 24px;
+      font-size: 1.5rem;
     }
 
     label {
       background: var(--mds-bg-input);
       transform-origin: 0 0;
       transition: transform 0.1s ease-out;
-      --translate-y: -22px;
+      --translate-y: -1.375rem;
       &.dense {
-        --translate-y: -16px;
+        --translate-y: -1rem;
       }
       &.floating {
         transform: translate3d(0, var(--translate-y), 0) scale(0.8);
         &.has-left-icon {
-          transform: translate3d(-36px, var(--translate-y), 0) scale(0.8);
+          transform: translate3d(-2.25rem, var(--translate-y), 0) scale(0.8);
         }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -45,7 +45,7 @@
 
     textarea {
       &::-webkit-scrollbar {
-        width: 12px;
+        width: 0.75rem;
         background: transparent;
       }
       &::-webkit-scrollbar-thumb {

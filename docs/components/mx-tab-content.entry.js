@@ -1,8 +1,10 @@
-import { r as registerInstance, h, e as Host } from './index-f6edd80d.js';
+import { r as registerInstance, h, e as Host } from './index-7d7e62d7.js';
 
 const MxTabContent = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
+    this.index = undefined;
+    this.value = undefined;
   }
   get isActiveTab() {
     return this.value >= 0 && this.index === this.value;

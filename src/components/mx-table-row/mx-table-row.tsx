@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Element, Event, EventEmitter, State, Method, Watch } from '@stencil/core';
+import { ResizeObserver } from '@juggle/resize-observer';
 import { minWidthSync, MinWidths } from '../../utils/minWidthSync';
 import { ITableRowAction } from '../mx-table/mx-table';
 import { getCursorCoords, getPageRect, isScrolledOutOfView } from '../../utils/utils';
@@ -6,6 +7,8 @@ import DragScroller from '../../utils/DragScroller';
 import { collapse, expand } from '../../utils/transitions';
 
 const DEFAULT_MAX_HEIGHT = 'calc(3.25rem + 1px)'; // 52px + 1px bottom border
+
+let rowAccordionDebounce;
 
 @Component({
   tag: 'mx-table-row',
@@ -17,39 +20,40 @@ export class MxTableRow {
   checkbox: HTMLMxCheckboxElement;
   dragOrigin = { x: 0, y: 0 };
   dragShadowEl: HTMLElement;
-  firstColumnWrapper: HTMLElement;
+  firstCellTarget: HTMLElement;
   childRowWrapper: HTMLElement;
   keyboardDragHandle: HTMLElement;
   dragScroller: DragScroller;
+  resizeObserver: ResizeObserver;
   indentLevel = 0;
   columnCount = 1;
-  isHidden: boolean = false;
+  isHidden = false;
 
   /** This is required for checkable rows in order to persist the checked state through sorting and pagination. */
   @Prop() rowId: string;
   /** An array of Menu Item props to create the actions menu, including a `value` property for each menu item's inner text. */
   @Prop() actions: ITableRowAction[] = [];
   /** Do not collapse this row if the parent row's `collapseNestedRows` prop is set to `true`. */
-  @Prop({ reflect: true }) doNotCollapse: boolean = false;
+  @Prop({ reflect: true }) doNotCollapse = false;
   /** Do not allow dragging of this row even if the parent table's `draggableRows` prop is set to `true`. */
-  @Prop() doNotDrag: boolean = false;
+  @Prop() doNotDrag = false;
   /** This row's index in the `HTMLMxTableElement.rows` array.  This is set internally by the table component. */
   @Prop() rowIndex: number;
-  @Prop({ mutable: true }) checked: boolean = false;
+  @Prop({ mutable: true }) checked = false;
   /** Toggles the visibility of all nested rows (except those set to `doNotCollapse`) */
-  @Prop({ reflect: true }) collapseNestedRows: boolean = false;
+  @Prop({ mutable: true, reflect: true }) collapseNestedRows = false;
   /** Style the row as a subheader. */
-  @Prop() subheader: boolean = false;
+  @Prop() subheader = false;
 
   @Element() element: HTMLMxTableRowElement;
 
   @State() minWidths = new MinWidths();
-  @State() checkable: boolean = false;
-  @State() checkOnRowClick: boolean = false;
-  @State() isDraggable: boolean = false;
-  @State() isDragging: boolean = false;
-  @State() isMobileExpanded: boolean = false;
-  @State() isMobileCollapsing: boolean = false;
+  @State() checkable = false;
+  @State() checkOnRowClick = false;
+  @State() isDraggable = false;
+  @State() isDragging = false;
+  @State() isMobileExpanded = false;
+  @State() isMobileCollapsing = false;
 
   /** Emits the `rowId` and `checked` state (via `Event.detail`) of the row whenever it is (un)checked */
   @Event() mxCheck: EventEmitter<{ rowId: string; checked: boolean }>;
@@ -59,6 +63,8 @@ export class MxTableRow {
   @Event() mxRowDragEnd: EventEmitter<{ isKeyboard: boolean; isCancel: boolean }>;
   /** Emits the `KeyboardEvent.key` when a key is pressed while keyboard dragging.  Handled by the parent table. */
   @Event() mxDragKeyDown: EventEmitter<string>;
+  /** Emitted when a row is collapsed or expanded.  Handled by the parent table. */
+  @Event() mxRowAccordion: EventEmitter<void>;
 
   @Watch('collapseNestedRows')
   onCollapseNestedRowsChange() {
@@ -67,6 +73,7 @@ export class MxTableRow {
 
   @Watch('minWidths')
   async onMinWidthsChange() {
+    // this.resetResizeObserver();
     if (!this.collapseNestedRows) return;
     // Ensure that collapsed, nested rows are hidden after switching to/from mobile UI
     await new Promise(requestAnimationFrame);
@@ -123,13 +130,24 @@ export class MxTableRow {
       this.actionMenu.anchorEl = this.actionMenuButton;
     this.wrapFirstColumn();
     this.moveNestedRows();
-    // Render collapsed mobile row
+    // Set up ResizeObserver for collapsed mobile row
+    this.resetResizeObserver();
+  }
+
+  setCollapsedHeight() {
     if (!this.minWidths.sm && !this.isMobileExpanded && !this.isHidden)
       this.rowEl.style.maxHeight = this.getCollapsedHeight();
   }
 
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
+  }
+
+  async resetResizeObserver() {
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    if (this.minWidths.sm) return;
+    this.resizeObserver = new ResizeObserver(() => this.setCollapsedHeight());
+    this.resizeObserver.observe(this.element.firstElementChild);
   }
 
   setIndentLevel() {
@@ -148,12 +166,16 @@ export class MxTableRow {
     nestedRows.forEach(async (row: HTMLMxTableRowElement) => {
       row.toggle(this.collapseNestedRows, skipTransition);
     });
+    clearTimeout(rowAccordionDebounce);
+    rowAccordionDebounce = setTimeout(this.mxRowAccordion.emit, 200);
   }
 
   /** Move first cell into same container as checkbox and drag handle. */
   wrapFirstColumn() {
-    const firstCell = this.element.querySelector('mx-table-cell');
-    if (this.firstColumnWrapper && firstCell) this.firstColumnWrapper.appendChild(firstCell);
+    if (this.firstCellTarget && this.firstCellTarget.parentNode) {
+      const firstCell = this.element.querySelector('mx-table-cell');
+      if (firstCell) this.firstCellTarget.parentNode.replaceChild(firstCell, this.firstCellTarget);
+    }
   }
 
   /** Move nested rows from the default slot to a container outside the collapsible row. */
@@ -163,7 +185,7 @@ export class MxTableRow {
   }
 
   onClick(e: MouseEvent) {
-    if (!!(e.target as HTMLElement).closest('a, button, input, mx-menu')) return; // Ignore clicks on links, buttons, etc.
+    if ((e.target as HTMLElement).closest('a, button, input, mx-menu')) return; // Ignore clicks on links, buttons, etc.
     if (!this.minWidths.sm) {
       // Collapse/expand row when the exposed column cell is clicked
       const exposedCell = this.getExposedCell();
@@ -334,17 +356,19 @@ export class MxTableRow {
    * are added. */
   @Method()
   async getChildren(): Promise<HTMLElement[]> {
-    let children: HTMLElement[] = [];
+    const children: HTMLElement[] = [];
     if (!this.minWidths.sm) children.push(this.rowEl);
     else
       (Array.from(this.rowEl.children) as HTMLElement[]).forEach(child => {
         if (!child.offsetParent) children.push(...(Array.from(child.children) as HTMLElement[]));
         else children.push(child);
       });
-    const nestedRows = Array.from(this.childRowWrapper.children) as HTMLMxTableRowElement[];
-    await Promise.all(
-      nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))),
-    );
+    if (!this.collapseNestedRows) {
+      const nestedRows = Array.from(this.childRowWrapper.children) as HTMLMxTableRowElement[];
+      await Promise.all(
+        nestedRows.map(childRow => childRow.getChildren().then(grandchildren => children.push(...grandchildren))),
+      );
+    }
     return children as HTMLElement[];
   }
 
@@ -390,8 +414,8 @@ export class MxTableRow {
   }
 
   get rowClass(): string {
-    let str = 'table-row overflow-hidden';
-    str += this.minWidths.sm ? ' contents' : ' grid';
+    let str = 'table-row';
+    str += this.minWidths.sm ? ' contents' : ' grid overflow-hidden';
     if (this.checkable) str += ' checkable-row';
     if (this.checkable && this.checkOnRowClick) str += ' cursor-pointer';
     if (!this.minWidths.sm && !this.isMobileExpanded) str += ' mobile-collapsed';
@@ -412,7 +436,7 @@ export class MxTableRow {
   }
 
   get indentClass(): string {
-    let str = 'table-row-indent h-full';
+    let str = 'table-row-indent sm:h-full';
     if (this.minWidths.sm) return str;
     str += ' col-start-1 row-start-1';
     return (str += ' row-span-' + this.columnCount);
@@ -438,10 +462,9 @@ export class MxTableRow {
           {/* On desktop, the checkbox, drag handle, and first cell need to indent as one column. */}
           {/* On mobile, display:contents allows those same elements to fall into the row grid. */}
           <div
-            ref={el => (this.firstColumnWrapper = el)}
             class={
               'first-column-wrapper contents sm:flex sm:items-center min-w-0 overflow-hidden' +
-              (this.subheader ? ' sm:col-span-full' : '')
+              (this.subheader ? ' sm:col-span-full pr-0' : '')
             }
           >
             {/* Indent */}
@@ -486,6 +509,24 @@ export class MxTableRow {
                   </p>
                 )}
               </div>
+            )}
+            <div ref={el => (this.firstCellTarget = el)} class="contents"></div>
+            {/* Subheader accordion chevron */}
+            {this.subheader && (
+              <button
+                type="button"
+                class="flex border-0 items-center h-40 justify-end px-12"
+                aria-label="Toggle visibility of rows grouped under this one"
+                onClick={() => (this.collapseNestedRows = !this.collapseNestedRows)}
+                onMouseDown={e => e.preventDefault() /* Do not focus on click */}
+              >
+                <i
+                  class={
+                    'subheader-chevron mds-chevron-down text-icon transform' +
+                    (!this.collapseNestedRows ? ' rotate-180' : '')
+                  }
+                ></i>
+              </button>
             )}
           </div>
           <slot></slot>

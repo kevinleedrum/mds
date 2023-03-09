@@ -1,50 +1,36 @@
 # Buttons
 
-## Standard Buttons
+Buttons are used to indicate calls to actions (CTAs) that the user can take (e.g. save, delete, add, create). There are a variety of button types to create the desired level of emphasis and hierarchy when multiple actions can be taken.
 
-<!-- #region standard-buttons -->
+## Primary Buttons
+
+Contained buttons using the primary brandable color as a fill. Other than FAB, they have the highest level of emphasis. Commonly used at the top of page headers, within modals, and empty states. These are usually for the main action on a page. Avoid grouping multiple primary buttons together or using them for less important actions.
+
+<!-- #region primary-buttons -->
 <section class="mds">
   <div class="grid grid-cols-1 lg:grid-cols-2">
     <div>
-      <strong>Contained</strong>
+      <strong>Enabled</strong>
       <div class="my-20">
         <mx-button>button</mx-button>
       </div>
       <div class="my-20">
-        <mx-button disabled>Disabled button</mx-button>
-      </div>
-      <div class="my-20">
         <mx-button xl>XL button</mx-button>
+      </div>
+       <div class="my-20">
+        <mx-button href="https://google.com" target="_blank">Button as Link</mx-button>
+      </div>
+    </div>
+    <div>
+      <strong>Disabled</strong>
+      <div class="my-20">
+        <mx-button disabled>Disabled button</mx-button>
       </div>
       <div class="my-20">
         <mx-button disabled xl>XL Disabled button</mx-button>
       </div>
        <div class="my-20">
-        <mx-button href="https://google.com" target="_blank">Button as Link</mx-button>
-      </div>
-       <div class="my-20">
         <mx-button disabled href="https://google.com" target="_blank">Button as Link Disabled</mx-button>
-      </div>
-    </div>
-    <div>
-      <strong>Outline</strong>
-      <div class="my-20">
-        <mx-button btn-type="outlined">Outlined button</mx-button>
-      </div>
-      <div class="my-20">
-        <mx-button btn-type="outlined" disabled>Outlined button</mx-button>
-      </div>
-      <div class="my-20">
-        <mx-button btn-type="outlined" xl>XL outlined button</mx-button>
-      </div>
-      <div class="my-20">
-        <mx-button btn-type="outlined" disabled xl>XL outlined Disabled</mx-button>
-      </div>
-      <div class="my-20">
-        <mx-button btn-type="outlined" href="https://google.com" target="_blank">Button as Link</mx-button>
-      </div>
-      <div class="my-20">
-        <mx-button disabled btn-type="outlined" href="https://google.com" target="_blank">Button as Link Disabled</mx-button>
       </div>
     </div>
   </div>
@@ -56,6 +42,46 @@
     <div class="my-20">
       <mx-button xl full>XL button</mx-button>
     </div>
+  </div>
+</section>
+<!-- #endregion primary-buttons -->
+
+<<< @/vuepress/components/buttons.md#primary-buttons
+
+## Secondary Buttons
+
+Outlined buttons without a fill. These are less emphasized than primary contained buttons but more so than a text button. Often grouped with primary buttons in page headers and modals. Use in place of a primary button whenever an action with less emphasis is appropriate.
+
+<!-- #region secondary-buttons -->
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2">
+    <div>
+      <strong>Enabled</strong>
+      <div class="my-20">
+        <mx-button btn-type="outlined">Outlined button</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="outlined" xl>XL outlined button</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="outlined" href="https://google.com" target="_blank">Button as Link</mx-button>
+      </div>
+    </div>
+    <div>
+      <strong>Disabled</strong>
+      <div class="my-20">
+        <mx-button btn-type="outlined" disabled>Outlined button</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="outlined" disabled xl>XL outlined Disabled</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button disabled btn-type="outlined" href="https://google.com" target="_blank">Button as Link Disabled</mx-button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <strong>Full</strong>
     <div class="my-20">
       <mx-button btn-type="outlined" full>Outlined button</mx-button>
     </div>
@@ -64,57 +90,83 @@
     </div>
   </div>
 </section>
-<!-- #endregion standard-buttons -->
+<!-- #endregion secondary-buttons -->
 
-<<< @/vuepress/components/buttons.md#standard-buttons
+<<< @/vuepress/components/buttons.md#secondary-buttons
 
-## Simple Buttons
+## Text/Tertiary Buttons
 
-<!-- #region simple-buttons -->
-<section class="mds">
-  <div class="my-20">
-    <mx-button btn-type="simple">Button</mx-button>
-  </div>
-  <div class="my-20">
-    <mx-button btn-type="simple" icon="ph-apple-logo">Button with Icon</mx-button>
-  </div>
-  <div class="my-20">
-    <mx-button btn-type="simple" disabled>Disabled</mx-button>
-  </div>
-  <div class="my-20">
-    <mx-button btn-type="simple" dropdown>Dropdown</mx-button>
-  </div>
-  <div class="my-20">
-    <mx-button btn-type="simple" dropdown disabled>Disabled</mx-button>
-  </div>
-</section>
-<!-- #endregion simple-buttons -->
-
-<<< @/vuepress/components/buttons.md#simple-buttons
-
-## Text Buttons
+Text buttons in the primary brandable color without a stroke or fill. These are lower emphasis and multiple can be grouped together or appear in the same container (e.g. tables, simple dialog).
 
 <!-- #region text-buttons -->
 <section class="mds">
-  <div class="my-20">
-    <mx-button btn-type="text">button</mx-button>
-  </div>
-  <div class="my-20">
-    <mx-button btn-type="text" icon="ph-apple-logo">button with icon</mx-button>
-  </div>
-  <div class="my-20">
-    <mx-button btn-type="text" disabled>disabled</mx-button>
-  </div>
-  <div class="my-20">
-    <mx-button btn-type="text" icon="ph-apple-logo" dropdown>Icon with Dropdown</mx-button>
-  </div>
-  <div class="my-20">
-    <mx-button btn-type="text" icon="ph-apple-logo" dropdown disabled>Disabled</mx-button>
+  <div class="grid grid-cols-1 lg:grid-cols-2">
+    <div>
+      <strong>Enabled</strong>
+      <div class="my-20">
+        <mx-button btn-type="text">button</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="text" icon="ph-apple-logo">button with icon</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="text" icon="ph-apple-logo" dropdown>Icon with Dropdown</mx-button>
+      </div>
+    </div>
+    <div>
+      <strong>Disabled</strong>
+      <div class="my-20">
+        <mx-button btn-type="text" disabled>disabled</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="text" icon="ph-apple-logo" disabled>button with icon</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="text" icon="ph-apple-logo" dropdown disabled>Disabled</mx-button>
+      </div>
+    </div>
   </div>
 </section>
 <!-- #endregion text-buttons -->
 
 <<< @/vuepress/components/buttons.md#text-buttons
+
+## Simple Buttons
+
+Pill shaped buttons that can also have a leading or trailing icon. These are lower emphasis buttons for less commonly used actions. They are often used for filters or appear within cards.
+
+<!-- #region simple-buttons -->
+<section class="mds">
+  <div class="grid grid-cols-1 lg:grid-cols-2">
+    <div>
+      <strong>Enabled</strong>
+      <div class="my-20">
+        <mx-button btn-type="simple">Button</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="simple" icon="ph-apple-logo">Button with Icon</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="simple" dropdown>Dropdown</mx-button>
+      </div>
+    </div>
+    <div>
+      <strong>Disabled</strong>
+      <div class="my-20">
+        <mx-button btn-type="simple" disabled>Disabled</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="simple" icon="ph-apple-logo" disabled>Button with Icon</mx-button>
+      </div>
+      <div class="my-20">
+        <mx-button btn-type="simple" dropdown disabled>Disabled</mx-button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- #endregion simple-buttons -->
+
+<<< @/vuepress/components/buttons.md#simple-buttons
 
 ### Button Properties
 
@@ -138,9 +190,9 @@
 
 Icon buttons are round buttons that only contain an icon. The icon can be set three different ways:
 
-- &bull; the class name of an icon in the icon font library (i.e. [Phosphor Icons](/getting-started.html#phosphor-icons)) via the `icon` prop,
-- &bull; an SVG passed into the default slot,
-- &bull; or one of the built-in elevated chevron icons via the `chevron-dropdown`, `chevron-left`, and `chevron-right` props.
+- the class name of an icon in the icon font library (i.e. [Phosphor Icons](/getting-started.html#phosphor-icons)) via the `icon` prop,
+- an SVG passed into the default slot,
+- or one of the built-in elevated chevron icons via the `chevron-dropdown`, `chevron-left`, and `chevron-right` props.
 
 <!-- #region icon-buttons -->
 <section class="mds">
@@ -156,6 +208,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
         <mx-icon-button chevron-down el-aria-label="Down" />
         <mx-icon-button chevron-left el-aria-label="Left" />
         <mx-icon-button chevron-right el-aria-label="Right" />
+        <mx-icon-button chevron-up el-aria-label="Up" />
         <mx-icon-button icon="ph-link" href="/" el-aria-label="Link" />
       </div>
     </div>
@@ -171,6 +224,7 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
         <mx-icon-button chevron-down disabled el-aria-label="Down" />
         <mx-icon-button chevron-left disabled el-aria-label="Left" />
         <mx-icon-button chevron-right disabled el-aria-label="Right" />
+        <mx-icon-button chevron-up disabled el-aria-label="Up" />
         <mx-icon-button icon="ph-link" href="/" disabled el-aria-label="Link" />
       </div>
     </div>
@@ -187,12 +241,14 @@ Icon buttons are round buttons that only contain an icon. The icon can be set th
 | `chevronDown`  | `chevron-down`  | Show downward chevron icon                             | `boolean`                         | `false`     |
 | `chevronLeft`  | `chevron-left`  | Show left-pointing chevron icon                        | `boolean`                         | `false`     |
 | `chevronRight` | `chevron-right` | Show right-pointing chevron icon                       | `boolean`                         | `false`     |
+| `chevronUp`    | `chevron-up`    | Show upward chevron icon                               | `boolean`                         | `false`     |
 | `disabled`     | `disabled`      |                                                        | `boolean`                         | `false`     |
 | `elAriaLabel`  | `el-aria-label` | The aria-label attribute for the inner button element. | `string`                          | `undefined` |
 | `form`         | `form`          |                                                        | `string`                          | `undefined` |
 | `formaction`   | `formaction`    |                                                        | `string`                          | `undefined` |
 | `href`         | `href`          | Create button as link                                  | `string`                          | `undefined` |
 | `icon`         | `icon`          | Class name of icon (for icon font)                     | `string`                          | `undefined` |
+| `target`       | `target`        | Only for link buttons                                  | `string`                          | `undefined` |
 | `type`         | `type`          |                                                        | `"button" \| "reset" \| "submit"` | `'button'`  |
 | `value`        | `value`         |                                                        | `string`                          | `undefined` |
 
@@ -249,9 +305,11 @@ A Toggle Button Group provides a convenient way to bind a group of toggle button
 However, unlike radio buttons, Toggle Buttons can be deselected. When a Toggle Button is clicked, the resulting value is
 emitted via a custom <code>mxInput</code> event.
 
+There is a `slot` available for SVG images or plain text as well. See Example.
+
 <!-- #region toggle-button-groups -->
 <section class="mds">
-  <div class="mt-5 grid grid-cols-1 lg:grid-cols-2">
+  <div class="mt-5 grid grid-cols-1 lg:grid-cols-3">
     <div>
       <strong>Enabled</strong>
       <div class="my-20">
@@ -273,7 +331,22 @@ emitted via a custom <code>mxInput</code> event.
         </mx-toggle-button-group>
       </div>
     </div>
-  </div>
+    <div>
+      <strong>Text Using Default Slot</strong>
+      <div class="my-20">
+        <mx-toggle-button-group :value="textAlign" @mxInput="e => textAlign = e.detail">
+          <mx-toggle-button value="left" el-aria-label="Align left">
+            <div class="caption1">Left</div>
+          </mx-toggle-button>
+          <mx-toggle-button value="center" el-aria-label="Align center">
+            <div class="caption1">Center</div>
+          </mx-toggle-button>
+          <mx-toggle-button value="right" el-aria-label="Align right">
+            <div class="caption1">Right</div>
+          </mx-toggle-button>
+        </mx-toggle-button-group>
+      </div>
+    </div>
   </div>
 </section>
 <!-- #endregion toggle-button-groups -->

@@ -11,8 +11,8 @@ export class MxToggleButton {
   dataAttributes = {};
 
   @Prop() icon: string;
-  @Prop({ reflect: true }) selected: boolean = false;
-  @Prop() disabled: boolean = false;
+  @Prop({ reflect: true }) selected = false;
+  @Prop() disabled = false;
   /** The aria-label attribute for the inner button element. */
   @Prop() elAriaLabel: string;
   /** Only used inside a toggle button group */
@@ -34,6 +34,7 @@ export class MxToggleButton {
       last-of-type:rounded-tr last-of-type:rounded-br"
       >
         <button
+          type="button"
           class={
             'btn-toggle inline-flex relative items-center justify-center w-48 h-48 text-1 overflow-hidden cursor-pointer disabled:cursor-auto disabled:pointer-events-none' +
             (this.selected ? ' selected' : '')
@@ -46,6 +47,7 @@ export class MxToggleButton {
           onClick={this.onClick.bind(this)}
           {...this.dataAttributes}
         >
+          <slot />
           <i class={this.icon}></i>
         </button>
       </Host>

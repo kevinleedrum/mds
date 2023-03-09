@@ -17,6 +17,7 @@ export function capitalize(str: string): string {
 }
 
 export function isDateObject(val: any): boolean {
+  if (val == null) return false; // null or undefined
   if (typeof val !== 'object') return false;
   return 'getTime' in val && !isNaN(val.getTime()); // "Invalid Date" objects return NaN for getTime()
 }
@@ -27,7 +28,7 @@ export function parseTimeString(str: string): { hours: number; minutes: number }
   if (str == null || str.trim() === '') return;
   const isExplicitAM = str.toLowerCase().includes('a');
   const isExplicitPM = str.toLowerCase().includes('p');
-  let digits = str.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+  const digits = str.replace(/[^0-9]/g, ''); // Remove non-numeric characters
   if (!digits.length || digits.length > 4) return null;
   // If only 1 or 2 digits entered, assume only an hour was entered
   let hours = digits.length <= 2 ? Number(digits) : Number(digits.slice(0, -2));
@@ -39,9 +40,12 @@ export function parseTimeString(str: string): { hours: number; minutes: number }
 }
 
 /** Returns the `clientX`, `clientY`, `pageX`, `pageY` from any MouseEvent or TouchEvent. */
-export function getCursorCoords(
-  e: MouseEvent | TouchEvent,
-): { pageX: number; pageY: number; clientX: number; clientY: number } {
+export function getCursorCoords(e: MouseEvent | TouchEvent): {
+  pageX: number;
+  pageY: number;
+  clientX: number;
+  clientY: number;
+} {
   if ((e as TouchEvent).changedTouches) return (e as TouchEvent).changedTouches[0];
   else if ((e as TouchEvent).touches) return (e as TouchEvent).touches[0];
   else return e as MouseEvent;
@@ -98,7 +102,7 @@ function isScrollable(el: HTMLElement) {
  * so they can be applied to the native element in the render function. */
 export function propagateDataAttributes() {
   Array.from(this.element.attributes).forEach((attribute: Attr) => {
-    if (!/^data\-/.test(attribute.name)) return;
+    if (!/^data-/.test(attribute.name)) return;
     this.element.removeAttribute(attribute.name);
     this.dataAttributes[attribute.name] = attribute.value;
   });

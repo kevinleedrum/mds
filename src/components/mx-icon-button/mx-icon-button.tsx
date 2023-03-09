@@ -16,15 +16,19 @@ export class MxIconButton {
   @Prop() value: string;
   /** Create button as link */
   @Prop() href: string;
-  @Prop({ reflect: true }) disabled: boolean = false;
+  /** Only for link buttons */
+  @Prop() target: string;
+  @Prop({ reflect: true }) disabled = false;
   /** The aria-label attribute for the inner button element. */
   @Prop() elAriaLabel: string;
   /** Show downward chevron icon */
-  @Prop() chevronDown: boolean = false;
+  @Prop() chevronDown = false;
   /** Show left-pointing chevron icon */
-  @Prop() chevronLeft: boolean = false;
+  @Prop() chevronLeft = false;
   /** Show right-pointing chevron icon */
-  @Prop() chevronRight: boolean = false;
+  @Prop() chevronRight = false;
+  /** Show upward chevron icon */
+  @Prop() chevronUp = false;
   /** Class name of icon (for icon font) */
   @Prop() icon: string;
 
@@ -41,7 +45,7 @@ export class MxIconButton {
   }
 
   get isChevron() {
-    return this.chevronDown || this.chevronLeft || this.chevronRight;
+    return this.chevronDown || this.chevronLeft || this.chevronRight || this.chevronUp;
   }
 
   render() {
@@ -58,7 +62,13 @@ export class MxIconButton {
             <i
               data-testid="chevron"
               class={
-                this.chevronLeft ? 'mds-chevron-left' : this.chevronRight ? 'mds-chevron-right' : 'mds-chevron-down'
+                this.chevronLeft
+                  ? 'mds-chevron-left'
+                  : this.chevronRight
+                  ? 'mds-chevron-right'
+                  : this.chevronUp
+                  ? 'mds-chevron-up'
+                  : 'mds-chevron-down'
               }
             ></i>
           </span>
@@ -74,6 +84,7 @@ export class MxIconButton {
           formaction={this.formaction}
           value={this.value}
           href={this.href}
+          target={this.href ? this.target : null}
           class="flex text-current appearance-none items-center w-48 h-48 rounded-full justify-center relative overflow-hidden cursor-pointer disabled:pointer-events-none disabled:cursor-auto"
           ref={el => (this.btnElem = el as HTMLButtonElement)}
           disabled={this.disabled}

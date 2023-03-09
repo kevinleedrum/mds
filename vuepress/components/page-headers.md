@@ -2,9 +2,9 @@
 
 The Page Header component displays the heading text of a page, and may also contain:
 
-- &bull; a link to the previous page,
-- &bull; primary, secondary, and tertiary [buttons](/components/buttons.html),
-- &bull; and [tabs](/components/tabs.html).
+- a link to the previous page,
+- primary, secondary, and tertiary [buttons](/components/buttons.html),
+- and [tabs](/components/tabs.html).
 
 On smaller screens, the size of the text and buttons will be reduced. Additionally, if there is not enough room on small screens for the tertiary button, it will be converted into a small menu button.
 

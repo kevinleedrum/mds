@@ -1,6 +1,6 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { R as ResizeObserver } from './resize-observer-9111af2a.js';
+import { R as ResizeObserver } from './resize-observer-731c02df.js';
 
 var __rest = (undefined && undefined.__rest) || function (s, e) {
   var t = {};
@@ -20,15 +20,10 @@ const MxPageHeader = class {
     this.hasTabs = false;
     this.hasModalHeaderCenter = false;
     this.hasModalHeaderRight = false;
-    /** An array of prop objects for each button.  Use the `label` property to specify the button's inner text. */
     this.buttons = [];
-    /** This flag is set by the Modal component to adjust the page header styling when used internally. */
     this.modal = false;
-    /** The URL for the previous page link */
     this.previousPageUrl = '';
-    /** The text to display for the previous page link */
     this.previousPageTitle = 'Back';
-    /** When set to true, the Page Header will use the themed background pattern. */
     this.pattern = false;
     this.minWidths = new MinWidths();
     this.renderTertiaryButtonAsMenu = false;
@@ -49,7 +44,11 @@ const MxPageHeader = class {
   componentWillLoad() {
     this.hasTabs = !!this.element.querySelector('[slot="tabs"]');
     this.hasModalHeaderCenter = !!this.element.querySelector('[slot="modal-header-center"]');
-    this.hasModalHeaderRight = !!this.element.querySelector('[slot="modal-header-right"]');
+    const modalHeaderRight = this.element.querySelector('[slot="modal-header-right"]');
+    this.hasModalHeaderRight =
+      modalHeaderRight &&
+        modalHeaderRight.firstElementChild &&
+        !!modalHeaderRight.firstElementChild.offsetParent; // Slot wrapper is not hidden
     this.updateSlottedButtonSize();
   }
   connectedCallback() {
@@ -127,7 +126,7 @@ const MxPageHeader = class {
         btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
       const isTertiary = index === 2;
       const { label } = button, menuItemProps = __rest(button, ["label"]); // Do not use button label as menu item label (use in slot instead)
-      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative flex flex-1 justify-end' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute -top-6" }, h("mx-icon-button", { ref: el => (this.menuButton = el), icon: "mds-dots-vertical" }), h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton, onMxClose: e => e.stopPropagation() }, h("mx-menu-item", Object.assign({}, menuItemProps), button.label)))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
+      return (h("div", { ref: el => isTertiary && (this.tertiaryButtonWrapper = el), class: isTertiary ? 'relative flex flex-1 justify-end' : '' }, isTertiary && this.renderTertiaryButtonAsMenu && (h("div", { class: "absolute -top-6" }, h("mx-icon-button", { ref: el => (this.menuButton = el), icon: "mds-dots-vertical" }), h("mx-menu", { ref: el => (this.tertiaryMenu = el), "anchor-el": this.menuButton, onMxClose: e => e.stopPropagation() }, h("mx-menu-item", Object.assign({}, menuItemProps), label)))), h("mx-button", Object.assign({}, button, { xl: this.minWidths.lg, "btn-type": btnType, "aria-hidden": isTertiary && this.renderTertiaryButtonAsMenu ? 'true' : null, class: isTertiary && this.renderTertiaryButtonAsMenu ? 'opacity-0 pointer-events-none' : '' }), button.label)));
     })));
   }
   render() {

@@ -1,12 +1,13 @@
 const process = require('process');
 const { description } = require('../../package');
+const versionedExamplePlugin = require('./plugins/versioned-example-plugin');
 
 module.exports = {
   title: 'Moxi Design System',
   description: description,
-  base: process.env.NODE_ENV === 'development' ? '/' : '/mds/',
+  base: '/',
   head: [
-    ['meta', { name: 'theme-color', content: '#3eaf7c' }],
+    ['meta', { name: 'theme-color', content: '#0457af' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
     ['link', { rel: 'stylesheet', href: '/styles/mds-core.css' }],
@@ -20,7 +21,7 @@ module.exports = {
     lineNumbers: true,
   },
   themeConfig: {
-    repo: '',
+    repo: 'https://github.com/moxiworks/mds',
     editLinks: false,
     docsDir: '',
     editLinkText: '',
@@ -39,12 +40,17 @@ module.exports = {
         link: '/examples/grid.html',
       },
       {
+        text: 'Patterns',
+        link: '/patterns/introduction.html',
+      },
+      {
         text: 'Components',
         link: '/components/inputs.html',
       },
     ],
     sidebar: {
       '/getting-started.html': ['getting-started'],
+      '/patterns/': ['introduction', 'filters'],
       '/examples/': ['grid', 'flex'],
       '/css-documentation/': [
         {
@@ -161,6 +167,10 @@ module.exports = {
         'uploads',
       ],
     },
+    yuu: {
+      colorThemes: [],
+      disableDarkTheme: true,
+    },
   },
-  plugins: [['fulltext-search']],
+  plugins: [['fulltext-search'], versionedExamplePlugin],
 };

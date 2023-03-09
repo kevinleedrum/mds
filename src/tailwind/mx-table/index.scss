@@ -7,6 +7,13 @@
     }
   }
 
+  [slot='filter'] {
+    @apply max-w-full;
+    & > * {
+      @apply max-w-full;
+    }
+  }
+
   .table-grid > *:not(.hidden) {
     /* Only place table cell elements into the grid (not row elements). */
     @apply contents;
@@ -54,6 +61,7 @@
   .mx-table-row {
     & > .table-row {
       border-color: var(--mds-border-table-cell);
+      will-change: max-height; /* Makes collapse/expand smoother. */
 
       & > :last-child:not(.pr-0, .p-0) {
         @apply sm:pr-24;
@@ -75,8 +83,9 @@
       .first-column-wrapper > :nth-child(2).mx-table-cell > div {
         @apply pl-24;
       }
-      .mobile-row-chevron {
-        color: var(--mds-text-table-mobile-row-chevron);
+      .mobile-row-chevron,
+      .subheader-chevron {
+        color: var(--mds-text-table-row-chevron);
         transition: transform 0.15s ease;
       }
       &.mobile-collapsed {

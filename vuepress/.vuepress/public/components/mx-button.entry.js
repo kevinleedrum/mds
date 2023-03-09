@@ -1,20 +1,25 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { r as ripple } from './ripple-54ef50dc.js';
-import { p as propagateDataAttributes } from './utils-f31b72fe.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { r as ripple } from './ripple-140c6d57.js';
+import { p as propagateDataAttributes } from './utils-a3c69dbe.js';
 
 const MxButton = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.dataAttributes = {};
+    this.componentWillRender = propagateDataAttributes;
     this.btnType = 'contained';
+    this.elAriaLabel = undefined;
     this.type = 'button';
+    this.value = undefined;
+    this.form = undefined;
+    this.formaction = undefined;
     this.disabled = false;
     this.xl = false;
-    /** Sets display to flex instead of inline-flex */
+    this.href = undefined;
+    this.target = undefined;
     this.full = false;
-    /** Show chevron icon */
     this.dropdown = false;
-    this.componentWillRender = propagateDataAttributes;
+    this.icon = undefined;
   }
   onClick(e) {
     if (this.disabled) {
@@ -59,8 +64,8 @@ const MxButton = class {
       this.btnType = 'simple';
   }
   render() {
-    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative whitespace-nowrap" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
-    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", { href: this.href, target: this.target, "aria-disabled": this.disabled ? 'true' : null, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, buttonContent)) : (h("button", Object.assign({ type: this.type, form: this.form, formaction: this.formaction, value: this.value, disabled: this.disabled, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent))));
+    const buttonContent = (h("div", { class: "flex justify-center items-center content-center relative overflow-hidden whitespace-nowrap" }, this.icon && h("i", { class: 'mr-8 text-3 ' + this.icon }), h("span", { class: "slot-content truncate" }, h("slot", null)), this.dropdown && this.btnType === 'text' && h("span", { class: "separator inline-block w-1 ml-4 -my-4 h-24" }), this.dropdown && (h("i", { "data-testid": "chevron", class: 'mds-chevron-down text-icon ' + (this.btnType === 'text' ? 'chevron-icon' : 'ml-4') }))));
+    return (h(Host, { class: 'mx-button appearance-none' + (this.full ? ' flex' : ' inline-flex') }, this.href ? (h("a", Object.assign({ href: this.href, target: this.target, "aria-disabled": this.disabled ? 'true' : null, class: this.buttonClass, ref: el => (this.anchorElem = el), onClick: this.onClick.bind(this) }, this.dataAttributes), buttonContent)) : (h("button", Object.assign({ type: this.type, form: this.form, formaction: this.formaction, value: this.value, disabled: this.disabled, class: this.buttonClass, ref: el => (this.btnElem = el), onClick: this.onClick.bind(this), "aria-label": this.elAriaLabel }, this.dataAttributes), buttonContent))));
   }
   get element() { return getElement(this); }
 };

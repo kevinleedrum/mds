@@ -1,26 +1,37 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { u as uuidv4, p as propagateDataAttributes } from './utils-f31b72fe.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { u as uuidv4, p as propagateDataAttributes } from './utils-a3c69dbe.js';
 
 const MxInput = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.dataAttributes = {};
     this.uuid = uuidv4();
-    /** The `type` attribute for the text input */
+    this.componentWillRender = propagateDataAttributes;
+    this.name = undefined;
+    this.inputId = undefined;
+    this.label = undefined;
+    this.placeholder = undefined;
+    this.value = undefined;
     this.type = 'text';
     this.dense = false;
     this.disabled = false;
     this.readonly = false;
+    this.maxlength = undefined;
+    this.leftIcon = undefined;
+    this.rightIcon = undefined;
+    this.suffix = undefined;
     this.outerContainerClass = '';
     this.labelClass = '';
     this.error = false;
+    this.assistiveText = undefined;
     this.floatLabel = false;
-    /** Display a multi-line `textarea` instead of an `input` */
     this.textarea = false;
-    this.textareaHeight = '250px';
+    this.textareaHeight = '15.625rem';
+    this.elAriaLabel = undefined;
+    this.hideCharacterCount = false;
+    this.step = undefined;
     this.isFocused = false;
     this.characterCount = 0;
-    this.componentWillRender = propagateDataAttributes;
   }
   connectedCallback() {
     this.characterCount = this.hasValue ? this.value.length : 0;
@@ -51,7 +62,7 @@ const MxInput = class {
     this.value = e.target.value;
   }
   getIconJsx(icon) {
-    return icon.onClick ? (h("button", { class: "inline-flex items-center justify-center cursor-pointer", "aria-label": icon.ariaLabel, onClick: icon.onClick }, h("i", { class: icon.icon }))) : (h("i", { class: icon.icon + ' pointer-events-none' }));
+    return icon.onClick ? (h("button", { type: "button", class: "inline-flex items-center justify-center cursor-pointer", "aria-label": icon.ariaLabel, onClick: icon.onClick }, h("i", { class: icon.icon }))) : (h("i", { class: icon.icon + ' pointer-events-none' }));
   }
   get workingElem() {
     return this.textarea ? this.textArea : this.textInput;
@@ -86,7 +97,7 @@ const MxInput = class {
     return str;
   }
   get labelClassNames() {
-    let str = 'block pointer-events-none';
+    let str = 'block whitespace-nowrap pointer-events-none';
     if (this.floatLabel) {
       str += ' absolute mt-0 px-4';
       if (this.textarea)
@@ -135,7 +146,7 @@ const MxInput = class {
   }
   render() {
     const labelJsx = (h("label", { htmlFor: this.inputId || this.uuid, class: this.labelClassNames }, this.label));
-    return (h(Host, { class: 'mx-input block' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { class: this.containerClass, onClick: this.onContainerClick.bind(this) }, this.leftIcon && h("div", { class: this.leftIconWrapperClass }, this.leftIcons.map(this.getIconJsx)), this.label && this.floatLabel && labelJsx, !this.textarea ? (h("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, "aria-label": this.elAriaLabel || this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (h("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass }, this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count pointer-events-none" }, this.characterCount, "/", this.maxlength)), this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4 pointer-events-none" }, this.suffix)), this.error && h("i", { class: "mds-warning-circle text-icon pointer-events-none" }), this.rightIcon && !this.error && (h("span", { class: "flex items-center space-x-16" }, this.rightIcons.map(this.getIconJsx)))))), (this.assistiveText || (this.textarea && this.maxlength)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
+    return (h(Host, { class: 'mx-input block text-3' + (this.disabled ? ' disabled' : '') }, this.label && !this.floatLabel && labelJsx, h("div", { class: this.containerClass, onClick: this.onContainerClick.bind(this) }, this.leftIcon && h("div", { class: this.leftIconWrapperClass }, this.leftIcons.map(this.getIconJsx)), this.label && this.floatLabel && labelJsx, !this.textarea ? (h("input", Object.assign({ type: this.type, class: this.inputClass, name: this.name, id: this.inputId || this.uuid, value: this.value, placeholder: this.floatLabel ? null : this.placeholder, "aria-label": this.elAriaLabel || this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, step: this.step, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textInput = el) }, this.dataAttributes))) : (h("textarea", Object.assign({ class: this.inputClass, style: { height: this.textareaHeight }, name: this.name, id: this.inputId || this.uuid, placeholder: this.floatLabel ? null : this.placeholder, maxlength: this.maxlength, disabled: this.disabled, readonly: this.readonly, onFocus: this.onFocus.bind(this), onBlur: this.onBlur.bind(this), onInput: this.onInput.bind(this), ref: el => (this.textArea = el) }, this.dataAttributes), this.value)), !this.textarea && (this.maxlength || this.suffix || this.error || this.rightIcon) && (h("span", { class: this.rightContentClass }, this.maxlength && !this.hideCharacterCount && (h("span", { "data-testid": "character-count", class: "character-count pointer-events-none" }, this.characterCount, "/", this.maxlength)), this.suffix && (h("span", { "data-testid": "suffix", class: "suffix flex items-center h-full px-4 pointer-events-none" }, this.suffix)), this.error && h("i", { class: "mds-warning-circle text-icon pointer-events-none" }), this.rightIcon && !this.error && (h("span", { class: "flex items-center space-x-16" }, this.rightIcons.map(this.getIconJsx)))))), (this.assistiveText || (this.textarea && this.maxlength && !this.hideCharacterCount)) && (h("div", { class: "flex justify-between caption1 mt-4 ml-16 space-x-32" }, h("span", { "data-testid": "assistive-text", class: "assistive-text" }, this.assistiveText), this.textarea && this.maxlength && !this.hideCharacterCount && (h("span", { "data-testid": "character-count", class: "character-count" }, this.characterCount, "/", this.maxlength))))));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

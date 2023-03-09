@@ -6,14 +6,14 @@ To open or close a modal, set its `isOpen` prop to `true` or `false`. The modal 
 
 The modal component uses a [Page Header](/page-headers.html) internally. The `previousPageUrl`, `previousPageTitle`, and `buttons` props are passed to that Page Header. Additionally, the `mx-modal` component has eight slots for content:
 
-- &bull; The default, unnamed slot is for the main modal content.
-- &bull; `card` - This content will appear in a card-like container with rounded corners.
-- &bull; `header-left` - Place heading text in this slot.
-- &bull; `header-center` - This content appears to the right of the heading text.
-- &bull; `header-right` - This contains a Close button unless overridden.
-- &bull; `header-bottom` - This slot is for content that should appear below the header text, such as tabs.
-- &bull; `footer-left` - This slot contains the previous page link (if the `previousPageUrl` prop is provided).
-- &bull; `footer-right` - If the `buttons` prop is provided, this slot contains those buttons by default.
+- The default, unnamed slot is for the main modal content.
+- `card` - This content will appear in a card-like container with rounded corners.
+- `header-left` - Place heading text in this slot.
+- `header-center` - This content appears to the right of the heading text.
+- `header-right` - This contains a Close button unless overridden.
+- `header-bottom` - This slot is for content that should appear below the header text, such as tabs.
+- `footer-left` - This slot contains the previous page link (if the `previousPageUrl` prop is provided).
+- `footer-right` - If the `buttons` prop is provided, this slot contains those buttons by default.
 
 On small screens, the modal will fill the screen, except for a 24-px margin at the top. On larger screens, the max dimensions are based on whether the `large` prop is set. If `large` is `true`, the modal will stretch to nearly fill the entire page (with a 40px margin) up to 1200px; otherwise, the max dimensions are 800x600px.
 
@@ -174,7 +174,7 @@ If `fromLeft` or `fromRight` are set, then the modal will appear fixed to one si
 </section>
 <!-- #endregion modals-4 -->
 
-<<< @/vuepress/components/modals.md#modals-5
+<<< @/vuepress/components/modals.md#modals-4
 
 ### Modal that opens from the right on larger screens
 

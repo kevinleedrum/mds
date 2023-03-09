@@ -11,13 +11,13 @@ export class MxDropdownMenu {
 
   /** The aria-label attribute for the inner input element. */
   @Prop() elAriaLabel: string;
-  @Prop() disabled: boolean = false;
-  @Prop() readonly: boolean = false;
-  @Prop() dense: boolean = false;
+  @Prop() disabled = false;
+  @Prop() readonly = false;
+  @Prop() dense = false;
   /** Style as a filter dropdown with a 1dp elevation */
-  @Prop() elevated: boolean = false;
+  @Prop() elevated = false;
   /** Style as a filter dropdown with a "flat" border color */
-  @Prop() flat: boolean = false;
+  @Prop() flat = false;
   @Prop() label: string;
   /** Additional classes for the dropdown wrapper (e.g. `min-w-0` to override the default `min-width`) */
   @Prop() dropdownClass: string;
@@ -28,7 +28,10 @@ export class MxDropdownMenu {
   @Prop() suffix: string;
   @Prop({ mutable: true }) value: any;
 
-  @State() isFocused: boolean = false;
+  @Prop({ mutable: true, reflect: true }) error: boolean;
+  @Prop() assistiveText: string;
+
+  @State() isFocused = false;
 
   @Listen('click')
   async onClick(e: MouseEvent) {
@@ -64,6 +67,7 @@ export class MxDropdownMenu {
 
   onFocus() {
     this.isFocused = true;
+    this.error = false;
   }
 
   onMenuClose(e) {
@@ -82,6 +86,7 @@ export class MxDropdownMenu {
     if (this.flat) str += ' flat';
     str += this.isFocused ? ' focused border-2' : ' border';
     if (this.disabled || this.readonly) str += ' disabled';
+    if (this.error) str += ' error';
     if (this.dropdownClass) str += ' ' + this.dropdownClass;
     return str;
   }
@@ -101,7 +106,7 @@ export class MxDropdownMenu {
 
   render() {
     return (
-      <Host class="mx-dropdown-menu block">
+      <Host class="mx-dropdown-menu block text-3">
         <div ref={el => (this.dropdownWrapper = el)} class={this.dropdownWrapperClass}>
           {/* The input is always either readonly or disabled since you cannot type a value in the dropdown */}
           <input
@@ -120,9 +125,14 @@ export class MxDropdownMenu {
           />
           <span class={this.suffixClass}>
             {this.suffix && <span class="suffix flex items-center h-full px-4">{this.suffix}</span>}
-            <i data-testid="arrow" class="mds-arrow-triangle-down text-icon"></i>
+            {this.error ? (
+              <i class="mds-warning-circle text-icon pointer-events-none"></i>
+            ) : (
+              <i data-testid="arrow" class="mds-arrow-triangle-down text-icon"></i>
+            )}
           </span>
         </div>
+        {this.assistiveText && <div class="assistive-text caption1 mt-4 ml-16">{this.assistiveText}</div>}
         <mx-menu
           ref={el => (this.menu = el)}
           placement="bottom"

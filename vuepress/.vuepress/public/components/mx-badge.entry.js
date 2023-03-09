@@ -1,16 +1,16 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-f6edd80d.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-7d7e62d7.js';
 
 const MxBadge = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.isStandalone = true;
-    /** Make the corners a little more square (best for standalone text) */
+    this.value = undefined;
     this.squared = false;
-    /** Offset badge inward by this many pixels (e.g. 10 for icon buttons) */
+    this.indicator = undefined;
+    this.badgeClass = undefined;
+    this.icon = undefined;
     this.offset = 0;
-    /** Anchor the badge to the bottom of the wrapped content */
     this.bottom = false;
-    /** Anchor the badge to the left of the wrapped content */
     this.left = false;
   }
   componentWillLoad() {

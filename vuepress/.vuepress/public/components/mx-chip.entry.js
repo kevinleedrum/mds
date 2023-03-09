@@ -1,6 +1,6 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-f6edd80d.js';
-import { r as ripple } from './ripple-54ef50dc.js';
-import { u as uuidv4 } from './utils-f31b72fe.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-7d7e62d7.js';
+import { r as ripple } from './ripple-140c6d57.js';
+import { u as uuidv4 } from './utils-a3c69dbe.js';
 
 const MxChip = class {
   constructor(hostRef) {
@@ -9,17 +9,13 @@ const MxChip = class {
     this.uuid = uuidv4();
     this.outlined = false;
     this.disabled = false;
-    /** Display a checkmark on the left side of the chip */
     this.selected = false;
-    /** Use the pointer cursor and show a ripple animation.
-     * This does not need to be explicitly set for `choice` or `filter` chips. */
     this.clickable = false;
-    /** Show the remove icon on the right */
     this.removable = false;
-    /** Style as a choice chip when selected.
-     * This is set internally when the chip is wrapped with an `mx-chip-group`. */
+    this.avatarUrl = undefined;
+    this.icon = undefined;
+    this.value = undefined;
     this.choice = false;
-    /** Style as a filter chip when selected */
     this.filter = false;
   }
   componentWillRender() {

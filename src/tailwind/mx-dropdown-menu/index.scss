@@ -63,6 +63,23 @@
     }
   }
 
+  &.error {
+    border: 2px solid var(--mds-border-select-error);
+
+    label,
+    .icon-suffix i {
+      color: var(--mds-text-select-error);
+    }
+  }
+
+  &.assistive-text {
+    color: var(--mds-text-select-assistive);
+  }
+
+  &.error + .assistive-text {
+    color: var(--mds-text-select-error);
+  }
+
   &:hover:not(.disabled, .focused) {
     border-color: var(--mds-border-dropdown-hover);
   }

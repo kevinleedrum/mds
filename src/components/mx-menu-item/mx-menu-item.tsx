@@ -19,10 +19,11 @@ export class MxMenuItem implements IMxMenuItemProps {
   submenu: HTMLMxMenuElement;
   slotWrapper: HTMLElement;
   submenuDelayTimeout;
+  hasParentLink = false;
 
   /** If `multiSelect` is false, this will render a checkmark on the right side of the menu item.  If both `multiSelect` and `checked` are `true`, then the rendered multi-select checkbox will be checked. */
-  @Prop() checked: boolean = false;
-  @Prop() disabled: boolean = false;
+  @Prop() checked = false;
+  @Prop() disabled = false;
   /** The class name of the icon to display on the left. This is sometimes automatically set to `null` to add an empty icon for alignment purposes (when a sibling menu item has an icon). */
   @Prop() icon: string;
   /** A label to display above the menu item */
@@ -30,9 +31,9 @@ export class MxMenuItem implements IMxMenuItemProps {
   /** A subtitle to display below the menu item text */
   @Prop() subtitle: string;
   /** Render a checkbox as part of the menu item.  On small screens, the checkbox will appear on the left; otherwise, it will be on the right. */
-  @Prop() multiSelect: boolean = false;
+  @Prop() multiSelect = false;
   /** This is automatically set by a parent Dropdown Menu. */
-  @Prop() selected: boolean = false;
+  @Prop() selected = false;
 
   @State() minWidths = new MinWidths();
 
@@ -81,7 +82,13 @@ export class MxMenuItem implements IMxMenuItemProps {
   }
 
   connectedCallback() {
-    this.role = !!this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
+    const parentLink = this.element.closest('a');
+    if (parentLink) {
+      this.hasParentLink = true;
+      parentLink.setAttribute('role', 'menuitem');
+    } else {
+      this.role = this.element.closest('mx-dropdown-menu') ? 'option' : 'menuitem';
+    }
     minWidthSync.subscribeComponent(this);
   }
 
@@ -150,7 +157,7 @@ export class MxMenuItem implements IMxMenuItemProps {
   openSubMenu() {
     if (this.submenu) {
       this.submenu.placement = 'right-start';
-      this.submenu.anchorEl = this.element;
+      this.submenu.anchorEl = this.menuItemElem;
       return this.submenu.openMenu();
     }
   }
@@ -172,14 +179,15 @@ export class MxMenuItem implements IMxMenuItemProps {
 
   render() {
     return (
-      <Host class={'mx-menu-item block' + (!!this.submenu ? ' has-submenu' : '')}>
+      <Host role="none" class={'mx-menu-item block' + (this.submenu ? ' has-submenu' : '')}>
         <div
           ref={el => (this.menuItemElem = el)}
           role={this.role}
-          aria-checked={this.role === 'menuitem' ? null : this.checked ? 'true' : 'false'}
+          aria-checked={this.role === 'option' ? (this.checked ? 'true' : 'false') : null}
           aria-disabled={this.disabled ? 'true' : null}
+          aria-haspopup={this.submenu ? 'true' : null}
           aria-selected={this.selected ? 'true' : null}
-          tabindex={this.disabled || this.multiSelect ? '-1' : '0'}
+          tabindex={this.disabled || this.multiSelect || this.hasParentLink ? '-1' : '0'}
           class="block w-full cursor-pointer select-none text-4 outline-none"
           onClick={this.onClick.bind(this)}
         >
