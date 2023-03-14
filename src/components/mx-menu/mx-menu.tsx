@@ -238,7 +238,7 @@ export class MxMenu {
   render() {
     return (
       <Host class={this.hostClass}>
-        <div ref={el => (this.menuElem = el)} class="flex flex-col shadow-9 rounded-lg">
+        <div ref={el => (this.menuElem = el)} class="flex flex-col shadow-9 rounded-lg overflow-hidden">
           <div
             id={this.uuid}
             ref={el => (this.scrollElem = el)}
