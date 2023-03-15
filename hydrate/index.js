@@ -26388,7 +26388,7 @@ class MxMenu {
     return str;
   }
   render() {
-    return (hAsync(Host, { class: this.hostClass }, hAsync("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, hAsync("div", { id: this.uuid, ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden overscroll-contain" }, hAsync("slot", null)))));
+    return (hAsync(Host, { class: this.hostClass }, hAsync("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg overflow-hidden" }, hAsync("div", { id: this.uuid, ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden overscroll-contain" }, hAsync("slot", null)))));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

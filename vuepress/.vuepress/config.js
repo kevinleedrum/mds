@@ -5,7 +5,7 @@ const versionedExamplePlugin = require('./plugins/versioned-example-plugin');
 module.exports = {
   title: 'Moxi Design System',
   description: description,
-  base: '/',
+  base: process.env.NODE_ENV === 'production' ? '/mds/' : '/',
   head: [
     ['meta', { name: 'theme-color', content: '#0457af' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
