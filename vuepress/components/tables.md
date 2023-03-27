@@ -527,6 +527,12 @@ The example below combines nested rows with the `draggableRows` prop. For the sa
           <mx-table-cell>$65.00</mx-table-cell>
           <mx-table-cell>1</mx-table-cell>
           <mx-table-cell>$65.00</mx-table-cell>
+          <mx-table-row row-id="7">
+            <mx-table-cell>Roma Tomato (lb)</mx-table-cell>
+            <mx-table-cell>$0.99</mx-table-cell>
+            <mx-table-cell>12</mx-table-cell>
+            <mx-table-cell>$11.88</mx-table-cell>
+          </mx-table-row>
         </mx-table-row>
         <mx-table-row row-id="1">
           <mx-table-cell>Produce</mx-table-cell>

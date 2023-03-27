@@ -28277,7 +28277,7 @@ class MxTable {
     rows.forEach((row) => {
       if (row.subheader)
         return;
-      const cells = row.querySelectorAll('mx-table-cell:not(mx-table-row mx-table-row mx-table-cell)');
+      const cells = row.querySelectorAll('mx-table-cell');
       let colIndex = 0;
       cells.forEach((cell) => {
         cell.columnIndex = colIndex;
