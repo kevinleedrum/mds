@@ -386,7 +386,7 @@ export class MxTable {
     const rows = this.getTableRows();
     rows.forEach((row: HTMLMxTableRowElement) => {
       if (row.subheader) return;
-      const cells = row.querySelectorAll('mx-table-cell:not(mx-table-row mx-table-row mx-table-cell)');
+      const cells = row.querySelectorAll('mx-table-cell');
       let colIndex = 0;
       cells.forEach((cell: HTMLMxTableCellElement) => {
         cell.columnIndex = colIndex;
