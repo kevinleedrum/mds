@@ -35,7 +35,7 @@ and [@typescript-eslint/recommended](https://github.com/typescript-eslint/typesc
 
 ## Vuepress Documentation Only Creation and Editing
 
-This has been updated to where you can simply run `yarn:dev` to update documentation without the worry of unintended dynamic file c
+This has been updated to where you can simply run `yarn:dev` to update documentation without the worry of unintended dynamic file changes being added to your commits.
 
 ### Where Things Live
 

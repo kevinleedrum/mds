@@ -32,6 +32,7 @@ export class MxConfirmInput implements IMxInputProps {
   @Prop({ mutable: true }) textareaHeight = '250px';
   @Prop() elAriaLabel: string;
   @Prop() hideCharacterCount = false;
+  @Prop() step: string;
 
   @State() isFocused = false;
   @State() isHovered = false;

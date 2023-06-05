@@ -462,7 +462,9 @@ export class MxTable {
       // If `columns` prop is missing or does not have enough defintions for all columns, add default columns
       const rows = this.getTableRows().filter(row => !row.subheader);
       if (rows.length) {
-        const cellCount = rows[0].querySelectorAll('mx-table-cell').length;
+        const cellCount = rows[0].querySelectorAll(
+          'mx-table-cell:not(mx-table-row:not([subheader]) mx-table-row mx-table-cell)',
+        ).length;
         if (cellCount !== cols.length) {
           cols = cols.concat(new Array(cellCount).fill({})).slice(0, cellCount);
         }
@@ -622,7 +624,7 @@ export class MxTable {
         const valueA = this.getCellSortableValue(a, sortByColumn);
         const valueB = this.getCellSortableValue(b, sortByColumn);
         if (typeof valueA === 'number' && typeof valueB === 'number') return valueA - valueB;
-        return (valueA as string).localeCompare(valueB as string);
+        return valueA.toString().localeCompare(valueB.toString());
       };
     }
     rows.sort(sortCompare);
@@ -634,6 +636,7 @@ export class MxTable {
     const val = row[col.property];
     if (['date', 'dateTime'].includes(col.type) || isDateObject(val)) return -new Date(val).getTime();
     if (col.type === 'boolean') return val ? 1 : 0;
+    if (val == null) return '';
     return val;
   }
 

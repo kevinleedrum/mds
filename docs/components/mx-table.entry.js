@@ -1,6 +1,6 @@
-import { r as registerInstance, f as createEvent, h, i as forceUpdate, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, i as forceUpdate, e as Host, g as getElement } from './index-20e785a9.js';
 import { M as MinWidths, m as minWidthSync } from './minWidthSync-ff38ec9f.js';
-import { g as getPageRect, a as getCursorCoords, c as capitalize, i as isDateObject } from './utils-eee50014.js';
+import { g as getPageRect, a as getCursorCoords, c as capitalize, i as isDateObject } from './utils-a3c69dbe.js';
 
 const MxTable = class {
   constructor(hostRef) {
@@ -341,7 +341,7 @@ const MxTable = class {
       // If `columns` prop is missing or does not have enough defintions for all columns, add default columns
       const rows = this.getTableRows().filter(row => !row.subheader);
       if (rows.length) {
-        const cellCount = rows[0].querySelectorAll('mx-table-cell').length;
+        const cellCount = rows[0].querySelectorAll('mx-table-cell:not(mx-table-row:not([subheader]) mx-table-row mx-table-cell)').length;
         if (cellCount !== cols.length) {
           cols = cols.concat(new Array(cellCount).fill({})).slice(0, cellCount);
         }
@@ -498,7 +498,7 @@ const MxTable = class {
         const valueB = this.getCellSortableValue(b, sortByColumn);
         if (typeof valueA === 'number' && typeof valueB === 'number')
           return valueA - valueB;
-        return valueA.localeCompare(valueB);
+        return valueA.toString().localeCompare(valueB.toString());
       };
     }
     rows.sort(sortCompare);
@@ -513,6 +513,8 @@ const MxTable = class {
       return -new Date(val).getTime();
     if (col.type === 'boolean')
       return val ? 1 : 0;
+    if (val == null)
+      return '';
     return val;
   }
   getCellValue(row, col, rowIndex) {

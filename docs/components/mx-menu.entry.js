@@ -1,7 +1,7 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
-import { c as createPopover, a as convertPlacementToOrigin } from './popover-8664a111.js';
-import { d as fadeScaleIn, b as fadeOut } from './transitions-29f7f3e5.js';
-import { u as uuidv4 } from './utils-eee50014.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-20e785a9.js';
+import { c as createPopover, a as convertPlacementToOrigin } from './popover-a2a2acc7.js';
+import { d as fadeScaleIn, b as fadeOut } from './transitions-2b2d27da.js';
+import { u as uuidv4 } from './utils-a3c69dbe.js';
 
 const MxMenu = class {
   constructor(hostRef) {
@@ -213,7 +213,7 @@ const MxMenu = class {
     return str;
   }
   render() {
-    return (h(Host, { class: this.hostClass }, h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg" }, h("div", { id: this.uuid, ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden overscroll-contain" }, h("slot", null)))));
+    return (h(Host, { class: this.hostClass }, h("div", { ref: el => (this.menuElem = el), class: "flex flex-col shadow-9 rounded-lg overflow-hidden" }, h("div", { id: this.uuid, ref: el => (this.scrollElem = el), class: "scroll-wrapper overflow-y-auto overflow-x-hidden overscroll-contain" }, h("slot", null)))));
   }
   get element() { return getElement(this); }
   static get watchers() { return {

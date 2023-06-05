@@ -41,7 +41,7 @@ export class MxTab implements IMxTabProps {
   }
 
   get tabClass() {
-    let str = 'mx-tab relative inline-flex items-center justify-center min-w-full';
+    let str = 'mx-tab relative inline-flex items-center justify-center min-w-0';
     str += this.label && this.icon ? ' h-72' : ' h-48';
     return str;
   }

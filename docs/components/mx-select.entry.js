@@ -1,5 +1,5 @@
-import { r as registerInstance, h, e as Host, g as getElement } from './index-1ef0feab.js';
-import { u as uuidv4, p as propagateDataAttributes } from './utils-eee50014.js';
+import { r as registerInstance, h, e as Host, g as getElement } from './index-20e785a9.js';
+import { u as uuidv4, p as propagateDataAttributes } from './utils-a3c69dbe.js';
 
 const MxSelect = class {
   constructor(hostRef) {

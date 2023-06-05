@@ -1,4 +1,4 @@
-import { r as registerInstance, h, e as Host } from './index-1ef0feab.js';
+import { r as registerInstance, h, e as Host } from './index-20e785a9.js';
 import { r as ripple } from './ripple-140c6d57.js';
 
 const MxTab = class {
@@ -26,7 +26,7 @@ const MxTab = class {
     ripple(e, this.btnElem);
   }
   get tabClass() {
-    let str = 'mx-tab relative inline-flex items-center justify-center min-w-full';
+    let str = 'mx-tab relative inline-flex items-center justify-center min-w-0';
     str += this.label && this.icon ? ' h-72' : ' h-48';
     return str;
   }

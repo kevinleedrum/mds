@@ -1,6 +1,6 @@
-import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-1ef0feab.js';
+import { r as registerInstance, f as createEvent, h, e as Host, g as getElement } from './index-20e785a9.js';
 import { r as ripple } from './ripple-140c6d57.js';
-import { u as uuidv4 } from './utils-eee50014.js';
+import { u as uuidv4 } from './utils-a3c69dbe.js';
 
 const MxChip = class {
   constructor(hostRef) {
