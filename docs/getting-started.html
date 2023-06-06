@@ -1,437 +1,52 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Getting Started | Moxi Design System</title>
-    <meta name="generator" content="VuePress 1.9.9" />
-    <link rel="stylesheet" href="/mds/styles/mds-core.css" />
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="stylesheet" href="/mds/styles/mds-core.css">
     <script src="https://unpkg.com/phosphor-icons@1.3.1"></script>
     <script type="module" src="/mds/components/mds-components.esm.js"></script>
     <script nomodule="" src="/mds/components/mds-components.js"></script>
     <script src="/mds/fixProdInitialLoad.js"></script>
-    <meta name="description" content="Moxiworks Custom Component System" />
-    <meta name="theme-color" content="#0457af" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-
-    <link rel="preload" href="/mds/assets/css/0.styles.32656a7f.css" as="style" />
-    <link rel="preload" href="/mds/assets/js/app.b03f813d.js" as="script" />
-    <link rel="preload" href="/mds/assets/js/2.50e2be13.js" as="script" />
-    <link rel="preload" href="/mds/assets/js/10.2045c7c0.js" as="script" />
-    <link rel="prefetch" href="/mds/assets/js/100.bb8daffa.js" />
-    <link rel="prefetch" href="/mds/assets/js/101.b761c17e.js" />
-    <link rel="prefetch" href="/mds/assets/js/102.52f85b80.js" />
-    <link rel="prefetch" href="/mds/assets/js/103.aa3a6ade.js" />
-    <link rel="prefetch" href="/mds/assets/js/104.a6d5a473.js" />
-    <link rel="prefetch" href="/mds/assets/js/105.8a67f61c.js" />
-    <link rel="prefetch" href="/mds/assets/js/106.1bd7fb48.js" />
-    <link rel="prefetch" href="/mds/assets/js/107.1bd45d47.js" />
-    <link rel="prefetch" href="/mds/assets/js/108.39aa6bc6.js" />
-    <link rel="prefetch" href="/mds/assets/js/109.58b46577.js" />
-    <link rel="prefetch" href="/mds/assets/js/11.ab24ce5d.js" />
-    <link rel="prefetch" href="/mds/assets/js/110.b6eb71c8.js" />
-    <link rel="prefetch" href="/mds/assets/js/111.68ff901d.js" />
-    <link rel="prefetch" href="/mds/assets/js/112.6a2e325c.js" />
-    <link rel="prefetch" href="/mds/assets/js/113.5fb0897c.js" />
-    <link rel="prefetch" href="/mds/assets/js/114.1e5a420a.js" />
-    <link rel="prefetch" href="/mds/assets/js/115.0fe66a8a.js" />
-    <link rel="prefetch" href="/mds/assets/js/116.26210d3d.js" />
-    <link rel="prefetch" href="/mds/assets/js/117.b73441be.js" />
-    <link rel="prefetch" href="/mds/assets/js/118.acefd956.js" />
-    <link rel="prefetch" href="/mds/assets/js/119.6979da55.js" />
-    <link rel="prefetch" href="/mds/assets/js/12.e173d8de.js" />
-    <link rel="prefetch" href="/mds/assets/js/120.12d2dd74.js" />
-    <link rel="prefetch" href="/mds/assets/js/121.ccf5df86.js" />
-    <link rel="prefetch" href="/mds/assets/js/122.b1bc3943.js" />
-    <link rel="prefetch" href="/mds/assets/js/123.a52f9767.js" />
-    <link rel="prefetch" href="/mds/assets/js/124.b471fa1a.js" />
-    <link rel="prefetch" href="/mds/assets/js/125.4c1d740d.js" />
-    <link rel="prefetch" href="/mds/assets/js/126.07380bd6.js" />
-    <link rel="prefetch" href="/mds/assets/js/127.19115f04.js" />
-    <link rel="prefetch" href="/mds/assets/js/128.d31bc0bd.js" />
-    <link rel="prefetch" href="/mds/assets/js/129.98cc0f49.js" />
-    <link rel="prefetch" href="/mds/assets/js/13.0088ec2e.js" />
-    <link rel="prefetch" href="/mds/assets/js/130.31e2d77e.js" />
-    <link rel="prefetch" href="/mds/assets/js/131.38936b63.js" />
-    <link rel="prefetch" href="/mds/assets/js/132.1327b4a5.js" />
-    <link rel="prefetch" href="/mds/assets/js/133.e6a2ac56.js" />
-    <link rel="prefetch" href="/mds/assets/js/134.6b68ff19.js" />
-    <link rel="prefetch" href="/mds/assets/js/135.f16ed746.js" />
-    <link rel="prefetch" href="/mds/assets/js/14.b0a6a139.js" />
-    <link rel="prefetch" href="/mds/assets/js/15.56e2cf13.js" />
-    <link rel="prefetch" href="/mds/assets/js/16.0a35e5c1.js" />
-    <link rel="prefetch" href="/mds/assets/js/17.f3551163.js" />
-    <link rel="prefetch" href="/mds/assets/js/18.869bfc48.js" />
-    <link rel="prefetch" href="/mds/assets/js/19.b33061a3.js" />
-    <link rel="prefetch" href="/mds/assets/js/20.e55ebc65.js" />
-    <link rel="prefetch" href="/mds/assets/js/21.24972f49.js" />
-    <link rel="prefetch" href="/mds/assets/js/22.122d4b7c.js" />
-    <link rel="prefetch" href="/mds/assets/js/23.c16c0e81.js" />
-    <link rel="prefetch" href="/mds/assets/js/24.07afd860.js" />
-    <link rel="prefetch" href="/mds/assets/js/25.cdeb4cd8.js" />
-    <link rel="prefetch" href="/mds/assets/js/26.4c433461.js" />
-    <link rel="prefetch" href="/mds/assets/js/27.14d985ef.js" />
-    <link rel="prefetch" href="/mds/assets/js/28.53619529.js" />
-    <link rel="prefetch" href="/mds/assets/js/29.d95d7efe.js" />
-    <link rel="prefetch" href="/mds/assets/js/3.0d0b494b.js" />
-    <link rel="prefetch" href="/mds/assets/js/30.7fa8f242.js" />
-    <link rel="prefetch" href="/mds/assets/js/31.00014bb2.js" />
-    <link rel="prefetch" href="/mds/assets/js/32.3b123e6b.js" />
-    <link rel="prefetch" href="/mds/assets/js/33.7706e929.js" />
-    <link rel="prefetch" href="/mds/assets/js/34.0e505302.js" />
-    <link rel="prefetch" href="/mds/assets/js/35.3d3544e8.js" />
-    <link rel="prefetch" href="/mds/assets/js/36.7beecabd.js" />
-    <link rel="prefetch" href="/mds/assets/js/37.88a39895.js" />
-    <link rel="prefetch" href="/mds/assets/js/38.d2376071.js" />
-    <link rel="prefetch" href="/mds/assets/js/39.aa7c8698.js" />
-    <link rel="prefetch" href="/mds/assets/js/4.2afb4df9.js" />
-    <link rel="prefetch" href="/mds/assets/js/40.b1b6dd7a.js" />
-    <link rel="prefetch" href="/mds/assets/js/41.733a86cb.js" />
-    <link rel="prefetch" href="/mds/assets/js/42.b2af6b79.js" />
-    <link rel="prefetch" href="/mds/assets/js/43.55e6f186.js" />
-    <link rel="prefetch" href="/mds/assets/js/44.8900e1f0.js" />
-    <link rel="prefetch" href="/mds/assets/js/45.3a90f7b4.js" />
-    <link rel="prefetch" href="/mds/assets/js/46.22648355.js" />
-    <link rel="prefetch" href="/mds/assets/js/47.a38dc851.js" />
-    <link rel="prefetch" href="/mds/assets/js/48.b70ea670.js" />
-    <link rel="prefetch" href="/mds/assets/js/49.43a69ca7.js" />
-    <link rel="prefetch" href="/mds/assets/js/5.ffe0d0ce.js" />
-    <link rel="prefetch" href="/mds/assets/js/50.8c5c4595.js" />
-    <link rel="prefetch" href="/mds/assets/js/51.65a2fea7.js" />
-    <link rel="prefetch" href="/mds/assets/js/52.718428cd.js" />
-    <link rel="prefetch" href="/mds/assets/js/53.38d8cf2b.js" />
-    <link rel="prefetch" href="/mds/assets/js/54.26e23c76.js" />
-    <link rel="prefetch" href="/mds/assets/js/55.392ac4e4.js" />
-    <link rel="prefetch" href="/mds/assets/js/56.5d4d9d4e.js" />
-    <link rel="prefetch" href="/mds/assets/js/57.d40d3923.js" />
-    <link rel="prefetch" href="/mds/assets/js/58.49878726.js" />
-    <link rel="prefetch" href="/mds/assets/js/59.d136b354.js" />
-    <link rel="prefetch" href="/mds/assets/js/6.16b65cc0.js" />
-    <link rel="prefetch" href="/mds/assets/js/60.8046d0e9.js" />
-    <link rel="prefetch" href="/mds/assets/js/61.52162821.js" />
-    <link rel="prefetch" href="/mds/assets/js/62.46a1c499.js" />
-    <link rel="prefetch" href="/mds/assets/js/63.bea5bfbb.js" />
-    <link rel="prefetch" href="/mds/assets/js/64.068c82a0.js" />
-    <link rel="prefetch" href="/mds/assets/js/65.d515623f.js" />
-    <link rel="prefetch" href="/mds/assets/js/66.049f1594.js" />
-    <link rel="prefetch" href="/mds/assets/js/67.7585518b.js" />
-    <link rel="prefetch" href="/mds/assets/js/68.fcced636.js" />
-    <link rel="prefetch" href="/mds/assets/js/69.9d432120.js" />
-    <link rel="prefetch" href="/mds/assets/js/7.9b60665e.js" />
-    <link rel="prefetch" href="/mds/assets/js/70.91a3efad.js" />
-    <link rel="prefetch" href="/mds/assets/js/71.f5d8ad6c.js" />
-    <link rel="prefetch" href="/mds/assets/js/72.b1cbaa96.js" />
-    <link rel="prefetch" href="/mds/assets/js/73.ac7ca292.js" />
-    <link rel="prefetch" href="/mds/assets/js/74.e1aa4cf8.js" />
-    <link rel="prefetch" href="/mds/assets/js/75.980d662f.js" />
-    <link rel="prefetch" href="/mds/assets/js/76.8472523c.js" />
-    <link rel="prefetch" href="/mds/assets/js/77.b1dad4eb.js" />
-    <link rel="prefetch" href="/mds/assets/js/78.cea7d505.js" />
-    <link rel="prefetch" href="/mds/assets/js/79.7a1f88bb.js" />
-    <link rel="prefetch" href="/mds/assets/js/8.ac67e792.js" />
-    <link rel="prefetch" href="/mds/assets/js/80.6fabbe49.js" />
-    <link rel="prefetch" href="/mds/assets/js/81.46094494.js" />
-    <link rel="prefetch" href="/mds/assets/js/82.89b02acc.js" />
-    <link rel="prefetch" href="/mds/assets/js/83.56d2a2a3.js" />
-    <link rel="prefetch" href="/mds/assets/js/84.4e085ba2.js" />
-    <link rel="prefetch" href="/mds/assets/js/85.c2450613.js" />
-    <link rel="prefetch" href="/mds/assets/js/86.131206dc.js" />
-    <link rel="prefetch" href="/mds/assets/js/87.546bb8a6.js" />
-    <link rel="prefetch" href="/mds/assets/js/88.6b548745.js" />
-    <link rel="prefetch" href="/mds/assets/js/89.b463d964.js" />
-    <link rel="prefetch" href="/mds/assets/js/9.ac22ec8b.js" />
-    <link rel="prefetch" href="/mds/assets/js/90.9b04eaff.js" />
-    <link rel="prefetch" href="/mds/assets/js/91.b95c2375.js" />
-    <link rel="prefetch" href="/mds/assets/js/92.49ff84df.js" />
-    <link rel="prefetch" href="/mds/assets/js/93.bb744819.js" />
-    <link rel="prefetch" href="/mds/assets/js/94.e1cf3ee1.js" />
-    <link rel="prefetch" href="/mds/assets/js/95.1bc7a215.js" />
-    <link rel="prefetch" href="/mds/assets/js/96.608e891a.js" />
-    <link rel="prefetch" href="/mds/assets/js/97.7ca781bb.js" />
-    <link rel="prefetch" href="/mds/assets/js/98.3ecbe528.js" />
-    <link rel="prefetch" href="/mds/assets/js/99.452ff9ce.js" />
-    <link rel="stylesheet" href="/mds/assets/css/0.styles.32656a7f.css" />
+    <meta name="description" content="Moxiworks Custom Component System">
+    <meta name="theme-color" content="#0457af">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/mds/assets/css/0.styles.32656a7f.css" as="style"><link rel="preload" href="/mds/assets/js/app.f60237a5.js" as="script"><link rel="preload" href="/mds/assets/js/2.50e2be13.js" as="script"><link rel="preload" href="/mds/assets/js/10.2045c7c0.js" as="script"><link rel="prefetch" href="/mds/assets/js/100.f85b4ca0.js"><link rel="prefetch" href="/mds/assets/js/101.f036cd1d.js"><link rel="prefetch" href="/mds/assets/js/102.ecd09cd0.js"><link rel="prefetch" href="/mds/assets/js/103.9ce49ca8.js"><link rel="prefetch" href="/mds/assets/js/104.a6d5a473.js"><link rel="prefetch" href="/mds/assets/js/105.8a67f61c.js"><link rel="prefetch" href="/mds/assets/js/106.a2451d5f.js"><link rel="prefetch" href="/mds/assets/js/107.49fb94ad.js"><link rel="prefetch" href="/mds/assets/js/108.48c99798.js"><link rel="prefetch" href="/mds/assets/js/109.58b46577.js"><link rel="prefetch" href="/mds/assets/js/11.ab24ce5d.js"><link rel="prefetch" href="/mds/assets/js/110.9ce862e7.js"><link rel="prefetch" href="/mds/assets/js/111.fbc9a3bd.js"><link rel="prefetch" href="/mds/assets/js/112.6a2e325c.js"><link rel="prefetch" href="/mds/assets/js/113.5fb0897c.js"><link rel="prefetch" href="/mds/assets/js/114.4e0638c4.js"><link rel="prefetch" href="/mds/assets/js/115.b810be15.js"><link rel="prefetch" href="/mds/assets/js/116.8707cb10.js"><link rel="prefetch" href="/mds/assets/js/117.e63d71a4.js"><link rel="prefetch" href="/mds/assets/js/118.d2f55bd1.js"><link rel="prefetch" href="/mds/assets/js/119.5d0a4801.js"><link rel="prefetch" href="/mds/assets/js/12.e173d8de.js"><link rel="prefetch" href="/mds/assets/js/120.12d2dd74.js"><link rel="prefetch" href="/mds/assets/js/121.71c96c2c.js"><link rel="prefetch" href="/mds/assets/js/122.02726c99.js"><link rel="prefetch" href="/mds/assets/js/123.83b54b48.js"><link rel="prefetch" href="/mds/assets/js/124.b471fa1a.js"><link rel="prefetch" href="/mds/assets/js/125.4c1d740d.js"><link rel="prefetch" href="/mds/assets/js/126.07380bd6.js"><link rel="prefetch" href="/mds/assets/js/127.bb2d66f9.js"><link rel="prefetch" href="/mds/assets/js/128.5c40cffa.js"><link rel="prefetch" href="/mds/assets/js/129.7a560767.js"><link rel="prefetch" href="/mds/assets/js/13.dccdca9a.js"><link rel="prefetch" href="/mds/assets/js/130.1b461021.js"><link rel="prefetch" href="/mds/assets/js/131.8529a024.js"><link rel="prefetch" href="/mds/assets/js/132.1327b4a5.js"><link rel="prefetch" href="/mds/assets/js/133.e6a2ac56.js"><link rel="prefetch" href="/mds/assets/js/134.2f38ca6e.js"><link rel="prefetch" href="/mds/assets/js/135.de0d6c74.js"><link rel="prefetch" href="/mds/assets/js/14.b0a6a139.js"><link rel="prefetch" href="/mds/assets/js/15.3c67bdee.js"><link rel="prefetch" href="/mds/assets/js/16.6877e065.js"><link rel="prefetch" href="/mds/assets/js/17.c2475a75.js"><link rel="prefetch" href="/mds/assets/js/18.869bfc48.js"><link rel="prefetch" href="/mds/assets/js/19.b33061a3.js"><link rel="prefetch" href="/mds/assets/js/20.e55ebc65.js"><link rel="prefetch" href="/mds/assets/js/21.076ac870.js"><link rel="prefetch" href="/mds/assets/js/22.9d84b878.js"><link rel="prefetch" href="/mds/assets/js/23.9e6260c0.js"><link rel="prefetch" href="/mds/assets/js/24.07afd860.js"><link rel="prefetch" href="/mds/assets/js/25.4186c74b.js"><link rel="prefetch" href="/mds/assets/js/26.45751f0f.js"><link rel="prefetch" href="/mds/assets/js/27.8bc9a2e3.js"><link rel="prefetch" href="/mds/assets/js/28.53619529.js"><link rel="prefetch" href="/mds/assets/js/29.d95d7efe.js"><link rel="prefetch" href="/mds/assets/js/3.0d0b494b.js"><link rel="prefetch" href="/mds/assets/js/30.4b6ff390.js"><link rel="prefetch" href="/mds/assets/js/31.b3765575.js"><link rel="prefetch" href="/mds/assets/js/32.bf3ff9e9.js"><link rel="prefetch" href="/mds/assets/js/33.5fd37386.js"><link rel="prefetch" href="/mds/assets/js/34.d49a725b.js"><link rel="prefetch" href="/mds/assets/js/35.6ec47410.js"><link rel="prefetch" href="/mds/assets/js/36.7beecabd.js"><link rel="prefetch" href="/mds/assets/js/37.88a39895.js"><link rel="prefetch" href="/mds/assets/js/38.d2376071.js"><link rel="prefetch" href="/mds/assets/js/39.05c3beb2.js"><link rel="prefetch" href="/mds/assets/js/4.6594130e.js"><link rel="prefetch" href="/mds/assets/js/40.d41e13e4.js"><link rel="prefetch" href="/mds/assets/js/41.733a86cb.js"><link rel="prefetch" href="/mds/assets/js/42.d5917382.js"><link rel="prefetch" href="/mds/assets/js/43.8296fddd.js"><link rel="prefetch" href="/mds/assets/js/44.f432f153.js"><link rel="prefetch" href="/mds/assets/js/45.3a90f7b4.js"><link rel="prefetch" href="/mds/assets/js/46.9b06d308.js"><link rel="prefetch" href="/mds/assets/js/47.d4babe33.js"><link rel="prefetch" href="/mds/assets/js/48.b70ea670.js"><link rel="prefetch" href="/mds/assets/js/49.8e0af165.js"><link rel="prefetch" href="/mds/assets/js/5.ffe0d0ce.js"><link rel="prefetch" href="/mds/assets/js/50.20e8772e.js"><link rel="prefetch" href="/mds/assets/js/51.65a2fea7.js"><link rel="prefetch" href="/mds/assets/js/52.ee632e7b.js"><link rel="prefetch" href="/mds/assets/js/53.bcf125ed.js"><link rel="prefetch" href="/mds/assets/js/54.26e23c76.js"><link rel="prefetch" href="/mds/assets/js/55.dca53ab8.js"><link rel="prefetch" href="/mds/assets/js/56.7343facd.js"><link rel="prefetch" href="/mds/assets/js/57.d40d3923.js"><link rel="prefetch" href="/mds/assets/js/58.49878726.js"><link rel="prefetch" href="/mds/assets/js/59.d136b354.js"><link rel="prefetch" href="/mds/assets/js/6.16b65cc0.js"><link rel="prefetch" href="/mds/assets/js/60.958809c7.js"><link rel="prefetch" href="/mds/assets/js/61.5ae36d0a.js"><link rel="prefetch" href="/mds/assets/js/62.46a1c499.js"><link rel="prefetch" href="/mds/assets/js/63.bea5bfbb.js"><link rel="prefetch" href="/mds/assets/js/64.068c82a0.js"><link rel="prefetch" href="/mds/assets/js/65.cdaadae9.js"><link rel="prefetch" href="/mds/assets/js/66.a3240460.js"><link rel="prefetch" href="/mds/assets/js/67.56045e06.js"><link rel="prefetch" href="/mds/assets/js/68.fcced636.js"><link rel="prefetch" href="/mds/assets/js/69.9d432120.js"><link rel="prefetch" href="/mds/assets/js/7.9b60665e.js"><link rel="prefetch" href="/mds/assets/js/70.91a3efad.js"><link rel="prefetch" href="/mds/assets/js/71.f792cbbe.js"><link rel="prefetch" href="/mds/assets/js/72.56db88d8.js"><link rel="prefetch" href="/mds/assets/js/73.6758acfc.js"><link rel="prefetch" href="/mds/assets/js/74.6d2642e4.js"><link rel="prefetch" href="/mds/assets/js/75.980d662f.js"><link rel="prefetch" href="/mds/assets/js/76.8472523c.js"><link rel="prefetch" href="/mds/assets/js/77.b1dad4eb.js"><link rel="prefetch" href="/mds/assets/js/78.9789c2c6.js"><link rel="prefetch" href="/mds/assets/js/79.7a1f88bb.js"><link rel="prefetch" href="/mds/assets/js/8.ac67e792.js"><link rel="prefetch" href="/mds/assets/js/80.6fabbe49.js"><link rel="prefetch" href="/mds/assets/js/81.1f213042.js"><link rel="prefetch" href="/mds/assets/js/82.a4f96ef9.js"><link rel="prefetch" href="/mds/assets/js/83.b91da7ec.js"><link rel="prefetch" href="/mds/assets/js/84.180115ce.js"><link rel="prefetch" href="/mds/assets/js/85.86cd82d7.js"><link rel="prefetch" href="/mds/assets/js/86.a656e63a.js"><link rel="prefetch" href="/mds/assets/js/87.546bb8a6.js"><link rel="prefetch" href="/mds/assets/js/88.68b7dce9.js"><link rel="prefetch" href="/mds/assets/js/89.ec5af599.js"><link rel="prefetch" href="/mds/assets/js/9.13213803.js"><link rel="prefetch" href="/mds/assets/js/90.9b04eaff.js"><link rel="prefetch" href="/mds/assets/js/91.b95c2375.js"><link rel="prefetch" href="/mds/assets/js/92.49ff84df.js"><link rel="prefetch" href="/mds/assets/js/93.bb744819.js"><link rel="prefetch" href="/mds/assets/js/94.e1cf3ee1.js"><link rel="prefetch" href="/mds/assets/js/95.6e88419e.js"><link rel="prefetch" href="/mds/assets/js/96.6807cb62.js"><link rel="prefetch" href="/mds/assets/js/97.b1b2e4ae.js"><link rel="prefetch" href="/mds/assets/js/98.3ecbe528.js"><link rel="prefetch" href="/mds/assets/js/99.524f3701.js">
+    <link rel="stylesheet" href="/mds/assets/css/0.styles.32656a7f.css">
   </head>
   <body>
-    <div id="app" data-server-rendered="true">
-      <div class="theme-container">
-        <header class="navbar">
-          <div class="sidebar-button">
-            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
-              <path
-                fill="currentColor"
-                d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"
-              ></path>
-            </svg>
-          </div>
-          <a href="/mds/" class="home-link router-link-active"
-            ><!---->
-            <span class="site-name">Moxi Design System</span></a
-          >
-          <div class="links">
-            <!---->
-            <div class="user-settings">
-              <a href="#" class="settings-button"
-                ><svg
-                  aria-hidden="true"
-                  data-prefix="fas"
-                  data-icon="cog"
-                  role="img"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                  class="svg-inline--fa fa-cog fa-w-16 settings-icon"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M444.788 291.1l42.616 24.599c4.867 2.809 7.126 8.618 5.459 13.985-11.07 35.642-29.97 67.842-54.689 94.586a12.016 12.016 0 0 1-14.832 2.254l-42.584-24.595a191.577 191.577 0 0 1-60.759 35.13v49.182a12.01 12.01 0 0 1-9.377 11.718c-34.956 7.85-72.499 8.256-109.219.007-5.49-1.233-9.403-6.096-9.403-11.723v-49.184a191.555 191.555 0 0 1-60.759-35.13l-42.584 24.595a12.016 12.016 0 0 1-14.832-2.254c-24.718-26.744-43.619-58.944-54.689-94.586-1.667-5.366.592-11.175 5.459-13.985L67.212 291.1a193.48 193.48 0 0 1 0-70.199l-42.616-24.599c-4.867-2.809-7.126-8.618-5.459-13.985 11.07-35.642 29.97-67.842 54.689-94.586a12.016 12.016 0 0 1 14.832-2.254l42.584 24.595a191.577 191.577 0 0 1 60.759-35.13V25.759a12.01 12.01 0 0 1 9.377-11.718c34.956-7.85 72.499-8.256 109.219-.007 5.49 1.233 9.403 6.096 9.403 11.723v49.184a191.555 191.555 0 0 1 60.759 35.13l42.584-24.595a12.016 12.016 0 0 1 14.832 2.254c24.718 26.744 43.619 58.944 54.689 94.586 1.667 5.366-.592 11.175-5.459 13.985L444.788 220.9a193.485 193.485 0 0 1 0 70.2zM336 256c0-44.112-35.888-80-80-80s-80 35.888-80 80 35.888 80 80 80 80-35.888 80-80z"
-                  ></path></svg
-              ></a>
-              <div class="user-settings-menu" style="display: none">
-                <div class="theme-options">
-                  <!---->
-                  <ul class="color-theme-options">
-                    <li><a href="#" class="default-theme"></a></li>
-                    <li><a href="#" class="blue-theme"></a></li>
-                    <li><a href="#" class="red-theme"></a></li>
-                    <li><a href="#" class="purple-theme"></a></li>
-                  </ul>
-                  <!---->
-                  <div class="ignore-themes-options toggle-option">
-                    <label for="ignore-themes-toggle">Ignore Other Themes?</label>
-                    <input id="ignore-themes-toggle" type="checkbox" />
-                  </div>
-                  <!---->
-                </div>
-              </div>
-            </div>
-            <!---->
-            <div class="search-box">
-              <input aria-label="Search" autocomplete="off" spellcheck="false" value="" />
-              <!---->
-            </div>
-            <nav class="nav-links can-hide">
-              <div class="nav-item"><a href="/mds/getting-started/" class="nav-link"> Getting Started </a></div>
-              <div class="nav-item"><a href="/mds/css-documentation/" class="nav-link"> CSS Documentation </a></div>
-              <div class="nav-item"><a href="/mds/examples/grid.html" class="nav-link"> Examples </a></div>
-              <div class="nav-item"><a href="/mds/patterns/introduction.html" class="nav-link"> Patterns </a></div>
-              <div class="nav-item"><a href="/mds/components/inputs.html" class="nav-link"> Components </a></div>
-              <a href="https://github.com/moxiworks/mds" target="_blank" rel="noopener noreferrer" class="repo-link">
-                GitHub
-                <span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    focusable="false"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 100 100"
-                    width="15"
-                    height="15"
-                    class="icon outbound"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"
-                    ></path>
-                    <polygon
-                      fill="currentColor"
-                      points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"
-                    ></polygon>
-                  </svg>
-                  <span class="sr-only">(opens new window)</span></span
-                ></a
-              >
-            </nav>
-          </div>
-        </header>
-        <div class="sidebar-mask"></div>
-        <aside class="sidebar">
-          <nav class="nav-links">
-            <div class="nav-item"><a href="/mds/getting-started/" class="nav-link"> Getting Started </a></div>
-            <div class="nav-item"><a href="/mds/css-documentation/" class="nav-link"> CSS Documentation </a></div>
-            <div class="nav-item"><a href="/mds/examples/grid.html" class="nav-link"> Examples </a></div>
-            <div class="nav-item"><a href="/mds/patterns/introduction.html" class="nav-link"> Patterns </a></div>
-            <div class="nav-item"><a href="/mds/components/inputs.html" class="nav-link"> Components </a></div>
-            <a href="https://github.com/moxiworks/mds" target="_blank" rel="noopener noreferrer" class="repo-link">
-              GitHub
-              <span
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  focusable="false"
-                  x="0px"
-                  y="0px"
-                  viewBox="0 0 100 100"
-                  width="15"
-                  height="15"
-                  class="icon outbound"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"
-                  ></path>
-                  <polygon
-                    fill="currentColor"
-                    points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"
-                  ></polygon>
-                </svg>
-                <span class="sr-only">(opens new window)</span></span
-              ></a
-            >
-          </nav>
-          <ul class="sidebar-links">
-            <li>
-              <a href="/mds/getting-started.html" aria-current="page" class="active sidebar-link">Getting Started</a>
-              <ul class="sidebar-sub-headers">
-                <li class="sidebar-sub-header">
-                  <a href="/mds/getting-started.html#installing-with-yarn-or-npm" class="sidebar-link"
-                    >Installing with Yarn or NPM</a
-                  >
-                </li>
-                <li class="sidebar-sub-header">
-                  <a href="/mds/getting-started.html#installing-from-a-cdn" class="sidebar-link"
-                    >Installing from a CDN</a
-                  >
-                </li>
-                <li class="sidebar-sub-header">
-                  <a href="/mds/getting-started.html#phosphor-icons" class="sidebar-link">Phosphor Icons</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </aside>
-        <main class="page">
-          <div class="content__default">
-            <h1 id="getting-started"><a href="#getting-started" class="header-anchor">#</a> Getting Started</h1>
-            <p>
-              The Moxi Design System leverages the cross-framework capabilities of
-              <a href="https://stenciljs.com/" target="_blank" rel="noopener noreferrer"
-                >Stencil<span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    focusable="false"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 100 100"
-                    width="15"
-                    height="15"
-                    class="icon outbound"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"
-                    ></path>
-                    <polygon
-                      fill="currentColor"
-                      points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"
-                    ></polygon>
-                  </svg>
-                  <span class="sr-only">(opens new window)</span></span
-                ></a
-              >
-              and the convenience and composability of
-              <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer"
-                >Tailwind CSS<span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    focusable="false"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 100 100"
-                    width="15"
-                    height="15"
-                    class="icon outbound"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"
-                    ></path>
-                    <polygon
-                      fill="currentColor"
-                      points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"
-                    ></polygon>
-                  </svg>
-                  <span class="sr-only">(opens new window)</span></span
-                ></a
-              >
-              to produce scalable, easy-to-use components and design tokens for our organization.
-            </p>
-            <section class="mds">
-              <div class="flex h-128 overflow-hidden mb-40">
-                <a href="https://stenciljs.com/" target="_blank" class="flex items-center w-1/2 bg-white"
-                  ><img src="/mds/assets/img/stencil.99d65f0f.png" alt="Stencil" class="object-contain"
-                /></a>
-                <div class="w-20"></div>
-                <a href="https://tailwindcss.com/" target="_blank" class="flex items-center w-1/2 bg-white"
-                  ><img src="/mds/assets/img/tailwind.7ca35950.png" alt="Tailwind CSS" class="object-contain"
-                /></a>
-              </div>
-            </section>
-            <h2 id="installing-with-yarn-or-npm">
-              <a href="#installing-with-yarn-or-npm" class="header-anchor">#</a> Installing with Yarn or NPM
-            </h2>
-            <p>From your project directory, run either of these commands depending on your package manager:</p>
-            <div class="language-bash line-numbers-mode">
-              <pre
-                class="language-bash"
-              ><code><span class="token function">yarn</span> <span class="token function">add</span> @moxiworks/mds
-</code></pre>
-              <div class="line-numbers-wrapper"><span class="line-number">1</span><br /></div>
-            </div>
-            <div class="language-bash line-numbers-mode">
-              <pre
-                class="language-bash"
-              ><code><span class="token function">npm</span> <span class="token function">install</span> @moxiworks/mds
-</code></pre>
-              <div class="line-numbers-wrapper"><span class="line-number">1</span><br /></div>
-            </div>
-            <h3 id="using-the-custom-element-loader-non-react-frameworks-and-vanilla-js-ts">
-              <a href="#using-the-custom-element-loader-non-react-frameworks-and-vanilla-js-ts" class="header-anchor"
-                >#</a
-              >
-              Using the custom element loader (non-React frameworks and vanilla JS/TS)
-            </h3>
-            <p>
-              StencilJS gives us a basic <code>loader</code> which does all of the heavy lifting/tree shaking for us.
-              There's no need to <code>import</code> a specific component. Components only get added to your projects
-              bundle if the tag is used in your project. In the example below, the only component added would be the
-              <code>mx-button</code> component.
-            </p>
-            <p>
-              For more information around including StencilJS components into specific frame works visit
-              <a href="https://stenciljs.com/docs/overview" target="_blank" rel="noopener noreferrer"
-                >https://stenciljs.com/docs/overview<span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    focusable="false"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 100 100"
-                    width="15"
-                    height="15"
-                    class="icon outbound"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"
-                    ></path>
-                    <polygon
-                      fill="currentColor"
-                      points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"
-                    ></polygon>
-                  </svg>
-                  <span class="sr-only">(opens new window)</span></span
-                ></a
-              >
-            </p>
-            <div class="language-js line-numbers-mode">
-              <pre
-                class="language-js"
-              ><code><span class="token keyword">import</span> <span class="token string">'@moxiworks/mds/dist/styles/mds-core.css'</span><span class="token punctuation">;</span>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/mds/" class="home-link router-link-active"><!----> <span class="site-name">Moxi Design System</span></a> <div class="links"><!----> <div class="user-settings"><a href="#" class="settings-button"><svg aria-hidden="true" data-prefix="fas" data-icon="cog" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-cog fa-w-16 settings-icon"><path fill="currentColor" d="M444.788 291.1l42.616 24.599c4.867 2.809 7.126 8.618 5.459 13.985-11.07 35.642-29.97 67.842-54.689 94.586a12.016 12.016 0 0 1-14.832 2.254l-42.584-24.595a191.577 191.577 0 0 1-60.759 35.13v49.182a12.01 12.01 0 0 1-9.377 11.718c-34.956 7.85-72.499 8.256-109.219.007-5.49-1.233-9.403-6.096-9.403-11.723v-49.184a191.555 191.555 0 0 1-60.759-35.13l-42.584 24.595a12.016 12.016 0 0 1-14.832-2.254c-24.718-26.744-43.619-58.944-54.689-94.586-1.667-5.366.592-11.175 5.459-13.985L67.212 291.1a193.48 193.48 0 0 1 0-70.199l-42.616-24.599c-4.867-2.809-7.126-8.618-5.459-13.985 11.07-35.642 29.97-67.842 54.689-94.586a12.016 12.016 0 0 1 14.832-2.254l42.584 24.595a191.577 191.577 0 0 1 60.759-35.13V25.759a12.01 12.01 0 0 1 9.377-11.718c34.956-7.85 72.499-8.256 109.219-.007 5.49 1.233 9.403 6.096 9.403 11.723v49.184a191.555 191.555 0 0 1 60.759 35.13l42.584-24.595a12.016 12.016 0 0 1 14.832 2.254c24.718 26.744 43.619 58.944 54.689 94.586 1.667 5.366-.592 11.175-5.459 13.985L444.788 220.9a193.485 193.485 0 0 1 0 70.2zM336 256c0-44.112-35.888-80-80-80s-80 35.888-80 80 35.888 80 80 80 80-35.888 80-80z"></path></svg></a> <div class="user-settings-menu" style="display:none;"><div class="theme-options"><!----> <ul class="color-theme-options"><li><a href="#" class="default-theme"></a></li> <li><a href="#" class="blue-theme"></a></li><li><a href="#" class="red-theme"></a></li><li><a href="#" class="purple-theme"></a></li></ul> <!----> <div class="ignore-themes-options toggle-option"><label for="ignore-themes-toggle">Ignore Other Themes?</label> <input id="ignore-themes-toggle" type="checkbox"></div> <!----></div></div></div> <!----> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/mds/getting-started/" class="nav-link">
+  Getting Started
+</a></div><div class="nav-item"><a href="/mds/css-documentation/" class="nav-link">
+  CSS Documentation
+</a></div><div class="nav-item"><a href="/mds/examples/grid.html" class="nav-link">
+  Examples
+</a></div><div class="nav-item"><a href="/mds/patterns/introduction.html" class="nav-link">
+  Patterns
+</a></div><div class="nav-item"><a href="/mds/components/inputs.html" class="nav-link">
+  Components
+</a></div> <a href="https://github.com/moxiworks/mds" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/mds/getting-started/" class="nav-link">
+  Getting Started
+</a></div><div class="nav-item"><a href="/mds/css-documentation/" class="nav-link">
+  CSS Documentation
+</a></div><div class="nav-item"><a href="/mds/examples/grid.html" class="nav-link">
+  Examples
+</a></div><div class="nav-item"><a href="/mds/patterns/introduction.html" class="nav-link">
+  Patterns
+</a></div><div class="nav-item"><a href="/mds/components/inputs.html" class="nav-link">
+  Components
+</a></div> <a href="https://github.com/moxiworks/mds" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/mds/getting-started.html" aria-current="page" class="active sidebar-link">Getting Started</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/mds/getting-started.html#installing-with-yarn-or-npm" class="sidebar-link">Installing with Yarn or NPM</a></li><li class="sidebar-sub-header"><a href="/mds/getting-started.html#installing-from-a-cdn" class="sidebar-link">Installing from a CDN</a></li><li class="sidebar-sub-header"><a href="/mds/getting-started.html#phosphor-icons" class="sidebar-link">Phosphor Icons</a></li></ul></li></ul> </aside> <main class="page"> <div class="content__default"><h1 id="getting-started"><a href="#getting-started" class="header-anchor">#</a> Getting Started</h1> <p>The Moxi Design System leverages the cross-framework capabilities of <a href="https://stenciljs.com/" target="_blank" rel="noopener noreferrer">Stencil<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> and the convenience and composability of <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">Tailwind CSS<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>
+to produce scalable, easy-to-use components and design tokens for our organization.</p> <section class="mds"><div class="flex h-128 overflow-hidden mb-40"><a href="https://stenciljs.com/" target="_blank" class="flex items-center w-1/2 bg-white"><img src="/mds/assets/img/stencil.99d65f0f.png" alt="Stencil" class="object-contain"></a> <div class="w-20"></div> <a href="https://tailwindcss.com/" target="_blank" class="flex items-center w-1/2 bg-white"><img src="/mds/assets/img/tailwind.7ca35950.png" alt="Tailwind CSS" class="object-contain"></a></div></section> <h2 id="installing-with-yarn-or-npm"><a href="#installing-with-yarn-or-npm" class="header-anchor">#</a> Installing with Yarn or NPM</h2> <p>From your project directory, run either of these commands depending on your package manager:</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">yarn</span> <span class="token function">add</span> @moxiworks/mds
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> @moxiworks/mds
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="using-the-custom-element-loader-non-react-frameworks-and-vanilla-js-ts"><a href="#using-the-custom-element-loader-non-react-frameworks-and-vanilla-js-ts" class="header-anchor">#</a> Using the custom element loader (non-React frameworks and vanilla JS/TS)</h3> <p>StencilJS gives us a basic <code>loader</code> which does all of the heavy lifting/tree shaking for us. There's no need to <code>import</code> a specific component. Components only get added to your projects bundle if the tag is used in your project. In the example below, the only component added would be the <code>mx-button</code> component.</p> <p>For more information around including StencilJS components into specific frame works visit <a href="https://stenciljs.com/docs/overview" target="_blank" rel="noopener noreferrer">https://stenciljs.com/docs/overview<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token string">'@moxiworks/mds/dist/styles/mds-core.css'</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> applyPolyfills<span class="token punctuation">,</span> defineCustomElements <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@moxiworks/mds/loader'</span><span class="token punctuation">;</span>
 
 <span class="token function">applyPolyfills</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
@@ -453,79 +68,10 @@ document<span class="token punctuation">.</span><span class="token function">get
   &lt;/div&gt;
 &lt;/div&gt;
 </span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
-</code></pre>
-              <div class="line-numbers-wrapper">
-                <span class="line-number">1</span><br /><span class="line-number">2</span><br /><span
-                  class="line-number"
-                  >3</span
-                ><br /><span class="line-number">4</span><br /><span class="line-number">5</span><br /><span
-                  class="line-number"
-                  >6</span
-                ><br /><span class="line-number">7</span><br /><span class="line-number">8</span><br /><span
-                  class="line-number"
-                  >9</span
-                ><br /><span class="line-number">10</span><br /><span class="line-number">11</span><br /><span
-                  class="line-number"
-                  >12</span
-                ><br /><span class="line-number">13</span><br /><span class="line-number">14</span><br /><span
-                  class="line-number"
-                  >15</span
-                ><br /><span class="line-number">16</span><br /><span class="line-number">17</span><br /><span
-                  class="line-number"
-                  >18</span
-                ><br /><span class="line-number">19</span><br /><span class="line-number">20</span><br /><span
-                  class="line-number"
-                  >21</span
-                ><br /><span class="line-number">22</span><br />
-              </div>
-            </div>
-            <p>
-              <a
-                href="https://codesandbox.io/s/moxi-design-system-import-example-1ppbe?autoresize=1&amp;fontsize=12&amp;hidenavigation=1&amp;theme=dark"
-                target="_blank"
-                rel="noopener noreferrer"
-                ><img
-                  src="https://codesandbox.io/static/img/play-codesandbox.svg"
-                  alt="Edit moxi-design-system-import-example"
-                /><span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    focusable="false"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 100 100"
-                    width="15"
-                    height="15"
-                    class="icon outbound"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"
-                    ></path>
-                    <polygon
-                      fill="currentColor"
-                      points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"
-                    ></polygon>
-                  </svg>
-                  <span class="sr-only">(opens new window)</span></span
-                ></a
-              >
-            </p>
-            <h3 id="react-components"><a href="#react-components" class="header-anchor">#</a> React components</h3>
-            <p>
-              For React projects, <code>@moxiworks/mds/react</code> exports components that are proxied specifically for
-              React. These are first-class React components, allowing for custom events and non-primitive prop values,
-              which would typically be unavailable to web components within React.
-            </p>
-            <p>
-              Once <code>@moxiworks/mds</code> is installed, you simply need to import the core stylesheet and any
-              components you want to use.
-            </p>
-            <div class="language-js line-numbers-mode">
-              <pre
-                class="language-js"
-              ><code><span class="token keyword">import</span> <span class="token string">'@moxiworks/mds/dist/styles/mds-core.css'</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><p><a href="https://codesandbox.io/s/moxi-design-system-import-example-1ppbe?autoresize=1&amp;fontsize=12&amp;hidenavigation=1&amp;theme=dark" target="_blank" rel="noopener noreferrer"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="Edit moxi-design-system-import-example"><span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h3 id="react-components"><a href="#react-components" class="header-anchor">#</a> React components</h3> <p>For React projects, <code>@moxiworks/mds/react</code> exports components that are proxied specifically for React.
+These are first-class React components, allowing for custom events and non-primitive prop values, which
+would typically be unavailable to web components within React.</p> <p>Once <code>@moxiworks/mds</code> is installed, you simply need to import the core stylesheet and any components
+you want to use.</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token string">'@moxiworks/mds/dist/styles/mds-core.css'</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> MxButton <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@moxiworks/mds/react'</span><span class="token punctuation">;</span>
 
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -543,82 +89,8 @@ document<span class="token punctuation">.</span><span class="token function">get
     <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
   <span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre>
-              <div class="line-numbers-wrapper">
-                <span class="line-number">1</span><br /><span class="line-number">2</span><br /><span
-                  class="line-number"
-                  >3</span
-                ><br /><span class="line-number">4</span><br /><span class="line-number">5</span><br /><span
-                  class="line-number"
-                  >6</span
-                ><br /><span class="line-number">7</span><br /><span class="line-number">8</span><br /><span
-                  class="line-number"
-                  >9</span
-                ><br /><span class="line-number">10</span><br /><span class="line-number">11</span><br /><span
-                  class="line-number"
-                  >12</span
-                ><br /><span class="line-number">13</span><br /><span class="line-number">14</span><br /><span
-                  class="line-number"
-                  >15</span
-                ><br /><span class="line-number">16</span><br /><span class="line-number">17</span><br /><span
-                  class="line-number"
-                  >18</span
-                ><br />
-              </div>
-            </div>
-            <p>
-              <a
-                href="https://codesandbox.io/s/moxi-design-system-react-example-uzpn6v?file=/src/App.js&amp;autoresize=1&amp;fontsize=12&amp;hidenavigation=1&amp;theme=dark"
-                target="_blank"
-                rel="noopener noreferrer"
-                ><img
-                  src="https://codesandbox.io/static/img/play-codesandbox.svg"
-                  alt="Edit moxi-design-system-react-example"
-                /><span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    focusable="false"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 100 100"
-                    width="15"
-                    height="15"
-                    class="icon outbound"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"
-                    ></path>
-                    <polygon
-                      fill="currentColor"
-                      points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"
-                    ></polygon>
-                  </svg>
-                  <span class="sr-only">(opens new window)</span></span
-                ></a
-              >
-            </p>
-            <h2 id="installing-from-a-cdn">
-              <a href="#installing-from-a-cdn" class="header-anchor">#</a> Installing from a CDN
-            </h2>
-            <p>
-              If you prefer to use the system as a modern ESModule you can do so via UNPKG or JSDelivr. The example
-              below fetches both the JavaScript and the necessary stylesheet from JSDelivr.
-            </p>
-            <div class="language-html line-numbers-mode">
-              <div class="highlight-lines">
-                <br /><br /><br /><br /><br />
-                <div class="highlighted"> </div>
-                <div class="highlighted"> </div>
-                <div class="highlighted"> </div>
-                <div class="highlighted"> </div>
-                <div class="highlighted"> </div>
-                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-              </div>
-              <pre
-                class="language-html"
-              ><code><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">&gt;</span></span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><p><a href="https://codesandbox.io/s/moxi-design-system-react-example-uzpn6v?file=/src/App.js&amp;autoresize=1&amp;fontsize=12&amp;hidenavigation=1&amp;theme=dark" target="_blank" rel="noopener noreferrer"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="Edit moxi-design-system-react-example"><span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h2 id="installing-from-a-cdn"><a href="#installing-from-a-cdn" class="header-anchor">#</a> Installing from a CDN</h2> <p>If you prefer to use the system as a modern ESModule you can do so via UNPKG or JSDelivr.
+The example below fetches both the JavaScript and the necessary stylesheet from JSDelivr.</p> <div class="language-html line-numbers-mode"><div class="highlight-lines"><br><br><br><br><br><div class="highlighted"> </div><div class="highlighted"> </div><div class="highlighted"> </div><div class="highlighted"> </div><div class="highlighted"> </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div><pre class="language-html"><code><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>Moxi Design System as ESModule<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
@@ -643,123 +115,8 @@ document<span class="token punctuation">.</span><span class="token function">get
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span></code></pre>
-              <div class="line-numbers-wrapper">
-                <span class="line-number">1</span><br /><span class="line-number">2</span><br /><span
-                  class="line-number"
-                  >3</span
-                ><br /><span class="line-number">4</span><br /><span class="line-number">5</span><br /><span
-                  class="line-number"
-                  >6</span
-                ><br /><span class="line-number">7</span><br /><span class="line-number">8</span><br /><span
-                  class="line-number"
-                  >9</span
-                ><br /><span class="line-number">10</span><br /><span class="line-number">11</span><br /><span
-                  class="line-number"
-                  >12</span
-                ><br /><span class="line-number">13</span><br /><span class="line-number">14</span><br /><span
-                  class="line-number"
-                  >15</span
-                ><br /><span class="line-number">16</span><br /><span class="line-number">17</span><br /><span
-                  class="line-number"
-                  >18</span
-                ><br /><span class="line-number">19</span><br /><span class="line-number">20</span><br /><span
-                  class="line-number"
-                  >21</span
-                ><br /><span class="line-number">22</span><br /><span class="line-number">23</span><br /><span
-                  class="line-number"
-                  >24</span
-                ><br /><span class="line-number">25</span><br />
-              </div>
-            </div>
-            <p>
-              <a
-                href="https://codesandbox.io/s/agitated-cannon-tw60n?fontsize=14&amp;hidenavigation=1&amp;theme=dark"
-                target="_blank"
-                rel="noopener noreferrer"
-                ><img
-                  src="https://codesandbox.io/static/img/play-codesandbox.svg"
-                  alt="Edit moxi-design-system-esmodule-example"
-                /><span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    focusable="false"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 100 100"
-                    width="15"
-                    height="15"
-                    class="icon outbound"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"
-                    ></path>
-                    <polygon
-                      fill="currentColor"
-                      points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"
-                    ></polygon>
-                  </svg>
-                  <span class="sr-only">(opens new window)</span></span
-                ></a
-              >
-            </p>
-            <h2 id="phosphor-icons"><a href="#phosphor-icons" class="header-anchor">#</a> Phosphor Icons</h2>
-            <p>
-              Any icon system will work but the design team at Moxi has put an emphasis on Phosphor Icons. If you plan
-              to use icons in your collaberation with this framework, please visit
-              <a href="https://phosphoricons.com/" target="_blank" rel="noopener noreferrer"
-                >https://phosphoricons.com/<span
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    focusable="false"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 100 100"
-                    width="15"
-                    height="15"
-                    class="icon outbound"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"
-                    ></path>
-                    <polygon
-                      fill="currentColor"
-                      points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"
-                    ></polygon>
-                  </svg>
-                  <span class="sr-only">(opens new window)</span></span
-                ></a
-              >
-              for more information.
-            </p>
-            <p>To add Phosphor Icons to your project, simply add the following script tag:</p>
-            <div class="language-html line-numbers-mode">
-              <pre
-                class="language-html"
-              ><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>https://unpkg.com/phosphor-icons<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
-</code></pre>
-              <div class="line-numbers-wrapper"><span class="line-number">1</span><br /></div>
-            </div>
-            <p>
-              We purposly do not internally add this icon system as it's prefered to keep the icon libraries flexible.
-              This way if you prefer Font Awesome feel free to use it.
-            </p>
-          </div>
-          <footer class="page-edit">
-            <!---->
-            <!---->
-          </footer>
-          <!---->
-        </main>
-      </div>
-      <div class="global-ui"></div>
-    </div>
-    <script src="/mds/assets/js/app.b03f813d.js" defer></script>
-    <script src="/mds/assets/js/2.50e2be13.js" defer></script>
-    <script src="/mds/assets/js/10.2045c7c0.js" defer></script>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span></code></pre><div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><p><a href="https://codesandbox.io/s/agitated-cannon-tw60n?fontsize=14&amp;hidenavigation=1&amp;theme=dark" target="_blank" rel="noopener noreferrer"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="Edit moxi-design-system-esmodule-example"><span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h2 id="phosphor-icons"><a href="#phosphor-icons" class="header-anchor">#</a> Phosphor Icons</h2> <p>Any icon system will work but the design team at Moxi has put an emphasis on Phosphor Icons. If you plan to use icons in your collaberation with this framework, please visit <a href="https://phosphoricons.com/" target="_blank" rel="noopener noreferrer">https://phosphoricons.com/<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> for more information.</p> <p>To add Phosphor Icons to your project, simply add the following script tag:</p> <div class="language-html line-numbers-mode"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>https://unpkg.com/phosphor-icons<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>We purposly do not internally add this icon system as it's prefered to keep the icon libraries flexible. This way if you prefer Font Awesome feel free to use it.</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/mds/assets/js/app.f60237a5.js" defer></script><script src="/mds/assets/js/2.50e2be13.js" defer></script><script src="/mds/assets/js/10.2045c7c0.js" defer></script>
   </body>
 </html>
