@@ -147,7 +147,7 @@ function executeTransition(
   });
 }
 
-function setStyleProperty(el: HTMLElement, property, value) {
+function setStyleProperty(el: HTMLElement, property: string, value: string) {
   if (!el) return;
   if (property !== 'transform') {
     // Set typical style property (e.g. opacity)
@@ -157,7 +157,7 @@ function setStyleProperty(el: HTMLElement, property, value) {
     // Instead, we need to remove any conflicting transform values and then add the new value.
     // First, parse out an array of transforms (e.g. ['translate(532px, 311px)', 'scale(0.8)'])
     const matchTransforms = /\w*\((-?((\d+)|(\d*\.\d+))\w*,\s*)*(-?(\d+)|(\d*\.\d+))\w*\)/gi;
-    let transforms = el.style.transform.match(matchTransforms) || [];
+    let transforms = el.style.transform.match(matchTransforms) || [] as string[];
     // Parse out the name of our new transform (e.g. 'scale')
     const transformName = /^(\w*)\(/.exec(value)[1];
     // Remove existing transforms with the same name
