@@ -1,0 +1,124 @@
+{
+  "name": "@moxiworks/mds",
+  "version": "0.1.60",
+  "description": "Moxiworks Custom Component System",
+  "main": "dist/index.cjs.js",
+  "module": "dist/custom-elements/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/custom-elements/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "dist/custom-elements/index.d.ts": [
+        "dist/custom-elements/index.d.ts"
+      ],
+      "react": [
+        "react/dist/components.d.ts"
+      ]
+    }
+  },
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/mds-components/mds-components.esm.js",
+  "exports": {
+    ".": "./dist/index.cjs.js",
+    "./dist/styles/mds-core.css": "./dist/styles/mds-core.css",
+    "./dist/styles/mds-core.min.css": "./dist/styles/mds-core.min.css",
+    "./loader": "./loader/index.cjs.js",
+    "./loader/index.es2017.js": "./loader/index.es2017.js",
+    "./react": "./react/dist/components.js",
+    "./dist/custom-elements/index.js": "./dist/custom-elements/index.js",
+    "./hydrate": "./hydrate/index.js"
+  },
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "watch": {
+    "copy": {
+      "patterns": [
+        "www"
+      ],
+      "extensions": "js, css",
+      "runOnChangeOnly": true
+    },
+    "tailwind:scss": {
+      "patterns": [
+        "src/tailwind"
+      ],
+      "extensions": "scss",
+      "runOnChangeOnly": true
+    }
+  },
+  "lint-staged": {
+    "src/**/*.+(js|jsx|css|scss|ts|tsx|md)": [
+      "yarn format"
+    ],
+    "src/**/*.+(js|jsx|ts|tsx)": [
+      "yarn lint"
+    ]
+  },
+  "scripts": {
+    "build": "sh build-all.sh",
+    "dev": "npm-run-all --parallel docs:dev stencil:start tailwind:dev watch",
+    "format": "prettier --loglevel warn --write src/**/*",
+    "lint": "eslint src/**/*{.ts,.tsx} --max-warnings=0",
+    "tailwind:dev": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css -w",
+    "tailwind:scss": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css",
+    "tailwind:prod": "TAILWIND_MODE=build NODE_ENV=production postcss src/tailwind/styles.css -o dist/styles/mds-core.css",
+    "docs:dev": "vuepress dev vuepress",
+    "docs:build": "sh build-docs.sh",
+    "stencil:build": "stencil build --docs",
+    "stencil:start": "stencil build --dev --watch",
+    "test": "stencil test --spec",
+    "test:watch": "stencil test --spec --watchAll",
+    "generate": "stencil generate",
+    "copy": "sh copy-on-change.sh",
+    "watch": "npm-watch",
+    "minify:css": "minify dist/styles/mds-core.css > dist/styles/mds-core.min.css",
+    "vercel": "vercel ./docs",
+    "vercel:prod": "vercel ./docs --prod"
+  },
+  "dependencies": {
+    "@juggle/resize-observer": "^3.3.1",
+    "@popperjs/core": "^2.9.2",
+    "@stencil/core": "^2.0.1",
+    "chart.js": "^3.6.2",
+    "js-datepicker": "^5.18.0",
+    "nanoid": "^3.1.22",
+    "postcss-custom-properties": "^11.0.0",
+    "postcss-import": "^14.0.1",
+    "postcss-nested": "^5.0.5",
+    "prismjs": "^1.25.0",
+    "vuepress-theme-yuu": "^3.0.1"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@stencil/react-output-target": "^0.3.1",
+    "@stencil/sass": "^1.4.1",
+    "@types/jest": "^26.0.22",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/parser": "^5.27.1",
+    "autoprefixer": "^10.2.5",
+    "copyfiles": "^2.4.1",
+    "enzyme": "^3.11.0",
+    "eslint": "^8.17.0",
+    "husky": "^8.0.1",
+    "jest": "26.6.3",
+    "jest-cli": "26.6.3",
+    "lint-staged": "^13.0.1",
+    "minify": "^7.0.2",
+    "npm-run-all": "^4.1.5",
+    "npm-watch": "^0.11.0",
+    "postcss": "^8.2.9",
+    "postcss-cli": "^8.3.1",
+    "prettier": "^2.6.2",
+    "stencil-inline-svg": "^1.1.0",
+    "tailwindcss": "^2.2.0-canary.9",
+    "typescript": "^4.7.3",
+    "vercel": "^24.0.0",
+    "vuepress": "^1.8.2",
+    "vuepress-plugin-flexsearch": "^0.1.0",
+    "vuepress-plugin-fulltext-search": "^2.2.0"
+  }
+}
