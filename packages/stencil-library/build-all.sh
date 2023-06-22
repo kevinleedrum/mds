@@ -12,7 +12,3 @@ yarn stencil:build
 yarn docs:build
 yarn tailwind:prod
 yarn minify:css
-
-cd react
-yarn
-yarn build

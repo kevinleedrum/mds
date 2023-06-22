@@ -1,6 +1,6 @@
 {
   "name": "@moxiworks/mds",
-  "version": "0.1.60",
+  "version": "2.0.0",
   "description": "Moxiworks Custom Component System",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
@@ -67,7 +67,7 @@
     "tailwind:scss": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css",
     "tailwind:prod": "TAILWIND_MODE=build NODE_ENV=production postcss src/tailwind/styles.css -o dist/styles/mds-core.css",
     "docs:dev": "vuepress dev vuepress",
-    "docs:build": "sh build-docs.sh",
+    "docs:build": "vuepress build vuepress",
     "stencil:build": "stencil build --docs",
     "stencil:start": "stencil build --dev --watch",
     "test": "stencil test --spec",

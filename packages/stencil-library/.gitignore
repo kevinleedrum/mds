@@ -3,7 +3,8 @@ dist/
 loader/
 react/src
 react/node_modules
-
+docs/
+hydrate/
 
 *~
 *.sw[mnpcod]

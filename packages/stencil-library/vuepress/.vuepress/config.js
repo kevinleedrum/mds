@@ -6,6 +6,7 @@ module.exports = {
   title: 'Moxi Design System',
   description: description,
   base: '/mds/',
+  dest: './docs',
   head: [
     ['meta', { name: 'theme-color', content: '#0457af' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],

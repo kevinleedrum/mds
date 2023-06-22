@@ -11,8 +11,8 @@ export const config: Config = {
       esmLoaderPath: '../loader',
     },
     reactOutputTarget({
-      componentCorePackage: '../..',
-      proxiesFile: './react/src/components.ts',
+      componentCorePackage: '@moxiworks/mds',
+      proxiesFile: '../react/lib/components/stencil-generated/index.ts',
       includeDefineCustomElements: true,
     }),
     {
@@ -27,7 +27,6 @@ export const config: Config = {
     },
     {
       type: 'dist-hydrate-script',
-      dir: '../hydrate'
     },
   ],
   plugins: [sass(), inlineSvg()],
