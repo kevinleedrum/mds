@@ -12,18 +12,28 @@ export const config: Config = {
     },
     reactOutputTarget({
       componentCorePackage: '@moxiworks/mds',
-      proxiesFile: '../react/lib/components/stencil-generated/index.ts',
+      proxiesFile: '../mds-react/lib/components/stencil-generated/index.ts',
       includeDefineCustomElements: true,
     }),
     {
-      type: 'dist-custom-elements-bundle',
+      type: 'dist-custom-elements',
     },
     {
       type: 'docs-readme',
     },
     {
       type: 'www',
+      empty: true,
       serviceWorker: null, // disable service workers
+      dir: 'www'
+    },
+    // Same as above but compiles into vuepress to be used
+    {
+      type: 'www',
+      empty: true,
+      serviceWorker: null, // disable service workers
+      dir: 'vuepress/.vuepress/public',
+      buildDir: 'components'
     },
     {
       type: 'dist-hydrate-script',

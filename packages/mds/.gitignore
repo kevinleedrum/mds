@@ -32,5 +32,4 @@ UserInterfaceState.xcuserstate
 
 # Omit files that are copied around polluting pull requests.
 
-vuepress/.vuepress/public/components
-vuepress/.vuepress/public/styles
+vuepress/.vuepress/public/

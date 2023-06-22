@@ -11,4 +11,5 @@ echo ""
 yarn stencil:build
 yarn docs:build
 yarn tailwind:prod
+yarn tailwind:docs
 yarn minify:css

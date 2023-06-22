@@ -3,14 +3,14 @@
   "version": "2.0.0",
   "description": "Moxiworks Custom Component System",
   "main": "dist/index.cjs.js",
-  "module": "dist/custom-elements/index.js",
+  "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
-  "types": "dist/custom-elements/index.d.ts",
+  "types": "dist/components/index.d.ts",
   "typesVersions": {
     "*": {
-      "dist/custom-elements/index.d.ts": [
-        "dist/custom-elements/index.d.ts"
+      "dist/components/index.d.ts": [
+        "dist/components/index.d.ts"
       ],
       "react": [
         "react/dist/components.d.ts"
@@ -27,7 +27,7 @@
     "./loader": "./loader/index.cjs.js",
     "./loader/index.es2017.js": "./loader/index.es2017.js",
     "./react": "./react/dist/components.js",
-    "./dist/custom-elements/index.js": "./dist/custom-elements/index.js",
+    "./dist/components/index.js": "./dist/components/index.js",
     "./hydrate": "./hydrate/index.js"
   },
   "files": [
@@ -35,13 +35,6 @@
     "loader/"
   ],
   "watch": {
-    "copy": {
-      "patterns": [
-        "www"
-      ],
-      "extensions": "js, css",
-      "runOnChangeOnly": true
-    },
     "tailwind:scss": {
       "patterns": [
         "src/tailwind"
@@ -59,12 +52,12 @@
     ]
   },
   "scripts": {
-    "build": "sh build-all.sh",
+    "build": "sh scripts/build-all.sh",
     "dev": "npm-run-all --parallel docs:dev stencil:start tailwind:dev watch",
     "format": "prettier --loglevel warn --write src/**/*",
     "lint": "eslint src/**/*{.ts,.tsx} --max-warnings=0",
-    "tailwind:dev": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css -w",
-    "tailwind:scss": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css",
+    "tailwind:dev": "yarn tailwind:docs -w",
+    "tailwind:docs": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css",
     "tailwind:prod": "TAILWIND_MODE=build NODE_ENV=production postcss src/tailwind/styles.css -o dist/styles/mds-core.css",
     "docs:dev": "vuepress dev vuepress",
     "docs:build": "vuepress build vuepress",
@@ -73,7 +66,7 @@
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
     "generate": "stencil generate",
-    "copy": "sh copy-on-change.sh",
+    "copy": "sh scripts/copy-on-change.sh",
     "watch": "npm-watch",
     "minify:css": "minify dist/styles/mds-core.css > dist/styles/mds-core.min.css",
     "vercel": "vercel ./docs",
@@ -100,7 +93,6 @@
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
     "autoprefixer": "^10.2.5",
-    "copyfiles": "^2.4.1",
     "enzyme": "^3.11.0",
     "eslint": "^8.17.0",
     "husky": "^8.0.1",
