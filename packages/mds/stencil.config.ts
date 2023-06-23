@@ -32,8 +32,11 @@ export const config: Config = {
       type: 'www',
       empty: true,
       serviceWorker: null, // disable service workers
-      dir: 'vuepress/.vuepress/public',
-      buildDir: 'components'
+      dir: 'vuepress/.vuepress/public/components',
+      // We don't want it in a build directory
+      buildDir: '',
+      // We don't need an index file generated
+      indexHtml: ''
     },
     {
       type: 'dist-hydrate-script',
