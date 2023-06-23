@@ -1,4 +1,4 @@
-# React Package README
+# @moxiworks/mds-react
 
 This package in the monorepo serves as the React integration for the Stencil-generated components. The `lib` directory within this package contains the Stencil-generated components, which are built to be consumed by React applications.
 
