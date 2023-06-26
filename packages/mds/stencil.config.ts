@@ -1,46 +1,17 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
-import { reactOutputTarget } from '@stencil/react-output-target';
 import { inlineSvg } from 'stencil-inline-svg';
+import { dist, distCustomElements, docsWww, hydrate, react } from './config/outputTargets';
 
+// This is the baseConfig that builds everything required
 export const config: Config = {
-  namespace: 'mds-components',
+  namespace: 'mds-components', 
   outputTargets: [
-    {
-      type: 'dist',
-      esmLoaderPath: '../loader',
-    },
-    reactOutputTarget({
-      componentCorePackage: '@moxiworks/mds',
-      proxiesFile: '../mds-react/lib/components/stencil-generated/index.ts',
-      includeDefineCustomElements: true,
-    }),
-    {
-      type: 'dist-custom-elements',
-    },
-    {
-      type: 'docs-readme',
-    },
-    {
-      type: 'www',
-      empty: true,
-      serviceWorker: null, // disable service workers
-      dir: 'www'
-    },
-    // Same as above but compiles into vuepress to be used
-    {
-      type: 'www',
-      empty: true,
-      serviceWorker: null, // disable service workers
-      dir: 'vuepress/.vuepress/public/components',
-      // We don't want it in a build directory
-      buildDir: '',
-      // We don't need an index file generated
-      indexHtml: ''
-    },
-    {
-      type: 'dist-hydrate-script',
-    },
+    dist,
+    react,
+    distCustomElements,
+    docsWww,
+    hydrate,
   ],
   plugins: [sass(), inlineSvg()],
   testing: {

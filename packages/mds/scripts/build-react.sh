@@ -2,10 +2,9 @@
 
 echo ""
 echo "==========================="
-echo "Building all"
+echo "Building react"
 echo "==========================="
 echo ""
 
-yarn stencil:build
-yarn tailwind:build
-yarn docs:build
+yarn stencil:react
+yarn tailwind:react

@@ -2,10 +2,10 @@
 
 echo ""
 echo "==========================="
-echo "Building all"
+echo "Building docs"
 echo "==========================="
 echo ""
 
-yarn stencil:build
-yarn tailwind:build
+yarn stencil:docs
+yarn tailwind:docs
 yarn docs:build

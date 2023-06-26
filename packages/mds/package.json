@@ -6,14 +6,11 @@
   "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
-  "types": "dist/components/index.d.ts",
+  "types": "dist/types/components.d.ts",
   "typesVersions": {
     "*": {
-      "dist/components/index.d.ts": [
-        "dist/components/index.d.ts"
-      ],
-      "react": [
-        "react/dist/components.d.ts"
+      "dist/custom-elements/index.d.ts": [
+        "dist/custom-elements/index.d.ts"
       ]
     }
   },
@@ -52,25 +49,36 @@
     ]
   },
   "scripts": {
-    "build": "sh scripts/build-all.sh",
-    "dev": "npm-run-all --parallel docs:dev stencil:start tailwind:dev watch",
     "format": "prettier --loglevel warn --write src/**/*",
     "lint": "eslint src/**/*{.ts,.tsx} --max-warnings=0",
+    "check": "tsc --noEmit",
+    "clean": "sh scripts/clean-builds.sh",
+    
+    "build": "sh scripts/build-all.sh",
+    "build:mds": "sh scripts/build-mds.sh",
+    "build:react": "sh scripts/build-react.sh",
+    "build:docs": "sh scripts/build-docs.sh",
+
+    "dev": "npm-run-all --parallel docs:dev stencil:dev tailwind:dev npm-watch",
+
     "tailwind:dev": "yarn tailwind:docs -w",
+    "tailwind:build": "yarn tailwind:mds && yarn tailwind:react && yarn tailwind:docs",
+    "tailwind:mds": "sh ./scripts/build-tailwind.sh dist/styles",
+    "tailwind:react": "sh ./scripts/build-tailwind.sh ../mds-react/dist/styles",
     "tailwind:docs": "NODE_ENV=development postcss src/tailwind/styles.css -o vuepress/.vuepress/public/styles/mds-core.css",
-    "tailwind:prod": "TAILWIND_MODE=build NODE_ENV=production postcss src/tailwind/styles.css -o dist/styles/mds-core.css",
+
     "docs:dev": "vuepress dev vuepress",
     "docs:build": "vuepress build vuepress",
-    "stencil:build": "stencil build --docs",
-    "stencil:start": "stencil build --dev --watch",
+
+    "stencil:dev": "stencil build --dev --watch",
+    "stencil:build": "stencil build",
+    "stencil:mds": "yarn stencil:build --config stencil.config.mds.ts",
+    "stencil:react": "yarn stencil:build --config stencil.config.react.ts",
+    "stencil:docs": "yarn stencil:build --config stencil.config.docs.ts",
+    "stencil:generate": "stencil generate",
+
     "test": "stencil test --spec",
-    "test:watch": "stencil test --spec --watchAll",
-    "generate": "stencil generate",
-    "clean": "sh scripts/clean-builds.sh",
-    "watch": "npm-watch",
-    "minify:css": "minify dist/styles/mds-core.css > dist/styles/mds-core.min.css",
-    "vercel": "vercel ./docs",
-    "vercel:prod": "vercel ./docs --prod"
+    "test:watch": "stencil test --spec --watchAll"
   },
   "dependencies": {
     "@juggle/resize-observer": "^3.3.1",
@@ -108,7 +116,6 @@
     "stencil-inline-svg": "^1.1.0",
     "tailwindcss": "^2.2.0-canary.9",
     "typescript": "^4.7.3",
-    "vercel": "^24.0.0",
     "vuepress": "^1.8.2",
     "vuepress-plugin-flexsearch": "^0.1.0",
     "vuepress-plugin-fulltext-search": "^2.2.0"

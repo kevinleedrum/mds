@@ -2,10 +2,9 @@
 
 echo ""
 echo "==========================="
-echo "Building all"
+echo "Building mds library"
 echo "==========================="
 echo ""
 
-yarn stencil:build
-yarn tailwind:build
-yarn docs:build
+yarn stencil:mds
+yarn tailwind:mds
