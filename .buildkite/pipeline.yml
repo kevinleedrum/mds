@@ -20,6 +20,9 @@ env:
   CI_BUILD_SERVICE: "ci-build"
   CI_BUILD_NAME: "$CI_BUILD_SERVICE-$BUILDKITE_BUILD_NUMBER"
 
+  STENCIL_REACT_OUTPUT_DIR: "packages/mds-react/lib/components"
+  STENCIL_DIST_OUTPUT_DIR: "packages/mds-react/lib/components"
+
 steps:
   - label: ":docker: Build image"
     agents:
@@ -43,86 +46,90 @@ steps:
   - group: ":pencil2: @moxiworks/mds"
     key: "mds"
     steps:
-    - label: ":eslint: Lint"
+    - label: ":eslint: @moxiworks/mds Lint"
+      command: "yarn lint"
       agents:
         queue: docker-ec2
       plugins:
         ecr#v1.2.0:
           login: true
-        docker-compose#v3.8.0:
+        docker-compose#v4.7.0:
           workdir: /app/packages/mds
-          command: ["yarn", "lint"]
           run: ci
           config: ops/ci/docker-compose.yml
 
-    - label: ":typescript: Check"
+    - label: ":typescript: @moxiworks/mds Check"
+      command: "yarn ts:check"
       agents:
         queue: docker-ec2
       plugins:
         ecr#v1.2.0:
           login: true
-        docker-compose#v3.8.0:
+        docker-compose#v4.7.0:
           workdir: /app/packages/mds
-          command: ["yarn", "check"]
           run: ci
           config: ops/ci/docker-compose.yml
 
-    - label: ":jest: Test"
+    - label: ":jest: @moxiworks/mds Test"
+      command: "yarn test"
       agents:
         queue: docker-ec2
       plugins:
         ecr#v1.2.0:
           login: true
-        docker-compose#v3.8.0:
+        docker-compose#v4.7.0:
           workdir: /app/packages/mds
-          command: ["yarn", "test"]
           run: ci
           config: ops/ci/docker-compose.yml
 
-    - label: ":pencil2: Build mds"
+    - label: ":pencil2: @moxiworks/mds Build mds"
+      command: "yarn mds:build-mds"
       agents:
         queue: docker-ec2
       plugins:
         ecr#v1.2.0:
           login: true
-        docker-compose#v3.8.0:
-          command: ["yarn", "mds:build-mds"]
+        docker-compose#v4.7.0:
           run: ci
           config: ops/ci/docker-compose.yml
 
-    - label: ":books: Build docs"
+    - label: ":books: @moxiworks/mds Build docs"
+      command: "yarn mds:build-docs"
       agents:
         queue: docker-ec2
       plugins:
         ecr#v1.2.0:
           login: true
-        docker-compose#v3.8.0:
-          command: ["yarn", "mds:build-docs"]
+        docker-compose#v4.7.0:
           run: ci
           config: ops/ci/docker-compose.yml
 
-    - label: ":react: Build react"
+    - label: ":react: @moxiworks/mds Build react"
+      command: "yarn mds:build-react"
+      key: 'mds-build-react'
       agents:
         queue: docker-ec2
       plugins:
         ecr#v1.2.0:
           login: true
-        docker-compose#v3.8.0:
-          command: ["yarn", "mds:build-react"]
+        docker-compose#v4.7.0:
           run: ci
           config: ops/ci/docker-compose.yml
   
   - group: ":react: @moxiworks/mds-react"
     key: "mds-react"
     steps:
-    - label: ":react: Build"
+    - label: ":react: @moxiworks/mds-react Build"
+      commands: 
+        - "yarn mds:build-react"
+        - "yarn mds-react:build"
+      depends_on: "mds-build-react"
       agents:
         queue: docker-ec2
       plugins:
         ecr#v1.2.0:
           login: true
-        docker-compose#v3.8.0:
-          command: ["yarn", "mds-react:build"]
+        docker-compose#v4.7.0:
           run: ci
           config: ops/ci/docker-compose.yml
 
@@ -141,4 +148,24 @@ steps:
         cache-from:
           - "$BRANCH_IMAGE"
         build: ci-build
+        args:
+          - GITHUB_USERNAME
+          - GITHUB_EMAIL
+          - GITHUB_TOKEN
     branches: "main"
+
+  - wait
+
+  - group: ":rocket: Release builds"
+    steps:
+    - label: ":github: Publish github pages"
+      command: "yarn mds:release-docs"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          run: ci-build
+          config: ops/ci/docker-compose.yml
+      branches: "main"
