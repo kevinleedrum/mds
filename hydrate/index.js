@@ -26861,6 +26861,10 @@ class MxModal {
   connectedCallback() {
     minWidthSync.subscribeComponent(this);
   }
+  componentDidLoad() {
+    if (this.isOpen)
+      this.openModal();
+  }
   disconnectedCallback() {
     minWidthSync.unsubscribeComponent(this);
     unlockBodyScroll(this.element);
