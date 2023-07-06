@@ -26659,6 +26659,10 @@ class MxModal {
     minWidthSync.unsubscribeComponent(this);
     unlockBodyScroll(this.element);
   }
+  componentDidLoad() {
+    if (this.isOpen)
+      this.openModal();
+  }
   async openModal() {
     moveToPortal(this.element);
     lockBodyScroll(this.element);
