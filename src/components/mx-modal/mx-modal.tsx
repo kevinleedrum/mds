@@ -118,6 +118,10 @@ export class MxModal {
     unlockBodyScroll(this.element);
   }
 
+  componentDidLoad() {
+    if (this.isOpen) this.openModal();
+  }
+
   async openModal() {
     moveToPortal(this.element);
     lockBodyScroll(this.element);
