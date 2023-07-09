@@ -73,7 +73,7 @@
     "stencil:react": "yarn stencil:build --config stencil.config.react.ts",
     "stencil:docs": "yarn stencil:build --config stencil.config.docs.ts",
     "stencil:generate": "stencil generate",
-    "test": "stencil test --spec",
+    "test": "TZ=UTC stencil test --spec",
     "test:watch": "stencil test --spec --watchAll"
   },
   "dependencies": {
