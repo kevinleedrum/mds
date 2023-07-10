@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node-terminal",
+        "request": "launch",
+        "name": "Debug Stencil tests",
+        "cwd": "${workspaceFolder}/packages/mds",
+        "command": "yarn test",
+        "internalConsoleOptions": "neverOpen",
+      },
+      {
+        "type": "node-terminal",
+        "request": "launch",
+        "name": "Spec Test Current File",
+        "cwd": "${workspaceFolder}/packages/mds",
+        "command": "yarn test ${fileBasename}",
+        "internalConsoleOptions": "neverOpen",
+      },
+    ]
+}
