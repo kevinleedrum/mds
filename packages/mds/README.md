@@ -8,17 +8,12 @@ The goal is to create this framework to the spec of our design team and committi
 
 ## Development
 
-The project uses Vuepress as a means to write documentation as you develop. When the system is built, Vuepress is compiled to the `docs` directory to be accessed via Github pages. This project also uses `yarn` over `npm`.
+The project uses Vuepress as a means to write documentation as you develop. When the system is built, Vuepress is compiled to the `docs` directory to be accessed via Github pages.
 
-### Installing Yarn
+Installation docs for this project can be found [in the root README.md](./packages/mds/README.md)
 
-`npm install yarn -g`
-
-### Cloning For Local Development
-
-1. Fork and then clone the project locally.
-2. Inside the cloned direcrory run `yarn install`.
-3. After the dependencies are installed run `yarn dev` to start the development Vuepress server.
+### Running locally
+After the dependencies are installed run `yarn dev` to start the development Vuepress server.
 
 You can now access the site at [http://localhost:8080](http://localhost:8080).
 
@@ -35,7 +30,7 @@ and [@typescript-eslint/recommended](https://github.com/typescript-eslint/typesc
 
 ## Vuepress Documentation Only Creation and Editing
 
-This has been updated to where you can simply run `yarn:dev` to update documentation without the worry of unintended dynamic file changes being added to your commits.
+This has been updated to where you can simply run `yarn dev` to update documentation without the worry of unintended dynamic file changes being added to your commits.
 
 ### Where Things Live
 
@@ -49,7 +44,7 @@ You can develop the component in Vuepress then write the documentation around it
 
 #### StencilJS Components
 
-All of the StencilJS components are located in the `src` directory. There is a generator to stub a new component: `yarn generate mx-{name of component}`. All of the components are prefixed with `mx-`. For example, the input component is called `mx-input` which is essentially the tag name `<mx-input />`.
+All of the StencilJS components are located in the `src` directory. There is a generator to stub a new component: `yarn stencil:generate mx-{name of component}`. All of the components are prefixed with `mx-`. For example, the input component is called `mx-input` which is essentially the tag name `<mx-input />`.
 
 You can read more about Stencil, it's lifecycle methods, property handling, etc at [https://stenciljs.com/docs/introduction](https://stenciljs.com/docs/introduction).
 
