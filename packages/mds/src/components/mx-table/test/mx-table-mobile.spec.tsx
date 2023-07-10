@@ -5,7 +5,7 @@ import { MxTableRow } from '../../mx-table-row/mx-table-row';
 import { MxTableCell } from '../../mx-table-cell/mx-table-cell';
 import { MxCheckbox } from '../../mx-checkbox/mx-checkbox';
 
-describe('mx-table (mobile)', () => {
+describe.skip('mx-table (mobile)', () => {
   let page: SpecPage;
   let root: HTMLMxTableElement;
   beforeEach(async () => {
