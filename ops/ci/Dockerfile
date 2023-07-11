@@ -2,13 +2,17 @@ FROM node:16-alpine as ci
 
 RUN apk --no-cache add ca-certificates
 
+RUN yarn set version berry
+
 WORKDIR /app
 COPY package.json ./
 COPY yarn.lock ./
+COPY .yarnrc.yml ./
 COPY packages/mds/package.json ./packages/mds/package.json
 COPY packages/mds-react/package.json ./packages/mds-react/package.json
+COPY .yarn ./
 
-RUN yarn install
+RUN yarn install --immutable
 
 # Copy local code to the container image.
 COPY . ./

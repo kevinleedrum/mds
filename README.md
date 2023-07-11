@@ -23,7 +23,11 @@ Before proceeding with the setup, please ensure that you have followed the below
 
 1. Node Version Manager (nvm): nvm allows you to manage multiple versions of Node.js on your machine. If you don't have nvm installed, follow the [installation instructions](https://github.com/nvm-sh/nvm) at nvm's GitHub repository for your operating system.
 
-2. Yarn: yarn is a replacement package manager for npm. It has a powerful workspaces feature that is ideal for a monorepo project such as this. Follow the [installation instructions](https://yarnpkg.com/getting-started/install) on yarn's official website. Since our nvm version is above 16.10, we recommend the `corepack` approach for installation.
+2. Yarn: yarn is a replacement package manager for npm. It has a powerful workspaces feature that is ideal for a monorepo project such as this. 
+
+We are using the `berry` version of yarn which is `Yarn 3`. Follow the [installation instructions](https://yarnpkg.com/getting-started/install) on yarn's official website. Since our nvm version is above 16.10, we recommend the `corepack` approach for installation. Ensure you've run `yarn set version berry` to be on the same version as other developers.
+
+We have chosen to disable the "Zero-Installs" feature of yarn for now until we have done more research into the benefits.
 
 #### Setup Instructions:
 1. Clone the repository to your local machine using the following command. Ensure you have ssh access to the repo:
@@ -69,6 +73,8 @@ Notice that it's not the package directory name used, but instead the package.js
 ### Troubleshooting
 
 - If you encounter any issues during the setup process, please refer to the documentation or support channels for the specific packages or libraries within the monorepo.
+
+- If you encounter the `Unsupported engine` error, it most likely means you are either trying to use `npm`, or you're version of `yarn` is below `3.0.0`
 
 - Ensure that you have a stable internet connection during the setup process to download the required packages and dependencies.
 
