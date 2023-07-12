@@ -13,3 +13,4 @@ node_modules/
 !.yarn/README.md
 
 *.log
+.DS_Store
