@@ -5,6 +5,7 @@ react/node_modules
 docs/
 hydrate/
 
+package.tgz
 *~
 *.sw[mnpcod]
 *.log
