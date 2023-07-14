@@ -1,35 +1,16 @@
-www/
-dist/
-loader/
-react/src
-react/node_modules
-
-
-*~
-*.sw[mnpcod]
-*.log
-*.lock
-*.tmp
-*.tmp.*
-log.txt
-*.sublime-project
-*.sublime-workspace
-
-.stencil/
-.nova/
-.idea/
-.vscode/
-.sass-cache/
-.versions/
+.vscode/*
+!.vscode/launch.json
 node_modules/
-$RECYCLE.BIN/
-
-.DS_Store
-Thumbs.db
-UserInterfaceState.xcuserstate
 .env
 
-# Omit files that are copied around polluting pull requests.
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+!.yarn/README.md
 
-vuepress/.vuepress/public/components
-vuepress/.vuepress/public/styles
+*.log
+.DS_Store

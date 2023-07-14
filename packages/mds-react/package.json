@@ -1,0 +1,26 @@
+{
+  "name": "@moxiworks/mds-react",
+  "version": "2.0.0",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build": "yarn tsc",
+    "tsc": "tsc -p ."
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@moxiworks/mds": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.13",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.1.3"
+  }
+}

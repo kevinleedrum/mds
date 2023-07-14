@@ -1,0 +1,171 @@
+env:
+  # Tells buildkite to retry pushing/pulling docker images so that flakiness
+  # in our image repository doesn't cause builds to fail needlessly.
+  BUILDKITE_PLUGIN_DOCKER_COMPOSE_PULL_RETRIES: 2
+  BUILDKITE_PLUGIN_DOCKER_COMPOSE_PUSH_RETRIES: 2
+
+  ECR_REPOSITORY: "447351447783.dkr.ecr.us-west-2.amazonaws.com/mds"
+
+  # CI image with dependancies installed
+  CI_SERVICE: "ci"
+  CI_NAME: "$CI_SERVICE-$BUILDKITE_BUILD_NUMBER"
+
+  BRANCH_NAME: "$CI_SERVICE-$BUILDKITE_BRANCH"
+  BRANCH_IMAGE: "$CI_SERVICE:$ECR_REPOSITORY:$BRANCH_NAME"
+
+  MASTER_NAME: "master-$CI_SERVICE-latest"
+  MASTER_IMAGE: "$CI_SERVICE:$ECR_REPOSITORY:$MASTER_NAME"
+
+  # CI image with dependancies installed and everything already built
+  CI_BUILD_SERVICE: "ci-build"
+  CI_BUILD_NAME: "$CI_BUILD_SERVICE-$BUILDKITE_BUILD_NUMBER"
+
+  STENCIL_REACT_OUTPUT_DIR: "packages/mds-react/lib/components"
+  STENCIL_DIST_OUTPUT_DIR: "packages/mds-react/lib/components"
+
+steps:
+  - label: ":docker: Build image"
+    agents:
+      queue: docker-ec2
+    plugins:
+      ecr#v1.2.0:
+        login: true
+      docker-compose#v4.7.0:
+        config: ops/ci/docker-compose.yml
+        image-repository: "$ECR_REPOSITORY"
+        image-name: "$CI_NAME"
+        cache-from:
+          - "$BRANCH_IMAGE"
+          - "$MASTER_IMAGE"
+        build: ci
+        push:
+          - "$BRANCH_IMAGE"
+
+  - wait
+
+  - group: ":pencil2: @moxiworks/mds"
+    key: "mds"
+    steps:
+    - label: ":eslint: @moxiworks/mds Lint"
+      command: "yarn lint"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          workdir: /app/packages/mds
+          run: ci
+          config: ops/ci/docker-compose.yml
+
+    - label: ":typescript: @moxiworks/mds Check"
+      command: "yarn ts:check"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          workdir: /app/packages/mds
+          run: ci
+          config: ops/ci/docker-compose.yml
+
+    - label: ":jest: @moxiworks/mds Test"
+      command: "yarn test"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          workdir: /app/packages/mds
+          run: ci
+          config: ops/ci/docker-compose.yml
+
+    - label: ":pencil2: @moxiworks/mds Build mds"
+      command: "yarn mds:build-mds"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          run: ci
+          config: ops/ci/docker-compose.yml
+
+    - label: ":books: @moxiworks/mds Build docs"
+      command: "yarn mds:build-docs"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          run: ci
+          config: ops/ci/docker-compose.yml
+
+    - label: ":react: @moxiworks/mds Build react"
+      command: "yarn mds:build-react"
+      key: 'mds-build-react'
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          run: ci
+          config: ops/ci/docker-compose.yml
+  
+  - group: ":react: @moxiworks/mds-react"
+    key: "mds-react"
+    steps:
+    - label: ":react: @moxiworks/mds-react Build"
+      commands: 
+        - "yarn mds:build-react"
+        - "yarn mds-react:build"
+      depends_on: "mds-build-react"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          run: ci
+          config: ops/ci/docker-compose.yml
+
+  - wait
+
+  - label: ":docker: Build prebuilt image"
+    agents:
+      queue: docker-ec2
+    plugins:
+      ecr#v1.2.0:
+        login: true
+      docker-compose#v4.7.0:
+        config: ops/ci/docker-compose.yml
+        image-repository: "$ECR_REPOSITORY"
+        image-name: "$CI_BUILD_NAME"
+        cache-from:
+          - "$BRANCH_IMAGE"
+        build: ci-build
+        args:
+          - GITHUB_USERNAME
+          - GITHUB_EMAIL
+          - GITHUB_TOKEN
+    branches: "main"
+
+  - wait
+
+  - group: ":rocket: Release builds"
+    steps:
+    - label: ":github: Publish github pages"
+      command: "yarn mds:release-docs"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          run: ci-build
+          config: ops/ci/docker-compose.yml
+      branches: "main"

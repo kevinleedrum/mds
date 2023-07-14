@@ -1,0 +1,16 @@
+# this is just for building the image
+version: "3.5"
+services:
+  # Used for ci commands testing builds
+  ci:
+    build:
+      dockerfile: ops/ci/Dockerfile
+      target: ci
+      context: ../../
+
+  # Used for ci command with everything pre-built. Mostly used for publishing
+  ci-build:
+    build:
+      dockerfile: ops/ci/Dockerfile
+      target: build
+      context: ../../

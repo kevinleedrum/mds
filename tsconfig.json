@@ -1,19 +1,17 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "lib": ["dom", "es2017"],
-    "moduleResolution": "node",
-    "module": "esnext",
-    "target": "es2017",
-    "skipLibCheck": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "jsx": "react",
-    "jsxFactory": "h"
-  },
-  "include": ["src"],
-  "exclude": ["node_modules"]
-}
+    "compilerOptions": {
+      "module": "esnext",
+      "moduleResolution": "node",
+      "declaration": false,
+      "noImplicitAny": false,
+      "removeComments": true,
+      "noLib": false,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "allowSyntheticDefaultImports": true,
+      "target": "es2017",
+      "sourceMap": true,
+      "lib": ["dom", "es2017"]
+    },
+    "exclude": ["node_modules"]
+  }
