@@ -1,21 +1,21 @@
 .mx-checkbox {
   .checkbox-label {
-    color: var(--mds-text-checkbox);
+    color: var(--mds-color-secondary);
   }
 
   span {
     position: relative;
     z-index: 1;
-    border: 0.125rem solid var(--mds-border-checkbox);
-    border-radius: 0.125rem;
+    border: 1px solid var(--mds-color-secondary);
+    border-radius: 3px;
 
     &::before {
       content: '';
       position: absolute;
-      top: -0.8438rem;
-      left: -0.8438rem;
-      width: 2.5rem;
-      height: 2.5rem;
+      top: -12px;
+      left: -12px;
+      width: 40px;
+      height: 40px;
       border-radius: 100%;
       z-index: 0;
     }
@@ -24,11 +24,11 @@
       content: '';
       position: absolute;
       display: none;
-      left: 0.25rem;
-      top: -0.0625rem;
-      width: 0.375rem;
-      height: 0.75rem;
-      border: solid var(--mds-border-checkbox-check);
+      left: 5px;
+      top: 3px;
+      width: 5px;
+      height: 8px;
+      border: solid var(--mds-color-white);
       border-width: 0 0.125rem 0.125rem 0;
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
@@ -37,76 +37,85 @@
 
     &:hover {
       &::before {
-        background: var(--mds-bg-checkbox-overlay-hover);
+        background: var(--mds-color-primary-darkest);
+        opacity: 0.04;
       }
     }
 
     &:active {
       &::before {
-        background: var(--mds-bg-checkbox-overlay-active);
+        background: var(--mds-color-primary-darkest);
+        opacity: 0.12;
       }
     }
   }
 
   :focus-within:focus-visible {
-    & + span::before {
+    &+span::before {
       display: block;
-      background: var(--mds-bg-checkbox-overlay-focus);
+      background: var(--mds-color-primary-darkest);
+      opacity: 0.04;
     }
-    &:checked ~ span::before,
-    &.indeterminate ~ span::before {
-      background: var(--mds-bg-checkbox-overlay-checked-focus);
+
+    &:checked~span::before,
+    &.indeterminate~span::before {
+      background: var(--mds-color-primary);
+      opacity: 0.24;
     }
   }
 
-  input.indeterminate ~ span::after {
+  input.indeterminate~span::after {
     content: '';
     position: absolute;
     display: none;
-    left: 0.125rem;
-    top: 0.375rem;
-    width: 0.625rem;
+    left: 4px;
+    top: 7px;
+    width: 8px;
     height: 0;
     border: 0;
-    border-top: 0.125rem solid var(--mds-border-checkbox-check);
+    border-top: 0.125rem solid var(--mds-color-white);
     transform: rotate(0deg);
   }
 
-  input:checked ~ span,
-  input.indeterminate ~ span {
-    background-color: var(--mds-bg-checkbox-checked);
-    border-color: var(--mds-bg-checkbox-checked);
+  input:checked~span,
+  input.indeterminate~span {
+    background-color: var(--mds-color-primary);
+    border-color: var(--mds-color-primary);
+
     &::after {
       display: block;
     }
 
     &:hover {
       &::before {
-        background: var(--mds-bg-checkbox-overlay-checked-hover);
+        background: var(--mds-color-primary);
+        opacity: 0.08;
       }
     }
 
     &:active {
       &::before {
-        background: var(--mds-bg-checkbox-overlay-checked-active);
+        background: var(--mds-color-primary);
+        opacity: 0.32;
       }
     }
   }
 
-  input:disabled ~ span {
-    border-color: var(--mds-bg-checkbox-disabled);
+  input:disabled~span {
+    border-color: var(--mds-color-secondary-medium);
+
     &:hover::before,
     &:active::before {
       background: transparent;
     }
   }
 
-  input:checked:disabled ~ span,
-  input.indeterminate:disabled ~ span {
-    background-color: var(--mds-bg-checkbox-disabled);
+  input:checked:disabled~span,
+  input.indeterminate:disabled~span {
+    background-color: var(--mds-color-secondary-medium);
   }
 
-  input:disabled ~ .checkbox-label {
-    color: var(--mds-text-checkbox-disabled);
+  input:disabled~.checkbox-label {
+    color: var(--mds-color-secondary-medium);
   }
 }

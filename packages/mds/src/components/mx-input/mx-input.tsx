@@ -152,7 +152,7 @@ export class MxInput implements IMxInputProps {
     if (!this.textarea) {
       str += this.dense ? ' h-36' : ' h-48';
     }
-    str += this.error || this.isFocused ? ' border-2' : ' border';
+    str += ' border';
     if (this.error) str += ' error';
     if (this.disabled) str += ' disabled';
     if (this.readonly) str += ' readonly';

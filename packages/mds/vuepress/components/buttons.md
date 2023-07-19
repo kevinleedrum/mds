@@ -366,10 +366,6 @@ There is a `slot` available for SVG images or plain text as well. See Example.
 | --------- | --------------------------------------- | ------------------ |
 | `mxInput` | Emits the updated value as event.detail | `CustomEvent<any>` |
 
-## CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#buttons
-
 <script>
 export default {
   data() {

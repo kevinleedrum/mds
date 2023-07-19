@@ -1,4 +1,28 @@
 :root {
+  /* New Color Palette (Introduced with Mercury) */
+  --mds-color-primary: #0073E6;
+  --mds-color-primary-light: #6BC4FF;
+  --mds-color-primary-hover: #4096EC;
+  --mds-color-primary-dark: #003B76;
+  --mds-color-primary-darkest: #14143A;
+  --mds-color-secondary: #597897;
+  --mds-color-secondary-medium: #9BB2C9;
+  --mds-color-secondary-light: #DFE5E8;
+  --mds-color-secondary-ultralight: #F3F5F6;
+  --mds-color-tertiary: #9C5AF2;
+  --mds-color-tertiary-light: #CE82FF;
+  --mds-color-tertiary-dark: #653496;
+  --mds-color-error: #FF4330;
+  --mds-color-error-hover: #FF7A70;
+  --mds-color-warning: #FE6300;
+  --mds-color-warning-hover: #FF9246;
+  --mds-color-success: #19A388;
+  --mds-color-success-hover: #1FCDAB;
+  --mds-color-text-light: #ffffff;
+  --mds-color-text-dark: #597897;
+  --mds-color-text-disabled: #597897;
+  --mds-color-white: #ffffff;
+
   /* Global Colors */
   --mds-bg-error: #fbd6de;
   --mds-bg-gray-inverted: #e8e8e8;
@@ -24,82 +48,6 @@
   /* #endregion patterns */
 
   /* Component Variables */
-
-  /* #region buttons */
-  /* Contained Buttons */
-  --mds-bg-btn-contained-active: #0457af;
-  --mds-bg-btn-contained-disabled: #a4a4a4;
-  --mds-bg-btn-contained-focus: #3874ba;
-  --mds-bg-btn-contained-hover: #0457af;
-  --mds-bg-btn-contained: #0457af;
-  --mds-ripple-btn-contained: rgba(255, 255, 255, 0.32);
-  --mds-text-btn-contained-disabled: #747474;
-  --mds-text-btn-contained: #fff;
-
-  /* Outline Buttons */
-  --mds-bg-btn-outlined-active: #fff;
-  --mds-bg-btn-outlined-disabled: #fcfcfc;
-  --mds-bg-btn-outlined-focus: #dedede;
-  --mds-bg-btn-outlined-hover: #eeeeee;
-  --mds-bg-btn-outlined: #fff;
-  --mds-border-btn-outlined-disabled: #f3f3f3;
-  --mds-border-btn-outlined: #e7e7e7;
-  --mds-ripple-btn-outlined: rgba(51, 51, 51, 0.12);
-  --mds-text-btn-outlined-disabled: #a7a7a7;
-  --mds-text-btn-outlined: #2d2d2d;
-
-  /* Simple Buttons */
-  --mds-bg-btn-simple-active: #fff;
-  --mds-bg-btn-simple-disabled: #fcfcfc;
-  --mds-bg-btn-simple-focus: #d7d7d7;
-  --mds-bg-btn-simple-hover: #eeeeee;
-  --mds-bg-btn-simple: #fff;
-  --mds-border-btn-simple-disabled: #f2f2f2;
-  --mds-border-btn-simple: #e7e7e7;
-  --mds-ripple-btn-simple: rgba(0, 0, 0, 0.12);
-  --mds-text-btn-simple-disabled: #909090;
-  --mds-text-btn-simple: #2d2d2d;
-
-  /* Text Buttons */
-  --mds-bg-btn-text-active: transparent;
-  --mds-bg-btn-text-disabled: transparent;
-  --mds-bg-btn-text-dropdown-separator-focus: #8aafd8;
-  --mds-bg-btn-text-dropdown-separator-hover: #d4e2f1;
-  --mds-bg-btn-text-dropdown-separator: #e7e7e7;
-  --mds-bg-btn-text-focus: #bbd1e9;
-  --mds-bg-btn-text-hover: #e8f0f8;
-  --mds-bg-btn-text: transparent;
-  --mds-ripple-btn-text: rgba(4, 87, 175, 0.16);
-  --mds-text-btn-text-disabled: #a4a4a4;
-  --mds-text-btn-text-dropdown: #2d2d2d; /* Dropdown text buttons use a different text color */
-  --mds-text-btn-text: #0457af;
-
-  /* Icon Buttons */
-  --mds-bg-btn-icon-active: #d7d7d7;
-  --mds-bg-btn-icon-disabled: transparent;
-  --mds-bg-btn-icon-chevron-active: #dcdcdc;
-  --mds-bg-btn-icon-chevron-focus: #dcdcdc;
-  --mds-bg-btn-icon-chevron-hover: #f3f3f3;
-  --mds-bg-btn-icon-chevron: #fff;
-  --mds-bg-btn-icon-focus: #d7d7d7;
-  --mds-bg-btn-icon-hover: #eeeeee;
-  --mds-bg-btn-icon: transparent;
-  --mds-text-btn-icon-disabled: #b5b5b5;
-  --mds-text-btn-icon: #434343;
-
-  /* Toggle Buttons */
-  --mds-bg-btn-toggle-active: #fff;
-  --mds-bg-btn-toggle-disabled: #fff;
-  --mds-bg-btn-toggle-focus: #dcdcdc;
-  --mds-bg-btn-toggle-hover: #eeeeee;
-  --mds-bg-btn-toggle-selected: #dde8f4;
-  --mds-bg-btn-toggle: #fff;
-  --mds-border-btn-toggle: #bcbcbc;
-  --mds-ripple-btn-toggle: rgba(4, 87, 175, 0.16);
-  --mds-text-btn-toggle-active: #0457af;
-  --mds-text-btn-toggle-disabled: #a9a9a9;
-  --mds-text-btn-toggle: #434343;
-  /* #endregion buttons */
 
   /* #region chips */
   /* Chips */
@@ -151,57 +99,6 @@
   --mds-text-fab: #fff;
   /* #endregion fabs */
 
-  /* #region inputs */
-  /* Text Inputs & Textareas */
-  --mds-bg-input-readonly: #f5f5f5;
-  --mds-bg-input-scroll-thumb: #d4d4d4;
-  --mds-bg-input: #fff;
-  --mds-border-input-error: #ff0c3e;
-  --mds-border-input-focus: #0457af;
-  --mds-border-input-hover: #2d2d2d;
-  --mds-border-input: #a9a9a9;
-  --mds-caret-input: #0457af;
-  --mds-text-input-assistive: #787878;
-  --mds-text-input-disabled: #a9a9a9;
-  --mds-text-input-error: #ff0c3e;
-  --mds-text-input-label: #7a7a7a;
-  --mds-text-input: #454545;
-  /* #endregion inputs */
-
-  /* #region dropdowns */
-  /* Dropdown Menus */
-  --mds-bg-dropdown-elevated-focus: #f0f0f0;
-  --mds-bg-dropdown-elevated-hover: #f5f5f5;
-  --mds-bg-dropdown-flat-focus: #f0f0f0;
-  --mds-bg-dropdown-flat-hover: #f5f5f5;
-  --mds-bg-dropdown: #fff;
-  --mds-border-dropdown-elevated: transparent;
-  --mds-border-dropdown-flat-focus: transparent;
-  --mds-border-dropdown-flat: #eaeaea;
-  --mds-border-dropdown-focus: #0457af;
-  --mds-border-dropdown-hover: #2d2d2d;
-  --mds-border-dropdown: #a9a9a9;
-  --mds-text-dropdown-arrow: #5c5c5c;
-  --mds-text-dropdown-disabled: #a9a9a9;
-  --mds-text-dropdown-label: #7a7a7a;
-  --mds-text-dropdown: #454545;
-
-  /* Selects */
-  --mds-bg-select: #fff;
-  --mds-border-select-elevated: transparent;
-  --mds-border-select-error: #ff0c3e;
-  --mds-border-select-flat: #eaeaea;
-  --mds-border-select-focus: #0457af;
-  --mds-border-select-hover: #2d2d2d;
-  --mds-border-select: #a9a9a9;
-  --mds-text-select-arrow: #5c5c5c;
-  --mds-text-select-assistive: #787878;
-  --mds-text-select-disabled: #a9a9a9;
-  --mds-text-select-error: #ff0c3e;
-  --mds-text-select-label: #7a7a7a;
-  --mds-text-select: #454545;
-  /* #endregion dropdowns */
-
   /* #region pickers */
   /* Pickers */
   --mds-bg-picker: #fff;
@@ -222,68 +119,6 @@
   --mds-text-picker: #454545;
   /* #endregion pickers */
 
-  /* #region search */
-  /* Search */
-  --mds-border-search: transparent;
-  --mds-border-search-flat: #eaeaea;
-  --mds-bg-search: #fff;
-  --mds-text-search: #333;
-  --mds-text-search-clear: #0457af;
-  --mds-text-search-placeholder: rgba(51, 51, 51, 0.6);
-  --mds-border-search-hover: #333;
-  --mds-border-search-focus: #0457af;
-  /* #endregion search */
-
-  /* #region selection-controls */
-  /* Radio Buttons */
-  --mds-bg-radio-checked: #0457af;
-  --mds-bg-radio-disabled: #a4a4a4;
-  --mds-bg-radio-overlay-active: rgba(0, 0, 0, 0.12);
-  --mds-bg-radio-overlay-checked-active: rgba(4, 87, 175, 0.32);
-  --mds-bg-radio-overlay-checked-focus: rgba(4, 87, 175, 0.24);
-  --mds-bg-radio-overlay-checked-hover: rgba(4, 87, 175, 0.08);
-  --mds-bg-radio-overlay-focus: rgba(0, 0, 0, 0.12);
-  --mds-bg-radio-overlay-hover: rgba(0, 0, 0, 0.04);
-  --mds-border-radio: #505050;
-  --mds-border-radio-checked: #0457af;
-  --mds-border-radio-disabled: #a4a4a4;
-  --mds-text-radio-disabled: #a4a4a4;
-  --mds-text-radio: #2d2d2d;
-
-  /* Switches */
-  --mds-bg-switch-overlay-active: rgba(0, 0, 0, 0.12);
-  --mds-bg-switch-overlay-checked-active: rgba(4, 87, 175, 0.32);
-  --mds-bg-switch-overlay-checked-focus: rgba(4, 87, 175, 0.24);
-  --mds-bg-switch-overlay-checked-hover: rgba(4, 87, 175, 0.08);
-  --mds-bg-switch-overlay-focus: rgba(0, 0, 0, 0.12);
-  --mds-bg-switch-overlay-hover: rgba(0, 0, 0, 0.04);
-  --mds-bg-switch-thumb-checked-disabled: #abc6e2;
-  --mds-bg-switch-thumb-checked: #0457af;
-  --mds-bg-switch-thumb-disabled: #fcfcfc;
-  --mds-bg-switch-thumb: #fff;
-  --mds-bg-switch-track-checked-disabled: #d4e2f1;
-  --mds-bg-switch-track-checked: #abc6e2;
-  --mds-bg-switch-track-disabled: #ddd;
-  --mds-bg-switch-track: #b9b9b9;
-  --mds-text-switch-disabled: #a4a4a4;
-  --mds-text-switch: #2d2d2d;
-
-  /* Checkboxes */
-  --mds-bg-checkbox-checked: #0457af;
-  --mds-bg-checkbox-disabled: #a4a4a4;
-  --mds-bg-checkbox-overlay-active: rgba(0, 0, 0, 0.12);
-  --mds-bg-checkbox-overlay-checked-active: rgba(4, 87, 175, 0.32);
-  --mds-bg-checkbox-overlay-checked-focus: rgba(4, 87, 175, 0.24);
-  --mds-bg-checkbox-overlay-checked-hover: rgba(4, 87, 175, 0.08);
-  --mds-bg-checkbox-overlay-focus: rgba(0, 0, 0, 0.12);
-  --mds-bg-checkbox-overlay-hover: rgba(0, 0, 0, 0.04);
-  --mds-border-checkbox-disabled: #a4a4a4;
-  --mds-border-checkbox-check: #fff;
-  --mds-border-checkbox: #505050;
-  --mds-text-checkbox-disabled: #a4a4a4;
-  --mds-text-checkbox: #2d2d2d;
-  /* #endregion selection-controls */
-
   /* #region tooltips */
   /* Tooltips */
   --mds-bg-tooltip-inverted: #fafafa;
@@ -291,13 +126,6 @@
   --mds-text-tooltip-inverted: #333;
   --mds-text-tooltip: #fff;
   /* #endregion tooltips */
-
-  /* #region progress */
-  /* Progress Indicators */
-  --mds-bg-linear-progress-track: #c3d3e6;
-  --mds-bg-linear-progress: #0457af;
-  --mds-text-circular-progress: #0457af;
-  /* #endregion progress */
 
   /* #region tabs */
   /* Tabs */

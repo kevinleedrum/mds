@@ -42,7 +42,3 @@
 | `placeholder` | `placeholder`   |                                                                                                                                                             | `string`  | `undefined` |
 | `showClear`   | `show-clear`    | Set to `false` to hide the clear button.                                                                                                                    | `boolean` | `true`      |
 | `value`       | `value`         |                                                                                                                                                             | `string`  | `undefined` |
-
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#search

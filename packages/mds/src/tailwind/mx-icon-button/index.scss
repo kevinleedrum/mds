@@ -1,36 +1,39 @@
-.mds .mx-icon-button > a,
-.mx-icon-button > button {
-  color: var(--mds-text-btn-icon);
-  background: var(--mds-bg-btn-icon);
+.mds .mx-icon-button>a,
+.mx-icon-button>button {
+  color: var(--mds-color-secondary);
+  background: transparent;
 
   .chevron-wrapper {
-    background: var(--mds-bg-btn-icon-chevron);
+    background: var(--mds-color-white);
   }
 
   &:focus:not(:disabled, [aria-disabled='true']) {
     background: var(--mds-bg-btn-icon-focus);
+
     .chevron-wrapper {
-      background: var(--mds-bg-btn-icon-chevron-focus);
+      background: var(--mds-color-secondary-light);
     }
   }
 
   &:hover:not(:disabled, [aria-disabled='true']) {
-    background: var(--mds-bg-btn-icon-hover);
+    background: var(--mds-color-secondary-ultralight);
+
     .chevron-wrapper {
-      background: var(--mds-bg-btn-icon-chevron-hover);
+      background: var(--mds-color-secondary-light);
     }
   }
 
   &:active:not(:disabled, [aria-disabled='true']) {
-    background: var(--mds-bg-btn-icon-active);
+    background: var(--mds-color-secondary-light);
+
     .chevron-wrapper {
-      background: var(--mds-bg-btn-icon-chevron-active);
+      background: var(--mds-color-secondary-ultralight);
     }
   }
 
   &:disabled,
   &[aria-disabled='true'] {
-    color: var(--mds-text-btn-icon-disabled);
-    background: var(--mds-bg-btn-icon-disabled);
+    color: var(--mds-color-secondary-medium);
+    background: transparent;
   }
 }

@@ -1,26 +1,26 @@
 .mx-search {
-  color: var(--mds-text-search);
+  color: var(--mds-color-secondary);
 
-  & > input {
-    border-color: var(--mds-border-search);
-    background: var(--mds-bg-search);
-    color: var(--mds-text-search);
+  &>input {
+    border-color: var(--mds-color-secondary);
+    background: var(--mds-color-white);
+    color: var(--mds-color-secondary);
 
     &::placeholder {
-      color: var(--mds-text-search-placeholder);
+      color: var(--mds-color-secondary-medium);
     }
 
     &.flat {
-      border-color: var(--mds-border-search-flat);
+      border-color: var(--mds-color-secondary-light);
     }
 
     &:hover {
-      border-color: var(--mds-border-search-hover);
+      border-color: var(--mds-color-primary);
     }
 
     &:focus {
-      border-color: var(--mds-border-search-focus);
-      padding-left: 3.4375rem; /* Remove 1px of padding to offset the border increase */
+      border-color: var(--mds-color-primary);
+      box-shadow: 0px 0px 5px 0px rgba(0, 115, 230, 0.50);
     }
 
     &::-webkit-search-cancel-button {
@@ -28,8 +28,8 @@
     }
   }
 
-  & > .clear-button {
-    background: var(--mds-bg-search);
-    color: var(--mds-text-search-clear);
+  &>.clear-button {
+    background: var(--mds-color-white);
+    color: var(--mds-color-primary);
   }
 }

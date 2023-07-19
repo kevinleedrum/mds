@@ -1,119 +1,127 @@
 .mx-button {
+
   button,
   a {
     &.contained {
-      background-color: var(--mds-bg-btn-contained);
-      color: var(--mds-text-btn-contained);
-      --ripple-color: var(--mds-ripple-btn-contained);
+      background-color: var(--mds-color-primary);
+      color: var(--mds-color-text-light);
+      --ripple-color: var(--mds-color-primary-light);
 
       &:focus {
-        background: var(--mds-bg-btn-contained-focus);
+        background: var(--mds-color-primary-dark);
       }
 
       &:hover {
-        background: var(--mds-bg-btn-contained-hover);
+        background: var(--mds-color-primary-hover);
       }
 
       &:active {
-        background: var(--mds-bg-btn-contained-active);
+        background: var(--mds-color-primary-dark);
       }
 
       &:disabled,
       &[aria-disabled='true'] {
-        background: var(--mds-bg-btn-contained-disabled);
-        color: var(--mds-text-btn-contained-disabled);
+        background: var(--mds-color-secondary-light);
+        color: var(--mds-color-text-disabled);
       }
     }
 
     &.outlined {
-      border-color: var(--mds-border-btn-outlined);
-      background-color: var(--mds-bg-btn-outlined);
-      color: var(--mds-text-btn-outlined);
-      --ripple-color: var(--mds-ripple-btn-outlined);
+      border-color: var(--mds-color-primary);
+      background-color: var(--mds-color-white);
+      color: var(--mds-color-primary);
+      --ripple-color: var(--mds-color-primary-light);
 
       &:focus:not(:disabled, [aria-disabled='true']) {
-        background: var(--mds-bg-btn-outlined-focus);
+        background: var(--mds-color-primary-hover);
+        color: var(--mds-color-text-light);
       }
 
       &:hover:not(:disabled, [aria-disabled='true']) {
-        background: var(--mds-bg-btn-outlined-hover);
+        background: var(--mds-color-primary-hover);
+        color: var(--mds-color-text-light);
       }
 
       &:active:not(:disabled, [aria-disabled='true']) {
-        background: var(--mds-bg-btn-outlined-active);
+        background: var(--mds-color-primary-dark);
+        color: var(--mds-color-text-light);
       }
 
       &:disabled,
       &[aria-disabled='true'] {
-        background: var(--mds-bg-btn-outlined-disabled);
-        border-color: var(--mds-border-btn-outlined-disabled);
-        color: var(--mds-text-btn-outlined-disabled);
+        background: var(--mds-color-white);
+        border-color: var(--mds-color-secondary-light);
+        color: var(--mds-color-text-disabled);
       }
     }
 
     &.simple {
-      color: var(--mds-text-btn-simple);
-      background: var(--mds-bg-btn-simple);
-      border-color: var(--mds-border-btn-simple);
-      --ripple-color: var(--mds-ripple-btn-simple);
+      color: var(--mds-color-primary-dark);
+      background: var(--mds-color-white);
+      border-color: var(--mds-color-secondary);
+      --ripple-color: var(--mds-color-primary-light);
 
       &:focus:not(:disabled, [aria-disabled='true']) {
-        background: var(--mds-bg-btn-simple-focus);
+        background: var(--mds-color-secondary-light);
       }
 
       &:hover:not(:disabled, [aria-disabled='true']) {
-        background: var(--mds-bg-btn-simple-hover);
+        background: var(--mds-color-secondary-light);
       }
 
       &:active:not(:disabled, [aria-disabled='true']) {
-        background: var(--mds-bg-btn-simple-active);
+        background: var(--mds-color-primary-dark);
+        color: var(--mds-color-text-light);
       }
 
       &:disabled,
       &[aria-disabled='true'] {
-        background: var(--mds-bg-btn-simple-disabled);
-        border-color: var(--mds-border-btn-simple-disabled);
-        color: var(--mds-text-btn-simple-disabled);
+        background: var(--mds-color-white);
+        border-color: var(--mds-color-secondary-medium);
+        color: var(--mds-color-text-disabled);
       }
     }
 
     &.text {
-      color: var(--mds-text-btn-text);
-      background: var(--mds-bg-btn-text);
-      --ripple-color: var(--mds-ripple-btn-text);
+      color: var(--mds-color-primary-dark);
+      background: var(--mds-color-white);
+      --ripple-color: var(--mds-color-primary-light);
 
       .separator {
-        background: var(--mds-bg-btn-text-dropdown-separator);
+        background: var(--mds-color-secondary-light);
       }
 
       &:focus:not(:disabled, [aria-disabled='true']) {
-        background: var(--mds-bg-btn-text-focus);
+        background: var(--mds-color-secondary-ultralight);
+
         .separator {
-          background: var(--mds-bg-btn-text-dropdown-separator-focus);
+          background: var(--mds-color-secondary);
         }
       }
 
       &:hover:not(:disabled, [aria-disabled='true']) {
-        background: var(--mds-bg-btn-text-hover);
+        background: var(--mds-color-secondary-ultralight);
+
         .separator {
-          background: var(--mds-bg-btn-text-dropdown-separator-hover);
+          background: var(--mds-color-secondary);
         }
       }
 
       &:active:not(:disabled, [aria-disabled='true']) {
-        background: var(--mds-bg-btn-text-active);
+        background: var(--mds-color-primary-dark);
+        color: var(--mds-color-text-light);
       }
 
       &:disabled,
       &[aria-disabled='true'] {
-        color: var(--mds-text-btn-text-disabled);
-        background: var(--mds-bg-btn-text-disabled);
+        color: var(--mds-color-secondary-medium);
       }
 
       &.dropdown:not(:disabled, [aria-disabled='true']) {
+
         .slot-content,
         .chevron-icon {
-          color: var(--mds-text-btn-text-dropdown);
+          color: var(--mds-color-secondary);
         }
       }
     }
