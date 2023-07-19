@@ -4,16 +4,16 @@
   span {
     position: relative;
     z-index: 1;
-    border: 0.125rem solid var(--mds-border-radio);
+    border: 1px solid var(--mds-color-secondary);
 
     &::before {
       display: none;
       content: '';
       position: absolute;
-      top: -0.7813rem;
-      left: -0.7813rem;
-      width: 2.5rem;
-      height: 2.5rem;
+      top: -11px;
+      left: -11px;
+      width: 40px;
+      height: 40px;
       border-radius: 100%;
       z-index: 0;
     }
@@ -22,40 +22,45 @@
       content: '';
       position: absolute;
       display: none;
-      left: 0.1875rem;
-      top: 0.1875rem;
-      width: 0.625rem;
-      height: 0.625rem;
-      background: var(--mds-bg-radio-checked);
+      left: 2px;
+      top: 2px;
+      width: 14px;
+      height: 14px;
+      background: var(--mds-color-primary);
       border-radius: 100%;
     }
 
     &:hover {
       &::before {
         display: block;
-        background: var(--mds-bg-radio-overlay-hover);
+        background: var(--mds-color-primary-darkest);
+        opacity: 0.04;
       }
     }
 
     &:active {
       &::before {
-        background: var(--mds-bg-radio-overlay-active);
+        background: var(--mds-color-primary-darkest);
+        opacity: 0.12;
       }
     }
   }
 
   :focus-within:focus-visible {
-    & + span::before {
+    &+span::before {
       display: block;
-      background: var(--mds-bg-radio-overlay-focus);
+      background: var(--mds-color-primary-darkest);
+      opacity: 0.12;
     }
-    &:checked ~ span::before {
-      background: var(--mds-bg-radio-overlay-checked-focus);
+
+    &:checked~span::before {
+      background: var(--mds-color-primary);
+      opacity: 0.24;
     }
   }
 
-  input:checked ~ span {
-    border-color: var(--mds-border-radio-checked);
+  input:checked~span {
+    border-color: var(--mds-color-primary);
 
     &::after {
       display: block;
@@ -63,31 +68,36 @@
 
     &:hover {
       &::before {
-        background: var(--mds-bg-radio-overlay-checked-hover);
+        background: var(--mds-color-primary);
+        opacity: 0.08;
       }
     }
 
     &:active {
       &::before {
         display: block;
-        background: var(--mds-bg-radio-overlay-checked-active);
+        background: var(--mds-color-primary);
+        opacity: 0.32;
       }
     }
   }
 
   input:disabled {
-    & ~ span {
-      border-color: var(--mds-border-radio-disabled);
+    &~span {
+      border-color: var(--mds-color-secondary-light);
     }
-    & ~ span::after {
-      background: var(--mds-bg-radio-disabled);
+
+    &~span::after {
+      background: var(--mds-color-secondary-light);
     }
-    & ~ span::before,
-    &:checked ~ span::before {
+
+    &~span::before,
+    &:checked~span::before {
       background: transparent;
     }
-    & ~ .radio-label {
-      color: var(--mds-text-radio-disabled);
+
+    &~.radio-label {
+      color: var(--mds-color-secondary-light);
     }
   }
 }

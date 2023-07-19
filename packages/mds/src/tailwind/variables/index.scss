@@ -154,20 +154,6 @@
   /* #endregion pickers */
 
   /* #region selection-controls */
-  /* Radio Buttons */
-  --mds-bg-radio-checked: #0457af;
-  --mds-bg-radio-disabled: #a4a4a4;
-  --mds-bg-radio-overlay-active: rgba(0, 0, 0, 0.12);
-  --mds-bg-radio-overlay-checked-active: rgba(4, 87, 175, 0.32);
-  --mds-bg-radio-overlay-checked-focus: rgba(4, 87, 175, 0.24);
-  --mds-bg-radio-overlay-checked-hover: rgba(4, 87, 175, 0.08);
-  --mds-bg-radio-overlay-focus: rgba(0, 0, 0, 0.12);
-  --mds-bg-radio-overlay-hover: rgba(0, 0, 0, 0.04);
-  --mds-border-radio: #505050;
-  --mds-border-radio-checked: #0457af;
-  --mds-border-radio-disabled: #a4a4a4;
-  --mds-text-radio-disabled: #a4a4a4;
-  --mds-text-radio: #2d2d2d;
 
   /* Switches */
   --mds-bg-switch-overlay-active: rgba(0, 0, 0, 0.12);
@@ -187,20 +173,6 @@
   --mds-text-switch-disabled: #a4a4a4;
   --mds-text-switch: #2d2d2d;
 
-  /* Checkboxes */
-  --mds-bg-checkbox-checked: #0457af;
-  --mds-bg-checkbox-disabled: #a4a4a4;
-  --mds-bg-checkbox-overlay-active: rgba(0, 0, 0, 0.12);
-  --mds-bg-checkbox-overlay-checked-active: rgba(4, 87, 175, 0.32);
-  --mds-bg-checkbox-overlay-checked-focus: rgba(4, 87, 175, 0.24);
-  --mds-bg-checkbox-overlay-checked-hover: rgba(4, 87, 175, 0.08);
-  --mds-bg-checkbox-overlay-focus: rgba(0, 0, 0, 0.12);
-  --mds-bg-checkbox-overlay-hover: rgba(0, 0, 0, 0.04);
-  --mds-border-checkbox-disabled: #a4a4a4;
-  --mds-border-checkbox-check: #fff;
-  --mds-border-checkbox: #505050;
-  --mds-text-checkbox-disabled: #a4a4a4;
-  --mds-text-checkbox: #2d2d2d;
   /* #endregion selection-controls */
 
   /* #region tooltips */
