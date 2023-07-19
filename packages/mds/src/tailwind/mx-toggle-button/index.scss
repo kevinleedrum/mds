@@ -1,34 +1,35 @@
 .mx-toggle-button {
-  color: var(--mds-text-btn-toggle);
-  border-color: var(--mds-border-btn-toggle);
-  --ripple-color: var(--mds-ripple-btn-toggle);
+  color: var(--mds-color-secondary);
+  border-color: var(--mds-color-secondary-medium);
+  --ripple-color: var(--mds-color-primary-light);
 
   .btn-toggle {
-    background: var(--mds-bg-btn-toggle);
+    background: var(--mds-color-white);
     outline-offset: -1px;
 
     &:focus:not(:disabled, [aria-disabled='true']) {
-      background: var(--mds-bg-btn-toggle-focus);
+      background: var(--mds-color-secondary-light);
     }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
-      background: var(--mds-bg-btn-toggle-hover);
+      background: var(--mds-color-primary-light);
     }
 
     &:active:not(:disabled, [aria-disabled='true']) {
-      background: var(--mds-bg-btn-toggle-active);
-      color: var(--mds-text-btn-toggle-active);
+      background: var(--mds-color-white);
+      color: var(--mds-color-primary);
     }
 
     &:disabled,
     &[aria-disabled='true'] {
-      color: var(--mds-text-btn-toggle-disabled);
-      background: var(--mds-bg-btn-toggle-disabled);
+      color: var(--mds-color-secondary-medium);
+      background: var(--mds-color-white);
     }
 
     &.selected,
     &.selected:focus {
-      background: var(--mds-bg-btn-toggle-selected);
+      color: var(--mds-color-text-light);
+      background: var(--mds-color-primary);
     }
   }
 }
