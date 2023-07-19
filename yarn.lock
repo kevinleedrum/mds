@@ -1788,7 +1788,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@moxiworks/mds-react@workspace:packages/mds-react"
   dependencies:
-    "@moxiworks/mds": "*"
+    "@moxiworks/mds": 0.2.1
     "@types/react": ^18.2.13
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -1796,7 +1796,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@moxiworks/mds@*, @moxiworks/mds@workspace:packages/mds":
+"@moxiworks/mds@0.2.1, @moxiworks/mds@workspace:packages/mds":
   version: 0.0.0-use.local
   resolution: "@moxiworks/mds@workspace:packages/mds"
   dependencies:
