@@ -1,8 +1,9 @@
 .mx-switch {
-  color: var(--mds-text-switch);
+  color: var(--mds-color-secondary);
 
   .slider {
-    background-color: var(--mds-bg-switch-track);
+    background-color: var(--mds-color-white);
+    border: 1px solid var(--mds-color-secondary);
     -webkit-transition: 0.15s;
     transition: 0.15s;
 
@@ -10,11 +11,12 @@
       @apply shadow-1;
       position: absolute;
       content: '';
-      height: 1.25rem;
-      width: 1.25rem;
-      left: -0.0625rem;
-      bottom: -0.1875rem;
-      background-color: var(--mds-bg-switch-thumb);
+      height: 20px;
+      width: 20px;
+      left: -1px;
+      bottom: -4px;
+      border: 1px solid var(--mds-color-secondary);
+      background-color: var(--mds-color-white);
       -webkit-transition: 0.15s;
       transition: 0.15s;
 
@@ -27,77 +29,97 @@
       display: none;
       content: '';
       position: absolute;
-      top: -0.8125rem;
-      left: -0.7188rem;
-      width: 2.5rem;
-      height: 2.5rem;
+      top: -14px;
+      left: -12px;
+      width: 40px;
+      height: 40px;
       border-radius: 100%;
       z-index: 0;
     }
+
     &:hover::after {
       display: block;
-      background: var(--mds-bg-switch-overlay-hover);
+      background: var(--mds-color-primary-darkest);
+      opacity: 0.04;
     }
+
     &:active::after {
       display: block;
-      background: var(--mds-bg-switch-overlay-active);
+      background: var(--mds-color-primary-darkest);
+      opacity: 0.12;
     }
   }
 
-  input:checked + .slider {
-    background-color: var(--mds-bg-switch-track-checked);
+  input:checked+.slider {
+    background-color: var(--mds-color-primary-light);
   }
 
-  :focus-within:focus-visible + .slider::after {
+  :focus-within:focus-visible+.slider::after {
     display: block;
-    background: var(--mds-bg-switch-overlay-focus);
+    background: var(--mds-color-primary-darkest);
+    opacity: 0.12;
   }
 
-  input:checked + .slider:active::after,
-  :focus-within:focus-visible:checked + .slider::after {
+  input:checked+.slider:active::after,
+  :focus-within:focus-visible:checked+.slider::after {
     display: block;
-    background: var(--mds-bg-switch-overlay-checked-focus);
+    background: var(--mds-color-primary);
+    opacity: 0.24;
   }
 
-  input:checked + .slider:before {
+  input:checked+.slider:before {
     -webkit-transform: translateX(1.25rem);
     -ms-transform: translateX(1.25rem);
     transform: translateX(1.25rem);
-    background: var(--mds-bg-switch-thumb-checked);
+    background: var(--mds-color-primary);
+    width: 18px;
+    height: 18px;
+    bottom: -3px;
+    outline: 1px solid var(--mds-color-secondary);
+    border: 1px solid var(--mds-color-white);
   }
 
-  input:checked + .slider::after {
+  input:checked+.slider::after {
     -webkit-transform: translateX(1.25rem);
     -ms-transform: translateX(1.25rem);
     transform: translateX(1.25rem);
-    background: var(--mds-bg-switch-overlay-checked-active);
+    background: var(--mds-color-primary);
+    opacity: 0.32;
   }
 
-  input:checked + .slider:hover::after {
-    background: var(--mds-bg-switch-overlay-checked-hover);
+  input:checked+.slider:hover::after {
+    background: var(--mds-color-primary);
+    opacity: 0.08;
   }
 
   input:disabled {
-    & + .slider {
-      background-color: var(--mds-bg-switch-track-disabled);
+    &+.slider {
+      background-color: var(--mds-color-secondary-ultralight);
+      border: 1px solid var(--mds-color-secondary-medium);
     }
-    & + .slider:before {
-      background: var(--mds-bg-switch-thumb-disabled);
+
+    &+.slider:before {
+      background: var(--mds-color-secondary-ultralight);
+      border: 1px solid var(--mds-color-secondary-medium);
     }
-    & + .slider:after,
-    & + .slider:hover::after {
+
+    &+.slider:after,
+    &+.slider:hover::after {
       background: transparent;
     }
+
     &:checked {
-      & + .slider {
-        background: var(--mds-bg-switch-track-checked-disabled);
+      &+.slider {
+        background: var(--mds-color-secondary-light);
       }
-      & + .slider:before {
-        background: var(--mds-bg-switch-thumb-checked-disabled);
+
+      &+.slider:before {
+        background: var(--mds-color-secondary-medium);
       }
     }
-    & ~ .switch-label {
-      color: var(--mds-text-switch-disabled);
+
+    &~.switch-label {
+      color: var(--mds-color-secondary-medium);
     }
   }
 

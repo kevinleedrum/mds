@@ -153,28 +153,6 @@
   --mds-text-picker: #454545;
   /* #endregion pickers */
 
-  /* #region selection-controls */
-
-  /* Switches */
-  --mds-bg-switch-overlay-active: rgba(0, 0, 0, 0.12);
-  --mds-bg-switch-overlay-checked-active: rgba(4, 87, 175, 0.32);
-  --mds-bg-switch-overlay-checked-focus: rgba(4, 87, 175, 0.24);
-  --mds-bg-switch-overlay-checked-hover: rgba(4, 87, 175, 0.08);
-  --mds-bg-switch-overlay-focus: rgba(0, 0, 0, 0.12);
-  --mds-bg-switch-overlay-hover: rgba(0, 0, 0, 0.04);
-  --mds-bg-switch-thumb-checked-disabled: #abc6e2;
-  --mds-bg-switch-thumb-checked: #0457af;
-  --mds-bg-switch-thumb-disabled: #fcfcfc;
-  --mds-bg-switch-thumb: #fff;
-  --mds-bg-switch-track-checked-disabled: #d4e2f1;
-  --mds-bg-switch-track-checked: #abc6e2;
-  --mds-bg-switch-track-disabled: #ddd;
-  --mds-bg-switch-track: #b9b9b9;
-  --mds-text-switch-disabled: #a4a4a4;
-  --mds-text-switch: #2d2d2d;
-
-  /* #endregion selection-controls */
-
   /* #region tooltips */
   /* Tooltips */
   --mds-bg-tooltip-inverted: #fafafa;
