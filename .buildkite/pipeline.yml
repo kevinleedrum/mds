@@ -169,3 +169,17 @@ steps:
           run: ci-build
           config: ops/ci/docker-compose.yml
       branches: "main"
+
+    - label: ":npm: Publish packages"
+      command: "yarn publish"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          run: ci-build
+          config: ops/ci/docker-compose.yml
+          env:
+            - NPM_AUTH_TOKEN
+      branches: "main"
