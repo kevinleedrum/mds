@@ -161,10 +161,6 @@ The `mx-confirm-input` component wraps the `mx-input` component, and provides ad
 | `type`                | `type`                  | The `type` attribute for the text input                                                                                                              | `string`                  | `'text'`    |
 | `value`               | `value`                 |                                                                                                                                                      | `string`                  | `undefined` |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#inputs
-
 <script>
 export default {
   data() {
