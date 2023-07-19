@@ -7,13 +7,21 @@ html, body, #app, .theme-container.no-sidebar
 
 body
   background: #f9f9f9;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 1rem;
 
 .theme-container.no-sidebar
   background: linear-gradient(180deg, #f9f9f9 25%, var(--mds-bg-primary));
   .theme-default-content
     padding-bottom: 0;
+
+h1, h2, h3, h4, h5, h6
+  font-weight 500
+
+.sidebar
+  & > .sidebar-links
+    & > li > a.sidebar-link
+      font-weight 500 !important
 
 p
   margin: 20px 0;
