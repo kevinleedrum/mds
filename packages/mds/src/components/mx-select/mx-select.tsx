@@ -76,7 +76,7 @@ export class MxSelect {
     if (!this.hasValue) str += ' no-value';
     if (this.elevated) str += ' elevated shadow-1';
     if (this.flat) str += ' flat';
-    str += this.error || this.isFocused ? ' border-2' : ' border';
+    str += ' border';
     if (this.error) str += ' error';
     if (this.disabled) str += ' disabled';
     if (this.selectClass) str += ' ' + this.selectClass;

@@ -499,10 +499,6 @@ Like the [Dropdown Menu](#dropdown-menus), the Select component also has `flat` 
 | `suffix`        | `suffix`         | Text shown to the left of the arrow                                                            | `string`  | `undefined` |
 | `value`         | `value`          |                                                                                                | `any`     | `undefined` |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#dropdowns
-
 <script>
 export default {
   data() {

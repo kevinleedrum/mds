@@ -84,7 +84,7 @@ export class MxDropdownMenu {
     str += this.dense ? ' h-36' : ' h-48';
     if (this.elevated) str += ' elevated shadow-1';
     if (this.flat) str += ' flat';
-    str += this.isFocused ? ' focused border-2' : ' border';
+    str += ' border';
     if (this.disabled || this.readonly) str += ' disabled';
     if (this.error) str += ' error';
     if (this.dropdownClass) str += ' ' + this.dropdownClass;
