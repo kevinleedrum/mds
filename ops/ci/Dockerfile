@@ -6,11 +6,12 @@ RUN yarn set version berry
 
 WORKDIR /app
 COPY package.json ./
-COPY yarn.lock ./
-COPY .yarnrc.yml ./
 COPY packages/mds/package.json ./packages/mds/package.json
 COPY packages/mds-react/package.json ./packages/mds-react/package.json
+COPY yarn.lock ./
 COPY .yarn ./
+COPY .yarnrc.yml ./
+COPY .npmrc ./
 
 RUN yarn install --immutable
 
