@@ -84,11 +84,11 @@
 
   input:disabled {
     &~span {
-      border-color: var(--mds-color-secondary-light);
+      border-color: var(--mds-color-secondary-medium);
     }
 
     &~span::after {
-      background: var(--mds-color-secondary-light);
+      background: var(--mds-color-secondary-medium);
     }
 
     &~span::before,
@@ -97,7 +97,7 @@
     }
 
     &~.radio-label {
-      color: var(--mds-color-secondary-light);
+      color: var(--mds-color-secondary-medium);
     }
   }
 }

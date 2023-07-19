@@ -102,7 +102,7 @@
   }
 
   input:disabled~span {
-    border-color: var(--mds-color-secondary-light);
+    border-color: var(--mds-color-secondary-medium);
 
     &:hover::before,
     &:active::before {
@@ -112,10 +112,10 @@
 
   input:checked:disabled~span,
   input.indeterminate:disabled~span {
-    background-color: var(--mds-color-secondary-light);
+    background-color: var(--mds-color-secondary-medium);
   }
 
   input:disabled~.checkbox-label {
-    color: var(--mds-color-secondary-light);
+    color: var(--mds-color-secondary-medium);
   }
 }
