@@ -25,8 +25,11 @@ ARG GITHUB_TOKEN
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
 
+# This is used by the activepipebot
 RUN git config --global user.name ${GITHUB_USERNAME}
 RUN git config --global user.email ${GITHUB_EMAIL}
+# We also want to set the origin and checkout the main branch as we don't want a detached head
 RUN git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/moxiworks/mds.git
+RUN git checkout -B "$BUILDKITE_BRANCH" "$BUILDKITE_COMMIT"
 
 RUN yarn build
