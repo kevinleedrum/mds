@@ -152,6 +152,8 @@ steps:
           - GITHUB_USERNAME
           - GITHUB_EMAIL
           - GITHUB_TOKEN
+          - BUILDKITE_BRANCH
+          - BUILDKITE_COMMIT
     branches: "main"
 
   - wait
