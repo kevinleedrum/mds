@@ -1,6 +1,6 @@
 {
   "name": "@moxiworks/mds-react",
-  "version": "2.0.0",
+  "version": "0.2.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -15,7 +15,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@moxiworks/mds": "*"
+    "@moxiworks/mds": "0.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.13",
