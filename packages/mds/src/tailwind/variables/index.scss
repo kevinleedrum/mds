@@ -1,4 +1,28 @@
 :root {
+  /* New Color Palette (Introduced with Mercury) */
+  --mds-color-primary: #0073E6;
+  --mds-color-primary-light: #6BC4FF;
+  --mds-color-primary-hover: #4096EC;
+  --mds-color-primary-dark: #003B76;
+  --mds-color-primary-darkest: #14143A;
+  --mds-color-secondary: #597897;
+  --mds-color-secondary-medium: #9BB2C9;
+  --mds-color-secondary-light: #DFE5E8;
+  --mds-color-secondary-ultralight: #F3F5F6;
+  --mds-color-tertiary: #9C5AF2;
+  --mds-color-tertiary-light: #CE82FF;
+  --mds-color-tertiary-dark: #653496;
+  --mds-color-error: #FF4330;
+  --mds-color-error-hover: #FF7A70;
+  --mds-color-warning: #FE6300;
+  --mds-color-warning-hover: #FF9246;
+  --mds-color-success: #19A388;
+  --mds-color-success-hover: #1FCDAB;
+  --mds-color-text-light: #ffffff;
+  --mds-color-text-dark: #597897;
+  --mds-color-text-disabled: #597897;
+  --mds-color-white: #ffffff;
+
   /* Global Colors */
   --mds-bg-error: #fbd6de;
   --mds-bg-gray-inverted: #e8e8e8;
@@ -71,7 +95,8 @@
   --mds-bg-btn-text: transparent;
   --mds-ripple-btn-text: rgba(4, 87, 175, 0.16);
   --mds-text-btn-text-disabled: #a4a4a4;
-  --mds-text-btn-text-dropdown: #2d2d2d; /* Dropdown text buttons use a different text color */
+  --mds-text-btn-text-dropdown: #2d2d2d;
+  /* Dropdown text buttons use a different text color */
   --mds-text-btn-text: #0457af;
 
   /* Icon Buttons */
