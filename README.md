@@ -70,6 +70,21 @@ yarn workspace @moxiworks/mds {command}
 ```
 Notice that it's not the package directory name used, but instead the package.json name.
 
+### Publishing
+The packages are release using lerna, and abide by convention commits to determine the appropriate version to release to.
+
+For example:
+- A commit with `fix: Message` would bump from `1.0.0` to `1.0.1`
+- A commit with `feat: Message` would bump from `1.0.0` to `1.1.0`
+
+...etc
+
+If no conventional commit is found, it'll resolve to a `fix` upgrade (A Patch). 
+
+But **please** try and remember to use conventional commits
+
+Most merges will result in a release as we can't guarantee the result of all changes. For example a change to only `tsconfig.json` has the ability to impact the code output.
+
 ### Troubleshooting
 
 - If you encounter any issues during the setup process, please refer to the documentation or support channels for the specific packages or libraries within the monorepo.

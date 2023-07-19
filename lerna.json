@@ -3,5 +3,20 @@
   "version": "0.2.0",
   "packages": [
     "packages/*"
-  ]
+  ],
+  "npmClient": "yarn",
+  "tagVersionPrefix": "",
+  "conventionalCommits": true,
+  "yes": true,
+  "message": "chore(release): publish",
+  "changelog": false,
+  "ignoreChanges": [
+    "packages/mds/vuepress",
+    "**/*.spec.*"
+  ],
+  "command": {
+    "version": {
+      "push": false
+    }
+  }
 }
