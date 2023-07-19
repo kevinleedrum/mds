@@ -1,12 +1,13 @@
 .mx-circular-progress {
   svg {
-    color: var(--mds-text-circular-progress);
+    color: var(--mds-color-primary);
   }
 
   @keyframes spin {
     from {
       transform: rotate(0deg);
     }
+
     to {
       transform: rotate(359deg);
     }
@@ -17,10 +18,12 @@
       stroke-dasharray: 1px, 200px;
       stroke-dashoffset: 0;
     }
+
     50% {
       stroke-dasharray: 100px, 200px;
       stroke-dashoffset: -15px;
     }
+
     100% {
       stroke-dasharray: 100px, 200px;
       stroke-dashoffset: -125px;

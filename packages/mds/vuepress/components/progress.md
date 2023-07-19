@@ -103,10 +103,6 @@ If you only want to show a progress indicator when a task is taking longer to fi
 | `simulateProgressDuration` | `simulate-progress-duration` | If provided, the indicator will simulate progress toward 99% over the given duration (milliseconds).                              | `number` | `null`  |
 | `value`                    | `value`                      | The progress percentage from 0 to 100. If not provided (or set to `null`), an indeterminate progress indicator will be displayed. | `number` | `null`  |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#progress
-
 <script>
 export default {
   data() { 
