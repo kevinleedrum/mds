@@ -38,7 +38,7 @@ export class MxSearch {
   }
 
   get inputClass() {
-    let str = 'w-full pl-56 pr-16 rounded-lg outline-none border focus:border-2';
+    let str = 'w-full pl-56 pr-16 rounded-lg outline-none border';
     str += this.flat ? ' flat' : ' shadow-1';
     str += this.dense ? ' h-36 py-8 text-4' : ' h-48 py-12';
     return str;
@@ -64,7 +64,7 @@ export class MxSearch {
           {...this.dataAttributes}
           onInput={this.onInput.bind(this)}
         ></input>
-        <i class="absolute mds-search text-icon left-16 pointer-events-none"></i>
+        <i class="absolute mds-search left-16 pointer-events-none"></i>
         {this.showClear && (
           <button
             type="button"
@@ -73,7 +73,7 @@ export class MxSearch {
             data-testid="clear-button"
             onClick={this.onClear.bind(this)}
           >
-            <i class="mds-x text-icon"></i>
+            <i class="mds-x"></i>
           </button>
         )}
       </Host>
