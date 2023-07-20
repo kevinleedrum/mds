@@ -165,10 +165,6 @@ Remove the currently selected image. This will reset the file input, and it will
 
 If no image is selected, open the file dialog.
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#uploads
-
 <script>
 export default {
   data() {
