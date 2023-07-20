@@ -1,11 +1,11 @@
 .mx-pagination {
-  color: var(--mds-text-pagination);
+  color: var(--mds-color-secondary);
 
   & > .pagination-bg {
-    background: var(--mds-bg-pagination);
+    background: var(--mds-color-white);
   }
 
   & > .simple {
-    background: var(--mds-bg-pagination-simple);
+    background: var(--mds-color-secondary-ultralight);
   }
 }

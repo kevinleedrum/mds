@@ -117,10 +117,6 @@ preferred placement can be changed via the `placement` prop.
 | `tooltipClass` | `tooltip-class` | Additional classes to add to the tooltip.                                                                  | `string`                                                                                                                                                                                       | `undefined` |
 | `value`        | `value`         | The text to show inside the tooltip. Alternatively, use the `tooltip` slot.                                | `string`                                                                                                                                                                                       | `undefined` |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#tooltips
-
 <script>
 export default {
   data() {

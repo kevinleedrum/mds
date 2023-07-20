@@ -1,43 +1,42 @@
 .mx-tab {
   .active-tab-indicator {
-    background: var(--mds-bg-tab-indicator);
+    background: var(--mds-color-primary);
   }
 
   button {
-    color: var(--mds-text-tab);
-    --ripple-color: var(--mds-ripple-tab);
+    color: var(--mds-color-secondary);
+    --ripple-color: var(--mds-color-secondary-ultralight);
 
     &[aria-selected='true'] {
-      color: var(--mds-text-tab-selected);
+      color: var(--mds-color-primary);
     }
 
     &:not([aria-selected='true'], :active) i:not(.mx-badge i) {
-      color: var(--mds-text-tab-icon);
+      color: var(--mds-color-secondary);
       &.icon-only {
-        color: var(--mds-text-tab-icon-only);
+        color: var(--mds-color-secondary);
       }
     }
 
     &:focus-visible {
-      background: var(--mds-bg-tab-focus);
-      border-bottom-color: var(--mds-border-tab-focus);
+      background: var(--mds-color-secondary-light);
+      border-bottom-color: var(--mds-color-secondary-light);
       &[aria-selected='true'] {
-        background: var(--mds-bg-tab-selected-focus);
+        border-bottom-color: var(--mds-color-secondary-light);
       }
     }
 
     &:hover {
-      background: var(--mds-bg-tab-hover);
-      border-bottom-color: var(--mds-border-tab-hover);
+      background: var(--mds-color-secondary-ultralight);
+      border-bottom-color: var(--mds-color-secondary-light);
       &[aria-selected='true'] {
-        background: var(--mds-bg-tab-selected-hover);
+        border-bottom-color: var(--mds-color-secondary-light);
       }
     }
 
     &:active {
-      background: var(--mds-bg-tab-active);
-      color: var(--mds-text-tab-active);
-      border-bottom-color: var(--mds-border-tab-active);
+      color: var(--mds-color-secondary);
+      border-bottom-color: var(--mds-color-secondary-light);
     }
   }
 }

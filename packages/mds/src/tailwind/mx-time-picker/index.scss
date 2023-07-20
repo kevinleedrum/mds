@@ -1,49 +1,55 @@
 .mx-time-picker {
-  color: var(--mds-text-picker);
+  color: var(--mds-color-secondary);
 
   label {
-    color: var(--mds-text-picker-label);
+    color: var(--mds-color-secondary);
   }
 
-  & > .picker-wrapper {
-    color: var(--mds-text-picker);
-    background: var(--mds-bg-picker);
-    border-color: var(--mds-border-picker);
+  &>.picker-wrapper {
+    color: var(--mds-color-secondary);
+    background: var(--mds-color-white);
+    border-color: var(--mds-color-secondary);
 
     .icon-wrapper {
-      background: var(--mds-bg-picker);
+      background: var(--mds-color-white);
     }
 
     &:hover:not(.focused, .disabled) {
-      border-color: var(--mds-border-picker-hover);
+      border-color: var(--mds-color-primary);
     }
 
     &.focused {
-      border-color: var(--mds-border-picker-focus);
+      border-color: var(--mds-color-primary);
+      box-shadow: 0px 0px 5px 0px rgba(0, 115, 230, 0.50);
+
       input,
       input:invalid:not(:disabled) {
-        color: var(--mds-text-picker-focus);
+        color: var(--mds-color-secondary);
       }
     }
 
     &.disabled {
+
       input,
       .menu-button {
-        color: var(--mds-text-picker-disabled);
+        color: var(--mds-color-secondary-medium);
       }
     }
 
     label {
-      background: var(--mds-bg-picker);
+      background: var(--mds-color-white);
       transform-origin: 0 0;
       transition: transform 0.1s ease-out;
       --translate-y: -1.375rem;
+
       &.dense {
         --translate-y: -1rem;
       }
+
       &.floating {
         transform: translate3d(0, var(--translate-y), 0) scale(0.8);
       }
+
       @media (prefers-reduced-motion: reduce) {
         transition: none;
       }
@@ -51,8 +57,9 @@
 
     input {
       &:invalid:not(:disabled) {
-        color: var(--mds-text-picker-label);
+        color: var(--mds-color-secondary);
       }
+
       &::-webkit-calendar-picker-indicator,
       &::-webkit-clear-button {
         display: none;
@@ -62,21 +69,23 @@
   }
 
   &.error {
-    & > .picker-wrapper,
-    & > .picker-wrapper:hover:not(.focused) {
-      border-color: var(--mds-border-picker-error);
 
-      & > label,
+    &>.picker-wrapper,
+    &>.picker-wrapper:hover:not(.focused) {
+      border-color: var(--mds-color-error);
+
+      &>label,
       .menu-button {
-        color: var(--mds-text-picker-error);
+        color: var(--mds-color-error);
       }
     }
+
     .assistive-text {
-      color: var(--mds-text-picker-error);
+      color: var(--mds-color-error);
     }
   }
 
   .icon-button {
-    color: var(--mds-text-picker-icon);
+    color: var(--mds-color-secondary);
   }
 }

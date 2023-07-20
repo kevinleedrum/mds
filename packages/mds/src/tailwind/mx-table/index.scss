@@ -1,5 +1,5 @@
 .mx-table {
-  color: var(--mds-text-table);
+  color: var(--mds-color-secondary);
 
   [slot='search'] {
     @media (min-width: 640px) {
@@ -9,38 +9,42 @@
 
   [slot='filter'] {
     @apply max-w-full;
-    & > * {
+
+    &>* {
       @apply max-w-full;
     }
   }
 
-  .table-grid > *:not(.hidden) {
+  .table-grid>*:not(.hidden) {
     /* Only place table cell elements into the grid (not row elements). */
     @apply contents;
   }
 
-  .header-row > * {
-    background: var(--mds-bg-table-header);
-    border-color: var(--mds-border-table-header);
+  .header-row>* {
+    background: var(--mds-color-secondary-ultralight);
+    border-color: var(--mds-color-secondary-light);
     @apply border-b;
+
     &:first-child {
       @apply pl-24 rounded-tl;
     }
+
     &:last-child {
       @apply sm:pr-24 rounded-tr;
     }
   }
 
-  .mx-table-row > .table-row > *,
-  .first-column-wrapper > *,
-  .empty-state > *,
-  .table-footer > * {
-    background: var(--mds-bg-table);
+  .mx-table-row>.table-row>*,
+  .first-column-wrapper>*,
+  .empty-state>*,
+  .table-footer>* {
+    background: var(--mds-color-white);
   }
-  .mx-table-row > .table-row.subheader > *,
-  .table-row.subheader > .first-column-wrapper > * {
-    background: var(--mds-bg-table-subheader);
-    color: var(--mds-text-table-subheader);
+
+  .mx-table-row>.table-row.subheader>*,
+  .table-row.subheader>.first-column-wrapper>* {
+    background: var(--mds-color-secondary-light);
+    color: var(--mds-color-primary);
   }
 
   .empty-state,
@@ -53,55 +57,66 @@
         @apply rounded-br;
       }
     }
-    &:not(:last-child) > * {
+
+    &:not(:last-child)>* {
       @apply border-b;
     }
   }
 
   .mx-table-row {
-    & > .table-row {
-      border-color: var(--mds-border-table-cell);
-      will-change: max-height; /* Makes collapse/expand smoother. */
+    &>.table-row {
+      border-color: var(--mds-color-secondary-light);
+      will-change: max-height;
+      /* Makes collapse/expand smoother. */
 
-      & > :last-child:not(.pr-0, .p-0) {
+      &> :last-child:not(.pr-0, .p-0) {
         @apply sm:pr-24;
       }
 
-      & > * > .mx-table-row {
+      &>*>.mx-table-row {
         &:first-of-type {
           @apply border-t sm:border-t-0;
         }
+
         &:last-of-type {
           @apply border-b-0;
         }
       }
-      &:focus-within > *,
-      &:focus-within > .first-column-wrapper > *:not(.table-row-indent) {
-        background: var(--mds-bg-table-focus);
+
+      &:focus-within>*,
+      &:focus-within>.first-column-wrapper>*:not(.table-row-indent) {
+        background: var(--mds-color-secondary-ultralight);
       }
-      .first-column-wrapper > :nth-child(2):not(.mx-table-cell),
-      .first-column-wrapper > :nth-child(2).mx-table-cell > div {
+
+      .first-column-wrapper> :nth-child(2):not(.mx-table-cell),
+      .first-column-wrapper> :nth-child(2).mx-table-cell>div {
         @apply pl-24;
       }
+
       .mobile-row-chevron,
       .subheader-chevron {
-        color: var(--mds-text-table-row-chevron);
+        color: var(--mds-color-primary);
         transition: transform 0.15s ease;
       }
+
       &.mobile-collapsed {
+
         .mx-table-cell:not(.exposed-cell),
         .action-cell {
           @apply sr-only;
         }
       }
+
       &.checkable-row .exposed-cell {
         @apply pl-16;
       }
+
       .table-row-indent {
-        background: var(--mds-bg-table-indent);
+        background: var(--mds-color-secondary-ultralight);
       }
+
       .drag-handle {
-        color: var(--mds-text-table-drag-handle);
+        color: var(--mds-color-secondary-medium);
       }
     }
 
@@ -115,25 +130,29 @@
         @apply sm:rounded-br;
       }
     }
-    &:not(.last-row) > .table-row {
+
+    &:not(.last-row)>.table-row {
       @apply border-b sm:border-b-0;
     }
-    &:not(.last-row) > .table-row > * {
+
+    &:not(.last-row)>.table-row>* {
       @apply sm:border-b;
     }
   }
 
   @media (hover: hover) {
-    &.hoverable .hovered-row:not(.subheader) > *,
-    &.hoverable .hovered-row:not(.subheader) > .first-column-wrapper > *:not(.table-row-indent) {
-      background: var(--mds-bg-table-hover);
+
+    &.hoverable .hovered-row:not(.subheader)>*,
+    &.hoverable .hovered-row:not(.subheader)>.first-column-wrapper>*:not(.table-row-indent) {
+      background: var(--mds-color-secondary-ultralight);
     }
   }
 }
 
-.mx-table-cell > div {
+.mx-table-cell>div {
   @apply pl-24 sm:pl-16 p-16;
 }
-.subheader > .first-column-wrapper > .mx-table-cell > div {
+
+.subheader>.first-column-wrapper>.mx-table-cell>div {
   @apply pl-24 sm:pl-12 p-12;
 }

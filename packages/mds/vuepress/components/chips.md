@@ -246,10 +246,6 @@ Action Chips trigger contextual actions much like [Buttons](/components/buttons)
 | --------- | --------------------------------------- | ------------------ |
 | `mxInput` | Emits the updated value as event.detail | `CustomEvent<any>` |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#chips
-
 <script>
 export default {
   data() {

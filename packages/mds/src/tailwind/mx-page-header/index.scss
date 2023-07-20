@@ -1,6 +1,6 @@
 .mx-page-header {
-  background-color: var(--mds-bg-page-header);
-  color: var(--mds-text-page-header);
+  background-color: var(--mds-color-white);
+  color: var(--mds-color-secondary);
 
   [slot='buttons'] {
     @apply py-1 flex space-x-8 md:space-x-24 md:justify-end md:flex-row-reverse md:space-x-reverse items-center max-w-full;
