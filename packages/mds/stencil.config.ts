@@ -1,7 +1,7 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { inlineSvg } from 'stencil-inline-svg';
-import { OutputTargetDist, OutputTargetDistCustomElementsBundle, OutputTargetHydrate, OutputTargetWww } from "@stencil/core/internal"
+import { OutputTargetDist, OutputTargetDistCustomElements, OutputTargetHydrate, OutputTargetWww } from "@stencil/core/internal"
 import { reactOutputTarget } from "@stencil/react-output-target"
 
 // Outputs  loader
@@ -25,8 +25,8 @@ export const react = reactOutputTarget({
 })
 
 // Outputs dist/components
-export const distCustomElements: OutputTargetDistCustomElementsBundle = {
-  type: 'dist-custom-elements-bundle',
+export const distCustomElements: OutputTargetDistCustomElements = {
+  type: 'dist-custom-elements',
 }
 
 // Identical to the `dist/mds-component` output, just with a module input

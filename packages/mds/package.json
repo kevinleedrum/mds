@@ -3,20 +3,13 @@
   "version": "0.3.0",
   "description": "Moxiworks Custom Component System",
   "main": "dist/index.cjs.js",
-  "module": "dist/custom-elements/index.js",
+  "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
-  "types": "dist/custom-elements/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "dist/custom-elements/index.d.ts": [
-        "dist/custom-elements/index.d.ts"
-      ]
-    }
-  },
-  "collection": "dist/collection/collection-manifest.json",
-  "collection:main": "dist/collection/index.js",
+  "types": "dist/types/components.d.ts",
   "unpkg": "dist/mds-components/mds-components.esm.js",
+  "collection:main": "dist/collection/index.js",
+  "collection": "dist/collection/collection-manifest.json",
   "exports": {
     ".": "./dist/index.cjs.js",
     "./dist/styles/mds-core.css": "./dist/styles/mds-core.css",
@@ -83,7 +76,7 @@
   "dependencies": {
     "@juggle/resize-observer": "^3.3.1",
     "@popperjs/core": "^2.9.2",
-    "@stencil/core": "^2.0.1",
+    "@stencil/core": "^4.0.1",
     "chart.js": "^3.6.2",
     "cssnano": "^6.0.1",
     "js-datepicker": "^5.18.0",
@@ -99,8 +92,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@stencil/react-output-target": "^0.3.1",
-    "@stencil/sass": "^1.4.1",
+    "@stencil/react-output-target": "^0.5.3",
+    "@stencil/sass": "^3.0.4",
     "@types/jest": "^26.0.22",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",

@@ -1885,9 +1885,9 @@ __metadata:
   dependencies:
     "@juggle/resize-observer": ^3.3.1
     "@popperjs/core": ^2.9.2
-    "@stencil/core": ^2.0.1
-    "@stencil/react-output-target": ^0.3.1
-    "@stencil/sass": ^1.4.1
+    "@stencil/core": ^4.0.1
+    "@stencil/react-output-target": ^0.5.3
+    "@stencil/sass": ^3.0.4
     "@types/jest": ^26.0.22
     "@typescript-eslint/eslint-plugin": ^5.27.1
     "@typescript-eslint/parser": ^5.27.1
@@ -2368,30 +2368,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stencil/core@npm:^2.0.1":
-  version: 2.22.3
-  resolution: "@stencil/core@npm:2.22.3"
+"@stencil/core@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@stencil/core@npm:4.0.1"
   bin:
     stencil: bin/stencil
-  checksum: b43fd0c0e10c8f6831821635de650f49c8d94eab75aa8e9214b723511cfd1f90fbf1ad33a79b4d2f165ef9ca6bee02839aac7b0a234ec6082b5959f98069f397
+  checksum: 68b3dc9d455c53e4c483d7be8964145835b103b63cf552a745072971cf9c6c08f72278427892d4871cfa508b287ed435c564be562dbdfc8438d0162d5595ff02
   languageName: node
   linkType: hard
 
-"@stencil/react-output-target@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "@stencil/react-output-target@npm:0.3.1"
+"@stencil/react-output-target@npm:^0.5.3":
+  version: 0.5.3
+  resolution: "@stencil/react-output-target@npm:0.5.3"
   peerDependencies:
-    "@stencil/core": ^2.9.0
-  checksum: fe311ba81f79119598524ceedf7125ff77bba22999b7394de774231262e5b7be28d5c46f6e05df1cde8947e24b03ccac797aa725738aa7bb6912536277b61d79
+    "@stencil/core": ">=2.0.0 || >=3 || >= 4.0.0-beta.0 || >= 4.0.0"
+  checksum: ce762ecd37fe8b04b4193402f8999b44291d18af59e488ab4571528473aec9cac60c508df5db68298c78a493779e4781433dc2390ce7c34039b2a7a2455bd7db
   languageName: node
   linkType: hard
 
-"@stencil/sass@npm:^1.4.1":
-  version: 1.5.2
-  resolution: "@stencil/sass@npm:1.5.2"
+"@stencil/sass@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@stencil/sass@npm:3.0.4"
   peerDependencies:
-    "@stencil/core": ">=1.0.2"
-  checksum: fc4250eb31351f24c4f59829be2f8f57b81a4c6b5af395f8325e0eb13fe749334c6fbda7edfa250831d50419ba8c111b8fc31b81e2f176d251648dffbdf2cb49
+    "@stencil/core": ">=2.0.0 || >=3.0.0-beta.0 || >= 4.0.0-beta.0 || >= 4.0.0"
+  checksum: e0453126a4a89c12d3c88cfbfa308b2169678cd8a278a5a0a4b0cee6e531d32ba785a0f5adf791edc15f3b2f7af425172f7be4b03cc636428d273c4836dcc025
   languageName: node
   linkType: hard
 
