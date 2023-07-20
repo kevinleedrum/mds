@@ -24,10 +24,10 @@
     border-color: var(--mds-border-table-header);
     @apply border-b;
     &:first-child {
-      @apply pl-24 rounded-tl-2xl;
+      @apply pl-24 rounded-tl;
     }
     &:last-child {
-      @apply sm:pr-24 rounded-tr-2xl;
+      @apply sm:pr-24 rounded-tr;
     }
   }
 
@@ -47,10 +47,10 @@
   .table-footer {
     &:last-child {
       & > :first-child {
-        @apply rounded-bl-2xl;
+        @apply rounded-bl;
       }
       & > :last-child {
-        @apply rounded-br-2xl;
+        @apply rounded-br;
       }
     }
     &:not(:last-child) > * {
@@ -106,13 +106,13 @@
     }
 
     &.last-row > .table-row {
-      @apply rounded-b-2xl;
+      @apply rounded-b;
 
       & > :first-child {
-        @apply sm:rounded-bl-2xl;
+        @apply sm:rounded-bl;
       }
       & > :last-child {
-        @apply sm:rounded-br-2xl;
+        @apply sm:rounded-br;
       }
     }
     &:not(.last-row) > .table-row {
