@@ -174,9 +174,9 @@ export class MxModal {
 
   get modalClass(): string {
     let str = 'modal flex flex-col shadow-9 relative overflow-hidden';
-    if (this.fromLeft) str += ' rounded-r-xl';
-    else if (this.fromRight) str += ' rounded-l-xl';
-    else str += ' sm:rounded-t-xl md:rounded-xl w-full md:w-auto';
+    if (this.fromLeft) str += ' rounded-r';
+    else if (this.fromRight) str += ' rounded-l';
+    else str += ' sm:rounded-t md:rounded w-full md:w-auto';
     return str;
   }
 
@@ -258,7 +258,7 @@ export class MxModal {
             {this.hasCard && (
               <div>
                 <div
-                  class="bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded-2xl"
+                  class="bg-modal-card min-h-full px-24 sm:px-40 py-16 sm:py-24 rounded"
                   data-testid="modal-card"
                 >
                   <slot name="card"></slot>

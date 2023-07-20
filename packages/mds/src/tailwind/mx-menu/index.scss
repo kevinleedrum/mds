@@ -1,5 +1,5 @@
 .mx-menu > div {
-  background: var(--mds-bg-menu);
+  background: var(--mds-color-white);
 
   .scroll-wrapper:not(:empty) {
     @apply py-8;
@@ -8,21 +8,21 @@
 
   ::-webkit-scrollbar {
     width: 12px;
-    background: var(--mds-bg-menu);
+    background: var(--mds-color-white);
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 0.5rem;
-    border: 0.25rem solid var(--mds-bg-menu);
-    background: var(--mds-bg-menu-scroll-thumb);
+    border: 0.25rem solid var(--mds-color-white);
+    background: var(--mds-color-secondary-ultralight);
   }
 
   hr {
     @apply h-8 border-0;
-    border-bottom: 1px solid var(--mds-border-menu-divider);
+    border-bottom: 1px solid var(--mds-color-secondary-ultralight);
   }
 
   p[role='heading'] {
     @apply flex items-center h-48 sm:h-32 m-0 px-12 uppercase subtitle5;
-    color: var(--mds-text-menu-section-label);
+    color: var(--mds-color-secondary);
   }
 }

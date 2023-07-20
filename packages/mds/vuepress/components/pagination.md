@@ -82,10 +82,6 @@ An `mxPageChange` event is emitted whenever the page or rows-per-page are change
 | -------------- | ----------- | ----------------------------------------------------- |
 | `mxPageChange` |             | `CustomEvent<{ rowsPerPage: number; page: number; }>` |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#pagination
-
 <script>
 export default {
   data() {

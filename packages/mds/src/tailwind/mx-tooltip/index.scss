@@ -1,8 +1,9 @@
 .mx-tooltip {
-  color: var(--mds-text-tooltip);
-  background: var(--mds-bg-tooltip);
+  color: var(--mds-color-white);
+  background: var(--mds-color-secondary);
+
   &.inverted {
-    color: var(--mds-text-tooltip-inverted);
-    background: var(--mds-bg-tooltip-inverted);
+    color: var(--mds-color-secondary);
+    background: var(--mds-color-secondary-ultralight);
   }
 }

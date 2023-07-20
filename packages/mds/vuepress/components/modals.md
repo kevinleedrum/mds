@@ -217,10 +217,6 @@ If `fromLeft` or `fromRight` are set, then the modal will appear fixed to one si
 | `previousPageTitle`   | `previous-page-title`    | The text to display for the previous page link                                                                                                                | `string`         | `'Back'`    |
 | `previousPageUrl`     | `previous-page-url`      | The URL for the previous page link                                                                                                                            | `string`         | `''`        |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#modals
-
 <script>
 export default {
   data() {

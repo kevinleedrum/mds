@@ -132,10 +132,6 @@ for the `value` prop (a variable containing the active tab index), and each `mx-
 | `index`  | `index`   | The index of the tab that corresponds to this content | `number` | `undefined` |
 | `value`  | `value`   | The index of the selected tab                         | `number` | `undefined` |
 
-## CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#tabs
-
 <script>
 export default {
   data() {

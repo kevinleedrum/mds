@@ -1,15 +1,19 @@
 .mx-image-upload {
-  color: var(--mds-text-image-upload);
+  color: var(--mds-color-secondary);
 
   .dropzone-wrapper,
   .uploading-progress {
-    background: var(--mds-bg-image-upload);
+    background: var(--mds-color-secondary-ultralight);
+  }
+
+  .dropzone-wrapper {
+    border: 1px dashed var(--mds-color-secondary);
   }
 
   .dropzone {
     &:hover,
     &.drag-over {
-      background: var(--mds-bg-image-upload-hover);
+      background: var(--mds-color-white);
     }
 
     i.dropzone-icon {
@@ -17,9 +21,9 @@
     }
 
     svg.dashed-border {
-      stroke: var(--mds-border-image-upload);
+      stroke: var(--mds-color-secondary);
       &.upload-error {
-        color: var(--mds-text-image-upload-error);
+        color: var(--mds-color-error);
       }
     }
 
@@ -29,10 +33,10 @@
   }
 
   .upload-success {
-    color: var(--mds-text-image-upload-success);
+    color: var(--mds-color-success);
   }
 
   .upload-error {
-    color: var(--mds-text-image-upload-error);
+    color: var(--mds-color-error);
   }
 }

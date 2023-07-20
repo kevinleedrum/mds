@@ -1,38 +1,38 @@
 .mx-menu-item {
   & > div {
     min-width: 8rem; /* 128px */
-    background: var(--mds-bg-menu-item);
-    color: var(--mds-text-menu-item);
+    background: transparent;
+    color: var(--mds-color-secondary);
 
     .item-label {
-      color: var(--mds-text-menu-item-label);
+      color: var(--mds-color-secondary-medium);
     }
 
     .item-subtitle {
-      color: var(--mds-text-menu-item-subtitle);
+      color: var(--mds-color-secondary);
     }
 
     .check {
-      color: var(--mds-text-menu-item-check);
+      color: var(--mds-color-primary);
     }
 
     &:focus,
     &:focus-within {
-      background: var(--mds-bg-menu-item-focus);
+      background: var(--mds-color-secondary-ultralight);
     }
 
     &[aria-disabled='true'] {
-      color: var(--mds-text-menu-item-disabled);
+      color: var(--mds-color-secondary-medium);
     }
   }
 
   &.has-submenu:focus-within {
     /* Add focused background to menu item when its submenu is focused */
-    background: var(--mds-bg-menu-item-focus);
+    background: var(--mds-color-secondary-ultralight);
   }
 }
 
 .mx-menu.autocomplete-only:not(:focus-within) .mx-menu-item:not([aria-disabled='true']):first-child > div {
   /* Add focused background to first enabled menu item for autocomplete-only menus */
-  background: var(--mds-bg-menu-item-focus);
+  background: var(--mds-color-secondary-ultralight);
 }

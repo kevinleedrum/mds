@@ -135,7 +135,7 @@ export class MxPagination {
   render() {
     return (
       <Host class="mx-pagination relative block text-4 whitespace-nowrap select-none">
-        {!this.simple && <div class="pagination-bg absolute top-0 left-0 w-full h-56 rounded-b-2xl"></div>}
+        {!this.simple && <div class="pagination-bg absolute top-0 left-0 w-full h-56 rounded-b"></div>}
         {this.simple ? (
           // Simple pagination
           <div class="simple flex items-center justify-center h-48">

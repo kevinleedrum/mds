@@ -254,9 +254,9 @@ export class MxDatePicker {
   }
 
   get pickerWrapperClass() {
-    let str = 'picker-wrapper w-320 flex items-center relative rounded-lg';
+    let str = 'picker-wrapper w-320 flex items-center relative rounded';
     str += this.dense ? ' h-36' : ' h-48';
-    str += this.error || this.isFocused ? ' border-2' : ' border';
+    str += ' border';
     if (this.disabled) str += ' disabled';
     if (this.isFocused) str += ' focused';
     return str;
