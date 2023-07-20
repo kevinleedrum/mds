@@ -38,7 +38,7 @@ export class MxSearch {
   }
 
   get inputClass() {
-    let str = 'w-full pl-56 pr-16 rounded-lg outline-none border';
+    let str = 'w-full pl-56 pr-16 rounded outline-none border';
     str += this.flat ? ' flat' : ' shadow-1';
     str += this.dense ? ' h-36 py-8 text-4' : ' h-48 py-12';
     return str;
