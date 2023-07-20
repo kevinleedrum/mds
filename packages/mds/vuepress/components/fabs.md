@@ -36,7 +36,3 @@ Floating Action Buttons represent primary, or occasionally secondary, actions on
 | `icon`        | `icon`          | Class name of icon                                     | `string`  | `undefined` |
 | `secondary`   | `secondary`     | Style as a secondary action                            | `boolean` | `false`     |
 | `value`       | `value`         |                                                        | `string`  | `undefined` |
-
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#fabs
