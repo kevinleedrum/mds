@@ -6,6 +6,10 @@
     background: var(--mds-bg-image-upload);
   }
 
+  .dropzone-wrapper {
+    border: 1px dashed var(--mds-color-secondary);
+  }
+
   .dropzone {
     &:hover,
     &.drag-over {

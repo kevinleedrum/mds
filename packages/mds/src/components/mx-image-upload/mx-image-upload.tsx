@@ -210,10 +210,6 @@ export class MxImageUpload {
                 </div>
               </slot>
             </div>
-            {/* Dashed Border SVG (CSS borders do not allow custom dash patterns) */}
-            <svg class="dashed-border absolute inset-0 pointer-events-none" width="100%" height="100%">
-              <rect width="100%" height="100%" fill="none" rx="16" ry="16" stroke-width="1" stroke-dasharray="4,8" />
-            </svg>
             <input
               ref={el => (this.fileInput = el)}
               id={this.inputId}
