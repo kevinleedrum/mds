@@ -22,6 +22,7 @@
   --mds-color-text-dark: #597897;
   --mds-color-text-disabled: #597897;
   --mds-color-white: #ffffff;
+  --mds-color-transparent: transparent;
   --mds-color-modalbg: rgba(0,32,64,0.6);
 
   /* Global Colors */
@@ -55,13 +56,5 @@
   --mds-bg-page-header: #fff;
   --mds-text-page-header: #4e4e4e;
   /* #endregion page-headers */
-
-  /* #region banners */
-  /* Banners */
-  --mds-bg-banner-error: #f5d7de;
-  --mds-bg-banner: #e1f5ff;
-  --mds-text-banner-error: #ff0c3e;
-  --mds-text-banner: #333;
-  /* #endregion banners */
 
 }

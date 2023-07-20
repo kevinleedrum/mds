@@ -1,13 +1,10 @@
 .mx-banner {
   & > div {
-    background: var(--mds-bg-banner);
-    color: var(--mds-text-banner);
+    background: var(--mds-color-tertiary);
+    color: var(--mds-color-white);
   }
   &.is-error > div {
-    background: var(--mds-bg-banner-error);
-    [slot='actions'] button {
-      color: var(--mds-text-banner-error);
-    }
+    background: var(--mds-color-warning);
   }
 
   [slot='actions'] > * {
