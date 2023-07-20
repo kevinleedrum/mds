@@ -148,7 +148,7 @@ export class MxInput implements IMxInputProps {
   }
 
   get containerClass() {
-    let str = 'mx-input-wrapper flex items-center relative rounded-lg';
+    let str = 'mx-input-wrapper flex items-center relative rounded';
     if (!this.textarea) {
       str += this.dense ? ' h-36' : ' h-48';
     }
