@@ -163,7 +163,7 @@ export class MxDialog {
   }
 
   get modalClassNames(): string {
-    let str = 'modal w-320 m-16 flex flex-col rounded-lg shadow-4 relative overflow-hidden';
+    let str = 'modal w-320 m-16 flex flex-col rounded shadow-4 relative overflow-hidden';
     if (this.isSimple) str += ' w-320';
     if (this.modalClass) str += ' ' + this.modalClass;
     return str;

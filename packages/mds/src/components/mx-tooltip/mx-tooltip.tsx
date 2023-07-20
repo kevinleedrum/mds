@@ -79,9 +79,9 @@ export class MxTooltip {
     if (!this.isOpen) str += ' hidden';
     if (this.inverted) str += ' inverted';
     if (this.extended) {
-      str += ' p-16 rounded-lg shadow-4';
+      str += ' p-16 rounded shadow-4';
     } else {
-      str += ' px-12 py-4 rounded-2xl';
+      str += ' px-12 py-4 rounded';
     }
     if (this.tooltipClass) str += ' ' + this.tooltipClass;
     return str;

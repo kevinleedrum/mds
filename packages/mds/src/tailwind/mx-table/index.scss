@@ -26,11 +26,11 @@
     @apply border-b;
 
     &:first-child {
-      @apply pl-24 rounded-tl-2xl;
+      @apply pl-24 rounded-tl;
     }
 
     &:last-child {
-      @apply sm:pr-24 rounded-tr-2xl;
+      @apply sm:pr-24 rounded-tr;
     }
   }
 
@@ -50,12 +50,11 @@
   .empty-state,
   .table-footer {
     &:last-child {
-      &> :first-child {
-        @apply rounded-bl-2xl;
+      & > :first-child {
+        @apply rounded-bl;
       }
-
-      &> :last-child {
-        @apply rounded-br-2xl;
+      & > :last-child {
+        @apply rounded-br;
       }
     }
 
@@ -121,15 +120,14 @@
       }
     }
 
-    &.last-row>.table-row {
-      @apply rounded-b-2xl;
+    &.last-row > .table-row {
+      @apply rounded-b;
 
-      &> :first-child {
-        @apply sm:rounded-bl-2xl;
+      & > :first-child {
+        @apply sm:rounded-bl;
       }
-
-      &> :last-child {
-        @apply sm:rounded-br-2xl;
+      & > :last-child {
+        @apply sm:rounded-br;
       }
     }
 
