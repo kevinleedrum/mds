@@ -22,6 +22,7 @@
   --mds-color-text-dark: #597897;
   --mds-color-text-disabled: #597897;
   --mds-color-white: #ffffff;
+  --mds-color-modalbg: rgba(0,32,64,0.6);
 
   /* Global Colors */
   --mds-bg-error: #fbd6de;
@@ -148,24 +149,6 @@
   --mds-text-banner-error: #ff0c3e;
   --mds-text-banner: #333;
   /* #endregion banners */
-
-  /* #region dialogs */
-  /* Dialogs */
-  --mds-bg-dialog-backdrop: rgba(0, 0, 0, 0.5);
-  --mds-bg-dialog-scroll-thumb: #d4d4d4;
-  --mds-bg-dialog: #f8f8f8;
-  --mds-text-dialog: #333;
-  /* #endregion dialogs */
-
-  /* #region modals */
-  /* Modals */
-  --mds-bg-modal-backdrop: rgba(0, 0, 0, 0.5);
-  --mds-bg-modal-card: #fff;
-  --mds-bg-modal-footer: #fefefe;
-  --mds-bg-modal-header: #fefefe;
-  --mds-bg-modal: #f8f8f8;
-  --mds-text-modal: #333;
-  /* #endregion modals */
 
   /* #region uploads */
   /* Image Uploads */

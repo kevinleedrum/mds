@@ -1,28 +1,28 @@
 .mx-modal {
-  color: var(--mds-text-modal);
+  color: var(--mds-color-secondary);
 
   .modal {
     min-width: 300px;
   }
 
   .bg-modal-backdrop {
-    background: var(--mds-bg-modal-backdrop);
+    background: var(--mds-color-modalbg);
   }
 
   .bg-modal-header {
-    background: var(--mds-bg-modal-header);
+    background: var(--mds-color-secondary-ultralight);
   }
 
   .bg-modal-content {
-    background: var(--mds-bg-modal);
+    background: var(--mds-color-secondary-ultralight);
   }
 
   .bg-modal-card {
-    background: var(--mds-bg-modal-card);
+    background: var(--mds-color-white);
   }
 
   .bg-modal-footer {
-    background: var(--mds-bg-modal-footer);
+    background: var(--mds-color-secondary-ultralight);
   }
 
   &.modal-medium > .modal {
