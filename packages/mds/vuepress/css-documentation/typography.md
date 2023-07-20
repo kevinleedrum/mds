@@ -4,33 +4,18 @@ Documentation and examples around typography including headings, body text, list
 
 ## Headings
 
-The headings in the MoxiWorks Design System comprise the `h1` through `h6` elements, as well as utility classes `text-h1` through `text-h6`. The `h1` can become extra large with an `xl` utility class, and `h3` through `h6` can be given extra weight with an `emphasis` class.
+The headings in the MoxiWorks Design System comprise the `h1` through `h6` elements, as well as utility classes `text-h1` through `text-h3`. The `h3` can be given extra weight with an `emphasis` class.
 
 | Selectors                           | Size            | Letter-Spacing | Line-Height   | Weight    |
 | ----------------------------------- | --------------- | -------------- | ------------- | --------- |
-| `h1.xl` / `.text-h1.xl`             | 96px (6rem)     | -1.5px         | 7.5rem        | Bold      |
-| `h1` / `.text-h1`                   | 56px (3.5rem)   | -0.5px         | 4.5rem        | Bold      |
-| `h2` / `.text-h2`                   | 48px (3rem)     | 0              | 64px (4rem)   | SemiBold  |
-| `h3.emphasis` / `.text-h3.emphasis` | 40px (2.5rem)   | 0.25px         | 56px (3.5rem) | Bold      |
-| `h3` / `.text-h3`                   | 40px (2.5rem)   | 0.25px         | 56px (3.5rem) | Regular   |
-| `h4.emphasis` / `.text-h4.emphasis` | 36px (2.25rem)  | 0.25px         | 56px (3.5rem) | SemiBold  |
-| `h4` / `.text-h4`                   | 36px (2.25rem)  | 0.25px         | 56px (3.5rem) | Regular   |
-| `h5.emphasis` / `.text-h5.emphasis` | 24px (1.5rem)   | 0              | 40px (2.5rem) | ExtraBold |
-| `h5` / `.text-h5`                   | 24px (1.5rem)   | 0              | 40px (2.5rem) | Regular   |
-| `h6.emphasis` / `.text-h6.emphasis` | 18px (1.125rem) | 0.25px         | 24px (1.5rem) | Bold      |
-| `h6` / `.text-h6`                   | 18px (1.125rem) | 0.25px         | 24px (1.5rem) | Regular   |
+| `h1` / `.text-h1`                   | 40px (2.5rem)   | 0              | 48px (3rem)   | 300       |
+| `h2` / `.text-h2`                   | 24px (1.5rem)   | 0              | 24px (1.5rem) | 400       |
+| `h3` / `.text-h3`                   | 16px (1.25rem)  | 0              | 20px (1.25rem)| 500       |
+| `h3.emphasis` / `.text-h3.emphasis` | 16px (1.25rem)  | 0              | 20px (1.25rem)| 700       |
 
 ### Examples
 
 <div class="mds">
-  <h1 class="xl">This is XL H1.</h1>
-  <p class="text-h1 xl">This is styled as an XL H1.</p>
-
-```html
-<h1 class="xl">This is an XL H1.</h1>
-<p class="text-h1 xl">This is styled as an XL H1.</p>
-```
-
   <h1>This is an H1.</h1>
   <p class="text-h1">This is styled as an H1.</p>
 
@@ -47,6 +32,14 @@ The headings in the MoxiWorks Design System comprise the `h1` through `h6` eleme
 <h2 class="text-h2">This is styled as an H2.</h2>
 ```
 
+  <h3>This is an H3.</h3>
+  <p class="text-h3">This is styled as an H3.</p>
+
+```html
+<h3>This is an H3.</h3>
+<p class="text-h3">This is styled as an H3.</p>
+```
+
   <h3 class="emphasis">This is an H3 with emphasis.</h3>
   <p class="text-h3 emphasis">This is styled as an H3 with emphasis.</p>
 
@@ -54,68 +47,11 @@ The headings in the MoxiWorks Design System comprise the `h1` through `h6` eleme
 <h3 class="emphasis">This is an H3 with emphasis.</h3>
 <p class="text-h3 emphasis">This is styled as an H3 with emphasis.</p>
 ```
-
-  <h3>This is an H3 without emphasis.</h3>
-  <p class="text-h3">This is styled as an H3 without emphasis.</p>
-
-```html
-<h3>This is an H3 without emphasis.</h3>
-<p class="text-h3">This is styled as an H3 without emphasis.</p>
-```
-
-  <h4 class="emphasis">This is an H4 with emphasis.</h4>
-  <p class="text-h4 emphasis">This is styled as an H4 with emphasis.</p>
-
-```html
-<h4 class="emphasis">This is an H4 with emphasis.</h4>
-<p class="text-h4 emphasis">This is styled as an H4 with emphasis.</p>
-```
-
-  <h4>This is an H4 without emphasis.</h4>
-  <p class="text-h4">This is styled as an H4 without emphasis.</p>
-
-```html
-<h4>This is an H4 without emphasis.</h4>
-<p class="text-h4">This is styled an H4 without emphasis.</p>
-```
-
-  <h5 class="emphasis">This is an H5 with emphasis.</h5>
-  <p class="text-h5 emphasis">This is styled as an H5 with emphasis.</p>
-
-```html
-<h5 class="emphasis">This is an H5 with emphasis.</h5>
-<p class="text-h5 emphasis">This is styled as an H5 with emphasis.</p>
-```
-
-  <h5>This is an H5 without emphasis.</h5>
-  <p class="text-h5">This is styled as an H5 without emphasis.</p>
-
-```html
-<h5>This is an H5 without emphasis.</h5>
-<p class="text-h5">This is styled as an H5 without emphasis.</p>
-```
-
-  <h6 class="emphasis">This is an H6 with emphasis.</h6>
-  <p class="text-h6 emphasis">This is styled as an H6 with emphasis.</p>
-
-```html
-<h6 class="emphasis">This is an H6 with emphasis.</h6>
-<p class="text-h6 emphasis">This is styled as an H6 with emphasis.</p>
-```
-
-  <h6>This is an H6 without emphasis.</h6>
-  <p class="text-h6">This is styled as an H6 without emphasis.</p>
-
-```html
-<h6>This is an H6 without emphasis.</h6>
-<p class="text-h6">This is styled as an H6 without emphasis.</p>
-```
-
 </div>
 
 ## Body Fonts & Font Size
 
-In the Moxi Design System, the default body font size is **16px**. To achieve the base font simply add the `mds` class to your body tag or a containing div you desire the implementation.
+In the Moxi Design System, the default body font size is **14px**. To achieve the base font simply add the `mds` class to your body tag or a containing div you desire the implementation.
 
 ```html
 <body class="mds"></body>
@@ -123,22 +59,28 @@ In the Moxi Design System, the default body font size is **16px**. To achieve th
 
 There are five utility classes for setting the body font size.
 
-| Class           | Size            | Line-Height    | Letter-Spacing |
-| --------------- | --------------- | -------------- | -------------- |
-| `text-1`        | 20px (1.25rem)  | 24px (1.5rem)  | 0.5px          |
-| `text-2`        | 18px (1.125rem) | 24px (1.5rem)  | 0.5px          |
-| `text-3` (base) | 16px (1rem)     | 24px (1.5rem)  | 0.15px         |
-| `text-4`        | 14px (0.875rem) | 20px (1.25rem) | 0.25px         |
-| `text-icon`     | 24px (1.5rem)   | inherit        | inherit        |
+| Class            | Size            | Line-Height    | Letter-Spacing |
+| ---------------- | --------------- | -------------- | -------------- |
+| _body (default)_ | 14px (0.875rem) | 24px (1.5rem)  | 0              |
+| `text-small`     | 12px (0.75rem)  | 14px (0.875rem)| 0              |
+| `text-tooltip`   | 11px (0.75rem)  | 14px (0.875rem)| 0.1px          |
+| `text-1`         | 20px (1.25rem)  | 24px (1.5rem)  | 0.5px          |
+| `text-2`         | 18px (1.125rem) | 24px (1.5rem)  | 0.5px          |
+| `text-3`         | 16px (1rem)     | 24px (1.5rem)  | 0.15px         |
+| `text-4`         | 14px (0.875rem) | 20px (1.25rem) | 0.25px         |
+| `text-icon`      | 24px (1.5rem)   | inherit        | inherit        |
 
 ### Examples
 
 <!-- #region font-size -->
 <div class="mds">
   <div class="bg-white p-16 mt-16 border rounded-lg">
+    <p class="my-6">This is default body text.</p>
+    <p class="my-6 text-small">This is small.</p>
+    <p class="my-6 text-tooltip">This is tooltip text.</p>
     <p class="my-6 text-1">This is Body 1.</p>
     <p class="my-6 text-2">This is Body 2.</p>
-    <p class="my-6 text-3">This is Body 3 (base).</p>
+    <p class="my-6 text-3">This is Body 3.</p>
     <p class="my-6 text-4">This is Body 4.</p>
   </div>
 </div>
@@ -146,7 +88,7 @@ There are five utility classes for setting the body font size.
 
 <<<@/vuepress/css-documentation/typography.md#font-size
 
-## Subtitles
+<!-- ## Subtitles
 
 There are currently 5 subtitle variants available via special classes.
 
@@ -160,7 +102,7 @@ There are currently 5 subtitle variants available via special classes.
 
 ### Examples
 
-<!-- #region subtitles -->
+<!-- #region subtitles -- >
 <div class="mds">
   <div class="bg-white p-16 mt-16 border rounded-lg">
     <p class="my-6 subtitle1">Subtitle 1</p>
@@ -170,7 +112,7 @@ There are currently 5 subtitle variants available via special classes.
     <p class="my-6 subtitle5">Subtitle 5</p>
   </div>
 </div>
-<!-- #endregion subtitles -->
+<!-- #endregion subtitles -- >
 
 <<<@/vuepress/css-documentation/typography.md#subtitles
 
@@ -183,14 +125,14 @@ There are currently 5 subtitle variants available via special classes.
 
 ### Examples
 
-<!-- #region captions -->
+<!-- #region captions -- >
 <div class="mds">
   <div class="bg-white p-16 mt-16 border rounded-lg">
     <p class="my-6 caption1">Caption 1</p>
     <p class="my-6 caption2">Caption 2</p>
   </div>
 </div>
-<!-- #endregion captions -->
+<!-- #endregion captions -- >
 
 <<<@/vuepress/css-documentation/typography.md#captions
 
@@ -203,16 +145,17 @@ There are currently 5 subtitle variants available via special classes.
 
 ### Examples
 
-<!-- #region overlines -->
+<!-- #region overlines -- >
 <div class="mds">
   <div class="bg-white p-16 mt-16 border rounded-lg">
     <p class="my-6 overline1">Overline 1</p>
     <p class="my-6 overline2">Overline 2</p>
   </div>
 </div>
-<!-- #endregion overlines -->
+<!-- #endregion overlines -- >
 
 <<<@/vuepress/css-documentation/typography.md#overlines
+-->
 
 ## Font Style
 
