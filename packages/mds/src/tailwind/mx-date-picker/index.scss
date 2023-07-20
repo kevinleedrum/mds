@@ -87,7 +87,7 @@
   ***************************/
 
   .qs-datepicker-container {
-    @apply relative w-256 min-h-240 p-16 pb-8 rounded-xl overflow-hidden z-50 select-none shadow-12;
+    @apply relative w-256 min-h-240 p-16 pb-8 rounded overflow-hidden z-50 select-none shadow-12;
     background: var(--mds-bg-picker);
   }
 
@@ -123,7 +123,7 @@
     }
 
     input.qs-overlay-year {
-      @apply col-span-2 h-36 border min-w-0 mx-24 mt-24 mb-8 px-16 text-3 rounded-lg outline-none appearance-none;
+      @apply col-span-2 h-36 border min-w-0 mx-24 mt-24 mb-8 px-16 text-3 rounded outline-none appearance-none;
       color: var(--mds-text-input);
       background: var(--mds-bg-input);
       border-color: var(--mds-border-input);
@@ -159,7 +159,7 @@
 
     .qs-close::after,
     .qs-submit {
-      @apply flex items-center justify-center h-36 px-8 py-10 my-8 mr-8 uppercase rounded-lg font-semibold text-4 tracking-1-25 cursor-pointer;
+      @apply flex items-center justify-center h-36 px-8 py-10 my-8 mr-8 uppercase rounded font-semibold text-4 tracking-1-25 cursor-pointer;
       color: var(--mds-text-btn-text);
       background: var(--mds-bg-btn-text);
 
