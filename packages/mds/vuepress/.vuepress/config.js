@@ -1,6 +1,6 @@
 const process = require('process');
 const { description } = require('../../package');
-const versionedExamplePlugin = require('./plugins/versioned-example-plugin');
+// const versionedExamplePlugin = require('./plugins/versioned-example-plugin');
 
 module.exports = {
   title: 'Moxi Design System',
@@ -177,5 +177,8 @@ module.exports = {
       disableDarkTheme: true,
     },
   },
-  plugins: [['fulltext-search'], versionedExamplePlugin],
+  plugins: [
+    ['fulltext-search'],
+    // versionedExamplePlugin
+  ],
 };
