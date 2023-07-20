@@ -156,7 +156,7 @@ export class MxImageUpload {
   }
 
   get dropzoneClass(): string {
-    let str = 'dropzone relative w-full h-full px-16 rounded-2xl overflow-hidden';
+    let str = 'dropzone relative w-full h-full px-16 rounded overflow-hidden';
     if (this.hasFile) str += ' opacity-0';
     if (this.isDraggingOver) str += ' drag-over';
     str += this.showIcon && this.showDropzoneText ? ' py-24' : ' py-16';
@@ -194,7 +194,7 @@ export class MxImageUpload {
       <Host class="mx-image-upload block">
         <div
           data-testid="dropzone-wrapper"
-          class="dropzone-wrapper flex w-full items-center justify-center relative rounded-2xl text-3 overflow-hidden"
+          class="dropzone-wrapper flex w-full items-center justify-center relative rounded text-3 overflow-hidden"
           style={{ height: this.dropzoneHeight, width: this.dropzoneWidth }}
         >
           <div class={this.dropzoneClass}>
