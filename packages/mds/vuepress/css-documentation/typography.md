@@ -64,10 +64,6 @@ There are five utility classes for setting the body font size.
 | _body (default)_ | 14px (0.875rem) | 24px (1.5rem)  | 0              |
 | `text-small`     | 12px (0.75rem)  | 14px (0.875rem)| 0              |
 | `text-tooltip`   | 11px (0.75rem)  | 14px (0.875rem)| 0.1px          |
-| `text-1`         | 20px (1.25rem)  | 24px (1.5rem)  | 0.5px          |
-| `text-2`         | 18px (1.125rem) | 24px (1.5rem)  | 0.5px          |
-| `text-3`         | 16px (1rem)     | 24px (1.5rem)  | 0.15px         |
-| `text-4`         | 14px (0.875rem) | 20px (1.25rem) | 0.25px         |
 | `text-icon`      | 24px (1.5rem)   | inherit        | inherit        |
 
 ### Examples
@@ -78,84 +74,12 @@ There are five utility classes for setting the body font size.
     <p class="my-6">This is default body text.</p>
     <p class="my-6 text-small">This is small.</p>
     <p class="my-6 text-tooltip">This is tooltip text.</p>
-    <p class="my-6 text-1">This is Body 1.</p>
-    <p class="my-6 text-2">This is Body 2.</p>
-    <p class="my-6 text-3">This is Body 3.</p>
-    <p class="my-6 text-4">This is Body 4.</p>
   </div>
 </div>
 <!-- #endregion font-size -->
 
 <<<@/vuepress/css-documentation/typography.md#font-size
 
-<!-- ## Subtitles
-
-There are currently 5 subtitle variants available via special classes.
-
-| Class       | Size            | Weight    | Line-Height    | Letter-Spacing |
-| ----------- | --------------- | --------- | -------------- | -------------- |
-| `subtitle1` | 16px (1rem)     | SemiBold  | 24px (1.5rem)  | 0.15px         |
-| `subtitle2` | 14px (0.875rem) | SemiBold  | 20px (1.25rem) | 0.4px          |
-| `subtitle3` | 14px (0.875rem) | ExtraBold | 20px (1.25rem) | 0.4px          |
-| `subtitle4` | 12px (0.75rem)  | SemiBold  | 16px (1rem)    | 0.4px          |
-| `subtitle5` | 10px (0.625rem) | Bold      | 16px (1rem)    | 0.3px          |
-
-### Examples
-
-<!-- #region subtitles -- >
-<div class="mds">
-  <div class="bg-white p-16 mt-16 border rounded-lg">
-    <p class="my-6 subtitle1">Subtitle 1</p>
-    <p class="my-6 subtitle2">Subtitle 2</p>
-    <p class="my-6 subtitle3">Subtitle 3</p>
-    <p class="my-6 subtitle4">Subtitle 4</p>
-    <p class="my-6 subtitle5">Subtitle 5</p>
-  </div>
-</div>
-<!-- #endregion subtitles -- >
-
-<<<@/vuepress/css-documentation/typography.md#subtitles
-
-## Captions
-
-| Class      | Size            | Line-Height | Letter-Spacing |
-| ---------- | --------------- | ----------- | -------------- |
-| `caption1` | 12px (0.75rem)  | 16px (1rem) | 0.3px          |
-| `caption2` | 10px (0.625rem) | 16px (1rem) | 0.3px          |
-
-### Examples
-
-<!-- #region captions -- >
-<div class="mds">
-  <div class="bg-white p-16 mt-16 border rounded-lg">
-    <p class="my-6 caption1">Caption 1</p>
-    <p class="my-6 caption2">Caption 2</p>
-  </div>
-</div>
-<!-- #endregion captions -- >
-
-<<<@/vuepress/css-documentation/typography.md#captions
-
-## Overlines
-
-| Class       | Size            | Weight              | Line-Height   | Letter-Spacing |
-| ----------- | --------------- | ------------------- | ------------- | -------------- |
-| `overline1` | 18px (1.125rem) | SemiBold, Uppercase | 24px (1.5rem) | 1.5px          |
-| `overline2` | 12px (0.75rem)  | Regular, Uppercase  | 16px (1rem)   | 1.5px          |
-
-### Examples
-
-<!-- #region overlines -- >
-<div class="mds">
-  <div class="bg-white p-16 mt-16 border rounded-lg">
-    <p class="my-6 overline1">Overline 1</p>
-    <p class="my-6 overline2">Overline 2</p>
-  </div>
-</div>
-<!-- #endregion overlines -- >
-
-<<<@/vuepress/css-documentation/typography.md#overlines
--->
 
 ## Font Style
 
