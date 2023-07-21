@@ -717,6 +717,7 @@ export namespace Components {
         "labelClass": string;
         "labelName": string;
         "name": string;
+        "userchecked": boolean;
         "value": string;
     }
     interface MxSearch {
@@ -2107,6 +2108,7 @@ declare namespace LocalJSX {
         "labelClass"?: string;
         "labelName"?: string;
         "name"?: string;
+        "userchecked"?: boolean;
         "value"?: string;
     }
     interface MxSearch {
