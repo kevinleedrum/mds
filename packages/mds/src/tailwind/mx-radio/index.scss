@@ -47,7 +47,7 @@
   }
 
   :focus-within:focus-visible {
-    &+span::before {
+    +span::before {
       display: block;
       background: var(--mds-color-primary-darkest);
       opacity: 0.12;
@@ -83,20 +83,20 @@
   }
 
   input:disabled {
-    &~span {
+    ~span {
       border-color: var(--mds-color-secondary-medium);
     }
 
-    &~span::after {
+    ~span::after {
       background: var(--mds-color-secondary-medium);
     }
 
-    &~span::before,
+    ~span::before,
     &:checked~span::before {
       background: transparent;
     }
 
-    &~.radio-label {
+    ~.radio-label {
       color: var(--mds-color-secondary-medium);
     }
   }

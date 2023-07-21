@@ -93,32 +93,32 @@
   }
 
   input:disabled {
-    &+.slider {
+    +.slider {
       background-color: var(--mds-color-secondary-ultralight);
       border: 1px solid var(--mds-color-secondary-medium);
     }
 
-    &+.slider:before {
+    +.slider:before {
       background: var(--mds-color-secondary-ultralight);
       border: 1px solid var(--mds-color-secondary-medium);
     }
 
-    &+.slider:after,
-    &+.slider:hover::after {
+    +.slider:after,
+    +.slider:hover::after {
       background: transparent;
     }
 
     &:checked {
-      &+.slider {
+      +.slider {
         background: var(--mds-color-secondary-light);
       }
 
-      &+.slider:before {
+      +.slider:before {
         background: var(--mds-color-secondary-medium);
       }
     }
 
-    &~.switch-label {
+    ~.switch-label {
       color: var(--mds-color-secondary-medium);
     }
   }
