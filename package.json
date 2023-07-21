@@ -16,7 +16,8 @@
     "mds:release-docs": "yarn workspace @moxiworks/mds docs:deploy",
     "mds-react:build": "yarn workspace @moxiworks/mds-react build",
     "publish": "lerna publish",
-    "stylelint": "yarn workspace @moxiworks/mds stylelint './src/**/*.scss'"
+    "lint": "lerna run lint",
+    "stylelint": "lerna run stylelint"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

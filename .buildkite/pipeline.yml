@@ -58,6 +58,18 @@ steps:
           run: ci
           config: ops/ci/docker-compose.yml
 
+    - label: ":stylelint: @moxiworks/mds Stylelint"
+      command: "yarn stylelint"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          workdir: /app/packages/mds
+          run: ci
+          config: ops/ci/docker-compose.yml
+
     - label: ":typescript: @moxiworks/mds Check"
       command: "yarn ts:check"
       agents:

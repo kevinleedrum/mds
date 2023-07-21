@@ -54,6 +54,7 @@
   "scripts": {
     "format": "prettier --loglevel warn --write src/**/*",
     "lint": "eslint src/**/*{.ts,.tsx} --max-warnings=0",
+    "stylelint": "stylelint './src/**/*.scss'",
     "ts:check": "tsc --noEmit",
     "clean": "sh scripts/clean-builds.sh",
     "watch": "npm-watch",
