@@ -1,7 +1,7 @@
 .mx-search {
   color: var(--mds-color-secondary);
 
-  &>input {
+  >input {
     border-color: var(--mds-color-secondary);
     background: var(--mds-color-white);
     color: var(--mds-color-secondary);
@@ -28,7 +28,7 @@
     }
   }
 
-  &>.clear-button {
+  >.clear-button {
     background: var(--mds-color-white);
     color: var(--mds-color-primary);
   }

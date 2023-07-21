@@ -54,6 +54,7 @@
   "scripts": {
     "format": "prettier --loglevel warn --write src/**/*",
     "lint": "eslint src/**/*{.ts,.tsx} --max-warnings=0",
+    "stylelint": "stylelint './src/**/*.scss'",
     "ts:check": "tsc --noEmit",
     "clean": "sh scripts/clean-builds.sh",
     "watch": "npm-watch",
@@ -90,6 +91,9 @@
     "postcss-import": "^14.0.1",
     "postcss-nested": "^5.0.5",
     "prismjs": "^1.25.0",
+    "stylelint": "^15.10.2",
+    "stylelint-config-recommended-scss": "^12.0.0",
+    "stylelint-scss": "^5.0.1",
     "vuepress-theme-yuu": "^3.0.1"
   },
   "license": "MIT",

@@ -10,7 +10,7 @@
   [slot='filter'] {
     @apply max-w-full;
 
-    &>* {
+    >* {
       @apply max-w-full;
     }
   }
@@ -50,10 +50,10 @@
   .empty-state,
   .table-footer {
     &:last-child {
-      & > :first-child {
+      > :first-child {
         @apply rounded-bl;
       }
-      & > :last-child {
+      > :last-child {
         @apply rounded-br;
       }
     }
@@ -64,16 +64,16 @@
   }
 
   .mx-table-row {
-    &>.table-row {
+    >.table-row {
       border-color: var(--mds-color-secondary-light);
       will-change: max-height;
       /* Makes collapse/expand smoother. */
 
-      &> :last-child:not(.pr-0, .p-0) {
+      > :last-child:not(.pr-0, .p-0) {
         @apply sm:pr-24;
       }
 
-      &>*>.mx-table-row {
+      >*>.mx-table-row {
         &:first-of-type {
           @apply border-t sm:border-t-0;
         }
@@ -123,10 +123,10 @@
     &.last-row > .table-row {
       @apply rounded-b;
 
-      & > :first-child {
+      > :first-child {
         @apply sm:rounded-bl;
       }
-      & > :last-child {
+      > :last-child {
         @apply sm:rounded-br;
       }
     }

@@ -51,7 +51,7 @@
   }
 
   :focus-within:focus-visible {
-    &+span::before {
+    +span::before {
       display: block;
       background: var(--mds-color-primary-darkest);
       opacity: 0.04;
