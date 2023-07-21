@@ -47,10 +47,6 @@ If multiple snackbars are triggered, they will be queued and displayed consecuti
 | --------- | ------------------------------------------------- | ------------------- |
 | `mxClose` | Emitted after the snackbar closes (by any means). | `CustomEvent<void>` |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#snackbars
-
 <script>
 export default {
   data() {

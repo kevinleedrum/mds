@@ -249,10 +249,6 @@ Returns the menu item inner text (excluding any label or subtitle)
 
 Focuses the menu item.
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#menus
-
 <script>
 const fruits = [
   'Apple',

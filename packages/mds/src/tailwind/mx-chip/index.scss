@@ -1,45 +1,37 @@
 .mx-chip > div {
-  color: var(--mds-text-chip);
-  background: var(--mds-bg-chip);
-  --ripple-color: var(--mds-ripple-chip);
+  color: var(--mds-color-white);
+  background: var(--mds-color-secondary);
+  --ripple-color: var(--mds-color-secondary-medium);
   transform: translateZ(0); /* HACK: Fix Safari ripple extending outside border radius */
 
   &[aria-checked='true'] {
-    background: var(--mds-bg-chip-selected);
+    background: var(--mds-color-primary);
     &.choice {
-      color: var(--mds-text-chip-choice-selected);
-      background: var(--mds-bg-chip-choice-selected);
+      color: var(--mds-color-white);
     }
     &.filter {
-      background: var(--mds-bg-chip-filter-selected);
+      background: var(--mds-color-primary);
     }
-  }
-
-  &.choice:not(.outlined) {
-    --ripple-color: var(--mds-ripple-chip-choice);
-  }
-  &.filter:not(.outlined) {
-    --ripple-color: var(--mds-ripple-chip-filter);
   }
 
   &.clickable {
     &:focus:not([aria-disabled='true'], [aria-checked='true']) {
-      background: var(--mds-bg-chip-focus);
+      background: var(--mds-color-secondary-medium);
     }
 
     &:hover:not([aria-disabled='true']) {
-      background: var(--mds-bg-chip-hover);
+      background: var(--mds-color-secondary-medium);
     }
 
     &:active:not([aria-disabled='true']) {
-      background: var(--mds-bg-chip-active);
+      background: var(--mds-color-secondary);
       @apply shadow-8 -translate-y-1;
     }
   }
 
   &[aria-disabled='true'] {
-    background: var(--mds-bg-chip-disabled);
-    color: var(--mds-text-chip-disabled);
+    background: var(--mds-color-secondary-medium);
+    color: var(--mds-color-white);
     .left-icon,
     & + .remove,
     & + .remove:hover,
@@ -50,18 +42,18 @@
   }
 
   .check {
-    background: var(--mds-bg-chip-check);
-    color: var(--mds-text-chip-check);
+    background: var(--mds-color-primary);
+    color: var(--mds-color-white);
   }
 
   &.filter {
     .check {
-      background: var(--mds-bg-chip-filter-check);
+      background: var(--mds-color-primary-dark);
     }
   }
 
   & + .remove {
-    color: var(--mds-text-chip-remove);
+    color: var(--mds-color-secondary-light);
     opacity: 0.64;
     outline-offset: -4px;
 
@@ -72,15 +64,16 @@
   }
 
   &.outlined {
-    background: var(--mds-bg-chip-outlined);
-    border-color: var(--mds-border-chip-outlined);
-    --ripple-color: var(--mds-ripple-chip-outlined);
+    color: var(--mds-color-secondary);
+    background: var(--mds-color-white);
+    border-color: var(--mds-color-secondary-light);
+    --ripple-color: var(--mds-color-secondary-ultralight);
 
     &[aria-checked='true'] {
-      background: var(--mds-bg-chip-outlined-selected);
+      background: var(--mds-color-secondary-light);
       &.choice {
-        background: var(--mds-bg-chip-choice-selected);
-        border-color: var(--mds-border-chip-choice-outlined);
+        background: var(--mds-color-primary);
+        border-color: var(--mds-color-secondary-light);
       }
       &.filter {
         background: var(--mds-bg-chip-filter-selected);
@@ -89,22 +82,39 @@
 
     &.clickable {
       &:focus:not([aria-disabled='true'], [aria-checked='true']) {
-        background: var(--mds-bg-chip-outlined-focus);
+        background: var(--mds-color-secondary-ultralight);
       }
 
       &:hover:not([aria-disabled='true']) {
-        background: var(--mds-bg-chip-outlined-hover);
+        background: var(--mds-color-secondary-ultralight);
       }
 
       &:active:not([aria-disabled='true']) {
-        background: var(--mds-bg-chip-outlined-active);
+        background: var(--mds-color-secondary-medium);
+      }
+    }
+
+    &.filter {
+      .check {
+        background: var(--mds-color-primary);
+      }
+    }
+    
+    & + .remove {
+      color: var(--mds-color-secondary-medium);
+      opacity: 0.64;
+      outline-offset: -4px;
+  
+      &:hover,
+      &:focus {
+        opacity: 1;
       }
     }
 
     &[aria-disabled='true'] {
-      background: var(--mds-bg-chip-outlined-disabled);
-      border-color: var(--mds-border-chip-outlined-disabled);
-      color: var(--mds-text-chip-outlined-disabled);
+      background: var(--mds-color-secondary-ultralight);
+      border-color: var(--mds-color-secondary-light);
+      color: var(--mds-color-secondary-medium);
     }
   }
 }

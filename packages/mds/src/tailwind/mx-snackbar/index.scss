@@ -1,7 +1,4 @@
 .mx-snackbar-alert {
-  background: var(--mds-bg-snackbar);
-  color: var(--mds-text-snackbar);
-  button:not(:hover, :focus-within) {
-    --mds-text-btn-text: var(--mds-text-snackbar-btn);
-  }
+  background: var(--mds-color-tertiary);
+  color: var(--mds-color-white);
 }

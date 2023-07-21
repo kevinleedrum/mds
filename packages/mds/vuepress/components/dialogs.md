@@ -84,10 +84,6 @@ A Promise-based replacement for `Window.confirm()` that resolves to a boolean
 | --------- | ----------- | ------------------- |
 | `mxClose` |             | `CustomEvent<void>` |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#dialogs
-
 <script>
 export default {
   data() {

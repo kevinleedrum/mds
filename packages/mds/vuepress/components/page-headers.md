@@ -95,10 +95,6 @@ On smaller screens, the size of the text and buttons will be reduced. Additional
 | `previousPageTitle` | `previous-page-title` | The text to display for the previous page link                                                         | `string`              | `'Back'` |
 | `previousPageUrl`   | `previous-page-url`   | The URL for the previous page link                                                                     | `string`              | `''`     |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#page-headers
-
 <script>
 export default {
   data() {

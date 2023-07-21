@@ -217,10 +217,6 @@ Sometimes you will want to default the date and/or time picker to be the current
 | `name`          | `name`           |                                                       | `string`  | `undefined` |
 | `value`         | `value`          | The selected date in YYYY-MM-DD format                | `string`  | `undefined` |
 
-### CSS Variables
-
-<<< @/src/tailwind/variables/index.scss#pickers
-
 <script>
 export default {
   data() {
