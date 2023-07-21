@@ -33,9 +33,9 @@
     background: var(--mds-color-secondary-medium);
     color: var(--mds-color-white);
     .left-icon,
-    & + .remove,
-    & + .remove:hover,
-    & + .remove:focus {
+    + .remove,
+    + .remove:hover,
+    + .remove:focus {
       opacity: 0.24;
       cursor: initial;
     }
@@ -52,7 +52,7 @@
     }
   }
 
-  & + .remove {
+  + .remove {
     color: var(--mds-color-secondary-light);
     opacity: 0.64;
     outline-offset: -4px;
@@ -100,7 +100,7 @@
       }
     }
     
-    & + .remove {
+    + .remove {
       color: var(--mds-color-secondary-medium);
       opacity: 0.64;
       outline-offset: -4px;

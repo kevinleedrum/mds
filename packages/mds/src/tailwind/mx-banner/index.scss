@@ -1,5 +1,5 @@
 .mx-banner {
-  & > div {
+  > div {
     background: var(--mds-color-tertiary);
     color: var(--mds-color-white);
   }
@@ -8,7 +8,7 @@
   }
 
   [slot='actions'] > * {
-    & > * {
+    > * {
       @apply ml-8;
     }
   }

@@ -5,7 +5,7 @@
     color: var(--mds-color-secondary);
   }
 
-  &>.picker-wrapper {
+  >.picker-wrapper {
     color: var(--mds-color-secondary);
     background: var(--mds-color-white);
     border-color: var(--mds-color-secondary);
@@ -70,11 +70,11 @@
 
   &.error {
 
-    &>.picker-wrapper,
-    &>.picker-wrapper:hover:not(.focused) {
+    >.picker-wrapper,
+    >.picker-wrapper:hover:not(.focused) {
       border-color: var(--mds-color-error);
 
-      &>label,
+      >label,
       .menu-button {
         color: var(--mds-color-error);
       }
