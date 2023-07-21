@@ -16,6 +16,7 @@ export class MxCheckbox {
   /** Hide the label text visually, but still make it accessible for screen readers */
   @Prop() hideLabel = false;
   @Prop({ mutable: true }) checked = false;
+  @Prop({ mutable: true }) userchecked = false;
   @Prop() disabled = false;
   @Prop() indeterminate = false;
   /** The aria-label attribute for the inner input element. */
@@ -29,6 +30,7 @@ export class MxCheckbox {
     let str = 'flex h-18 w-18 flex-shrink-0';
     str += this.labelLeft ? ' order-2' : ' order-1';
     if (this.labelLeft && !this.hideLabel) str += ' ml-16';
+    if (this.userchecked) str += ' userchecked';
     return str;
   }
 
@@ -42,7 +44,7 @@ export class MxCheckbox {
 
   /** Keep checked prop in sync with input element attribute */
   onInput(e: InputEvent) {
-    this.checked = (e.target as HTMLInputElement).checked;
+    this.checked = this.userchecked = (e.target as HTMLInputElement).checked;
   }
 
   render() {

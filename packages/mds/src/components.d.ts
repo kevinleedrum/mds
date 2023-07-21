@@ -144,6 +144,7 @@ export namespace Components {
         "labelLeft": boolean;
         "labelName": string;
         "name": string;
+        "userchecked": boolean;
         "value": string;
     }
     interface MxChip {
@@ -1540,6 +1541,7 @@ declare namespace LocalJSX {
         "labelLeft"?: boolean;
         "labelName"?: string;
         "name"?: string;
+        "userchecked"?: boolean;
         "value"?: string;
     }
     interface MxChip {
