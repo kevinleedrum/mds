@@ -1,4 +1,4 @@
-FROM node:16-alpine as ci
+FROM node:18-alpine as ci
 
 RUN apk --no-cache add ca-certificates
 
