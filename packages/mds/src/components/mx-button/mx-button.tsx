@@ -75,10 +75,10 @@ export class MxButton implements IMxButtonProps {
 
     // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
-      str += ' w-full rounded font-semibold uppercase';
+      str += ' w-full rounded text-small font-bold uppercase';
       if (this.btnType === 'outlined') str += ' border';
       if (this.xl) str += ' min-h-48 px-32 text-3 tracking-1-5';
-      else str += ' min-h-36 px-16 text-4 tracking tracking-1-25';
+      else str += ' min-h-36 px-16 text-4';
     }
 
     // Simple Button
