@@ -29,19 +29,19 @@
   --mds-bg-error: #fbd6de;
   --mds-bg-gray-inverted: #e8e8e8;
   --mds-bg-gray: #fafafa;
-  --mds-bg-primary-inverted: #0457af;
+  --mds-bg-primary-inverted: var(--mds-color-primary);
   --mds-bg-primary: #e1f5ff;
   --mds-bg-secondary-inverted: #edfffc;
   --mds-bg-secondary: #00696b;
   --mds-text-disabled-inverted: rgba(255, 255, 255, 0.5);
   --mds-text-disabled: rgba(51, 51, 51, 0.38);
-  --mds-text-error: #ff0c3e;
+  --mds-text-error: var(--mds-color-error);
   --mds-text-inactive-inverted: rgba(255, 255, 255, 0.54);
   --mds-text-inactive: rgba(0, 0, 0, 0.64);
-  --mds-text-link: #0457af;
+  --mds-text-link: var(--mds-color-primary);
   --mds-text-medium-emphasis: rgba(51, 51, 51, 0.87);
   --mds-text-primary-inverted: #fff;
-  --mds-text-primary: #333;
+  --mds-text-primary: var(--mds-color-secondary);
 
   /* region animation */
   --mds-animation-speed-quick: 0.2s;
