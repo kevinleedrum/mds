@@ -38,6 +38,15 @@
     }
  }
  
+  input:focus-visible+span {
+    outline: 1px solid var(--mds-color-primary);
+  }
+ 
+  input:checked:focus-visible+span,
+  input.indeterminate:focus-visible+span {  
+    background-color: var(--mds-color-primary-dark);
+  }
+
   input.indeterminate~span::after {
     content: '';
     position: absolute;
