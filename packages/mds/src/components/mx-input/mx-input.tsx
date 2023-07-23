@@ -166,7 +166,6 @@ export class MxInput implements IMxInputProps {
     } else {
       str += ' p-16 overflow-y-auto resize-none';
     }
-    if (this.isFocused || this.error) str += this.leftIcon ? ' -mr-1' : ' -m-1'; // prevent shifting due to border-width change
     return str;
   }
 
@@ -178,8 +177,6 @@ export class MxInput implements IMxInputProps {
       str += this.leftIcon && !this.textarea ? ' left-48 has-left-icon' : ' left-12';
       if (this.dense && !this.textarea) str += ' dense text-4';
       if (this.isFocused || this.characterCount > 0) str += ' floating';
-      if (this.isFocused || this.error) str += ' -ml-1'; // prevent shifting due to border-width change
-      if ((this.isFocused || this.error) && this.textarea) str += ' -mt-1';
     } else {
       str += ' subtitle2 mb-4';
     }
@@ -188,14 +185,12 @@ export class MxInput implements IMxInputProps {
   }
 
   get leftIconWrapperClass() {
-    let str = 'flex items-center h-full pl-16 space-x-16';
-    if (this.isFocused || this.error) str += ' -ml-1'; // prevent shifting due to border-width change
+    const str = 'flex items-center h-full pl-16 space-x-16';
     return str;
   }
 
   get rightContentClass() {
-    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8';
-    if (this.isFocused || this.error) str += ' -mr-1'; // prevent shifting due to border-width change
+    const str = 'icon-suffix flex items-center h-full pr-16 space-x-8';
     return str;
   }
 

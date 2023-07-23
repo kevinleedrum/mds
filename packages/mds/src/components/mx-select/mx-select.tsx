@@ -84,9 +84,8 @@ export class MxSelect {
   }
 
   get selectElClass() {
-    let str =
+    const str =
       'absolute inset-0 w-full pl-16 overflow-hidden outline-none appearance-none bg-transparent cursor-pointer disabled:cursor-auto';
-    if (this.isFocused) str += ' -m-1'; // prevent shifting due to border-width change
     return str;
   }
 
@@ -96,7 +95,6 @@ export class MxSelect {
       str += ' absolute mt-0 left-12 px-4';
       if (this.dense) str += ' dense text-4';
       if (this.isFocused || this.hasValue) str += ' floating';
-      if (this.isFocused) str += ' -ml-1'; // prevent shifting due to border-width change
     } else {
       str += ' subtitle2 mb-4';
     }
@@ -104,8 +102,7 @@ export class MxSelect {
   }
 
   get iconSuffixClass() {
-    let str = 'icon-suffix absolute flex items-center h-full right-12 space-x-8 pointer-events-none';
-    if (this.isFocused) str += ' -mr-1'; // prevent shifting due to border-width change
+    const str = 'icon-suffix absolute flex items-center h-full right-12 space-x-8 pointer-events-none';
     return str;
   }
 

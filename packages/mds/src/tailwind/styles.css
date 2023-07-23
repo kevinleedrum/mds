@@ -253,7 +253,6 @@
   .text-small {
     font-size: 0.75rem;
     letter-spacing: 0;
-    font-weight: 400;
     line-height: 0.875rem;
   }
   .text-tooltip {

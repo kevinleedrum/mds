@@ -92,15 +92,13 @@ export class MxDropdownMenu {
   }
 
   get inputClass() {
-    let str =
+    const str =
       'absolute inset-0 w-full h-full pl-16 overflow-hidden outline-none appearance-none select-none bg-transparent cursor-pointer disabled:cursor-auto';
-    if (this.isFocused) str += ' -ml-1'; // prevent shifting due to border-width change
     return str;
   }
 
   get suffixClass() {
-    let str = 'icon-suffix absolute flex items-center h-full right-12 space-x-8 pointer-events-none';
-    if (this.isFocused) str += ' -mr-1'; // prevent shifting due to border-width change
+    const str = 'icon-suffix absolute flex items-center h-full right-12 space-x-8 pointer-events-none';
     return str;
   }
 

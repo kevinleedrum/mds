@@ -1,23 +1,31 @@
 .mds {
-  --ripple-color: rgba(255, 255, 255, 0.32);
+  --ripple-color: var(--mds-color-white);
   span.ripple {
     position: absolute;
+    content: " ";
+    overflow: hidden;
     border-radius: 50%;
+    opacity: 0.2;
     background-color: var(--ripple-color);
-    animation: ripple 1s;
-    opacity: 1;
-    transform: scale(0);
-    pointer-events: none;
+    animation: scaleOut var(--mds-animation-speed-quick) forwards;
+    filter: brightness(0.75);
 
     @media (prefers-reduced-motion: reduce) {
       animation: none;
     }
   }
-
-  @keyframes ripple {
-    to {
-      opacity: 0;
-      transform: scale(10);
+  @keyframes scaleOut {
+    0%{
+        opacity: 0;
+        transform: scale(0);
     }
+    50%{
+        opacity: 0.25;
+    }
+    100%{
+        opacity: 0;
+        transform: scale(1);
+    }
+    
   }
 }
