@@ -7,15 +7,16 @@
     border: 1px solid var(--mds-color-secondary);
 
     &::before {
-      display: none;
-      content: '';
       position: absolute;
-      top: -11px;
-      left: -11px;
-      width: 40px;
-      height: 40px;
+      content: '';
+      left: -1px;
+      top: -1px;
+      width: 20px;
+      height: 20px;
+      opacity: 0;
+      transform: scale(0);
+      border: 1px solid var(--mds-color-primary);
       border-radius: 100%;
-      z-index: 0;
     }
 
     &::after {
@@ -29,34 +30,13 @@
       background: var(--mds-color-primary);
       border-radius: 100%;
     }
-
-    &:hover {
-      &::before {
-        display: block;
-        background: var(--mds-color-primary-darkest);
-        opacity: 0.04;
-      }
-    }
-
-    &:active {
-      &::before {
-        background: var(--mds-color-primary-darkest);
-        opacity: 0.12;
-      }
-    }
   }
 
-  :focus-within:focus-visible {
-    +span::before {
-      display: block;
-      background: var(--mds-color-primary-darkest);
-      opacity: 0.12;
-    }
-
-    &:checked~span::before {
-      background: var(--mds-color-primary);
-      opacity: 0.24;
-    }
+  input:checked+span.userchecked::before {
+    animation: scaleOutRadio var(--mds-animation-speed-normal) forwards;
+  }
+  input:checked+span.userchecked::after {
+    animation: scaleInRadioMark var(--mds-animation-speed-normal) var(--mds-animation-ease-bounce) forwards;
   }
 
   input:checked~span {
@@ -64,21 +44,6 @@
 
     &::after {
       display: block;
-    }
-
-    &:hover {
-      &::before {
-        background: var(--mds-color-primary);
-        opacity: 0.08;
-      }
-    }
-
-    &:active {
-      &::before {
-        display: block;
-        background: var(--mds-color-primary);
-        opacity: 0.32;
-      }
     }
   }
 
@@ -91,13 +56,34 @@
       background: var(--mds-color-secondary-medium);
     }
 
-    ~span::before,
-    &:checked~span::before {
-      background: transparent;
-    }
-
     ~.radio-label {
       color: var(--mds-color-secondary-medium);
     }
   }
+}
+
+@keyframes scaleOutRadio {
+  0%{
+      opacity: 0;
+      transform: scale(1);
+  }
+  50%{
+      opacity: 0.5;
+  }
+  100%{
+      opacity: 0;
+      transform: scale(1.5);
+  }
+}
+
+@keyframes scaleInRadioMark {
+  0%{
+      opacity: 0;
+      transform: scale(0);
+  }
+  100%{
+      opacity: 1;
+      transform: scale(1);
+  }
+  
 }

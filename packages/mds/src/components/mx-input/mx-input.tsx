@@ -185,12 +185,12 @@ export class MxInput implements IMxInputProps {
   }
 
   get leftIconWrapperClass() {
-    let str = 'flex items-center h-full pl-16 space-x-16';
+    const str = 'flex items-center h-full pl-16 space-x-16';
     return str;
   }
 
   get rightContentClass() {
-    let str = 'icon-suffix flex items-center h-full pr-16 space-x-8';
+    const str = 'icon-suffix flex items-center h-full pr-16 space-x-8';
     return str;
   }
 

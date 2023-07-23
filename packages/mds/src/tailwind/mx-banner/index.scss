@@ -2,6 +2,9 @@
   > div {
     background: var(--mds-color-tertiary);
     color: var(--mds-color-white);
+    [slot='actions'] button {
+      color: var(--mds-color-white);
+    }
   }
   &.is-error > div {
     background: var(--mds-color-warning);

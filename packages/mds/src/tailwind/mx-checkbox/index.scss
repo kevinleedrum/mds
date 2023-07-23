@@ -10,14 +10,16 @@
     border-radius: 3px;
 
     &::before {
-      content: '';
       position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 40px;
-      height: 40px;
-      border-radius: 100%;
-      z-index: 0;
+      content: '';
+      left: -2px;
+      top: -2px;
+      width: 20px;
+      height: 20px;
+      opacity: 0;
+      transform: scale(0);
+      border: 1px solid var(--mds-color-primary);
+      border-radius: 3px;
     }
 
     &::after {
@@ -34,36 +36,8 @@
       -ms-transform: rotate(45deg);
       transform: rotate(45deg);
     }
-
-    &:hover {
-      &::before {
-        background: var(--mds-color-primary-darkest);
-        opacity: 0.04;
-      }
-    }
-
-    &:active {
-      &::before {
-        background: var(--mds-color-primary-darkest);
-        opacity: 0.12;
-      }
-    }
-  }
-
-  :focus-within:focus-visible {
-    +span::before {
-      display: block;
-      background: var(--mds-color-primary-darkest);
-      opacity: 0.04;
-    }
-
-    &:checked~span::before,
-    &.indeterminate~span::before {
-      background: var(--mds-color-primary);
-      opacity: 0.24;
-    }
-  }
-
+ }
+ 
   input.indeterminate~span::after {
     content: '';
     position: absolute;
@@ -77,6 +51,13 @@
     transform: rotate(0deg);
   }
 
+  input+span.userchecked::before {
+    animation: scaleOutCheckbox var(--mds-animation-speed-normal) forwards;
+  }
+  input:checked+span.userchecked::after {
+    animation: scaleInCheckboxMark var(--mds-animation-speed-normal) var(--mds-animation-ease-bounce) forwards;
+  }
+
   input:checked~span,
   input.indeterminate~span {
     background-color: var(--mds-color-primary);
@@ -84,20 +65,6 @@
 
     &::after {
       display: block;
-    }
-
-    &:hover {
-      &::before {
-        background: var(--mds-color-primary);
-        opacity: 0.08;
-      }
-    }
-
-    &:active {
-      &::before {
-        background: var(--mds-color-primary);
-        opacity: 0.32;
-      }
     }
   }
 
@@ -118,4 +85,30 @@
   input:disabled~.checkbox-label {
     color: var(--mds-color-secondary-medium);
   }
+}
+
+@keyframes scaleOutCheckbox {
+  0%{
+      opacity: 0;
+      transform: scale(1);
+  }
+  50%{
+      opacity: 0.5;
+  }
+  100%{
+      opacity: 0;
+      transform: scale(1.5);
+  }
+}
+
+@keyframes scaleInCheckboxMark {
+  0%{
+      opacity: 0;
+      transform: scale(0) rotate(45deg);
+  }
+  100%{
+      opacity: 1;
+      transform: scale(1) rotate(45deg);
+  }
+  
 }

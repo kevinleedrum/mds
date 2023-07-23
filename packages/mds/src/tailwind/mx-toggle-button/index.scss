@@ -6,18 +6,18 @@
   .btn-toggle {
     background: var(--mds-color-white);
     outline-offset: -1px;
+    transition: all var(--mds-animation-speed-quick);
 
-    &:focus:not(:disabled, [aria-disabled='true']) {
+    &:focus-visible:not(:disabled, [aria-disabled='true']) {
       background: var(--mds-color-secondary-light);
     }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
-      background: var(--mds-color-primary-light);
+      filter: brightness(0.9);
     }
 
-    &:active:not(:disabled, [aria-disabled='true']) {
-      background: var(--mds-color-white);
-      color: var(--mds-color-primary);
+    &.selected:hover:not(:disabled, [aria-disabled='true']) {
+      filter: brightness(1.4);
     }
 
     &:disabled,
@@ -27,9 +27,10 @@
     }
 
     &.selected,
-    &.selected:focus {
+    &.selected:focus-visible {
       color: var(--mds-color-text-light);
       background: var(--mds-color-primary);
     }
+
   }
 }
