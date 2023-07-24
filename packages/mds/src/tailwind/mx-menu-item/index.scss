@@ -1,7 +1,7 @@
 .mx-menu-item {
   > div {
     min-width: 8rem; /* 128px */
-    background: transparent;
+    background: var(--mds-color-transparent);
     color: var(--mds-color-secondary);
 
     .item-label {
