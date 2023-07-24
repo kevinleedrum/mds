@@ -6,6 +6,7 @@
   span {
     position: relative;
     z-index: 1;
+    background-color: var(--mds-color-white);
     border: 1px solid var(--mds-color-secondary);
     border-radius: 3px;
 
@@ -39,12 +40,8 @@
  }
  
   input:focus-visible+span {
-    outline: 1px solid var(--mds-color-primary);
-  }
- 
-  input:checked:focus-visible+span,
-  input.indeterminate:focus-visible+span {  
-    background-color: var(--mds-color-primary-dark);
+    filter: drop-shadow(0px 0px 5px var(--mds-color-primary-transparent));
+    border-color: var(--mds-color-primary);
   }
 
   input.indeterminate~span::after {
