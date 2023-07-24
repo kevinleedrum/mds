@@ -79,7 +79,7 @@
 
     &:hover::before,
     &:active::before {
-      background: transparent;
+      background: var(--mds-color-transparent);
     }
   }
 

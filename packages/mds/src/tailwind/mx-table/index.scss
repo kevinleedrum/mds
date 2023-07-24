@@ -15,6 +15,11 @@
     }
   }
 
+  .table-grid {
+    border-color: var(--mds-color-secondary-light);
+    @apply rounded border;  
+  }
+  
   .table-grid>*:not(.hidden) {
     /* Only place table cell elements into the grid (not row elements). */
     @apply contents;

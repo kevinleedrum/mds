@@ -1,7 +1,7 @@
 .mds .mx-icon-button>a,
 .mx-icon-button>button {
   color: var(--mds-color-secondary);
-  background: transparent;
+  background: var(--mds-color-transparent);
 
   .chevron-wrapper {
     background: var(--mds-color-white);
@@ -34,6 +34,6 @@
   &:disabled,
   &[aria-disabled='true'] {
     color: var(--mds-color-secondary-medium);
-    background: transparent;
+    background: var(--mds-color-transparent);
   }
 }

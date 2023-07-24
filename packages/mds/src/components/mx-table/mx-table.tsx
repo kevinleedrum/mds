@@ -651,7 +651,7 @@ export class MxTable {
 
   getHeaderClass(col: ITableColumn, colIndex: number) {
     if (!col) return '';
-    let str = 'flex items-center subtitle2 py-18 ' + this.getAlignClasses(col).join(' ');
+    let str = 'flex items-center text-small font-bold uppercase py-18 ' + this.getAlignClasses(col).join(' ');
     str += this.minWidths.sm ? ' px-16' : ' flex-1';
     const isCheckAllInHeader = this.showCheckAll && !this.showOperationsBar;
     if (this.minWidths.sm && colIndex === 0) str += ' space-x-16';
@@ -861,7 +861,7 @@ export class MxTable {
                       {!col.heading && <span class="sr-only">{col.isActionColumn ? 'Action' : col.property}</span>}
                       {!this.draggableRows && col.sortable && col.property && (
                         <div class={this.getHeaderArrowClass(col)} data-testid="arrow">
-                          <i class="mds-arrow-triangle-down text-icon"></i>
+                          <i class="mds-chevron-down text-icon"></i>
                         </div>
                       )}
                     </div>
@@ -882,7 +882,7 @@ export class MxTable {
                     <span class="truncate flex-shrink" innerHTML={this.exposedMobileColumn.heading}></span>
                     {!this.draggableRows && this.exposedMobileColumn.sortable && this.exposedMobileColumn.property && (
                       <div class={this.getHeaderArrowClass(this.exposedMobileColumn)} data-testid="arrow">
-                        <i class="mds-arrow-triangle-down text-icon"></i>
+                        <i class="mds-chevron-down text-icon"></i>
                       </div>
                     )}
                   </div>

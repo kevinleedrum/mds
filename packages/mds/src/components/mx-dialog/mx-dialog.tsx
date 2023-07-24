@@ -83,7 +83,7 @@ export class MxDialog {
 
   /** A Promise-based replacement for `Window.alert()` with some additional options */
   @Method()
-  async alert(message: string, { confirmLabel = 'Okay', cancelLabel, heading }: DialogOptions = {}): Promise<void> {
+  async alert(message: string, { confirmLabel = 'OK', cancelLabel, heading }: DialogOptions = {}): Promise<void> {
     return this.open(message, { heading, confirmLabel, cancelLabel });
   }
 
@@ -91,7 +91,7 @@ export class MxDialog {
   @Method()
   async confirm(
     message: string,
-    { confirmLabel = 'Okay', cancelLabel = 'Cancel', heading }: DialogOptions = {},
+    { confirmLabel = 'OK', cancelLabel = 'Cancel', heading }: DialogOptions = {},
   ): Promise<boolean> {
     return this.open(message, { heading, confirmLabel, cancelLabel });
   }
@@ -163,7 +163,7 @@ export class MxDialog {
   }
 
   get modalClassNames(): string {
-    let str = 'modal w-320 m-16 flex flex-col rounded shadow-4 relative overflow-hidden';
+    let str = 'modal p-20 w-480 m-16 flex flex-col rounded shadow-4 relative overflow-hidden';
     if (this.isSimple) str += ' w-320';
     if (this.modalClass) str += ' ' + this.modalClass;
     return str;
@@ -183,7 +183,7 @@ export class MxDialog {
           data-testid="modal"
           class={this.modalClassNames}
         >
-          <div class="p-24 text-4 flex-grow overflow-auto" tabindex="0" data-testid="modal-content">
+          <div class="text-4 p-20 flex-grow overflow-auto" tabindex="0" data-testid="modal-content">
             {this.hasHeading && (
               <h1 id={this.uuid + '-dialog-heading'} class="text-h6 emphasis my-0 pb-16" data-testid="heading">
                 {this.heading}
@@ -198,14 +198,14 @@ export class MxDialog {
             <slot></slot>
           </div>
           {this.hasButtons && (
-            <div class="flex flex-wrap items-center justify-end p-4" data-testid="button-tray">
+            <div class="flex flex-wrap items-center justify-end pr-20 p-10" data-testid="button-tray">
               {this.confirmLabel && (
-                <mx-button class="m-4 order-2" btnType="text" onClick={() => this.closeDialog(true)}>
+                <mx-button class="order-2" onClick={() => this.closeDialog(true)}>
                   {this.confirmLabel}
                 </mx-button>
               )}
               {this.cancelLabel && (
-                <mx-button class="m-4 order-1" btnType="text" onClick={() => this.closeDialog()}>
+                <mx-button class="order-1 mr-20" btnType="text" onClick={() => this.closeDialog()}>
                   {this.cancelLabel}
                 </mx-button>
               )}
