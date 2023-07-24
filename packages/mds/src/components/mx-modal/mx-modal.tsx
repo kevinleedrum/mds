@@ -213,7 +213,7 @@ export class MxModal {
           let { btnType } = button;
           if (!btnType) btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
           return (
-            <mx-button {...button} xl btn-type={btnType}>
+            <mx-button {...button} btn-type={btnType}>
               {button.label}
             </mx-button>
           );
@@ -278,7 +278,7 @@ export class MxModal {
                 {this.previousPageUrl && (
                   <a
                     href={this.previousPageUrl}
-                    class="flex items-center uppercase text-4 font-semibold tracking-1-25"
+                    class="flex items-center uppercase text-small font-bold"
                     data-testid="previous-page"
                   >
                     <i class="mds-arrow-left mr-10"></i>

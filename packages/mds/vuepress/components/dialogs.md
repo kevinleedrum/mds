@@ -99,10 +99,10 @@ export default {
     },
     async confirmation() {
       const confirmed = await this.$refs.dialog.confirm('Are you sure about this?')
-      this.$refs.dialog.alert(confirmed ? 'You clicked Okay.' : 'You did not click Okay.')
+      this.$refs.dialog.alert(confirmed ? 'You clicked OK.' : 'You did not click OK.')
     },
     async advancedConfirmation() {
-      const options = { heading: 'Pancakes', confirmLabel: 'Yes please', cancelLabel: 'No, I do not want pancakes'}
+      const options = { heading: 'Pancakes', confirmLabel: 'Yes please', cancelLabel: 'No pancakes for me'}
       const confirmed = await this.$refs.dialog.confirm('Would you like some pancakes?', options)
       this.$refs.dialog.alert(confirmed ? 'You accepted the pancakes.' : 'You declined the pancakes.')
     }
