@@ -792,6 +792,7 @@ export namespace Components {
         "labelClass": string;
         "labelName": string;
         "name": string;
+        "userchecked": boolean;
         "value": string;
     }
     interface MxTab {
@@ -2191,6 +2192,7 @@ declare namespace LocalJSX {
         "labelClass"?: string;
         "labelName"?: string;
         "name"?: string;
+        "userchecked"?: boolean;
         "value"?: string;
     }
     interface MxTab {

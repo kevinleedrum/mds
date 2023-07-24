@@ -4,21 +4,20 @@
   .slider {
     background-color: var(--mds-color-white);
     border: 1px solid var(--mds-color-secondary);
+    width: 42px;
+    height: 22px;
     -webkit-transition: 0.15s;
     transition: 0.15s;
 
-    &:before {
-      @apply shadow-1;
+    &::before {
       position: absolute;
       content: '';
-      height: 20px;
-      width: 20px;
-      left: -1px;
-      bottom: -4px;
-      border: 1px solid var(--mds-color-secondary);
-      background-color: var(--mds-color-white);
-      -webkit-transition: 0.15s;
-      transition: 0.15s;
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      top: 3px;
+      background-color: var(--mds-color-secondary);
+      transition: left var(--mds-animation-speed-normal) var(--mds-animation-ease-bounce);
 
       @media (prefers-reduced-motion: reduce) {
         transition: none;
@@ -26,86 +25,62 @@
     }
 
     &::after {
-      display: none;
       content: '';
       position: absolute;
-      top: -14px;
-      left: -12px;
-      width: 40px;
-      height: 40px;
-      border-radius: 100%;
-      z-index: 0;
-    }
-
-    &:hover::after {
-      display: block;
-      background: var(--mds-color-primary-darkest);
-      opacity: 0.04;
-    }
-
-    &:active::after {
-      display: block;
-      background: var(--mds-color-primary-darkest);
-      opacity: 0.12;
+      display: none;
+      left: 7px;
+      top: 5px;
+      width: 5px;
+      height: 8px;
+      border: solid var(--mds-color-white);
+      border-width: 0 0.125rem 0.125rem 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
     }
   }
 
   input:checked+.slider {
-    background-color: var(--mds-color-primary-light);
+    background-color: var(--mds-color-primary);
+    border-color: var(--mds-color-primary);
   }
 
-  :focus-within:focus-visible+.slider::after {
-    display: block;
-    background: var(--mds-color-primary-darkest);
-    opacity: 0.12;
-  }
-
-  input:checked+.slider:active::after,
-  :focus-within:focus-visible:checked+.slider::after {
-    display: block;
-    background: var(--mds-color-primary);
-    opacity: 0.24;
+  input:focus-visible+.slider {
+    filter: drop-shadow(0px 0px 5px var(--mds-color-primary-transparent));
+    border-color: var(--mds-color-primary);
+    &::before {
+      background-color: var(--mds-color-primary);
+    }
   }
 
   input:checked+.slider:before {
-    -webkit-transform: translateX(1.25rem);
-    -ms-transform: translateX(1.25rem);
-    transform: translateX(1.25rem);
-    background: var(--mds-color-primary);
-    width: 18px;
-    height: 18px;
-    bottom: -3px;
-    outline: 1px solid var(--mds-color-secondary);
-    border: 1px solid var(--mds-color-white);
+    left: 22px;
+    background: var(--mds-color-white);
   }
 
   input:checked+.slider::after {
-    -webkit-transform: translateX(1.25rem);
-    -ms-transform: translateX(1.25rem);
-    transform: translateX(1.25rem);
-    background: var(--mds-color-primary);
-    opacity: 0.32;
+    display: block;
   }
 
-  input:checked+.slider:hover::after {
-    background: var(--mds-color-primary);
-    opacity: 0.08;
+  input:checked+.slider.userchecked::after {
+    animation: scaleInCheckboxMark var(--mds-animation-speed-normal) var(--mds-animation-ease-bounce) forwards;
   }
 
   input:disabled {
     +.slider {
       background-color: var(--mds-color-secondary-ultralight);
       border: 1px solid var(--mds-color-secondary-medium);
+      &::before {
+        background-color: var(--mds-color-secondary-medium);
+      }
+      &::after {
+        border-color: var(--mds-color-secondary-medium);
+      }
     }
 
     +.slider:before {
       background: var(--mds-color-secondary-ultralight);
       border: 1px solid var(--mds-color-secondary-medium);
-    }
-
-    +.slider:after,
-    +.slider:hover::after {
-      background: var(--mds-color-transparent);
     }
 
     &:checked {
@@ -131,4 +106,16 @@
   .slider.round:before {
     border-radius: 50%;
   }
+}
+
+@keyframes scaleInCheckboxMark {
+  0%{
+      opacity: 0;
+      transform: scale(0) rotate(45deg);
+  }
+  100%{
+      opacity: 1;
+      transform: scale(1) rotate(45deg);
+  }
+  
 }
