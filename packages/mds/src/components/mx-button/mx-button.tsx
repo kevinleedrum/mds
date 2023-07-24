@@ -71,25 +71,25 @@ export class MxButton implements IMxButtonProps {
 
     // Common classes
     str +=
-      ' flex items-center justify-center relative overflow-hidden cursor-pointer appearance-none disabled:pointer-events-none disabled:cursor-auto hover:no-underline';
+      ' flex items-center justify-center text-small font-bold uppercase relative overflow-hidden cursor-pointer appearance-none disabled:pointer-events-none disabled:cursor-auto hover:no-underline';
 
     // Contained & Outlined Buttons
     if (['contained', 'outlined'].includes(this.btnType)) {
-      str += ' w-full rounded text-small font-bold uppercase';
+      str += ' w-full rounded';
       if (this.btnType === 'outlined') str += ' border';
       if (this.xl) str += ' min-h-48 px-32 text-3 tracking-1-5';
-      else str += ' min-h-36 px-16 text-4';
+      else str += ' min-h-36 px-16';
     }
 
     // Simple Button
     if (this.btnType === 'simple') {
-      str += ' w-full min-h-36 px-16 border rounded text-4';
+      str += ' w-full min-h-36 px-16 border rounded';
     }
 
     // Text Button
     if (this.btnType === 'text') {
-      str += ' w-full min-h-36 px-8 py-10 text-4 rounded';
-      str += this.dropdown ? ' font-normal' : ' font-semibold uppercase tracking-1-25';
+      str += ' w-full min-h-36 px-8 py-10 rounded';
+      str += this.dropdown ? '' : ' tracking-1-25';
     }
 
     return str;
