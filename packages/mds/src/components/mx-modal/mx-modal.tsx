@@ -278,7 +278,7 @@ export class MxModal {
                 {this.previousPageUrl && (
                   <a
                     href={this.previousPageUrl}
-                    class="flex items-center uppercase text-4 font-semibold tracking-1-25"
+                    class="flex items-center uppercase text-small font-bold"
                     data-testid="previous-page"
                   >
                     <i class="mds-arrow-left mr-10"></i>
