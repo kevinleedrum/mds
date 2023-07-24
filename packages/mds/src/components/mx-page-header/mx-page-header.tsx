@@ -114,7 +114,7 @@ export class MxPageHeader {
   }
 
   get headingClass() {
-    let str = 'my-0 pr-20 emphasis ';
+    let str = 'my-0 pr-20 ';
     if (!this.minWidths.md) str += this.previousPageUrl ? 'text-h6' : 'text-h5';
     else str += this.previousPageUrl || this.modal ? 'text-h5' : 'text-h3';
     if (this.hasModalHeaderRight) str += ' pr-80';
