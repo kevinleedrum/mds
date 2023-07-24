@@ -11,7 +11,7 @@ COPY packages/mds-react/package.json ./packages/mds-react/package.json
 COPY yarn.lock ./
 COPY .yarn ./
 COPY .yarnrc.yml ./
-COPY .npmrc ./
+COPY .npmrc.ci ./.npmrc
 
 RUN yarn install --immutable
 
