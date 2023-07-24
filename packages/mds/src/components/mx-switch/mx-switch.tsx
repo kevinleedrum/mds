@@ -13,6 +13,7 @@ export class MxSwitch {
   @Prop() labelClass = '';
   @Prop() labelName = '';
   @Prop({ mutable: true }) checked = false;
+  @Prop({ mutable: true }) userchecked = false;
   @Prop() disabled = false;
 
   @Element() element: HTMLMxInputElement;
@@ -21,9 +22,16 @@ export class MxSwitch {
 
   /** Keep checked prop in sync with input element attribute */
   onInput(e: InputEvent) {
-    this.checked = (e.target as HTMLInputElement).checked;
+    this.checked = this.userchecked = (e.target as HTMLInputElement).checked;
   }
 
+  get switchClass(): string {
+    let str = 'slider relative round flex-shrink-0';
+    if (!this.disabled) str += ' cursor-pointer';
+    str += this.userchecked ? ' userchecked' : '';
+    return str;
+  }
+  
   get labelClassNames(): string {
     let str = 'relative inline-flex flex-nowrap align-center items-center text-4';
     if (!this.disabled) str += ' cursor-pointer';
@@ -46,7 +54,7 @@ export class MxSwitch {
             {...this.dataAttributes}
             onInput={this.onInput.bind(this)}
           />
-          <div class={'slider relative round w-36 h-14 flex-shrink-0' + (this.disabled ? '' : ' cursor-pointer')}></div>
+          <div class={this.switchClass}></div>
           <div class="switch-label ml-16 inline-block" data-testid="labelName">
             {this.labelName}
           </div>
