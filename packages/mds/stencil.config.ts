@@ -3,6 +3,7 @@ import { sass } from '@stencil/sass';
 import { inlineSvg } from 'stencil-inline-svg';
 import { OutputTargetDist, OutputTargetDistCustomElements, OutputTargetHydrate, OutputTargetWww } from "@stencil/core/internal"
 import { reactOutputTarget } from "@stencil/react-output-target"
+import { angularOutputTarget } from '@stencil/angular-output-target';
 
 // Outputs  loader
 //          dist/cjs (common js)
@@ -22,6 +23,12 @@ export const react = reactOutputTarget({
   proxiesFile: '../mds-react/lib/components/stencil-generated/index.ts',
   includeDefineCustomElements: true,
   loaderDir: 'loader'
+})
+
+export const angular = angularOutputTarget({
+  componentCorePackage: '@moxiworks/mds',
+  directivesProxyFile: '../mds-angular/lib/stencil-generated/components.ts',
+  directivesArrayFile: '../mds-angular/lib/stencil-generated/index.ts',
 })
 
 // Outputs dist/components
@@ -52,6 +59,7 @@ export const config: Config = {
   outputTargets: [
     dist,
     react,
+    angular,
     distCustomElements,
     docsWww,
     hydrate,
