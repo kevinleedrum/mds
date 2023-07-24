@@ -213,7 +213,7 @@ export class MxModal {
           let { btnType } = button;
           if (!btnType) btnType = index === 0 ? 'contained' : index === 1 ? 'outlined' : 'text';
           return (
-            <mx-button {...button} xl btn-type={btnType}>
+            <mx-button {...button} btn-type={btnType}>
               {button.label}
             </mx-button>
           );
