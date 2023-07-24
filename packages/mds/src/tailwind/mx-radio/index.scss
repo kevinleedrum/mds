@@ -4,6 +4,7 @@
   span {
     position: relative;
     z-index: 1;
+    background-color: var(--mds-color-white);
     border: 1px solid var(--mds-color-secondary);
 
     &::before {
@@ -30,6 +31,11 @@
       background: var(--mds-color-primary);
       border-radius: 100%;
     }
+  }
+
+  input:focus-visible+span {
+    filter: drop-shadow(0px 0px 5px var(--mds-color-primary-transparent));
+    border-color: var(--mds-color-primary);
   }
 
   input:checked+span.userchecked::before {
