@@ -37,20 +37,20 @@ module.exports = {
         link: '/getting-started/',
       },
       {
-        text: 'CSS Documentation',
-        link: '/css-documentation/',
-      },
-      {
-        text: 'Examples',
-        link: '/examples/grid.html',
+        text: 'Components',
+        link: '/components/',
       },
       {
         text: 'Patterns',
         link: '/patterns/introduction.html',
       },
       {
-        text: 'Components',
-        link: '/components/inputs.html',
+        text: 'CSS Documentation',
+        link: '/css-documentation/',
+      },
+      {
+        text: 'Examples',
+        link: '/examples/grid.html',
       },
     ],
     sidebar: {
