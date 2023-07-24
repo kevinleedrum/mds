@@ -16,6 +16,7 @@ module.exports = {
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
     ['link', { rel: 'stylesheet', href: '/styles/mds-core.css' }],
+    ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     ['script', { src: 'https://unpkg.com/phosphor-icons@1.3.1' }],
     ['script', { type: 'module', src: '/components/mds-components.esm.js' }],
     ['script', { nomodule: '', src: '/components/mds-components.js' }],
