@@ -1,6 +1,6 @@
 {
   "name": "@moxiworks/mds",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "Moxiworks Custom Component System",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
