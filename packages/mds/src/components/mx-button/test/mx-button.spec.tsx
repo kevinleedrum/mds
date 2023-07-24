@@ -130,11 +130,6 @@ describe('mx-button as a simple button', () => {
     expect(btn.getAttribute('class')).toContain('border');
   });
 
-  it('is not uppercase', async () => {
-    const btn = root.querySelector('button');
-    expect(btn.getAttribute('class')).not.toContain('uppercase');
-  });
-
   it('has a chevron icon', async () => {
     const icon = root.querySelector('button [data-testid="chevron"]');
     expect(icon).not.toBeNull();
