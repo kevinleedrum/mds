@@ -1,6 +1,6 @@
 {
   "name": "@moxiworks/mds-angular",
-  "version": "0.2.11",
+  "version": "0.2.18",
   "module": "dist/fesm2022/component-library.mjs",
   "typings": "dist/index.d.ts",
   "exports": {
