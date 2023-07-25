@@ -95,6 +95,7 @@
     "@stencil/angular-output-target": "^0.7.1",
     "@stencil/react-output-target": "^0.5.3",
     "@stencil/sass": "^3.0.4",
+    "@stencil/vue-output-target": "^0.8.6",
     "@types/jest": "^26.0.22",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
