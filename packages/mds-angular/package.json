@@ -1,28 +1,35 @@
 {
   "name": "@moxiworks/mds-angular",
   "version": "0.2.11",
+  "module": "dist/fesm2022/component-library.mjs",
+  "typings": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "esm2022": "./dist/esm2022/component-library.mjs",
+      "esm": "./dist/esm2022/component-library.mjs",
+      "default": "./dist/fesm2022/component-library.mjs"
+    }
+  },
   "scripts": {
     "build": "ng build"
   },
-  "private": true,
+  "peerDependencies": {
+    "@moxiworks/mds": "0.2.11"
+  },
   "dependencies": {
-    "@angular/animations": "^16.1.0",
     "@angular/common": "^16.1.0",
-    "@angular/compiler": "^16.1.0",
     "@angular/core": "^16.1.0",
-    "@angular/forms": "^16.1.0",
-    "@angular/platform-browser": "^16.1.0",
-    "@angular/platform-browser-dynamic": "^16.1.0",
-    "@angular/router": "^16.1.0",
-    "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.13.0"
+    "@moxiworks/mds": "0.2.11",
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.1.5",
     "@angular/cli": "~16.1.5",
+    "@angular/compiler": "^16.1.0",
     "@angular/compiler-cli": "^16.1.0",
     "ng-packagr": "^16.0.0",
+    "rxjs": "~7.8.0",
     "typescript": "~5.1.3"
   }
 }
