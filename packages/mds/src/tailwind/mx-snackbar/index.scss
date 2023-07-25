@@ -1,4 +1,10 @@
 .mx-snackbar-alert {
   background: var(--mds-color-tertiary);
   color: var(--mds-color-white);
+  [slot='action'] button {
+    color: var(--mds-color-white);
+    &:hover:not(:disabled, [aria-disabled='true']) .slot-content {
+      color: var(--mds-color-white);
+    }
+  }
 }
