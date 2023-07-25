@@ -27,8 +27,8 @@ export const react = reactOutputTarget({
 
 export const angular = angularOutputTarget({
   componentCorePackage: '@moxiworks/mds',
-  directivesProxyFile: '../mds-angular/projects/component-library/src/lib/stencil-generated/components.ts',
-  directivesArrayFile: '../mds-angular/projects/component-library/src/lib/stencil-generated/index.ts',
+  directivesProxyFile: '../mds-angular/component-library/lib/stencil-generated/components.ts',
+  directivesArrayFile: '../mds-angular/component-library/lib/stencil-generated/index.ts',
 })
 
 // Outputs dist/components

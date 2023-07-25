@@ -5,7 +5,7 @@
     "component-library": {
       "projectType": "library",
       "root": "component-library",
-      "sourceRoot": "component-library/src",
+      "sourceRoot": "component-library/lib",
       "prefix": "lib",
       "architect": {
         "build": {
