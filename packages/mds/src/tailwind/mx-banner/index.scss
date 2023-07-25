@@ -4,6 +4,9 @@
     color: var(--mds-color-white);
     [slot='actions'] button {
       color: var(--mds-color-white);
+      &:hover:not(:disabled, [aria-disabled='true']) .slot-content {
+        color: var(--mds-color-white);
+      }
     }
   }
   &.is-error > div {
