@@ -4,18 +4,18 @@
   "projects": {
     "component-library": {
       "projectType": "library",
-      "root": "component-library",
-      "sourceRoot": "component-library/lib",
+      "root": ".",
+      "sourceRoot": "lib",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "component-library/ng-package.json"
+            "project": "ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "component-library/tsconfig.json"
+              "tsConfig": "tsconfig.json"
             }
           },
           "defaultConfiguration": "production"

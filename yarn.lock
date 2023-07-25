@@ -211,18 +211,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/common@npm:^16.1.0":
-  version: 16.1.6
-  resolution: "@angular/common@npm:16.1.6"
-  dependencies:
-    tslib: ^2.3.0
-  peerDependencies:
-    "@angular/core": 16.1.6
-    rxjs: ^6.5.3 || ^7.4.0
-  checksum: c27cbff57d066e703f5f332571bb41e8077be715382cb017af6023b20da4844852a8ce8fee24d4871c0ce62b4fb17a37b28774cc802453d8faccbfc6d29e6183
-  languageName: node
-  linkType: hard
-
 "@angular/compiler-cli@npm:^16.1.0":
   version: 16.1.6
   resolution: "@angular/compiler-cli@npm:16.1.6"
@@ -2473,7 +2461,6 @@ __metadata:
   dependencies:
     "@angular-devkit/build-angular": ^16.1.5
     "@angular/cli": ~16.1.5
-    "@angular/common": ^16.1.0
     "@angular/compiler": ^16.1.0
     "@angular/compiler-cli": ^16.1.0
     "@angular/core": ^16.1.0
@@ -2482,8 +2469,6 @@ __metadata:
     rxjs: ~7.8.0
     tslib: ^2.3.0
     typescript: ~5.1.3
-  peerDependencies:
-    "@moxiworks/mds": 0.2.11
   languageName: unknown
   linkType: soft
 

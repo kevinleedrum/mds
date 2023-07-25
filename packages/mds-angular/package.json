@@ -14,13 +14,10 @@
   "scripts": {
     "build": "ng build"
   },
-  "peerDependencies": {
-    "@moxiworks/mds": "0.2.11"
-  },
   "dependencies": {
-    "@angular/common": "^16.1.0",
     "@angular/core": "^16.1.0",
     "@moxiworks/mds": "0.2.11",
+    "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
@@ -29,7 +26,6 @@
     "@angular/compiler": "^16.1.0",
     "@angular/compiler-cli": "^16.1.0",
     "ng-packagr": "^16.0.0",
-    "rxjs": "~7.8.0",
     "typescript": "~5.1.3"
   }
 }

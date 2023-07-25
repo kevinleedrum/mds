@@ -1,27 +1,17 @@
+# @moxiworks/mds-angular
+
+This package in the monorepo serves as the Angular integration for the Stencil-generated components. The `lib` directory within this package contains the Stencil-generated components, which are built to be consumed by Angular applications.
+
 # MdsAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.5.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.5, following the [stencil-js integration docs](https://stenciljs.com/docs/angular).
 
-## Development server
+The docs suggested a complex structure deeply nested, seemingly a monorepo within a monorepo. Instead, we've chosen to keep things simple and structure it as a single application. Additionally, the `ng` tooling used to build Angular applications would normally build the `package.json` in with the dist. We've chosen to ignore this for simplicity, and to seemlessly work with lerna.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Generating the `lib` Directory
 
-## Code scaffolding
+The `lib` directory holds the Stencil-generated components, which serve as the foundation for the Angular library. These components are defined using web standards and can be used seamlessly within Angular applications. To generate the `lib` directory, run the build script in the `mds` package. In the `packages/mds/stencil.config.ts`, you can see the config for outputting this.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Building the `lib` Directory
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The `yarn build` script handles the tsc build. The output is stored in the `dist` directory. Only run this command after successfully completing the previous step.
