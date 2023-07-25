@@ -61,7 +61,7 @@ export const hydrate: OutputTargetHydrate = {
 
 // This is the baseConfig that builds everything required
 export const config: Config = {
-  namespace: 'mds-components', 
+  namespace: 'mds-components',
   outputTargets: [
     dist,
     react,
