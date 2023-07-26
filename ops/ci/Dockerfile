@@ -2,16 +2,19 @@ FROM node:18-alpine as ci
 
 RUN apk --no-cache add ca-certificates
 
-RUN yarn set version berry
-
 WORKDIR /app
-COPY package.json ./
-COPY packages/mds/package.json ./packages/mds/package.json
-COPY packages/mds-react/package.json ./packages/mds-react/package.json
-COPY yarn.lock ./
-COPY .yarn ./
-COPY .yarnrc.yml ./
+
 COPY .npmrc.ci ./.npmrc
+COPY .yarn/releases ./.yarn/releases
+COPY .yarnrc.yml ./
+
+COPY package.json ./
+COPY packages/mds-react/package.json ./packages/mds-react/package.json
+COPY packages/mds-angular/package.json ./packages/mds-angular/package.json
+COPY packages/mds-vue/package.json ./packages/mds-vue/package.json
+COPY packages/mds/package.json ./packages/mds/package.json
+
+COPY yarn.lock ./
 
 RUN yarn install --immutable
 

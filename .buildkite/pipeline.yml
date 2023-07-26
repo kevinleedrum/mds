@@ -115,10 +115,13 @@ steps:
         docker-compose#v4.7.0:
           run: ci
           config: ops/ci/docker-compose.yml
-
-    - label: ":react: @moxiworks/mds Build react"
-      command: "yarn mds:build-react"
-      key: 'mds-build-react'
+  
+  - group: ":react: @moxiworks/mds-react"
+    steps:
+    - label: ":react: @moxiworks/mds-react Build"
+      commands: 
+        - "yarn mds:build-react"
+        - "yarn mds-react:build"
       agents:
         queue: docker-ec2
       plugins:
@@ -127,15 +130,28 @@ steps:
         docker-compose#v4.7.0:
           run: ci
           config: ops/ci/docker-compose.yml
-  
-  - group: ":react: @moxiworks/mds-react"
-    key: "mds-react"
+
+  - group: ":angular: @moxiworks/mds-angular"
     steps:
-    - label: ":react: @moxiworks/mds-react Build"
+    - label: ":angular: @moxiworks/mds-angular Build"
       commands: 
-        - "yarn mds:build-react"
-        - "yarn mds-react:build"
-      depends_on: "mds-build-react"
+        - "yarn mds:build-angular"
+        - "yarn mds-angular:build"
+      agents:
+        queue: docker-ec2
+      plugins:
+        ecr#v1.2.0:
+          login: true
+        docker-compose#v4.7.0:
+          run: ci
+          config: ops/ci/docker-compose.yml
+
+  - group: ":vue: @moxiworks/mds-vue"
+    steps:
+    - label: ":vue: @moxiworks/mds-vue Build"
+      commands: 
+        - "yarn mds:build-vue"
+        - "yarn mds-vue:build"
       agents:
         queue: docker-ec2
       plugins:

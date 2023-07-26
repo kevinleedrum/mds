@@ -12,9 +12,13 @@
     "mds:build": "yarn workspace @moxiworks/mds build",
     "mds:build-mds": "yarn workspace @moxiworks/mds build:mds",
     "mds:build-react": "yarn workspace @moxiworks/mds build:react",
+    "mds:build-angular": "yarn workspace @moxiworks/mds build:angular",
+    "mds:build-vue": "yarn workspace @moxiworks/mds build:vue",
     "mds:build-docs": "yarn workspace @moxiworks/mds build:docs",
     "mds:release-docs": "yarn workspace @moxiworks/mds docs:deploy",
     "mds-react:build": "yarn workspace @moxiworks/mds-react build",
+    "mds-angular:build": "yarn workspace @moxiworks/mds-angular build",
+    "mds-vue:build": "yarn workspace @moxiworks/mds-vue build",
     "publish": "lerna publish",
     "lint": "lerna run lint",
     "stylelint": "lerna run stylelint"
