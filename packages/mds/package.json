@@ -115,7 +115,7 @@
     "prettier": "^2.6.2",
     "stencil-inline-svg": "^1.1.0",
     "tailwindcss": "^2.2.0-canary.9",
-    "typescript": "^4.7.3",
+    "typescript": "^5.1.6",
     "vue": "2.7.14",
     "vuepress": "^1.9.9",
     "vuepress-plugin-flexsearch": "^0.3.0",
