@@ -4,11 +4,13 @@
 
 Block inputs should always be contained within the `mx-block-wrapper` component.
 
-Block Wrappers have a single attribute of `columns`
+Block Wrappers have a single (optional) attribute of `columns` which is used to define the number of grid columns to utilise in the layout. Note: these collapse on mobile viewport sizes.
 
 ## Block Input (text)
 
-The `mx-block-input` component...
+The `mx-block-input` component is used for standard `<input>` fields in the Mercury block input designs.
+
+It utilises a similar interface to the [`mx-input` component](/components/inputs.html) but also adds the optional `colspan` attribute to define the number of columns in the block wrapper to span if a value other than 1 is required.
 
 <br />
 <section class="mds">
