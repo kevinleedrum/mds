@@ -7,10 +7,7 @@ module.exports = {
   description: description,
   base: '/mds/',
   dest: './docs',
-  extraWatchFiles: [
-    '.vuepress/public/components/*',
-    '.vuepress/public/styles/*',
-  ],
+  extraWatchFiles: ['.vuepress/public/components/*', '.vuepress/public/styles/*'],
   head: [
     ['meta', { name: 'theme-color', content: '#0457af' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
@@ -149,6 +146,7 @@ module.exports = {
       '/components/': [
         'badges',
         'banners',
+        'block-inputs',
         'buttons',
         'charts',
         'chips',

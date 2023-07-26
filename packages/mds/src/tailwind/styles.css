@@ -18,36 +18,38 @@
 /***************************
 * Import Component CSS
 ***************************/
-@import './mx-input/index.scss';
-@import './mx-confirm-input/index.scss';
-@import './mx-search/index.scss';
-@import './mx-button/index.scss';
-@import './mx-icon-button/index.scss';
-@import './mx-toggle-button/index.scss';
-@import './mx-chip/index.scss';
-@import './mx-fab/index.scss';
-@import './mx-checkbox/index.scss';
-@import './mx-radio/index.scss';
-@import './mx-switch/index.scss';
-@import './mx-tooltip/index.scss';
-@import './mx-circular-progress/index.scss';
-@import './mx-linear-progress/index.scss';
-@import './mx-tab/index.scss';
-@import './mx-select/index.scss';
-@import './mx-dropdown-menu/index.scss';
-@import './mx-menu/index.scss';
-@import './mx-menu-item/index.scss';
-@import './mx-date-picker/index.scss';
-@import './mx-time-picker/index.scss';
-@import './mx-page-header/index.scss';
 @import './mx-banner/index.scss';
-@import './mx-dialog/index.scss';
-@import './mx-modal/index.scss';
-@import './mx-table/index.scss';
-@import './mx-pagination/index.scss';
-@import './mx-snackbar/index.scss';
-@import './mx-image-upload/index.scss';
+@import './mx-block-input/index.scss';
+@import './mx-block-wrapper/index.scss';
+@import './mx-button/index.scss';
+@import './mx-checkbox/index.scss';
+@import './mx-chip/index.scss';
+@import './mx-circular-progress/index.scss';
 @import './mx-code/index.scss';
+@import './mx-confirm-input/index.scss';
+@import './mx-date-picker/index.scss';
+@import './mx-dialog/index.scss';
+@import './mx-dropdown-menu/index.scss';
+@import './mx-fab/index.scss';
+@import './mx-icon-button/index.scss';
+@import './mx-image-upload/index.scss';
+@import './mx-input/index.scss';
+@import './mx-linear-progress/index.scss';
+@import './mx-menu-item/index.scss';
+@import './mx-menu/index.scss';
+@import './mx-modal/index.scss';
+@import './mx-page-header/index.scss';
+@import './mx-pagination/index.scss';
+@import './mx-radio/index.scss';
+@import './mx-search/index.scss';
+@import './mx-select/index.scss';
+@import './mx-snackbar/index.scss';
+@import './mx-switch/index.scss';
+@import './mx-tab/index.scss';
+@import './mx-table/index.scss';
+@import './mx-time-picker/index.scss';
+@import './mx-toggle-button/index.scss';
+@import './mx-tooltip/index.scss';
 
 @import './icons.scss';
 @import './ripple.scss';
@@ -111,6 +113,17 @@
       &:not(.my-0) {
         @apply mb-24;
       }
+    }
+    .text-small {
+      font-size: 0.75rem;
+      letter-spacing: 0;
+      line-height: 0.875rem;
+    }
+    .text-tooltip {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1px;
+      font-weight: 700;
+      line-height: 0.875rem;
     }
     .text-h1 {
       font-size: 2.5rem;
@@ -249,16 +262,5 @@
       font-size: 0.75rem;
       @apply tracking-1-5 leading-4 font-normal uppercase;
     }
-  }
-  .text-small {
-    font-size: 0.75rem;
-    letter-spacing: 0;
-    line-height: 0.875rem;
-  }
-  .text-tooltip {
-    font-size: 0.6875rem;
-    letter-spacing: 0.1px;
-    font-weight: 700;
-    line-height: 0.875rem;
   }
 }
