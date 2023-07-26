@@ -5,6 +5,7 @@ describe('mx-block-input', () => {
   let page;
   let root: HTMLMxBlockInputElement;
   let input: HTMLInputElement;
+  let label: HTMLLabelElement;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [MxBlockInput],
@@ -25,11 +26,16 @@ describe('mx-block-input', () => {
     });
     root = page.root;
     input = root.querySelector('input');
+    label = root.querySelector('label');
   });
 
   it('assigns proper value for label', async () => {
     const placeholder = root.querySelector('label');
     expect(placeholder.textContent).toContain('testLabel');
+  });
+
+  it('associates the label with the input', async () => {
+    expect(label.getAttribute('htmlFor')).toBe(input.getAttribute('id'));
   });
 
   it('has the right name, value, placeholder and type', async () => {
@@ -47,7 +53,7 @@ describe('mx-block-input', () => {
   });
 
   it('should have proper assistive text', async () => {
-    const assitive = root.querySelector('label span');
+    const assitive = label.querySelector('span');
     expect(assitive.textContent).toBe('testAssistiveText');
   });
 
@@ -71,5 +77,9 @@ describe('mx-block-input', () => {
 
   it('applies any data attributes to the input element', async () => {
     expect(input.getAttribute('data-test')).toBe('testData');
+  });
+
+  it('associates assistive text to the aria-describedby attribute', async () => {
+    expect(input.getAttribute('aria-describedby')).toBe(label.querySelector('span').getAttribute('id'));
   });
 });
