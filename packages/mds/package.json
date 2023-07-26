@@ -59,7 +59,7 @@
     "build:docs": "sh scripts/build-docs.sh",
     "dev": "npm-run-all --parallel docs:dev stencil:dev tailwind:dev watch",
     "tailwind:dev": "yarn tailwind:docs -w",
-    "tailwind:build": "yarn tailwind:mds && yarn tailwind:react && yarn tailwind:docs",
+    "tailwind:build": "sh ./scripts/build-all-tailwind.sh",
     "tailwind:mds": "sh ./scripts/build-tailwind.sh dist/styles",
     "tailwind:react": "sh ./scripts/build-tailwind.sh ../mds-react/dist/styles",
     "tailwind:angular": "sh ./scripts/build-tailwind.sh ../mds-angular/dist/styles",
