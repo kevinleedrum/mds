@@ -65,6 +65,23 @@ export namespace Components {
          */
         "sticky": boolean;
     }
+    interface MxBlockInput {
+        "assistiveText": string;
+        "colspan": number;
+        "disabled": boolean;
+        "error": boolean;
+        "inputId": string;
+        "label": string;
+        "maxlength": number;
+        "name": string;
+        "placeholder": string;
+        "readonly": boolean;
+        "type": string;
+        "value": string;
+    }
+    interface MxBlockWrapper {
+        "columns": number;
+    }
     interface MxButton {
         "btnType": BtnType;
         "disabled": boolean;
@@ -1165,6 +1182,18 @@ declare global {
         prototype: HTMLMxBannerElement;
         new (): HTMLMxBannerElement;
     };
+    interface HTMLMxBlockInputElement extends Components.MxBlockInput, HTMLStencilElement {
+    }
+    var HTMLMxBlockInputElement: {
+        prototype: HTMLMxBlockInputElement;
+        new (): HTMLMxBlockInputElement;
+    };
+    interface HTMLMxBlockWrapperElement extends Components.MxBlockWrapper, HTMLStencilElement {
+    }
+    var HTMLMxBlockWrapperElement: {
+        prototype: HTMLMxBlockWrapperElement;
+        new (): HTMLMxBlockWrapperElement;
+    };
     interface HTMLMxButtonElement extends Components.MxButton, HTMLStencilElement {
     }
     var HTMLMxButtonElement: {
@@ -1384,6 +1413,8 @@ declare global {
     interface HTMLElementTagNameMap {
         "mx-badge": HTMLMxBadgeElement;
         "mx-banner": HTMLMxBannerElement;
+        "mx-block-input": HTMLMxBlockInputElement;
+        "mx-block-wrapper": HTMLMxBlockWrapperElement;
         "mx-button": HTMLMxButtonElement;
         "mx-chart": HTMLMxChartElement;
         "mx-checkbox": HTMLMxCheckboxElement;
@@ -1467,6 +1498,23 @@ declare namespace LocalJSX {
           * When set, `position: sticky` will be applied to the banner.
          */
         "sticky"?: boolean;
+    }
+    interface MxBlockInput {
+        "assistiveText"?: string;
+        "colspan"?: number;
+        "disabled"?: boolean;
+        "error"?: boolean;
+        "inputId"?: string;
+        "label"?: string;
+        "maxlength"?: number;
+        "name"?: string;
+        "placeholder"?: string;
+        "readonly"?: boolean;
+        "type"?: string;
+        "value"?: string;
+    }
+    interface MxBlockWrapper {
+        "columns"?: number;
     }
     interface MxButton {
         "btnType"?: BtnType;
@@ -2519,6 +2567,8 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "mx-badge": MxBadge;
         "mx-banner": MxBanner;
+        "mx-block-input": MxBlockInput;
+        "mx-block-wrapper": MxBlockWrapper;
         "mx-button": MxButton;
         "mx-chart": MxChart;
         "mx-checkbox": MxCheckbox;
@@ -2563,6 +2613,8 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "mx-badge": LocalJSX.MxBadge & JSXBase.HTMLAttributes<HTMLMxBadgeElement>;
             "mx-banner": LocalJSX.MxBanner & JSXBase.HTMLAttributes<HTMLMxBannerElement>;
+            "mx-block-input": LocalJSX.MxBlockInput & JSXBase.HTMLAttributes<HTMLMxBlockInputElement>;
+            "mx-block-wrapper": LocalJSX.MxBlockWrapper & JSXBase.HTMLAttributes<HTMLMxBlockWrapperElement>;
             "mx-button": LocalJSX.MxButton & JSXBase.HTMLAttributes<HTMLMxButtonElement>;
             "mx-chart": LocalJSX.MxChart & JSXBase.HTMLAttributes<HTMLMxChartElement>;
             "mx-checkbox": LocalJSX.MxCheckbox & JSXBase.HTMLAttributes<HTMLMxCheckboxElement>;
