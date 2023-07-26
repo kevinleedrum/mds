@@ -37,7 +37,7 @@ It utilises a similar interface to the [`mx-input` component](/components/inputs
       <strong>Disabled with assistive text</strong>
       <div class="my-20">
         <mx-block-wrapper>
-          <mx-block-input label="Label" assistive-text="Helpful text about input" disabled placeholder="Placeholder" />
+          <mx-block-input label="Label" assistive-text="Helpful text about input" disabled placeholder="Placeholder" value="This is the value" />
         </mx-block-wrapper>
       </div>
       <strong>Error</strong>

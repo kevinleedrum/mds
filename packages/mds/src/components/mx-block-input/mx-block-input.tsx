@@ -92,6 +92,7 @@ export class MxBlockInput implements IMxBlockInputProps {
 
   get containerClass() {
     let str = 'mx-block-input-container';
+    if (this.disabled) str += ' disabled';
     if (this.error) str += ' error';
     return str;
   }

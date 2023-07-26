@@ -17,6 +17,10 @@
       border: 1px solid var(--mds-color-secondary-light);
     }
     
+    &.disabled:before {
+      background-color: var(--mds-color-secondary-light);
+    }
+    
     &:after {
       display: none;
       position: absolute;
