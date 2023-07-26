@@ -106,7 +106,7 @@ export class MxBlockInput implements IMxBlockInputProps {
             {this.assistiveText && <span id={this.inputId || this.uuid + '-assistive'}>{this.assistiveText}</span>}
           </label>
           <input
-            aria-describedby={this.assistiveText ? this.inputId || this.uuid + '-assistive' : null}
+            aria-describedby={this.assistiveText ? (this.inputId || this.uuid) + '-assistive' : null}
             disabled={this.disabled}
             id={this.inputId || this.uuid}
             maxlength={this.maxlength}
