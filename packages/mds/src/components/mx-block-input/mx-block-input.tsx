@@ -100,11 +100,12 @@ export class MxBlockInput implements IMxBlockInputProps {
     return (
       <Host class={this.hostClass}>
         <div class={this.containerClass} onClick={this.onContainerClick.bind(this)}>
-          <label>
+          <label htmlFor={this.inputId || this.uuid}>
             {this.label}
-            {this.assistiveText && <span>{this.assistiveText}</span>}
+            {this.assistiveText && <span id={this.inputId || this.uuid + '-assistive'}>{this.assistiveText}</span>}
           </label>
           <input
+            aria-describedby={this.assistiveText ? this.inputId || this.uuid + '-assistive' : null}
             disabled={this.disabled}
             id={this.inputId || this.uuid}
             maxlength={this.maxlength}
