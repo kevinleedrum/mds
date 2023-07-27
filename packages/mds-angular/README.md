@@ -1,4 +1,5 @@
 # @moxiworks/mds-angular
+![npm](https://img.shields.io/npm/v/%40moxiworks%2Fmds-angular)
 
 This package in the monorepo serves as the Angular integration for the Stencil-generated components. The `lib` directory within this package contains the Stencil-generated components, which are built to be consumed by Angular applications.
 
@@ -15,3 +16,41 @@ The `lib` directory holds the Stencil-generated components, which serve as the f
 ## Building the `lib` Directory
 
 The `yarn build` script handles the tsc build. The output is stored in the `dist` directory. Only run this command after successfully completing the previous step.
+
+## Usage
+1. In your angular application, add the `@moxiworks/mds-angular` package to your dependancies.
+
+    Make sure you replace the `x.x.x` with the latest version, we can be found in the badge at the top of this doc. Avoid using `^` or `~`, as we want to be using the exact value.
+
+```json
+"dependencies": {
+  "@moxiworks/mds-angular": "x.x.x"
+}
+```
+
+2. Install the package
+
+```
+yarn install
+// or
+npm install
+```
+
+3. Setup the custom components
+```jsx
+// app.module.ts
+
+import { ComponentLibraryModule } from '@moxiworks/mds-angular';
+
+@NgModule({
+  imports: [ComponentLibraryModule],
+})
+export class AppModule {}
+```
+
+4. Use the components in the app
+```tsx
+<!-- app.component.html -->
+
+<mx-button type="button" href="https://google.com"></mx-button>
+```
