@@ -15,7 +15,7 @@ import { vueOutputTarget } from '@stencil/vue-output-target';
 
 export const dist: OutputTargetDist = {
   type: 'dist',
-  esmLoaderPath: '../loader'
+  esmLoaderPath: '../loader',
 }
 
 // Outputs ../mds-react/lib/components
