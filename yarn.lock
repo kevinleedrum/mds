@@ -2464,7 +2464,7 @@ __metadata:
     "@angular/compiler": ^16.1.0
     "@angular/compiler-cli": ^16.1.0
     "@angular/core": ^16.1.0
-    "@moxiworks/mds": 0.2.18
+    "@moxiworks/mds": 0.3.0
     ng-packagr: ^16.0.0
     rxjs: ~7.8.0
     tslib: ^2.3.0
@@ -2488,7 +2488,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@moxiworks/mds-vue@workspace:packages/mds-vue"
   dependencies:
-    "@moxiworks/mds": 0.2.18
+    "@moxiworks/mds": 0.3.0
     typescript: ^5.1.6
     vue: 3.0.0
   languageName: unknown
