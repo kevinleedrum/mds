@@ -7,6 +7,10 @@
     "build": "yarn tsc",
     "tsc": "tsc -p ."
   },
+  "export": {
+    "./styles/mds-core.css": "./dist/styles/mds-core.css",
+    "./styles/mds-core.min.css": "./dist/styles/mds-core.min.css"
+  },
   "files": [
     "dist"
   ],
@@ -14,7 +18,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@moxiworks/mds": "0.2.11"
+    "@moxiworks/mds": "0.2.18"
   },
   "devDependencies": {
     "typescript": "^5.1.6",

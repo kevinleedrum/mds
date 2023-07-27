@@ -2464,7 +2464,7 @@ __metadata:
     "@angular/compiler": ^16.1.0
     "@angular/compiler-cli": ^16.1.0
     "@angular/core": ^16.1.0
-    "@moxiworks/mds": 0.2.11
+    "@moxiworks/mds": 0.2.18
     ng-packagr: ^16.0.0
     rxjs: ~7.8.0
     tslib: ^2.3.0
@@ -2488,7 +2488,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@moxiworks/mds-vue@workspace:packages/mds-vue"
   dependencies:
-    "@moxiworks/mds": 0.2.11
+    "@moxiworks/mds": 0.2.18
     typescript: ^5.1.6
     vue: 3.0.0
   languageName: unknown
@@ -2544,28 +2544,6 @@ __metadata:
     webpack: 4
   languageName: unknown
   linkType: soft
-
-"@moxiworks/mds@npm:0.2.11":
-  version: 0.2.11
-  resolution: "@moxiworks/mds@npm:0.2.11"
-  dependencies:
-    "@juggle/resize-observer": ^3.3.1
-    "@popperjs/core": ^2.9.2
-    "@stencil/core": ^2.0.1
-    chart.js: ^3.6.2
-    js-datepicker: ^5.18.0
-    nanoid: ^3.1.22
-    postcss-custom-properties: ^11.0.0
-    postcss-import: ^14.0.1
-    postcss-nested: ^5.0.5
-    prismjs: ^1.25.0
-    stylelint: ^15.10.2
-    stylelint-config-recommended-scss: ^12.0.0
-    stylelint-scss: ^5.0.1
-    vuepress-theme-yuu: ^3.0.1
-  checksum: 2e56c8078b2e749165214b24794fef789c84c449cc57e791da24c0178a9e0d75fb4449feb56de42aed623a35795794553ea32b00facb308c64ff93b0dc598215
-  languageName: node
-  linkType: hard
 
 "@mrmlnc/readdir-enhanced@npm:^2.2.1":
   version: 2.2.1
@@ -3095,15 +3073,6 @@ __metadata:
   peerDependencies:
     "@stencil/core": ">=2.0.0 || >=3 || >= 4.0.0-beta.0 || >= 4.0.0"
   checksum: 87d3994dbfe3f7018bf32132e757c9222d31417d1adee1814c08f51567e8a8e6c9a869dc3183701b08a1251d419d391580bec334244f90e7d0fa81632a436da3
-  languageName: node
-  linkType: hard
-
-"@stencil/core@npm:^2.0.1":
-  version: 2.22.3
-  resolution: "@stencil/core@npm:2.22.3"
-  bin:
-    stencil: bin/stencil
-  checksum: b43fd0c0e10c8f6831821635de650f49c8d94eab75aa8e9214b723511cfd1f90fbf1ad33a79b4d2f165ef9ca6bee02839aac7b0a234ec6082b5959f98069f397
   languageName: node
   linkType: hard
 
@@ -21744,7 +21713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vuepress-theme-yuu@npm:^3.0.1, vuepress-theme-yuu@npm:^3.1.1":
+"vuepress-theme-yuu@npm:^3.1.1":
   version: 3.1.1
   resolution: "vuepress-theme-yuu@npm:3.1.1"
   dependencies:

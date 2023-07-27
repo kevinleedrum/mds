@@ -9,14 +9,19 @@
       "esm2022": "./dist/esm2022/component-library.mjs",
       "esm": "./dist/esm2022/component-library.mjs",
       "default": "./dist/fesm2022/component-library.mjs"
-    }
+    },
+    "./styles/mds-core.css": "./dist/styles/mds-core.css",
+    "./styles/mds-core.min.css": "./dist/styles/mds-core.min.css"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "ng build"
   },
   "dependencies": {
     "@angular/core": "^16.1.0",
-    "@moxiworks/mds": "0.2.11",
+    "@moxiworks/mds": "0.2.18",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

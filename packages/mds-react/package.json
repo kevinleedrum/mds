@@ -4,6 +4,16 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "esm2022": "./dist/esm2022/component-library.mjs",
+      "esm": "./dist/esm2022/component-library.mjs",
+      "default": "./dist/fesm2022/component-library.mjs"
+    },
+    "./styles/mds-core.css": "./dist/styles/mds-core.css",
+    "./styles/mds-core.min.css": "./dist/styles/mds-core.min.css"
+  },
   "scripts": {
     "build": "yarn tsc",
     "tsc": "tsc -p ."
