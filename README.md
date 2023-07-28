@@ -13,7 +13,19 @@ You can view the documentation for the mds package [here](./packages/mds/README.
 
 The mds-react package contains the React output from the mds repository. It is hosted separately to be imported directly by React applications.
 
-You can view the documentation for the mds package [here](./packages/mds-react/README.md)
+You can view the documentation for the mds-react package [here](./packages/mds-react/README.md)
+
+### mds-angular
+
+The mds-angular package contains the Angular output from the mds repository. It is hosted separately to be imported directly by Angular applications.
+
+You can view the documentation for the mds-angular package [here](./packages/mds-angular/README.md)
+
+### mds-vue
+
+The mds-vue package contains the Vue output from the mds repository. It is hosted separately to be imported directly by Vue applications.
+
+You can view the documentation for the mds-vue package [here](./packages/mds-vue/README.md)
 
 ## Contributing
 
