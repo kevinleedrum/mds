@@ -8,7 +8,7 @@
     "yarn": ">= 3.0.0"
   },
   "scripts": {
-    "build": "yarn mds:build && yarn mds-react:build",
+    "build": "yarn mds:build && yarn mds-react:build && yarn mds-angular:build && yarn mds-vue:build",
     "mds:build": "yarn workspace @moxiworks/mds build",
     "mds:build-mds": "yarn workspace @moxiworks/mds build:mds",
     "mds:build-react": "yarn workspace @moxiworks/mds build:react",
