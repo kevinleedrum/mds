@@ -1,5 +1,4 @@
 .mx-button {
-
   button,
   a {
     &.contained {
@@ -13,7 +12,7 @@
         background: var(--mds-color-primary-dark);
       }
 
-      &:hover:enabled{
+      &:hover:not(:disabled, [aria-disabled='true']) {
         filter: brightness(1.4);
       }
 
@@ -92,7 +91,7 @@
           text-decoration: underline;
           color: var(--mds-color-primary);
         }
-        
+
         .separator {
           background: var(--mds-color-secondary);
         }
@@ -104,7 +103,6 @@
       }
 
       &.dropdown:not(:disabled, [aria-disabled='true']) {
-
         .slot-content,
         .chevron-icon {
           color: var(--mds-color-secondary);
