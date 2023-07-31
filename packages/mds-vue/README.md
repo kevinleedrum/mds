@@ -58,6 +58,6 @@ createApp(App).use(ComponentLibrary).mount('#app');
 5. Use the components.
 ```jsx
 <template>
-  <mx-button type="button" href="https://google.com"></mx-button>
+  <mx-button icon="mds-check">It works!</mx-button>
 </template>
 ```

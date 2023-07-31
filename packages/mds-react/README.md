@@ -41,7 +41,7 @@ defineCustomElements();
 function App() {
   return (
     <div className="App">
-      <MxButton first="Your" last="Name" />
+      <MxButton icon="mds-check">It works!</MxButton>
     </div>
   );
 }
