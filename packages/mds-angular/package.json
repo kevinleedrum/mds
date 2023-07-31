@@ -1,6 +1,6 @@
 {
   "name": "@moxiworks/mds-angular",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "module": "dist/fesm2022/component-library.mjs",
   "typings": "dist/index.d.ts",
   "exports": {
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@angular/core": "^16.1.0",
-    "@moxiworks/mds": "0.3.0",
+    "@moxiworks/mds": "0.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
