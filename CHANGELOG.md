@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/moxiworks/mds/compare/0.4.0...0.4.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* Turns out prepack and prepublish are both run at publish ([1d85f88](https://github.com/moxiworks/mds/commit/1d85f88c4fd0c93e0cd68483ff122a63d572f023))
+
+
+
+
+
 # [0.4.0](https://github.com/moxiworks/mds/compare/0.3.0...0.4.0) (2023-07-31)
 
 
