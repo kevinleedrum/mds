@@ -21,8 +21,7 @@
   },
   "scripts": {
     "build": "ng build",
-    "prepublish": "sh scripts/delete-output.sh",
-    "prepack": "sh scripts/delete-output.sh"
+    "prepublish": "sh scripts/delete-output.sh"
   },
   "dependencies": {
     "@angular/core": "^16.1.0",
