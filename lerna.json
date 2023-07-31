@@ -9,7 +9,7 @@
   "conventionalCommits": true,
   "yes": true,
   "message": "chore(release): %v [skip ci]",
-  "changelog": false,
+  "changelog": true,
   "exact": true,
   "ignoreChanges": [
     "packages/mds/vuepress",

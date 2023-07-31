@@ -1,8 +1,10 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { inlineSvg } from 'stencil-inline-svg';
-import { OutputTargetDist, OutputTargetDistCustomElementsBundle, OutputTargetHydrate, OutputTargetWww } from "@stencil/core/internal"
+import { OutputTargetDist, OutputTargetDistCustomElements, OutputTargetHydrate, OutputTargetWww } from "@stencil/core/internal"
 import { reactOutputTarget } from "@stencil/react-output-target"
+import { angularOutputTarget } from '@stencil/angular-output-target';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 // Outputs  loader
 //          dist/cjs (common js)
@@ -13,7 +15,7 @@ import { reactOutputTarget } from "@stencil/react-output-target"
 
 export const dist: OutputTargetDist = {
   type: 'dist',
-  esmLoaderPath: '../loader'
+  esmLoaderPath: '../loader',
 }
 
 // Outputs ../mds-react/lib/components
@@ -24,9 +26,20 @@ export const react = reactOutputTarget({
   loaderDir: 'loader'
 })
 
+export const angular = angularOutputTarget({
+  componentCorePackage: '@moxiworks/mds',
+  directivesProxyFile: '../mds-angular/lib/stencil-generated/components.ts',
+  directivesArrayFile: '../mds-angular/lib/stencil-generated/index.ts',
+})
+
+export const vue = vueOutputTarget({
+  componentCorePackage: '@moxiworks/mds',
+  proxiesFile: '../mds-vue/lib/components.ts',
+})
+
 // Outputs dist/components
-export const distCustomElements: OutputTargetDistCustomElementsBundle = {
-  type: 'dist-custom-elements-bundle',
+export const distCustomElements: OutputTargetDistCustomElements = {
+  type: 'dist-custom-elements',
 }
 
 // Identical to the `dist/mds-component` output, just with a module input
@@ -48,10 +61,12 @@ export const hydrate: OutputTargetHydrate = {
 
 // This is the baseConfig that builds everything required
 export const config: Config = {
-  namespace: 'mds-components', 
+  namespace: 'mds-components',
   outputTargets: [
     dist,
     react,
+    angular,
+    vue,
     distCustomElements,
     docsWww,
     hydrate,

@@ -8,13 +8,17 @@
     "yarn": ">= 3.0.0"
   },
   "scripts": {
-    "build": "yarn mds:build && yarn mds-react:build",
+    "build": "yarn mds:build && yarn mds-react:build && yarn mds-angular:build && yarn mds-vue:build",
     "mds:build": "yarn workspace @moxiworks/mds build",
     "mds:build-mds": "yarn workspace @moxiworks/mds build:mds",
     "mds:build-react": "yarn workspace @moxiworks/mds build:react",
+    "mds:build-angular": "yarn workspace @moxiworks/mds build:angular",
+    "mds:build-vue": "yarn workspace @moxiworks/mds build:vue",
     "mds:build-docs": "yarn workspace @moxiworks/mds build:docs",
     "mds:release-docs": "yarn workspace @moxiworks/mds docs:deploy",
     "mds-react:build": "yarn workspace @moxiworks/mds-react build",
+    "mds-angular:build": "yarn workspace @moxiworks/mds-angular build",
+    "mds-vue:build": "yarn workspace @moxiworks/mds-vue build",
     "publish": "lerna publish",
     "lint": "lerna run lint",
     "stylelint": "lerna run stylelint"
@@ -22,7 +26,7 @@
   "devDependencies": {
     "@types/node": "^20.3.1",
     "lerna": "^7.0.2",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.6"
   },
   "packageManager": "yarn@3.6.1"
 }

@@ -19,6 +19,20 @@ import { PageChangeEventDetail } from "./components/mx-pagination/mx-pagination"
 import { ITableColumn, ITableRowAction, SortChangeEventDetail } from "./components/mx-table/mx-table";
 import { ITableRowAction as ITableRowAction1 } from "./components/mx-table/mx-table";
 import { IMxTabProps } from "./components/mx-tab/mx-tab";
+export { BtnType, ButtonTypeAttribute } from "./components/mx-button/mx-button";
+export { ChartJsData, ChartJsOptions } from "./components/mx-chart/mx-chart";
+export { ChartType } from "chart.js";
+export { MxInputIcon } from "./components/mx-input/mx-input";
+export { DialogOptions } from "./components/mx-dialog/mx-dialog";
+export { BtnType as BtnType1 } from "./components/mx-button/mx-button";
+export { MxInputIcon as MxInputIcon1 } from "./components/mx-input/mx-input";
+export { PopoverOffset, PopoverPlacement } from "./utils/popover";
+export { IModalButton } from "./components/mx-modal/mx-modal";
+export { IPageHeaderButton } from "./components/mx-page-header/mx-page-header";
+export { PageChangeEventDetail } from "./components/mx-pagination/mx-pagination";
+export { ITableColumn, ITableRowAction, SortChangeEventDetail } from "./components/mx-table/mx-table";
+export { ITableRowAction as ITableRowAction1 } from "./components/mx-table/mx-table";
+export { IMxTabProps } from "./components/mx-tab/mx-tab";
 export namespace Components {
     interface MxBadge {
         /**
@@ -519,7 +533,7 @@ export namespace Components {
         /**
           * The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
-        "leftIcon": string | MxInputIcon[];
+        "leftIcon": string | MxInputIcon1[];
         "maxlength": number;
         /**
           * The `name` attribute for the text input
@@ -534,7 +548,7 @@ export namespace Components {
         /**
           * The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
-        "rightIcon": string | MxInputIcon[];
+        "rightIcon": string | MxInputIcon1[];
         "step": string;
         /**
           * Text shown to the right of the input value
@@ -1952,7 +1966,7 @@ declare namespace LocalJSX {
         /**
           * The class name of the icon to show on the left side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
-        "leftIcon"?: string | MxInputIcon[];
+        "leftIcon"?: string | MxInputIcon1[];
         "maxlength"?: number;
         /**
           * The `name` attribute for the text input
@@ -1967,7 +1981,7 @@ declare namespace LocalJSX {
         /**
           * The class name of the icon to show on the right side of the input, _or_ an array of objects specifying an `icon`, `ariaLabel`, and `onClick` handler
          */
-        "rightIcon"?: string | MxInputIcon[];
+        "rightIcon"?: string | MxInputIcon1[];
         "step"?: string;
         /**
           * Text shown to the right of the input value

@@ -1,9 +1,8 @@
 {
-  "name": "@moxiworks/mds-react",
+  "name": "@moxiworks/mds-angular",
   "version": "0.3.0",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "module": "dist/fesm2022/component-library.mjs",
+  "typings": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -14,23 +13,29 @@
     "./styles/mds-core.css": "./dist/styles/mds-core.css",
     "./styles/mds-core.min.css": "./dist/styles/mds-core.min.css"
   },
-  "scripts": {
-    "build": "yarn tsc",
-    "tsc": "tsc -p ."
-  },
   "files": [
     "dist"
   ],
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "build": "ng build",
+    "prepublish": "sh scripts/delete-output.sh",
+    "prepack": "sh scripts/delete-output.sh"
+  },
   "dependencies": {
-    "@moxiworks/mds": "0.3.0"
+    "@angular/core": "^16.1.0",
+    "@moxiworks/mds": "0.3.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.13",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@angular-devkit/build-angular": "^16.1.5",
+    "@angular/cli": "~16.1.5",
+    "@angular/compiler": "^16.1.0",
+    "@angular/compiler-cli": "^16.1.0",
+    "ng-packagr": "^16.0.0",
     "typescript": "^5.1.6"
   }
 }

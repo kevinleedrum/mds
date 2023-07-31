@@ -1,0 +1,27 @@
+{
+  "name": "@moxiworks/mds-vue",
+  "version": "0.3.0",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build": "yarn tsc",
+    "tsc": "tsc -p ."
+  },
+  "export": {
+    "./styles/mds-core.css": "./dist/styles/mds-core.css",
+    "./styles/mds-core.min.css": "./dist/styles/mds-core.min.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@moxiworks/mds": "0.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6",
+    "vue": "3.0.0"
+  }
+}
