@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/moxiworks/mds/compare/0.4.4...0.4.5) (2023-08-01)
+
+
+### Bug Fixes
+
+* Updated the react exports ([0cd2a86](https://github.com/moxiworks/mds/commit/0cd2a868439cd1fde1a0382c3a65d94a7cb5cbd5))
+
+
+
+
+
 ## [0.4.4](https://github.com/moxiworks/mds/compare/0.4.3...0.4.4) (2023-08-01)
 
 **Note:** Version bump only for package @moxiworks/mds-react
