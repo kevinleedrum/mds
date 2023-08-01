@@ -88,5 +88,5 @@ StencilJS provides a loader which dynamically "tree-shakes" the code as needed. 
 
 StencilJS has a bunch of documentation around integrating these types of components into most popular frameworks - including vanilla Javascript. You can read more about that here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview)
 
-We currently have the following framework integrations
+We currently have the following framework integrations:
 - React - Located in [packages/react-mds](../mds-react/README.md). 
