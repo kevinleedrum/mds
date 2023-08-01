@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/moxiworks/mds/compare/0.4.2...0.4.3) (2023-08-01)
+
+
+### Bug Fixes
+
+* Corrected the mds-vue typescript reference ([2c0b8d2](https://github.com/moxiworks/mds/commit/2c0b8d213f7a12c0246830779bb76519b38bf700))
+
+
+
+
+
 ## [0.4.1](https://github.com/moxiworks/mds/compare/0.4.0...0.4.1) (2023-08-01)
 
 **Note:** Version bump only for package @moxiworks/mds-vue
