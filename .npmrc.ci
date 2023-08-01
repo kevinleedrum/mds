@@ -1,2 +1,0 @@
-# This is only needed in CI.
-//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
