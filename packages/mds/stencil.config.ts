@@ -72,6 +72,10 @@ export const config: Config = {
     hydrate,
   ],
   plugins: [sass(), inlineSvg()],
+  extras: {
+    // Enabling this flag will allow downstream projects that consume a Stencil library and use a bundler such as Vite to lazily load the Stencil library's components.
+    enableImportInjection: true,
+  },
   testing: {
     transform: {
       // Stub in assets that jest does not know how to import
