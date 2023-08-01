@@ -1,17 +1,17 @@
 {
   "name": "@moxiworks/mds-angular",
   "version": "0.4.4",
-  "module": "fesm2022/moxiworks-mds-angular.mjs",
+  "module": "dist/fesm2022/moxiworks-mds-angular.mjs",
   "typings": "dist/index.d.ts",
   "exports": {
+    "./styles/mds-core.css": "./dist/styles/mds-core.css",
+    "./styles/mds-core.min.css": "./dist/styles/mds-core.min.css",
     ".": {
       "types": "./dist/index.d.ts",
       "esm2022": "./dist/esm2022/moxiworks-mds-angular.mjs",
       "esm": "./dist/esm2022/moxiworks-mds-angular.mjs",
       "default": "./dist/fesm2022/moxiworks-mds-angular.mjs"
-    },
-    "./styles/mds-core.css": "./dist/styles/mds-core.css",
-    "./styles/mds-core.min.css": "./dist/styles/mds-core.min.css"
+    }
   },
   "files": [
     "dist"
