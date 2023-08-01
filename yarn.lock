@@ -2464,7 +2464,7 @@ __metadata:
     "@angular/compiler": ^16.1.0
     "@angular/compiler-cli": ^16.1.0
     "@angular/core": ^16.1.0
-    "@moxiworks/mds": 0.4.1
+    "@moxiworks/mds": 0.4.4
     ng-packagr: ^16.0.0
     rxjs: ~7.8.0
     tslib: ^2.3.0
@@ -2476,7 +2476,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@moxiworks/mds-react@workspace:packages/mds-react"
   dependencies:
-    "@moxiworks/mds": 0.4.1
+    "@moxiworks/mds": 0.4.4
     "@types/react": ^18.2.13
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -2488,13 +2488,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@moxiworks/mds-vue@workspace:packages/mds-vue"
   dependencies:
-    "@moxiworks/mds": 0.4.1
+    "@moxiworks/mds": 0.4.4
     typescript: ^5.1.6
     vue: 3.0.0
   languageName: unknown
   linkType: soft
 
-"@moxiworks/mds@0.4.1, @moxiworks/mds@workspace:packages/mds":
+"@moxiworks/mds@0.4.4, @moxiworks/mds@workspace:packages/mds":
   version: 0.0.0-use.local
   resolution: "@moxiworks/mds@workspace:packages/mds"
   dependencies:

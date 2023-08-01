@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.4](https://github.com/moxiworks/mds/compare/0.4.3...0.4.4) (2023-08-01)
+
+
+### Bug Fixes
+
+* Enabled import injection ([6b6e200](https://github.com/moxiworks/mds/commit/6b6e200673eb7703d7b9d4ad9966862a19979db3))
+
+
+
+
+
 ## [0.4.1](https://github.com/moxiworks/mds/compare/0.4.0...0.4.1) (2023-08-01)
 
 **Note:** Version bump only for package @moxiworks/mds
