@@ -1,59 +1,3 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
-
-## [0.4.1](https://github.com/moxiworks/mds/compare/0.4.0...0.4.1) (2023-07-31)
-
-
-### Bug Fixes
-
-* Turns out prepack and prepublish are both run at publish ([1d85f88](https://github.com/moxiworks/mds/commit/1d85f88c4fd0c93e0cd68483ff122a63d572f023))
-
-
-
-
-
-# [0.4.0](https://github.com/moxiworks/mds/compare/0.3.0...0.4.0) (2023-07-31)
-
-
-### Bug Fixes
-
-* Added angular output target ([b744fbb](https://github.com/moxiworks/mds/commit/b744fbbee6a7319705079c29ca640183d0183182))
-* Cleaned up the tailwind generation ([856ec28](https://github.com/moxiworks/mds/commit/856ec2895af89b4da226e9fdf0aa3e2543b0fbfe))
-* Exclude the ng generated files ([4ec5f29](https://github.com/moxiworks/mds/commit/4ec5f2971756194b502befbf75849e8d1ceb0d72))
-* Exporting the css ([7c90fd4](https://github.com/moxiworks/mds/commit/7c90fd42f2f1743371065ae6fa6abad2f4388770))
-* Fixed Node 18 issue with vuepress ([705984f](https://github.com/moxiworks/mds/commit/705984f592e6e9edc1286f9b35c4158f23afd456))
-* Fixed the publish config ([1471292](https://github.com/moxiworks/mds/commit/147129213e5f16483ac169f6ccae85a75733459b))
-* Made the ts version consistent across projects ([5797278](https://github.com/moxiworks/mds/commit/57972782d725f0c36c4dee6e99e3136e2a66b805))
-* Modified root package.json ([cfb7ac4](https://github.com/moxiworks/mds/commit/cfb7ac41f117aa634cb2ed3a835b4cbcc144a0cb))
-* Moved up a level ([b4bf087](https://github.com/moxiworks/mds/commit/b4bf087ff418d07ff8a32a98e17fb501084ccea5))
-* Removed the angular analytics ([84116b2](https://github.com/moxiworks/mds/commit/84116b2fb889becfe7058de2d6a026f565eac78d))
-* Removed the lib ([b43ac9b](https://github.com/moxiworks/mds/commit/b43ac9b8864736421a7f527c697174237606d0ed))
-* Resolved rebase issues ([4aee785](https://github.com/moxiworks/mds/commit/4aee7854be2b0a21cc66c881da012476fbabc284))
-* restructured angular package ([3193f36](https://github.com/moxiworks/mds/commit/3193f36f2b2cf404996dd4cf11a775e61e78f0d2))
-* Turned on changelogs ([2a771bb](https://github.com/moxiworks/mds/commit/2a771bb75d1e2b64a50bb1648fa03b538d65ebf6))
-* Updated build ([bca09fe](https://github.com/moxiworks/mds/commit/bca09febd83f0520bdea6553c2268eafb9f4689f))
-* Updated CI ([7e2b5ab](https://github.com/moxiworks/mds/commit/7e2b5ab96417f2906c205dda9acc543e62ac77ef))
-* Updated config ([77c49e0](https://github.com/moxiworks/mds/commit/77c49e077b063042bea89feaedce5e8c27fc9d3e))
-* Updated the build configs ([97dbfd8](https://github.com/moxiworks/mds/commit/97dbfd80cb5c63fb52d45486d8efee659664dca2))
-
-
-### Features
-
-* Added vue output target ([d063661](https://github.com/moxiworks/mds/commit/d06366197aed15b700eee88ee04e54bd5da01d39))
-* bumped node to version 18 ([2e56f9b](https://github.com/moxiworks/mds/commit/2e56f9b51c2b0fc46cfbd07e1a751d842760bc3a))
-* ENG-166245 - bumped packages ([e2d4741](https://github.com/moxiworks/mds/commit/e2d47412eec00cb6a8d4a912634ce042954575b8))
-* ENG-166364 - Added the angular output ([10682cd](https://github.com/moxiworks/mds/commit/10682cd71e9a79cdb95854bcf34ec2ad3614e63a))
-* ENG-166441 - Added the vue output ([03e5707](https://github.com/moxiworks/mds/commit/03e570731bfa4567796c55ddc273b47d74cbc99f))
-* ENG-166598 - Upgraded vuepress ([3863443](https://github.com/moxiworks/mds/commit/38634439899963545077b264325a4b59205c5569))
-* Specified version ([28e8251](https://github.com/moxiworks/mds/commit/28e825178612cbe333e09898f3fdcc06c74d1a28))
-* Upgraded stencil to latest ([01d485e](https://github.com/moxiworks/mds/commit/01d485ecef4339e084c7965e4a36b33ad2ec41de))
-
-
-
-
-
 #  (2023-07-27)
 
 
@@ -280,3 +224,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ## [0.0.9](https://github.com/moxiworks/mds/compare/0.0.8...0.0.9) (2021-04-28)
+
+
+
