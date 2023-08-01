@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/moxiworks/mds/compare/0.4.0...0.4.1) (2023-08-01)
+
+
+### Bug Fixes
+
+* npmrc needs to be stored in Dockerfile root ([653c44b](https://github.com/moxiworks/mds/commit/653c44b5eaea1cc4b9f7240725ca94a236e33b14))
+* Returned the Dockerfile npmrc back to normal ([3dd2db2](https://github.com/moxiworks/mds/commit/3dd2db245973f376fb43ff55356b209ba11342e2))
+
+
+
+
+
 # [0.4.0](https://github.com/moxiworks/mds/compare/0.3.0...0.4.0) (2023-08-01)
 
 

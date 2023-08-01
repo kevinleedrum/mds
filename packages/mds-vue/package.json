@@ -1,6 +1,6 @@
 {
   "name": "@moxiworks/mds-vue",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "scripts": {
@@ -18,7 +18,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@moxiworks/mds": "0.4.0"
+    "@moxiworks/mds": "0.4.1"
   },
   "devDependencies": {
     "typescript": "^5.1.6",
