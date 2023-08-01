@@ -4,7 +4,7 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /app
 
-COPY .npmrc.ci ./.npmrc
+COPY .npmrc ./
 COPY .yarn/releases ./.yarn/releases
 COPY .yarnrc.yml ./
 
