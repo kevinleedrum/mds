@@ -1,3 +1,40 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [0.4.0](https://github.com/moxiworks/mds/compare/0.3.0...0.4.0) (2023-08-01)
+
+
+### Bug Fixes
+
+* Added angular output target ([b744fbb](https://github.com/moxiworks/mds/commit/b744fbbee6a7319705079c29ca640183d0183182))
+* Cleaned up the tailwind generation ([856ec28](https://github.com/moxiworks/mds/commit/856ec2895af89b4da226e9fdf0aa3e2543b0fbfe))
+* Fixed Node 18 issue with vuepress ([705984f](https://github.com/moxiworks/mds/commit/705984f592e6e9edc1286f9b35c4158f23afd456))
+* Made the ts version consistent across projects ([5797278](https://github.com/moxiworks/mds/commit/57972782d725f0c36c4dee6e99e3136e2a66b805))
+* Removed the lib ([b43ac9b](https://github.com/moxiworks/mds/commit/b43ac9b8864736421a7f527c697174237606d0ed))
+* restructured angular package ([3193f36](https://github.com/moxiworks/mds/commit/3193f36f2b2cf404996dd4cf11a775e61e78f0d2))
+* Updated CI ([7e2b5ab](https://github.com/moxiworks/mds/commit/7e2b5ab96417f2906c205dda9acc543e62ac77ef))
+* Updated config ([77c49e0](https://github.com/moxiworks/mds/commit/77c49e077b063042bea89feaedce5e8c27fc9d3e))
+* Updated the build configs ([97dbfd8](https://github.com/moxiworks/mds/commit/97dbfd80cb5c63fb52d45486d8efee659664dca2))
+
+
+### Features
+
+* Added vue output target ([d063661](https://github.com/moxiworks/mds/commit/d06366197aed15b700eee88ee04e54bd5da01d39))
+* ENG-166364 - Added the angular output ([10682cd](https://github.com/moxiworks/mds/commit/10682cd71e9a79cdb95854bcf34ec2ad3614e63a))
+* ENG-166598 - Upgraded vuepress ([3863443](https://github.com/moxiworks/mds/commit/38634439899963545077b264325a4b59205c5569))
+* Upgraded stencil to latest ([01d485e](https://github.com/moxiworks/mds/commit/01d485ecef4339e084c7965e4a36b33ad2ec41de))
+
+
+### Reverts
+
+* Revert "chore(release): 0.4.0 [skip ci]" ([3e7ee12](https://github.com/moxiworks/mds/commit/3e7ee123d6322ae9f0e3bd1220b5eb730c939bc6))
+
+
+
+
+
 ## [0.2.18](https://github.com/moxiworks/mds/compare/0.2.17...0.2.18) (2023-07-24)
 
 
@@ -162,6 +199,3 @@
 ### Bug Fixes
 
 * Update font to Roboto ([0111c10](https://github.com/moxiworks/mds/commit/0111c10fac8d7ab4d8c45c0bbe7469b982a5329a))
-
-
-

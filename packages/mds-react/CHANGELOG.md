@@ -1,3 +1,25 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [0.4.0](https://github.com/moxiworks/mds/compare/0.3.0...0.4.0) (2023-08-01)
+
+
+### Bug Fixes
+
+* Exporting the css ([7c90fd4](https://github.com/moxiworks/mds/commit/7c90fd42f2f1743371065ae6fa6abad2f4388770))
+* Made the ts version consistent across projects ([5797278](https://github.com/moxiworks/mds/commit/57972782d725f0c36c4dee6e99e3136e2a66b805))
+
+
+### Reverts
+
+* Revert "chore(release): 0.4.0 [skip ci]" ([3e7ee12](https://github.com/moxiworks/mds/commit/3e7ee123d6322ae9f0e3bd1220b5eb730c939bc6))
+
+
+
+
+
 ## [0.2.18](https://github.com/moxiworks/mds/compare/0.2.17...0.2.18) (2023-07-24)
 
 
@@ -63,6 +85,3 @@
 
 
 ## [0.2.1](https://github.com/moxiworks/mds/compare/0.2.0...0.2.1) (2023-07-19)
-
-
-
