@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.6](https://github.com/moxiworks/mds/compare/0.4.5...0.4.6) (2023-08-02)
+
+
+### Bug Fixes
+
+* mds-angular exports to include * ([ffcba2f](https://github.com/moxiworks/mds/commit/ffcba2fca276a5cfb3c719f2c4b764b6527bf2ad))
+
+
+
+
+
 ## [0.4.4](https://github.com/moxiworks/mds/compare/0.4.3...0.4.4) (2023-08-01)
 
 **Note:** Version bump only for package @moxiworks/mds-vue

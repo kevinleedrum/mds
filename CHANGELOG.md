@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.6](https://github.com/moxiworks/mds/compare/0.4.5...0.4.6) (2023-08-02)
+
+
+### Bug Fixes
+
+* mds-angular exports to include * ([ffcba2f](https://github.com/moxiworks/mds/commit/ffcba2fca276a5cfb3c719f2c4b764b6527bf2ad))
+* Updated the exports ([90e90e9](https://github.com/moxiworks/mds/commit/90e90e998b68ae7a75811074dab93482b1384278))
+
+
+
+
+
 ## [0.4.5](https://github.com/moxiworks/mds/compare/0.4.4...0.4.5) (2023-08-01)
 
 
