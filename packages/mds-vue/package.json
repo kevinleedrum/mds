@@ -8,6 +8,7 @@
     "tsc": "tsc -p ."
   },
   "export": {
+    "*": "dist/index.js",
     "./styles/mds-core.css": "./dist/styles/mds-core.css",
     "./styles/mds-core.min.css": "./dist/styles/mds-core.min.css"
   },
