@@ -6,7 +6,8 @@
   "types": "dist/types/index.d.ts",
   "exports": {
     "./styles/mds-core.css": "./dist/styles/mds-core.css",
-    "./styles/mds-core.min.css": "./dist/styles/mds-core.min.css"
+    "./styles/mds-core.min.css": "./dist/styles/mds-core.min.css",
+    ".": "./dist/index.js"
   },
   "scripts": {
     "build": "yarn tsc",
